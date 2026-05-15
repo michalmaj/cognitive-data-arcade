@@ -1,0 +1,28 @@
+[project]
+name = "cognitive-data-arcade"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Michał Maj", email = "michalpmaj@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "matplotlib>=3.10.9",
+    "numpy>=2.4.4",
+    "pandas>=3.0.3",
+    "pygame>=2.6.1",
+]
+
+[project.scripts]
+cognitive-data-arcade = "cognitive_data_arcade:main"
+
+[build-system]
+requires = ["uv_build>=0.10.12,<0.11.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
+    "ruff>=0.15.13",
+]
