@@ -33,3 +33,7 @@ data/external/*
 # IDE
 .vscode/
 .idea/
+
+# Private / agent configuration — not for public repo
+CLAUDE.md
+.claude/
