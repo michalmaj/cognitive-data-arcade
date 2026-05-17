@@ -19,6 +19,12 @@ class SessionResult:
     arcade_points_earned: int
     science_points_earned: int
 
+    def __post_init__(self) -> None:
+        if self.correct_trials > self.total_trials:
+            raise ValueError(
+                f"correct_trials ({self.correct_trials}) > total_trials ({self.total_trials})"
+            )
+
     @property
     def accuracy(self) -> float:
         if self.total_trials == 0:
@@ -43,7 +49,7 @@ def _check_sharpshooter(session: SessionResult, profile: Profile) -> bool:
     return session.accuracy == 1.0 and session.total_trials >= 10
 
 
-def _check_three_in_a_row(session: SessionResult, profile: Profile) -> bool:
+def _check_high_accuracy(session: SessionResult, profile: Profile) -> bool:
     return session.correct_trials >= 3 and session.accuracy >= 0.9
 
 
@@ -59,7 +65,7 @@ BADGE_REGISTRY: list[Badge] = [
     Badge("quick_reflex", "⚡", "Quick Reflex", "Błyskawiczny", _check_quick_reflex),
     Badge("sharpshooter", "🎯", "Sharpshooter", "Snajper", _check_sharpshooter),
     Badge(
-        "three_in_a_row", "🔁", "Three in a Row", "Trzy z Rzędu", _check_three_in_a_row
+        "high_accuracy", "🎯", "High Accuracy", "Wysoka Celność", _check_high_accuracy
     ),
     Badge("clean_data", "🧹", "Clean Data", "Czyste Dane", _check_clean_data),
     Badge("first_game", "🎮", "First Game", "Pierwsza Gra", _check_first_game),
@@ -68,10 +74,17 @@ BADGE_REGISTRY: list[Badge] = [
 
 class BadgeEngine:
     def __init__(self, registry: list[Badge] | None = None) -> None:
-        self._registry = registry if registry is not None else BADGE_REGISTRY
+        self._registry: tuple[Badge, ...] = tuple(
+            registry if registry is not None else BADGE_REGISTRY
+        )
 
     def evaluate(self, session: SessionResult, profile: Profile) -> list[str]:
-        """Return badge_ids newly earned this session (not already in profile.badges)."""
+        """Return badge_ids newly earned this session (not already in profile.badges).
+
+        Must be called with the profile state BEFORE adding session points.
+        The first_game badge checks profile.arcade_points == 0; calling this
+        after ProfileManager.add_ap() will cause first_game to never trigger.
+        """
         return [
             badge.badge_id
             for badge in self._registry

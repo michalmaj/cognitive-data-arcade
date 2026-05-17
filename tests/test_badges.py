@@ -1,3 +1,5 @@
+import pytest
+
 from cognitive_data_arcade.engine.badges import (
     Badge,
     BadgeEngine,
@@ -108,7 +110,7 @@ def test_badge_registry_has_five_entries() -> None:
     assert ids == {
         "quick_reflex",
         "sharpshooter",
-        "three_in_a_row",
+        "high_accuracy",
         "clean_data",
         "first_game",
     }
@@ -130,3 +132,17 @@ def test_clean_data_badge_requires_sp() -> None:
     engine = BadgeEngine()
     assert "clean_data" in engine.evaluate(session_with_sp, profile)
     assert "clean_data" not in engine.evaluate(session_no_sp, profile)
+
+
+def test_high_accuracy_badge_condition() -> None:
+    good = _make_session(total_trials=20, correct_trials=18)  # 90% accuracy, 18 >= 3
+    bad = _make_session(total_trials=20, correct_trials=10)  # 50% accuracy
+    profile = _make_profile(arcade_points=100)
+    engine = BadgeEngine()
+    assert "high_accuracy" in engine.evaluate(good, profile)
+    assert "high_accuracy" not in engine.evaluate(bad, profile)
+
+
+def test_session_result_rejects_more_correct_than_total() -> None:
+    with pytest.raises(ValueError, match="correct_trials"):
+        _make_session(total_trials=10, correct_trials=11)
