@@ -30,9 +30,17 @@ def test_log_creates_csv_with_correct_headers(tmp_path: Path) -> None:
     with csv_file.open() as f:
         headers = csv.DictReader(f).fieldnames
     assert headers == [
-        "participant_id", "session_id", "trial_id", "task_name",
-        "condition", "stimulus", "expected_response", "actual_response",
-        "correct", "reaction_time_ms", "timestamp",
+        "participant_id",
+        "session_id",
+        "trial_id",
+        "task_name",
+        "condition",
+        "stimulus",
+        "expected_response",
+        "actual_response",
+        "correct",
+        "reaction_time_ms",
+        "timestamp",
     ]
 
 

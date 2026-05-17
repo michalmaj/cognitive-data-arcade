@@ -42,9 +42,7 @@ class ProfileManager:
 
     def save(self, profile: Profile) -> None:
         self._path.parent.mkdir(parents=True, exist_ok=True)
-        self._path.write_text(
-            json.dumps(asdict(profile), indent=2), encoding="utf-8"
-        )
+        self._path.write_text(json.dumps(asdict(profile), indent=2), encoding="utf-8")
 
     def add_ap(self, points: int) -> Profile:
         profile = self.load()
