@@ -37,3 +37,5 @@ data/external/*
 # Private / agent configuration — not for public repo
 CLAUDE.md
 .claude/
+.superpowers/
+docs/superpowers/
