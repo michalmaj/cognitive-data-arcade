@@ -16,7 +16,6 @@ def level_title(total_points: int) -> str:
     for threshold, title in _LEVELS:
         if total_points >= threshold:
             return title
-    return "🌱 Data Seedling"
 
 
 @dataclass

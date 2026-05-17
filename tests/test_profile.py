@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from cognitive_data_arcade.profile.manager import Profile, ProfileManager, level_title
+from cognitive_data_arcade.profile.manager import ProfileManager, level_title
 
 
 def test_level_title_boundaries() -> None:
