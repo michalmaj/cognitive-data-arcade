@@ -49,9 +49,7 @@ class LessonMenuScene(Scene):
         title = font_title.render("Cognitive Data Arcade", True, _TITLE_COLOR)
         surface.blit(title, (40, 36))
 
-        subtitle = font_item.render(
-            "↑↓ navigate   ESC quit", True, (80, 80, 100)
-        )
+        subtitle = font_item.render("↑↓ navigate   ESC quit", True, _ITEM_COLOR)
         surface.blit(subtitle, (42, 96))
 
         for i, (num, name) in enumerate(_LESSONS):
