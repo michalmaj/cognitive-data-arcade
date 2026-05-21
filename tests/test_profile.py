@@ -75,3 +75,34 @@ def test_device_uuid_stable_across_loads(tmp_path: Path) -> None:
     uuid1 = manager.load().device_uuid
     uuid2 = manager.load().device_uuid
     assert uuid1 == uuid2
+
+
+def test_profile_default_language_is_pl(tmp_path: Path) -> None:
+    manager = ProfileManager(tmp_path / "profile.json")
+    profile = manager.load()
+    assert profile.language == "pl"
+
+
+def test_set_language_persists(tmp_path: Path) -> None:
+    manager = ProfileManager(tmp_path / "profile.json")
+    manager.set_language("en")
+    assert manager.load().language == "en"
+
+
+def test_load_old_profile_without_language_uses_default(tmp_path: Path) -> None:
+    import json
+    import uuid
+
+    path = tmp_path / "profile.json"
+    old_data = {
+        "alias": "olduser",
+        "device_uuid": str(uuid.uuid4()),
+        "arcade_points": 100,
+        "science_points": 50,
+        "badges": [],
+        "completed_lessons": [],
+    }
+    path.write_text(json.dumps(old_data))
+    manager = ProfileManager(path)
+    profile = manager.load()
+    assert profile.language == "pl"
