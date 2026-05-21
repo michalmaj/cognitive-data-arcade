@@ -8,6 +8,7 @@ from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.profile.manager import Profile, ProfileManager
 
 _BG = (26, 26, 46)
+_BANNER_BG = (26, 26, 62)
 _TITLE_COLOR = (240, 240, 240)
 _ITEM_COLOR = (160, 160, 160)
 _HIGHLIGHT_COLOR = (243, 156, 18)
@@ -38,6 +39,11 @@ class SessionSummaryScene(Scene):
         self._next: Scene | None = None
         self._done = False
         self._go_to_profile = False
+        self._font_sm = pygame.font.SysFont(None, 24)
+        self._font_title = pygame.font.SysFont(None, 56)
+        self._font_sub = pygame.font.SysFont(None, 30)
+        self._font_stat = pygame.font.SysFont(None, 52)
+        self._font_hint = pygame.font.SysFont(None, 26)
 
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type != pygame.KEYDOWN:
@@ -59,16 +65,15 @@ class SessionSummaryScene(Scene):
             return self._next
         if not self._done:
             return None
+        from cognitive_data_arcade.ui.menu import LessonMenuScene
+
         if self._go_to_profile:
-            from cognitive_data_arcade.ui.menu import LessonMenuScene
             from cognitive_data_arcade.ui.profile_screen import ProfileScene
 
-            back = LessonMenuScene(self._pm, self._strings)
+            back = LessonMenuScene()
             self._next = ProfileScene(self._pm, self._strings, back)
         else:
-            from cognitive_data_arcade.ui.menu import LessonMenuScene
-
-            self._next = LessonMenuScene(self._pm, self._strings)
+            self._next = LessonMenuScene()
         return self._next
 
     def draw(self, surface: pygame.Surface) -> None:
@@ -76,23 +81,18 @@ class SessionSummaryScene(Scene):
         w = surface.get_width()
         h = surface.get_height()
 
-        font_tag = pygame.font.SysFont(None, 24)
-        font_title = pygame.font.SysFont(None, 56)
-        font_sub = pygame.font.SysFont(None, 30)
-        font_label = pygame.font.SysFont(None, 24)
-        font_stat = pygame.font.SysFont(None, 52)
-        font_hint = pygame.font.SysFont(None, 26)
-
         # Lesson tag
-        tag = font_tag.render(self._session.task_name, True, _DIM_COLOR)
+        tag = self._font_sm.render(self._session.task_name, True, _DIM_COLOR)
         surface.blit(tag, (w // 2 - tag.get_width() // 2, 28))
 
         # Title
-        title = font_title.render(self._strings.session_complete, True, _TITLE_COLOR)
+        title = self._font_title.render(
+            self._strings.session_complete, True, _TITLE_COLOR
+        )
         surface.blit(title, (w // 2 - title.get_width() // 2, 52))
 
         # Subtitle
-        sub = font_sub.render(self._strings.session_subtitle, True, _ITEM_COLOR)
+        sub = self._font_sub.render(self._strings.session_subtitle, True, _ITEM_COLOR)
         surface.blit(sub, (w // 2 - sub.get_width() // 2, 110))
 
         # Divider
@@ -130,14 +130,14 @@ class SessionSummaryScene(Scene):
             pygame.draw.rect(
                 surface, _BORDER_COLOR, (bx, box_y, box_w, box_h), 1, border_radius=6
             )
-            lbl = font_label.render(label, True, _DIM_COLOR)
+            lbl = self._font_sm.render(label, True, _DIM_COLOR)
             surface.blit(lbl, (bx + box_w // 2 - lbl.get_width() // 2, box_y + 10))
-            val = font_stat.render(value, True, color)
+            val = self._font_stat.render(value, True, color)
             surface.blit(val, (bx + box_w // 2 - val.get_width() // 2, box_y + 38))
 
         # Badges section
         section_y = box_y + box_h + 22
-        lbl_new = font_label.render(self._strings.label_new_badges, True, _DIM_COLOR)
+        lbl_new = self._font_sm.render(self._strings.label_new_badges, True, _DIM_COLOR)
         surface.blit(lbl_new, (box_x0, section_y))
         section_y += 24
 
@@ -145,7 +145,7 @@ class SessionSummaryScene(Scene):
             pill_x = box_x0
             for bid in self._new_badge_ids:
                 name = self._strings.badge_names.get(bid, bid)
-                pill_surf = font_label.render(f"✦ {name}", True, _HIGHLIGHT_COLOR)
+                pill_surf = self._font_sm.render(f"✦ {name}", True, _HIGHLIGHT_COLOR)
                 pill_w = pill_surf.get_width() + 20
                 pill_h = 28
                 pygame.draw.rect(
@@ -164,7 +164,7 @@ class SessionSummaryScene(Scene):
                 surface.blit(pill_surf, (pill_x + 10, section_y + 5))
                 pill_x += pill_w + 10
         else:
-            no_badge = font_label.render(
+            no_badge = self._font_sm.render(
                 self._strings.label_no_new_badges, True, _DIM_COLOR
             )
             surface.blit(no_badge, (box_x0, section_y))
@@ -182,12 +182,12 @@ class SessionSummaryScene(Scene):
         banner_y = section_y + 46
         if before_lvl != after_lvl:
             banner_rect = pygame.Rect(100, banner_y, w - 200, 44)
-            pygame.draw.rect(surface, (26, 26, 62), banner_rect, border_radius=6)
+            pygame.draw.rect(surface, _BANNER_BG, banner_rect, border_radius=6)
             pygame.draw.rect(surface, _LEVEL_COLOR, banner_rect, 1, border_radius=6)
             lvl_text = (
                 f"▲  {self._strings.label_level_up}  {before_lvl}  →  {after_lvl}"
             )
-            lvl_surf = font_label.render(lvl_text, True, _LEVEL_COLOR)
+            lvl_surf = self._font_sm.render(lvl_text, True, _LEVEL_COLOR)
             surface.blit(lvl_surf, (w // 2 - lvl_surf.get_width() // 2, banner_y + 13))
 
         # Footer hints
@@ -197,9 +197,9 @@ class SessionSummaryScene(Scene):
             (self._strings.hint_esc, _ITEM_COLOR),
         ]
         hint_y = h - 40
-        hint_total = sum(font_hint.size(t)[0] for t, _ in hints) + 60
+        hint_total = sum(self._font_hint.size(t)[0] for t, _ in hints) + 60
         hint_x = (w - hint_total) // 2
         for hint_text, hint_color in hints:
-            hs = font_hint.render(hint_text, True, hint_color)
+            hs = self._font_hint.render(hint_text, True, hint_color)
             surface.blit(hs, (hint_x, hint_y))
             hint_x += hs.get_width() + 30

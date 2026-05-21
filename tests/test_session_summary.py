@@ -38,6 +38,7 @@ def _make_profile(ap: int = 0) -> Profile:
 def _make_scene(
     tmp_path: Path, new_badge_ids: list[str] | None = None
 ) -> SessionSummaryScene:
+    pygame.init()
     pm = ProfileManager(tmp_path / "profile.json")
     profile_before = _make_profile(ap=200)
     profile_after = _make_profile(ap=270)
@@ -80,6 +81,7 @@ def test_session_summary_draw_does_not_crash(tmp_path: Path) -> None:
 
 
 def test_session_summary_level_up_does_not_crash(tmp_path: Path) -> None:
+    pygame.init()
     pm = ProfileManager(tmp_path / "profile.json")
     # before: 400 AP (Data Seedling), after: 600 AP (Data Explorer) — level changes
     profile_before = _make_profile(ap=400)
@@ -92,6 +94,20 @@ def test_session_summary_level_up_does_not_crash(tmp_path: Path) -> None:
         strings=PL,
         profile_manager=pm,
     )
-    pygame.init()
     surface = pygame.Surface((1024, 768))
     scene.draw(surface)
+
+
+def test_session_summary_next_scene_initially_none(tmp_path: Path) -> None:
+    scene = _make_scene(tmp_path)
+    assert scene.next_scene() is None
+
+
+def test_session_summary_next_scene_after_space_is_menu(tmp_path: Path) -> None:
+    from cognitive_data_arcade.ui.menu import LessonMenuScene
+
+    scene = _make_scene(tmp_path)
+    scene.handle_event(
+        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_SPACE, mod=0, unicode=" ")
+    )
+    assert isinstance(scene.next_scene(), LessonMenuScene)
