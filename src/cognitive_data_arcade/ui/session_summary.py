@@ -70,10 +70,10 @@ class SessionSummaryScene(Scene):
         if self._go_to_profile:
             from cognitive_data_arcade.ui.profile_screen import ProfileScene
 
-            back = LessonMenuScene()
+            back = LessonMenuScene(self._pm, self._strings)
             self._next = ProfileScene(self._pm, self._strings, back)
         else:
-            self._next = LessonMenuScene()
+            self._next = LessonMenuScene(self._pm, self._strings)
         return self._next
 
     def draw(self, surface: pygame.Surface) -> None:

@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import pygame
 
+from cognitive_data_arcade.engine.i18n import Strings, get_strings
 from cognitive_data_arcade.engine.scene import Scene
+from cognitive_data_arcade.profile.manager import ProfileManager
 
 _LESSONS = [
     (1, "Big Data in Cognitive Science"),
@@ -24,9 +26,12 @@ _HIGHLIGHT_COLOR = (243, 156, 18)
 
 
 class LessonMenuScene(Scene):
-    def __init__(self) -> None:
-        self._done = False
+    def __init__(self, profile_manager: ProfileManager, strings: Strings) -> None:
+        self._pm = profile_manager
+        self._strings = strings
         self._selected = 0
+        self._next: Scene | None = None
+        self._done = False
 
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type != pygame.KEYDOWN:
@@ -37,25 +42,38 @@ class LessonMenuScene(Scene):
             self._selected = max(0, self._selected - 1)
         elif event.key == pygame.K_DOWN:
             self._selected = min(len(_LESSONS) - 1, self._selected + 1)
+        elif event.key == pygame.K_p:
+            from cognitive_data_arcade.ui.profile_screen import ProfileScene
+
+            back = LessonMenuScene(self._pm, self._strings)
+            self._next = ProfileScene(self._pm, self._strings, back)
+            self._done = True
+        elif event.key == pygame.K_l:
+            new_lang = "en" if self._strings.language == "pl" else "pl"
+            self._pm.set_language(new_lang)
+            self._strings = get_strings(new_lang)
 
     def update(self, dt_ms: float) -> None:
         pass
+
+    def is_done(self) -> bool:
+        return self._done
+
+    def next_scene(self) -> Scene | None:
+        return self._next
 
     def draw(self, surface: pygame.Surface) -> None:
         surface.fill(_BG)
         font_title = pygame.font.SysFont(None, 52)
         font_item = pygame.font.SysFont(None, 34)
 
-        title = font_title.render("Cognitive Data Arcade", True, _TITLE_COLOR)
+        title = font_title.render(self._strings.menu_title, True, _TITLE_COLOR)
         surface.blit(title, (40, 36))
 
-        subtitle = font_item.render("↑↓ navigate   ESC quit", True, _ITEM_COLOR)
+        subtitle = font_item.render(self._strings.menu_subtitle, True, _ITEM_COLOR)
         surface.blit(subtitle, (42, 96))
 
         for i, (num, name) in enumerate(_LESSONS):
             color = _HIGHLIGHT_COLOR if i == self._selected else _ITEM_COLOR
             text = font_item.render(f"{num:02d}.  {name}", True, color)
             surface.blit(text, (60, 140 + i * 44))
-
-    def is_done(self) -> bool:
-        return self._done
