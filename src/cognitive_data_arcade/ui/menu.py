@@ -32,6 +32,9 @@ class LessonMenuScene(Scene):
         self._selected = 0
         self._next: Scene | None = None
         self._done = False
+        pygame.font.init()
+        self._font_title = pygame.font.SysFont(None, 52)
+        self._font_item = pygame.font.SysFont(None, 34)
 
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type != pygame.KEYDOWN:
@@ -64,16 +67,16 @@ class LessonMenuScene(Scene):
 
     def draw(self, surface: pygame.Surface) -> None:
         surface.fill(_BG)
-        font_title = pygame.font.SysFont(None, 52)
-        font_item = pygame.font.SysFont(None, 34)
 
-        title = font_title.render(self._strings.menu_title, True, _TITLE_COLOR)
+        title = self._font_title.render(self._strings.menu_title, True, _TITLE_COLOR)
         surface.blit(title, (40, 36))
 
-        subtitle = font_item.render(self._strings.menu_subtitle, True, _ITEM_COLOR)
+        subtitle = self._font_item.render(
+            self._strings.menu_subtitle, True, _ITEM_COLOR
+        )
         surface.blit(subtitle, (42, 96))
 
         for i, (num, name) in enumerate(_LESSONS):
             color = _HIGHLIGHT_COLOR if i == self._selected else _ITEM_COLOR
-            text = font_item.render(f"{num:02d}.  {name}", True, color)
+            text = self._font_item.render(f"{num:02d}.  {name}", True, color)
             surface.blit(text, (60, 140 + i * 44))
