@@ -111,3 +111,14 @@ def test_session_summary_next_scene_after_space_is_menu(tmp_path: Path) -> None:
         pygame.event.Event(pygame.KEYDOWN, key=pygame.K_SPACE, mod=0, unicode=" ")
     )
     assert isinstance(scene.next_scene(), LessonMenuScene)
+
+
+def test_session_summary_p_key_transitions_to_profile(tmp_path: Path) -> None:
+    from cognitive_data_arcade.ui.profile_screen import ProfileScene
+
+    scene = _make_scene(tmp_path)
+    scene.handle_event(
+        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_p, mod=0, unicode="p")
+    )
+    assert scene.is_done()
+    assert isinstance(scene.next_scene(), ProfileScene)
