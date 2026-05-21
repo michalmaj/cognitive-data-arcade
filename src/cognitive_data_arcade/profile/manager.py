@@ -26,6 +26,7 @@ class Profile:
     science_points: int = 0
     badges: list[str] = field(default_factory=list)
     completed_lessons: list[int] = field(default_factory=list)
+    language: str = "pl"
 
 
 class ProfileManager:
@@ -38,7 +39,9 @@ class ProfileManager:
             self.save(profile)
             return profile
         data = json.loads(self._path.read_text(encoding="utf-8"))
-        return Profile(**data)
+        known = {f for f in Profile.__dataclass_fields__}
+        filtered = {k: v for k, v in data.items() if k in known}
+        return Profile(**filtered)
 
     def save(self, profile: Profile) -> None:
         self._path.parent.mkdir(parents=True, exist_ok=True)
@@ -68,4 +71,10 @@ class ProfileManager:
         if lesson_number not in profile.completed_lessons:
             profile.completed_lessons.append(lesson_number)
             self.save(profile)
+        return profile
+
+    def set_language(self, lang: str) -> Profile:
+        profile = self.load()
+        profile.language = lang
+        self.save(profile)
         return profile
