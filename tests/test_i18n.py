@@ -54,7 +54,11 @@ def test_level_title_boundaries_en() -> None:
 
 def test_level_title_boundaries_pl() -> None:
     assert level_title(0, PL) == PL.level_seedling
+    assert level_title(499, PL) == PL.level_seedling
     assert level_title(500, PL) == PL.level_explorer
+    assert level_title(1500, PL) == PL.level_analyst
+    assert level_title(3000, PL) == PL.level_scientist
+    assert level_title(5000, PL) == PL.level_hacker
 
 
 def test_level_progress_in_first_level() -> None:

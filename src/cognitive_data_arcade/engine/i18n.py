@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import types
+from collections.abc import Mapping
 from dataclasses import dataclass
 
 _THRESHOLDS = [0, 500, 1500, 3000, 5000]
@@ -21,7 +23,7 @@ _BADGE_NAMES_PL: dict[str, str] = {
 }
 
 
-@dataclass
+@dataclass(frozen=True)
 class Strings:
     language: str
     # Menu
@@ -53,7 +55,7 @@ class Strings:
     level_scientist: str
     level_hacker: str
     # Badge names keyed by badge_id
-    badge_names: dict[str, str]
+    badge_names: Mapping[str, str]
 
 
 EN = Strings(
@@ -82,7 +84,7 @@ EN = Strings(
     level_analyst="📊 Data Analyst",
     level_scientist="🧠 Cognitive Scientist",
     level_hacker="⚡ Mind Hacker",
-    badge_names=_BADGE_NAMES_EN,
+    badge_names=types.MappingProxyType(_BADGE_NAMES_EN),
 )
 
 PL = Strings(
@@ -90,7 +92,7 @@ PL = Strings(
     menu_title="Cognitive Data Arcade",
     menu_subtitle="↑↓ nawigacja   P profil   L język: PL   ESC wyjście",
     session_complete="Sesja Zakończona",
-    session_subtitle="oto co dziś zrobiło Twoje mózg",
+    session_subtitle="oto co dziś zrobił Twój mózg",
     label_arcade_points="Punkty Arcade",
     label_science_points="Punkty Nauki",
     label_accuracy="Dokładność",
@@ -111,23 +113,28 @@ PL = Strings(
     level_analyst="📊 Analityk Danych",
     level_scientist="🧠 Naukowiec Kognitywny",
     level_hacker="⚡ Haker Umysłu",
-    badge_names=_BADGE_NAMES_PL,
+    badge_names=types.MappingProxyType(_BADGE_NAMES_PL),
 )
 
 
 def get_strings(lang: str) -> Strings:
+    """Return the Strings instance for *lang*; falls back to EN for unknown locales."""
     return PL if lang == "pl" else EN
 
 
+_LEVEL_ATTRS = [
+    "level_seedling",
+    "level_explorer",
+    "level_analyst",
+    "level_scientist",
+    "level_hacker",
+]
+
+
 def level_title(total_points: int, strings: Strings) -> str:
-    if total_points >= 5000:
-        return strings.level_hacker
-    if total_points >= 3000:
-        return strings.level_scientist
-    if total_points >= 1500:
-        return strings.level_analyst
-    if total_points >= 500:
-        return strings.level_explorer
+    for i in range(len(_THRESHOLDS) - 1, -1, -1):
+        if total_points >= _THRESHOLDS[i]:
+            return getattr(strings, _LEVEL_ATTRS[i])
     return strings.level_seedling
 
 
