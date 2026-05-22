@@ -83,3 +83,32 @@ def test_level_progress_above_max_level() -> None:
     current, total = level_progress(9999)
     assert current == 1
     assert total == 1
+
+
+def test_en_rt_strings_are_non_trivial() -> None:
+    assert len(EN.rt_instructions) > 20
+    assert len(EN.rt_too_early) > 2
+    assert len(EN.rt_between_blocks) > 10
+    assert len(EN.rt_get_ready) > 2
+    assert len(EN.rt_hint_space) > 2
+    assert len(EN.rt_too_slow) > 2
+    assert "\n" in EN.rt_instructions
+
+
+def test_pl_rt_strings_are_non_trivial() -> None:
+    assert len(PL.rt_instructions) > 20
+    assert len(PL.rt_too_early) > 2
+    assert len(PL.rt_between_blocks) > 10
+    assert len(PL.rt_get_ready) > 2
+    assert len(PL.rt_hint_space) > 2
+    assert len(PL.rt_too_slow) > 2
+    assert "\n" in PL.rt_instructions
+
+
+def test_en_and_pl_rt_strings_differ() -> None:
+    assert EN.rt_instructions != PL.rt_instructions
+    assert EN.rt_too_early != PL.rt_too_early
+    assert EN.rt_between_blocks != PL.rt_between_blocks
+    assert EN.rt_get_ready != PL.rt_get_ready
+    assert EN.rt_hint_space != PL.rt_hint_space
+    assert EN.rt_too_slow != PL.rt_too_slow
