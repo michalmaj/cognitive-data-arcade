@@ -56,6 +56,13 @@ class Strings:
     level_hacker: str
     # Badge names keyed by badge_id
     badge_names: Mapping[str, str]
+    # Reaction Time Lab
+    rt_instructions: str
+    rt_too_early: str
+    rt_between_blocks: str
+    rt_get_ready: str
+    rt_hint_space: str
+    rt_too_slow: str
 
 
 EN = Strings(
@@ -85,6 +92,18 @@ EN = Strings(
     level_scientist="🧠 Cognitive Scientist",
     level_hacker="⚡ Mind Hacker",
     badge_names=types.MappingProxyType(_BADGE_NAMES_EN),
+    rt_instructions=(
+        "Watch the centre circle.\n"
+        "Press SPACE as fast as you can when it lights up.\n"
+        "Ignore the other circles.\n"
+        "\n"
+        "Press SPACE to start."
+    ),
+    rt_too_early="Too early!",
+    rt_between_blocks="Break — press SPACE to continue",
+    rt_get_ready="Get ready…",
+    rt_hint_space="SPACE — react",
+    rt_too_slow="Too slow",
 )
 
 PL = Strings(
@@ -114,6 +133,18 @@ PL = Strings(
     level_scientist="🧠 Naukowiec Kognitywny",
     level_hacker="⚡ Haker Umysłu",
     badge_names=types.MappingProxyType(_BADGE_NAMES_PL),
+    rt_instructions=(
+        "Obserwuj środkowe kółko.\n"
+        "Naciśnij SPACJĘ jak najszybciej gdy zaświeci.\n"
+        "Ignoruj pozostałe kółka.\n"
+        "\n"
+        "Naciśnij SPACJĘ aby zacząć."
+    ),
+    rt_too_early="Zbyt wcześnie!",
+    rt_between_blocks="Przerwa — naciśnij SPACJĘ aby kontynuować",
+    rt_get_ready="Przygotuj się…",
+    rt_hint_space="SPACJA — reaguj",
+    rt_too_slow="Za wolno",
 )
 
 
