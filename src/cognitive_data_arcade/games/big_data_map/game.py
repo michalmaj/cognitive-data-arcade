@@ -189,3 +189,115 @@ _L2_NODES: dict[str, list[_Node]] = {
         ),
     ],
 }
+
+
+def _node_positions(n: int, r: int) -> list[tuple[int, int]]:
+    """n evenly-spaced positions on a circle of radius r centred at (_CX, _CY), starting at top."""
+    positions = []
+    for i in range(n):
+        angle = math.pi / 2 + 2 * math.pi * i / n
+        x = _CX + int(r * math.cos(angle))
+        y = _CY - int(r * math.sin(angle))
+        positions.append((x, y))
+    return positions
+
+
+def _lighten(color: tuple[int, int, int]) -> tuple[int, int, int]:
+    return tuple(min(255, c + 40) for c in color)  # type: ignore[return-value]
+
+
+def _darken(color: tuple[int, int, int]) -> tuple[int, int, int]:
+    return tuple(max(0, c - 60) for c in color)  # type: ignore[return-value]
+
+
+class BigDataMapGame(Scene):
+    def __init__(self, strings: Strings, profile_manager: ProfileManager) -> None:
+        self._strings = strings          # accepted for API consistency; unused in MVP
+        self._pm = profile_manager
+        self._in_l2: bool = False
+        self._l1_idx: int = 0
+        self._l2_idx: int = 0
+        self._done: bool = False
+        self._next: Scene | None = None
+        self._font_title = pygame.font.SysFont(None, 32)
+        self._font_node = pygame.font.SysFont(None, 18)
+        self._font_info = pygame.font.SysFont(None, 22)
+
+    def handle_event(self, event: pygame.event.Event) -> None:
+        if event.type != pygame.KEYDOWN:
+            return
+        n = len(_L1_NODES)
+        if event.key in (pygame.K_UP, pygame.K_RIGHT):
+            self._l1_idx = (self._l1_idx - 1) % n
+        elif event.key in (pygame.K_DOWN, pygame.K_LEFT):
+            self._l1_idx = (self._l1_idx + 1) % n
+
+    def update(self, dt: float) -> None:
+        pass
+
+    def draw(self, surface: pygame.Surface) -> None:
+        surface.fill(_BG)
+        self._draw_title(surface)
+        self._draw_l1_network(surface)
+        self._draw_info_bar(surface)
+
+    def _draw_title(self, surface: pygame.Surface) -> None:
+        rendered = self._font_title.render("Big Data w Kognitywistyce", True, _ORANGE)
+        surface.blit(rendered, (16, (_TITLE_H - rendered.get_height()) // 2))
+
+    def _draw_l1_network(self, surface: pygame.Surface) -> None:
+        positions = _node_positions(len(_L1_NODES), _R_L1)
+        for pos in positions:
+            pygame.draw.line(surface, _LINE_COLOR, (_CX, _CY), pos, 2)
+        self._draw_circle_node(
+            surface, (_CX, _CY), _CENTRE_R, _ORANGE, "Big Data\nw nauce",
+            highlighted=False, is_game=False,
+        )
+        for i, (node, pos) in enumerate(zip(_L1_NODES, positions)):
+            self._draw_circle_node(
+                surface, pos, _L1_R, node.color, node.label,
+                highlighted=(i == self._l1_idx), is_game=node.is_game,
+            )
+
+    def _draw_circle_node(
+        self,
+        surface: pygame.Surface,
+        center: tuple[int, int],
+        radius: int,
+        color: tuple[int, int, int],
+        label: str,
+        *,
+        highlighted: bool,
+        is_game: bool,
+    ) -> None:
+        fill = _lighten(color) if highlighted else _darken(color)
+        border = _GOLD if is_game else color
+        border_w = 3 if is_game else 2
+        pygame.draw.circle(surface, fill, center, radius)
+        pygame.draw.circle(surface, border, center, radius, border_w)
+        lines = label.split("\n")
+        line_h = self._font_node.get_height() + 1
+        y = center[1] - (len(lines) * line_h) // 2
+        for line in lines:
+            text_color = (255, 255, 255) if highlighted else color
+            rendered = self._font_node.render(line, True, text_color)
+            surface.blit(rendered, (center[0] - rendered.get_width() // 2, y))
+            y += line_h
+
+    def _draw_info_bar(self, surface: pygame.Surface) -> None:
+        bar_y = _H - _INFO_H
+        pygame.draw.rect(surface, (8, 8, 20), (0, bar_y, _W, _INFO_H))
+        pygame.draw.line(surface, (26, 26, 58), (0, bar_y), (_W, bar_y), 1)
+        node = _L1_NODES[self._l1_idx]
+        rendered = self._font_info.render(node.description, True, _TEXT_LIGHT)
+        surface.blit(rendered, (16, bar_y + 8))
+        hint = "ENTER rozwiń  |  ESC / SPACE wróć do menu lekcji"
+        rendered_hint = self._font_info.render(hint, True, _TEXT_DIM)
+        surface.blit(rendered_hint, (16, bar_y + 8 + self._font_info.get_height() + 4))
+
+    def is_done(self) -> bool:
+        return self._done
+
+    def next_scene(self) -> Scene:
+        assert self._next is not None, "next_scene() called before is_done()"
+        return self._next
