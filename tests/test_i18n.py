@@ -112,3 +112,23 @@ def test_en_and_pl_rt_strings_differ() -> None:
     assert EN.rt_get_ready != PL.rt_get_ready
     assert EN.rt_hint_space != PL.rt_hint_space
     assert EN.rt_too_slow != PL.rt_too_slow
+
+
+def test_en_has_analysis_strings() -> None:
+    assert len(EN.analysis_title) > 5
+    assert len(EN.analysis_hint_esc) > 2
+    assert len(EN.analysis_hint_s) > 2
+    assert len(EN.label_median_rt) > 2
+    assert len(EN.picker_title) > 2
+    assert len(EN.picker_no_sessions) > 10
+
+
+def test_pl_has_analysis_strings() -> None:
+    assert len(PL.analysis_title) > 5
+    assert len(PL.picker_no_sessions) > 10
+
+
+def test_en_and_pl_analysis_strings_differ() -> None:
+    assert EN.analysis_title != PL.analysis_title
+    assert EN.picker_no_sessions != PL.picker_no_sessions
+    assert EN.analysis_hint_esc != PL.analysis_hint_esc
