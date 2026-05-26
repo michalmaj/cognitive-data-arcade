@@ -1,12 +1,9 @@
 from __future__ import annotations
 
-import matplotlib
-matplotlib.use("Agg")
-
 from pathlib import Path
 
-import matplotlib.pyplot as plt
 import pandas as pd
+from matplotlib.backends.backend_agg import FigureCanvasAgg
 from matplotlib.figure import Figure
 
 
@@ -26,27 +23,28 @@ def session_stats(df: pd.DataFrame) -> dict:
     n_correct = int(df["correct"].sum())
     accuracy = n_correct / n_trials if n_trials > 0 else 0.0
 
+    # Timeouts (rt == -1) are excluded from RT means but count as incorrect for accuracy.
     def _avg_rt(cond: str) -> float:
         subset = df.loc[
             (df["condition"] == cond) & (df["reaction_time_ms"] > 0),
             "reaction_time_ms",
         ]
-        return float(subset.mean()) if not subset.empty else 0.0
+        return float(subset.mean()) if not subset.empty else float("nan")
 
-    cong   = _avg_rt("congruent")
-    neut   = _avg_rt("neutral")
+    cong = _avg_rt("congruent")
+    neut = _avg_rt("neutral")
     incong = _avg_rt("incongruent")
 
     return {
-        "avg_rt_congruent":   cong,
-        "avg_rt_neutral":     neut,
+        "avg_rt_congruent": cong,
+        "avg_rt_neutral": neut,
         "avg_rt_incongruent": incong,
-        "facilitation_ms":    neut - cong,
-        "interference_ms":    incong - neut,
-        "stroop_effect_ms":   incong - cong,
-        "accuracy":           accuracy,
-        "n_trials":           n_trials,
-        "n_correct":          n_correct,
+        "facilitation_ms": neut - cong,
+        "interference_ms": incong - neut,
+        "stroop_effect_ms": incong - cong,
+        "accuracy": accuracy,
+        "n_trials": n_trials,
+        "n_correct": n_correct,
     }
 
 
@@ -63,7 +61,10 @@ def build_stroop_chart(
     ]
     colors = ["#e74c3c", "#5050c0", "#27ae60"]
 
-    fig, ax = plt.subplots(figsize=figsize)
+    fig = Figure(figsize=figsize)
+    FigureCanvasAgg(fig)
+    ax = fig.add_subplot(111)
+
     fig.patch.set_facecolor("#0d0d1e")
     ax.set_facecolor("#0d0d1e")
 
