@@ -255,6 +255,7 @@ class ReactionTimeGame(Scene):
             profile_after=profile_after,
             strings=self._strings,
             profile_manager=self._pm,
+            csv_path=self._csv_path,
         )
 
     # ── draw ─────────────────────────────────────────────────────────────────

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 import pygame
 
 from cognitive_data_arcade.engine.i18n import Strings, get_strings
@@ -55,6 +57,12 @@ class LessonMenuScene(Scene):
             new_lang = "en" if self._strings.language == "pl" else "pl"
             self._pm.set_language(new_lang)
             self._strings = get_strings(new_lang)
+        elif event.key == pygame.K_a:
+            from cognitive_data_arcade.ui.session_picker import SessionPickerScene
+
+            sessions_dir = Path("data") / "generated" / "reaction_time"
+            self._next = SessionPickerScene(sessions_dir, self._strings, self._pm)
+            self._done = True
 
     def update(self, dt_ms: float) -> None:
         pass
