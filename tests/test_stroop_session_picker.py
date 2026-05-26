@@ -81,6 +81,48 @@ def test_picker_nonexistent_dir(tmp_path: Path) -> None:
     assert picker._sessions == []
 
 
+def test_picker_esc_sets_done(tmp_path: Path) -> None:
+    sd = tmp_path / "stroop"
+    sd.mkdir()
+    picker = _make_picker(tmp_path, sd)
+    picker.handle_event(
+        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode="")
+    )
+    assert picker.is_done()
+
+
+def test_picker_down_on_empty_does_not_crash(tmp_path: Path) -> None:
+    sd = tmp_path / "stroop"
+    sd.mkdir()
+    picker = _make_picker(tmp_path, sd)
+    picker.handle_event(
+        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_DOWN, mod=0, unicode="")
+    )
+    assert picker._selected == 0
+
+
+def test_picker_malformed_row_skipped(tmp_path: Path) -> None:
+    import csv as _csv
+
+    sd = tmp_path / "stroop"
+    sd.mkdir()
+    p = sd / "bad.csv"
+    with p.open("w", newline="", encoding="utf-8") as f:
+        writer = _csv.DictWriter(
+            f, fieldnames=["participant_id", "condition", "correct"]
+        )
+        writer.writeheader()
+        writer.writerow(
+            {"participant_id": "p1", "condition": "congruent", "correct": "True"}
+        )
+    picker = _make_picker(tmp_path, sd)
+    # File with no valid RT rows should parse without crashing and produce avg_rt=nan
+    assert len(picker._sessions) == 1
+    import math
+
+    assert math.isnan(picker._sessions[0].avg_rt)
+
+
 def test_enter_on_session_sets_done(tmp_path: Path) -> None:
     from cognitive_data_arcade.ui.stroop_analysis_scene import StroopAnalysisScene
 

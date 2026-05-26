@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import csv
 import datetime
+import math
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -93,19 +94,22 @@ class StroopSessionPickerScene(Scene):
         n_trials = len(rows)
         n_correct = sum(1 for r in rows if str(r["correct"]).lower() in ("true", "1"))
         for r in rows:
-            rt = float(r["reaction_time_ms"])
+            try:
+                rt = float(r["reaction_time_ms"])
+            except (KeyError, ValueError):
+                continue
             if rt > 0:
                 all_rts.append(rt)
                 cond = r.get("condition", "")
                 if cond in rts_by_cond:
                     rts_by_cond[cond].append(rt)
-        avg_rt = sum(all_rts) / len(all_rts) if all_rts else 0.0
+        avg_rt = sum(all_rts) / len(all_rts) if all_rts else float("nan")
         accuracy = n_correct / n_trials if n_trials else 0.0
         cong = rts_by_cond["congruent"]
         incong = rts_by_cond["incongruent"]
-        cong_avg = sum(cong) / len(cong) if cong else 0.0
-        incong_avg = sum(incong) / len(incong) if incong else 0.0
-        stroop_effect = incong_avg - cong_avg
+        cong_avg = sum(cong) / len(cong) if cong else float("nan")
+        incong_avg = sum(incong) / len(incong) if incong else float("nan")
+        stroop_effect = incong_avg - cong_avg  # propagates nan correctly
         date_str = datetime.datetime.fromtimestamp(path.stat().st_mtime).strftime(
             "%Y-%m-%d"
         )
@@ -215,14 +219,22 @@ class StroopSessionPickerScene(Scene):
                 pygame.draw.rect(surface, _ORANGE, (0, y, 3, _ROW_H - 1))
             date_s = self._font_row.render(entry.date_str, True, _DIM)
             surface.blit(date_s, (_PAD_X, y + 8))
-            rt_color = _GREEN if 0 < entry.avg_rt < 500 else _ORANGE
-            rt_s = self._font_row.render(f"{entry.avg_rt:.0f} ms", True, rt_color)
+            if math.isnan(entry.avg_rt):
+                rt_text = "— ms"
+                rt_color = _DIM
+            else:
+                rt_color = _GREEN if 0 < entry.avg_rt < 500 else _ORANGE
+                rt_text = f"{entry.avg_rt:.0f} ms"
+            rt_s = self._font_row.render(rt_text, True, rt_color)
             surface.blit(rt_s, (_PAD_X + 120, y + 8))
-            effect_color = _RED if entry.stroop_effect > 0 else _GREEN
-            sign = "+" if entry.stroop_effect >= 0 else ""
-            effect_s = self._font_row.render(
-                f"Δ {sign}{entry.stroop_effect:.0f} ms", True, effect_color
-            )
+            if math.isnan(entry.stroop_effect):
+                effect_text = "Δ — ms"
+                effect_color = _DIM
+            else:
+                effect_color = _RED if entry.stroop_effect > 0 else _GREEN
+                sign = "+" if entry.stroop_effect >= 0 else ""
+                effect_text = f"Δ {sign}{entry.stroop_effect:.0f} ms"
+            effect_s = self._font_row.render(effect_text, True, effect_color)
             surface.blit(effect_s, (_PAD_X + 220, y + 8))
             acc_s = self._font_row.render(f"{entry.accuracy:.0%}", True, _WHITE)
             surface.blit(acc_s, (_PAD_X + 370, y + 8))
