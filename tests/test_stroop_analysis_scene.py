@@ -40,6 +40,19 @@ def _make_scene() -> StroopAnalysisScene:
     return StroopAnalysisScene(chart, _STATS, EN, _DummyScene())
 
 
+_NAN_STATS = {
+    "avg_rt_congruent": float("nan"),
+    "avg_rt_neutral": float("nan"),
+    "avg_rt_incongruent": float("nan"),
+    "facilitation_ms": float("nan"),
+    "interference_ms": float("nan"),
+    "stroop_effect_ms": float("nan"),
+    "accuracy": 0.0,
+    "n_trials": 12,
+    "n_correct": 0,
+}
+
+
 def test_draws_without_crash() -> None:
     scene = _make_scene()
     surface = pygame.Surface((1024, 768))
@@ -53,6 +66,19 @@ def test_esc_sets_done() -> None:
         pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode="")
     )
     assert scene.is_done()
+
+
+def test_draws_without_crash_all_timeouts() -> None:
+    pygame.init()
+    chart = pygame.Surface((680, 520))
+    scene = StroopAnalysisScene(chart, _NAN_STATS, EN, _DummyScene())
+    surface = pygame.Surface((1024, 768))
+    scene.draw(surface)
+
+
+def test_next_scene_is_none_before_esc() -> None:
+    scene = _make_scene()
+    assert scene.next_scene() is None
 
 
 def test_next_scene_returns_back() -> None:

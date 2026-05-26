@@ -1,9 +1,16 @@
 from __future__ import annotations
 
+import math
+
 import pygame
 
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
+
+
+def _fmt_rt(value: float) -> str:
+    return "— ms" if math.isnan(value) else f"{value:.0f} ms"
+
 
 _BG = (10, 10, 20)
 _WHITE = (240, 240, 240)
@@ -22,7 +29,7 @@ class StroopAnalysisScene(Scene):
     def __init__(
         self,
         chart_surface: pygame.Surface,
-        stats: dict,
+        stats: dict[str, float],
         strings: Strings,
         back_scene: Scene,
     ) -> None:
@@ -36,7 +43,6 @@ class StroopAnalysisScene(Scene):
         self._font_label = pygame.font.SysFont(None, 24)
         self._font_value = pygame.font.SysFont(None, 32)
         self._font_badge = pygame.font.SysFont(None, 28)
-        self._font_hint = pygame.font.SysFont(None, 24)
 
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
@@ -71,7 +77,7 @@ class StroopAnalysisScene(Scene):
         for label, value, color in cond_items:
             lbl = self._font_label.render(label, True, _DIM)
             surface.blit(lbl, (_STATS_X, panel_y))
-            val = self._font_value.render(f"{value:.0f} ms", True, color)
+            val = self._font_value.render(_fmt_rt(value), True, color)
             surface.blit(val, (_STATS_X, panel_y + 20))
             panel_y += 56
 
@@ -88,14 +94,16 @@ class StroopAnalysisScene(Scene):
             lbl = self._font_label.render(label, True, _DIM)
             surface.blit(lbl, (_STATS_X, panel_y))
             val_color = _GREEN if value < 0 else _RED
-            val = self._font_value.render(f"{sign}{value:.0f} ms", True, val_color)
+            val_text = _fmt_rt(value) if math.isnan(value) else f"{sign}{value:.0f} ms"
+            val = self._font_value.render(val_text, True, val_color)
             surface.blit(val, (_STATS_X, panel_y + 20))
             panel_y += 56
 
         # Stroop Effect badge
         effect = self._stats["stroop_effect_ms"]
         sign = "+" if effect >= 0 else ""
-        badge_text = f"{self._strings.label_stroop_effect}  {sign}{effect:.0f} ms"
+        effect_str = _fmt_rt(effect) if math.isnan(effect) else f"{sign}{effect:.0f} ms"
+        badge_text = f"{self._strings.label_stroop_effect}  {effect_str}"
         badge_surf = self._font_badge.render(badge_text, True, _ORANGE)
         bw = badge_surf.get_width() + 24
         bh = badge_surf.get_height() + 16
@@ -108,5 +116,5 @@ class StroopAnalysisScene(Scene):
         )
         surface.blit(badge_surf, (_STATS_X + 8, badge_y + 8))
 
-        hint = self._font_hint.render("ESC  back", True, _DIM)
+        hint = self._font_label.render("ESC  back", True, _DIM)
         surface.blit(hint, (14, h - _FOOTER_H))
