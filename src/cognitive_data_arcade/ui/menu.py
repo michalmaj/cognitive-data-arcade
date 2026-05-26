@@ -73,7 +73,9 @@ class LessonMenuScene(Scene):
             self._launch_stroop_picker()
 
     def _launch_big_data_map(self) -> None:
-        from cognitive_data_arcade.games.big_data_map.game import BigDataMapGame  # deferred to avoid circular import
+        from cognitive_data_arcade.games.big_data_map.game import (
+            BigDataMapGame,
+        )  # deferred to avoid circular import
 
         self._next = BigDataMapGame(self._strings, self._pm)
         self._done = True

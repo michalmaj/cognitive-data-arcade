@@ -24,8 +24,8 @@ _NET_H = _H - _TITLE_H - _INFO_H
 _CX = _W // 2
 _CY = _NET_TOP + _NET_H // 2
 
-_R_L1 = 240   # orbit radius for L1 nodes
-_R_L2 = 200   # orbit radius for L2 nodes
+_R_L1 = 240  # orbit radius for L1 nodes
+_R_L2 = 200  # orbit radius for L2 nodes
 _CENTRE_R = 70
 _L1_R = 60
 _L2_R = 50
@@ -33,8 +33,8 @@ _L2_R = 50
 
 @dataclass(frozen=True)
 class _Node:
-    label: str            # display text — use "\n" for two lines
-    description: str      # shown in info bar (1–2 sentences)
+    label: str  # display text — use "\n" for two lines
+    description: str  # shown in info bar (1–2 sentences)
     color: tuple[int, int, int]
     is_game: bool = False  # True → gold border
 
@@ -42,10 +42,18 @@ class _Node:
 _L1_NODES: list[_Node] = [
     _Node("fMRI\nEEG", "Neuroobrazowanie i sygnały elektryczne mózgu.", (39, 174, 96)),
     _Node("Czasy\nreakcji", "Pomiar prędkości procesów poznawczych.", (155, 89, 182)),
-    _Node("Eye\ntracking", "Śledzenie ruchu oczu ujawnia procesy uwagi.", (231, 76, 60)),
+    _Node(
+        "Eye\ntracking", "Śledzenie ruchu oczu ujawnia procesy uwagi.", (231, 76, 60)
+    ),
     _Node("Mowa\nNLP", "Języki naturalne jako dane kognitywistyczne.", (26, 188, 156)),
-    _Node("Big Data\nkliniczna", "Medyczne zbiory danych na dużą skalę.", (230, 126, 34)),
-    _Node("Digital\nphenotyp.", "Smartfon jako czujnik stanu psychicznego.", (52, 152, 219)),
+    _Node(
+        "Big Data\nkliniczna", "Medyczne zbiory danych na dużą skalę.", (230, 126, 34)
+    ),
+    _Node(
+        "Digital\nphenotyp.",
+        "Smartfon jako czujnik stanu psychicznego.",
+        (52, 152, 219),
+    ),
 ]
 
 _L2_NODES: dict[str, list[_Node]] = {
@@ -212,7 +220,7 @@ def _darken(color: tuple[int, int, int]) -> tuple[int, int, int]:
 
 class BigDataMapGame(Scene):
     def __init__(self, strings: Strings, profile_manager: ProfileManager) -> None:
-        self._strings = strings          # accepted for API consistency; unused in MVP
+        self._strings = strings  # accepted for API consistency; unused in MVP
         self._pm = profile_manager
         self._in_l2: bool = False
         self._l1_idx: int = 0
@@ -271,13 +279,23 @@ class BigDataMapGame(Scene):
         for pos in positions:
             pygame.draw.line(surface, _LINE_COLOR, (_CX, _CY), pos, 2)
         self._draw_circle_node(
-            surface, (_CX, _CY), _CENTRE_R, _ORANGE, "Big Data\nw nauce",
-            highlighted=False, is_game=False,
+            surface,
+            (_CX, _CY),
+            _CENTRE_R,
+            _ORANGE,
+            "Big Data\nw nauce",
+            highlighted=False,
+            is_game=False,
         )
         for i, (node, pos) in enumerate(zip(_L1_NODES, positions)):
             self._draw_circle_node(
-                surface, pos, _L1_R, node.color, node.label,
-                highlighted=(i == self._l1_idx), is_game=node.is_game,
+                surface,
+                pos,
+                _L1_R,
+                node.color,
+                node.label,
+                highlighted=(i == self._l1_idx),
+                is_game=node.is_game,
             )
 
     def _draw_l2_network(self, surface: pygame.Surface) -> None:
@@ -287,13 +305,23 @@ class BigDataMapGame(Scene):
         for pos in positions:
             pygame.draw.line(surface, _LINE_COLOR, (_CX, _CY), pos, 2)
         self._draw_circle_node(
-            surface, (_CX, _CY), _CENTRE_R, l1_node.color, l1_node.label,
-            highlighted=False, is_game=False,
+            surface,
+            (_CX, _CY),
+            _CENTRE_R,
+            l1_node.color,
+            l1_node.label,
+            highlighted=False,
+            is_game=False,
         )
         for i, (node, pos) in enumerate(zip(l2_nodes, positions)):
             self._draw_circle_node(
-                surface, pos, _L2_R, node.color, node.label,
-                highlighted=(i == self._l2_idx), is_game=node.is_game,
+                surface,
+                pos,
+                _L2_R,
+                node.color,
+                node.label,
+                highlighted=(i == self._l2_idx),
+                is_game=node.is_game,
             )
 
     def _draw_circle_node(
@@ -337,7 +365,9 @@ class BigDataMapGame(Scene):
         surface.blit(rendered_hint, (16, bar_y + 8 + self._font_info.get_height() + 4))
 
     def _finish(self) -> None:
-        from cognitive_data_arcade.ui.menu import LessonMenuScene  # deferred to avoid circular import
+        from cognitive_data_arcade.ui.menu import (
+            LessonMenuScene,
+        )  # deferred to avoid circular import
 
         self._next = LessonMenuScene(self._pm, self._strings)
         self._done = True
