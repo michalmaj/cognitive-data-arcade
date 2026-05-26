@@ -19,8 +19,8 @@ _FAST_CONFIG = StroopConfig(
 
 _SPACE = pygame.event.Event(pygame.KEYDOWN, key=pygame.K_SPACE, mod=0, unicode=" ")
 _ENTER = pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode="\r")
-_UP    = pygame.event.Event(pygame.KEYDOWN, key=pygame.K_UP, mod=0, unicode="")
-_DOWN  = pygame.event.Event(pygame.KEYDOWN, key=pygame.K_DOWN, mod=0, unicode="")
+_UP = pygame.event.Event(pygame.KEYDOWN, key=pygame.K_UP, mod=0, unicode="")
+_DOWN = pygame.event.Event(pygame.KEYDOWN, key=pygame.K_DOWN, mod=0, unicode="")
 
 
 def _make_game(tmp_path: Path) -> StroopGame:
@@ -38,10 +38,10 @@ def _make_game(tmp_path: Path) -> StroopGame:
 
 def _advance_to_stimulus(game: StroopGame) -> None:
     """Bring game from PRESET_SELECT all the way to STIMULUS."""
-    game.handle_event(_ENTER)   # PRESET_SELECT → INSTRUCTIONS
-    game.handle_event(_SPACE)   # INSTRUCTIONS → COUNTDOWN
-    game.update(3100.0)         # COUNTDOWN → ITI
-    game.update(25.0)           # ITI → STIMULUS (max iti=20 ms)
+    game.handle_event(_ENTER)  # PRESET_SELECT → INSTRUCTIONS
+    game.handle_event(_SPACE)  # INSTRUCTIONS → COUNTDOWN
+    game.update(3100.0)  # COUNTDOWN → ITI
+    game.update(25.0)  # ITI → STIMULUS (max iti=20 ms)
 
 
 def test_preset_select_phase_is_initial(tmp_path: Path) -> None:
@@ -144,3 +144,39 @@ def test_next_scene_is_session_summary(tmp_path: Path) -> None:
             game.update(_FAST_CONFIG.iti_max_ms + 1)
     assert game.is_done()
     assert isinstance(game.next_scene(), SessionSummaryScene)
+
+
+def test_word_color_semantics_across_conditions(tmp_path: Path) -> None:
+    """Verify word_color is set correctly per condition in the trial record."""
+    game = _make_game(tmp_path)
+    _advance_to_stimulus(game)
+
+    # Play enough trials to cover all three conditions
+    # Run a full 12-trial block (one complete cycle)
+    for _ in range(12):
+        if game.is_done():
+            break
+        event = pygame.event.Event(
+            pygame.KEYDOWN, key=game._current_stimulus.expected_key, mod=0, unicode=""
+        )
+        game.handle_event(event)
+        game.update(_FAST_CONFIG.feedback_duration_ms + 1)
+        if not game.is_done():
+            game.update(_FAST_CONFIG.iti_max_ms + 1)
+
+    for record in game._records:
+        if record.condition == "neutral":
+            assert record.word_color == "none", (
+                f"Neutral trial should have word_color='none', got '{record.word_color}'"
+            )
+        elif record.condition == "congruent":
+            assert record.word_color == record.ink_color, (
+                f"Congruent trial: word_color '{record.word_color}' != ink_color '{record.ink_color}'"
+            )
+        elif record.condition == "incongruent":
+            assert record.word_color != record.ink_color, (
+                f"Incongruent trial: word_color '{record.word_color}' should differ from ink_color '{record.ink_color}'"
+            )
+            assert record.word_color != "none", (
+                "Incongruent word_color should not be 'none'"
+            )
