@@ -1,0 +1,9 @@
+{
+  "lesson_number": 2,
+  "slug": "reaction_time",
+  "title_en": "Reaction Time Lab",
+  "title_pl": "Laboratorium Czasów Reakcji",
+  "game": "reaction_time",
+  "duration_min": 90,
+  "module": 1
+}

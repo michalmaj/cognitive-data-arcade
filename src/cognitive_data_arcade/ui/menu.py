@@ -65,10 +65,20 @@ class LessonMenuScene(Scene):
             self._done = True
         elif event.key == pygame.K_RETURN:
             lesson_num = _LESSONS[self._selected][0]
-            if lesson_num == 7:
+            if lesson_num == 1:
+                self._launch_big_data_map()
+            elif lesson_num == 7:
                 self._launch_stroop()
         elif event.key == pygame.K_z:
             self._launch_stroop_picker()
+
+    def _launch_big_data_map(self) -> None:
+        from cognitive_data_arcade.games.big_data_map.game import (
+            BigDataMapGame,
+        )  # deferred to avoid circular import
+
+        self._next = BigDataMapGame(self._strings, self._pm)
+        self._done = True
 
     def _launch_stroop(self) -> None:
         import datetime
