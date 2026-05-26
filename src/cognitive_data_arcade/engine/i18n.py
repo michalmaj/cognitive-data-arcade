@@ -70,6 +70,21 @@ class Strings:
     label_median_rt: str
     picker_title: str
     picker_no_sessions: str
+    # Stroop Challenge
+    stroop_title: str
+    stroop_instructions: str
+    stroop_pick_preset: str
+    preset_quick: str
+    preset_standard: str
+    preset_full: str
+    stroop_hint_ink: str
+    stroop_too_slow: str
+    stroop_analysis_title: str
+    label_facilitation: str
+    label_interference: str
+    label_stroop_effect: str
+    stroop_picker_title: str
+    stroop_picker_no_sessions: str
 
 
 EN = Strings(
@@ -117,6 +132,27 @@ EN = Strings(
     label_median_rt="Median RT",
     picker_title="Select Session",
     picker_no_sessions="No sessions yet — play RT Lab first",
+    stroop_title="Stroop Challenge",
+    stroop_instructions=(
+        "A word will appear in coloured ink.\n"
+        "Press the key matching the INK COLOUR — ignore what the word says.\n"
+        "\n"
+        "R = Red   G = Green   B = Blue   Y = Yellow\n"
+        "\n"
+        "Press SPACE to start."
+    ),
+    stroop_pick_preset="Choose difficulty",
+    preset_quick="Quick  36 trials",
+    preset_standard="Standard  60 trials",
+    preset_full="Full  96 trials",
+    stroop_hint_ink="Name the INK colour — ignore the word",
+    stroop_too_slow="Too slow",
+    stroop_analysis_title="Stroop Effect Analysis",
+    label_facilitation="Facilitation",
+    label_interference="Interference",
+    label_stroop_effect="Stroop Effect",
+    stroop_picker_title="Select Stroop Session",
+    stroop_picker_no_sessions="No sessions yet — play Stroop first",
 )
 
 PL = Strings(
@@ -164,6 +200,27 @@ PL = Strings(
     label_median_rt="Mediana RT",
     picker_title="Wybierz Sesję",
     picker_no_sessions="Brak sesji — najpierw zagraj w RT Lab",
+    stroop_title="Wyzwanie Stroopa",
+    stroop_instructions=(
+        "Słowo pojawi się w kolorowym tuszu.\n"
+        "Naciśnij klawisz koloru TUSZU — ignoruj znaczenie słowa.\n"
+        "\n"
+        "R = Czerwony   G = Zielony   B = Niebieski   Y = Żółty\n"
+        "\n"
+        "Naciśnij SPACJĘ aby zacząć."
+    ),
+    stroop_pick_preset="Wybierz poziom",
+    preset_quick="Szybki  36 prób",
+    preset_standard="Standard  60 prób",
+    preset_full="Pełny  96 prób",
+    stroop_hint_ink="Nazwij kolor TUSZU — ignoruj słowo",
+    stroop_too_slow="Za wolno",
+    stroop_analysis_title="Analiza Efektu Stroopa",
+    label_facilitation="Facylitacja",
+    label_interference="Interferencja",
+    label_stroop_effect="Efekt Stroopa",
+    stroop_picker_title="Wybierz Sesję Stroopa",
+    stroop_picker_no_sessions="Brak sesji — najpierw zagraj w Stroop",
 )
 
 

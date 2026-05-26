@@ -57,3 +57,39 @@ def test_menu_esc_key_exits(tmp_path: Path) -> None:
     )
     assert scene.is_done()
     assert scene.next_scene() is None
+
+
+def test_menu_enter_on_lesson_7_launches_stroop(tmp_path: Path) -> None:
+    from cognitive_data_arcade.games.stroop.game import StroopGame
+
+    scene = _make_menu(tmp_path)
+    # Navigate to lesson 7 (index 6)
+    for _ in range(6):
+        scene.handle_event(
+            pygame.event.Event(pygame.KEYDOWN, key=pygame.K_DOWN, mod=0, unicode="")
+        )
+    scene.handle_event(
+        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode="\r")
+    )
+    assert scene.is_done()
+    assert isinstance(scene.next_scene(), StroopGame)
+
+
+def test_menu_z_key_launches_stroop_picker(tmp_path: Path) -> None:
+    from cognitive_data_arcade.ui.stroop_session_picker import StroopSessionPickerScene
+
+    scene = _make_menu(tmp_path)
+    scene.handle_event(
+        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_z, mod=0, unicode="z")
+    )
+    assert scene.is_done()
+    assert isinstance(scene.next_scene(), StroopSessionPickerScene)
+
+
+def test_menu_enter_on_non_stroop_lesson_does_nothing(tmp_path: Path) -> None:
+    scene = _make_menu(tmp_path)
+    # lesson 1 is at index 0 (default selected)
+    scene.handle_event(
+        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode="\r")
+    )
+    assert not scene.is_done()

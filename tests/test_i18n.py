@@ -132,3 +132,33 @@ def test_en_and_pl_analysis_strings_differ() -> None:
     assert EN.analysis_title != PL.analysis_title
     assert EN.picker_no_sessions != PL.picker_no_sessions
     assert EN.analysis_hint_esc != PL.analysis_hint_esc
+
+
+def test_en_has_stroop_strings() -> None:
+    assert len(EN.stroop_title) > 3
+    assert len(EN.stroop_instructions) > 20
+    assert "\n" in EN.stroop_instructions
+    assert len(EN.stroop_pick_preset) > 3
+    assert len(EN.preset_quick) > 3
+    assert len(EN.preset_standard) > 3
+    assert len(EN.preset_full) > 3
+    assert len(EN.stroop_hint_ink) > 5
+    assert len(EN.stroop_too_slow) > 2
+    assert len(EN.stroop_analysis_title) > 5
+    assert len(EN.label_facilitation) > 3
+    assert len(EN.label_interference) > 3
+    assert len(EN.label_stroop_effect) > 3
+    assert len(EN.stroop_picker_title) > 5
+    assert len(EN.stroop_picker_no_sessions) > 10
+
+
+def test_pl_has_stroop_strings() -> None:
+    assert len(PL.stroop_title) > 3
+    assert len(PL.stroop_instructions) > 20
+    assert len(PL.stroop_picker_no_sessions) > 10
+
+
+def test_en_and_pl_stroop_strings_differ() -> None:
+    assert EN.stroop_title != PL.stroop_title
+    assert EN.stroop_instructions != PL.stroop_instructions
+    assert EN.stroop_picker_no_sessions != PL.stroop_picker_no_sessions
