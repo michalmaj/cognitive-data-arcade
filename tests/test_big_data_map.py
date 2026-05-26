@@ -8,6 +8,7 @@ import pytest
 from cognitive_data_arcade.engine.i18n import PL
 from cognitive_data_arcade.games.big_data_map.game import BigDataMapGame
 from cognitive_data_arcade.profile.manager import ProfileManager
+from cognitive_data_arcade.ui.menu import LessonMenuScene
 
 
 def _make_game(tmp_path: Path) -> BigDataMapGame:
@@ -45,3 +46,37 @@ def test_arrow_keys_cycle_nodes(tmp_path: Path) -> None:
     assert game._l1_idx == 1
     game.handle_event(_key(pygame.K_UP))
     assert game._l1_idx == 0
+
+
+def test_enter_navigates_to_l2(tmp_path: Path) -> None:
+    game = _make_game(tmp_path)
+    game.handle_event(_key(pygame.K_RETURN))
+    assert game._in_l2
+    assert game._l2_idx == 0
+
+
+def test_esc_from_l2_returns_to_l1(tmp_path: Path) -> None:
+    game = _make_game(tmp_path)
+    game.handle_event(_key(pygame.K_RETURN))  # L1 → L2
+    game.handle_event(_key(pygame.K_ESCAPE))  # L2 → L1
+    assert not game._in_l2
+    assert not game.is_done()
+
+
+def test_esc_from_l1_sets_done(tmp_path: Path) -> None:
+    game = _make_game(tmp_path)
+    game.handle_event(_key(pygame.K_ESCAPE))
+    assert game.is_done()
+
+
+def test_space_sets_done_from_l2(tmp_path: Path) -> None:
+    game = _make_game(tmp_path)
+    game.handle_event(_key(pygame.K_RETURN))  # enter L2
+    game.handle_event(_key(pygame.K_SPACE))
+    assert game.is_done()
+
+
+def test_next_scene_is_menu(tmp_path: Path) -> None:
+    game = _make_game(tmp_path)
+    game.handle_event(_key(pygame.K_ESCAPE))  # triggers _finish()
+    assert isinstance(game.next_scene(), LessonMenuScene)

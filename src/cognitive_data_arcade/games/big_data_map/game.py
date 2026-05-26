@@ -226,11 +226,29 @@ class BigDataMapGame(Scene):
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type != pygame.KEYDOWN:
             return
-        n = len(_L1_NODES)
-        if event.key in (pygame.K_UP, pygame.K_RIGHT):
-            self._l1_idx = (self._l1_idx - 1) % n
-        elif event.key in (pygame.K_DOWN, pygame.K_LEFT):
-            self._l1_idx = (self._l1_idx + 1) % n
+        key = event.key
+        if self._in_l2:
+            l2_nodes = _L2_NODES[_L1_NODES[self._l1_idx].label]
+            n = len(l2_nodes)
+            if key in (pygame.K_UP, pygame.K_RIGHT):
+                self._l2_idx = (self._l2_idx - 1) % n
+            elif key in (pygame.K_DOWN, pygame.K_LEFT):
+                self._l2_idx = (self._l2_idx + 1) % n
+            elif key in (pygame.K_RETURN, pygame.K_KP_ENTER, pygame.K_ESCAPE):
+                self._in_l2 = False
+            elif key == pygame.K_SPACE:
+                self._finish()
+        else:
+            n = len(_L1_NODES)
+            if key in (pygame.K_UP, pygame.K_RIGHT):
+                self._l1_idx = (self._l1_idx - 1) % n
+            elif key in (pygame.K_DOWN, pygame.K_LEFT):
+                self._l1_idx = (self._l1_idx + 1) % n
+            elif key in (pygame.K_RETURN, pygame.K_KP_ENTER):
+                self._in_l2 = True
+                self._l2_idx = 0
+            elif key in (pygame.K_ESCAPE, pygame.K_SPACE):
+                self._finish()
 
     def update(self, dt: float) -> None:
         pass
@@ -238,7 +256,10 @@ class BigDataMapGame(Scene):
     def draw(self, surface: pygame.Surface) -> None:
         surface.fill(_BG)
         self._draw_title(surface)
-        self._draw_l1_network(surface)
+        if self._in_l2:
+            self._draw_l2_network(surface)
+        else:
+            self._draw_l1_network(surface)
         self._draw_info_bar(surface)
 
     def _draw_title(self, surface: pygame.Surface) -> None:
@@ -257,6 +278,22 @@ class BigDataMapGame(Scene):
             self._draw_circle_node(
                 surface, pos, _L1_R, node.color, node.label,
                 highlighted=(i == self._l1_idx), is_game=node.is_game,
+            )
+
+    def _draw_l2_network(self, surface: pygame.Surface) -> None:
+        l1_node = _L1_NODES[self._l1_idx]
+        l2_nodes = _L2_NODES[l1_node.label]
+        positions = _node_positions(len(l2_nodes), _R_L2)
+        for pos in positions:
+            pygame.draw.line(surface, _LINE_COLOR, (_CX, _CY), pos, 2)
+        self._draw_circle_node(
+            surface, (_CX, _CY), _CENTRE_R, l1_node.color, l1_node.label,
+            highlighted=False, is_game=False,
+        )
+        for i, (node, pos) in enumerate(zip(l2_nodes, positions)):
+            self._draw_circle_node(
+                surface, pos, _L2_R, node.color, node.label,
+                highlighted=(i == self._l2_idx), is_game=node.is_game,
             )
 
     def _draw_circle_node(
@@ -288,12 +325,22 @@ class BigDataMapGame(Scene):
         bar_y = _H - _INFO_H
         pygame.draw.rect(surface, (8, 8, 20), (0, bar_y, _W, _INFO_H))
         pygame.draw.line(surface, (26, 26, 58), (0, bar_y), (_W, bar_y), 1)
-        node = _L1_NODES[self._l1_idx]
+        if self._in_l2:
+            node = _L2_NODES[_L1_NODES[self._l1_idx].label][self._l2_idx]
+            hint = "ENTER / ESC wróć  |  SPACE menu lekcji"
+        else:
+            node = _L1_NODES[self._l1_idx]
+            hint = "ENTER rozwiń  |  ESC / SPACE wróć do menu lekcji"
         rendered = self._font_info.render(node.description, True, _TEXT_LIGHT)
         surface.blit(rendered, (16, bar_y + 8))
-        hint = "ENTER rozwiń  |  ESC / SPACE wróć do menu lekcji"
         rendered_hint = self._font_info.render(hint, True, _TEXT_DIM)
         surface.blit(rendered_hint, (16, bar_y + 8 + self._font_info.get_height() + 4))
+
+    def _finish(self) -> None:
+        from cognitive_data_arcade.ui.menu import LessonMenuScene  # deferred to avoid circular import
+
+        self._next = LessonMenuScene(self._pm, self._strings)
+        self._done = True
 
     def is_done(self) -> bool:
         return self._done
