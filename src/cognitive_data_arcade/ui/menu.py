@@ -63,6 +63,34 @@ class LessonMenuScene(Scene):
             sessions_dir = Path("data") / "generated" / "reaction_time"
             self._next = SessionPickerScene(sessions_dir, self._strings, self._pm)
             self._done = True
+        elif event.key == pygame.K_RETURN:
+            lesson_num = _LESSONS[self._selected][0]
+            if lesson_num == 7:
+                self._launch_stroop()
+        elif event.key == pygame.K_z:
+            self._launch_stroop_picker()
+
+    def _launch_stroop(self) -> None:
+        import datetime
+
+        from cognitive_data_arcade.games.stroop.config import STANDARD
+        from cognitive_data_arcade.games.stroop.game import StroopGame
+
+        profile = self._pm.load()
+        pid = profile.device_uuid
+        sid = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        csv_path = Path("data") / "generated" / "stroop" / f"{sid}.csv"
+        self._next = StroopGame(STANDARD, self._pm, self._strings, pid, sid, csv_path)
+        self._done = True
+
+    def _launch_stroop_picker(self) -> None:
+        from cognitive_data_arcade.ui.stroop_session_picker import (
+            StroopSessionPickerScene,
+        )
+
+        sessions_dir = Path("data") / "generated" / "stroop"
+        self._next = StroopSessionPickerScene(sessions_dir, self._strings, self._pm)
+        self._done = True
 
     def update(self, dt_ms: float) -> None:
         pass
