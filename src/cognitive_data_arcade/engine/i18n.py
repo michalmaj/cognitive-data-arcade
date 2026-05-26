@@ -63,6 +63,13 @@ class Strings:
     rt_get_ready: str
     rt_hint_space: str
     rt_too_slow: str
+    # Analysis
+    analysis_title: str
+    analysis_hint_esc: str
+    analysis_hint_s: str
+    label_median_rt: str
+    picker_title: str
+    picker_no_sessions: str
 
 
 EN = Strings(
@@ -104,6 +111,12 @@ EN = Strings(
     rt_get_ready="Get ready…",
     rt_hint_space="SPACE — react",
     rt_too_slow="Too slow",
+    analysis_title="Reaction Time Analysis",
+    analysis_hint_esc="ESC  back",
+    analysis_hint_s="S  analyse",
+    label_median_rt="Median RT",
+    picker_title="Select Session",
+    picker_no_sessions="No sessions yet — play RT Lab first",
 )
 
 PL = Strings(
@@ -145,6 +158,12 @@ PL = Strings(
     rt_get_ready="Przygotuj się…",
     rt_hint_space="SPACJA — reaguj",
     rt_too_slow="Za wolno",
+    analysis_title="Analiza Czasu Reakcji",
+    analysis_hint_esc="ESC  wróć",
+    analysis_hint_s="S  analiza",
+    label_median_rt="Mediana RT",
+    picker_title="Wybierz Sesję",
+    picker_no_sessions="Brak sesji — najpierw zagraj w RT Lab",
 )
 
 

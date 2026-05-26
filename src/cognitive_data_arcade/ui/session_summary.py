@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 import pygame
 
 from cognitive_data_arcade.engine.badges import SessionResult
@@ -29,6 +31,7 @@ class SessionSummaryScene(Scene):
         profile_after: Profile,
         strings: Strings,
         profile_manager: ProfileManager,
+        csv_path: Path | None = None,
     ) -> None:
         self._session = session
         self._new_badge_ids = new_badge_ids
@@ -39,6 +42,8 @@ class SessionSummaryScene(Scene):
         self._next: Scene | None = None
         self._done = False
         self._go_to_profile = False
+        self._csv_path = csv_path
+        self._go_to_analysis = False
         self._font_sm = pygame.font.SysFont(None, 24)
         self._font_title = pygame.font.SysFont(None, 56)
         self._font_sub = pygame.font.SysFont(None, 30)
@@ -53,6 +58,9 @@ class SessionSummaryScene(Scene):
         elif event.key == pygame.K_p:
             self._done = True
             self._go_to_profile = True
+        elif event.key == pygame.K_s and self._csv_path is not None:
+            self._done = True
+            self._go_to_analysis = True
 
     def update(self, dt_ms: float) -> None:
         pass
@@ -67,7 +75,21 @@ class SessionSummaryScene(Scene):
             return None
         from cognitive_data_arcade.ui.menu import LessonMenuScene
 
-        if self._go_to_profile:
+        if self._go_to_analysis and self._csv_path is not None:
+            from cognitive_data_arcade.analytics.rt_analysis import (
+                build_histogram,
+                load_session,
+                session_stats,
+            )
+            from cognitive_data_arcade.engine.chart import figure_to_surface
+            from cognitive_data_arcade.ui.analysis_scene import AnalysisScene
+
+            df = load_session(self._csv_path)
+            stats = session_stats(df)
+            fig = build_histogram(df)
+            chart = figure_to_surface(fig, (680, 550))
+            self._next = AnalysisScene(chart, stats, self._strings, back_scene=self)
+        elif self._go_to_profile:
             from cognitive_data_arcade.ui.profile_screen import ProfileScene
 
             back = LessonMenuScene(self._pm, self._strings)
@@ -196,6 +218,8 @@ class SessionSummaryScene(Scene):
             (self._strings.hint_p, _ITEM_COLOR),
             (self._strings.hint_esc, _ITEM_COLOR),
         ]
+        if self._csv_path is not None:
+            hints.append((self._strings.analysis_hint_s, _HIGHLIGHT_COLOR))
         hint_y = h - 40
         hint_total = sum(self._font_hint.size(t)[0] for t, _ in hints) + 60
         hint_x = (w - hint_total) // 2
