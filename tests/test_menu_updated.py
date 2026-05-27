@@ -126,3 +126,20 @@ def test_return_on_lesson1_launches_big_data_map(tmp_path: Path) -> None:
     )
     assert scene.is_done()
     assert isinstance(scene.next_scene(), BigDataMapGame)
+
+
+def test_return_on_lesson8_launches_flanker(tmp_path: Path) -> None:
+    from cognitive_data_arcade.games.flanker.game import FlankerGame
+
+    pygame.init()
+    scene = _make_menu(tmp_path)
+    # Navigate to lesson 8 (index 7 in _LESSONS, so 7 K_DOWN presses)
+    for _ in range(7):
+        scene.handle_event(
+            pygame.event.Event(pygame.KEYDOWN, key=pygame.K_DOWN, mod=0, unicode="")
+        )
+    scene.handle_event(
+        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode="\r")
+    )
+    assert scene.is_done()
+    assert isinstance(scene.next_scene(), FlankerGame)

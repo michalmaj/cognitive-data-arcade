@@ -69,6 +69,8 @@ class LessonMenuScene(Scene):
                 self._launch_big_data_map()
             elif lesson_num == 2:
                 self._launch_rt_lab()
+            elif lesson_num == 8:
+                self._launch_flanker()
             elif lesson_num == 7:
                 self._launch_stroop()
         elif event.key == pygame.K_z:
@@ -117,6 +119,19 @@ class LessonMenuScene(Scene):
 
         sessions_dir = Path("data") / "generated" / "stroop"
         self._next = StroopSessionPickerScene(sessions_dir, self._strings, self._pm)
+        self._done = True
+
+    def _launch_flanker(self) -> None:
+        import datetime
+
+        from cognitive_data_arcade.games.flanker.config import STANDARD
+        from cognitive_data_arcade.games.flanker.game import FlankerGame
+
+        profile = self._pm.load()
+        pid = profile.device_uuid
+        sid = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        csv_path = Path("data") / "generated" / "flanker" / f"{sid}.csv"
+        self._next = FlankerGame(STANDARD, self._pm, self._strings, pid, sid, csv_path)
         self._done = True
 
     def update(self, dt_ms: float) -> None:
