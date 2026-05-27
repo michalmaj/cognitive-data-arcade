@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections.abc import Callable
 from pathlib import Path
 
 import pygame
@@ -32,6 +33,7 @@ class SessionSummaryScene(Scene):
         strings: Strings,
         profile_manager: ProfileManager,
         csv_path: Path | None = None,
+        analysis_factory: Callable[[Path, Strings, Scene], Scene] | None = None,
     ) -> None:
         self._session = session
         self._new_badge_ids = new_badge_ids
@@ -43,6 +45,7 @@ class SessionSummaryScene(Scene):
         self._done = False
         self._go_to_profile = False
         self._csv_path = csv_path
+        self._analysis_factory = analysis_factory
         self._go_to_analysis = False
         self._font_sm = pygame.font.SysFont(None, 24)
         self._font_title = pygame.font.SysFont(None, 56)
@@ -76,19 +79,22 @@ class SessionSummaryScene(Scene):
         from cognitive_data_arcade.ui.menu import LessonMenuScene
 
         if self._go_to_analysis and self._csv_path is not None:
-            from cognitive_data_arcade.analytics.rt_analysis import (
-                build_histogram,
-                load_session,
-                session_stats,
-            )
-            from cognitive_data_arcade.engine.chart import figure_to_surface
-            from cognitive_data_arcade.ui.analysis_scene import AnalysisScene
+            if self._analysis_factory is not None:
+                self._next = self._analysis_factory(self._csv_path, self._strings, self)
+            else:
+                from cognitive_data_arcade.analytics.rt_analysis import (
+                    build_histogram,
+                    load_session,
+                    session_stats,
+                )
+                from cognitive_data_arcade.engine.chart import figure_to_surface
+                from cognitive_data_arcade.ui.analysis_scene import AnalysisScene
 
-            df = load_session(self._csv_path)
-            stats = session_stats(df)
-            fig = build_histogram(df)
-            chart = figure_to_surface(fig, (680, 550))
-            self._next = AnalysisScene(chart, stats, self._strings, back_scene=self)
+                df = load_session(self._csv_path)
+                stats = session_stats(df)
+                fig = build_histogram(df)
+                chart = figure_to_surface(fig, (680, 550))
+                self._next = AnalysisScene(chart, stats, self._strings, back_scene=self)
         elif self._go_to_profile:
             from cognitive_data_arcade.ui.profile_screen import ProfileScene
 

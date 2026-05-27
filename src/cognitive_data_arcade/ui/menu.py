@@ -67,6 +67,12 @@ class LessonMenuScene(Scene):
             lesson_num = _LESSONS[self._selected][0]
             if lesson_num == 1:
                 self._launch_big_data_map()
+            elif lesson_num == 2:
+                self._launch_rt_lab()
+            elif lesson_num == 8:
+                self._launch_flanker()
+            elif lesson_num == 9:
+                self._launch_gono()
             elif lesson_num == 7:
                 self._launch_stroop()
         elif event.key == pygame.K_z:
@@ -78,6 +84,21 @@ class LessonMenuScene(Scene):
         )  # deferred to avoid circular import
 
         self._next = BigDataMapGame(self._strings, self._pm)
+        self._done = True
+
+    def _launch_rt_lab(self) -> None:
+        import datetime
+
+        from cognitive_data_arcade.games.reaction_time.config import DEFAULT_CONFIG
+        from cognitive_data_arcade.games.reaction_time.game import ReactionTimeGame
+
+        profile = self._pm.load()
+        pid = profile.device_uuid
+        sid = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        csv_path = Path("data") / "generated" / "reaction_time" / f"{sid}.csv"
+        self._next = ReactionTimeGame(
+            DEFAULT_CONFIG, self._pm, self._strings, pid, sid, csv_path
+        )
         self._done = True
 
     def _launch_stroop(self) -> None:
@@ -100,6 +121,32 @@ class LessonMenuScene(Scene):
 
         sessions_dir = Path("data") / "generated" / "stroop"
         self._next = StroopSessionPickerScene(sessions_dir, self._strings, self._pm)
+        self._done = True
+
+    def _launch_flanker(self) -> None:
+        import datetime
+
+        from cognitive_data_arcade.games.flanker.config import STANDARD
+        from cognitive_data_arcade.games.flanker.game import FlankerGame
+
+        profile = self._pm.load()
+        pid = profile.device_uuid
+        sid = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        csv_path = Path("data") / "generated" / "flanker" / f"{sid}.csv"
+        self._next = FlankerGame(STANDARD, self._pm, self._strings, pid, sid, csv_path)
+        self._done = True
+
+    def _launch_gono(self) -> None:
+        import datetime
+
+        from cognitive_data_arcade.games.gono.config import STANDARD
+        from cognitive_data_arcade.games.gono.game import GoNoGoGame
+
+        profile = self._pm.load()
+        pid = profile.device_uuid
+        sid = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        csv_path = Path("data") / "generated" / "gono" / f"{sid}.csv"
+        self._next = GoNoGoGame(STANDARD, self._pm, self._strings, pid, sid, csv_path)
         self._done = True
 
     def update(self, dt_ms: float) -> None:
