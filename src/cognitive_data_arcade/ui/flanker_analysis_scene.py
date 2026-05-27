@@ -13,8 +13,6 @@ _BG = (26, 26, 46)
 _WHITE = (240, 240, 240)
 _ORANGE = (243, 156, 18)
 _DIM = (100, 100, 150)
-_GREEN = (39, 174, 96)
-_RED = (231, 76, 60)
 
 _CHART_X = 20
 _CHART_Y = 20
@@ -81,14 +79,7 @@ class FlankerAnalysisScene(Scene):
         stat_lines = [
             ("Congruent RT", _fmt_rt(stats["congruent_mean_rt"])),
             ("Incongruent RT", _fmt_rt(stats["incongruent_mean_rt"])),
-            (
-                "Flanker Effect",
-                (
-                    "— ms"
-                    if math.isnan(stats["flanker_effect_ms"])
-                    else f"{stats['flanker_effect_ms']:.0f} ms"
-                ),
-            ),
+            ("Flanker Effect", _fmt_rt(stats["flanker_effect_ms"])),
             ("Congruent Acc", f"{stats['congruent_accuracy']:.0%}"),
             ("Incongruent Acc", f"{stats['incongruent_accuracy']:.0%}"),
             ("Overall Acc", f"{stats['overall_accuracy']:.0%}"),
@@ -101,6 +92,5 @@ class FlankerAnalysisScene(Scene):
             surface.blit(val, (_STATS_X, panel_y + 20))
             panel_y += 56
 
-        hint_text = getattr(self._strings, "hint_space", "SPACE — back to menu")
-        hint = self._font_label.render(hint_text, True, _DIM)
+        hint = self._font_label.render(self._strings.hint_space, True, _DIM)
         surface.blit(hint, (14, h - _FOOTER_H))
