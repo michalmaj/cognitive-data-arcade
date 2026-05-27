@@ -85,6 +85,16 @@ class Strings:
     label_stroop_effect: str
     stroop_picker_title: str
     stroop_picker_no_sessions: str
+    # Pause menu
+    pause_title: str
+    pause_restart: str
+    pause_how_to_play: str
+    pause_keyref: str
+    pause_quit: str
+    pause_hint_resume: str
+    pause_hint_esc_back: str
+    # How to play screen
+    howtoplay_hint_skip: str
 
 
 EN = Strings(
@@ -153,6 +163,14 @@ EN = Strings(
     label_stroop_effect="Stroop Effect",
     stroop_picker_title="Select Stroop Session",
     stroop_picker_no_sessions="No sessions yet — play Stroop first",
+    pause_title="PAUSED",
+    pause_restart="Restart",
+    pause_how_to_play="How to play",
+    pause_keyref="Quick ref",
+    pause_quit="Quit",
+    pause_hint_resume="ESC — resume",
+    pause_hint_esc_back="ESC — back",
+    howtoplay_hint_skip="SPACE — skip",
 )
 
 PL = Strings(
@@ -221,6 +239,14 @@ PL = Strings(
     label_stroop_effect="Efekt Stroopa",
     stroop_picker_title="Wybierz Sesję Stroopa",
     stroop_picker_no_sessions="Brak sesji — najpierw zagraj w Stroop",
+    pause_title="PAUZA",
+    pause_restart="Restart",
+    pause_how_to_play="Jak grać",
+    pause_keyref="Ściągawka",
+    pause_quit="Wyjdź",
+    pause_hint_resume="ESC — wznów",
+    pause_hint_esc_back="ESC — wróć",
+    howtoplay_hint_skip="SPACJA — pomiń",
 )
 
 
