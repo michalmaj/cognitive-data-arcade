@@ -92,7 +92,9 @@ class LessonMenuScene(Scene):
         pid = profile.device_uuid
         sid = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
         csv_path = Path("data") / "generated" / "reaction_time" / f"{sid}.csv"
-        self._next = ReactionTimeGame(DEFAULT_CONFIG, self._pm, self._strings, pid, sid, csv_path)
+        self._next = ReactionTimeGame(
+            DEFAULT_CONFIG, self._pm, self._strings, pid, sid, csv_path
+        )
         self._done = True
 
     def _launch_stroop(self) -> None:
