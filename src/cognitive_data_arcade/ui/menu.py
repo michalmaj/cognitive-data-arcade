@@ -71,6 +71,8 @@ class LessonMenuScene(Scene):
                 self._launch_rt_lab()
             elif lesson_num == 8:
                 self._launch_flanker()
+            elif lesson_num == 9:
+                self._launch_gono()
             elif lesson_num == 7:
                 self._launch_stroop()
         elif event.key == pygame.K_z:
@@ -132,6 +134,19 @@ class LessonMenuScene(Scene):
         sid = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
         csv_path = Path("data") / "generated" / "flanker" / f"{sid}.csv"
         self._next = FlankerGame(STANDARD, self._pm, self._strings, pid, sid, csv_path)
+        self._done = True
+
+    def _launch_gono(self) -> None:
+        import datetime
+
+        from cognitive_data_arcade.games.gono.config import STANDARD
+        from cognitive_data_arcade.games.gono.game import GoNoGoGame
+
+        profile = self._pm.load()
+        pid = profile.device_uuid
+        sid = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        csv_path = Path("data") / "generated" / "gono" / f"{sid}.csv"
+        self._next = GoNoGoGame(STANDARD, self._pm, self._strings, pid, sid, csv_path)
         self._done = True
 
     def update(self, dt_ms: float) -> None:
