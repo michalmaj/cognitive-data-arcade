@@ -31,7 +31,8 @@ def test_generate_trials_go_ratio() -> None:
 
     trials = _generate_trials(STANDARD)
     go_count = sum(1 for t in trials if t["trial_type"] == "go")
-    expected = round(STANDARD.go_ratio * STANDARD.num_trials)
+    num_blocks = STANDARD.num_trials // STANDARD.trials_per_block
+    expected = round(STANDARD.go_ratio * STANDARD.trials_per_block) * num_blocks
     assert go_count == expected
 
 

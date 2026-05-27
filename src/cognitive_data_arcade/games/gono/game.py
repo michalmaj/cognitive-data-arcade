@@ -98,7 +98,6 @@ class GoNoGoGame(Scene):
         self._phase_timer = 0.0
         self._records: list[_TrialRecord] = []
         self._next: Scene | None = None
-        self._responded = False
         self._iti_duration = float(random.randint(config.iti_min_ms, config.iti_max_ms))
         self._profile_before = profile_manager.load()
         pygame.font.init()
@@ -166,7 +165,7 @@ class GoNoGoGame(Scene):
         record = _TrialRecord(
             participant_id=self._pid,
             session_id=self._sid,
-            trial_id=self._trial_idx,
+            trial_id=self._trial_idx + 1,
             task_name="gono",
             trial_type=t["trial_type"],
             response=response,
@@ -206,7 +205,6 @@ class GoNoGoGame(Scene):
         min_rt = min(hit_rts) if hit_rts else 0.0
         max_rt = max(hit_rts) if hit_rts else 0.0
 
-        profile_before = self._profile_before
         badge_engine = BadgeEngine()
         session = SessionResult(
             task_name="gono",
@@ -220,7 +218,7 @@ class GoNoGoGame(Scene):
             arcade_points_earned=ap_earned,
             science_points_earned=sp_earned,
         )
-        new_badges = badge_engine.evaluate(session, profile_before)
+        new_badges = badge_engine.evaluate(session, self._profile_before)
         self._pm.add_ap(ap_earned)
         if sp_earned:
             self._pm.add_sp(sp_earned)
@@ -238,7 +236,7 @@ class GoNoGoGame(Scene):
         return SessionSummaryScene(
             session=session,
             new_badge_ids=new_badges,
-            profile_before=profile_before,
+            profile_before=self._profile_before,
             profile_after=profile_after,
             strings=self._strings,
             profile_manager=self._pm,
