@@ -87,32 +87,54 @@ class LessonMenuScene(Scene):
         self._done = True
 
     def _launch_rt_lab(self) -> None:
+        self._next = self._make_rt_lab_game()
+        self._done = True
+
+    def _make_rt_lab_game(self) -> Scene:
         import datetime
 
+        from cognitive_data_arcade.engine.pause import PausableGame
         from cognitive_data_arcade.games.reaction_time.config import DEFAULT_CONFIG
         from cognitive_data_arcade.games.reaction_time.game import ReactionTimeGame
+        from cognitive_data_arcade.games.reaction_time.info import get_game_info
+        from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
 
         profile = self._pm.load()
         pid = profile.device_uuid
         sid = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
         csv_path = Path("data") / "generated" / "reaction_time" / f"{sid}.csv"
-        self._next = ReactionTimeGame(
+        inner = ReactionTimeGame(
             DEFAULT_CONFIG, self._pm, self._strings, pid, sid, csv_path
         )
-        self._done = True
+        game_info = get_game_info(self._strings)
+        pausable = PausableGame(
+            inner, game_info, self._make_rt_lab_game, self._strings, self._pm
+        )
+        return HowToPlayScene(game_info, self._strings, back_scene=pausable)
 
     def _launch_stroop(self) -> None:
+        self._next = self._make_stroop_game()
+        self._done = True
+
+    def _make_stroop_game(self) -> Scene:
         import datetime
 
+        from cognitive_data_arcade.engine.pause import PausableGame
         from cognitive_data_arcade.games.stroop.config import STANDARD
         from cognitive_data_arcade.games.stroop.game import StroopGame
+        from cognitive_data_arcade.games.stroop.info import get_game_info
+        from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
 
         profile = self._pm.load()
         pid = profile.device_uuid
         sid = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
         csv_path = Path("data") / "generated" / "stroop" / f"{sid}.csv"
-        self._next = StroopGame(STANDARD, self._pm, self._strings, pid, sid, csv_path)
-        self._done = True
+        inner = StroopGame(STANDARD, self._pm, self._strings, pid, sid, csv_path)
+        game_info = get_game_info(self._strings)
+        pausable = PausableGame(
+            inner, game_info, self._make_stroop_game, self._strings, self._pm
+        )
+        return HowToPlayScene(game_info, self._strings, back_scene=pausable)
 
     def _launch_stroop_picker(self) -> None:
         from cognitive_data_arcade.ui.stroop_session_picker import (
@@ -124,30 +146,52 @@ class LessonMenuScene(Scene):
         self._done = True
 
     def _launch_flanker(self) -> None:
+        self._next = self._make_flanker_game()
+        self._done = True
+
+    def _make_flanker_game(self) -> Scene:
         import datetime
 
+        from cognitive_data_arcade.engine.pause import PausableGame
         from cognitive_data_arcade.games.flanker.config import STANDARD
         from cognitive_data_arcade.games.flanker.game import FlankerGame
+        from cognitive_data_arcade.games.flanker.info import get_game_info
+        from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
 
         profile = self._pm.load()
         pid = profile.device_uuid
         sid = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
         csv_path = Path("data") / "generated" / "flanker" / f"{sid}.csv"
-        self._next = FlankerGame(STANDARD, self._pm, self._strings, pid, sid, csv_path)
-        self._done = True
+        inner = FlankerGame(STANDARD, self._pm, self._strings, pid, sid, csv_path)
+        game_info = get_game_info(self._strings)
+        pausable = PausableGame(
+            inner, game_info, self._make_flanker_game, self._strings, self._pm
+        )
+        return HowToPlayScene(game_info, self._strings, back_scene=pausable)
 
     def _launch_gono(self) -> None:
+        self._next = self._make_gono_game()
+        self._done = True
+
+    def _make_gono_game(self) -> Scene:
         import datetime
 
+        from cognitive_data_arcade.engine.pause import PausableGame
         from cognitive_data_arcade.games.gono.config import STANDARD
         from cognitive_data_arcade.games.gono.game import GoNoGoGame
+        from cognitive_data_arcade.games.gono.info import get_game_info
+        from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
 
         profile = self._pm.load()
         pid = profile.device_uuid
         sid = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
         csv_path = Path("data") / "generated" / "gono" / f"{sid}.csv"
-        self._next = GoNoGoGame(STANDARD, self._pm, self._strings, pid, sid, csv_path)
-        self._done = True
+        inner = GoNoGoGame(STANDARD, self._pm, self._strings, pid, sid, csv_path)
+        game_info = get_game_info(self._strings)
+        pausable = PausableGame(
+            inner, game_info, self._make_gono_game, self._strings, self._pm
+        )
+        return HowToPlayScene(game_info, self._strings, back_scene=pausable)
 
     def update(self, dt_ms: float) -> None:
         pass

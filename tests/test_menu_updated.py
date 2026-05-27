@@ -60,10 +60,10 @@ def test_menu_esc_key_exits(tmp_path: Path) -> None:
 
 
 def test_menu_enter_on_lesson_7_launches_stroop(tmp_path: Path) -> None:
-    from cognitive_data_arcade.games.stroop.game import StroopGame
+    from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
 
+    pygame.init()
     scene = _make_menu(tmp_path)
-    # Navigate to lesson 7 (index 6)
     for _ in range(6):
         scene.handle_event(
             pygame.event.Event(pygame.KEYDOWN, key=pygame.K_DOWN, mod=0, unicode="")
@@ -72,7 +72,7 @@ def test_menu_enter_on_lesson_7_launches_stroop(tmp_path: Path) -> None:
         pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode="\r")
     )
     assert scene.is_done()
-    assert isinstance(scene.next_scene(), StroopGame)
+    assert isinstance(scene.next_scene(), HowToPlayScene)
 
 
 def test_menu_z_key_launches_stroop_picker(tmp_path: Path) -> None:
@@ -100,11 +100,10 @@ def test_menu_enter_on_non_stroop_lesson_does_nothing(tmp_path: Path) -> None:
 
 
 def test_return_on_lesson2_launches_rt_lab(tmp_path: Path) -> None:
-    from cognitive_data_arcade.games.reaction_time.game import ReactionTimeGame
+    from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
 
     pygame.init()
     scene = _make_menu(tmp_path)
-    # Navigate to lesson 2 (index 1)
     scene.handle_event(
         pygame.event.Event(pygame.KEYDOWN, key=pygame.K_DOWN, mod=0, unicode="")
     )
@@ -112,7 +111,7 @@ def test_return_on_lesson2_launches_rt_lab(tmp_path: Path) -> None:
         pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode="\r")
     )
     assert scene.is_done()
-    assert isinstance(scene.next_scene(), ReactionTimeGame)
+    assert isinstance(scene.next_scene(), HowToPlayScene)
 
 
 def test_return_on_lesson1_launches_big_data_map(tmp_path: Path) -> None:
@@ -129,11 +128,10 @@ def test_return_on_lesson1_launches_big_data_map(tmp_path: Path) -> None:
 
 
 def test_return_on_lesson8_launches_flanker(tmp_path: Path) -> None:
-    from cognitive_data_arcade.games.flanker.game import FlankerGame
+    from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
 
     pygame.init()
     scene = _make_menu(tmp_path)
-    # Navigate to lesson 8 (index 7 in _LESSONS, so 7 K_DOWN presses)
     for _ in range(7):
         scene.handle_event(
             pygame.event.Event(pygame.KEYDOWN, key=pygame.K_DOWN, mod=0, unicode="")
@@ -142,15 +140,14 @@ def test_return_on_lesson8_launches_flanker(tmp_path: Path) -> None:
         pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode="\r")
     )
     assert scene.is_done()
-    assert isinstance(scene.next_scene(), FlankerGame)
+    assert isinstance(scene.next_scene(), HowToPlayScene)
 
 
 def test_return_on_lesson9_launches_gono(tmp_path: Path) -> None:
-    from cognitive_data_arcade.games.gono.game import GoNoGoGame
+    from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
 
     pygame.init()
     scene = _make_menu(tmp_path)
-    # Navigate to lesson 9 (index 8 in _LESSONS, so 8 K_DOWN presses)
     for _ in range(8):
         scene.handle_event(
             pygame.event.Event(pygame.KEYDOWN, key=pygame.K_DOWN, mod=0, unicode="")
@@ -159,4 +156,4 @@ def test_return_on_lesson9_launches_gono(tmp_path: Path) -> None:
         pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode="\r")
     )
     assert scene.is_done()
-    assert isinstance(scene.next_scene(), GoNoGoGame)
+    assert isinstance(scene.next_scene(), HowToPlayScene)
