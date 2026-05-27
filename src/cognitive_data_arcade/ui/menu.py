@@ -67,6 +67,8 @@ class LessonMenuScene(Scene):
             lesson_num = _LESSONS[self._selected][0]
             if lesson_num == 1:
                 self._launch_big_data_map()
+            elif lesson_num == 2:
+                self._launch_rt_lab()
             elif lesson_num == 7:
                 self._launch_stroop()
         elif event.key == pygame.K_z:
@@ -78,6 +80,19 @@ class LessonMenuScene(Scene):
         )  # deferred to avoid circular import
 
         self._next = BigDataMapGame(self._strings, self._pm)
+        self._done = True
+
+    def _launch_rt_lab(self) -> None:
+        import datetime
+
+        from cognitive_data_arcade.games.reaction_time.config import DEFAULT_CONFIG
+        from cognitive_data_arcade.games.reaction_time.game import ReactionTimeGame
+
+        profile = self._pm.load()
+        pid = profile.device_uuid
+        sid = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        csv_path = Path("data") / "generated" / "reaction_time" / f"{sid}.csv"
+        self._next = ReactionTimeGame(DEFAULT_CONFIG, self._pm, self._strings, pid, sid, csv_path)
         self._done = True
 
     def _launch_stroop(self) -> None:
