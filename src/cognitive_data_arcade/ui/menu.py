@@ -73,6 +73,8 @@ class LessonMenuScene(Scene):
                 self._launch_flanker()
             elif lesson_num == 9:
                 self._launch_gono()
+            elif lesson_num == 10:
+                self._launch_nback()
             elif lesson_num == 7:
                 self._launch_stroop()
         elif event.key == pygame.K_z:
@@ -192,6 +194,12 @@ class LessonMenuScene(Scene):
             inner, game_info, self._make_gono_game, self._strings, self._pm
         )
         return HowToPlayScene(game_info, self._strings, back_scene=pausable)
+
+    def _launch_nback(self) -> None:
+        from cognitive_data_arcade.ui.nback_level_scene import NBackLevelScene
+
+        self._next = NBackLevelScene(self._pm, self._strings)
+        self._done = True
 
     def update(self, dt_ms: float) -> None:
         pass

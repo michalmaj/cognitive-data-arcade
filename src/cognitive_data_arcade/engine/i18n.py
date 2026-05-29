@@ -95,6 +95,13 @@ class Strings:
     pause_hint_esc_back: str
     # How to play screen
     howtoplay_hint_skip: str
+    # N-Back Level Scene
+    nback_level_title: str
+    nback_level_1: str
+    nback_level_2: str
+    nback_level_3: str
+    nback_level_adaptive: str
+    nback_level_hint: str
 
 
 EN = Strings(
@@ -171,6 +178,12 @@ EN = Strings(
     pause_hint_resume="ESC — resume",
     pause_hint_esc_back="ESC — back",
     howtoplay_hint_skip="SPACE — skip",
+    nback_level_title="N-Back Memory Grid",
+    nback_level_1="1-Back",
+    nback_level_2="2-Back",
+    nback_level_3="3-Back",
+    nback_level_adaptive="Adaptive",
+    nback_level_hint="ESC — back",
 )
 
 PL = Strings(
@@ -247,6 +260,12 @@ PL = Strings(
     pause_hint_resume="ESC — wznów",
     pause_hint_esc_back="ESC — wróć",
     howtoplay_hint_skip="SPACJA — pomiń",
+    nback_level_title="N-Back Memory Grid",
+    nback_level_1="1-Back",
+    nback_level_2="2-Back",
+    nback_level_3="3-Back",
+    nback_level_adaptive="Adaptacyjny",
+    nback_level_hint="ESC — wróć",
 )
 
 
