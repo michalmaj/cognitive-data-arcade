@@ -10,12 +10,12 @@ def get_game_info(strings: Strings) -> GameInfo:
             title="Flanker Arena",
             description_lines=[
                 "Zadanie Eriksena Flankera mierzy selektywną uwagę i hamowanie odpowiedzi.",
-                "Na ekranie pojawia się pięć strzałek. Środkowa to cel — naciśnij ← lub → zgodnie z jej kierunkiem.",
+                "Na ekranie pojawia się pięć strzałek. Środkowa to cel — naciśnij LEWO lub PRAWO zgodnie z jej kierunkiem.",
                 "Gdy flankerzy (boczne strzałki) są niezgodne z celem, czas reakcji wydłuża się. To efekt flankera.",
             ],
             key_bindings=[
-                ("←", "cel wskazuje lewo"),
-                ("→", "cel wskazuje prawo"),
+                ("LEWO", "cel wskazuje lewo"),
+                ("PRAWO", "cel wskazuje prawo"),
                 ("ESC", "pauza"),
             ],
         )
@@ -23,12 +23,12 @@ def get_game_info(strings: Strings) -> GameInfo:
         title="Flanker Arena",
         description_lines=[
             "The Eriksen Flanker task measures selective attention and response inhibition.",
-            "Five arrows appear on screen. Press ← or → to match the direction of the centre arrow.",
+            "Five arrows appear on screen. Press LEFT or RIGHT to match the direction of the centre arrow.",
             "When flanking arrows conflict with the target, reaction time increases — the flanker effect.",
         ],
         key_bindings=[
-            ("←", "target points left"),
-            ("→", "target points right"),
+            ("LEFT", "target points left"),
+            ("RIGHT", "target points right"),
             ("ESC", "pause"),
         ],
     )
