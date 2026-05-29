@@ -157,3 +157,19 @@ def test_return_on_lesson9_launches_gono(tmp_path: Path) -> None:
     )
     assert scene.is_done()
     assert isinstance(scene.next_scene(), HowToPlayScene)
+
+
+def test_return_on_lesson10_launches_nback(tmp_path: Path) -> None:
+    from cognitive_data_arcade.ui.nback_level_scene import NBackLevelScene
+
+    pygame.init()
+    scene = _make_menu(tmp_path)
+    for _ in range(9):
+        scene.handle_event(
+            pygame.event.Event(pygame.KEYDOWN, key=pygame.K_DOWN, mod=0, unicode="")
+        )
+    scene.handle_event(
+        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode="\r")
+    )
+    assert scene.is_done()
+    assert isinstance(scene.next_scene(), NBackLevelScene)
