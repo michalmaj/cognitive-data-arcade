@@ -7,6 +7,7 @@ import pygame
 import pytest
 
 from cognitive_data_arcade.engine.i18n import EN
+from cognitive_data_arcade.engine.scene import Scene
 
 _COLS = [
     "task_name", "participant_id", "session_id", "trial_id", "block_id", "n_level",
@@ -35,14 +36,24 @@ def fixture_csv(tmp_path: Path) -> Path:
     return path
 
 
-class _DummyScene:
+class _DummyScene(Scene):
+    def handle_event(self, event: pygame.event.Event) -> None:
+        pass
+
+    def update(self, dt_ms: float) -> None:
+        pass
+
+    def draw(self, surface: pygame.Surface) -> None:
+        pass
+
     def is_done(self) -> bool:
         return False
-    def next_scene(self):
+
+    def next_scene(self) -> Scene | None:
         return None
 
 
-def test_draws_without_crash(tmp_path: Path, fixture_csv: Path) -> None:
+def test_draws_without_crash(fixture_csv: Path) -> None:
     from cognitive_data_arcade.ui.nback_analysis_scene import NBackAnalysisScene
 
     pygame.init()
@@ -51,7 +62,7 @@ def test_draws_without_crash(tmp_path: Path, fixture_csv: Path) -> None:
     scene.draw(surface)
 
 
-def test_esc_sets_done(tmp_path: Path, fixture_csv: Path) -> None:
+def test_esc_sets_done(fixture_csv: Path) -> None:
     from cognitive_data_arcade.ui.nback_analysis_scene import NBackAnalysisScene
 
     pygame.init()
@@ -63,7 +74,7 @@ def test_esc_sets_done(tmp_path: Path, fixture_csv: Path) -> None:
     assert scene.is_done()
 
 
-def test_space_sets_done(tmp_path: Path, fixture_csv: Path) -> None:
+def test_space_sets_done(fixture_csv: Path) -> None:
     from cognitive_data_arcade.ui.nback_analysis_scene import NBackAnalysisScene
 
     pygame.init()
@@ -74,7 +85,7 @@ def test_space_sets_done(tmp_path: Path, fixture_csv: Path) -> None:
     assert scene.is_done()
 
 
-def test_next_scene_returns_back_scene(tmp_path: Path, fixture_csv: Path) -> None:
+def test_next_scene_returns_back_scene(fixture_csv: Path) -> None:
     from cognitive_data_arcade.ui.nback_analysis_scene import NBackAnalysisScene
 
     pygame.init()
