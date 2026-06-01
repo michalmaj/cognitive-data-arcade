@@ -1,37 +1,39 @@
-# Teoria: Big Data w Kognitywistyce
+# Teoria — Big Data w Kognitywistyce
 
 ## 1. Czym jest Big Data?
 
-Big Data odnosi się do zbiorów danych tak dużych lub złożonych, że tradycyjne narzędzia przetwarzania danych nie są w stanie obsłużyć ich sprawnie. Trzy właściwości definiują Big Data, znane jako trzy V:
+Big Data to zbiory danych o tak dużej objętości i złożoności, że tradycyjne narzędzia do przetwarzania danych nie są w stanie ich obsłużyć. Trzy właściwości — często nazywane **trzema V** — definiują pojęcie Big Data:
 
-- **Wolumen** — sama ilość danych. W kognitywistyce projekt Human Connectome Project zebrał dane obrazowania mózgu od 1200 uczestników przy rozdzielczościach generujących terabajty danych na jedną sesję skanowania.
-- **Szybkość** — tempo napływania danych. Czujniki EEG rejestrują elektryczną aktywność mózgu z częstotliwością 256–2048 próbek na sekundę; godzinna sesja generuje miliony punktów danych.
-- **Różnorodność** — zróżnicowanie formatów. Badacze kognitywistyki przetwarzają jednocześnie obrazy fMRI, arkusze z czasami reakcji, nagrania mowy, współrzędne GPS ze smartfonów i odręczne notatki kliniczne.
+- **Wolumen (Volume):** Ogromna ilość danych. Jedna sesja fMRI generuje kilka gigabajtów surowego sygnału; Human Connectome Project przechowuje dane ponad 1 200 uczestników, zajmując łącznie kilka terabajtów.
+- **Prędkość (Velocity):** Szybkość powstawania danych. Urządzenia do śledzenia wzroku rejestrują pozycję spojrzenia z częstotliwością 250–1 000 próbek na sekundę. Wzmacniacze EEG strumieniują setki kanałów z prędkością nawet 10 000 Hz.
+- **Różnorodność (Variety):** Zróżnicowanie typów danych. Kognitywistyka łączy obrazy mózgu, logi behawioralne, nagrania mowy, sygnały fizjologiczne i elektroniczne rekordy medyczne — często w ramach jednego badania.
 
-Zrozumienie tych trzech właściwości wyjaśnia, dlaczego kognitywistyka przekształciła się z małych badań laboratoryjnych w dyscyplinę opartą na danych w ciągu ostatnich dwóch dekad.
+## 2. Zarys historyczny
 
-## 2. Perspektywa historyczna
+Pomiar procesów poznawczych za pomocą danych zapoczątkował **Franciscus Donders** w 1868 roku, odejmując czas prostej reakcji od czasu reakcji wyboru w celu oszacowania czasu trwania decyzji umysłowej — to pierwsze udokumentowane zastosowanie logiki odejmowania do danych behawioralnych.
 
-Historia zaczyna się w 1868 roku, gdy holenderski lekarz Franciscus Donders zmierzył, jak długo trwa podjęcie decyzji przez ludzki umysł. Odejmował jedno pomiary czasu reakcji od drugiego — technika wymagająca zaledwie 20 uczestników. Jego zbiór danych mieścił się na jednej kartce papieru.
+Pod koniec XX wieku pojawiły się projekty wielkoskalowego neuroobrazowania. Inicjatywy takie jak **Human Connectome Project** (2010) i **OpenNeuro** (2017) po raz pierwszy udostępniły publicznie wielogigabajtowe zbiory danych mózgowych, umożliwiając badaczom na całym świecie zadawanie pytań, na które żadne pojedyncze laboratorium nie mogłoby samodzielnie odpowiedzieć.
 
-Przenosząc się do 2010 roku: projekt Human Connectome Project rozpoczyna mapowanie wszystkich połączeń w ludzkim mózgu dla 1200 uczestników. Jedno skanowanie dyfuzyjnego MRI pojedynczego uczestnika zajmuje kilka gigabajtów. Metoda odejmowania Dondersa — teraz skomputeryzowana — nadal jest stosowana, jednak osadzona w zbiorach danych mierzonych w terabajtach.
+Obecna dekada rozszerza gromadzenie danych poza laboratorium. **Cyfrowa fenotypizacja** — ciągły, pasywny pomiar zachowania za pomocą smartfonów — generuje strumienie współrzędnych GPS, odczytów akcelerometru i logów interakcji korelujących ze stanem zdrowia psychicznego w skali populacji.
 
-Dziś cyfrowa fenotypizacja posuwa się jeszcze dalej: smartfony po cichu rejestrują setki zmiennych (lokalizacja GPS, szybkość pisania, czas snu, aktywność w mediach społecznościowych) przez całą dobę dla tysięcy uczestników. Wolumeny danych wzrosły mniej więcej miliard razy w porównaniu z pierwotnymi eksperymentami Dondersa.
+## 3. Kluczowe otwarte zbiory danych w kognitywistyce
 
-## 3. Otwarte zbiory danych w kognitywistyce
+**Human Connectome Project (HCP)**
+Dane strukturalnego i funkcjonalnego MRI od 1 200 zdrowych dorosłych, zebrane w wielu ośrodkach. Jeden z największych i starannie opracowanych zbiorów danych neuroobrazowania, stosowany do mapowania architektury sieci ludzkiego mózgu.
 
-Kilka przełomowych otwartych zbiorów danych zmieniło pytania, które badacze mogą zadawać:
+**OpenNeuro**
+Publiczne repozytorium tysięcy zbiorów danych neuroobrazowania (fMRI, EEG, MEG), udostępnianych przez badaczy z całego świata. Dane są dostępne do pobrania na otwartych licencjach, umożliwiając analizę wtórną bez konieczności zbierania nowych danych.
 
-**Human Connectome Project (HCP)** — strukturalne i funkcjonalne dane MRI od 1200 zdrowych dorosłych. Mapowanie szlaków istoty białej między obszarami mózgu wymagało uczestników, sprzętu i zasobów obliczeniowych niewyobrażalnych w dwudziestym wieku. Zbiór danych jest otwarcie dostępny dla zarejestrowanych badaczy na całym świecie.
+**CHILDES Corpus**
+Wielonarodowy zbiór transkrybowanych nagrań mowy dzieci obejmujący dziesiątki języków i etapów rozwojowych. Podstawowy zasób dla badań obliczeniowych i empirycznych nad przyswajaniem języka.
 
-**OpenNeuro.org** — publiczne repozytorium zawierające tysiące zbiorów danych MRI i EEG. Badacze deponują dane po publikacji, tworząc rosnące archiwum, które inni mogą ponownie analizować bez przeprowadzania nowych eksperymentów.
-
-**CHILDES** (Child Language Data Exchange System) — nagrania audio i wideo mowy dzieci z dziesiątek języków i kultur. Stosowany do badania, w jaki sposób ludzie przyswajają język — procesu zbyt wolnego i subtelnego, by zbadać go w jednym laboratorium.
-
-**UK Biobank** — dane medyczne, genetyczne i kognitywne od 500 000 uczestników rekrutowanych w całym Zjednoczonym Królestwie od 2006 roku. Podłużna obserwacja oznacza, że te same osoby wracają co kilka lat, umożliwiając badaczom wykrywanie, jak struktura mózgu i funkcje poznawcze zmieniają się wraz z wiekiem, stylem życia lub chorobą.
+**UK Biobank**
+Dane medyczne i genetyczne 500 000 dorosłych mieszkańców Wielkiej Brytanii, zbierane od 2006 roku. Obejmują neuroobrazowanie, oceny poznawcze, pomiary fizyczne i sekwencje genomowe — umożliwiając wielkoskalowe badania starzenia się mózgu i ryzyka psychiatrycznego.
 
 ## 4. Dlaczego skala ma znaczenie
 
-Małe próby ograniczają pytania, na które naukowcy mogą odpowiedzieć. Przy 20 uczestnikach badanie może wykryć tylko bardzo duże efekty — subtelne różnice poznawcze między grupami pozostają niewidoczne. Przy 10 000 uczestnikach możliwe jest wykrywanie małych efektów, stratyfikowanie według wieku, płci, wykształcenia i genetyki jednocześnie, a także identyfikowanie zjawisk występujących tylko u 1% populacji.
+Małe próby ograniczają pytania, jakie mogą zadawać badacze. Badanie z 30 uczestnikami pozwala wykryć jedynie duże efekty; subtelne zjawiska — takie jak zależność między jakością snu a konsolidacją pamięci — wymagają setek lub tysięcy obserwacji, by osiągnąć wiarygodność statystyczną.
 
-Skala zmienia również charakter pytań. Gdy dane pochodzą od tysięcy zróżnicowanych uczestników, badacze pytają nie tylko „czy ten efekt istnieje?", ale „dla kogo istnieje, w jakich warunkach i jak jest duży?" To przejście — od pytań o istnienie do pytań o charakteryzację — definiuje nowoczesną kognitywistykę opartą na danych.
+Duże zbiory danych przesuwają granicę tego, co jest możliwe do odkrycia. Badanie ABCD (11 800 dzieci obserwowanych podłużnie) ujawniło trajektorie rozwojowe niewidoczne dla wcześniejszych, mniejszych kohort. Analizy UK Biobank zidentyfikowały warianty genetyczne związane ze zdolnościami poznawczymi, których żadne poprzednie badanie nie miało wystarczającej mocy, by wykryć.
+
+Skala niesie też nowe obowiązki metodologiczne: przy wystarczającej liczbie danych pozorne korelacje stają się statystycznie istotne. Badacze pracujący z Big Data muszą stosować rygorystyczną korektę na wielokrotne porównania i prerejestracją, aby uniknąć fałszywych odkryć.

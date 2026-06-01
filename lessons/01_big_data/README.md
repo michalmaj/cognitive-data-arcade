@@ -1,20 +1,26 @@
-# Lesson 01: Big Data in Cognitive Science
-
-**Estimated time:** 90 minutes
-**Game:** BigDataMapGame — launched from the main menu, press ENTER on lesson 01
-**Prerequisites:** None
+# Lesson 01 — Big Data in Cognitive Science
 
 ## Learning Goals
 
-- Define Big Data using the three Vs (volume, velocity, variety) with cognitive science examples.
-- Name at least three open datasets used in cognitive neuroscience research.
-- Explain why sample size changed what questions researchers can ask.
+By the end of this lesson, students will be able to:
 
-## Lesson Sections
+1. Define Big Data and describe its three defining characteristics (volume, velocity, variety) with examples from cognitive science.
+2. Identify at least four major open datasets used in cognitive and neuroscientific research.
+3. Explain why large sample sizes change the kinds of questions researchers can ask.
 
-| Section | File | Estimated time |
-|---|---|---|
-| Theory | `theory.md` | 30 min |
-| Activity | BigDataMapGame (launch from menu) | 20 min |
-| Tasks & Discussion | `tasks.md` | 30 min |
-| Notes | `notes.md` | 10 min |
+## Required Activity
+
+This lesson uses the **Big Data in Cognitive Science** interactive concept network, available in the application as **Lesson 01**. The network must be explored before the discussion questions can be answered meaningfully.
+
+## Estimated Time
+
+| Section | Time |
+|---|---|
+| Theory reading | 30 min |
+| Interactive exploration | 20 min |
+| Discussion | 20 min |
+| **Total** | **~70 min** (90 min with breaks) |
+
+## Prerequisites
+
+No prior knowledge is assumed beyond secondary school level.

@@ -1,42 +1,43 @@
-# Zadania: Lekcja 01
+# Zadania — Big Data w Kognitywistyce
 
-## Krok 1: Uruchomienie aplikacji
+Wykonaj poniższe kroki podczas lekcji. Zapisuj obserwacje w zeszycie lub udostępnionym dokumencie zgodnie ze wskazówkami prowadzącego.
 
-Należy otworzyć terminal i przejść do katalogu projektu. Następnie uruchomić:
+## Krok 1: Uruchom aplikację
 
-```bash
+Otwórz terminal w katalogu projektu i wykonaj polecenie:
+
+```
 uv run cognitive-data-arcade
 ```
 
-Pojawia się menu główne. Lekcja 01 — **Big Data w Kognitywistyce** — widnieje na górze listy.
+## Krok 2: Otwórz Lekcję 01
 
-## Krok 2: Otwarcie lekcji 01
+Za pomocą klawiszy strzałek przejdź do pozycji **Lekcja 01 — Big Data w Kognitywistyce** i naciśnij **ENTER**.
 
-Należy nacisnąć **ENTER** na lekcji 01. Otwiera się sieć pojęć BigDataMap, przedstawiająca centralny węzeł oznaczony „Big Data w nauce" otoczony sześcioma węzłami tematycznymi.
+Pojawi się krótki ekran wprowadzający. Naciśnij **SPACJĘ** lub **ENTER**, aby rozpocząć interaktywną sieć pojęć.
 
-## Krok 3: Eksploracja sieci pojęć
+## Krok 3: Eksploruj sieć pojęć
 
-Sieć nawiguje się za pomocą **klawiszy strzałek** (←→↑↓). Naciśnięcie **ENTER** pozwala zagłębić się w temat i zobaczyć jego podwęzły. Naciśnięcie **ESC** powraca do widoku głównego.
+Sieć wyświetla sześć głównych gałęzi (węzłów L1) rozmieszczonych wokół węzła centralnego. Nawiguj za pomocą **klawiszy strzałek**.
 
-Należy odwiedzić co najmniej trzy różne podwęzły (L2) z trzech różnych obszarów tematycznych (L1). Należy przeczytać opis pojawiający się na pasku informacyjnym na dole ekranu.
+1. Wybierz gałąź klawiszami strzałek i naciśnij **ENTER**, aby rozwinąć ją do widoku podwęzłów (widok L2).
+2. Przeczytaj opis wyświetlany na pasku informacyjnym na dole ekranu.
+3. Naciśnij **ENTER** lub **BACKSPACE**, aby wrócić do widoku głównego.
+4. Powtórz dla co najmniej **trzech różnych gałęzi**, czytając co najmniej dwa podwęzły w każdej.
+5. Zwróć uwagę, które podwęzły mają **złotą obwódkę** — to gry dostępne w menu lekcji.
 
-**Minimalne wymagane wizyty:**
-- Co najmniej jeden podwęzeł z obszaru **fMRI / EEG**
-- Co najmniej jeden podwęzeł z obszaru **Czasy reakcji**
-- Co najmniej jeden podwęzeł z obszaru **Big Data kliniczna**
+## Krok 4: Zapisz obserwacje
 
-Należy zwrócić uwagę, które węzły są oznaczone złotą ramką — są to gry dostępne w menu głównym.
+Po eksploracji sieci napisz krótkie odpowiedzi na poniższe pytania:
 
-## Krok 4: Pytania do dyskusji
+- Która gałąź L1 zawiera najwięcej podwęzłów?
+- Który opis podwęzła najbardziej cię zaskoczył i dlaczego?
+- Który węzeł ze złotą obwódką (gra) najbardziej chciałbyś/chciałabyś wypróbować?
 
-Należy odpowiedzieć na poniższe pytania pisemnie lub zgodnie z instrukcją prowadzącego:
+## Pytania dyskusyjne
 
-1. **Który typ danych zaskakuje najbardziej?** Który z sześciu obszarów tematycznych wytwarza dane, których przed tą lekcją nie kojarzyłoby się z kognitywistyką?
+Omów poniższe pytania z grupą lub prześlij pisemne odpowiedzi zgodnie ze wskazówkami prowadzącego:
 
-2. **Która metoda mogłaby zmierzyć stan poznawczy w tej chwili?** Należy zastanowić się, jakie dane wytwarza aktualnie środowisko, w którym się przebywa.
-
-3. **Jakie obawy etyczne pojawiają się przy zbieraniu takich danych?** Należy rozważyć, kto jest właścicielem danych, kto może mieć do nich dostęp i w jaki sposób mogłyby zostać nadużyte.
-
-## Krok 5: Powrót do menu głównego
-
-Naciśnięcie **SPACE** w dowolnym miejscu sieci pojęć powoduje powrót do menu lekcji.
+1. **Który typ danych zaskoczył cię najbardziej?** Rozważ skalę, metodę zbierania lub potencjalne zastosowania.
+2. **Która metoda opisana w sieci mogłaby mierzyć twój aktualny stan poznawczy?** Wyjaśnij, jakie dane by zbierała i co mogłoby z nich wynikać.
+3. **Jakie obawy etyczne rodzą się przy zbieraniu danych poznawczych na dużą skalę?** Rozważ prywatność, zgodę i możliwe nadużycia.
