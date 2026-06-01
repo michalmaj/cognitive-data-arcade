@@ -1,13 +1,13 @@
 from __future__ import annotations
 
-import math  # noqa: F401 # used by _node_positions in Task 2
+import math
 from dataclasses import dataclass
 
-import pygame  # noqa: F401
+import pygame
 
-from cognitive_data_arcade.engine.i18n import Strings  # noqa: F401
-from cognitive_data_arcade.engine.scene import Scene  # noqa: F401
-from cognitive_data_arcade.profile.manager import ProfileManager  # noqa: F401
+from cognitive_data_arcade.engine.i18n import Strings
+from cognitive_data_arcade.engine.scene import Scene
+from cognitive_data_arcade.profile.manager import ProfileManager
 
 _BG = (13, 13, 30)
 _LINE_COLOR = (42, 42, 80)
@@ -225,8 +225,6 @@ class BigDataMapGame(Scene):
         self._in_l2: bool = False
         self._l1_idx: int = 0
         self._l2_idx: int = 0
-        self._done: bool = False
-        self._next: Scene | None = None
         self._font_title = pygame.font.SysFont(None, 32)
         self._font_node = pygame.font.SysFont(None, 18)
         self._font_info = pygame.font.SysFont(None, 22)
@@ -242,10 +240,8 @@ class BigDataMapGame(Scene):
                 self._l2_idx = (self._l2_idx - 1) % n
             elif key in (pygame.K_DOWN, pygame.K_LEFT):
                 self._l2_idx = (self._l2_idx + 1) % n
-            elif key in (pygame.K_RETURN, pygame.K_KP_ENTER, pygame.K_ESCAPE):
+            elif key in (pygame.K_RETURN, pygame.K_KP_ENTER, pygame.K_BACKSPACE):
                 self._in_l2 = False
-            elif key == pygame.K_SPACE:
-                self._finish()
         else:
             n = len(_L1_NODES)
             if key in (pygame.K_UP, pygame.K_RIGHT):
@@ -255,8 +251,6 @@ class BigDataMapGame(Scene):
             elif key in (pygame.K_RETURN, pygame.K_KP_ENTER):
                 self._in_l2 = True
                 self._l2_idx = 0
-            elif key in (pygame.K_ESCAPE, pygame.K_SPACE):
-                self._finish()
 
     def update(self, dt: float) -> None:
         pass
@@ -355,26 +349,17 @@ class BigDataMapGame(Scene):
         pygame.draw.line(surface, (26, 26, 58), (0, bar_y), (_W, bar_y), 1)
         if self._in_l2:
             node = _L2_NODES[_L1_NODES[self._l1_idx].label][self._l2_idx]
-            hint = "ENTER / ESC wróć  |  SPACE menu lekcji"
+            hint = "ENTER / BACKSPACE — wróć  |  ESC — pauza"
         else:
             node = _L1_NODES[self._l1_idx]
-            hint = "ENTER rozwiń  |  ESC / SPACE wróć do menu lekcji"
+            hint = "ENTER — rozwiń  |  ESC — pauza"
         rendered = self._font_info.render(node.description, True, _TEXT_LIGHT)
         surface.blit(rendered, (16, bar_y + 8))
         rendered_hint = self._font_info.render(hint, True, _TEXT_DIM)
         surface.blit(rendered_hint, (16, bar_y + 8 + self._font_info.get_height() + 4))
 
-    def _finish(self) -> None:
-        from cognitive_data_arcade.ui.menu import (
-            LessonMenuScene,
-        )  # deferred to avoid circular import
-
-        self._next = LessonMenuScene(self._pm, self._strings)
-        self._done = True
-
     def is_done(self) -> bool:
-        return self._done
+        return False
 
-    def next_scene(self) -> Scene:
-        assert self._next is not None, "next_scene() called before is_done()"
-        return self._next
+    def next_scene(self) -> Scene | None:
+        return None
