@@ -1,42 +1,43 @@
-# Tasks: Lesson 01
+# Tasks — Big Data in Cognitive Science
 
-## Step 1: Launch the Application
+Complete the following steps during the lesson. Record observations in a notebook or shared document as directed by the instructor.
 
-Open a terminal and navigate to the project directory. Run:
+## Step 1: Launch the application
 
-```bash
+Open a terminal in the project directory and run:
+
+```
 uv run cognitive-data-arcade
 ```
 
-The main menu appears. Lesson 01 — **Big Data in Cognitive Science** — is listed at the top.
-
 ## Step 2: Open Lesson 01
 
-Press **ENTER** on lesson 01. The BigDataMap concept network opens, showing a central node labelled "Big Data w nauce" surrounded by six topic nodes.
+Use the arrow keys to navigate to **Lesson 01 — Big Data in Cognitive Science** and press **ENTER**.
 
-## Step 3: Explore the Concept Network
+A brief introduction screen will appear. Press **SPACE** or **ENTER** to start the interactive concept network.
 
-Navigate the network using **arrow keys** (←→↑↓). Press **ENTER** to drill into a topic and see its sub-nodes. Press **ESC** to return to the main view.
+## Step 3: Explore the concept network
 
-Visit at least three different sub-nodes (L2) from three different topic areas (L1). Read the description that appears in the information bar at the bottom of the screen.
+The network displays six main branches (L1 nodes) arranged around a central node. Navigate with the **arrow keys**.
 
-**Minimum required visits:**
-- At least one sub-node from **fMRI / EEG**
-- At least one sub-node from **Czasy reakcji**
-- At least one sub-node from **Big Data kliniczna**
+1. Select a branch with the arrow keys and press **ENTER** to expand it into sub-nodes (L2 view).
+2. Read the description shown in the information bar at the bottom of the screen.
+3. Press **ENTER** or **BACKSPACE** to return to the main view.
+4. Repeat for at least **three different branches**, reading at least two sub-nodes in each.
+5. Note which sub-nodes have a **gold border** — these are games available in the lesson menu.
 
-Note which nodes are marked with a gold border — those are games available in the main menu.
+## Step 4: Record observations
 
-## Step 4: Discussion Questions
+After exploring the network, write brief answers to the following:
 
-Answer the following questions in writing or as directed:
+- Which L1 branch contains the most sub-nodes?
+- Which sub-node description surprised you most, and why?
+- Which gold-bordered node (game) would you most like to try?
 
-1. **Which data type surprises you most?** Which of the six topic areas produces data you would not have associated with cognitive science before this lesson?
+## Discussion Questions
 
-2. **Which method could measure your own cognitive state right now?** Consider what data your current environment is already producing about you.
+Discuss the following questions with your group or submit written answers as instructed:
 
-3. **What ethical concerns arise when collecting this data?** Consider who owns the data, who can access it, and how it might be misused.
-
-## Step 5: Return to the Main Menu
-
-Press **SPACE** from anywhere in the concept network to return to the lesson menu.
+1. **Which data type surprised you most?** Consider scale, collection method, or potential applications.
+2. **Which method described in the network could measure your own cognitive state right now?** Explain what data it would collect and what it might reveal.
+3. **What ethical concerns arise when collecting cognitive data at scale?** Consider privacy, consent, and potential misuse.

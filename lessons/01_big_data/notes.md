@@ -1,40 +1,39 @@
-# Notes: Lesson 01
-
-These notes summarise expected outcomes, provide suggested answers, and flag common misconceptions.
+# Instructor Notes — Big Data in Cognitive Science
 
 ## Timing Guide
 
-| Section | Expected time |
-|---|---|
-| Theory reading | 30 min |
-| BigDataMap exploration | 20 min |
-| Discussion | 30 min |
-| **Total** | **80–90 min** |
+| Activity | Time | Notes |
+|---|---|---|
+| Theory reading (self-paced) | 25–30 min | Assign before class if possible |
+| App launch + troubleshooting | 5 min | Have SETUP.md ready for students who cannot launch |
+| Network exploration | 15–20 min | Circulate; prompt students who stay on one branch |
+| Observation recording | 5 min | |
+| Discussion | 20–25 min | See question guidance below |
+| **Total** | **~70–85 min** | |
 
-Students who read slowly may need more time for theory. The exploration phase typically takes 15–25 minutes depending on curiosity.
+## Expected Observations
 
-## Expected Discussion Points
+Most students will spend the most time in the **Czasy reakcji** (Reaction Times) branch because it contains five sub-nodes including two gold-bordered games. Prompt students who notice this to reflect on why reaction time has generated so many methods and tools.
 
-**Q1 — Which data type surprises you most?**
+The **Digital phenotyping** branch tends to provoke the strongest reactions. Students often do not realise their smartphones are continuous behavioural sensors. This is a productive entry point for the ethics discussion.
 
-Most students find digital phenotyping most surprising — the idea that a smartphone accelerometer can infer sleep quality or mood is counterintuitive. Some students are surprised that spoken language (CHILDES, CommonVoice) counts as cognitive data. Any thoughtful answer is acceptable.
+## Discussion Question Guidance
 
-**Q2 — Which method could measure your cognitive state right now?**
+**Question 1 — Which data type surprised you most?**
+Accept any well-reasoned answer. Common choices: UK Biobank (scale of 500 000), CHILDES (recording children in their homes), keystroke dynamics (the idea that typing rhythm reveals mental state). Push students to articulate *why* the scale or method surprises them.
 
-Expected answers: keystroke dynamics (typing on a laptop), GPS and movement (phone in pocket), eye tracking (if a webcam-based tracker is available). A strong answer notes that passive sensing is already happening without a formal study setup.
+**Question 2 — Which method could measure your cognitive state right now?**
+Expected answers: GPS/accelerometer (phone in pocket), keystroke dynamics (typing on a laptop), eye tracking (if a webcam-based system were available). Use this to introduce the concept of passive vs. active measurement.
 
-**Q3 — Ethical concerns**
-
-Expected concerns: consent (participants may not realise what data is collected), data re-identification (anonymised data can sometimes be re-linked to individuals), power asymmetry (who benefits from the data), secondary use (data collected for health research could be sold or repurposed). Any of these is a valid answer. The goal is to prompt reflection, not to produce a definitive list.
+**Question 3 — Ethical concerns with cognitive data at scale**
+Key themes to surface: informed consent at population scale, data re-identification risk (even "anonymous" brain scans can be re-identified), commercial use of health data, algorithmic bias in mental health prediction. The ABCD Study and UK Biobank both have public ethics documentation students can read.
 
 ## Common Misconceptions
 
-**"Big Data is just about social media."** Many students associate Big Data exclusively with commercial platforms. It is worth clarifying that the three Vs apply equally to genomics, clinical records, and neuroscience imaging data.
-
-**"More data always means better science."** Scale helps but does not replace good experimental design or appropriate analysis. Large datasets amplify both signal and systematic error.
-
-**"Open data is unprotected data."** Open datasets like HCP and UK Biobank require registration, data-use agreements, and commit researchers to handling data responsibly.
+- **"Big Data is just about social media."** Point to HCP, UK Biobank, and CHILDES as counter-examples spanning neuroscience, medicine, and linguistics.
+- **"More data always means better science."** Introduce the multiple-comparisons problem: with enough data, spurious correlations reach statistical significance. Pre-registration and effect-size reporting matter.
+- **"Open data means anyone can use it for anything."** Most open datasets (including HCP and UK Biobank) require data access agreements and prohibit commercial use without permission.
 
 ## Connection to Following Lessons
 
-Lesson 02 introduces reaction time as a concrete measurement from the "Czasy reakcji" branch of the Big Data Map. The RT Lab and Stroop Challenge nodes marked with a gold border are exactly the games used in lessons 02 and 07.
+Lesson 02 (Reaction Time Lab) connects directly to the **Czasy reakcji → Donders 1868** sub-node. Students have already encountered Donders in theory; the RT Lab lets them replicate his logic empirically. Refer back to this lesson when introducing the subtraction method in Lesson 02.

@@ -81,12 +81,21 @@ class LessonMenuScene(Scene):
             self._launch_stroop_picker()
 
     def _launch_big_data_map(self) -> None:
-        from cognitive_data_arcade.games.big_data_map.game import (
-            BigDataMapGame,
-        )  # deferred to avoid circular import
-
-        self._next = BigDataMapGame(self._strings, self._pm)
+        self._next = self._make_big_data_map_game()
         self._done = True
+
+    def _make_big_data_map_game(self) -> Scene:
+        from cognitive_data_arcade.engine.pause import PausableGame
+        from cognitive_data_arcade.games.big_data_map.game import BigDataMapGame
+        from cognitive_data_arcade.games.big_data_map.info import get_game_info
+        from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
+
+        inner = BigDataMapGame(self._strings, self._pm)
+        game_info = get_game_info(self._strings)
+        pausable = PausableGame(
+            inner, game_info, self._make_big_data_map_game, self._strings, self._pm
+        )
+        return HowToPlayScene(game_info, self._strings, back_scene=pausable)
 
     def _launch_rt_lab(self) -> None:
         self._next = self._make_rt_lab_game()

@@ -1,40 +1,39 @@
-# Notatki: Lekcja 01
+# Notatki dla prowadzącego — Big Data w Kognitywistyce
 
-Niniejsze notatki podsumowują oczekiwane rezultaty, zawierają sugerowane odpowiedzi oraz wskazują typowe błędne przekonania.
+## Harmonogram
 
-## Przewodnik czasowy
+| Aktywność | Czas | Uwagi |
+|---|---|---|
+| Czytanie teorii (samodzielnie) | 25–30 min | Można zadać przed zajęciami |
+| Uruchomienie aplikacji + rozwiązywanie problemów | 5 min | Miej SETUP.pl.md pod ręką dla studentów, którzy nie mogą uruchomić aplikacji |
+| Eksploracja sieci | 15–20 min | Obchodź grupę; zachęcaj studentów, którzy zostają w jednej gałęzi |
+| Zapisywanie obserwacji | 5 min | |
+| Dyskusja | 20–25 min | Patrz wskazówki do pytań poniżej |
+| **Łącznie** | **~70–85 min** | |
 
-| Sekcja | Szacowany czas |
-|---|---|
-| Czytanie teorii | 30 min |
-| Eksploracja BigDataMap | 20 min |
-| Dyskusja | 30 min |
-| **Razem** | **80–90 min** |
+## Oczekiwane obserwacje
 
-Studenci czytający wolniej mogą potrzebować więcej czasu na teorię. Faza eksploracji trwa zazwyczaj 15–25 minut, w zależności od ciekawości uczestników.
+Większość studentów spędzi najwięcej czasu w gałęzi **Czasy reakcji**, ponieważ zawiera pięć podwęzłów, w tym dwie gry ze złotą obwódką. Zachęcaj studentów, którzy to zauważą, do zastanowienia się, dlaczego czas reakcji wygenerował tak wiele metod i narzędzi.
 
-## Oczekiwane wątki dyskusji
+Gałąź **Digital phenotyping** zazwyczaj wywołuje najsilniejsze reakcje. Studenci często nie zdają sobie sprawy, że smartfony są ciągłymi czujnikami behawioralnymi. To dobry punkt wejścia do dyskusji o etyce.
 
-**Q1 — Który typ danych zaskakuje najbardziej?**
+## Wskazówki do pytań dyskusyjnych
 
-Większość studentów za najbardziej zaskakującą uważa cyfrową fenotypizację — idea, że akcelerometr smartfona może wnioskować o jakości snu lub nastroju, jest nieoczywista. Niektórych studentów zaskakuje fakt, że mowa (CHILDES, CommonVoice) jest traktowana jako dane kognitywne. Każda przemyślana odpowiedź jest akceptowalna.
+**Pytanie 1 — Który typ danych zaskoczył cię najbardziej?**
+Akceptuj każdą dobrze uzasadnioną odpowiedź. Typowe wybory: UK Biobank (skala 500 000 osób), CHILDES (nagrywanie dzieci w domach), dynamika naciśnięć klawiszy (idea, że rytm pisania ujawnia stan psychiczny). Zachęcaj studentów do wyjaśnienia, *dlaczego* skala lub metoda ich zaskakuje.
 
-**Q2 — Która metoda mogłaby zmierzyć stan poznawczy w tej chwili?**
+**Pytanie 2 — Która metoda mogłaby mierzyć twój aktualny stan poznawczy?**
+Oczekiwane odpowiedzi: GPS/akcelerometr (telefon w kieszeni), dynamika naciśnięć klawiszy (pisanie na laptopie), śledzenie wzroku (gdyby dostępny był system oparty na kamerze). Wykorzystaj to do wprowadzenia pojęcia pomiaru pasywnego vs. aktywnego.
 
-Oczekiwane odpowiedzi: dynamika pisania na klawiaturze (pisanie na laptopie), GPS i ruch (telefon w kieszeni), śledzenie wzroku (jeśli dostępny jest śledzący ruch gałek ocznych oparty na kamerze internetowej). Mocna odpowiedź zauważa, że pasywne pomiary już zachodzą bez formalnego ustawienia badania.
-
-**Q3 — Obawy etyczne**
-
-Oczekiwane obawy: zgoda (uczestnicy mogą nie zdawać sobie sprawy z tego, jakie dane są zbierane), ponowna identyfikacja danych (zanonimizowane dane mogą być czasem powiązane z konkretnymi osobami), asymetria władzy (kto korzysta z danych), wtórne wykorzystanie (dane zebrane w celach zdrowotnych mogą zostać sprzedane lub przekształcone). Każda z tych odpowiedzi jest trafna. Celem jest skłonienie do refleksji, a nie wypracowanie wyczerpującej listy.
+**Pytanie 3 — Obawy etyczne przy zbieraniu danych poznawczych na dużą skalę**
+Kluczowe wątki do poruszenia: świadoma zgoda w skali populacji, ryzyko reidentyfikacji danych (nawet "anonimowe" skany mózgu można zidentyfikować), komercyjne wykorzystanie danych zdrowotnych, stronniczość algorytmiczna w przewidywaniu zdrowia psychicznego. Badania ABCD i UK Biobank posiadają publiczną dokumentację etyczną dostępną dla studentów.
 
 ## Typowe błędne przekonania
 
-**„Big Data dotyczy wyłącznie mediów społecznościowych."** Wielu studentów kojarzy Big Data wyłącznie z platformami komercyjnymi. Warto wyjaśnić, że trzy V odnoszą się w równym stopniu do genomiki, dokumentacji klinicznej i danych obrazowania w neuronauce.
+- **"Big Data to tylko media społecznościowe."** Wskaż HCP, UK Biobank i CHILDES jako przykłady z neuronauki, medycyny i językoznawstwa.
+- **"Więcej danych zawsze oznacza lepszą naukę."** Wprowadź problem wielokrotnych porównań: przy wystarczającej liczbie danych pozorne korelacje osiągają istotność statystyczną. Ważne są prerejestracją i raportowanie wielkości efektu.
+- **"Otwarte dane oznaczają, że każdy może je wykorzystywać do czegokolwiek."** Większość otwartych zbiorów danych (w tym HCP i UK Biobank) wymaga umów o dostęp i zakazuje użytku komercyjnego bez zezwolenia.
 
-**„Więcej danych zawsze oznacza lepszą naukę."** Skala pomaga, ale nie zastępuje dobrego projektu eksperymentalnego ani odpowiedniej analizy. Duże zbiory danych wzmacniają zarówno sygnał, jak i błędy systematyczne.
+## Powiązanie z kolejnymi lekcjami
 
-**„Otwarte dane to dane bez ochrony."** Otwarte zbiory danych, takie jak HCP i UK Biobank, wymagają rejestracji, umów o korzystaniu z danych i zobowiązują badaczy do odpowiedzialnego postępowania z danymi.
-
-## Połączenie z następnymi lekcjami
-
-Lekcja 02 wprowadza czas reakcji jako konkretny pomiar z gałęzi „Czasy reakcji" mapy Big Data. Węzły RT Lab i Stroop Challenge oznaczone złotą ramką to dokładnie te gry, które są używane w lekcjach 02 i 07.
+Lekcja 02 (RT Lab) nawiązuje bezpośrednio do podwęzła **Czasy reakcji → Donders 1868**. Studenci zetknęli się już z Dondersem w teorii; RT Lab pozwala im empirycznie zreplikować jego logikę. Odwołaj się do tej lekcji podczas wprowadzania metody odejmowania w Lekcji 02.

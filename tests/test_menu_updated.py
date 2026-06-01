@@ -115,7 +115,7 @@ def test_return_on_lesson2_launches_rt_lab(tmp_path: Path) -> None:
 
 
 def test_return_on_lesson1_launches_big_data_map(tmp_path: Path) -> None:
-    from cognitive_data_arcade.games.big_data_map.game import BigDataMapGame
+    from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
 
     pygame.init()
     scene = _make_menu(tmp_path)
@@ -124,7 +124,7 @@ def test_return_on_lesson1_launches_big_data_map(tmp_path: Path) -> None:
         pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode="")
     )
     assert scene.is_done()
-    assert isinstance(scene.next_scene(), BigDataMapGame)
+    assert isinstance(scene.next_scene(), HowToPlayScene)
 
 
 def test_return_on_lesson8_launches_flanker(tmp_path: Path) -> None:

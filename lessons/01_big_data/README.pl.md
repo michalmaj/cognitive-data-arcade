@@ -1,20 +1,26 @@
-# Lekcja 01: Big Data w Kognitywistyce
+# Lekcja 01 — Big Data w Kognitywistyce
 
-**Szacowany czas:** 90 minut
-**Gra:** BigDataMapGame — uruchamiana z menu głównego, należy nacisnąć ENTER na lekcji 01
-**Wymagania wstępne:** Brak
+## Cele kształcenia
 
-## Cele lekcji
+Po zakończeniu tej lekcji student potrafi:
 
-- Zdefiniować Big Data używając trzech V (wolumen, szybkość, różnorodność) na przykładach z kognitywistyki.
-- Wymienić co najmniej trzy otwarte zbiory danych używane w badaniach neuronauki poznawczej.
-- Wyjaśnić, dlaczego wielkość próby zmieniła pytania, które badacze mogą zadawać.
+1. Zdefiniować pojęcie Big Data i opisać jego trzy cechy charakterystyczne (wolumen, prędkość, różnorodność) na przykładach z kognitywistyki.
+2. Wymienić co najmniej cztery otwarte zbiory danych stosowane w badaniach poznawczych i neuronauce.
+3. Wyjaśnić, dlaczego duże próby badawcze zmieniają rodzaj pytań, jakie można stawiać w nauce.
 
-## Sekcje lekcji
+## Wymagana aktywność
 
-| Sekcja | Plik | Szacowany czas |
-|---|---|---|
-| Teoria | `theory.md` | 30 min |
-| Aktywność | BigDataMapGame (uruchomienie z menu) | 20 min |
-| Zadania i dyskusja | `tasks.md` | 30 min |
-| Notatki | `notes.md` | 10 min |
+Lekcja korzysta z interaktywnej sieci pojęć **Big Data w Kognitywistyce**, dostępnej w aplikacji jako **Lekcja 01**. Sieć należy zbadać przed przystąpieniem do pytań dyskusyjnych.
+
+## Szacowany czas
+
+| Sekcja | Czas |
+|---|---|
+| Czytanie teorii | 30 min |
+| Eksploracja interaktywna | 20 min |
+| Dyskusja | 20 min |
+| **Łącznie** | **~70 min** (90 min z przerwami) |
+
+## Wymagania wstępne
+
+Nie są wymagane wiadomości wykraczające poza poziom szkoły średniej.
