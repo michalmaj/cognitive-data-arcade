@@ -14,7 +14,7 @@ def get_game_info(strings: Strings) -> GameInfo:
                 "Węzły ze złotą obwódką to gry dostępne w menu lekcji — możesz je wypróbować.",
             ],
             key_bindings=[
-                ("↑↓←→", "nawigacja między węzłami"),
+                ("GORA / DOL", "nawigacja między węzłami"),
                 ("ENTER", "rozwiń gałąź / wróć do L1"),
                 ("BACKSPACE", "wróć do L1"),
                 ("ESC", "pauza"),
@@ -28,7 +28,7 @@ def get_game_info(strings: Strings) -> GameInfo:
             "Nodes with a gold border are games available in the lesson menu — try them out.",
         ],
         key_bindings=[
-            ("↑↓←→", "navigate between nodes"),
+            ("UP / DOWN", "navigate between nodes"),
             ("ENTER", "expand branch / back to L1"),
             ("BACKSPACE", "back to L1"),
             ("ESC", "pause"),
