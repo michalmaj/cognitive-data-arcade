@@ -66,3 +66,15 @@ def test_nback_game_info(strings) -> None:
     # Key labels must be ASCII-safe (no Unicode arrows)
     for key, _ in info.key_bindings:
         assert key.isascii()
+
+
+@pytest.mark.parametrize("strings", [PL, EN])
+def test_big_data_map_game_info(strings) -> None:
+    from cognitive_data_arcade.engine.pause import GameInfo
+    from cognitive_data_arcade.games.big_data_map.info import get_game_info
+
+    info = get_game_info(strings)
+    assert isinstance(info, GameInfo)
+    assert info.title
+    assert len(info.description_lines) >= 2
+    assert len(info.key_bindings) >= 3
