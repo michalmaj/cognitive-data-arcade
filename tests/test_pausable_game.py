@@ -133,7 +133,7 @@ def test_how_to_play_sub_scene_closes_on_space(tmp_path: Path) -> None:
         pygame.event.Event(pygame.KEYDOWN, key=pygame.K_SPACE, mod=0, unicode=" ")
     )
     assert pg._sub_scene is None
-    assert not pg._paused  # resumed after how-to-play
+    assert pg._paused  # returns to pause menu, not unpaused
 
 
 def test_keyref_opens(tmp_path: Path) -> None:
