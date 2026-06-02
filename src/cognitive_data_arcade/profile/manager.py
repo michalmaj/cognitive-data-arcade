@@ -27,6 +27,10 @@ class Profile:
     badges: list[str] = field(default_factory=list)
     completed_lessons: list[int] = field(default_factory=list)
     language: str = "pl"
+    music_enabled: bool = True
+    sfx_enabled: bool = True
+    music_volume: float = 0.7
+    sfx_volume: float = 0.8
 
 
 class ProfileManager:

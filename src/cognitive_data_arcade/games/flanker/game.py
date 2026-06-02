@@ -10,6 +10,7 @@ from pathlib import Path
 
 import pygame
 
+from cognitive_data_arcade.engine import audio
 from cognitive_data_arcade.engine.badges import BadgeEngine, SessionResult
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
@@ -178,6 +179,7 @@ class FlankerGame(Scene):
         _write_trial(self._csv_path, record)
         self._last_correct = correct
         self._last_rt = rt_ms
+        audio.play_sfx("correct" if correct else "wrong")
         self._trial_idx += 1
         self._phase = _Phase.FEEDBACK
         self._phase_timer = 0.0

@@ -102,6 +102,12 @@ class Strings:
     nback_level_3: str
     nback_level_adaptive: str
     nback_level_hint: str
+    # Options scene
+    pause_options: str
+    options_title: str
+    options_music: str
+    options_sfx: str
+    options_hint: str
 
 
 EN = Strings(
@@ -184,6 +190,11 @@ EN = Strings(
     nback_level_3="3-Back",
     nback_level_adaptive="Adaptive",
     nback_level_hint="ESC — back",
+    pause_options="Options",
+    options_title="Options",
+    options_music="Music",
+    options_sfx="SFX",
+    options_hint="LEFT / RIGHT  volume    ENTER  toggle    ESC  back",
 )
 
 PL = Strings(
@@ -266,6 +277,11 @@ PL = Strings(
     nback_level_3="3-Back",
     nback_level_adaptive="Adaptacyjny",
     nback_level_hint="ESC — wróć",
+    pause_options="Opcje",
+    options_title="Opcje",
+    options_music="Muzyka",
+    options_sfx="Dzwieki",
+    options_hint="LEWO / PRAWO  glosnosc    ENTER  przelacz    ESC  wróc",
 )
 
 
