@@ -229,8 +229,32 @@ class BigDataMapGame(Scene):
         self._font_title = pygame.font.SysFont(None, 32)
         self._font_node = pygame.font.SysFont(None, 18)
         self._font_info = pygame.font.SysFont(None, 22)
+        self._node_rects: list[pygame.Rect] = []
 
     def handle_event(self, event: pygame.event.Event) -> None:
+        if event.type == pygame.MOUSEMOTION:
+            from cognitive_data_arcade.engine.mouse import hit
+            for i, rect in enumerate(self._node_rects):
+                if hit(rect, event.pos):
+                    if self._in_l2:
+                        self._l2_idx = i
+                    else:
+                        self._l1_idx = i
+                    break
+            return
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            from cognitive_data_arcade.engine.mouse import hit
+            for i, rect in enumerate(self._node_rects):
+                if hit(rect, event.pos):
+                    if self._in_l2:
+                        self._l2_idx = i
+                    else:
+                        self._l1_idx = i
+                        self._in_l2 = True
+                        self._l2_idx = 0
+                        audio.play_sfx("navigate")
+                    break
+            return
         if event.type != pygame.KEYDOWN:
             return
         key = event.key
@@ -273,6 +297,10 @@ class BigDataMapGame(Scene):
 
     def _draw_l1_network(self, surface: pygame.Surface) -> None:
         positions = _node_positions(len(_L1_NODES), _R_L1)
+        self._node_rects = [
+            pygame.Rect(x - _L1_R, y - _L1_R, _L1_R * 2, _L1_R * 2)
+            for x, y in positions
+        ]
         for pos in positions:
             pygame.draw.line(surface, _LINE_COLOR, (_CX, _CY), pos, 2)
         self._draw_circle_node(
@@ -299,6 +327,10 @@ class BigDataMapGame(Scene):
         l1_node = _L1_NODES[self._l1_idx]
         l2_nodes = _L2_NODES[l1_node.label]
         positions = _node_positions(len(l2_nodes), _R_L2)
+        self._node_rects = [
+            pygame.Rect(x - _L2_R, y - _L2_R, _L2_R * 2, _L2_R * 2)
+            for x, y in positions
+        ]
         for pos in positions:
             pygame.draw.line(surface, _LINE_COLOR, (_CX, _CY), pos, 2)
         self._draw_circle_node(

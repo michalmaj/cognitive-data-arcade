@@ -270,3 +270,39 @@ def test_options_mousebuttonup_stops_drag():
     event = pygame.event.Event(pygame.MOUSEBUTTONUP, pos=(400, 130), button=1)
     opts.handle_event(event)
     assert not opts._dragging
+
+
+def _make_bdm():
+    pm = MagicMock()
+    from cognitive_data_arcade.engine.i18n import get_strings
+    from cognitive_data_arcade.games.big_data_map.game import BigDataMapGame
+    return BigDataMapGame(get_strings("en"), pm)
+
+
+def test_bdm_node_rects_populated_after_draw():
+    bdm = _make_bdm()
+    surf = pygame.display.get_surface()
+    bdm.draw(surf)
+    assert len(bdm._node_rects) == 6  # 6 L1 nodes
+
+
+def test_bdm_click_l1_node_enters_l2():
+    bdm = _make_bdm()
+    surf = pygame.display.get_surface()
+    bdm.draw(surf)
+    # click the center of node 0's bounding rect
+    rect = bdm._node_rects[0]
+    event = pygame.event.Event(pygame.MOUSEBUTTONDOWN,
+                                pos=(rect.centerx, rect.centery), button=1)
+    bdm.handle_event(event)
+    assert bdm._in_l2
+
+
+def test_bdm_click_outside_no_change():
+    bdm = _make_bdm()
+    surf = pygame.display.get_surface()
+    bdm.draw(surf)
+    # click at center of screen (which is NOT a node, it's the fixed center label)
+    event = pygame.event.Event(pygame.MOUSEBUTTONDOWN, pos=(512, 364), button=1)
+    bdm.handle_event(event)
+    assert not bdm._in_l2
