@@ -29,10 +29,10 @@ _HIGHLIGHT_COLOR = (243, 156, 18)
 
 
 class LessonMenuScene(Scene):
-    def __init__(self, profile_manager: ProfileManager, strings: Strings) -> None:
+    def __init__(self, profile_manager: ProfileManager, strings: Strings, selected: int = 0) -> None:
         self._pm = profile_manager
         self._strings = strings
-        self._selected = 0
+        self._selected = selected
         self._next: Scene | None = None
         self._done = False
         audio.play_music("menu")
@@ -54,7 +54,7 @@ class LessonMenuScene(Scene):
         elif event.key == pygame.K_p:
             from cognitive_data_arcade.ui.profile_screen import ProfileScene
 
-            back = LessonMenuScene(self._pm, self._strings)
+            back = LessonMenuScene(self._pm, self._strings, self._selected)
             self._next = ProfileScene(self._pm, self._strings, back)
             self._done = True
         elif event.key == pygame.K_l:
@@ -85,7 +85,7 @@ class LessonMenuScene(Scene):
         elif event.key == pygame.K_o:
             from cognitive_data_arcade.ui.options_scene import OptionsScene
 
-            back = LessonMenuScene(self._pm, self._strings)
+            back = LessonMenuScene(self._pm, self._strings, self._selected)
             self._next = OptionsScene(self._pm, self._strings, back)
             self._done = True
         elif event.key == pygame.K_t:
@@ -93,7 +93,7 @@ class LessonMenuScene(Scene):
             if lesson_num in (1, 2, 7, 8, 9, 10):
                 from cognitive_data_arcade.ui.lesson_reader import LessonReaderScene
 
-                back = LessonMenuScene(self._pm, self._strings)
+                back = LessonMenuScene(self._pm, self._strings, self._selected)
                 self._next = LessonReaderScene(lesson_num, self._strings, back)
                 self._done = True
         elif event.key == pygame.K_z:

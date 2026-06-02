@@ -61,7 +61,6 @@ class PausableGame(Scene):
             self._sub_scene.handle_event(event)
             if self._sub_scene.is_done():
                 self._sub_scene = None
-                self._paused = False
             return
         if not self._paused:
             if event.key == pygame.K_ESCAPE:

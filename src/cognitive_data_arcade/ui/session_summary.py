@@ -213,7 +213,7 @@ class SessionSummaryScene(Scene):
             pygame.draw.rect(surface, _BANNER_BG, banner_rect, border_radius=6)
             pygame.draw.rect(surface, _LEVEL_COLOR, banner_rect, 1, border_radius=6)
             lvl_text = (
-                f"▲  {self._strings.label_level_up}  {before_lvl}  →  {after_lvl}"
+                f">>  {self._strings.label_level_up}  {before_lvl}  ->  {after_lvl}"
             )
             lvl_surf = self._font_sm.render(lvl_text, True, _LEVEL_COLOR)
             surface.blit(lvl_surf, (w // 2 - lvl_surf.get_width() // 2, banner_y + 13))

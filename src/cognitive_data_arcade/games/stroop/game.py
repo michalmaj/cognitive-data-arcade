@@ -347,7 +347,7 @@ class StroopGame(Scene):
             color = _HIGHLIGHT if i == self._preset_idx else _DIM
             surf = self._font_med.render(label, True, color)
             surface.blit(surf, (w // 2 - surf.get_width() // 2, 280 + i * 56))
-        hint = self._font_hint.render("↑↓ navigate   SPACE/ENTER select", True, _DIM)
+        hint = self._font_hint.render("UP/DN  navigate   SPACE/ENTER  select", True, _DIM)
         surface.blit(hint, (w // 2 - hint.get_width() // 2, h - _FOOTER_H))
 
     def _draw_instructions(self, surface: pygame.Surface, w: int, h: int) -> None:
