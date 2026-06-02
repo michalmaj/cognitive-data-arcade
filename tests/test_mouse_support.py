@@ -226,3 +226,47 @@ def test_profile_click_outside_edit_does_not_break_keyboard():
     esc = pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode="")
     scene.handle_event(esc)
     assert scene.is_done()
+
+
+def _make_options():
+    pm = MagicMock()
+    pm.load.return_value = MagicMock(
+        music_enabled=True, sfx_enabled=True,
+        music_volume=0.8, sfx_volume=0.8
+    )
+    from cognitive_data_arcade.engine.i18n import get_strings
+    from cognitive_data_arcade.ui.options_scene import OptionsScene
+    return OptionsScene(pm, get_strings("en"), back_scene=None)
+
+
+def test_options_mousemotion_hover_row1():
+    opts = _make_options()
+    # row 1 is at y=200
+    event = pygame.event.Event(pygame.MOUSEMOTION, pos=(100, 205))
+    opts.handle_event(event)
+    assert opts._focused == 1
+
+
+def test_options_mousebuttondown_slider_updates_volume():
+    opts = _make_options()
+    # music bar at x=230, w=220. Click at x=340 → vol = (340-230)/220 ≈ 0.5
+    event = pygame.event.Event(pygame.MOUSEBUTTONDOWN, pos=(340, 130), button=1)
+    opts.handle_event(event)
+    assert abs(opts._music_vol - (340 - 230) / 220) < 0.01
+
+
+def test_options_drag_updates_volume():
+    opts = _make_options()
+    opts._dragging = True
+    opts._focused = 0
+    event = pygame.event.Event(pygame.MOUSEMOTION, pos=(340, 130))
+    opts.handle_event(event)
+    assert abs(opts._music_vol - (340 - 230) / 220) < 0.01
+
+
+def test_options_mousebuttonup_stops_drag():
+    opts = _make_options()
+    opts._dragging = True
+    event = pygame.event.Event(pygame.MOUSEBUTTONUP, pos=(400, 130), button=1)
+    opts.handle_event(event)
+    assert not opts._dragging
