@@ -306,3 +306,47 @@ def test_bdm_click_outside_no_change():
     event = pygame.event.Event(pygame.MOUSEBUTTONDOWN, pos=(512, 364), button=1)
     bdm.handle_event(event)
     assert not bdm._in_l2
+
+
+import pathlib, tempfile
+
+
+def _make_stroop():
+    pm = MagicMock()
+    pm.load.return_value = MagicMock(
+        alias="T", device_uuid="x",
+        arcade_points=0, science_points=0,
+        badges=[], completed_lessons=[]
+    )
+    from cognitive_data_arcade.engine.i18n import get_strings
+    from cognitive_data_arcade.games.stroop.game import StroopGame
+    from cognitive_data_arcade.games.stroop.config import STANDARD
+    strings = get_strings("en")
+    with tempfile.TemporaryDirectory() as d:
+        return StroopGame(STANDARD, pm, strings, "p1", "s1",
+                          pathlib.Path(d) / "test.csv")
+
+
+def test_stroop_has_color_rects():
+    sg = _make_stroop()
+    assert hasattr(sg, '_color_rects')
+
+
+def test_stroop_preset_mousemotion_sets_idx():
+    sg = _make_stroop()
+    # preset options at y=280, 336, 392 (280 + i*56)
+    event = pygame.event.Event(pygame.MOUSEMOTION, pos=(512, 340))
+    sg.handle_event(event)
+    assert sg._preset_idx == 1  # y=340 is closest to option 1 (y=336)
+
+
+def test_stroop_preset_mouseclick_confirms():
+    sg = _make_stroop()
+    from cognitive_data_arcade.games.stroop.game import _Phase
+    # Draw first to populate preset rects
+    surf = pygame.display.get_surface()
+    sg.draw(surf)
+    # click option 0 rect area
+    event = pygame.event.Event(pygame.MOUSEBUTTONDOWN, pos=(512, 285), button=1)
+    sg.handle_event(event)
+    assert sg._phase == _Phase.INSTRUCTIONS
