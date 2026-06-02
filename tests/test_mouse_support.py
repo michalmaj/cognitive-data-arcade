@@ -121,3 +121,69 @@ def test_pause_mousebuttondown_confirms(_display_1024):
     event = pygame.event.Event(pygame.MOUSEBUTTONDOWN, pos=(512, 466), button=1)
     pg.handle_event(event)
     assert pg._done
+
+
+def test_session_picker_mousemotion_sets_selected():
+    from cognitive_data_arcade.ui.session_picker import SessionPickerScene
+    import pathlib, tempfile
+    pm = MagicMock()
+    from cognitive_data_arcade.engine.i18n import get_strings
+    strings = get_strings("en")
+    with tempfile.TemporaryDirectory() as d:
+        # Create at least 3 dummy session CSV files so idx 2 is valid
+        header = "reaction_time_ms,correct\n"
+        for i in range(3):
+            p = pathlib.Path(d) / f"session_{i:02d}.csv"
+            p.write_text(header + "250,True\n300,False\n")
+        sp = SessionPickerScene(pathlib.Path(d), strings, pm)
+        # row 2 at y = 44 + 2*64 = 172
+        event = pygame.event.Event(pygame.MOUSEMOTION, pos=(200, 175))
+        sp.handle_event(event)
+        assert sp._selected == 2
+
+
+def test_nback_mousemotion_sets_selected():
+    from cognitive_data_arcade.ui.nback_level_scene import NBackLevelScene
+    pm = MagicMock()
+    from cognitive_data_arcade.engine.i18n import get_strings
+    strings = get_strings("en")
+    scene = NBackLevelScene(pm, strings)
+    # option 1 at y = 160 + 1*56 = 216
+    event = pygame.event.Event(pygame.MOUSEMOTION, pos=(200, 220))
+    scene.handle_event(event)
+    assert scene._selected == 1
+
+
+def test_how_to_play_click_starts_game():
+    from cognitive_data_arcade.engine.pause import GameInfo
+    from cognitive_data_arcade.engine.i18n import get_strings
+    from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
+    info = GameInfo(title="T", description_lines=[], key_bindings=[])
+    back = MagicMock()
+    scene = HowToPlayScene(info, get_strings("en"), back_scene=back)
+    event = pygame.event.Event(pygame.MOUSEBUTTONDOWN, pos=(512, 400), button=1)
+    scene.handle_event(event)
+    assert scene.is_done()
+    assert scene.next_scene() is back
+
+
+def test_lesson_reader_right_click_advances():
+    from cognitive_data_arcade.ui.lesson_reader import LessonReaderScene
+    from cognitive_data_arcade.engine.i18n import get_strings
+    strings = get_strings("en")
+    scene = LessonReaderScene(1, strings, back_scene=None)
+    initial = scene._idx
+    event = pygame.event.Event(pygame.MOUSEBUTTONDOWN, pos=(700, 400), button=1)
+    scene.handle_event(event)
+    assert scene._idx == (initial + 1) % len(scene._slides)
+
+
+def test_lesson_reader_left_click_goes_back():
+    from cognitive_data_arcade.ui.lesson_reader import LessonReaderScene
+    from cognitive_data_arcade.engine.i18n import get_strings
+    strings = get_strings("en")
+    scene = LessonReaderScene(1, strings, back_scene=None)
+    scene._idx = 2
+    event = pygame.event.Event(pygame.MOUSEBUTTONDOWN, pos=(200, 400), button=1)
+    scene.handle_event(event)
+    assert scene._idx == 1

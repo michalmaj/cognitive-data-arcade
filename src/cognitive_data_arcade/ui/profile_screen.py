@@ -43,6 +43,16 @@ class ProfileScene(Scene):
         self._font_label = pygame.font.SysFont(None, 24)
 
     def handle_event(self, event: pygame.event.Event) -> None:
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and not self._editing_alias:
+            surf = pygame.display.get_surface()
+            h = surf.get_size()[1] if surf else 768
+            footer_y = h - _FOOTER_H
+            from cognitive_data_arcade.engine.mouse import hit
+            edit_rect = pygame.Rect(220, footer_y + 15, 200, 24)
+            if hit(edit_rect, event.pos):
+                self._editing_alias = True
+                self._alias_buffer = ""
+            return
         if event.type != pygame.KEYDOWN:
             return
 

@@ -37,6 +37,10 @@ class HowToPlayScene(Scene):
         self._font_hint = pygame.font.SysFont(None, 26)
 
     def handle_event(self, event: pygame.event.Event) -> None:
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            self._next = self._back_scene
+            self._done = True
+            return
         if event.type != pygame.KEYDOWN:
             return
         if event.key == pygame.K_ESCAPE:
