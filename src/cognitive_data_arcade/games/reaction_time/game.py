@@ -8,6 +8,7 @@ from pathlib import Path
 
 import pygame
 
+from cognitive_data_arcade.engine import audio
 from cognitive_data_arcade.engine.badges import BadgeEngine, SessionResult
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
@@ -129,6 +130,7 @@ class ReactionTimeGame(Scene):
             self._phase_timer = 0.0
             self._iti_duration = self._rand_iti()
         elif self._phase == _Phase.STIMULUS:
+            audio.play_sfx("select")
             self._complete_trial(rt=self._phase_timer, actual="space", correct=True)
         elif self._phase == _Phase.BETWEEN_BLOCKS:
             self._enter_iti()

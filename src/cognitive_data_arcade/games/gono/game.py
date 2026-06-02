@@ -9,6 +9,7 @@ from pathlib import Path
 
 import pygame
 
+from cognitive_data_arcade.engine import audio
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.gono.config import GoNoGoConfig
@@ -175,6 +176,7 @@ class GoNoGoGame(Scene):
         )
         self._records.append(record)
         _write_trial(self._csv_path, record)
+        audio.play_sfx("correct" if correct else "wrong")
         self._phase = _Phase.FEEDBACK
         self._phase_timer = 0.0
 
