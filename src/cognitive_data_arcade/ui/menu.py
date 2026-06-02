@@ -92,20 +92,7 @@ class LessonMenuScene(Scene):
             self._next = SessionPickerScene(sessions_dir, self._strings, self._pm)
             self._done = True
         elif event.key == pygame.K_RETURN:
-            audio.play_sfx("select")
-            lesson_num = _LESSONS[self._selected][0]
-            if lesson_num == 1:
-                self._launch_big_data_map()
-            elif lesson_num == 2:
-                self._launch_rt_lab()
-            elif lesson_num == 8:
-                self._launch_flanker()
-            elif lesson_num == 9:
-                self._launch_gono()
-            elif lesson_num == 10:
-                self._launch_nback()
-            elif lesson_num == 7:
-                self._launch_stroop()
+            self._launch_selected_game()
         elif event.key == pygame.K_o:
             from cognitive_data_arcade.ui.options_scene import OptionsScene
 
@@ -122,6 +109,22 @@ class LessonMenuScene(Scene):
                 self._done = True
         elif event.key == pygame.K_z:
             self._launch_stroop_picker()
+
+    def _launch_selected_game(self) -> None:
+        audio.play_sfx("select")
+        lesson_num = _LESSONS[self._selected][0]
+        if lesson_num == 1:
+            self._launch_big_data_map()
+        elif lesson_num == 2:
+            self._launch_rt_lab()
+        elif lesson_num == 8:
+            self._launch_flanker()
+        elif lesson_num == 9:
+            self._launch_gono()
+        elif lesson_num == 10:
+            self._launch_nback()
+        elif lesson_num == 7:
+            self._launch_stroop()
 
     def _teoria_available(self) -> bool:
         lesson_num = _LESSONS[self._selected][0]
@@ -155,20 +158,7 @@ class LessonMenuScene(Scene):
     def _confirm_popup(self) -> None:
         self._popup_visible = False
         if self._popup_selected == 0:
-            audio.play_sfx("select")
-            lesson_num = _LESSONS[self._selected][0]
-            if lesson_num == 1:
-                self._launch_big_data_map()
-            elif lesson_num == 2:
-                self._launch_rt_lab()
-            elif lesson_num == 8:
-                self._launch_flanker()
-            elif lesson_num == 9:
-                self._launch_gono()
-            elif lesson_num == 10:
-                self._launch_nback()
-            elif lesson_num == 7:
-                self._launch_stroop()
+            self._launch_selected_game()
         elif self._popup_selected == 1 and self._teoria_available():
             lesson_num = _LESSONS[self._selected][0]
             from cognitive_data_arcade.ui.lesson_reader import LessonReaderScene
