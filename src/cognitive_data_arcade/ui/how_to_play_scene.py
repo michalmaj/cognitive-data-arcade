@@ -22,10 +22,13 @@ class HowToPlayScene(Scene):
         game_info: GameInfo,
         strings: Strings,
         back_scene: Scene | None,
+        esc_scene: Scene | None = None,
     ) -> None:
         self._game_info = game_info
         self._strings = strings
         self._back_scene = back_scene
+        self._esc_scene = esc_scene
+        self._next: Scene | None = None
         self._done = False
         pygame.font.init()
         self._font_title = pygame.font.SysFont(None, 54)
@@ -34,11 +37,13 @@ class HowToPlayScene(Scene):
         self._font_hint = pygame.font.SysFont(None, 26)
 
     def handle_event(self, event: pygame.event.Event) -> None:
-        if event.type == pygame.KEYDOWN and event.key in (
-            pygame.K_SPACE,
-            pygame.K_RETURN,
-            pygame.K_ESCAPE,
-        ):
+        if event.type != pygame.KEYDOWN:
+            return
+        if event.key == pygame.K_ESCAPE:
+            self._next = self._esc_scene if self._esc_scene is not None else self._back_scene
+            self._done = True
+        elif event.key in (pygame.K_SPACE, pygame.K_RETURN):
+            self._next = self._back_scene
             self._done = True
 
     def update(self, dt_ms: float) -> None:
@@ -48,7 +53,7 @@ class HowToPlayScene(Scene):
         return self._done
 
     def next_scene(self) -> Scene | None:
-        return self._back_scene if self._done else None
+        return self._next if self._done else None
 
     def draw(self, surface: pygame.Surface) -> None:
         surface.fill(_BG)

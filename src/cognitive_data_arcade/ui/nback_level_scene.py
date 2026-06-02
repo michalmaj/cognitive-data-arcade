@@ -62,7 +62,12 @@ class NBackLevelScene(Scene):
         game_info = get_game_info(self._strings)
         restart_factory = lambda: NBackLevelScene(self._pm, self._strings)
         pausable = PausableGame(inner, game_info, restart_factory, self._strings, self._pm)
-        self._next = HowToPlayScene(game_info, self._strings, back_scene=pausable)
+        self._next = HowToPlayScene(
+            game_info,
+            self._strings,
+            back_scene=pausable,
+            esc_scene=NBackLevelScene(self._pm, self._strings),
+        )
         self._done = True
 
     def update(self, dt_ms: float) -> None:

@@ -114,7 +114,12 @@ class LessonMenuScene(Scene):
         pausable = PausableGame(
             inner, game_info, self._make_big_data_map_game, self._strings, self._pm
         )
-        return HowToPlayScene(game_info, self._strings, back_scene=pausable)
+        return HowToPlayScene(
+            game_info,
+            self._strings,
+            back_scene=pausable,
+            esc_scene=LessonMenuScene(self._pm, self._strings, self._selected),
+        )
 
     def _launch_rt_lab(self) -> None:
         self._next = self._make_rt_lab_game()
@@ -140,7 +145,12 @@ class LessonMenuScene(Scene):
         pausable = PausableGame(
             inner, game_info, self._make_rt_lab_game, self._strings, self._pm
         )
-        return HowToPlayScene(game_info, self._strings, back_scene=pausable)
+        return HowToPlayScene(
+            game_info,
+            self._strings,
+            back_scene=pausable,
+            esc_scene=LessonMenuScene(self._pm, self._strings, self._selected),
+        )
 
     def _launch_stroop(self) -> None:
         self._next = self._make_stroop_game()
@@ -164,7 +174,12 @@ class LessonMenuScene(Scene):
         pausable = PausableGame(
             inner, game_info, self._make_stroop_game, self._strings, self._pm
         )
-        return HowToPlayScene(game_info, self._strings, back_scene=pausable)
+        return HowToPlayScene(
+            game_info,
+            self._strings,
+            back_scene=pausable,
+            esc_scene=LessonMenuScene(self._pm, self._strings, self._selected),
+        )
 
     def _launch_stroop_picker(self) -> None:
         from cognitive_data_arcade.ui.stroop_session_picker import (
@@ -197,7 +212,12 @@ class LessonMenuScene(Scene):
         pausable = PausableGame(
             inner, game_info, self._make_flanker_game, self._strings, self._pm
         )
-        return HowToPlayScene(game_info, self._strings, back_scene=pausable)
+        return HowToPlayScene(
+            game_info,
+            self._strings,
+            back_scene=pausable,
+            esc_scene=LessonMenuScene(self._pm, self._strings, self._selected),
+        )
 
     def _launch_gono(self) -> None:
         self._next = self._make_gono_game()
@@ -221,7 +241,12 @@ class LessonMenuScene(Scene):
         pausable = PausableGame(
             inner, game_info, self._make_gono_game, self._strings, self._pm
         )
-        return HowToPlayScene(game_info, self._strings, back_scene=pausable)
+        return HowToPlayScene(
+            game_info,
+            self._strings,
+            back_scene=pausable,
+            esc_scene=LessonMenuScene(self._pm, self._strings, self._selected),
+        )
 
     def _launch_nback(self) -> None:
         from cognitive_data_arcade.ui.nback_level_scene import NBackLevelScene
