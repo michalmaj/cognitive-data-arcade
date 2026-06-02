@@ -39,3 +39,6 @@ CLAUDE.md
 .claude/
 .superpowers/
 docs/superpowers/
+# Audio assets (download separately)
+assets/audio/music/*.ogg
+assets/audio/music/*.mp3
