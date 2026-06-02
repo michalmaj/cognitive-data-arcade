@@ -113,6 +113,8 @@ class Strings:
     lesson_notes: str
     lesson_tasks: str
     lesson_reader_hint: str
+    # Popups
+    label_play_game: str
 
 
 EN = Strings(
@@ -204,6 +206,7 @@ EN = Strings(
     lesson_notes="Notes",
     lesson_tasks="Tasks",
     lesson_reader_hint="SPACE / RIGHT  next    LEFT  back    ESC  menu",
+    label_play_game="Play",
 )
 
 PL = Strings(
@@ -295,6 +298,7 @@ PL = Strings(
     lesson_notes="Notatki",
     lesson_tasks="Zadania",
     lesson_reader_hint="SPACJA / PRAWO  dalej    LEWO  wstecz    ESC  menu",
+    label_play_game="Graj",
 )
 
 
