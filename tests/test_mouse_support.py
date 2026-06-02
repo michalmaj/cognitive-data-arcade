@@ -187,3 +187,42 @@ def test_lesson_reader_left_click_goes_back():
     event = pygame.event.Event(pygame.MOUSEBUTTONDOWN, pos=(200, 400), button=1)
     scene.handle_event(event)
     assert scene._idx == 1
+
+
+def test_profile_click_edit_button_enters_edit_mode():
+    from cognitive_data_arcade.ui.profile_screen import ProfileScene
+    from cognitive_data_arcade.engine.i18n import get_strings
+    pm = MagicMock()
+    pm.load.return_value = MagicMock(
+        alias="TestUser",
+        arcade_points=0, science_points=0,
+        badges=[], completed_lessons=[],
+    )
+    back = MagicMock()
+    scene = ProfileScene(pm, get_strings("en"), back)
+    # Edit button is at Rect(220, h-50+15, 200, 24)
+    # For 768h screen: footer_y = 768-50 = 718, button at y=733
+    event = pygame.event.Event(pygame.MOUSEBUTTONDOWN, pos=(300, 733), button=1)
+    scene.handle_event(event)
+    assert scene._editing_alias is True
+
+
+def test_profile_click_outside_edit_does_not_break_keyboard():
+    from cognitive_data_arcade.ui.profile_screen import ProfileScene
+    from cognitive_data_arcade.engine.i18n import get_strings
+    pm = MagicMock()
+    pm.load.return_value = MagicMock(
+        alias="TestUser",
+        arcade_points=0, science_points=0,
+        badges=[], completed_lessons=[],
+    )
+    back = MagicMock()
+    scene = ProfileScene(pm, get_strings("en"), back)
+    # Click somewhere that is NOT the edit button
+    click = pygame.event.Event(pygame.MOUSEBUTTONDOWN, pos=(100, 100), button=1)
+    scene.handle_event(click)
+    assert not scene._editing_alias
+    # ESC keyboard event should still work
+    esc = pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode="")
+    scene.handle_event(esc)
+    assert scene.is_done()
