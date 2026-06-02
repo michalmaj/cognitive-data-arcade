@@ -201,7 +201,7 @@ class StroopSessionPickerScene(Scene):
             surface.blit(msg, (w // 2 - msg.get_width() // 2, h // 2))
         else:
             self._draw_rows(surface, w)
-        hint = self._font_hint.render("↑↓  ENTER  ESC", True, _DIM)
+        hint = self._font_hint.render("UP/DN  ENTER  ESC", True, _DIM)
         surface.blit(hint, (w - hint.get_width() - 14, h - _FOOTER_H))
 
     def _draw_rows(self, surface: pygame.Surface, w: int) -> None:
