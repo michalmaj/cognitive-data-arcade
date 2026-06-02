@@ -108,12 +108,17 @@ class Strings:
     options_music: str
     options_sfx: str
     options_hint: str
+    # Lesson reader
+    lesson_theory: str
+    lesson_notes: str
+    lesson_tasks: str
+    lesson_reader_hint: str
 
 
 EN = Strings(
     language="en",
     menu_title="Cognitive Data Arcade",
-    menu_subtitle="UP/DN  navigate   O  options   P  profile   L  lang: EN   ESC  quit",
+    menu_subtitle="UP/DN  navigate   O  options   T  theory   P  profile   L  lang: EN   ESC  quit",
     session_complete="Session Complete",
     session_subtitle="here's what your brain did today",
     label_arcade_points="Arcade Points",
@@ -195,12 +200,16 @@ EN = Strings(
     options_music="Music",
     options_sfx="SFX",
     options_hint="LEFT / RIGHT  volume    ENTER  toggle    ESC  back",
+    lesson_theory="Theory",
+    lesson_notes="Notes",
+    lesson_tasks="Tasks",
+    lesson_reader_hint="SPACE / RIGHT  next    LEFT  back    ESC  menu",
 )
 
 PL = Strings(
     language="pl",
     menu_title="Cognitive Data Arcade",
-    menu_subtitle="UP/DN  nawigacja   O  opcje   P  profil   L  jezyk: PL   ESC  wyjscie",
+    menu_subtitle="UP/DN  nawigacja   O  opcje   T  teoria   P  profil   L  jezyk: PL   ESC  wyjscie",
     session_complete="Sesja Zakończona",
     session_subtitle="oto co dziś zrobił Twój mózg",
     label_arcade_points="Punkty Arcade",
@@ -282,6 +291,10 @@ PL = Strings(
     options_music="Muzyka",
     options_sfx="Dzwieki",
     options_hint="LEWO / PRAWO  glosnosc    ENTER  przelacz    ESC  wróc",
+    lesson_theory="Teoria",
+    lesson_notes="Notatki",
+    lesson_tasks="Zadania",
+    lesson_reader_hint="SPACJA / PRAWO  dalej    LEWO  wstecz    ESC  menu",
 )
 
 

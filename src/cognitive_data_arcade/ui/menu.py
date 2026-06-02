@@ -88,6 +88,14 @@ class LessonMenuScene(Scene):
             back = LessonMenuScene(self._pm, self._strings)
             self._next = OptionsScene(self._pm, self._strings, back)
             self._done = True
+        elif event.key == pygame.K_t:
+            lesson_num = _LESSONS[self._selected][0]
+            if lesson_num in (1, 2, 7, 8, 9, 10):
+                from cognitive_data_arcade.ui.lesson_reader import LessonReaderScene
+
+                back = LessonMenuScene(self._pm, self._strings)
+                self._next = LessonReaderScene(lesson_num, self._strings, back)
+                self._done = True
         elif event.key == pygame.K_z:
             self._launch_stroop_picker()
 
