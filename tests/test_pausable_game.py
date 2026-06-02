@@ -95,7 +95,7 @@ def test_down_navigates_and_clamps(tmp_path: Path) -> None:
         pg.handle_event(
             pygame.event.Event(pygame.KEYDOWN, key=pygame.K_DOWN, mod=0, unicode="")
         )
-    assert pg._selected == 3  # clamped at max index
+    assert pg._selected == 4  # clamped at max index (_MENU_ITEMS - 1)
 
 
 def test_restart_creates_new_scene(tmp_path: Path) -> None:
@@ -162,7 +162,7 @@ def test_quit_returns_lesson_menu(tmp_path: Path) -> None:
 
     pg, _, _ = _make(tmp_path)
     pg._paused = True
-    pg._selected = 3
+    pg._selected = 4
     pg.handle_event(
         pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode="\r")
     )

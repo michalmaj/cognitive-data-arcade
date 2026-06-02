@@ -4,6 +4,7 @@ from pathlib import Path
 
 import pygame
 
+from cognitive_data_arcade.engine import audio
 from cognitive_data_arcade.engine.i18n import Strings, get_strings
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.profile.manager import ProfileManager
@@ -34,6 +35,7 @@ class LessonMenuScene(Scene):
         self._selected = 0
         self._next: Scene | None = None
         self._done = False
+        audio.play_music("menu")
         pygame.font.init()
         self._font_title = pygame.font.SysFont(None, 52)
         self._font_item = pygame.font.SysFont(None, 34)
@@ -45,8 +47,10 @@ class LessonMenuScene(Scene):
             self._done = True
         elif event.key == pygame.K_UP:
             self._selected = max(0, self._selected - 1)
+            audio.play_sfx("navigate")
         elif event.key == pygame.K_DOWN:
             self._selected = min(len(_LESSONS) - 1, self._selected + 1)
+            audio.play_sfx("navigate")
         elif event.key == pygame.K_p:
             from cognitive_data_arcade.ui.profile_screen import ProfileScene
 
@@ -64,6 +68,7 @@ class LessonMenuScene(Scene):
             self._next = SessionPickerScene(sessions_dir, self._strings, self._pm)
             self._done = True
         elif event.key == pygame.K_RETURN:
+            audio.play_sfx("select")
             lesson_num = _LESSONS[self._selected][0]
             if lesson_num == 1:
                 self._launch_big_data_map()
@@ -77,6 +82,12 @@ class LessonMenuScene(Scene):
                 self._launch_nback()
             elif lesson_num == 7:
                 self._launch_stroop()
+        elif event.key == pygame.K_o:
+            from cognitive_data_arcade.ui.options_scene import OptionsScene
+
+            back = LessonMenuScene(self._pm, self._strings)
+            self._next = OptionsScene(self._pm, self._strings, back)
+            self._done = True
         elif event.key == pygame.K_z:
             self._launch_stroop_picker()
 

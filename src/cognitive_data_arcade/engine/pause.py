@@ -5,6 +5,7 @@ from dataclasses import dataclass
 
 import pygame
 
+from cognitive_data_arcade.engine import audio
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.profile.manager import ProfileManager
@@ -16,7 +17,7 @@ _HIGHLIGHT = (243, 156, 18)
 _DIM = (100, 100, 150)
 _KEY_COLOR = (39, 174, 96)
 
-_MENU_ITEMS = 4
+_MENU_ITEMS = 5
 
 
 @dataclass(frozen=True)
@@ -46,6 +47,7 @@ class PausableGame(Scene):
         self._sub_scene: Scene | None = None
         self._done = False
         self._next: Scene | None = None
+        audio.play_music("game")
         pygame.font.init()
         self._font_title = pygame.font.SysFont(None, 52)
         self._font_item = pygame.font.SysFont(None, 34)
@@ -66,6 +68,7 @@ class PausableGame(Scene):
                 self._paused = True
                 self._show_keyref = False
                 self._selected = 0
+                audio.play_sfx("pause")
             else:
                 self._inner.handle_event(event)
         elif self._show_keyref:
@@ -79,6 +82,7 @@ class PausableGame(Scene):
             elif event.key == pygame.K_DOWN:
                 self._selected = min(_MENU_ITEMS - 1, self._selected + 1)
             elif event.key == pygame.K_RETURN:
+                audio.play_sfx("select")
                 self._activate()
 
     def update(self, dt_ms: float) -> None:
@@ -122,6 +126,10 @@ class PausableGame(Scene):
         elif self._selected == 2:
             self._show_keyref = True
         elif self._selected == 3:
+            from cognitive_data_arcade.ui.options_scene import OptionsScene
+
+            self._sub_scene = OptionsScene(self._pm, self._strings, back_scene=None)
+        elif self._selected == 4:
             from cognitive_data_arcade.ui.menu import LessonMenuScene
 
             self._next = LessonMenuScene(self._pm, self._strings)
@@ -134,7 +142,7 @@ class PausableGame(Scene):
 
     def _draw_pause_menu(self, surface: pygame.Surface) -> None:
         w, h = surface.get_size()
-        panel_w, panel_h = 340, 260
+        panel_w, panel_h = 340, 300
         px = (w - panel_w) // 2
         py = (h - panel_h) // 2
         pygame.draw.rect(
@@ -149,6 +157,7 @@ class PausableGame(Scene):
             self._strings.pause_restart,
             self._strings.pause_how_to_play,
             self._strings.pause_keyref,
+            self._strings.pause_options,
             self._strings.pause_quit,
         ]
         item_y = py + 72
