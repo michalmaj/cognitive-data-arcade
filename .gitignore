@@ -42,3 +42,4 @@ docs/superpowers/
 # Audio assets (download separately)
 assets/audio/music/*.ogg
 assets/audio/music/*.mp3
+assets/audio/music/*.wav

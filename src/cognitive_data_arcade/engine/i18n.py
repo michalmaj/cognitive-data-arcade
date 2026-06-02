@@ -113,7 +113,7 @@ class Strings:
 EN = Strings(
     language="en",
     menu_title="Cognitive Data Arcade",
-    menu_subtitle="↑↓ navigate   P profile   L language: EN   ESC quit",
+    menu_subtitle="UP/DN  navigate   O  options   P  profile   L  lang: EN   ESC  quit",
     session_complete="Session Complete",
     session_subtitle="here's what your brain did today",
     label_arcade_points="Arcade Points",
@@ -200,7 +200,7 @@ EN = Strings(
 PL = Strings(
     language="pl",
     menu_title="Cognitive Data Arcade",
-    menu_subtitle="↑↓ nawigacja   P profil   L język: PL   ESC wyjście",
+    menu_subtitle="UP/DN  nawigacja   O  opcje   P  profil   L  jezyk: PL   ESC  wyjscie",
     session_complete="Sesja Zakończona",
     session_subtitle="oto co dziś zrobił Twój mózg",
     label_arcade_points="Punkty Arcade",

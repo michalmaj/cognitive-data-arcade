@@ -60,8 +60,11 @@ def play_music(track: str) -> None:
 
 
 def _start_music(track: str) -> None:
-    path = Path("assets") / "audio" / "music" / f"{track}.ogg"
-    if not path.exists():
+    for ext in (".ogg", ".mp3", ".wav"):
+        path = Path("assets") / "audio" / "music" / f"{track}{ext}"
+        if path.exists():
+            break
+    else:
         return
     try:
         pygame.mixer.music.load(str(path))
