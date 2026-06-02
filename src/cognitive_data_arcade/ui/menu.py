@@ -138,7 +138,7 @@ class LessonMenuScene(Scene):
                 self._popup_selected = 1 - self._popup_selected
             elif event.key == pygame.K_RETURN:
                 self._confirm_popup()
-        elif event.type == pygame.MOUSEMOTION:
+        elif event.type in (pygame.MOUSEMOTION, pygame.MOUSEBUTTONDOWN):
             surf = pygame.display.get_surface()
             if surf is None:
                 return
@@ -148,12 +148,18 @@ class LessonMenuScene(Scene):
             play_rect = pygame.Rect(px + 20, py + 80, 120, 40)
             teoria_rect = pygame.Rect(px + 180, py + 80, 120, 40)
             from cognitive_data_arcade.engine.mouse import hit
-            if hit(play_rect, event.pos):
-                self._popup_selected = 0
-            elif hit(teoria_rect, event.pos) and self._teoria_available():
-                self._popup_selected = 1
-        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            self._confirm_popup()
+            if event.type == pygame.MOUSEMOTION:
+                if hit(play_rect, event.pos):
+                    self._popup_selected = 0
+                elif hit(teoria_rect, event.pos) and self._teoria_available():
+                    self._popup_selected = 1
+            elif event.button == 1:
+                if hit(play_rect, event.pos):
+                    self._popup_selected = 0
+                    self._confirm_popup()
+                elif hit(teoria_rect, event.pos) and self._teoria_available():
+                    self._popup_selected = 1
+                    self._confirm_popup()
 
     def _confirm_popup(self) -> None:
         self._popup_visible = False
@@ -185,9 +191,9 @@ class LessonMenuScene(Scene):
         teoria_color = (70, 70, 112)
         if self._teoria_available():
             teoria_color = _HIGHLIGHT_COLOR if self._popup_selected == 1 else _ITEM_COLOR
-        teoria_surf = self._font_item.render("[ Teoria ]", True, teoria_color)
+        teoria_surf = self._font_item.render(f"[ {self._strings.label_theory_lesson} ]", True, teoria_color)
         surface.blit(teoria_surf, (px + 180, py + 80))
-        hint_surf = self._font_item.render("ESC — zamknij", True, (70, 70, 112))
+        hint_surf = self._font_item.render(self._strings.label_esc_close, True, (70, 70, 112))
         surface.blit(hint_surf, (px + _POPUP_W // 2 - hint_surf.get_width() // 2, py + _POPUP_H - 30))
 
     def _launch_big_data_map(self) -> None:
