@@ -371,9 +371,9 @@ class StroopGame(Scene):
         title = self._font_med.render(self._strings.stroop_pick_preset, True, _WHITE)
         surface.blit(title, (w // 2 - title.get_width() // 2, 200))
         labels = [
-            self._strings.preset_quick,
-            self._strings.preset_standard,
-            self._strings.preset_full,
+            self._strings.stroop_difficulty_easy,
+            self._strings.stroop_difficulty_medium,
+            self._strings.stroop_difficulty_hard,
         ]
         self._preset_rects = []
         for i, label in enumerate(labels):

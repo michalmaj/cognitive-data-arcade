@@ -139,9 +139,9 @@ def test_en_has_stroop_strings() -> None:
     assert len(EN.stroop_instructions) > 20
     assert "\n" in EN.stroop_instructions
     assert len(EN.stroop_pick_preset) > 3
-    assert len(EN.preset_quick) > 3
-    assert len(EN.preset_standard) > 3
-    assert len(EN.preset_full) > 3
+    assert len(EN.stroop_difficulty_easy) > 0
+    assert len(EN.stroop_difficulty_medium) > 0
+    assert len(EN.stroop_difficulty_hard) > 0
     assert len(EN.stroop_hint_ink) > 5
     assert len(EN.stroop_too_slow) > 2
     assert len(EN.stroop_analysis_title) > 5
