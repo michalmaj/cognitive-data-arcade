@@ -93,7 +93,7 @@ class OptionsScene(Scene):
 
     def draw(self, surface: pygame.Surface) -> None:
         surface.fill(_BG)
-        w, h = surface.get_size()
+        _, h = surface.get_size()
 
         title = self._font_title.render(self._strings.options_title, True, _WHITE)
         surface.blit(title, (40, 36))

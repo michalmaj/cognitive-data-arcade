@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import numpy as np
 import pygame
+from pathlib import Path
 
 from cognitive_data_arcade.profile.manager import Profile
 
@@ -50,6 +51,8 @@ def _make_tone(freq: float, duration_ms: int) -> pygame.mixer.Sound:
 
 def play_music(track: str) -> None:
     global _current_track
+    if _current_track == track:
+        return
     _current_track = track
     if not _music_enabled:
         return
@@ -57,7 +60,6 @@ def play_music(track: str) -> None:
 
 
 def _start_music(track: str) -> None:
-    from pathlib import Path
     path = Path("assets") / "audio" / "music" / f"{track}.ogg"
     if not path.exists():
         return
