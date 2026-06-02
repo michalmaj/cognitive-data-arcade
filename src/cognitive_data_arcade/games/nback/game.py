@@ -9,6 +9,7 @@ from pathlib import Path
 
 import pygame
 
+from cognitive_data_arcade.engine import audio
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.nback.config import NBackConfig, Trial, generate_block
@@ -172,6 +173,7 @@ class NBackGame(Scene):
         )
         self._records.append(record)
         _write_trial(self._csv_path, record)
+        audio.play_sfx("correct" if (pos_correct and let_correct) else "wrong")
         self._trial_global += 1
         self._trial_in_block += 1
 

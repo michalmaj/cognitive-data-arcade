@@ -5,6 +5,7 @@ from dataclasses import dataclass
 
 import pygame
 
+from cognitive_data_arcade.engine import audio
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.profile.manager import ProfileManager
@@ -242,6 +243,7 @@ class BigDataMapGame(Scene):
                 self._l2_idx = (self._l2_idx + 1) % n
             elif key in (pygame.K_RETURN, pygame.K_KP_ENTER, pygame.K_BACKSPACE):
                 self._in_l2 = False
+                audio.play_sfx("navigate")
         else:
             n = len(_L1_NODES)
             if key in (pygame.K_UP, pygame.K_RIGHT):
@@ -251,6 +253,7 @@ class BigDataMapGame(Scene):
             elif key in (pygame.K_RETURN, pygame.K_KP_ENTER):
                 self._in_l2 = True
                 self._l2_idx = 0
+                audio.play_sfx("navigate")
 
     def update(self, dt: float) -> None:
         pass
