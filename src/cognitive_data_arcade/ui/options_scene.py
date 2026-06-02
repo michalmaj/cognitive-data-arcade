@@ -14,6 +14,10 @@ _DIM = (100, 100, 150)
 _GREEN = (39, 174, 96)
 _GRAY = (50, 50, 80)
 _STEP = 0.05
+_ROW_Y = [120, 200]
+_BAR_X = 230
+_BAR_W = 220
+_BAR_H = 18
 
 
 class OptionsScene(Scene):
@@ -33,12 +37,36 @@ class OptionsScene(Scene):
         self._music_vol: float = profile.music_volume
         self._sfx_vol: float = profile.sfx_volume
         self._focused: int = 0  # 0=music row, 1=sfx row
+        self._dragging: bool = False
         pygame.font.init()
         self._font_title = pygame.font.SysFont(None, 52)
         self._font_item = pygame.font.SysFont(None, 36)
         self._font_hint = pygame.font.SysFont(None, 26)
 
     def handle_event(self, event: pygame.event.Event) -> None:
+        if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+            self._dragging = False
+            return
+        if event.type == pygame.MOUSEMOTION:
+            if self._dragging:
+                self._apply_slider_x(event.pos[0])
+            else:
+                for i in range(2):
+                    if self._row_hit_rect(i).collidepoint(event.pos):
+                        self._focused = i
+            return
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            for i in range(2):
+                if self._row_bar_rect(i).collidepoint(event.pos):
+                    self._focused = i
+                    self._dragging = True
+                    self._apply_slider_x(event.pos[0])
+                    return
+                if self._row_hit_rect(i).collidepoint(event.pos):
+                    self._focused = i
+                    self._toggle()
+                    return
+            return
         if event.type != pygame.KEYDOWN:
             return
         key = event.key
@@ -73,6 +101,21 @@ class OptionsScene(Scene):
             self._sfx_enabled = not self._sfx_enabled
             audio.set_sfx_enabled(self._sfx_enabled)
         audio.play_sfx("select")
+
+    def _row_hit_rect(self, row: int) -> pygame.Rect:
+        return pygame.Rect(0, _ROW_Y[row], 600, 40)
+
+    def _row_bar_rect(self, row: int) -> pygame.Rect:
+        return pygame.Rect(_BAR_X, _ROW_Y[row] + 8, _BAR_W, _BAR_H)
+
+    def _apply_slider_x(self, x: int) -> None:
+        vol = max(0.0, min(1.0, (x - _BAR_X) / _BAR_W))
+        if self._focused == 0:
+            self._music_vol = vol
+            audio.set_music_volume(vol)
+        else:
+            self._sfx_vol = vol
+            audio.set_sfx_volume(vol)
 
     def _save(self) -> None:
         profile = self._pm.load()

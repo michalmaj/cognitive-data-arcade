@@ -86,6 +86,20 @@ class LessonReaderScene(Scene):
         if not self._slides:
             self._done = True
             return
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            surf = pygame.display.get_surface()
+            w = surf.get_size()[0] if surf else 1024
+            if event.pos[0] >= w // 2:
+                prev = self._slides[self._idx][0]
+                self._idx = (self._idx + 1) % len(self._slides)
+                if self._slides[self._idx][0] != prev:
+                    audio.play_sfx("navigate")
+            else:
+                prev = self._slides[self._idx][0]
+                self._idx = (self._idx - 1) % len(self._slides)
+                if self._slides[self._idx][0] != prev:
+                    audio.play_sfx("navigate")
+            return
         if event.type != pygame.KEYDOWN:
             return
         key = event.key

@@ -141,6 +141,19 @@ class StroopSessionPickerScene(Scene):
     # ── Scene interface ───────────────────────────────────────────────────────
 
     def handle_event(self, event: pygame.event.Event) -> None:
+        if event.type == pygame.MOUSEMOTION:
+            y = event.pos[1]
+            idx = (y - _TOP_H) // _ROW_H
+            if 0 <= idx < len(self._sessions):
+                self._selected = idx
+            return
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            y = event.pos[1]
+            idx = (y - _TOP_H) // _ROW_H
+            if 0 <= idx < len(self._sessions):
+                self._selected = idx
+                self._open_analysis()
+            return
         if event.type != pygame.KEYDOWN:
             return
         if event.key == pygame.K_UP:

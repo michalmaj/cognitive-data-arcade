@@ -19,6 +19,7 @@ class GameLoop:
         pygame.init()
         screen = pygame.display.set_mode((self._width, self._height))
         pygame.display.set_caption("Cognitive Data Arcade")
+        pygame.mouse.set_visible(True)
         clock = pygame.time.Clock()
 
         while self._scene is not None:

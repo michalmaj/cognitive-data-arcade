@@ -27,6 +27,11 @@ _TITLE_COLOR = (240, 240, 240)
 _ITEM_COLOR = (160, 160, 160)
 _HIGHLIGHT_COLOR = (243, 156, 18)
 
+_MENU_TOP = 140
+_ROW_H = 44
+_POPUP_W = 320
+_POPUP_H = 160
+
 
 class LessonMenuScene(Scene):
     def __init__(self, profile_manager: ProfileManager, strings: Strings, selected: int = 0) -> None:
@@ -35,12 +40,31 @@ class LessonMenuScene(Scene):
         self._selected = selected
         self._next: Scene | None = None
         self._done = False
+        self._popup_visible: bool = False
+        self._popup_selected: int = 0  # 0=Play, 1=Teoria
         audio.play_music("menu")
         pygame.font.init()
         self._font_title = pygame.font.SysFont(None, 52)
         self._font_item = pygame.font.SysFont(None, 34)
 
     def handle_event(self, event: pygame.event.Event) -> None:
+        if self._popup_visible:
+            self._handle_popup_event(event)
+            return
+        if event.type == pygame.MOUSEMOTION:
+            x, y = event.pos
+            idx = (y - _MENU_TOP) // _ROW_H
+            if 0 <= idx < len(_LESSONS):
+                self._selected = idx
+            return
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            x, y = event.pos
+            idx = (y - _MENU_TOP) // _ROW_H
+            if 0 <= idx < len(_LESSONS):
+                self._selected = idx
+                self._popup_visible = True
+                self._popup_selected = 0
+            return
         if event.type != pygame.KEYDOWN:
             return
         if event.key == pygame.K_ESCAPE:
@@ -68,20 +92,7 @@ class LessonMenuScene(Scene):
             self._next = SessionPickerScene(sessions_dir, self._strings, self._pm)
             self._done = True
         elif event.key == pygame.K_RETURN:
-            audio.play_sfx("select")
-            lesson_num = _LESSONS[self._selected][0]
-            if lesson_num == 1:
-                self._launch_big_data_map()
-            elif lesson_num == 2:
-                self._launch_rt_lab()
-            elif lesson_num == 8:
-                self._launch_flanker()
-            elif lesson_num == 9:
-                self._launch_gono()
-            elif lesson_num == 10:
-                self._launch_nback()
-            elif lesson_num == 7:
-                self._launch_stroop()
+            self._launch_selected_game()
         elif event.key == pygame.K_o:
             from cognitive_data_arcade.ui.options_scene import OptionsScene
 
@@ -98,6 +109,92 @@ class LessonMenuScene(Scene):
                 self._done = True
         elif event.key == pygame.K_z:
             self._launch_stroop_picker()
+
+    def _launch_selected_game(self) -> None:
+        audio.play_sfx("select")
+        lesson_num = _LESSONS[self._selected][0]
+        if lesson_num == 1:
+            self._launch_big_data_map()
+        elif lesson_num == 2:
+            self._launch_rt_lab()
+        elif lesson_num == 8:
+            self._launch_flanker()
+        elif lesson_num == 9:
+            self._launch_gono()
+        elif lesson_num == 10:
+            self._launch_nback()
+        elif lesson_num == 7:
+            self._launch_stroop()
+
+    def _teoria_available(self) -> bool:
+        lesson_num = _LESSONS[self._selected][0]
+        return lesson_num in (1, 2, 7, 8, 9, 10)
+
+    def _handle_popup_event(self, event: pygame.event.Event) -> None:
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                self._popup_visible = False
+            elif event.key in (pygame.K_LEFT, pygame.K_RIGHT, pygame.K_TAB):
+                self._popup_selected = 1 - self._popup_selected
+            elif event.key == pygame.K_RETURN:
+                self._confirm_popup()
+        elif event.type in (pygame.MOUSEMOTION, pygame.MOUSEBUTTONDOWN):
+            surf = pygame.display.get_surface()
+            if surf is None:
+                return
+            w, h = surf.get_size()
+            px = (w - _POPUP_W) // 2
+            py = (h - _POPUP_H) // 2
+            play_rect = pygame.Rect(px + 20, py + 80, 120, 40)
+            teoria_rect = pygame.Rect(px + 180, py + 80, 120, 40)
+            from cognitive_data_arcade.engine.mouse import hit
+            if event.type == pygame.MOUSEMOTION:
+                if hit(play_rect, event.pos):
+                    self._popup_selected = 0
+                elif hit(teoria_rect, event.pos) and self._teoria_available():
+                    self._popup_selected = 1
+            elif event.button == 1:
+                if hit(play_rect, event.pos):
+                    self._popup_selected = 0
+                    self._confirm_popup()
+                elif hit(teoria_rect, event.pos) and self._teoria_available():
+                    self._popup_selected = 1
+                    self._confirm_popup()
+
+    def _confirm_popup(self) -> None:
+        self._popup_visible = False
+        if self._popup_selected == 0:
+            self._launch_selected_game()
+        elif self._popup_selected == 1 and self._teoria_available():
+            lesson_num = _LESSONS[self._selected][0]
+            from cognitive_data_arcade.ui.lesson_reader import LessonReaderScene
+
+            back = LessonMenuScene(self._pm, self._strings, self._selected)
+            self._next = LessonReaderScene(lesson_num, self._strings, back)
+            self._done = True
+
+    def _draw_popup(self, surface: pygame.Surface) -> None:
+        w, h = surface.get_size()
+        overlay = pygame.Surface((w, h), pygame.SRCALPHA)
+        overlay.fill((0, 0, 0, 140))
+        surface.blit(overlay, (0, 0))
+        px = (w - _POPUP_W) // 2
+        py = (h - _POPUP_H) // 2
+        pygame.draw.rect(surface, (18, 18, 42), (px, py, _POPUP_W, _POPUP_H), border_radius=8)
+        pygame.draw.rect(surface, (42, 42, 80), (px, py, _POPUP_W, _POPUP_H), 1, border_radius=8)
+        name = _LESSONS[self._selected][1]
+        title_surf = self._font_item.render(name, True, (240, 240, 240))
+        surface.blit(title_surf, (px + _POPUP_W // 2 - title_surf.get_width() // 2, py + 16))
+        play_color = _HIGHLIGHT_COLOR if self._popup_selected == 0 else _ITEM_COLOR
+        play_surf = self._font_item.render(f"[ {self._strings.label_play_game} ]", True, play_color)
+        surface.blit(play_surf, (px + 20, py + 80))
+        teoria_color = (70, 70, 112)
+        if self._teoria_available():
+            teoria_color = _HIGHLIGHT_COLOR if self._popup_selected == 1 else _ITEM_COLOR
+        teoria_surf = self._font_item.render(f"[ {self._strings.label_theory_lesson} ]", True, teoria_color)
+        surface.blit(teoria_surf, (px + 180, py + 80))
+        hint_surf = self._font_item.render(self._strings.label_esc_close, True, (70, 70, 112))
+        surface.blit(hint_surf, (px + _POPUP_W // 2 - hint_surf.get_width() // 2, py + _POPUP_H - 30))
 
     def _launch_big_data_map(self) -> None:
         self._next = self._make_big_data_map_game()
@@ -278,3 +375,6 @@ class LessonMenuScene(Scene):
             color = _HIGHLIGHT_COLOR if i == self._selected else _ITEM_COLOR
             text = self._font_item.render(f"{num:02d}.  {name}", True, color)
             surface.blit(text, (60, 140 + i * 44))
+
+        if self._popup_visible:
+            self._draw_popup(surface)

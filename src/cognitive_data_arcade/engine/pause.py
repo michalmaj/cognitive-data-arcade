@@ -54,35 +54,62 @@ class PausableGame(Scene):
         self._font_key = pygame.font.SysFont(None, 30)
         self._font_hint = pygame.font.SysFont(None, 26)
 
-    def handle_event(self, event: pygame.event.Event) -> None:
-        if event.type != pygame.KEYDOWN:
+    def _update_pause_selected(self, pos: tuple[int, int]) -> None:
+        from cognitive_data_arcade.engine.mouse import hit
+        surf = pygame.display.get_surface()
+        if surf is None:
             return
+        w, h = surf.get_size()
+        panel_w, panel_h = 340, 300
+        px = (w - panel_w) // 2
+        py = (h - panel_h) // 2
+        item_y = py + 72
+        for i in range(_MENU_ITEMS):
+            rect = pygame.Rect(px, item_y, panel_w, 36)
+            if hit(rect, pos):
+                self._selected = i
+                break
+            item_y += 40
+
+    def handle_event(self, event: pygame.event.Event) -> None:
         if self._sub_scene is not None:
             self._sub_scene.handle_event(event)
             if self._sub_scene.is_done():
                 self._sub_scene = None
             return
         if not self._paused:
-            if event.key == pygame.K_ESCAPE:
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 self._paused = True
                 self._show_keyref = False
                 self._selected = 0
                 audio.play_sfx("pause")
             else:
                 self._inner.handle_event(event)
-        elif self._show_keyref:
-            if event.key == pygame.K_ESCAPE:
+            return
+        if self._show_keyref:
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 self._show_keyref = False
-        else:
-            if event.key == pygame.K_ESCAPE:
-                self._paused = False
-            elif event.key == pygame.K_UP:
-                self._selected = max(0, self._selected - 1)
-            elif event.key == pygame.K_DOWN:
-                self._selected = min(_MENU_ITEMS - 1, self._selected + 1)
-            elif event.key == pygame.K_RETURN:
-                audio.play_sfx("select")
-                self._activate()
+            return
+        # pause menu active
+        if event.type == pygame.MOUSEMOTION:
+            self._update_pause_selected(event.pos)
+            return
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            self._update_pause_selected(event.pos)
+            audio.play_sfx("select")
+            self._activate()
+            return
+        if event.type != pygame.KEYDOWN:
+            return
+        if event.key == pygame.K_ESCAPE:
+            self._paused = False
+        elif event.key == pygame.K_UP:
+            self._selected = max(0, self._selected - 1)
+        elif event.key == pygame.K_DOWN:
+            self._selected = min(_MENU_ITEMS - 1, self._selected + 1)
+        elif event.key == pygame.K_RETURN:
+            audio.play_sfx("select")
+            self._activate()
 
     def update(self, dt_ms: float) -> None:
         if self._sub_scene is not None:

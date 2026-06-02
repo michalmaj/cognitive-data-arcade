@@ -120,6 +120,8 @@ class StroopGame(Scene):
         self._current_stimulus: _Stimulus | None = None
         self._records: list[_TrialRecord] = []
         self._next_cache: Scene | None = None
+        self._color_rects: dict[str, pygame.Rect] = {}
+        self._preset_rects: list[pygame.Rect] = []
 
         pygame.font.init()
         self._font_sm = pygame.font.SysFont(None, 26)
@@ -131,6 +133,36 @@ class StroopGame(Scene):
     # ── Scene interface ───────────────────────────────────────────────────────
 
     def handle_event(self, event: pygame.event.Event) -> None:
+        if event.type == pygame.MOUSEMOTION:
+            from cognitive_data_arcade.engine.mouse import hit
+            if self._phase == _Phase.PRESET_SELECT:
+                for i, rect in enumerate(self._preset_rects):
+                    if hit(rect, event.pos):
+                        self._preset_idx = i
+                        break
+            return
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            from cognitive_data_arcade.engine.mouse import hit
+            if self._phase == _Phase.PRESET_SELECT:
+                for i, rect in enumerate(self._preset_rects):
+                    if hit(rect, event.pos):
+                        self._preset_idx = i
+                        self._config = self._presets[self._preset_idx]
+                        self._phase = _Phase.INSTRUCTIONS
+                        break
+            elif self._phase == _Phase.STIMULUS:
+                color_name_map = {"r": "red", "g": "green", "b": "blue", "y": "yellow"}
+                for key, rect in self._color_rects.items():
+                    if hit(rect, event.pos):
+                        color = color_name_map[key]
+                        correct = color == self._current_stimulus.ink_name
+                        self._complete_trial(
+                            rt=self._phase_timer,
+                            actual=key,
+                            correct=correct,
+                        )
+                        break
+            return
         if event.type != pygame.KEYDOWN:
             return
         if self._phase == _Phase.PRESET_SELECT:
@@ -343,10 +375,16 @@ class StroopGame(Scene):
             self._strings.preset_standard,
             self._strings.preset_full,
         ]
+        self._preset_rects = []
         for i, label in enumerate(labels):
             color = _HIGHLIGHT if i == self._preset_idx else _DIM
             surf = self._font_med.render(label, True, color)
-            surface.blit(surf, (w // 2 - surf.get_width() // 2, 280 + i * 56))
+            x = w // 2 - surf.get_width() // 2
+            y = 280 + i * 56
+            surface.blit(surf, (x, y))
+            self._preset_rects.append(
+                pygame.Rect(x - 10, y - 4, surf.get_width() + 20, surf.get_height() + 8)
+            )
         hint = self._font_hint.render("UP/DN  navigate   SPACE/ENTER  select", True, _DIM)
         surface.blit(hint, (w // 2 - hint.get_width() // 2, h - _FOOTER_H))
 
@@ -399,14 +437,16 @@ class StroopGame(Scene):
         bar_y = h - _FOOTER_H
         pygame.draw.line(surface, (42, 42, 80), (0, bar_y), (w, bar_y))
         key_labels = [
-            ("R", "CZERWONY", (231, 76, 60)),
-            ("G", "ZIELONY", (39, 174, 96)),
-            ("B", "NIEBIESKI", (41, 128, 185)),
-            ("Y", "ŻÓŁTY", (243, 156, 18)),
+            ("R", "r", "CZERWONY", (231, 76, 60)),
+            ("G", "g", "ZIELONY", (39, 174, 96)),
+            ("B", "b", "NIEBIESKI", (41, 128, 185)),
+            ("Y", "y", "ŻÓŁTY", (243, 156, 18)),
         ]
         col_w = w // 4
-        for i, (letter, name, color) in enumerate(key_labels):
+        self._color_rects = {}
+        for i, (letter, key, name, color) in enumerate(key_labels):
             cx = i * col_w + col_w // 2
+            self._color_rects[key] = pygame.Rect(i * col_w, bar_y, col_w, _FOOTER_H)
             k = self._font_key.render(letter, True, color)
             surface.blit(k, (cx - k.get_width() // 2, bar_y + 4))
             n = self._font_sm.render(name, True, color)
