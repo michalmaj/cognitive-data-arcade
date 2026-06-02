@@ -44,26 +44,34 @@ def test_right_also_navigates_forward():
     assert scene._idx == 1
 
 
-def test_left_on_first_slide_does_nothing():
+def test_left_on_first_slide_wraps_to_last():
     scene = LessonReaderScene(1, EN, None)
+    last_idx = len(scene._slides) - 1
     scene.handle_event(_key(pygame.K_LEFT))
+    assert scene._idx == last_idx
+    assert not scene.is_done()
+
+
+def test_backspace_on_first_slide_wraps_to_last():
+    scene = LessonReaderScene(1, EN, None)
+    last_idx = len(scene._slides) - 1
+    scene.handle_event(_key(pygame.K_BACKSPACE))
+    assert scene._idx == last_idx
+
+
+def test_space_on_last_slide_wraps_to_first():
+    scene = LessonReaderScene(1, EN, None)
+    scene._idx = len(scene._slides) - 1
+    scene.handle_event(_key(pygame.K_SPACE))
     assert scene._idx == 0
     assert not scene.is_done()
 
 
-def test_backspace_on_first_slide_does_nothing():
+def test_esc_is_only_way_to_close():
     scene = LessonReaderScene(1, EN, None)
-    scene.handle_event(_key(pygame.K_BACKSPACE))
-    assert scene._idx == 0
-
-
-def test_space_on_last_slide_sets_done():
-    scene = LessonReaderScene(1, EN, None)
-    for _ in range(200):
-        if scene.is_done():
-            break
+    for _ in range(len(scene._slides) + 5):
         scene.handle_event(_key(pygame.K_SPACE))
-    assert scene.is_done()
+    assert not scene.is_done()
 
 
 def test_esc_returns_back_scene():

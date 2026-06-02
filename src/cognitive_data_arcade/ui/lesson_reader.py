@@ -92,19 +92,15 @@ class LessonReaderScene(Scene):
         if key == pygame.K_ESCAPE:
             self._done = True
         elif key in (pygame.K_SPACE, pygame.K_RIGHT):
-            if self._idx < len(self._slides) - 1:
-                prev = self._slides[self._idx][0]
-                self._idx += 1
-                if self._slides[self._idx][0] != prev:
-                    audio.play_sfx("navigate")
-            else:
-                self._done = True
+            prev = self._slides[self._idx][0]
+            self._idx = (self._idx + 1) % len(self._slides)
+            if self._slides[self._idx][0] != prev:
+                audio.play_sfx("navigate")
         elif key in (pygame.K_LEFT, pygame.K_BACKSPACE):
-            if self._idx > 0:
-                prev = self._slides[self._idx][0]
-                self._idx -= 1
-                if self._slides[self._idx][0] != prev:
-                    audio.play_sfx("navigate")
+            prev = self._slides[self._idx][0]
+            self._idx = (self._idx - 1) % len(self._slides)
+            if self._slides[self._idx][0] != prev:
+                audio.play_sfx("navigate")
 
     def update(self, dt_ms: float) -> None:
         pass
