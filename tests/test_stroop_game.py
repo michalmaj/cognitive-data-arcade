@@ -10,6 +10,7 @@ from cognitive_data_arcade.profile.manager import ProfileManager
 _FAST_CONFIG = StroopConfig(
     num_trials=12,
     trials_per_block=12,
+    num_colors=4,
     iti_min_ms=10,
     iti_max_ms=20,
     feedback_duration_ms=10,
@@ -26,7 +27,7 @@ _DOWN = pygame.event.Event(pygame.KEYDOWN, key=pygame.K_DOWN, mod=0, unicode="")
 def _make_game(tmp_path: Path) -> StroopGame:
     pm = ProfileManager(tmp_path / "profile.json")
     pm.load()
-    return StroopGame(
+    game = StroopGame(
         config=_FAST_CONFIG,
         profile_manager=pm,
         strings=PL,
@@ -34,6 +35,9 @@ def _make_game(tmp_path: Path) -> StroopGame:
         session_id="test-session",
         csv_path=tmp_path / "stroop.csv",
     )
+    # Override presets to use _FAST_CONFIG as the default (at index 1)
+    game._presets = [_FAST_CONFIG, _FAST_CONFIG, _FAST_CONFIG]
+    return game
 
 
 def _advance_to_stimulus(game: StroopGame) -> None:
@@ -54,13 +58,13 @@ def test_preset_select_phase_is_initial(tmp_path: Path) -> None:
 
 def test_arrow_keys_change_preset(tmp_path: Path) -> None:
     game = _make_game(tmp_path)
-    assert game._preset_idx == 1  # STANDARD default
+    assert game._preset_idx == 1  # MEDIUM default
     game.handle_event(_UP)
-    assert game._preset_idx == 0  # QUICK
+    assert game._preset_idx == 0  # EASY
     game.handle_event(_DOWN)
-    assert game._preset_idx == 1  # STANDARD
+    assert game._preset_idx == 1  # MEDIUM
     game.handle_event(_DOWN)
-    assert game._preset_idx == 2  # FULL
+    assert game._preset_idx == 2  # HARD
     game.handle_event(_DOWN)
     assert game._preset_idx == 2  # clamps at max
 

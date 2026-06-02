@@ -14,8 +14,9 @@ COLORS: list[tuple[str, str, tuple[int, int, int], int]] = [
 
 @dataclass(frozen=True)
 class StroopConfig:
-    num_trials: int = 60
-    trials_per_block: int = 30
+    num_trials: int = 36
+    trials_per_block: int = 36
+    num_colors: int = 3
     iti_min_ms: int = 800
     iti_max_ms: int = 1500
     feedback_duration_ms: int = 600
@@ -23,6 +24,7 @@ class StroopConfig:
     ap_per_correct: int = 2
 
 
-QUICK = StroopConfig(num_trials=36, trials_per_block=18)
-STANDARD = StroopConfig(num_trials=60, trials_per_block=30)
-FULL = StroopConfig(num_trials=96, trials_per_block=32)
+EASY = StroopConfig(num_colors=2, num_trials=36, trials_per_block=36)
+MEDIUM = StroopConfig(num_colors=3, num_trials=36, trials_per_block=36)
+HARD = StroopConfig(num_colors=4, num_trials=36, trials_per_block=36)
+STANDARD = MEDIUM  # alias — menu.py unchanged

@@ -13,7 +13,7 @@ from cognitive_data_arcade.engine import audio
 from cognitive_data_arcade.engine.badges import BadgeEngine, SessionResult
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
-from cognitive_data_arcade.games.stroop.config import COLORS, FULL, QUICK, StroopConfig
+from cognitive_data_arcade.games.stroop.config import COLORS, EASY, HARD, MEDIUM, StroopConfig
 from cognitive_data_arcade.profile.manager import ProfileManager
 
 _BG = (10, 10, 20)
@@ -106,7 +106,7 @@ class StroopGame(Scene):
         self._session_id = session_id
         self._csv_path = csv_path
 
-        self._presets = [QUICK, config, FULL]
+        self._presets = [EASY, MEDIUM, HARD]
         self._preset_idx = 1  # middle (standard) default
 
         self._phase = _Phase.PRESET_SELECT
