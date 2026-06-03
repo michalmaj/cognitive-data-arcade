@@ -20,3 +20,7 @@ class FlankerConfig:
 QUICK = FlankerConfig(num_trials=24, trials_per_block=12)
 STANDARD = FlankerConfig(num_trials=48, trials_per_block=24)
 FULL = FlankerConfig(num_trials=96, trials_per_block=48)
+
+DIFFICULTY_EASY: dict = {"stimulus_duration_ms": 3000}
+DIFFICULTY_MEDIUM: dict = {"stimulus_duration_ms": 2000}
+DIFFICULTY_HARD: dict = {"stimulus_duration_ms": 1000}
