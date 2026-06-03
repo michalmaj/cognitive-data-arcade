@@ -37,7 +37,7 @@ class OptionsScene(Scene):
         self._sfx_enabled: bool = profile.sfx_enabled
         self._music_vol: float = profile.music_volume
         self._sfx_vol: float = profile.sfx_volume
-        self._fullscreen: bool = profile.fullscreen
+        self._fullscreen: bool = _display.is_fullscreen()
         self._focused: int = 0
         self._dragging: bool = False
         pygame.font.init()

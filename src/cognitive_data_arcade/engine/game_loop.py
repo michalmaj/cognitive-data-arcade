@@ -4,17 +4,20 @@ import pygame
 
 from cognitive_data_arcade.engine import display as _display
 from cognitive_data_arcade.engine.scene import Scene
+from cognitive_data_arcade.profile.manager import ProfileManager
 
 
 class GameLoop:
     FPS = 60
 
     def __init__(
-        self, initial_scene: Scene, width: int = 1024, height: int = 768
+        self, initial_scene: Scene, width: int = 1024, height: int = 768,
+        pm: ProfileManager | None = None,
     ) -> None:
         self._scene: Scene | None = initial_scene
         self._width = width
         self._height = height
+        self._pm = pm
 
     def run(self, fullscreen: bool = False) -> None:
         pygame.init()
@@ -32,6 +35,8 @@ class GameLoop:
                     return
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_F11:
                     _display.toggle()
+                    if self._pm is not None:
+                        self._pm.set_fullscreen(_display.is_fullscreen())
                 else:
                     self._scene.handle_event(event)
             self._scene.update(dt_ms)
