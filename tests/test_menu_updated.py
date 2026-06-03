@@ -60,7 +60,7 @@ def test_menu_esc_key_exits(tmp_path: Path) -> None:
 
 
 def test_menu_enter_on_lesson_7_launches_stroop(tmp_path: Path) -> None:
-    from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
+    from cognitive_data_arcade.ui.stroop_level_scene import StroopLevelScene
 
     pygame.init()
     scene = _make_menu(tmp_path)
@@ -72,7 +72,7 @@ def test_menu_enter_on_lesson_7_launches_stroop(tmp_path: Path) -> None:
         pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode="\r")
     )
     assert scene.is_done()
-    assert isinstance(scene.next_scene(), HowToPlayScene)
+    assert isinstance(scene.next_scene(), StroopLevelScene)
 
 
 def test_menu_z_key_launches_stroop_picker(tmp_path: Path) -> None:
@@ -128,7 +128,7 @@ def test_return_on_lesson1_launches_big_data_map(tmp_path: Path) -> None:
 
 
 def test_return_on_lesson8_launches_flanker(tmp_path: Path) -> None:
-    from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
+    from cognitive_data_arcade.ui.flanker_level_scene import FlankerLevelScene
 
     pygame.init()
     scene = _make_menu(tmp_path)
@@ -140,11 +140,11 @@ def test_return_on_lesson8_launches_flanker(tmp_path: Path) -> None:
         pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode="\r")
     )
     assert scene.is_done()
-    assert isinstance(scene.next_scene(), HowToPlayScene)
+    assert isinstance(scene.next_scene(), FlankerLevelScene)
 
 
 def test_return_on_lesson9_launches_gono(tmp_path: Path) -> None:
-    from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
+    from cognitive_data_arcade.ui.gono_level_scene import GoNoGoLevelScene
 
     pygame.init()
     scene = _make_menu(tmp_path)
@@ -156,7 +156,7 @@ def test_return_on_lesson9_launches_gono(tmp_path: Path) -> None:
         pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode="\r")
     )
     assert scene.is_done()
-    assert isinstance(scene.next_scene(), HowToPlayScene)
+    assert isinstance(scene.next_scene(), GoNoGoLevelScene)
 
 
 def test_return_on_lesson10_launches_nback(tmp_path: Path) -> None:

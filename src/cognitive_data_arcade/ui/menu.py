@@ -170,11 +170,23 @@ class LessonMenuScene(Scene):
         if lesson_num == 2:
             return self._make_rt_lab_game
         if lesson_num == 7:
-            return self._make_stroop_game
+            pm, strings = self._pm, self._strings
+            def _make_stroop():
+                from cognitive_data_arcade.ui.stroop_level_scene import StroopLevelScene
+                return StroopLevelScene(pm, strings)
+            return _make_stroop
         if lesson_num == 8:
-            return self._make_flanker_game
+            pm, strings = self._pm, self._strings
+            def _make_flanker():
+                from cognitive_data_arcade.ui.flanker_level_scene import FlankerLevelScene
+                return FlankerLevelScene(pm, strings)
+            return _make_flanker
         if lesson_num == 9:
-            return self._make_gono_game
+            pm, strings = self._pm, self._strings
+            def _make_gono():
+                from cognitive_data_arcade.ui.gono_level_scene import GoNoGoLevelScene
+                return GoNoGoLevelScene(pm, strings)
+            return _make_gono
         if lesson_num == 10:
             pm, strings = self._pm, self._strings
             def _make_nback():
@@ -275,33 +287,10 @@ class LessonMenuScene(Scene):
         )
 
     def _launch_stroop(self) -> None:
-        self._next = self._make_stroop_game()
+        from cognitive_data_arcade.ui.stroop_level_scene import StroopLevelScene
+
+        self._next = StroopLevelScene(self._pm, self._strings)
         self._done = True
-
-    def _make_stroop_game(self) -> Scene:
-        import datetime
-
-        from cognitive_data_arcade.engine.pause import PausableGame
-        from cognitive_data_arcade.games.stroop.config import STANDARD
-        from cognitive_data_arcade.games.stroop.game import StroopGame
-        from cognitive_data_arcade.games.stroop.info import get_game_info
-        from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
-
-        profile = self._pm.load()
-        pid = profile.device_uuid
-        sid = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-        csv_path = Path("data") / "generated" / "stroop" / f"{sid}.csv"
-        inner = StroopGame(STANDARD, self._pm, self._strings, pid, sid, csv_path)
-        game_info = get_game_info(self._strings)
-        pausable = PausableGame(
-            inner, game_info, self._make_stroop_game, self._strings, self._pm
-        )
-        return HowToPlayScene(
-            game_info,
-            self._strings,
-            back_scene=pausable,
-            esc_scene=LessonMenuScene(self._pm, self._strings, self._selected),
-        )
 
     def _launch_stroop_picker(self) -> None:
         from cognitive_data_arcade.ui.stroop_session_picker import (
@@ -313,62 +302,16 @@ class LessonMenuScene(Scene):
         self._done = True
 
     def _launch_flanker(self) -> None:
-        self._next = self._make_flanker_game()
+        from cognitive_data_arcade.ui.flanker_level_scene import FlankerLevelScene
+
+        self._next = FlankerLevelScene(self._pm, self._strings)
         self._done = True
-
-    def _make_flanker_game(self) -> Scene:
-        import datetime
-
-        from cognitive_data_arcade.engine.pause import PausableGame
-        from cognitive_data_arcade.games.flanker.config import STANDARD
-        from cognitive_data_arcade.games.flanker.game import FlankerGame
-        from cognitive_data_arcade.games.flanker.info import get_game_info
-        from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
-
-        profile = self._pm.load()
-        pid = profile.device_uuid
-        sid = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-        csv_path = Path("data") / "generated" / "flanker" / f"{sid}.csv"
-        inner = FlankerGame(STANDARD, self._pm, self._strings, pid, sid, csv_path)
-        game_info = get_game_info(self._strings)
-        pausable = PausableGame(
-            inner, game_info, self._make_flanker_game, self._strings, self._pm
-        )
-        return HowToPlayScene(
-            game_info,
-            self._strings,
-            back_scene=pausable,
-            esc_scene=LessonMenuScene(self._pm, self._strings, self._selected),
-        )
 
     def _launch_gono(self) -> None:
-        self._next = self._make_gono_game()
+        from cognitive_data_arcade.ui.gono_level_scene import GoNoGoLevelScene
+
+        self._next = GoNoGoLevelScene(self._pm, self._strings)
         self._done = True
-
-    def _make_gono_game(self) -> Scene:
-        import datetime
-
-        from cognitive_data_arcade.engine.pause import PausableGame
-        from cognitive_data_arcade.games.gono.config import STANDARD
-        from cognitive_data_arcade.games.gono.game import GoNoGoGame
-        from cognitive_data_arcade.games.gono.info import get_game_info
-        from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
-
-        profile = self._pm.load()
-        pid = profile.device_uuid
-        sid = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-        csv_path = Path("data") / "generated" / "gono" / f"{sid}.csv"
-        inner = GoNoGoGame(STANDARD, self._pm, self._strings, pid, sid, csv_path)
-        game_info = get_game_info(self._strings)
-        pausable = PausableGame(
-            inner, game_info, self._make_gono_game, self._strings, self._pm
-        )
-        return HowToPlayScene(
-            game_info,
-            self._strings,
-            back_scene=pausable,
-            esc_scene=LessonMenuScene(self._pm, self._strings, self._selected),
-        )
 
     def _launch_nback(self) -> None:
         from cognitive_data_arcade.ui.nback_level_scene import NBackLevelScene
