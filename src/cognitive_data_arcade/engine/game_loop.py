@@ -41,6 +41,8 @@ class GameLoop:
                     self._scene.handle_event(event)
             self._scene.update(dt_ms)
             screen = pygame.display.get_surface()
+            if screen is None:
+                continue
             screen.fill((26, 26, 46))
             self._scene.draw(screen)
             pygame.display.flip()
