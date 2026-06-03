@@ -12,18 +12,18 @@ Po zakończeniu tej lekcji student potrafi:
 
 ## Wymagana aktywność
 
-Lekcja korzysta z gry **Go/No-Go Guard**, dostępnej w aplikacji jako **Lekcja 09**. Ukończ co najmniej jedną sesję na poziomie Sredni (75% Go) i jedną na poziomie Trudny (60% Go) przed odpowiedzią na pytania analityczne.
+Lekcja korzysta z gry **Go/No-Go Guard**, dostępnej w aplikacji jako **Lekcja 09**. Ukończ co najmniej jedną sesję na poziomie Średni (75% Go) i jedną na poziomie Trudny (60% Go) przed odpowiedzią na pytania analityczne.
 
 ## Szacowany czas
 
 | Sekcja | Czas |
 |---|---|
 | Czytanie teorii | 30 min |
-| Gra (Sredni + Trudny) | 20 min |
+| Gra (Średni + Trudny) | 20 min |
 | Analiza danych (obliczanie d') | 20 min |
 | Dyskusja | 20 min |
-| **Lacznie** | **~90 min** (110 min z przerwami) |
+| **Łącznie** | **~90 min** (110 min z przerwami) |
 
-## Wymagania wstepne
+## Wymagania wstępne
 
-Zalecana jest Lekcja 02 (RT Lab), ale nie jest wymagana. Studenci powinni rozumiec pojecie czasu reakcji i podstawowych wskaznikow bledow. Znajomosc rachunku rozniczkowego ani statystyki nie jest konieczna — tabela wynikow z dla obliczenia d' jest podana w theory.pl.md.
+Zalecana jest Lekcja 02 (RT Lab), ale nie jest wymagana. Studenci powinni rozumieć pojęcie czasu reakcji i podstawowych wskaźników błędów. Znajomość rachunku różniczkowego ani statystyki nie jest konieczna — tabela wyników z dla obliczenia d' jest podana w theory.pl.md.
