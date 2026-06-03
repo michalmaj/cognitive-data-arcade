@@ -102,6 +102,26 @@ class Strings:
     nback_level_3: str
     nback_level_adaptive: str
     nback_level_hint: str
+    # Difficulty picker scenes
+    picker_session: str
+    picker_difficulty: str
+    level_quick: str
+    level_standard: str
+    level_full: str
+    level_easy: str
+    level_medium: str
+    level_hard: str
+    level_trials_suffix: str
+    stroop_easy_desc: str
+    stroop_medium_desc: str
+    stroop_hard_desc: str
+    flanker_easy_desc: str
+    flanker_medium_desc: str
+    flanker_hard_desc: str
+    gono_easy_desc: str
+    gono_medium_desc: str
+    gono_hard_desc: str
+    level_hint: str
     # Options scene
     pause_options: str
     options_title: str
@@ -201,6 +221,25 @@ EN = Strings(
     nback_level_3="3-Back",
     nback_level_adaptive="Adaptive",
     nback_level_hint="ESC — back",
+    picker_session="Session",
+    picker_difficulty="Difficulty",
+    level_quick="Quick",
+    level_standard="Standard",
+    level_full="Full",
+    level_easy="Easy",
+    level_medium="Medium",
+    level_hard="Hard",
+    level_trials_suffix="trials",
+    stroop_easy_desc="2 colors",
+    stroop_medium_desc="3 colors",
+    stroop_hard_desc="4 colors",
+    flanker_easy_desc="3s window",
+    flanker_medium_desc="2s window",
+    flanker_hard_desc="1s window",
+    gono_easy_desc="2s / 80% Go",
+    gono_medium_desc="1s / 75% Go",
+    gono_hard_desc="0.7s / 60% Go",
+    level_hint="ENTER play   ESC menu",
     pause_options="Options",
     options_title="Options",
     options_music="Music",
@@ -297,6 +336,25 @@ PL = Strings(
     nback_level_3="3-Back",
     nback_level_adaptive="Adaptacyjny",
     nback_level_hint="ESC — wróć",
+    picker_session="Sesja",
+    picker_difficulty="Trudnosc",
+    level_quick="Krotka",
+    level_standard="Standard",
+    level_full="Pelna",
+    level_easy="Latwy",
+    level_medium="Sredni",
+    level_hard="Trudny",
+    level_trials_suffix="prob",
+    stroop_easy_desc="2 kolory",
+    stroop_medium_desc="3 kolory",
+    stroop_hard_desc="4 kolory",
+    flanker_easy_desc="okno 3s",
+    flanker_medium_desc="okno 2s",
+    flanker_hard_desc="okno 1s",
+    gono_easy_desc="2s / 80% Go",
+    gono_medium_desc="1s / 75% Go",
+    gono_hard_desc="0.7s / 60% Go",
+    level_hint="ENTER graj   ESC menu",
     pause_options="Opcje",
     options_title="Opcje",
     options_music="Muzyka",
