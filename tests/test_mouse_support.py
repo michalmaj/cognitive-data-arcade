@@ -75,10 +75,10 @@ def test_menu_teoria_available_for_lesson_1():
     assert menu._teoria_available()
 
 
-def test_menu_teoria_not_available_for_lesson_3():
+def test_menu_teoria_available_for_lesson_3():
     menu = _make_menu()
-    menu._selected = 2  # lesson 3 (index 2)
-    assert not menu._teoria_available()
+    menu._selected = 2  # lesson 3 (index 2) — now has content
+    assert menu._teoria_available()
 
 
 from cognitive_data_arcade.engine.pause import PausableGame, GameInfo
