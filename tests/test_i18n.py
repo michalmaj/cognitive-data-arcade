@@ -162,3 +162,9 @@ def test_en_and_pl_stroop_strings_differ() -> None:
     assert EN.stroop_title != PL.stroop_title
     assert EN.stroop_instructions != PL.stroop_instructions
     assert EN.stroop_picker_no_sessions != PL.stroop_picker_no_sessions
+
+
+def test_en_and_pl_have_options_fullscreen_string() -> None:
+    assert len(EN.options_fullscreen) > 3
+    assert len(PL.options_fullscreen) > 3
+    assert EN.options_fullscreen != PL.options_fullscreen

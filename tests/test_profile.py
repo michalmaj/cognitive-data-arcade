@@ -106,3 +106,27 @@ def test_load_old_profile_without_language_uses_default(tmp_path: Path) -> None:
     manager = ProfileManager(path)
     profile = manager.load()
     assert profile.language == "pl"
+
+
+def test_profile_default_fullscreen_is_false(tmp_path: Path) -> None:
+    manager = ProfileManager(tmp_path / "profile.json")
+    profile = manager.load()
+    assert profile.fullscreen is False
+
+
+def test_load_old_profile_without_fullscreen_uses_default(tmp_path: Path) -> None:
+    import json
+    import uuid
+
+    path = tmp_path / "profile.json"
+    old_data = {
+        "alias": "olduser",
+        "device_uuid": str(uuid.uuid4()),
+        "arcade_points": 0,
+        "science_points": 0,
+        "badges": [],
+        "completed_lessons": [],
+    }
+    path.write_text(json.dumps(old_data))
+    profile = ProfileManager(path).load()
+    assert profile.fullscreen is False

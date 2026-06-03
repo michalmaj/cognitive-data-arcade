@@ -31,6 +31,7 @@ class Profile:
     sfx_enabled: bool = True
     music_volume: float = 0.7
     sfx_volume: float = 0.8
+    fullscreen: bool = False
 
 
 class ProfileManager:
@@ -80,5 +81,11 @@ class ProfileManager:
     def set_language(self, lang: str) -> Profile:
         profile = self.load()
         profile.language = lang
+        self.save(profile)
+        return profile
+
+    def set_fullscreen(self, enabled: bool) -> Profile:
+        profile = self.load()
+        profile.fullscreen = enabled
         self.save(profile)
         return profile
