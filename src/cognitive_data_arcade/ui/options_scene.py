@@ -3,6 +3,7 @@ from __future__ import annotations
 import pygame
 
 from cognitive_data_arcade.engine import audio
+from cognitive_data_arcade.engine import display as _display
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.profile.manager import ProfileManager
@@ -14,7 +15,7 @@ _DIM = (100, 100, 150)
 _GREEN = (39, 174, 96)
 _GRAY = (50, 50, 80)
 _STEP = 0.05
-_ROW_Y = [120, 200]
+_ROW_Y = [120, 200, 280]
 _BAR_X = 230
 _BAR_W = 220
 _BAR_H = 18
@@ -36,7 +37,8 @@ class OptionsScene(Scene):
         self._sfx_enabled: bool = profile.sfx_enabled
         self._music_vol: float = profile.music_volume
         self._sfx_vol: float = profile.sfx_volume
-        self._focused: int = 0  # 0=music row, 1=sfx row
+        self._fullscreen: bool = profile.fullscreen
+        self._focused: int = 0
         self._dragging: bool = False
         pygame.font.init()
         self._font_title = pygame.font.SysFont(None, 52)
@@ -51,13 +53,13 @@ class OptionsScene(Scene):
             if self._dragging:
                 self._apply_slider_x(event.pos[0])
             else:
-                for i in range(2):
+                for i in range(3):
                     if self._row_hit_rect(i).collidepoint(event.pos):
                         self._focused = i
             return
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            for i in range(2):
-                if self._row_bar_rect(i).collidepoint(event.pos):
+            for i in range(3):
+                if i < 2 and self._row_bar_rect(i).collidepoint(event.pos):
                     self._focused = i
                     self._dragging = True
                     self._apply_slider_x(event.pos[0])
@@ -74,9 +76,9 @@ class OptionsScene(Scene):
             self._save()
             self._done = True
         elif key == pygame.K_UP:
-            self._focused = 0
+            self._focused = max(0, self._focused - 1)
         elif key == pygame.K_DOWN:
-            self._focused = 1
+            self._focused = min(2, self._focused + 1)
         elif key == pygame.K_LEFT:
             self._change_volume(-_STEP)
         elif key == pygame.K_RIGHT:
@@ -85,6 +87,8 @@ class OptionsScene(Scene):
             self._toggle()
 
     def _change_volume(self, delta: float) -> None:
+        if self._focused == 2:
+            return
         if self._focused == 0:
             self._music_vol = max(0.0, min(1.0, self._music_vol + delta))
             audio.set_music_volume(self._music_vol)
@@ -97,9 +101,12 @@ class OptionsScene(Scene):
         if self._focused == 0:
             self._music_enabled = not self._music_enabled
             audio.set_music_enabled(self._music_enabled)
-        else:
+        elif self._focused == 1:
             self._sfx_enabled = not self._sfx_enabled
             audio.set_sfx_enabled(self._sfx_enabled)
+        elif self._focused == 2:
+            self._fullscreen = not self._fullscreen
+            _display.toggle()
         audio.play_sfx("select")
 
     def _row_hit_rect(self, row: int) -> pygame.Rect:
@@ -123,6 +130,7 @@ class OptionsScene(Scene):
         profile.sfx_enabled = self._sfx_enabled
         profile.music_volume = self._music_vol
         profile.sfx_volume = self._sfx_vol
+        profile.fullscreen = self._fullscreen
         self._pm.save(profile)
 
     def update(self, dt_ms: float) -> None:
@@ -153,7 +161,7 @@ class OptionsScene(Scene):
             lbl = self._font_item.render(f"{prefix} {label}", True, color)
             surface.blit(lbl, (40, row_y))
 
-            bar_x, bar_y, bar_w, bar_h = 230, row_y + 8, 220, 18
+            bar_x, bar_y, bar_w, bar_h = _BAR_X, row_y + 8, _BAR_W, _BAR_H
             pygame.draw.rect(surface, _GRAY, (bar_x, bar_y, bar_w, bar_h), border_radius=4)
             fill = int(bar_w * vol)
             if fill > 0:
@@ -168,6 +176,18 @@ class OptionsScene(Scene):
             surface.blit(tog, (bar_x + bar_w + 72, row_y))
 
             row_y += 80
+
+        # Fullscreen row (no slider — toggle only)
+        active = self._focused == 2
+        color = _ORANGE if active else _DIM
+        prefix = ">" if active else " "
+        lbl = self._font_item.render(f"{prefix} {self._strings.options_fullscreen}", True, color)
+        tog = self._font_item.render(
+            "[ON ]" if self._fullscreen else "[OFF]",
+            True, _GREEN if self._fullscreen else _DIM,
+        )
+        surface.blit(lbl, (40, _ROW_Y[2]))
+        surface.blit(tog, (_BAR_X + _BAR_W + 72, _ROW_Y[2]))
 
         hint = self._font_hint.render(self._strings.options_hint, True, _DIM)
         surface.blit(hint, (40, h - 32))

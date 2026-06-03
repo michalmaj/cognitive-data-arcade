@@ -99,3 +99,27 @@ def test_volume_clamps_at_one(pm):
     for _ in range(20):
         scene.handle_event(_key(pygame.K_RIGHT))
     assert scene._music_vol == pytest.approx(1.0)
+
+
+def test_down_down_focuses_fullscreen_row(pm):
+    scene = OptionsScene(pm, EN, None)
+    scene.handle_event(_key(pygame.K_DOWN))
+    scene.handle_event(_key(pygame.K_DOWN))
+    assert scene._focused == 2
+
+
+def test_enter_on_fullscreen_row_toggles(pm):
+    # Temporarily remove display to avoid set_mode() errors in headless environment
+    old_display = pygame.display.get_surface()
+    pygame.display.quit()
+    try:
+        scene = OptionsScene(pm, EN, None)
+        scene.handle_event(_key(pygame.K_DOWN))
+        scene.handle_event(_key(pygame.K_DOWN))
+        initial = scene._fullscreen
+        scene.handle_event(_key(pygame.K_RETURN))
+        assert scene._fullscreen is not initial
+    finally:
+        pygame.display.init()
+        if old_display is not None:
+            pygame.display.set_mode((1024, 768))
