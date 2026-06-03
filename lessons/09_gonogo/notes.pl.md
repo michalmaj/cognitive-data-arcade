@@ -1,47 +1,47 @@
-# Notatki dla prowadzacego — Hamowanie odpowiedzi: Go/No-Go Guard
+# Notatki dla prowadzącego — Hamowanie odpowiedzi: Go/No-Go Guard
 
 ## Harmonogram
 
-| Aktywnosc | Czas | Uwagi |
+| Aktywność | Czas | Uwagi |
 |---|---|---|
-| Czytanie teorii (samodzielnie) | 25–30 min | Mozna zadac przed zajeciami; theory.pl.md jest gestą lektura — przeznaczyc wiecej czasu dla studentow pierwszego roku |
-| Uruchomienie aplikacji + rozwiazywanie problemow | 5 min | |
-| Gra: poziom Sredni | 8–10 min | Studenci powinni ukonczyc co najmniej jedna pelna sesje (~80 prob) |
-| Gra: poziom Trudny | 8–10 min | Kluczowe dla porownania d' |
-| Cwiczenie obliczania d' | 10–15 min | Obchodz grupe i sprawdzaj odczyt wartosci z; wielu studentow myli wskaznik trafien z ogolna trafnoscia |
-| Dyskusja | 20–25 min | Patrz wskazowki do pytan ponizej |
-| **Lacznie** | **~80–95 min** | |
+| Czytanie teorii (samodzielnie) | 25–30 min | Można zadać przed zajęciami; theory.pl.md jest gęstą lekturą — przeznaczyć więcej czasu dla studentów pierwszego roku |
+| Uruchomienie aplikacji + rozwiązywanie problemów | 5 min | |
+| Gra: poziom Średni | 8–10 min | Studenci powinni ukończyć co najmniej jedną pełną sesję (~80 prób) |
+| Gra: poziom Trudny | 8–10 min | Kluczowe dla porównania d' |
+| Ćwiczenie obliczania d' | 10–15 min | Obchodź grupę i sprawdzaj odczyt wartości z; wielu studentów myli wskaźnik trafień z ogólną trafnością |
+| Dyskusja | 20–25 min | Patrz wskazówki do pytań poniżej |
+| **Łącznie** | **~80–95 min** | |
 
 ## Oczekiwane obserwacje
 
-Wiekszosc studentow bedzie miec wskazniki bledow komisji miedzy 8 a 20% na poziomie Srednim. Studenci regularnie grajacy w gry wideo czesto zglosza nizsze wskazniki bledow komisji — to interesujacy punkt do dyskusji o tym, czy gaming trenuje hamowanie odpowiedzi, czy po prostu odzwierciedla istniejace juz roznice w funkcjach wykonawczych.
+Większość studentów będzie mieć wskaźniki błędów komisji między 8 a 20% na poziomie Średnim. Studenci regularnie grający w gry wideo często zgłoszą niższe wskaźniki błędów komisji — to interesujący punkt do dyskusji o tym, czy gaming trenuje hamowanie odpowiedzi, czy po prostu odzwierciedla istniejące już różnice w funkcjach wykonawczych.
 
-Na poziomie Trudnym niektorzy studenci widza nizsze wskazniki bledow komisji pomimo trudniejszego ogolnego wrazenia. Powod: 60% Go oznacza proporcjonalnie wiecej prob No-Go, co przerwa prepotencje. Krotsze okno odpowiedzi (0,7 s) dodaje presje czasowa, ale w innym kierunku. Moze to dezorientowac studentow — skorzystaj z okazji, by rozroznic efekt proporcji Go od efektu presji czasu.
+Na poziomie Trudnym niektórzy studenci widzą niższe wskaźniki błędów komisji pomimo trudniejszego ogólnego wrażenia. Powód: 60% Go oznacza proporcjonalnie więcej prób No-Go, co przerywa prepotencję. Krótsze okno odpowiedzi (0,7 s) dodaje presję czasową, ale w innym kierunku. Może to dezorientować studentów — skorzystaj z okazji, by rozróżnić efekt proporcji Go od efektu presji czasu.
 
-Wskaznik bledow komisji zazwyczaj rosnie w pozniejszych blokach sesji. Ten efekt zmeczenia/wyczerpania nie zawsze jest widoczny w jednej sesji 80 prob, ale studenci uwaznie analizujacy dane proba po probie moga go zauwazac.
+Wskaźnik błędów komisji zazwyczaj rośnie w późniejszych blokach sesji. Ten efekt zmęczenia/wyczerpania nie zawsze jest widoczny w jednej sesji 80 prób, ale studenci uważnie analizujący dane próba po próbie mogą go zauważać.
 
-## Wskazowki do pytan dyskusyjnych
+## Wskazówki do pytań dyskusyjnych
 
-**Pytanie 1 — Jaka jest roznica miedzy bledem komisji a bledem pominiecia?**
-Studenci czesto mowia, ze blad komisji to "nacisniecie, kiedy nie powinno sie", a blad pominiecia to "brak nacisniecia, kiedy trzeba". Pogłeb dalej: dlaczego blad komisji jest konkretnie miara *kontroli hamowania*, a nie uwagi? Kluczowa kwestia: blad komisji odzwierciedla *nieudana supresje* juz przygotowanej odpowiedzi — program motoryczny sie uruchomil. Blad pominiecia odzwierciedla brak czujnosci lub detekcji, a nie nieudane zatrzymanie.
+**Pytanie 1 — Jaka jest różnica między błędem komisji a błędem pominięcia?**
+Studenci często mówią, że błąd komisji to "naciśnięcie, kiedy nie powinno się", a błąd pominięcia to "brak naciśnięcia, kiedy trzeba". Pogłęb dalej: dlaczego błąd komisji jest konkretnie miarą *kontroli hamowania*, a nie uwagi? Kluczowa kwestia: błąd komisji odzwierciedla *nieudaną supresję* już przygotowanej odpowiedzi — program motoryczny się uruchomił. Błąd pominięcia odzwierciedla brak czujności lub detekcji, a nie nieudane zatrzymanie.
 
-**Pytanie 2 — Dwoje studentow ma 85% trafnosci. Czy jedno moze byc impulsywne, a drugie nieuważne?**
-To jest podstawowe pytanie dotyczace SDT. Student A: 95% trafien, 15% FA — impulsywny. Student B: 75% trafien, 5% FA — zachowawczy lub nieuważny. Oboje moga miec ~85% ogolnej trafnosci przy proporcji Go:No-Go okolo 3:1. Oblicz ich wartosci d' wspolnie ze studentami: Z(0,95) = 1,64, Z(0,15) ≈ −1,04: d'_A = 1,64 − (−1,04) = 2,68. Dla B: Z(0,75) = 0,52, Z(0,05) = −1,64: d'_B = 0,52 − (−1,64) = 2,16. Oba wyniki pokazuja dobra dyskryminacje mimo roznic w trafnosci — zestawienie pokazuje, ze ogolna trafnosc moze byc mylaaca.
+**Pytanie 2 — Dwoje studentów ma 85% trafności. Czy jedno może być impulsywne, a drugie nieuważne?**
+To jest podstawowe pytanie dotyczące SDT. Student A: 95% trafień, 15% FA — impulsywny. Student B: 75% trafień, 5% FA — zachowawczy lub nieuważny. Oboje mogą mieć ~85% ogólnej trafności przy proporcji Go:No-Go około 3:1. Oblicz ich wartości d' wspólnie ze studentami: Z(0,95) = 1,64, Z(0,15) ≈ −1,04: d'_A = 1,64 − (−1,04) = 2,68. Dla B: Z(0,75) = 0,52, Z(0,05) = −1,64: d'_B = 0,52 − (−1,64) = 2,16. Oba wyniki pokazują dobrą dyskryminację mimo różnic w trafności — zestawienie pokazuje, że ogólna trafność może być myląca.
 
-**Pytanie 3 — Dlaczego kontrola hamowania rozwija sie powoli?**
-Oczekiwane odpowiedzi: dojrzewanie kory przedczolowej. Zachec studentow do zastanowienia sie nad pytaniem, *dlaczego* jest to adaptacyjne — impulsywne, szybko reagujace dziecko moze miec ewolucyjne zalety (szybka reakcja na zagrozenia). Powolny rozwoj celowego hamowania moze byc nowsza ewolucyjnie cecha.
+**Pytanie 3 — Dlaczego kontrola hamowania rozwija się powoli?**
+Oczekiwane odpowiedzi: dojrzewanie kory przedczołowej. Zachęć studentów do zastanowienia się nad pytaniem, *dlaczego* jest to adaptacyjne — impulsywne, szybko reagujące dziecko może mieć ewolucyjne zalety (szybka reakcja na zagrożenia). Powolny rozwój celowego hamowania może być nowszą ewolucyjnie cechą.
 
-**Pytanie 4 — Czym zadanie Stop-Signal rozni sie od Go/No-Go?**
-Kluczowe rozroznienie: w SST odpowiedz Go *juz sie zaczela*, gdy przybywa sygnal stopu. Uczestnik anuluje program motoryczny bedacy w trakcie wykonania, a nie zapobiega jego uruchomieniu. Uzyj analogii samochodu: Go/No-Go to decyzja o nierozpalaniu silnika, a SST to hamowanie po juz rozpoczetej jedzie.
+**Pytanie 4 — Czym zadanie Stop-Signal różni się od Go/No-Go?**
+Kluczowe rozróżnienie: w SST odpowiedź Go *już się zaczęła*, gdy przybywa sygnał stopu. Uczestnik anuluje program motoryczny będący w trakcie wykonania, a nie zapobiega jego uruchomieniu. Użyj analogii samochodu: Go/No-Go to decyzja o nierozpalaniu silnika, a SST to hamowanie po już rozpoczętej jeździe.
 
-## Typowe blędne przekonania
+## Typowe błędne przekonania
 
-- **"Mniej bledow komisji zawsze oznacza lepszy wynik."** Uczestnik odpowiadajacy tylko w 50% prob Go bedzie miec bardzo malo bledow komisji, ale rowniez bedzienny wskaznik trafien i niskie d'. Wyniki nalezy oceniac lacznie — bledy komisji i wskaznik trafien razem, najlepiej jako d'.
-- **"Proby No-Go sa latwe, bo nie trzeba nic robic."** Prawidlowe odrzucenia wymagaja aktywnego hamowania — sa poznawczo wymagajace. Badania ERP wykazuja wieksze komponenty N2 w probach No-Go niz Go, co odzwierciedla dodatkowa prace neuronalna.
-- **"ADHD oznacza, ze zawsze jestes impulsywny."** ADHD jest heterogeniczne. Niektorzy maja obraz predominujaco nieuważny (wysokie chybienia, wolny czas reakcji), a nie nadpobudliwy-impulsywny (wiele bledow komisji). Go/No-Go pomaga rozroznic te profile.
-- **"d' to kolejna miara trafnosci."** d' jest wolne od strategii odpowiadania; trafnosc nie. Dwoje uczestnikow z tym samym d' moze miec bardzo rozna trafnosc, jesli jedno odpowiada znacznie liberalniej.
+- **"Mniej błędów komisji zawsze oznacza lepszy wynik."** Uczestnik odpowiadający tylko w 50% prób Go będzie mieć bardzo mało błędów komisji, ale również będzie miał niski wskaźnik trafień i niskie d'. Wyniki należy oceniać łącznie — błędy komisji i wskaźnik trafień razem, najlepiej jako d'.
+- **"Próby No-Go są łatwe, bo nie trzeba nic robić."** Prawidłowe odrzucenia wymagają aktywnego hamowania — są poznawczo wymagające. Badania ERP wykazują większe komponenty N2 w próbach No-Go niż Go, co odzwierciedla dodatkową pracę neuronalną.
+- **"ADHD oznacza, że zawsze jesteś impulsywny."** ADHD jest heterogeniczne. Niektórzy mają obraz predominująco nieuważny (wysokie chybienia, wolny czas reakcji), a nie nadpobudliwy-impulsywny (wiele błędów komisji). Go/No-Go pomaga rozróżnić te profile.
+- **"d' to kolejna miara trafności."** d' jest wolne od strategii odpowiadania; trafność nie. Dwoje uczestników z tym samym d' może mieć bardzo różną trafność, jeśli jedno odpowiada znacznie liberalniej.
 
-## Powiazanie z innymi lekcjami
+## Powiązanie z innymi lekcjami
 
-- **Lekcja 02 (RT Lab):** Studenci moga porownac czasy reakcji w probach Go ze swoim prostym czasem reakcji z Lekcji 02. Go/No-Go typowo daje wolniejsze czasy RT w probach Go — dodanie wymogu hamowania zwieksza ostroznosc odpowiedzi (spowolnienie RT Go jest dobrze znana konsekwencja wiekszego kontekstu hamowania).
-- **Lekcja 08 (Flanker):** Zarówno Flanker, jak i Go/No-Go mierza kontrole hamowania, ale na roznych etapach. Flanker mierzy zdolnosc do ignorowania konkurencyjnych informacji istotnych dla odpowiedzi (monitorowanie konfliktu); Go/No-Go mierzy zdolnosc do calkowitego stlumienia przygotowanej odpowiedzi. Wprowadz rozroznienie miedzy *monitorowaniem konfliktu* a *hamowaniem odpowiedzi* jako roznych skladnikow funkcji wykonawczych.
+- **Lekcja 02 (RT Lab):** Studenci mogą porównać czasy reakcji w próbach Go ze swoim prostym czasem reakcji z Lekcji 02. Go/No-Go typowo daje wolniejsze czasy RT w próbach Go — dodanie wymogu hamowania zwiększa ostrożność odpowiedzi (spowolnienie RT Go jest dobrze znana konsekwencją większego kontekstu hamowania).
+- **Lekcja 08 (Flanker):** Zarówno Flanker, jak i Go/No-Go mierzą kontrolę hamowania, ale na różnych etapach. Flanker mierzy zdolność do ignorowania konkurencyjnych informacji istotnych dla odpowiedzi (monitorowanie konfliktu); Go/No-Go mierzy zdolność do całkowitego stłumienia przygotowanej odpowiedzi. Wprowadź rozróżnienie między *monitorowaniem konfliktu* a *hamowaniem odpowiedzi* jako różnych składników funkcji wykonawczych.

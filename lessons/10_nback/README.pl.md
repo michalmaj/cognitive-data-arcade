@@ -1,18 +1,18 @@
-# Lekcja 10 — Pamiec robocza: N-Back Memory Grid
+# Lekcja 10 — Pamięć robocza: N-Back Memory Grid
 
-## Cele ksztalcenia
+## Cele kształcenia
 
-Po zakonczeniu tej lekcji student potrafi:
+Po zakończeniu tej lekcji student potrafi:
 
-1. Zdefiniowac pamiec robocza i opisac cztery komponenty modelu Baddeleya (petla fonologiczna, szkicownik wzrokowo-przestrzenny, centralny wykonawca, bufor epizodyczny).
-2. Wyjasnic paradygmat n-back i wyartkulowac, dlaczego zwiekszanie n zwieksza obciazenie poznawcze w sposob nieliniowy.
-3. Obliczyc d' z wskaznika trafien i wskaznika falszywych alarmow dla wynikow n-back oraz zinterpretowac znaczenie d'.
-4. Opisac twierdzenie Jaeggi i in. (2008) o treningu dual n-back i wyjasnic, dlaczego spolecznosc naukowa w duzej mierze nie zreplikowala wynikow dotyczacych transferu odleglego.
-5. Wskazac neuronalne korelatywy obciazenia pamieci roboczej w zadaniach n-back i wyjasnic, dlaczego obustronna aktywnosc dlPFC wzrasta wraz z n.
+1. Zdefiniować pamięć roboczą i opisać cztery komponenty modelu Baddeleya (pętla fonologiczna, szkicownik wzrokowo-przestrzenny, centralny wykonawca, bufor epizodyczny).
+2. Wyjaśnić paradygmat n-back i wyartykułować, dlaczego zwiększanie n zwiększa obciążenie poznawcze w sposób nieliniowy.
+3. Obliczyć d' z wskaźnika trafień i wskaźnika fałszywych alarmów dla wyników n-back oraz zinterpretować znaczenie d'.
+4. Opisać twierdzenie Jaeggi i in. (2008) o treningu dual n-back i wyjaśnić, dlaczego społeczność naukowa w dużej mierze nie zreplikowała wyników dotyczących transferu odległego.
+5. Wskazać neuronalne korelatywy obciążenia pamięci roboczej w zadaniach n-back i wyjaśnić, dlaczego obustronna aktywność dlPFC wzrasta wraz z n.
 
-## Wymagana aktywnosc
+## Wymagana aktywność
 
-Lekcja korzysta z gry **N-Back Memory Grid**, dostepnej w aplikacji jako **Lekcja 10**. Ukonczyj sesje na poziomach 1-Back, 2-Back i tryb Adaptacyjny przed odpowiedzią na pytania analityczne. Zalecane sa co najmniej dwie sesje Adaptacyjne, aby zaobserwowac zachowanie mechanizmu dostosowywania poziomu.
+Lekcja korzysta z gry **N-Back Memory Grid**, dostępnej w aplikacji jako **Lekcja 10**. Ukończ sesje na poziomach 1-Back, 2-Back i tryb Adaptacyjny przed odpowiedzią na pytania analityczne. Zalecane są co najmniej dwie sesje Adaptacyjne, aby zaobserwować zachowanie mechanizmu dostosowywania poziomu.
 
 ## Szacowany czas
 
@@ -20,10 +20,10 @@ Lekcja korzysta z gry **N-Back Memory Grid**, dostepnej w aplikacji jako **Lekcj
 |---|---|
 | Czytanie teorii | 30 min |
 | Gra (1-Back, 2-Back, Adaptacyjny) | 25 min |
-| Analiza danych (d' dla roznych poziomow n) | 15 min |
+| Analiza danych (d' dla różnych poziomów n) | 15 min |
 | Dyskusja | 20 min |
-| **Lacznie** | **~90 min** (110 min z przerwami) |
+| **Łącznie** | **~90 min** (110 min z przerwami) |
 
-## Wymagania wstepne
+## Wymagania wstępne
 
-Zalecana jest Lekcja 09 (Go/No-Go Guard), poniewaz d' i teoria detekcji sygnalu sa tam szczegolowo wprowadzone. Studenci, ktorzy nie realizowali Lekcji 09, powinni uwazliwie przeczytac sekcje d' w theory.pl.md przed przystapnięciem do zadan analitycznych.
+Zalecana jest Lekcja 09 (Go/No-Go Guard), ponieważ d' i teoria detekcji sygnału są tam szczegółowo wprowadzone. Studenci, którzy nie realizowali Lekcji 09, powinni uważnie przeczytać sekcję d' w theory.pl.md przed przystąpieniem do zadań analitycznych.
