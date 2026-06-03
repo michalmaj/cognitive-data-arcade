@@ -96,3 +96,12 @@ def test_next_scene_returns_back_scene(fixture_csv: Path) -> None:
         pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode="")
     )
     assert scene.next_scene() is back
+
+
+def test_mouse_click_sets_done(fixture_csv: Path) -> None:
+    from cognitive_data_arcade.ui.nback_analysis_scene import NBackAnalysisScene
+
+    pygame.init()
+    scene = NBackAnalysisScene(fixture_csv, EN, _DummyScene())
+    scene.handle_event(pygame.event.Event(pygame.MOUSEBUTTONDOWN, button=1, pos=(400, 300)))
+    assert scene.is_done()

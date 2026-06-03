@@ -62,3 +62,13 @@ def test_gono_analysis_scene_space_returns_to_back(tmp_path: Path) -> None:
     )
     assert scene.is_done()
     assert scene.next_scene() is back_scene
+
+
+def test_gono_analysis_scene_mouse_click_sets_done(tmp_path: Path) -> None:
+    csv_path = tmp_path / "gono_session.csv"
+    csv_path.write_text(_CSV)
+
+    pygame.init()
+    scene = GoNoGoAnalysisScene(csv_path, PL, back_scene=_DummyScene())
+    scene.handle_event(pygame.event.Event(pygame.MOUSEBUTTONDOWN, button=1, pos=(400, 300)))
+    assert scene.is_done()

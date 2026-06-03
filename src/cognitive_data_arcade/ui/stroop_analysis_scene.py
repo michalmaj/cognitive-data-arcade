@@ -45,7 +45,9 @@ class StroopAnalysisScene(Scene):
         self._font_badge = pygame.font.SysFont(None, 28)
 
     def handle_event(self, event: pygame.event.Event) -> None:
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            self._done = True
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             self._done = True
 
     def update(self, dt_ms: float) -> None:

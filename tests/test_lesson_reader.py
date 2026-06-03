@@ -82,6 +82,29 @@ def test_esc_returns_back_scene():
     assert scene.next_scene() is back
 
 
+def test_enter_without_factory_does_nothing():
+    scene = LessonReaderScene(1, EN, None)
+    scene.handle_event(_key(pygame.K_RETURN))
+    assert not scene.is_done()
+
+
+def test_enter_with_factory_launches_play_scene():
+    play = _Back()
+    scene = LessonReaderScene(1, EN, None, play_factory=lambda: play)
+    scene.handle_event(_key(pygame.K_RETURN))
+    assert scene.is_done()
+    assert scene.next_scene() is play
+
+
+def test_enter_play_overrides_back():
+    back = _Back()
+    play = _Back()
+    scene = LessonReaderScene(1, EN, back, play_factory=lambda: play)
+    scene.handle_event(_key(pygame.K_RETURN))
+    assert scene.next_scene() is play
+    assert scene.next_scene() is not back
+
+
 def test_missing_lesson_immediately_done():
     scene = LessonReaderScene(99, EN, None)
     scene.handle_event(_key(pygame.K_SPACE))
