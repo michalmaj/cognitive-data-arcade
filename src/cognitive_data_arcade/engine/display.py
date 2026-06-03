@@ -23,7 +23,11 @@ def is_fullscreen() -> bool:
 
 
 def _apply() -> None:
+    global _fullscreen
     if pygame.display.get_surface() is None:
         return
     flags = (pygame.FULLSCREEN | pygame.SCALED) if _fullscreen else 0
-    pygame.display.set_mode((_W, _H), flags)
+    try:
+        pygame.display.set_mode((_W, _H), flags)
+    except pygame.error:
+        _fullscreen = not _fullscreen  # revert if mode switch fails

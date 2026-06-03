@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 import pygame
 import pytest
 
@@ -27,3 +29,14 @@ def test_toggle_flips_state() -> None:
     assert display.is_fullscreen() is True
     display.toggle()
     assert display.is_fullscreen() is False
+
+
+def test_apply_reverts_state_on_pygame_error() -> None:
+    pygame.display.init()
+    pygame.display.set_mode((100, 100))
+    display.init(False)
+
+    with patch("pygame.display.set_mode", side_effect=pygame.error("mode switch failed")):
+        display.toggle()  # tries fullscreen, set_mode raises, should revert
+
+    assert display.is_fullscreen() is False  # reverted back
