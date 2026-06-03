@@ -169,7 +169,7 @@ EN = Strings(
         "A word will appear in coloured ink.\n"
         "Press the key matching the INK COLOUR — ignore what the word says.\n"
         "\n"
-        "R = Red   G = Green   B = Blue   Y = Yellow\n"
+        "Active colour keys are shown at the bottom of the screen.\n"
         "\n"
         "Press SPACE to start."
     ),
@@ -263,7 +263,7 @@ PL = Strings(
         "Słowo pojawi się w kolorowym tuszu.\n"
         "Naciśnij klawisz koloru TUSZU — ignoruj znaczenie słowa.\n"
         "\n"
-        "R = Czerwony   G = Zielony   B = Niebieski   Y = Żółty\n"
+        "Aktywne klawisze kolorów widoczne są na dole ekranu.\n"
         "\n"
         "Naciśnij SPACJĘ aby zacząć."
     ),
