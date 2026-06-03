@@ -21,3 +21,7 @@ class GoNoGoConfig:
 QUICK = GoNoGoConfig(num_trials=40, trials_per_block=20, go_ratio=0.75)
 STANDARD = GoNoGoConfig(num_trials=80, trials_per_block=40, go_ratio=0.75)
 FULL = GoNoGoConfig(num_trials=120, trials_per_block=60, go_ratio=0.75)
+
+DIFFICULTY_EASY: dict = {"stimulus_duration_ms": 2000, "go_ratio": 0.80}
+DIFFICULTY_MEDIUM: dict = {"stimulus_duration_ms": 1000, "go_ratio": 0.75}
+DIFFICULTY_HARD: dict = {"stimulus_duration_ms": 700, "go_ratio": 0.60}
