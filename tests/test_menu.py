@@ -28,11 +28,12 @@ def test_t_opens_lesson_reader_for_lesson_with_content(tmp_path):
     assert isinstance(scene.next_scene(), LessonReaderScene)
 
 
-def test_t_does_nothing_for_lesson_without_content(tmp_path):
+def test_t_opens_lesson_reader_for_lesson_3(tmp_path):
     pm = ProfileManager(tmp_path / "profile.json")
     scene = LessonMenuScene(pm, PL)
-    # Move to lesson 3 (index 2, no content)
+    # Move to lesson 3 (index 2) — now has content
     for _ in range(2):
         scene.handle_event(_key(pygame.K_DOWN))
     scene.handle_event(_key(pygame.K_t))
-    assert not scene.is_done()
+    assert scene.is_done()
+    assert isinstance(scene.next_scene(), LessonReaderScene)
