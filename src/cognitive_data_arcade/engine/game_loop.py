@@ -21,7 +21,7 @@ class GameLoop:
 
     def run(self, fullscreen: bool = False) -> None:
         pygame.init()
-        pygame.display.set_mode((self._width, self._height))
+        pygame.display.set_mode((self._width, self._height), pygame.SCALED)
         _display.init(fullscreen)
         pygame.display.set_caption("Cognitive Data Arcade")
         pygame.mouse.set_visible(True)
