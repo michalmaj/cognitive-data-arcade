@@ -21,11 +21,12 @@ class GameLoop:
 
     def run(self, fullscreen: bool = False) -> None:
         pygame.init()
-        pygame.display.set_mode((self._width, self._height), pygame.SCALED)
+        pygame.display.set_mode((self._width, self._height))
         _display.init(fullscreen)
         pygame.display.set_caption("Cognitive Data Arcade")
         pygame.mouse.set_visible(True)
         clock = pygame.time.Clock()
+        internal = pygame.Surface((self._width, self._height))
 
         while self._scene is not None:
             dt_ms = clock.tick(self.FPS)
@@ -43,8 +44,13 @@ class GameLoop:
             screen = pygame.display.get_surface()
             if screen is None:
                 continue
-            screen.fill((26, 26, 46))
-            self._scene.draw(screen)
+            internal.fill((26, 26, 46))
+            self._scene.draw(internal)
+            sw, sh = screen.get_size()
+            if sw == self._width and sh == self._height:
+                screen.blit(internal, (0, 0))
+            else:
+                pygame.transform.smoothscale(internal, (sw, sh), screen)
             pygame.display.flip()
             if self._scene.is_done():
                 self._scene = self._scene.next_scene()
