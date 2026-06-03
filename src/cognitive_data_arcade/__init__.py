@@ -14,4 +14,4 @@ def main() -> None:
     profile = pm.load()
     strings = get_strings(profile.language)
     audio.init(profile)
-    GameLoop(LessonMenuScene(pm, strings)).run()
+    GameLoop(LessonMenuScene(pm, strings)).run(profile.fullscreen)

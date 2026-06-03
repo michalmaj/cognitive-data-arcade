@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import pygame
 
+from cognitive_data_arcade.engine import display as _display
 from cognitive_data_arcade.engine.scene import Scene
 
 
@@ -15,9 +16,10 @@ class GameLoop:
         self._width = width
         self._height = height
 
-    def run(self) -> None:
+    def run(self, fullscreen: bool = False) -> None:
         pygame.init()
-        screen = pygame.display.set_mode((self._width, self._height))
+        pygame.display.set_mode((self._width, self._height))
+        _display.init(fullscreen)
         pygame.display.set_caption("Cognitive Data Arcade")
         pygame.mouse.set_visible(True)
         clock = pygame.time.Clock()
@@ -28,8 +30,12 @@ class GameLoop:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     return
-                self._scene.handle_event(event)
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_F11:
+                    _display.toggle()
+                else:
+                    self._scene.handle_event(event)
             self._scene.update(dt_ms)
+            screen = pygame.display.get_surface()
             screen.fill((26, 26, 46))
             self._scene.draw(screen)
             pygame.display.flip()

@@ -1,4 +1,14 @@
+import pygame
+import pytest
+
 from cognitive_data_arcade.engine import display
+
+
+@pytest.fixture(autouse=True)
+def no_display():
+    pygame.display.quit()
+    yield
+    pygame.display.quit()
 
 
 def test_init_false_sets_not_fullscreen() -> None:
