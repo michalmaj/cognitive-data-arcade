@@ -105,7 +105,10 @@ class LessonMenuScene(Scene):
                 from cognitive_data_arcade.ui.lesson_reader import LessonReaderScene
 
                 back = LessonMenuScene(self._pm, self._strings, self._selected)
-                self._next = LessonReaderScene(lesson_num, self._strings, back)
+                self._next = LessonReaderScene(
+                    lesson_num, self._strings, back,
+                    play_factory=self._game_factory_for(lesson_num),
+                )
                 self._done = True
         elif event.key == pygame.K_z:
             self._launch_stroop_picker()
@@ -161,6 +164,25 @@ class LessonMenuScene(Scene):
                     self._popup_selected = 1
                     self._confirm_popup()
 
+    def _game_factory_for(self, lesson_num: int):
+        if lesson_num == 1:
+            return self._make_big_data_map_game
+        if lesson_num == 2:
+            return self._make_rt_lab_game
+        if lesson_num == 7:
+            return self._make_stroop_game
+        if lesson_num == 8:
+            return self._make_flanker_game
+        if lesson_num == 9:
+            return self._make_gono_game
+        if lesson_num == 10:
+            pm, strings = self._pm, self._strings
+            def _make_nback():
+                from cognitive_data_arcade.ui.nback_level_scene import NBackLevelScene
+                return NBackLevelScene(pm, strings)
+            return _make_nback
+        return None
+
     def _confirm_popup(self) -> None:
         self._popup_visible = False
         if self._popup_selected == 0:
@@ -170,7 +192,10 @@ class LessonMenuScene(Scene):
             from cognitive_data_arcade.ui.lesson_reader import LessonReaderScene
 
             back = LessonMenuScene(self._pm, self._strings, self._selected)
-            self._next = LessonReaderScene(lesson_num, self._strings, back)
+            self._next = LessonReaderScene(
+                lesson_num, self._strings, back,
+                play_factory=self._game_factory_for(lesson_num),
+            )
             self._done = True
 
     def _draw_popup(self, surface: pygame.Surface) -> None:

@@ -90,3 +90,9 @@ def test_next_scene_returns_back() -> None:
         pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode="")
     )
     assert scene.next_scene() is back
+
+
+def test_mouse_click_sets_done() -> None:
+    scene = _make_scene()
+    scene.handle_event(pygame.event.Event(pygame.MOUSEBUTTONDOWN, button=1, pos=(400, 300)))
+    assert scene.is_done()

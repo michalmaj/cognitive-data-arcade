@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib
+from typing import Callable
 
 import pygame
 
@@ -64,10 +65,13 @@ class LessonReaderScene(Scene):
         lesson_num: int,
         strings: Strings,
         back_scene: Scene | None,
+        play_factory: Callable[[], Scene] | None = None,
     ) -> None:
         self._strings = strings
         self._back = back_scene
+        self._play_factory = play_factory
         self._done = False
+        self._next: Scene | None = None
         self._slides = _load_content(lesson_num, strings.language)
         self._idx = 0
         pygame.font.init()
@@ -104,6 +108,10 @@ class LessonReaderScene(Scene):
             return
         key = event.key
         if key == pygame.K_ESCAPE:
+            self._next = self._back
+            self._done = True
+        elif key == pygame.K_RETURN and self._play_factory is not None:
+            self._next = self._play_factory()
             self._done = True
         elif key in (pygame.K_SPACE, pygame.K_RIGHT):
             prev = self._slides[self._idx][0]
@@ -123,7 +131,7 @@ class LessonReaderScene(Scene):
         return self._done
 
     def next_scene(self) -> Scene | None:
-        return self._back if self._done else None
+        return self._next if self._done else None
 
     def draw(self, surface: pygame.Surface) -> None:
         surface.fill(_BG)
@@ -173,3 +181,8 @@ class LessonReaderScene(Scene):
         # Hint (bottom left)
         hint = self._font_hint.render(self._strings.lesson_reader_hint, True, _DIM)
         surface.blit(hint, (_LEFT, h - _HINT_Y_OFFSET))
+        if self._play_factory is not None:
+            play_hint = self._font_hint.render(
+                self._strings.lesson_reader_play_hint, True, _ORANGE
+            )
+            surface.blit(play_hint, (_LEFT, h - _HINT_Y_OFFSET - play_hint.get_height() - 4))

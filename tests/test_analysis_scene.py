@@ -54,3 +54,11 @@ def test_esc_sets_done() -> None:
     scene.handle_event(esc)
     assert scene.is_done()
     assert isinstance(scene.next_scene(), _BackScene)
+
+
+def test_mouse_click_sets_done() -> None:
+    scene = _make_scene()
+    click = pygame.event.Event(pygame.MOUSEBUTTONDOWN, button=1, pos=(400, 300))
+    scene.handle_event(click)
+    assert scene.is_done()
+    assert isinstance(scene.next_scene(), _BackScene)
