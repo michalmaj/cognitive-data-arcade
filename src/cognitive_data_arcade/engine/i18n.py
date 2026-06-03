@@ -74,9 +74,9 @@ class Strings:
     stroop_title: str
     stroop_instructions: str
     stroop_pick_preset: str
-    preset_quick: str
-    preset_standard: str
-    preset_full: str
+    stroop_difficulty_easy: str
+    stroop_difficulty_medium: str
+    stroop_difficulty_hard: str
     stroop_hint_ink: str
     stroop_too_slow: str
     stroop_analysis_title: str
@@ -169,14 +169,14 @@ EN = Strings(
         "A word will appear in coloured ink.\n"
         "Press the key matching the INK COLOUR — ignore what the word says.\n"
         "\n"
-        "R = Red   G = Green   B = Blue   Y = Yellow\n"
+        "Active colour keys are shown at the bottom of the screen.\n"
         "\n"
         "Press SPACE to start."
     ),
     stroop_pick_preset="Choose difficulty",
-    preset_quick="Quick  36 trials",
-    preset_standard="Standard  60 trials",
-    preset_full="Full  96 trials",
+    stroop_difficulty_easy="2 colors",
+    stroop_difficulty_medium="3 colors",
+    stroop_difficulty_hard="4 colors",
     stroop_hint_ink="Name the INK colour — ignore the word",
     stroop_too_slow="Too slow",
     stroop_analysis_title="Stroop Effect Analysis",
@@ -263,14 +263,14 @@ PL = Strings(
         "Słowo pojawi się w kolorowym tuszu.\n"
         "Naciśnij klawisz koloru TUSZU — ignoruj znaczenie słowa.\n"
         "\n"
-        "R = Czerwony   G = Zielony   B = Niebieski   Y = Żółty\n"
+        "Aktywne klawisze kolorów widoczne są na dole ekranu.\n"
         "\n"
         "Naciśnij SPACJĘ aby zacząć."
     ),
     stroop_pick_preset="Wybierz poziom",
-    preset_quick="Szybki  36 prób",
-    preset_standard="Standard  60 prób",
-    preset_full="Pełny  96 prób",
+    stroop_difficulty_easy="2 kolory",
+    stroop_difficulty_medium="3 kolory",
+    stroop_difficulty_hard="4 kolory",
     stroop_hint_ink="Nazwij kolor TUSZU — ignoruj słowo",
     stroop_too_slow="Za wolno",
     stroop_analysis_title="Analiza Efektu Stroopa",

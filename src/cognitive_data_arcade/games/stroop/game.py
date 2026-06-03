@@ -13,7 +13,7 @@ from cognitive_data_arcade.engine import audio
 from cognitive_data_arcade.engine.badges import BadgeEngine, SessionResult
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
-from cognitive_data_arcade.games.stroop.config import COLORS, FULL, QUICK, StroopConfig
+from cognitive_data_arcade.games.stroop.config import COLORS, EASY, HARD, MEDIUM, StroopConfig
 from cognitive_data_arcade.profile.manager import ProfileManager
 
 _BG = (10, 10, 20)
@@ -25,13 +25,6 @@ _HIGHLIGHT = (243, 156, 18)
 _W, _H = 1024, 768
 _PROGRESS_H = 4
 _FOOTER_H = 40
-
-_KEY_TO_COLOR: dict[int, str] = {
-    pygame.K_r: "red",
-    pygame.K_g: "green",
-    pygame.K_b: "blue",
-    pygame.K_y: "yellow",
-}
 
 _COLOR_TO_RESPONSE: dict[str, str] = {
     "red": "r",
@@ -105,8 +98,11 @@ class StroopGame(Scene):
         self._participant_id = participant_id
         self._session_id = session_id
         self._csv_path = csv_path
+        self._key_to_color: dict[int, str] = {
+            kc: name for _, name, _, kc in COLORS[:self._config.num_colors]
+        }
 
-        self._presets = [QUICK, config, FULL]
+        self._presets = [EASY, MEDIUM, HARD]
         self._preset_idx = 1  # middle (standard) default
 
         self._phase = _Phase.PRESET_SELECT
@@ -148,6 +144,9 @@ class StroopGame(Scene):
                     if hit(rect, event.pos):
                         self._preset_idx = i
                         self._config = self._presets[self._preset_idx]
+                        self._key_to_color = {
+                            kc: name for _, name, _, kc in COLORS[:self._config.num_colors]
+                        }
                         self._phase = _Phase.INSTRUCTIONS
                         break
             elif self._phase == _Phase.STIMULUS:
@@ -173,8 +172,8 @@ class StroopGame(Scene):
                 self._phase_timer = 0.0
                 self._countdown_val = 3
         elif self._phase == _Phase.STIMULUS:
-            if event.key in _KEY_TO_COLOR:
-                color = _KEY_TO_COLOR[event.key]
+            if event.key in self._key_to_color:
+                color = self._key_to_color[event.key]
                 correct = color == self._current_stimulus.ink_name
                 self._complete_trial(
                     rt=self._phase_timer,
@@ -192,6 +191,9 @@ class StroopGame(Scene):
             self._preset_idx = min(len(self._presets) - 1, self._preset_idx + 1)
         elif key in (pygame.K_SPACE, pygame.K_RETURN):
             self._config = self._presets[self._preset_idx]
+            self._key_to_color = {
+                kc: name for _, name, _, kc in COLORS[:self._config.num_colors]
+            }
             self._phase = _Phase.INSTRUCTIONS
 
     def update(self, dt_ms: float) -> None:
@@ -250,14 +252,13 @@ class StroopGame(Scene):
         return self._stimulus_queue.pop(0)
 
     def _build_block(self) -> list[_Stimulus]:
-        # Always 12 stimuli (4 per condition) for counterbalancing;
-        # trials_per_block controls rest breaks independently.
+        active = COLORS[:self._config.num_colors]
         stimuli: list[_Stimulus] = []
-        for word, name, rgb, key in COLORS:
+        for word, name, rgb, key in active:
             stimuli.append(_Stimulus(word, name, rgb, key, "congruent", name))
             stimuli.append(_Stimulus("XXXXX", name, rgb, key, "neutral", "none"))
-        for word, name, _rgb, _key in COLORS:
-            wrong = [(n, r, k) for (w, n, r, k) in COLORS if n != name]
+        for word, name, _rgb, _key in active:
+            wrong = [(n, r, k) for (w, n, r, k) in active if n != name]
             ink_name, ink_rgb, ink_key = random.choice(wrong)
             stimuli.append(
                 _Stimulus(word, ink_name, ink_rgb, ink_key, "incongruent", name)
@@ -371,9 +372,9 @@ class StroopGame(Scene):
         title = self._font_med.render(self._strings.stroop_pick_preset, True, _WHITE)
         surface.blit(title, (w // 2 - title.get_width() // 2, 200))
         labels = [
-            self._strings.preset_quick,
-            self._strings.preset_standard,
-            self._strings.preset_full,
+            self._strings.stroop_difficulty_easy,
+            self._strings.stroop_difficulty_medium,
+            self._strings.stroop_difficulty_hard,
         ]
         self._preset_rects = []
         for i, label in enumerate(labels):
@@ -436,20 +437,17 @@ class StroopGame(Scene):
     def _draw_key_bar(self, surface: pygame.Surface, w: int, h: int) -> None:
         bar_y = h - _FOOTER_H
         pygame.draw.line(surface, (42, 42, 80), (0, bar_y), (w, bar_y))
-        key_labels = [
-            ("R", "r", "CZERWONY", (231, 76, 60)),
-            ("G", "g", "ZIELONY", (39, 174, 96)),
-            ("B", "b", "NIEBIESKI", (41, 128, 185)),
-            ("Y", "y", "ŻÓŁTY", (243, 156, 18)),
-        ]
-        col_w = w // 4
+        active = COLORS[:self._config.num_colors]
+        col_w = w // self._config.num_colors
         self._color_rects = {}
-        for i, (letter, key, name, color) in enumerate(key_labels):
+        for i, (word, name, rgb, key_const) in enumerate(active):
+            letter = chr(key_const).upper()
+            key = _COLOR_TO_RESPONSE[name]
             cx = i * col_w + col_w // 2
             self._color_rects[key] = pygame.Rect(i * col_w, bar_y, col_w, _FOOTER_H)
-            k = self._font_key.render(letter, True, color)
+            k = self._font_key.render(letter, True, rgb)
             surface.blit(k, (cx - k.get_width() // 2, bar_y + 4))
-            n = self._font_sm.render(name, True, color)
+            n = self._font_sm.render(word, True, rgb)
             surface.blit(n, (cx - n.get_width() // 2, bar_y + 22))
 
     def _draw_feedback(self, surface: pygame.Surface, w: int, h: int) -> None:
