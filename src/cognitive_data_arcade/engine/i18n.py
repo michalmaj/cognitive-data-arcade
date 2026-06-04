@@ -139,6 +139,13 @@ class Strings:
     label_play_game: str
     label_theory_lesson: str
     label_esc_close: str
+    # Event Log Detective
+    eld_hint_key: str
+    eld_report_title: str
+    eld_score_fmt: str
+    eld_play_again: str
+    eld_consequence_fmt: str
+    eld_confirm_hint: str
 
 
 EN = Strings(
@@ -254,6 +261,12 @@ EN = Strings(
     label_play_game="Play",
     label_theory_lesson="Theory",
     label_esc_close="ESC — close",
+    eld_hint_key="H — hint",
+    eld_report_title="EXPERIMENT REPORT",
+    eld_score_fmt="Score: {correct}/{total}  [{diff} x{mult}] = {pts} pts",
+    eld_play_again="ENTER — Play again   ESC — Menu",
+    eld_consequence_fmt="If you choose {label}:",
+    eld_confirm_hint="ENTER — Confirm   ESC — Change",
 )
 
 PL = Strings(
@@ -369,6 +382,12 @@ PL = Strings(
     label_play_game="Graj",
     label_theory_lesson="Teoria",
     label_esc_close="ESC — zamknij",
+    eld_hint_key="H — wskazowka",
+    eld_report_title="RAPORT EKSPERYMENTU",
+    eld_score_fmt="Wynik: {correct}/{total}  [{diff} x{mult}] = {pts} pkt",
+    eld_play_again="ENTER — Zagraj ponownie   ESC — Menu",
+    eld_consequence_fmt="Jesli wybierzesz {label}:",
+    eld_confirm_hint="ENTER — Potwierdz   ESC — Zmien wybor",
 )
 
 

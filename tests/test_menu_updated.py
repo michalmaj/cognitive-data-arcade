@@ -88,8 +88,8 @@ def test_menu_z_key_launches_stroop_picker(tmp_path: Path) -> None:
 
 def test_menu_enter_on_non_stroop_lesson_does_nothing(tmp_path: Path) -> None:
     scene = _make_menu(tmp_path)
-    # Navigate to lesson 3 (index 2), which should not launch anything
-    for _ in range(2):
+    # Navigate to lesson 4 (index 3), which should not launch anything
+    for _ in range(3):
         scene.handle_event(
             pygame.event.Event(pygame.KEYDOWN, key=pygame.K_DOWN, mod=0, unicode="")
         )

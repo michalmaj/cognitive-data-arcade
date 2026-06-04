@@ -120,6 +120,8 @@ class LessonMenuScene(Scene):
             self._launch_big_data_map()
         elif lesson_num == 2:
             self._launch_rt_lab()
+        elif lesson_num == 3:
+            self._launch_event_log_detective()
         elif lesson_num == 8:
             self._launch_flanker()
         elif lesson_num == 9:
@@ -169,6 +171,14 @@ class LessonMenuScene(Scene):
             return self._make_big_data_map_game
         if lesson_num == 2:
             return self._make_rt_lab_game
+        if lesson_num == 3:
+            pm, strings = self._pm, self._strings
+
+            def _make_eld() -> Scene:
+                from cognitive_data_arcade.ui.event_log_level_scene import EventLogLevelScene
+                return EventLogLevelScene(pm, strings)
+
+            return _make_eld
         if lesson_num == 7:
             pm, strings = self._pm, self._strings
             def _make_stroop():
@@ -257,6 +267,12 @@ class LessonMenuScene(Scene):
 
     def _launch_rt_lab(self) -> None:
         self._next = self._make_rt_lab_game()
+        self._done = True
+
+    def _launch_event_log_detective(self) -> None:
+        from cognitive_data_arcade.ui.event_log_level_scene import EventLogLevelScene
+
+        self._next = EventLogLevelScene(self._pm, self._strings)
         self._done = True
 
     def _make_rt_lab_game(self) -> Scene:
