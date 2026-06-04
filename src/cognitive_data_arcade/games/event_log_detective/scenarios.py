@@ -72,7 +72,7 @@ _s1_d1 = Decision(
     ),
     report_pl=(
         "CSV to universalny format tekstowy czytelny przez Excela, Pandas i kazdy edytor. "
-        "Dla danych tabelarycznych z kilkoma tysiącami wierszy nie potrzebujesz "
+        "Dla danych tabelarycznych z kilkoma tysiacami wierszy nie potrzebujesz "
         "bardziej zlozonego formatu."
     ),
     report_en=(
@@ -211,10 +211,10 @@ _s1_d3 = Decision(
             label_en="RT only",
             is_correct=False,
             consequence_easy_pl=(
-                "Brak participant_id — niemozliwe porownanie miedzy uczestnikami."
+                "Brak participant_id, condition i stimulus — prawie zadna analiza nie jest mozliwa."
             ),
             consequence_easy_en=(
-                "No participant_id — impossible to compare across participants."
+                "No participant_id, condition or stimulus columns — almost no analysis is possible."
             ),
         ),
         Option(
@@ -222,10 +222,10 @@ _s1_d3 = Decision(
             label_en="RT + correct",
             is_correct=False,
             consequence_easy_pl=(
-                "Brak participant_id — niemozliwe porownanie miedzy uczestnikami."
+                "Brak participant_id — niemozliwe porownanie wynikow miedzy uczestnikami."
             ),
             consequence_easy_en=(
-                "No participant_id — impossible to compare across participants."
+                "No participant_id — impossible to compare results across participants."
             ),
         ),
         Option(
@@ -368,7 +368,7 @@ _s1_d6 = Decision(
     context_pl=(
         "Uczestnik nie odpowiedzial na probe przed uplyniecia czasu. "
         "Pole actual_response i reaction_time_ms sa puste. "
-        "Musisz ustalic, jaką wartosc zapisac w CSV."
+        "Musisz ustalic, jaka wartosc zapisac w CSV."
     ),
     context_en=(
         "The participant did not respond to a trial before the timeout. "
