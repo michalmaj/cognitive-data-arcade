@@ -155,8 +155,7 @@ def test_easy_popup_shown_for_wrong_answer():
     game = _make_game(difficulty="easy")
     game._state = _State.DECISION
     game._node_idx = 0
-    dec = SCENARIOS[0].decisions[0]
-    wrong_idx = next(j for j, o in enumerate(dec.options) if not o.is_correct)
+    wrong_idx = next(j for j, o in enumerate(game._shuffled_options[0]) if not o.is_correct)
     game._option_idx = wrong_idx
     game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode=""))
     assert game._popup_visible
@@ -167,8 +166,7 @@ def test_easy_popup_shown_for_correct_answer():
     game = _make_game(difficulty="easy")
     game._state = _State.DECISION
     game._node_idx = 0
-    dec = SCENARIOS[0].decisions[0]
-    correct_idx = next(j for j, o in enumerate(dec.options) if o.is_correct)
+    correct_idx = next(j for j, o in enumerate(game._shuffled_options[0]) if o.is_correct)
     game._option_idx = correct_idx
     game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode=""))
     assert game._popup_visible
@@ -179,8 +177,7 @@ def test_medium_no_popup_for_wrong_answer():
     game = _make_game(difficulty="medium")
     game._state = _State.DECISION
     game._node_idx = 0
-    dec = SCENARIOS[0].decisions[0]
-    wrong_idx = next(j for j, o in enumerate(dec.options) if not o.is_correct)
+    wrong_idx = next(j for j, o in enumerate(game._shuffled_options[0]) if not o.is_correct)
     game._option_idx = wrong_idx
     game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode=""))
     assert not game._popup_visible
@@ -224,20 +221,18 @@ def test_all_decided_true_when_all_set():
 
 def test_score_all_correct_hard():
     game = _make_game(difficulty="hard")
-    decisions = SCENARIOS[0].decisions
-    for i, dec in enumerate(decisions):
-        correct_idx = next(j for j, o in enumerate(dec.options) if o.is_correct)
+    for i in range(len(game._scenario.decisions)):
+        correct_idx = next(j for j, o in enumerate(game._shuffled_options[i]) if o.is_correct)
         game._choices[i] = correct_idx
     correct, total, score = game._score()
-    assert correct == total == len(decisions)
+    assert correct == total == len(game._scenario.decisions)
     assert score == total * 3
 
 
 def test_score_multiplier_easy():
     game = _make_game(difficulty="easy")
-    decisions = SCENARIOS[0].decisions
-    for i, dec in enumerate(decisions):
-        correct_idx = next(j for j, o in enumerate(dec.options) if o.is_correct)
+    for i in range(len(game._scenario.decisions)):
+        correct_idx = next(j for j, o in enumerate(game._shuffled_options[i]) if o.is_correct)
         game._choices[i] = correct_idx
     correct, total, score = game._score()
     assert score == correct * 1
@@ -245,9 +240,8 @@ def test_score_multiplier_easy():
 
 def test_score_zero_when_all_wrong():
     game = _make_game(difficulty="medium")
-    decisions = SCENARIOS[0].decisions
-    for i, dec in enumerate(decisions):
-        wrong_idx = next((j for j, o in enumerate(dec.options) if not o.is_correct), None)
+    for i in range(len(game._scenario.decisions)):
+        wrong_idx = next((j for j, o in enumerate(game._shuffled_options[i]) if not o.is_correct), None)
         if wrong_idx is None:
             wrong_idx = 0
         game._choices[i] = wrong_idx
@@ -304,3 +298,24 @@ def test_draw_report_does_not_crash():
     for i in range(len(SCENARIOS[0].decisions)):
         game._choices[i] = 0
     game.draw(pygame.display.get_surface())
+
+
+# ── Option shuffle ─────────────────────────────────────────────────────────────
+
+def test_options_are_shuffled_differently_across_games():
+    """Two game instances must not always produce the same option order."""
+    import random
+    orders = set()
+    for seed in range(20):
+        random.seed(seed)
+        game = _make_game(scenario_idx=0)
+        order = tuple(opt.label_en for opt in game._shuffled_options[0])
+        orders.add(order)
+    assert len(orders) > 1
+
+
+def test_shuffled_options_same_length_as_original():
+    game = _make_game()
+    for i, dec in enumerate(game._scenario.decisions):
+        assert len(game._shuffled_options[i]) == len(dec.options)
+        assert set(game._shuffled_options[i]) == set(dec.options)
