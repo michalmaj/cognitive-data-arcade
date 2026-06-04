@@ -147,9 +147,6 @@ class Strings:
     eld_consequence_fmt: str
     eld_correct_choice_fmt: str
     eld_confirm_hint: str
-    eld_pause_title: str
-    eld_pause_resume: str
-    eld_pause_quit: str
 
 
 EN = Strings(
@@ -268,13 +265,10 @@ EN = Strings(
     eld_hint_key="H — hint",
     eld_report_title="EXPERIMENT REPORT",
     eld_score_fmt="Score: {correct}/{total}  [{diff} x{mult}] = {pts} pts",
-    eld_play_again="ENTER — Play again   ESC — Menu",
+    eld_play_again="ENTER — Play again   ESC — Pause",
     eld_consequence_fmt="If you choose {label}:",
     eld_correct_choice_fmt="Good choice! {label}:",
     eld_confirm_hint="ENTER — Confirm   ESC — Change",
-    eld_pause_title="PAUSED",
-    eld_pause_resume="ESC — Resume",
-    eld_pause_quit="Q — Quit to menu",
 )
 
 PL = Strings(
@@ -393,13 +387,10 @@ PL = Strings(
     eld_hint_key="H — wskazówka",
     eld_report_title="RAPORT EKSPERYMENTU",
     eld_score_fmt="Wynik: {correct}/{total}  [{diff} x{mult}] = {pts} pkt",
-    eld_play_again="ENTER — Zagraj ponownie   ESC — Menu",
+    eld_play_again="ENTER — Zagraj ponownie   ESC — Pauza",
     eld_consequence_fmt="Jeśli wybierzesz {label}:",
     eld_correct_choice_fmt="Dobry wybór! {label}:",
     eld_confirm_hint="ENTER — Potwierdź   ESC — Zmień wybór",
-    eld_pause_title="PAUZA",
-    eld_pause_resume="ESC — Kontynuuj",
-    eld_pause_quit="Q — Wyjdź do menu",
 )
 
 

@@ -4,6 +4,7 @@ import pygame
 
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.i18n import Strings
+from cognitive_data_arcade.engine.pause import PausableGame
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.event_log_detective.scenarios import SCENARIOS
 from cognitive_data_arcade.profile.manager import ProfileManager
@@ -88,34 +89,26 @@ class EventLogLevelScene(Scene):
             self._launch()
 
     def _launch(self) -> None:
-        try:
-            from cognitive_data_arcade.games.event_log_detective.game import (
-                EventLogDetectiveGame,
-            )
-            from cognitive_data_arcade.games.event_log_detective.info import (
-                get_game_info,
-            )
-            from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
+        from cognitive_data_arcade.games.event_log_detective.game import EventLogDetectiveGame
+        from cognitive_data_arcade.games.event_log_detective.info import get_game_info
+        from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
 
-            difficulties = ["easy", "medium", "hard"]
-            scenario = SCENARIOS[self._exp_idx]
-            difficulty = difficulties[self._diff_idx]
+        difficulties = ["easy", "medium", "hard"]
+        scenario = SCENARIOS[self._exp_idx]
+        difficulty = difficulties[self._diff_idx]
+        pm, strings = self._pm, self._strings
 
-            def back_factory() -> EventLogLevelScene:
-                return EventLogLevelScene(self._pm, self._strings)
-
-            inner = EventLogDetectiveGame(
-                scenario, difficulty, self._strings, self._pm, back_factory
-            )
-            game_info = get_game_info(self._strings)
-            self._next = HowToPlayScene(
-                game_info,
-                self._strings,
-                back_scene=inner,
-                esc_scene=EventLogLevelScene(self._pm, self._strings),
-            )
-        except ImportError:
-            self._next = LessonMenuScene(self._pm, self._strings)
+        def restart_factory() -> EventLogLevelScene:
+            return EventLogLevelScene(pm, strings)
+        inner = EventLogDetectiveGame(scenario, difficulty, strings, pm, restart_factory)
+        game_info = get_game_info(strings)
+        pausable = PausableGame(inner, game_info, restart_factory, strings, pm)
+        self._next = HowToPlayScene(
+            game_info,
+            strings,
+            back_scene=pausable,
+            esc_scene=EventLogLevelScene(pm, strings),
+        )
         self._done = True
 
     def update(self, dt_ms: float) -> None:
