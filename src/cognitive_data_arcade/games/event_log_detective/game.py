@@ -6,13 +6,14 @@ State machine: INTRO -> CONFIG_MAP <-> DECISION -> REPORT
 from __future__ import annotations
 
 import enum
+import random
 
 import pygame
 
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
-from cognitive_data_arcade.games.event_log_detective.scenarios import Scenario
+from cognitive_data_arcade.games.event_log_detective.scenarios import Option, Scenario
 from cognitive_data_arcade.profile.manager import ProfileManager
 
 # ---------------------------------------------------------------------------
@@ -64,6 +65,10 @@ class EventLogDetectiveGame(Scene):
         self._node_idx = 0
         self._option_idx = 0
         self._choices: list[int | None] = [None] * len(scenario.decisions)
+        self._shuffled_options: list[tuple[Option, ...]] = [
+            tuple(random.sample(dec.options, len(dec.options)))
+            for dec in scenario.decisions
+        ]
         self._popup_visible = False
         self._hint_visible = False
         self._done = False
@@ -157,7 +162,8 @@ class EventLogDetectiveGame(Scene):
                 self._state = _State.DECISION
     def _handle_decision(self, event: pygame.event.Event) -> None:
         dec = self._scenario.decisions[self._node_idx]
-        n_opts = len(dec.options)
+        opts = self._shuffled_options[self._node_idx]
+        n_opts = len(opts)
 
         if event.key == pygame.K_UP:
             self._option_idx = max(0, self._option_idx - 1)
@@ -170,7 +176,7 @@ class EventLogDetectiveGame(Scene):
         elif event.key == pygame.K_h and self._difficulty == "medium":
             self._hint_visible = not self._hint_visible
         elif event.key == pygame.K_RETURN:
-            opt = dec.options[self._option_idx]
+            opt = opts[self._option_idx]
             if self._difficulty == "easy":
                 self._popup_is_correct = opt.is_correct
                 if opt.is_correct or opt.consequence_easy_en:
@@ -235,8 +241,7 @@ class EventLogDetectiveGame(Scene):
             for j, rect in enumerate(self._option_rects):
                 if rect.collidepoint(pos):
                     self._option_idx = j
-                    dec = self._scenario.decisions[self._node_idx]
-                    opt = dec.options[self._option_idx]
+                    opt = self._shuffled_options[self._node_idx][self._option_idx]
                     if self._difficulty == "easy":
                         self._popup_is_correct = opt.is_correct
                         if opt.is_correct or opt.consequence_easy_en:
@@ -273,9 +278,9 @@ class EventLogDetectiveGame(Scene):
         multiplier = {"easy": 1, "medium": 2, "hard": 3}.get(self._difficulty, 1)
         total = len(self._scenario.decisions)
         correct = 0
-        for i, dec in enumerate(self._scenario.decisions):
+        for i in range(len(self._scenario.decisions)):
             choice = self._choices[i]
-            if choice is not None and dec.options[choice].is_correct:
+            if choice is not None and self._shuffled_options[i][choice].is_correct:
                 correct += 1
         weighted_score = correct * multiplier
         return correct, total, weighted_score
@@ -409,7 +414,7 @@ class EventLogDetectiveGame(Scene):
         y += 10
         # Options
         self._option_rects = []
-        for j, opt in enumerate(dec.options):
+        for j, opt in enumerate(self._shuffled_options[self._node_idx]):
             label = opt.label_pl if lang == "pl" else opt.label_en
             row = f"[{j + 1}] {label}"
             color = _ACCENT if j == self._option_idx else _WHITE
@@ -447,7 +452,7 @@ class EventLogDetectiveGame(Scene):
         w, h = surface.get_size()
         lang = self._strings.language
         dec = self._scenario.decisions[self._node_idx]
-        opt = dec.options[self._option_idx]
+        opt = self._shuffled_options[self._node_idx][self._option_idx]
 
         label = opt.label_pl if lang == "pl" else opt.label_en
         if self._popup_is_correct:
@@ -521,7 +526,7 @@ class EventLogDetectiveGame(Scene):
             choice = self._choices[i]
             if choice is None:
                 continue
-            opt = dec.options[choice]
+            opt = self._shuffled_options[i][choice]
             is_ok = opt.is_correct
 
             marker = "OK" if is_ok else "X!"
