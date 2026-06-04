@@ -19,8 +19,7 @@ def get_game_info(strings: Strings) -> GameInfo:
                 ("ENTER", "otworz / potwierdz"),
                 ("1-4", "wybierz opcje"),
                 ("H", "wskazowka (Medium)"),
-                ("BACKSPACE", "wroc do mapy"),
-                ("ESC", "pauza"),
+                ("ESC", "wroc / menu"),
             ],
         )
     return GameInfo(
@@ -36,7 +35,6 @@ def get_game_info(strings: Strings) -> GameInfo:
             ("ENTER", "open / confirm"),
             ("1-4", "select option"),
             ("H", "hint (Medium)"),
-            ("BACKSPACE", "back to map"),
-            ("ESC", "pause"),
+            ("ESC", "back / menu"),
         ],
     )

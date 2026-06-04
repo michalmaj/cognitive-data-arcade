@@ -265,10 +265,10 @@ EN = Strings(
     eld_hint_key="H — hint",
     eld_report_title="EXPERIMENT REPORT",
     eld_score_fmt="Score: {correct}/{total}  [{diff} x{mult}] = {pts} pts",
-    eld_play_again="ENTER — Play again   ESC — Pause",
+    eld_play_again="ENTER — Play again   ESC — menu",
     eld_consequence_fmt="If you choose {label}:",
     eld_correct_choice_fmt="Good choice! {label}:",
-    eld_confirm_hint="ENTER — Confirm   BACKSPACE — Change",
+    eld_confirm_hint="ENTER — Confirm   ESC — Change",
 )
 
 PL = Strings(
@@ -387,10 +387,10 @@ PL = Strings(
     eld_hint_key="H — wskazówka",
     eld_report_title="RAPORT EKSPERYMENTU",
     eld_score_fmt="Wynik: {correct}/{total}  [{diff} x{mult}] = {pts} pkt",
-    eld_play_again="ENTER — Zagraj ponownie   ESC — Pauza",
-    eld_consequence_fmt="Jeśli wybierzesz {label}:",
-    eld_correct_choice_fmt="Dobry wybór! {label}:",
-    eld_confirm_hint="ENTER — Potwierdź   BACKSPACE — Zmień wybór",
+    eld_play_again="ENTER — Zagraj ponownie   ESC — menu",
+    eld_consequence_fmt="Jezeli wybierzesz {label}:",
+    eld_correct_choice_fmt="Dobry wybor! {label}:",
+    eld_confirm_hint="ENTER — Potwierdz   ESC — Zmien wybor",
 )
 
 

@@ -104,25 +104,17 @@ def test_enter_when_all_decided_goes_to_report():
 
 # ── DECISION navigation ────────────────────────────────────────────────────────
 
-def test_backspace_in_decision_returns_to_config_map():
-    game = _make_game()
-    game._state = _State.DECISION
-    game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_BACKSPACE, mod=0, unicode=""))
-    assert game._state == _State.CONFIG_MAP
-
-
-def test_left_in_decision_returns_to_config_map():
-    game = _make_game()
-    game._state = _State.DECISION
-    game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_LEFT, mod=0, unicode=""))
-    assert game._state == _State.CONFIG_MAP
-
-
-def test_esc_in_decision_is_noop():
-    # PausableGame intercepts ESC — inner game must not act on it
+def test_esc_in_decision_returns_to_config_map():
     game = _make_game()
     game._state = _State.DECISION
     game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode=""))
+    assert game._state == _State.CONFIG_MAP
+
+
+def test_left_in_decision_is_noop():
+    game = _make_game()
+    game._state = _State.DECISION
+    game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_LEFT, mod=0, unicode=""))
     assert game._state == _State.DECISION
 
 
@@ -207,13 +199,12 @@ def test_popup_enter_confirms_and_closes():
     assert game._state == _State.CONFIG_MAP
 
 
-def test_popup_backspace_closes_without_saving():
-    # ESC is intercepted by PausableGame; BACKSPACE dismisses popup without saving
+def test_popup_esc_closes_without_saving():
     game = _make_game(difficulty="easy")
     game._state = _State.DECISION
     game._popup_visible = True
     game._node_idx = 0
-    game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_BACKSPACE, mod=0, unicode=""))
+    game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode=""))
     assert not game._popup_visible
     assert game._choices[0] is None
 
@@ -267,30 +258,21 @@ def test_score_zero_when_all_wrong():
 
 # ── REPORT navigation ──────────────────────────────────────────────────────────
 
-def test_report_esc_is_noop():
-    # PausableGame intercepts ESC — inner game must not act on it in REPORT
+def test_report_esc_navigates_to_level_scene():
+    from cognitive_data_arcade.ui.event_log_level_scene import EventLogLevelScene
     game = _make_game()
     game._state = _State.REPORT
     game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode=""))
-    assert not game.is_done()
+    assert game.is_done()
+    assert isinstance(game.next_scene(), EventLogLevelScene)
 
 
-def test_report_enter_with_back_factory():
-    called = []
-
-    class _FakeScene:
-        pass
-
-    def factory():
-        called.append(True)
-        return _FakeScene()
-
+def test_report_enter_replays_same_scenario():
     game = _make_game()
-    game._back_factory = factory
     game._state = _State.REPORT
     game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode=""))
-    assert called
     assert game.is_done()
+    assert isinstance(game.next_scene(), EventLogDetectiveGame)
 
 
 # ── Draw smoke tests ──────────────────────────────────────────────────────────
