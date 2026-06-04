@@ -20,7 +20,9 @@ class Option:
     label_pl: str
     label_en: str
     is_correct: bool
-    consequence_easy_pl: str  # shown in Easy popup before confirm (empty string if correct)
+    consequence_easy_pl: (
+        str  # shown in Easy popup before confirm (empty string if correct)
+    )
     consequence_easy_en: str
 
 
@@ -28,11 +30,11 @@ class Option:
 class Decision:
     title_pl: str
     title_en: str
-    context_pl: str           # right-panel context text (always visible)
+    context_pl: str  # right-panel context text (always visible)
     context_en: str
-    hint_medium_pl: str       # shown when H pressed on Medium
+    hint_medium_pl: str  # shown when H pressed on Medium
     hint_medium_en: str
-    report_pl: str            # explanation shown in final report
+    report_pl: str  # explanation shown in final report
     report_en: str
     options: tuple[Option, ...]  # 2-4 options
 
@@ -284,9 +286,7 @@ _s1_d4 = Decision(
             consequence_easy_pl=(
                 "Plik nadpisany przy nastepnym uruchomieniu — tracisz poprzednie dane."
             ),
-            consequence_easy_en=(
-                "Overwritten on next run — you lose previous data."
-            ),
+            consequence_easy_en=("Overwritten on next run — you lose previous data."),
         ),
         Option(
             label_pl="exp_{losowy}.csv",
@@ -295,9 +295,7 @@ _s1_d4 = Decision(
             consequence_easy_pl=(
                 "Losowa nazwa — nie wiadomo kto i kiedy, trudno sortowac."
             ),
-            consequence_easy_en=(
-                "Random name — unknown who and when, hard to sort."
-            ),
+            consequence_easy_en=("Random name — unknown who and when, hard to sort."),
         ),
     ),
 )
@@ -315,12 +313,8 @@ _s1_d5 = Decision(
         "These are likely anticipations or hardware artefacts. "
         "You must decide what to do with these observations."
     ),
-    hint_medium_pl=(
-        "Pomysl, jak zachowac slad po kazdej decyzji dotyczacej danych."
-    ),
-    hint_medium_en=(
-        "Think about how to preserve a trace of every data decision."
-    ),
+    hint_medium_pl=("Pomysl, jak zachowac slad po kazdej decyzji dotyczacej danych."),
+    hint_medium_en=("Think about how to preserve a trace of every data decision."),
     report_pl=(
         "Oznaczenie flaga zachowuje dane i zostawia slad audytowy. "
         "Mozesz pozniej wykluczyc flagowane probe albo zbadac ich rozklad."
@@ -355,9 +349,7 @@ _s1_d5 = Decision(
             consequence_easy_pl=(
                 "Zachowujesz skontaminowane dane — znieksztalca srednie RT."
             ),
-            consequence_easy_en=(
-                "You keep contaminated data — distorts mean RT."
-            ),
+            consequence_easy_en=("You keep contaminated data — distorts mean RT."),
         ),
     ),
 )
@@ -417,9 +409,7 @@ _s1_d6 = Decision(
             consequence_easy_pl=(
                 "NULL nie jest rozpoznawany przez wszystkie biblioteki Pythona."
             ),
-            consequence_easy_en=(
-                "NULL: not recognised by all Python libraries."
-            ),
+            consequence_easy_en=("NULL: not recognised by all Python libraries."),
         ),
         Option(
             label_pl="-1",
@@ -450,7 +440,12 @@ scenario1 = Scenario(
         "Make decisions about how to record and store the data."
     ),
     decisions=(
-        _s1_d1, _s1_d2, _s1_d3, _s1_d4, _s1_d5, _s1_d6,
+        _s1_d1,
+        _s1_d2,
+        _s1_d3,
+        _s1_d4,
+        _s1_d5,
+        _s1_d6,
     ),
 )
 
@@ -472,12 +467,8 @@ _s2_d1 = Decision(
         "Behavioural data is a few hundred rows of reaction times and responses. "
         "Choose the storage format for this data layer."
     ),
-    hint_medium_pl=(
-        "Dane behawioralne to zwykla tabela — wybierz najprostszy format."
-    ),
-    hint_medium_en=(
-        "Behavioural data is a simple table — choose the simplest format."
-    ),
+    hint_medium_pl=("Dane behawioralne to zwykla tabela — wybierz najprostszy format."),
+    hint_medium_en=("Behavioural data is a simple table — choose the simplest format."),
     report_pl=(
         "Dla kilkuset wierszy CSV jest optymalny: lekki, czytelny i latwy do analizy. "
         "Bardziej zlezone formaty sa tu przesada."
@@ -498,9 +489,7 @@ _s2_d1 = Decision(
             label_pl="JSON",
             label_en="JSON",
             is_correct=False,
-            consequence_easy_pl=(
-                "JSON to zbedna zlozonos dla kilkuset wierszy RT."
-            ),
+            consequence_easy_pl=("JSON to zbedna zlozonos dla kilkuset wierszy RT."),
             consequence_easy_en=(
                 "JSON: unnecessary complexity for a few hundred RT rows."
             ),
@@ -509,23 +498,15 @@ _s2_d1 = Decision(
             label_pl="HDF5",
             label_en="HDF5",
             is_correct=False,
-            consequence_easy_pl=(
-                "HDF5 to przerost formy dla danych behawioralnych."
-            ),
-            consequence_easy_en=(
-                "HDF5: overkill for behavioural data."
-            ),
+            consequence_easy_pl=("HDF5 to przerost formy dla danych behawioralnych."),
+            consequence_easy_en=("HDF5: overkill for behavioural data."),
         ),
         Option(
             label_pl="EDF/BDF",
             label_en="EDF/BDF",
             is_correct=False,
-            consequence_easy_pl=(
-                "EDF sluzy do sygnalu EEG, nie do danych RT."
-            ),
-            consequence_easy_en=(
-                "EDF is for EEG signals, not RT data."
-            ),
+            consequence_easy_pl=("EDF sluzy do sygnalu EEG, nie do danych RT."),
+            consequence_easy_en=("EDF is for EEG signals, not RT data."),
         ),
     ),
 )
@@ -585,9 +566,7 @@ _s2_d2 = Decision(
             consequence_easy_pl=(
                 "JSON jest jeszcze wiekszy niz CSV dla danych szeregowych."
             ),
-            consequence_easy_en=(
-                "JSON: even larger than CSV for time-series data."
-            ),
+            consequence_easy_en=("JSON: even larger than CSV for time-series data."),
         ),
         Option(
             label_pl="EDF/BDF",
@@ -691,9 +670,7 @@ _s2_d4 = Decision(
             consequence_easy_pl=(
                 "128 Hz jest niedostateczne do rozroznienia P100 od N200."
             ),
-            consequence_easy_en=(
-                "128 Hz: insufficient to distinguish P100 from N200."
-            ),
+            consequence_easy_en=("128 Hz: insufficient to distinguish P100 from N200."),
         ),
         Option(
             label_pl="256 Hz",
@@ -717,9 +694,7 @@ _s2_d4 = Decision(
             label_pl="2000 Hz",
             label_en="2000 Hz",
             is_correct=False,
-            consequence_easy_pl=(
-                "2000 Hz podwaja rozmiar danych bez zadnej korzysci."
-            ),
+            consequence_easy_pl=("2000 Hz podwaja rozmiar danych bez zadnej korzysci."),
             consequence_easy_en=(
                 "2000 Hz: unnecessary resolution, doubles data size without benefit."
             ),
@@ -829,20 +804,14 @@ _s2_d6 = Decision(
             consequence_easy_pl=(
                 "Jeden plik — jesli uszkodzony, tracisz wszystkie markery."
             ),
-            consequence_easy_en=(
-                "Single file — if corrupted, you lose all markers."
-            ),
+            consequence_easy_en=("Single file — if corrupted, you lose all markers."),
         ),
         Option(
             label_pl="Osadzone w EEG",
             label_en="Embedded in EEG",
             is_correct=False,
-            consequence_easy_pl=(
-                "Jeden rekord — ryzyko utraty przy bledzie formatu."
-            ),
-            consequence_easy_en=(
-                "Single record — risk of loss on format error."
-            ),
+            consequence_easy_pl=("Jeden rekord — ryzyko utraty przy bledzie formatu."),
+            consequence_easy_en=("Single record — risk of loss on format error."),
         ),
         Option(
             label_pl="Zadne",
@@ -906,12 +875,8 @@ _s2_d7 = Decision(
             label_pl="Wszystko w jednym katalogu",
             label_en="All in one directory",
             is_correct=False,
-            consequence_easy_pl=(
-                "3000 plikow w jednym folderze -> chaos."
-            ),
-            consequence_easy_en=(
-                "3000 files in one folder -> chaos."
-            ),
+            consequence_easy_pl=("3000 plikow w jednym folderze -> chaos."),
+            consequence_easy_en=("3000 files in one folder -> chaos."),
         ),
     ),
 )
@@ -931,7 +896,13 @@ scenario2 = Scenario(
         "Make decisions about formats, synchronisation, and data storage."
     ),
     decisions=(
-        _s2_d1, _s2_d2, _s2_d3, _s2_d4, _s2_d5, _s2_d6, _s2_d7,
+        _s2_d1,
+        _s2_d2,
+        _s2_d3,
+        _s2_d4,
+        _s2_d5,
+        _s2_d6,
+        _s2_d7,
     ),
 )
 
@@ -982,9 +953,7 @@ _s3_d1 = Decision(
             consequence_easy_pl=(
                 "CSV traci metadane kliniczne i rozdzielczosc czasowa."
             ),
-            consequence_easy_en=(
-                "CSV: loses clinical metadata and time resolution."
-            ),
+            consequence_easy_en=("CSV: loses clinical metadata and time resolution."),
         ),
         Option(
             label_pl="HDF5",
@@ -993,20 +962,14 @@ _s3_d1 = Decision(
             consequence_easy_pl=(
                 "HDF5 nie jest obslugiwany przez kliniczne oprogramowanie EEG."
             ),
-            consequence_easy_en=(
-                "HDF5: not supported by clinical EEG software."
-            ),
+            consequence_easy_en=("HDF5: not supported by clinical EEG software."),
         ),
         Option(
             label_pl="JSON",
             label_en="JSON",
             is_correct=False,
-            consequence_easy_pl=(
-                "JSON nie nadaje sie do sygnalu EEG."
-            ),
-            consequence_easy_en=(
-                "JSON: not suitable for EEG signals."
-            ),
+            consequence_easy_pl=("JSON nie nadaje sie do sygnalu EEG."),
+            consequence_easy_en=("JSON: not suitable for EEG signals."),
         ),
     ),
 )
@@ -1062,12 +1025,8 @@ _s3_d2 = Decision(
             label_pl="Wlasna konwencja",
             label_en="Own convention",
             is_correct=False,
-            consequence_easy_pl=(
-                "Wlasna konwencja: inni naukowcy jej nie znaja."
-            ),
-            consequence_easy_en=(
-                "Own convention: other scientists won't know it."
-            ),
+            consequence_easy_pl=("Wlasna konwencja: inni naukowcy jej nie znaja."),
+            consequence_easy_en=("Own convention: other scientists won't know it."),
         ),
     ),
 )
@@ -1111,9 +1070,7 @@ _s3_d3 = Decision(
             label_pl="patient_001.edf",
             label_en="patient_001.edf",
             is_correct=False,
-            consequence_easy_pl=(
-                "Kolizje miedzy osrodkami i nieczytelne po 5 latach."
-            ),
+            consequence_easy_pl=("Kolizje miedzy osrodkami i nieczytelne po 5 latach."),
             consequence_easy_en=(
                 "Collides between sites and unreadable after 5 years."
             ),
@@ -1122,9 +1079,7 @@ _s3_d3 = Decision(
             label_pl="{osrodek}_{sub}_{data}.edf",
             label_en="{site}_{sub}_{date}.edf",
             is_correct=False,
-            consequence_easy_pl=(
-                "Wlasna konwencja — inne osrodki beda mialy inne."
-            ),
+            consequence_easy_pl=("Wlasna konwencja — inne osrodki beda mialy inne."),
             consequence_easy_en=(
                 "Own convention — other sites will have different ones."
             ),
@@ -1184,12 +1139,8 @@ _s3_d4 = Decision(
             label_pl="Pelna dokumentacja kliniczna w EDF",
             label_en="Full clinical record in EDF",
             is_correct=False,
-            consequence_easy_pl=(
-                "Naruszenie RODO — dane wrazliwe w pliku danych."
-            ),
-            consequence_easy_en=(
-                "GDPR violation — sensitive data in data file."
-            ),
+            consequence_easy_pl=("Naruszenie RODO — dane wrazliwe w pliku danych."),
+            consequence_easy_en=("GDPR violation — sensitive data in data file."),
         ),
     ),
 )
@@ -1207,9 +1158,7 @@ _s3_d5 = Decision(
         "Reports will later be aggregated and automatically processed "
         "in a multi-site meta-analysis."
     ),
-    hint_medium_pl=(
-        "Zastanow sie, ktory format latwo parsuje skrypt Pythona bez NLP."
-    ),
+    hint_medium_pl=("Zastanow sie, ktory format latwo parsuje skrypt Pythona bez NLP."),
     hint_medium_en=(
         "Think about which format a Python script can parse easily without NLP."
     ),
@@ -1251,12 +1200,8 @@ _s3_d5 = Decision(
             label_pl="PDF",
             label_en="PDF",
             is_correct=False,
-            consequence_easy_pl=(
-                "PDF jest trudny do automatycznego parsowania."
-            ),
-            consequence_easy_en=(
-                "PDF: hard to parse automatically."
-            ),
+            consequence_easy_pl=("PDF jest trudny do automatycznego parsowania."),
+            consequence_easy_en=("PDF: hard to parse automatically."),
         ),
     ),
 )
@@ -1305,20 +1250,14 @@ _s3_d6 = Decision(
             consequence_easy_pl=(
                 "Nie wiadomo co sie zmienilo i kiedy -> niereprodukowalne."
             ),
-            consequence_easy_en=(
-                "Unknown what changed and when -> irreproducible."
-            ),
+            consequence_easy_en=("Unknown what changed and when -> irreproducible."),
         ),
         Option(
             label_pl="Nadpisz plik",
             label_en="Overwrite file",
             is_correct=False,
-            consequence_easy_pl=(
-                "Utrata historii — nie mozna cofnac bledow."
-            ),
-            consequence_easy_en=(
-                "History loss — can't undo errors."
-            ),
+            consequence_easy_pl=("Utrata historii — nie mozna cofnac bledow."),
+            consequence_easy_en=("History loss — can't undo errors."),
         ),
         Option(
             label_pl="Git LFS",
@@ -1349,7 +1288,12 @@ scenario3 = Scenario(
         "Make key decisions about standards and data management."
     ),
     decisions=(
-        _s3_d1, _s3_d2, _s3_d3, _s3_d4, _s3_d5, _s3_d6,
+        _s3_d1,
+        _s3_d2,
+        _s3_d3,
+        _s3_d4,
+        _s3_d5,
+        _s3_d6,
     ),
 )
 

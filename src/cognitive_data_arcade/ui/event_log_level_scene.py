@@ -89,17 +89,24 @@ class EventLogLevelScene(Scene):
 
     def _launch(self) -> None:
         try:
-            from cognitive_data_arcade.games.event_log_detective.game import EventLogDetectiveGame
-            from cognitive_data_arcade.games.event_log_detective.info import get_game_info
+            from cognitive_data_arcade.games.event_log_detective.game import (
+                EventLogDetectiveGame,
+            )
+            from cognitive_data_arcade.games.event_log_detective.info import (
+                get_game_info,
+            )
             from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
 
             difficulties = ["easy", "medium", "hard"]
             scenario = SCENARIOS[self._exp_idx]
             difficulty = difficulties[self._diff_idx]
+
             def back_factory() -> EventLogLevelScene:
                 return EventLogLevelScene(self._pm, self._strings)
 
-            inner = EventLogDetectiveGame(scenario, difficulty, self._strings, self._pm, back_factory)
+            inner = EventLogDetectiveGame(
+                scenario, difficulty, self._strings, self._pm, back_factory
+            )
             game_info = get_game_info(self._strings)
             self._next = HowToPlayScene(
                 game_info,
@@ -134,7 +141,9 @@ class EventLogLevelScene(Scene):
         else:
             exp_label_text = "Experiment"
         exp_label = self._font_row.render(exp_label_text, True, _DIM)
-        surface.blit(exp_label, (60, _ROW1_Y + (_TILE_H - self._font_row.get_height()) // 2))
+        surface.blit(
+            exp_label, (60, _ROW1_Y + (_TILE_H - self._font_row.get_height()) // 2)
+        )
 
         # Experiment tiles
         for i, scenario in enumerate(SCENARIOS):
@@ -143,10 +152,14 @@ class EventLogLevelScene(Scene):
             else:
                 name = scenario.title_en
             n_decisions = len(scenario.decisions)
-            desc = f"{n_decisions} decisions" if self._strings.language == "en" else f"{n_decisions} decyzji"
+            desc = (
+                f"{n_decisions} decisions"
+                if self._strings.language == "en"
+                else f"{n_decisions} decyzji"
+            )
             rect = _tile_rect(i, _ROW1_Y)
-            selected = (i == self._exp_idx)
-            hovered = (i == self._hover_exp)
+            selected = i == self._exp_idx
+            hovered = i == self._hover_exp
             if selected:
                 pygame.draw.rect(surface, _SELECTED_COLOR, rect, border_radius=8)
                 text_color = _BG
@@ -158,12 +171,18 @@ class EventLogLevelScene(Scene):
                 text_color = _DIM
             name_surf = self._font_tile.render(name, True, text_color)
             desc_surf = self._font_desc.render(desc, True, text_color)
-            surface.blit(name_surf, (rect.centerx - name_surf.get_width() // 2, rect.y + 18))
-            surface.blit(desc_surf, (rect.centerx - desc_surf.get_width() // 2, rect.y + 52))
+            surface.blit(
+                name_surf, (rect.centerx - name_surf.get_width() // 2, rect.y + 18)
+            )
+            surface.blit(
+                desc_surf, (rect.centerx - desc_surf.get_width() // 2, rect.y + 52)
+            )
 
         # Difficulty row label
         diff_label = self._font_row.render(self._strings.picker_difficulty, True, _DIM)
-        surface.blit(diff_label, (60, _ROW2_Y + (_TILE_H - self._font_row.get_height()) // 2))
+        surface.blit(
+            diff_label, (60, _ROW2_Y + (_TILE_H - self._font_row.get_height()) // 2)
+        )
 
         diff_names = [
             self._strings.level_easy,
@@ -185,8 +204,8 @@ class EventLogLevelScene(Scene):
 
         for i, (name, desc) in enumerate(zip(diff_names, diff_descs)):
             rect = _tile_rect(i, _ROW2_Y)
-            selected = (i == self._diff_idx)
-            hovered = (i == self._hover_diff)
+            selected = i == self._diff_idx
+            hovered = i == self._hover_diff
             if selected:
                 pygame.draw.rect(surface, _SELECTED_COLOR, rect, border_radius=8)
                 text_color = _BG
@@ -198,8 +217,12 @@ class EventLogLevelScene(Scene):
                 text_color = _DIM
             name_surf = self._font_tile.render(name, True, text_color)
             desc_surf = self._font_desc.render(desc, True, text_color)
-            surface.blit(name_surf, (rect.centerx - name_surf.get_width() // 2, rect.y + 18))
-            surface.blit(desc_surf, (rect.centerx - desc_surf.get_width() // 2, rect.y + 52))
+            surface.blit(
+                name_surf, (rect.centerx - name_surf.get_width() // 2, rect.y + 18)
+            )
+            surface.blit(
+                desc_surf, (rect.centerx - desc_surf.get_width() // 2, rect.y + 52)
+            )
 
         # Active-row indicator
         active_row_y = _ROW1_Y if self._active_row == 0 else _ROW2_Y

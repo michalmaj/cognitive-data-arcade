@@ -192,6 +192,7 @@ class EventLogDetectiveGame(Scene):
             self._done = True
         elif event.key == pygame.K_ESCAPE:
             from cognitive_data_arcade.ui.menu import LessonMenuScene  # lazy import
+
             self._next = LessonMenuScene(self._pm, self._strings)
             self._done = True
 
@@ -208,6 +209,7 @@ class EventLogDetectiveGame(Scene):
             self._next = self._back_factory()
         else:
             from cognitive_data_arcade.ui.menu import LessonMenuScene  # lazy import
+
             self._next = LessonMenuScene(self._pm, self._strings)
         self._done = True
 
@@ -362,8 +364,12 @@ class EventLogDetectiveGame(Scene):
 
         # Medium hint toggle
         if self._difficulty == "medium":
-            hint_key_surf = self._font_hint.render(self._strings.eld_hint_key, True, _DIM)
-            surface.blit(hint_key_surf, (w // 2 - hint_key_surf.get_width() // 2, h - 80))
+            hint_key_surf = self._font_hint.render(
+                self._strings.eld_hint_key, True, _DIM
+            )
+            surface.blit(
+                hint_key_surf, (w // 2 - hint_key_surf.get_width() // 2, h - 80)
+            )
 
             if self._hint_visible:
                 hint_text = dec.hint_medium_pl if lang == "pl" else dec.hint_medium_en
@@ -376,7 +382,7 @@ class EventLogDetectiveGame(Scene):
 
         # ESC hint
         if lang == "pl":
-            esc_hint = "ESC -- wróc"
+            esc_hint = "ESC -- wroc"
         else:
             esc_hint = "ESC -- back"
         esc_surf = self._font_hint.render(esc_hint, True, _DIM)
@@ -397,15 +403,21 @@ class EventLogDetectiveGame(Scene):
         box_w, box_h = 500, 240
         box_x = w // 2 - box_w // 2
         box_y = h // 2 - box_h // 2
-        pygame.draw.rect(surface, _PANEL_BG, (box_x, box_y, box_w, box_h), border_radius=8)
-        pygame.draw.rect(surface, _ACCENT, (box_x, box_y, box_w, box_h), 2, border_radius=8)
+        pygame.draw.rect(
+            surface, _PANEL_BG, (box_x, box_y, box_w, box_h), border_radius=8
+        )
+        pygame.draw.rect(
+            surface, _ACCENT, (box_x, box_y, box_w, box_h), 2, border_radius=8
+        )
 
         label = opt.label_pl if lang == "pl" else opt.label_en
         title_text = self._strings.eld_consequence_fmt.format(label=label)
         title_surf = self._font_body.render(title_text, True, _ACCENT)
         surface.blit(title_surf, (box_x + 20, box_y + 20))
 
-        consequence = opt.consequence_easy_pl if lang == "pl" else opt.consequence_easy_en
+        consequence = (
+            opt.consequence_easy_pl if lang == "pl" else opt.consequence_easy_en
+        )
         wrapped = self._wrap(consequence, box_w - 40)
         cy = box_y + 60
         for line in wrapped:
@@ -413,15 +425,22 @@ class EventLogDetectiveGame(Scene):
             surface.blit(surf, (box_x + 20, cy))
             cy += 30
 
-        confirm_surf = self._font_hint.render(self._strings.eld_confirm_hint, True, _DIM)
-        surface.blit(confirm_surf, (box_x + box_w // 2 - confirm_surf.get_width() // 2, box_y + box_h - 36))
+        confirm_surf = self._font_hint.render(
+            self._strings.eld_confirm_hint, True, _DIM
+        )
+        surface.blit(
+            confirm_surf,
+            (box_x + box_w // 2 - confirm_surf.get_width() // 2, box_y + box_h - 36),
+        )
 
     def _draw_report(self, surface: pygame.Surface) -> None:
         w, h = surface.get_size()
         lang = self._strings.language
         sc = self._scenario
 
-        title_surf = self._font_title.render(self._strings.eld_report_title, True, _ACCENT)
+        title_surf = self._font_title.render(
+            self._strings.eld_report_title, True, _ACCENT
+        )
         surface.blit(title_surf, (w // 2 - title_surf.get_width() // 2, 20))
 
         correct, total, pts = self._score()
