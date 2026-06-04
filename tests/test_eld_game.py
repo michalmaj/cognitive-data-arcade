@@ -5,7 +5,6 @@ import pygame
 from cognitive_data_arcade.engine.i18n import EN, PL
 from cognitive_data_arcade.games.event_log_detective.game import EventLogDetectiveGame, _State
 from cognitive_data_arcade.games.event_log_detective.scenarios import SCENARIOS
-from cognitive_data_arcade.ui.menu import LessonMenuScene
 
 
 class _FakePM:
@@ -105,11 +104,26 @@ def test_enter_when_all_decided_goes_to_report():
 
 # ── DECISION navigation ────────────────────────────────────────────────────────
 
-def test_esc_in_decision_returns_to_config_map():
+def test_backspace_in_decision_returns_to_config_map():
+    game = _make_game()
+    game._state = _State.DECISION
+    game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_BACKSPACE, mod=0, unicode=""))
+    assert game._state == _State.CONFIG_MAP
+
+
+def test_left_in_decision_returns_to_config_map():
+    game = _make_game()
+    game._state = _State.DECISION
+    game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_LEFT, mod=0, unicode=""))
+    assert game._state == _State.CONFIG_MAP
+
+
+def test_esc_in_decision_is_noop():
+    # PausableGame intercepts ESC — inner game must not act on it
     game = _make_game()
     game._state = _State.DECISION
     game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode=""))
-    assert game._state == _State.CONFIG_MAP
+    assert game._state == _State.DECISION
 
 
 def test_down_increments_option():
@@ -252,12 +266,12 @@ def test_score_zero_when_all_wrong():
 
 # ── REPORT navigation ──────────────────────────────────────────────────────────
 
-def test_report_esc_goes_to_menu():
+def test_report_esc_is_noop():
+    # PausableGame intercepts ESC — inner game must not act on it in REPORT
     game = _make_game()
     game._state = _State.REPORT
     game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode=""))
-    assert game.is_done()
-    assert isinstance(game.next_scene(), LessonMenuScene)
+    assert not game.is_done()
 
 
 def test_report_enter_with_back_factory():

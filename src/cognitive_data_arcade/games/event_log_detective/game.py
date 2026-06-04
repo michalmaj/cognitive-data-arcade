@@ -75,7 +75,6 @@ class EventLogDetectiveGame(Scene):
         self._node_rects: list[pygame.Rect] = []
         self._option_rects: list[pygame.Rect] = []
         self._popup_is_correct: bool = False
-        self._paused: bool = False
 
         self._font_title = get_font(48)
         self._font_body = get_font(30)
@@ -88,18 +87,12 @@ class EventLogDetectiveGame(Scene):
 
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.MOUSEMOTION:
-            if not self._paused:
-                self._handle_mouse_motion(event.pos)
+            self._handle_mouse_motion(event.pos)
             return
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            if not self._paused:
-                self._handle_mouse_click(event.pos)
+            self._handle_mouse_click(event.pos)
             return
         if event.type != pygame.KEYDOWN:
-            return
-
-        if self._paused:
-            self._handle_pause_key(event)
             return
 
         # If popup is visible it takes priority
@@ -138,8 +131,6 @@ class EventLogDetectiveGame(Scene):
 
         if self._popup_visible:
             self._draw_popup(surface)
-        if self._paused:
-            self._draw_pause_overlay(surface)
 
     # ------------------------------------------------------------------
     # Event handlers
@@ -148,8 +139,6 @@ class EventLogDetectiveGame(Scene):
     def _handle_intro(self, event: pygame.event.Event) -> None:
         if event.key in (pygame.K_RETURN, pygame.K_SPACE):
             self._state = _State.CONFIG_MAP
-        elif event.key == pygame.K_ESCAPE:
-            self._go_back()
 
     def _handle_config_map(self, event: pygame.event.Event) -> None:
         n = len(self._scenario.decisions)
@@ -165,9 +154,6 @@ class EventLogDetectiveGame(Scene):
                 self._option_idx = prev if prev is not None else 0
                 self._hint_visible = False
                 self._state = _State.DECISION
-        elif event.key == pygame.K_ESCAPE:
-            self._paused = True
-
     def _handle_decision(self, event: pygame.event.Event) -> None:
         dec = self._scenario.decisions[self._node_idx]
         n_opts = len(dec.options)
@@ -192,7 +178,7 @@ class EventLogDetectiveGame(Scene):
                     self._confirm_decision()
             else:
                 self._confirm_decision()
-        elif event.key == pygame.K_ESCAPE:
+        elif event.key in (pygame.K_BACKSPACE, pygame.K_LEFT):
             self._state = _State.CONFIG_MAP
 
     def _handle_popup(self, event: pygame.event.Event) -> None:
@@ -206,18 +192,6 @@ class EventLogDetectiveGame(Scene):
         if event.key == pygame.K_RETURN and self._back_factory is not None:
             self._next = self._back_factory()
             self._done = True
-        elif event.key == pygame.K_ESCAPE:
-            from cognitive_data_arcade.ui.menu import LessonMenuScene  # lazy import
-
-            self._next = LessonMenuScene(self._pm, self._strings)
-            self._done = True
-
-    def _handle_pause_key(self, event: pygame.event.Event) -> None:
-        if event.key == pygame.K_ESCAPE:
-            self._paused = False
-        elif event.key in (pygame.K_q,):
-            self._paused = False
-            self._go_back()
 
     def _handle_mouse_motion(self, pos: tuple[int, int]) -> None:
         if self._popup_visible:
@@ -277,15 +251,6 @@ class EventLogDetectiveGame(Scene):
     def _confirm_decision(self) -> None:
         self._choices[self._node_idx] = self._option_idx
         self._state = _State.CONFIG_MAP
-
-    def _go_back(self) -> None:
-        if self._back_factory is not None:
-            self._next = self._back_factory()
-        else:
-            from cognitive_data_arcade.ui.menu import LessonMenuScene  # lazy import
-
-            self._next = LessonMenuScene(self._pm, self._strings)
-        self._done = True
 
     def _all_decided(self) -> bool:
         return all(c is not None for c in self._choices)
@@ -398,14 +363,14 @@ class EventLogDetectiveGame(Scene):
         # Bottom hint
         if self._all_decided():
             if lang == "pl":
-                hint = "ENTER — raport   ESC — menu"
+                hint = "ENTER — raport   ESC — pauza"
             else:
-                hint = "ENTER — report   ESC — menu"
+                hint = "ENTER — report   ESC — pause"
         else:
             if lang == "pl":
-                hint = "↑↓ — wybierz   ENTER — decyduj   ESC — menu"
+                hint = "↑↓ — wybierz   ENTER — decyduj   ESC — pauza"
             else:
-                hint = "UP/DN — select   ENTER — decide   ESC — menu"
+                hint = "UP/DN — select   ENTER — decide   ESC — pause"
         hint_surf = self._font_hint.render(hint, True, _DIM)
         surface.blit(hint_surf, (w // 2 - hint_surf.get_width() // 2, h - 40))
 
@@ -458,35 +423,19 @@ class EventLogDetectiveGame(Scene):
                     surface.blit(surf, (40, hy))
                     hy += 28
 
-        # ESC hint
+        # Back hint (Backspace/Left goes to config map)
         if lang == "pl":
-            esc_hint = "ESC — wróć"
+            back_hint = "BACKSPACE / ← — cofnij"
         else:
-            esc_hint = "ESC — back"
-        esc_surf = self._font_hint.render(esc_hint, True, _DIM)
-        surface.blit(esc_surf, (w // 2 - esc_surf.get_width() // 2, h - 40))
+            back_hint = "BACKSPACE / ← — back"
+        back_surf = self._font_hint.render(back_hint, True, _DIM)
+        surface.blit(back_surf, (w // 2 - back_surf.get_width() // 2, h - 40))
 
     def _draw_popup(self, surface: pygame.Surface) -> None:
         w, h = surface.get_size()
         lang = self._strings.language
         dec = self._scenario.decisions[self._node_idx]
         opt = dec.options[self._option_idx]
-
-        # Semi-transparent overlay
-        overlay = pygame.Surface((w, h), pygame.SRCALPHA)
-        overlay.fill((0, 0, 0, 160))
-        surface.blit(overlay, (0, 0))
-
-        # Popup box
-        box_w, box_h = 500, 240
-        box_x = w // 2 - box_w // 2
-        box_y = h // 2 - box_h // 2
-        pygame.draw.rect(
-            surface, _PANEL_BG, (box_x, box_y, box_w, box_h), border_radius=8
-        )
-        pygame.draw.rect(
-            surface, _ACCENT, (box_x, box_y, box_w, box_h), 2, border_radius=8
-        )
 
         label = opt.label_pl if lang == "pl" else opt.label_en
         if self._popup_is_correct:
@@ -497,44 +446,39 @@ class EventLogDetectiveGame(Scene):
             title_text = self._strings.eld_consequence_fmt.format(label=label)
             title_color = _ACCENT
             body = opt.consequence_easy_pl if lang == "pl" else opt.consequence_easy_en
-        title_surf = self._font_body.render(title_text, True, title_color)
-        surface.blit(title_surf, (box_x + 20, box_y + 20))
 
+        # Auto-size box to fit text content
+        box_w = min(560, w - 60)
         wrapped = self._wrap(body, box_w - 40)
-        cy = box_y + 60
-        for line in wrapped:
-            surf = self._font_body.render(line, True, _WHITE)
-            surface.blit(surf, (box_x + 20, cy))
-            cy += 30
+        line_h = 28
+        box_h = 60 + len(wrapped) * line_h + 44  # title + body lines + footer
+        box_h = max(box_h, 160)
+        box_x = w // 2 - box_w // 2
+        box_y = h // 2 - box_h // 2
 
-        confirm_surf = self._font_hint.render(
-            self._strings.eld_confirm_hint, True, _DIM
-        )
-        surface.blit(
-            confirm_surf,
-            (box_x + box_w // 2 - confirm_surf.get_width() // 2, box_y + box_h - 36),
-        )
-
-    def _draw_pause_overlay(self, surface: pygame.Surface) -> None:
-        w, h = surface.get_size()
+        # Semi-transparent overlay
         overlay = pygame.Surface((w, h), pygame.SRCALPHA)
         overlay.fill((0, 0, 0, 160))
         surface.blit(overlay, (0, 0))
 
-        box_w, box_h = 360, 180
-        box_x = w // 2 - box_w // 2
-        box_y = h // 2 - box_h // 2
         pygame.draw.rect(surface, _PANEL_BG, (box_x, box_y, box_w, box_h), border_radius=8)
-        pygame.draw.rect(surface, _ACCENT, (box_x, box_y, box_w, box_h), 2, border_radius=8)
+        border_color = _GREEN if self._popup_is_correct else _ACCENT
+        pygame.draw.rect(surface, border_color, (box_x, box_y, box_w, box_h), 2, border_radius=8)
 
-        title_surf = self._font_title.render(self._strings.eld_pause_title, True, _ACCENT)
-        surface.blit(title_surf, (box_x + box_w // 2 - title_surf.get_width() // 2, box_y + 24))
+        title_surf = self._font_body.render(title_text, True, title_color)
+        surface.blit(title_surf, (box_x + 20, box_y + 18))
 
-        res_surf = self._font_body.render(self._strings.eld_pause_resume, True, _WHITE)
-        surface.blit(res_surf, (box_x + box_w // 2 - res_surf.get_width() // 2, box_y + 90))
+        cy = box_y + 54
+        for line in wrapped:
+            surf = self._font_hint.render(line, True, _WHITE)
+            surface.blit(surf, (box_x + 20, cy))
+            cy += line_h
 
-        quit_surf = self._font_body.render(self._strings.eld_pause_quit, True, _DIM)
-        surface.blit(quit_surf, (box_x + box_w // 2 - quit_surf.get_width() // 2, box_y + 126))
+        confirm_surf = self._font_hint.render(self._strings.eld_confirm_hint, True, _DIM)
+        surface.blit(
+            confirm_surf,
+            (box_x + box_w // 2 - confirm_surf.get_width() // 2, box_y + box_h - 30),
+        )
 
     def _draw_report(self, surface: pygame.Surface) -> None:
         w, h = surface.get_size()
