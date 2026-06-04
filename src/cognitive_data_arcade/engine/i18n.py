@@ -382,12 +382,12 @@ PL = Strings(
     label_play_game="Graj",
     label_theory_lesson="Teoria",
     label_esc_close="ESC — zamknij",
-    eld_hint_key="H — wskazowka",
+    eld_hint_key="H — wskazówka",
     eld_report_title="RAPORT EKSPERYMENTU",
     eld_score_fmt="Wynik: {correct}/{total}  [{diff} x{mult}] = {pts} pkt",
     eld_play_again="ENTER — Zagraj ponownie   ESC — Menu",
-    eld_consequence_fmt="Jesli wybierzesz {label}:",
-    eld_confirm_hint="ENTER — Potwierdz   ESC — Zmien wybor",
+    eld_consequence_fmt="Jeśli wybierzesz {label}:",
+    eld_confirm_hint="ENTER — Potwierdź   ESC — Zmień wybór",
 )
 
 

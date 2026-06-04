@@ -1,11 +1,6 @@
 """EventLogDetectiveGame — main game scene for the Event Log Detective mini-game.
 
 State machine: INTRO -> CONFIG_MAP <-> DECISION -> REPORT
-
-All Polish text in Python source uses ASCII approximations for diacritics:
-    a (for a with ogonek), e (for e with ogonek), s (for s with acute),
-    z (for z with acute/dot), o (for o with acute), n (for n with acute),
-    l (for l with stroke), c (for c with acute)
 """
 
 from __future__ import annotations
@@ -15,6 +10,7 @@ from collections.abc import Callable
 
 import pygame
 
+from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.event_log_detective.scenarios import Scenario
@@ -75,18 +71,26 @@ class EventLogDetectiveGame(Scene):
         self._hint_visible = False
         self._done = False
         self._next: Scene | None = None
+        # Populated during draw so mouse handlers can use them
+        self._node_rects: list[pygame.Rect] = []
+        self._option_rects: list[pygame.Rect] = []
 
-        pygame.font.init()
-        self._font_title = pygame.font.SysFont(None, 48)
-        self._font_body = pygame.font.SysFont(None, 30)
-        self._font_option = pygame.font.SysFont(None, 32)
-        self._font_hint = pygame.font.SysFont(None, 26)
+        self._font_title = get_font(48)
+        self._font_body = get_font(30)
+        self._font_option = get_font(32)
+        self._font_hint = get_font(26)
 
     # ------------------------------------------------------------------
     # Scene interface
     # ------------------------------------------------------------------
 
     def handle_event(self, event: pygame.event.Event) -> None:
+        if event.type == pygame.MOUSEMOTION:
+            self._handle_mouse_motion(event.pos)
+            return
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            self._handle_mouse_click(event.pos)
+            return
         if event.type != pygame.KEYDOWN:
             return
 
@@ -196,6 +200,57 @@ class EventLogDetectiveGame(Scene):
             self._next = LessonMenuScene(self._pm, self._strings)
             self._done = True
 
+    def _handle_mouse_motion(self, pos: tuple[int, int]) -> None:
+        if self._popup_visible:
+            return
+        if self._state == _State.CONFIG_MAP:
+            for i, rect in enumerate(self._node_rects):
+                if rect.collidepoint(pos):
+                    self._node_idx = i
+                    break
+        elif self._state == _State.DECISION:
+            for j, rect in enumerate(self._option_rects):
+                if rect.collidepoint(pos):
+                    self._option_idx = j
+                    break
+
+    def _handle_mouse_click(self, pos: tuple[int, int]) -> None:
+        if self._popup_visible:
+            return
+        if self._state == _State.INTRO:
+            self._state = _State.CONFIG_MAP
+        elif self._state == _State.CONFIG_MAP:
+            for i, rect in enumerate(self._node_rects):
+                if rect.collidepoint(pos):
+                    self._node_idx = i
+                    if self._all_decided():
+                        self._state = _State.REPORT
+                    else:
+                        prev = self._choices[self._node_idx]
+                        self._option_idx = prev if prev is not None else 0
+                        self._hint_visible = False
+                        self._state = _State.DECISION
+                    return
+        elif self._state == _State.DECISION:
+            for j, rect in enumerate(self._option_rects):
+                if rect.collidepoint(pos):
+                    self._option_idx = j
+                    dec = self._scenario.decisions[self._node_idx]
+                    opt = dec.options[self._option_idx]
+                    if (
+                        self._difficulty == "easy"
+                        and not opt.is_correct
+                        and opt.consequence_easy_en
+                    ):
+                        self._popup_visible = True
+                    else:
+                        self._confirm_decision()
+                    return
+        elif self._state == _State.REPORT:
+            if self._back_factory is not None:
+                self._next = self._back_factory()
+                self._done = True
+
     # ------------------------------------------------------------------
     # Helpers
     # ------------------------------------------------------------------
@@ -270,9 +325,9 @@ class EventLogDetectiveGame(Scene):
             y += 36
 
         if lang == "pl":
-            hint = "ENTER / SPACJA -- dalej"
+            hint = "ENTER / SPACJA — dalej"
         else:
-            hint = "ENTER / SPACE -- continue"
+            hint = "ENTER / SPACE — continue"
         hint_surf = self._font_hint.render(hint, True, _DIM)
         surface.blit(hint_surf, (w // 2 - hint_surf.get_width() // 2, h - 50))
 
@@ -293,6 +348,7 @@ class EventLogDetectiveGame(Scene):
         # Left panel — decision list
         left_w = divider_x - 20
         y = 80
+        self._node_rects = []
         for i, dec in enumerate(decisions):
             label = dec.title_pl if lang == "pl" else dec.title_en
             if i == self._node_idx:
@@ -307,6 +363,7 @@ class EventLogDetectiveGame(Scene):
             row = f"{marker} {label}"
             surf = self._font_body.render(row, True, color)
             surface.blit(surf, (20, y))
+            self._node_rects.append(pygame.Rect(20, y, left_w, 34))
             y += 34
 
         # Right panel — context of selected node
@@ -322,14 +379,14 @@ class EventLogDetectiveGame(Scene):
         # Bottom hint
         if self._all_decided():
             if lang == "pl":
-                hint = "ENTER -- raport   ESC -- menu"
+                hint = "ENTER — raport   ESC — menu"
             else:
-                hint = "ENTER -- report   ESC -- menu"
+                hint = "ENTER — report   ESC — menu"
         else:
             if lang == "pl":
-                hint = "UP/DN -- wybierz   ENTER -- decyduj   ESC -- menu"
+                hint = "↑↓ — wybierz   ENTER — decyduj   ESC — menu"
             else:
-                hint = "UP/DN -- select   ENTER -- decide   ESC -- menu"
+                hint = "UP/DN — select   ENTER — decide   ESC — menu"
         hint_surf = self._font_hint.render(hint, True, _DIM)
         surface.blit(hint_surf, (w // 2 - hint_surf.get_width() // 2, h - 40))
 
@@ -354,12 +411,14 @@ class EventLogDetectiveGame(Scene):
 
         y += 10
         # Options
+        self._option_rects = []
         for j, opt in enumerate(dec.options):
             label = opt.label_pl if lang == "pl" else opt.label_en
             row = f"[{j + 1}] {label}"
             color = _ACCENT if j == self._option_idx else _WHITE
             surf = self._font_option.render(row, True, color)
             surface.blit(surf, (40, y))
+            self._option_rects.append(pygame.Rect(40, y, w - 80, 40))
             y += 40
 
         # Medium hint toggle
@@ -382,9 +441,9 @@ class EventLogDetectiveGame(Scene):
 
         # ESC hint
         if lang == "pl":
-            esc_hint = "ESC -- wroc"
+            esc_hint = "ESC — wróć"
         else:
-            esc_hint = "ESC -- back"
+            esc_hint = "ESC — back"
         esc_surf = self._font_hint.render(esc_hint, True, _DIM)
         surface.blit(esc_surf, (w // 2 - esc_surf.get_width() // 2, h - 40))
 
@@ -474,11 +533,19 @@ class EventLogDetectiveGame(Scene):
             row_surf = self._font_body.render(row_text, True, _WHITE)
             surface.blit(row_surf, (70, y + 4))
 
-            # Report explanation
-            report_text = dec.report_pl if lang == "pl" else dec.report_en
-            report_lines = self._wrap(report_text, w - 90)
+            # Correct choices: explain WHY it was right (dec.report).
+            # Wrong choices: show the consequence of this specific bad choice.
+            if is_ok:
+                explanation = dec.report_pl if lang == "pl" else dec.report_en
+            else:
+                explanation = (
+                    opt.consequence_easy_pl if lang == "pl" else opt.consequence_easy_en
+                )
+                if not explanation:
+                    explanation = dec.report_pl if lang == "pl" else dec.report_en
+            exp_lines = self._wrap(explanation, w - 90)
             ry = y + 32
-            for line in report_lines:
+            for line in exp_lines:
                 surf = self._font_hint.render(line, True, _DIM)
                 surface.blit(surf, (70, ry))
                 ry += 22
