@@ -185,7 +185,7 @@ class EventLogDetectiveGame(Scene):
         if event.key == pygame.K_RETURN:
             self._popup_visible = False
             self._confirm_decision()
-        elif event.key == pygame.K_ESCAPE:
+        elif event.key == pygame.K_BACKSPACE:
             self._popup_visible = False
 
     def _handle_report(self, event: pygame.event.Event) -> None:
