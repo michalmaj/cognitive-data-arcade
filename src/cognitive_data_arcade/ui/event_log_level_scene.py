@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import pygame
 
+from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.event_log_detective.scenarios import SCENARIOS
@@ -35,12 +36,11 @@ class EventLogLevelScene(Scene):
         self._hover_diff: int = -1
         self._done = False
         self._next: Scene | None = None
-        pygame.font.init()
-        self._font_title = pygame.font.SysFont(None, 52)
-        self._font_row = pygame.font.SysFont(None, 36)
-        self._font_tile = pygame.font.SysFont(None, 32)
-        self._font_desc = pygame.font.SysFont(None, 26)
-        self._font_hint = pygame.font.SysFont(None, 28)
+        self._font_title = get_font(52)
+        self._font_row = get_font(36)
+        self._font_tile = get_font(32)
+        self._font_desc = get_font(26)
+        self._font_hint = get_font(28)
 
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.MOUSEMOTION:
@@ -148,9 +148,14 @@ class EventLogLevelScene(Scene):
         # Experiment tiles
         for i, scenario in enumerate(SCENARIOS):
             if self._strings.language == "pl":
-                name = scenario.title_pl
+                full_name = scenario.title_pl
             else:
-                name = scenario.title_en
+                full_name = scenario.title_en
+            # Split "Exp 3: Multi-site Clinical Study" into prefix + subtitle
+            if ": " in full_name:
+                prefix, subtitle = full_name.split(": ", 1)
+            else:
+                prefix, subtitle = full_name, ""
             n_decisions = len(scenario.decisions)
             desc = (
                 f"{n_decisions} decisions"
@@ -169,14 +174,24 @@ class EventLogLevelScene(Scene):
             else:
                 pygame.draw.rect(surface, _DIM, rect, 2, border_radius=8)
                 text_color = _DIM
-            name_surf = self._font_tile.render(name, True, text_color)
+            # Clip rendering to tile rect to prevent overflow into adjacent tiles
+            old_clip = surface.get_clip()
+            surface.set_clip(rect)
+            prefix_surf = self._font_tile.render(prefix, True, text_color)
+            surface.blit(
+                prefix_surf, (rect.centerx - prefix_surf.get_width() // 2, rect.y + 10)
+            )
+            if subtitle:
+                sub_surf = self._font_desc.render(subtitle, True, text_color)
+                surface.blit(
+                    sub_surf,
+                    (rect.centerx - sub_surf.get_width() // 2, rect.y + 40),
+                )
             desc_surf = self._font_desc.render(desc, True, text_color)
             surface.blit(
-                name_surf, (rect.centerx - name_surf.get_width() // 2, rect.y + 18)
+                desc_surf, (rect.centerx - desc_surf.get_width() // 2, rect.y + 64)
             )
-            surface.blit(
-                desc_surf, (rect.centerx - desc_surf.get_width() // 2, rect.y + 52)
-            )
+            surface.set_clip(old_clip)
 
         # Difficulty row label
         diff_label = self._font_row.render(self._strings.picker_difficulty, True, _DIM)
