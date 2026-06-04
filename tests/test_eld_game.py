@@ -207,12 +207,13 @@ def test_popup_enter_confirms_and_closes():
     assert game._state == _State.CONFIG_MAP
 
 
-def test_popup_esc_closes_without_saving():
+def test_popup_backspace_closes_without_saving():
+    # ESC is intercepted by PausableGame; BACKSPACE dismisses popup without saving
     game = _make_game(difficulty="easy")
     game._state = _State.DECISION
     game._popup_visible = True
     game._node_idx = 0
-    game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode=""))
+    game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_BACKSPACE, mod=0, unicode=""))
     assert not game._popup_visible
     assert game._choices[0] is None
 

@@ -268,7 +268,7 @@ EN = Strings(
     eld_play_again="ENTER — Play again   ESC — Pause",
     eld_consequence_fmt="If you choose {label}:",
     eld_correct_choice_fmt="Good choice! {label}:",
-    eld_confirm_hint="ENTER — Confirm   ESC — Change",
+    eld_confirm_hint="ENTER — Confirm   BACKSPACE — Change",
 )
 
 PL = Strings(
@@ -390,7 +390,7 @@ PL = Strings(
     eld_play_again="ENTER — Zagraj ponownie   ESC — Pauza",
     eld_consequence_fmt="Jeśli wybierzesz {label}:",
     eld_correct_choice_fmt="Dobry wybór! {label}:",
-    eld_confirm_hint="ENTER — Potwierdź   ESC — Zmień wybór",
+    eld_confirm_hint="ENTER — Potwierdź   BACKSPACE — Zmień wybór",
 )
 
 
