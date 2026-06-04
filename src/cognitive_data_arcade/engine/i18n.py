@@ -145,7 +145,11 @@ class Strings:
     eld_score_fmt: str
     eld_play_again: str
     eld_consequence_fmt: str
+    eld_correct_choice_fmt: str
     eld_confirm_hint: str
+    eld_pause_title: str
+    eld_pause_resume: str
+    eld_pause_quit: str
 
 
 EN = Strings(
@@ -266,7 +270,11 @@ EN = Strings(
     eld_score_fmt="Score: {correct}/{total}  [{diff} x{mult}] = {pts} pts",
     eld_play_again="ENTER — Play again   ESC — Menu",
     eld_consequence_fmt="If you choose {label}:",
+    eld_correct_choice_fmt="Good choice! {label}:",
     eld_confirm_hint="ENTER — Confirm   ESC — Change",
+    eld_pause_title="PAUSED",
+    eld_pause_resume="ESC — Resume",
+    eld_pause_quit="Q — Quit to menu",
 )
 
 PL = Strings(
@@ -350,12 +358,12 @@ PL = Strings(
     nback_level_adaptive="Adaptacyjny",
     nback_level_hint="ESC — wróć",
     picker_session="Sesja",
-    picker_difficulty="Trudnosc",
+    picker_difficulty="Trudność",
     level_quick="Krotka",
     level_standard="Standard",
     level_full="Pelna",
-    level_easy="Latwy",
-    level_medium="Sredni",
+    level_easy="Łatwy",
+    level_medium="Średni",
     level_hard="Trudny",
     level_trials_suffix="prob",
     stroop_easy_desc="2 kolory",
@@ -387,7 +395,11 @@ PL = Strings(
     eld_score_fmt="Wynik: {correct}/{total}  [{diff} x{mult}] = {pts} pkt",
     eld_play_again="ENTER — Zagraj ponownie   ESC — Menu",
     eld_consequence_fmt="Jeśli wybierzesz {label}:",
+    eld_correct_choice_fmt="Dobry wybór! {label}:",
     eld_confirm_hint="ENTER — Potwierdź   ESC — Zmień wybór",
+    eld_pause_title="PAUZA",
+    eld_pause_resume="ESC — Kontynuuj",
+    eld_pause_quit="Q — Wyjdź do menu",
 )
 
 

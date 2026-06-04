@@ -156,7 +156,8 @@ def test_easy_popup_shown_for_wrong_answer():
     assert game._popup_visible
 
 
-def test_easy_no_popup_for_correct_answer():
+def test_easy_popup_shown_for_correct_answer():
+    # On Easy, correct choices also show a popup explaining WHY the choice was good.
     game = _make_game(difficulty="easy")
     game._state = _State.DECISION
     game._node_idx = 0
@@ -164,8 +165,8 @@ def test_easy_no_popup_for_correct_answer():
     correct_idx = next(j for j, o in enumerate(dec.options) if o.is_correct)
     game._option_idx = correct_idx
     game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode=""))
-    assert not game._popup_visible
-    assert game._choices[0] == correct_idx
+    assert game._popup_visible
+    assert game._popup_is_correct
 
 
 def test_medium_no_popup_for_wrong_answer():

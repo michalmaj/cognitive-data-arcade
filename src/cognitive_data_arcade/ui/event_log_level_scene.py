@@ -135,14 +135,14 @@ class EventLogLevelScene(Scene):
         title = self._font_title.render("Event Log Detective", True, _WHITE)
         surface.blit(title, (60, 50))
 
-        # Experiment row label
+        # Experiment row label — use small font so it fits before the first tile at x=188
         if self._strings.language == "pl":
             exp_label_text = "Eksperyment"
         else:
             exp_label_text = "Experiment"
-        exp_label = self._font_row.render(exp_label_text, True, _DIM)
+        exp_label = self._font_hint.render(exp_label_text, True, _DIM)
         surface.blit(
-            exp_label, (60, _ROW1_Y + (_TILE_H - self._font_row.get_height()) // 2)
+            exp_label, (10, _ROW1_Y + (_TILE_H - self._font_hint.get_height()) // 2)
         )
 
         # Experiment tiles
@@ -193,10 +193,10 @@ class EventLogLevelScene(Scene):
             )
             surface.set_clip(old_clip)
 
-        # Difficulty row label
-        diff_label = self._font_row.render(self._strings.picker_difficulty, True, _DIM)
+        # Difficulty row label — same small font as experiment label
+        diff_label = self._font_hint.render(self._strings.picker_difficulty, True, _DIM)
         surface.blit(
-            diff_label, (60, _ROW2_Y + (_TILE_H - self._font_row.get_height()) // 2)
+            diff_label, (10, _ROW2_Y + (_TILE_H - self._font_hint.get_height()) // 2)
         )
 
         diff_names = [
@@ -206,14 +206,14 @@ class EventLogLevelScene(Scene):
         ]
         if self._strings.language == "pl":
             diff_descs = [
-                "podglad konsekwencji",
-                "wskazowka",
+                "efekty wyboru",
+                "wskazówka [H]",
                 "bez pomocy",
             ]
         else:
             diff_descs = [
-                "consequence preview",
-                "hint available",
+                "see effects",
+                "hint [H]",
                 "no help",
             ]
 
@@ -230,6 +230,8 @@ class EventLogLevelScene(Scene):
             else:
                 pygame.draw.rect(surface, _DIM, rect, 2, border_radius=8)
                 text_color = _DIM
+            old_clip = surface.get_clip()
+            surface.set_clip(rect)
             name_surf = self._font_tile.render(name, True, text_color)
             desc_surf = self._font_desc.render(desc, True, text_color)
             surface.blit(
@@ -238,6 +240,7 @@ class EventLogLevelScene(Scene):
             surface.blit(
                 desc_surf, (rect.centerx - desc_surf.get_width() // 2, rect.y + 52)
             )
+            surface.set_clip(old_clip)
 
         # Active-row indicator
         active_row_y = _ROW1_Y if self._active_row == 0 else _ROW2_Y
