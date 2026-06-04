@@ -4,7 +4,6 @@ import pygame
 
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.i18n import Strings
-from cognitive_data_arcade.engine.pause import PausableGame
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.event_log_detective.scenarios import SCENARIOS
 from cognitive_data_arcade.profile.manager import ProfileManager
@@ -98,15 +97,12 @@ class EventLogLevelScene(Scene):
         difficulty = difficulties[self._diff_idx]
         pm, strings = self._pm, self._strings
 
-        def restart_factory() -> EventLogLevelScene:
-            return EventLogLevelScene(pm, strings)
-        inner = EventLogDetectiveGame(scenario, difficulty, strings, pm, restart_factory)
+        inner = EventLogDetectiveGame(scenario, difficulty, strings, pm)
         game_info = get_game_info(strings)
-        pausable = PausableGame(inner, game_info, restart_factory, strings, pm)
         self._next = HowToPlayScene(
             game_info,
             strings,
-            back_scene=pausable,
+            back_scene=inner,
             esc_scene=EventLogLevelScene(pm, strings),
         )
         self._done = True

@@ -6,7 +6,6 @@ State machine: INTRO -> CONFIG_MAP <-> DECISION -> REPORT
 from __future__ import annotations
 
 import enum
-from collections.abc import Callable
 
 import pygame
 
@@ -55,13 +54,11 @@ class EventLogDetectiveGame(Scene):
         difficulty: str,
         strings: Strings,
         pm: ProfileManager,
-        back_factory: Callable[[], Scene] | None = None,
     ) -> None:
         self._scenario = scenario
         self._difficulty = difficulty
         self._strings = strings
         self._pm = pm
-        self._back_factory = back_factory
 
         self._state = _State.INTRO
         self._node_idx = 0
@@ -139,10 +136,14 @@ class EventLogDetectiveGame(Scene):
     def _handle_intro(self, event: pygame.event.Event) -> None:
         if event.key in (pygame.K_RETURN, pygame.K_SPACE):
             self._state = _State.CONFIG_MAP
+        elif event.key == pygame.K_ESCAPE:
+            self._go_level_scene()
 
     def _handle_config_map(self, event: pygame.event.Event) -> None:
         n = len(self._scenario.decisions)
-        if event.key == pygame.K_UP:
+        if event.key == pygame.K_ESCAPE:
+            self._go_level_scene()
+        elif event.key == pygame.K_UP:
             self._node_idx = max(0, self._node_idx - 1)
         elif event.key == pygame.K_DOWN:
             self._node_idx = min(n - 1, self._node_idx + 1)
@@ -178,20 +179,26 @@ class EventLogDetectiveGame(Scene):
                     self._confirm_decision()
             else:
                 self._confirm_decision()
-        elif event.key in (pygame.K_BACKSPACE, pygame.K_LEFT):
+        elif event.key == pygame.K_ESCAPE:
+            self._hint_visible = False
             self._state = _State.CONFIG_MAP
 
     def _handle_popup(self, event: pygame.event.Event) -> None:
         if event.key == pygame.K_RETURN:
             self._popup_visible = False
             self._confirm_decision()
-        elif event.key == pygame.K_BACKSPACE:
+        elif event.key == pygame.K_ESCAPE:
             self._popup_visible = False
 
     def _handle_report(self, event: pygame.event.Event) -> None:
-        if event.key == pygame.K_RETURN and self._back_factory is not None:
-            self._next = self._back_factory()
+        if event.key == pygame.K_RETURN:
+            # Replay the same scenario and difficulty
+            self._next = EventLogDetectiveGame(
+                self._scenario, self._difficulty, self._strings, self._pm
+            )
             self._done = True
+        elif event.key == pygame.K_ESCAPE:
+            self._go_level_scene()
 
     def _handle_mouse_motion(self, pos: tuple[int, int]) -> None:
         if self._popup_visible:
@@ -240,9 +247,10 @@ class EventLogDetectiveGame(Scene):
                         self._confirm_decision()
                     return
         elif self._state == _State.REPORT:
-            if self._back_factory is not None:
-                self._next = self._back_factory()
-                self._done = True
+            self._next = EventLogDetectiveGame(
+                self._scenario, self._difficulty, self._strings, self._pm
+            )
+            self._done = True
 
     # ------------------------------------------------------------------
     # Helpers
@@ -251,6 +259,11 @@ class EventLogDetectiveGame(Scene):
     def _confirm_decision(self) -> None:
         self._choices[self._node_idx] = self._option_idx
         self._state = _State.CONFIG_MAP
+
+    def _go_level_scene(self) -> None:
+        from cognitive_data_arcade.ui.event_log_level_scene import EventLogLevelScene
+        self._next = EventLogLevelScene(self._pm, self._strings)
+        self._done = True
 
     def _all_decided(self) -> bool:
         return all(c is not None for c in self._choices)
@@ -363,14 +376,14 @@ class EventLogDetectiveGame(Scene):
         # Bottom hint
         if self._all_decided():
             if lang == "pl":
-                hint = "ENTER — raport   ESC — pauza"
+                hint = "ENTER — raport   ESC — menu"
             else:
-                hint = "ENTER — report   ESC — pause"
+                hint = "ENTER — report   ESC — menu"
         else:
             if lang == "pl":
-                hint = "↑↓ — wybierz   ENTER — decyduj   ESC — pauza"
+                hint = "UP/DN — wybierz   ENTER — decyduj   ESC — menu"
             else:
-                hint = "UP/DN — select   ENTER — decide   ESC — pause"
+                hint = "UP/DN — select   ENTER — decide   ESC — menu"
         hint_surf = self._font_hint.render(hint, True, _DIM)
         surface.blit(hint_surf, (w // 2 - hint_surf.get_width() // 2, h - 40))
 
@@ -423,11 +436,10 @@ class EventLogDetectiveGame(Scene):
                     surface.blit(surf, (40, hy))
                     hy += 28
 
-        # Back hint (Backspace/Left goes to config map)
         if lang == "pl":
-            back_hint = "BACKSPACE / ← — cofnij"
+            back_hint = "ESC — wroc do mapy"
         else:
-            back_hint = "BACKSPACE / ← — back"
+            back_hint = "ESC — back to map"
         back_surf = self._font_hint.render(back_hint, True, _DIM)
         surface.blit(back_surf, (w // 2 - back_surf.get_width() // 2, h - 40))
 
@@ -502,7 +514,9 @@ class EventLogDetectiveGame(Scene):
         # Horizontal divider
         pygame.draw.line(surface, _DIM, (40, 120), (w - 40, 120), 1)
 
-        y = 134
+        # Use a tighter layout so 7 decisions fit in 768px:
+        # header ~28px + explanation lines ~20px each + gap 4px
+        y = 130
         for i, dec in enumerate(sc.decisions):
             choice = self._choices[i]
             if choice is None:
@@ -512,35 +526,29 @@ class EventLogDetectiveGame(Scene):
 
             marker = "OK" if is_ok else "X!"
             marker_color = _GREEN if is_ok else _RED
-            marker_surf = self._font_option.render(marker, True, marker_color)
-            surface.blit(marker_surf, (20, y))
+            marker_surf = self._font_hint.render(marker, True, marker_color)
+            surface.blit(marker_surf, (20, y + 2))
 
             dec_title = dec.title_pl if lang == "pl" else dec.title_en
             opt_label = opt.label_pl if lang == "pl" else opt.label_en
             row_text = f"{dec_title}: {opt_label}"
-            row_surf = self._font_body.render(row_text, True, _WHITE)
-            surface.blit(row_surf, (70, y + 4))
+            row_surf = self._font_hint.render(row_text, True, _WHITE)
+            surface.blit(row_surf, (62, y))
+            y += 22
 
-            # Correct choices: explain WHY it was right (dec.report).
-            # Wrong choices: show the consequence of this specific bad choice.
+            # Wrong choice: show specific consequence; correct: show report explanation
             if is_ok:
                 explanation = dec.report_pl if lang == "pl" else dec.report_en
             else:
                 explanation = (
                     opt.consequence_easy_pl if lang == "pl" else opt.consequence_easy_en
-                )
-                if not explanation:
-                    explanation = dec.report_pl if lang == "pl" else dec.report_en
+                ) or (dec.report_pl if lang == "pl" else dec.report_en)
             exp_lines = self._wrap(explanation, w - 90)
-            ry = y + 32
-            for line in exp_lines:
+            for line in exp_lines[:2]:  # at most 2 lines per decision to save space
                 surf = self._font_hint.render(line, True, _DIM)
-                surface.blit(surf, (70, ry))
-                ry += 22
-            y = ry + 6
-
-            if y > h - 80:
-                break
+                surface.blit(surf, (62, y))
+                y += 20
+            y += 4
 
         # Bottom hint
         hint_surf = self._font_hint.render(self._strings.eld_play_again, True, _DIM)

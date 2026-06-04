@@ -61,7 +61,7 @@ _s1_d1 = Decision(
         "You will analyse the data in Python and Excel."
     ),
     hint_medium_pl=(
-        "Pomysl o tym, co otwiera każdy psycholog bez instalowania dodatkowych narzędzi."
+        "Pomyśl o tym, co otwiera każdy psycholog bez instalowania dodatkowych narzędzi."
     ),
     hint_medium_en=(
         "Think about what every psychologist can open without installing extra tools."
@@ -87,21 +87,21 @@ _s1_d1 = Decision(
             label_pl="JSON",
             label_en="JSON",
             is_correct=False,
-            consequence_easy_pl="JSON wprowadza zbędna złożoność — nie otwiera sie w Excelu.",
+            consequence_easy_pl="JSON wprowadza zbędną złożoność — nie otwiera się w Excelu.",
             consequence_easy_en="JSON: unnecessary complexity, doesn't open in Excel.",
         ),
         Option(
             label_pl="HDF5",
             label_en="HDF5",
             is_correct=False,
-            consequence_easy_pl="HDF5 to przerost formy nad trescia dla 6000 wierszy.",
+            consequence_easy_pl="HDF5 to przerost formy nad treścią dla 6000 wierszy.",
             consequence_easy_en="HDF5: overkill for 6000 rows.",
         ),
         Option(
             label_pl="EDF/BDF",
             label_en="EDF/BDF",
             is_correct=False,
-            consequence_easy_pl="EDF sluzy do sygnału EEG, nie do danych behawioralnych.",
+            consequence_easy_pl="EDF służy do sygnału EEG, nie do danych behawioralnych.",
             consequence_easy_en="EDF is for EEG signals, not behavioural data.",
         ),
     ),
@@ -112,8 +112,8 @@ _s1_d2 = Decision(
     title_en="Separator",
     context_pl=(
         "Zapisujesz dane w formacie CSV. "
-        "Musisz wybrac znak oddzielajacy kolumny. "
-        "Plik będzie czytany przez Pandas i Excela w roznych systemach operacyjnych."
+        "Musisz wybrać znak oddzielający kolumny. "
+        "Plik będzie czytany przez Pandas i Excela w różnych systemach operacyjnych."
     ),
     context_en=(
         "You are saving data in CSV format. "
@@ -121,14 +121,14 @@ _s1_d2 = Decision(
         "The file will be read by Pandas and Excel on various operating systems."
     ),
     hint_medium_pl=(
-        "Sprawdz, który separator jest domyslnie rozpoznawany przez Pandas i angielski Excel."
+        "Sprawdź, który separator jest domyślnie rozpoznawany przez Pandas i angielski Excel."
     ),
     hint_medium_en=(
         "Check which separator Pandas and English-locale Excel recognise by default."
     ),
     report_pl=(
-        "Przecinek i tabulator sa domyslnie rozpoznawane przez Pandas (sep=',' i sep='\\t'). "
-        "Srednik bywa domyslny w europejskim Excelu, ale wymaga jawnego podania w bibliotekach."
+        "Przecinek i tabulator są domyślnie rozpoznawane przez Pandas (sep=',' i sep='\\t'). "
+        "Średnik bywa domyślny w europejskim Excelu, ale wymaga jawnego podania w bibliotekach."
     ),
     report_en=(
         "Comma and tab are recognised by Pandas by default (sep=',' and sep='\\t'). "
@@ -151,11 +151,11 @@ _s1_d2 = Decision(
             consequence_easy_en="",
         ),
         Option(
-            label_pl="Srednik",
+            label_pl="Średnik",
             label_en="Semicolon",
             is_correct=False,
             consequence_easy_pl=(
-                "Srednik nie jest rozpoznawany przez czesc bibliotek — "
+                "Średnik nie jest rozpoznawany przez część bibliotek — "
                 "wymaga dodatkowej konfiguracji."
             ),
             consequence_easy_en=(
@@ -169,10 +169,10 @@ _s1_d3 = Decision(
     title_pl="Kolumny do zapisania",
     title_en="Columns to save",
     context_pl=(
-        "Masz dostep do pelnego dziennika zdarzeń z 8 kolumnami: "
+        "Masz dostęp do pełnego dziennika zdarzeń z 8 kolumnami: "
         "participant_id, session_id, trial_id, condition, stimulus, "
         "expected_response, actual_response, reaction_time_ms. "
-        "Chcesz byc szybki, ale tez miec dane gotowe do analizy."
+        "Chcesz być szybki, ale też mieć dane gotowe do analizy."
     ),
     context_en=(
         "You have access to the full event log with 8 columns: "
@@ -181,14 +181,14 @@ _s1_d3 = Decision(
         "You want to be fast but also have data ready for analysis."
     ),
     hint_medium_pl=(
-        "Zastanów sie, bez których kolumn nie można porównać uczestników ani warunkov."
+        "Zastanów się, bez których kolumn nie można porównać uczestników ani warunków."
     ),
     hint_medium_en=(
         "Think about which columns are essential to compare participants and conditions."
     ),
     report_pl=(
-        "Pełny dziennik pozwala odtworzyć każda próbę. "
-        "Przy ograniczonych kolumnach tracisz informacje, ktorej nie da sie odzyskac później."
+        "Pełny dziennik pozwala odtworzyć każdą próbę. "
+        "Przy ograniczonych kolumnach tracisz informację, której nie da się odzyskać później."
     ),
     report_en=(
         "The full log lets you reconstruct every trial. "
@@ -207,18 +207,18 @@ _s1_d3 = Decision(
             label_en="RT only",
             is_correct=False,
             consequence_easy_pl=(
-                "Brak participant_id, condition i stimulus — prawie zadna analiza nie jest możliwa."
+                "Brak participant_id, condition i stimulus — prawie żadna analiza nie jest możliwa."
             ),
             consequence_easy_en=(
                 "No participant_id, condition or stimulus columns — almost no analysis is possible."
             ),
         ),
         Option(
-            label_pl="RT + poprawnosc",
+            label_pl="RT + poprawność",
             label_en="RT + correct",
             is_correct=False,
             consequence_easy_pl=(
-                "Brak participant_id — niemozliwe porownanie wynikow między uczestnikami."
+                "Brak participant_id — niemożliwe porównanie wyników między uczestnikami."
             ),
             consequence_easy_en=(
                 "No participant_id — impossible to compare results across participants."
@@ -229,7 +229,7 @@ _s1_d3 = Decision(
             label_en="Raw events",
             is_correct=False,
             consequence_easy_pl=(
-                "Surowe zdarzenia wymagaja parsowania — trudna analiza bez preprocessingu."
+                "Surowe zdarzenia wymagają parsowania — trudna analiza bez preprocessingu."
             ),
             consequence_easy_en=(
                 "Raw events require parsing — hard to analyse without preprocessing."
@@ -242,9 +242,9 @@ _s1_d4 = Decision(
     title_pl="Nazwa pliku",
     title_en="File name",
     context_pl=(
-        "Badziesz zbierać dane od wielu uczestników przez kilka tygodni. "
+        "Będziesz zbierać dane od wielu uczestników przez kilka tygodni. "
         "Pliki będą przechowywane w wspólnym folderze na dysku laboratoryjnym. "
-        "Potrzebujesz nazwy, która jednoznacznie identyfikuje sesje."
+        "Potrzebujesz nazwy, która jednoznacznie identyfikuje sesję."
     ),
     context_en=(
         "You will collect data from many participants over several weeks. "
@@ -252,14 +252,14 @@ _s1_d4 = Decision(
         "You need a name that uniquely identifies the session."
     ),
     hint_medium_pl=(
-        "Dobra nazwa pliku powinna zawierac date i identyfikator uczestnika."
+        "Dobra nazwa pliku powinna zawierać datę i identyfikator uczestnika."
     ),
     hint_medium_en=(
         "A good file name should include the date and participant identifier."
     ),
     report_pl=(
-        "Schemat {data}_{pid}.csv pozwala natychmiast zobaczyc, "
-        "kiedy i dla kogo zebrano dane, i latwiej sortowac pliki chronologicznie."
+        "Schemat {data}_{pid}.csv pozwala natychmiast zobaczyć, "
+        "kiedy i dla kogo zebrano dane, i łatwiej sortować pliki chronologicznie."
     ),
     report_en=(
         "The pattern {date}_{pid}.csv lets you immediately see "
@@ -278,7 +278,7 @@ _s1_d4 = Decision(
             label_en="data.csv",
             is_correct=False,
             consequence_easy_pl=(
-                "Plik nadpisany przy nastepnym uruchomieniu — tracisz poprzednie dane."
+                "Plik nadpisany przy następnym uruchomieniu — tracisz poprzednie dane."
             ),
             consequence_easy_en=("Overwritten on next run — you lose previous data."),
         ),
@@ -287,7 +287,7 @@ _s1_d4 = Decision(
             label_en="exp_{random}.csv",
             is_correct=False,
             consequence_easy_pl=(
-                "Losowa nazwa — nie wiadomo kto i kiedy, trudno sortowac."
+                "Losowa nazwa — nie wiadomo kto i kiedy, trudno sortować."
             ),
             consequence_easy_en=("Random name — unknown who and when, hard to sort."),
         ),
@@ -298,20 +298,20 @@ _s1_d5 = Decision(
     title_pl="RT < 100 ms",
     title_en="RT < 100 ms",
     context_pl=(
-        "Po zebraniu danych zauwazes, ze kilka prób ma czas reakcji poniżej 100 ms. "
-        "To prawdopodobnie anticipacje lub artefakty sprzetowe. "
-        "Musisz zdecydowac, co zrobic z tymi obserwacjami."
+        "Po zebraniu danych zauważysz, że kilka prób ma czas reakcji poniżej 100 ms. "
+        "To prawdopodobnie antycypacje lub artefakty sprzętowe. "
+        "Musisz zdecydować, co zrobić z tymi obserwacjami."
     ),
     context_en=(
         "After collecting data you notice that some trials have reaction times below 100 ms. "
         "These are likely anticipations or hardware artefacts. "
         "You must decide what to do with these observations."
     ),
-    hint_medium_pl=("Pomysl, jak zachowac slad po kazdej decyzji dotyczacej danych."),
+    hint_medium_pl=("Pomyśl, jak zachować ślad po każdej decyzji dotyczącej danych."),
     hint_medium_en=("Think about how to preserve a trace of every data decision."),
     report_pl=(
-        "Oznaczenie flaga zachowuje dane i zostawia slad audytowy. "
-        "Możesz później wykluczyć flagowane próbę albo zbadac ich rozkład."
+        "Oznaczenie flagą zachowuje dane i zostawia ślad audytowy. "
+        "Możesz później wykluczyć flagowane próby albo zbadać ich rozkład."
     ),
     report_en=(
         "Flagging preserves the data and leaves an audit trail. "
@@ -319,18 +319,18 @@ _s1_d5 = Decision(
     ),
     options=(
         Option(
-            label_pl="Oznacz flaga",
+            label_pl="Oznacz flagą",
             label_en="Flag it",
             is_correct=True,
             consequence_easy_pl="",
             consequence_easy_en="",
         ),
         Option(
-            label_pl="Usun wiersz",
+            label_pl="Usuń wiersz",
             label_en="Delete row",
             is_correct=False,
             consequence_easy_pl=(
-                "Utrata danych bez sladu — nie wiesz ile prób usunieto."
+                "Utrata danych bez śladu — nie wiesz ile prób usunięto."
             ),
             consequence_easy_en=(
                 "Data loss without trace — you don't know how many trials were removed."
@@ -341,7 +341,7 @@ _s1_d5 = Decision(
             label_en="Keep as-is",
             is_correct=False,
             consequence_easy_pl=(
-                "Zachowujesz skontaminowane dane — znieksztalca średnie RT."
+                "Zachowujesz skontaminowane dane — zniekształca średnie RT."
             ),
             consequence_easy_en=("You keep contaminated data — distorts mean RT."),
         ),
@@ -352,9 +352,9 @@ _s1_d6 = Decision(
     title_pl="Brak odpowiedzi",
     title_en="Missing response",
     context_pl=(
-        "Uczestnik nie odpowiedzial na próbę przed upłynięcia czasu. "
-        "Pole actual_response i reaction_time_ms sa puste. "
-        "Musisz ustalic, jaka wartosc zapisać w CSV."
+        "Uczestnik nie odpowiedział na próbę przed upłynięciem czasu. "
+        "Pole actual_response i reaction_time_ms są puste. "
+        "Musisz ustalić, jaką wartość zapisać w CSV."
     ),
     context_en=(
         "The participant did not respond to a trial before the timeout. "
@@ -362,15 +362,15 @@ _s1_d6 = Decision(
         "You need to decide what value to write in the CSV."
     ),
     hint_medium_pl=(
-        "Sprawdz, która wartosc Pandas interpretuje jako brak liczby (a nie tekst)."
+        "Sprawdź, która wartość Pandas interpretuje jako brak liczby (a nie tekst)."
     ),
     hint_medium_en=(
         "Check which value Pandas interprets as a missing number (not as text)."
     ),
     report_pl=(
-        "NaN jest standardem w Pandas dla brakujacych wartosci numerycznych. "
-        "Pusty string jest czytany jako tekst, NULL nie jest rozpoznawany wszedzie, "
-        "a -1 moglby byc pomylony z prawdziwym RT bez dokumentacji."
+        "NaN jest standardem w Pandas dla brakujących wartości numerycznych. "
+        "Pusty string jest czytany jako tekst, NULL nie jest rozpoznawany wszędzie, "
+        "a -1 mógłby być pomylony z prawdziwym RT bez dokumentacji."
     ),
     report_en=(
         "NaN is the Pandas standard for missing numeric values. "
@@ -390,7 +390,7 @@ _s1_d6 = Decision(
             label_en="Empty string",
             is_correct=False,
             consequence_easy_pl=(
-                "Pusty string — Pandas czyta go jako tekst, nie liczbe."
+                "Pusty string — Pandas czyta go jako tekst, nie liczbę."
             ),
             consequence_easy_en=(
                 "Empty string — Pandas reads it as text, not a number."
@@ -410,7 +410,7 @@ _s1_d6 = Decision(
             label_en="-1",
             is_correct=False,
             consequence_easy_pl=(
-                "Wartosc -1 nieodroznialna od prawdziwego RT bez dokumentacji."
+                "Wartość -1 nieodróżnialna od prawdziwego RT bez dokumentacji."
             ),
             consequence_easy_en=(
                 "-1: indistinguishable from real RT without documentation."
@@ -426,7 +426,7 @@ scenario1 = Scenario(
     intro_pl=(
         "Prowadzisz prosty eksperyment behawioralny mierzacy czasy reakcji. "
         "Masz 30 uczestników, około 200 prób każdy. "
-        "Podejmij decyzje dotyczace zapisu i przechowywania danych."
+        "Podejmij decyzje dotyczące zapisu i przechowywania danych."
     ),
     intro_en=(
         "You are running a simple behavioural experiment measuring reaction times. "
@@ -461,11 +461,11 @@ _s2_d1 = Decision(
         "Behavioural data is a few hundred rows of reaction times and responses. "
         "Choose the storage format for this data layer."
     ),
-    hint_medium_pl=("Dane behawioralne to zwykla tabela — wybierz najprostszy format."),
+    hint_medium_pl=("Dane behawioralne to zwykła tabela — wybierz najprostszy format."),
     hint_medium_en=("Behavioural data is a simple table — choose the simplest format."),
     report_pl=(
         "Dla kilkuset wierszy CSV jest optymalny: lekki, czytelny i łatwy do analizy. "
-        "Bardziej zlezone formaty sa tu przesada."
+        "Bardziej złożone formaty są tu przesadą."
     ),
     report_en=(
         "For a few hundred rows CSV is optimal: lightweight, readable, and easy to analyse. "
@@ -499,7 +499,7 @@ _s2_d1 = Decision(
             label_pl="EDF/BDF",
             label_en="EDF/BDF",
             is_correct=False,
-            consequence_easy_pl=("EDF sluzy do sygnału EEG, nie do danych RT."),
+            consequence_easy_pl=("EDF służy do sygnału EEG, nie do danych RT."),
             consequence_easy_en=("EDF is for EEG signals, not RT data."),
         ),
     ),
@@ -519,15 +519,15 @@ _s2_d2 = Decision(
         "Choose the storage format for the raw signal."
     ),
     hint_medium_pl=(
-        "Oszacuj rozmiar danych i sprawdz, który format oferuje kompresję."
+        "Oszacuj rozmiar danych i sprawdź, który format oferuje kompresję."
     ),
     hint_medium_en=(
         "Estimate the data size and check which format offers compression."
     ),
     report_pl=(
-        "HDF5 kompresuje dane i umozliwia szybki dostep do fragmentow sygnału. "
+        "HDF5 kompresuje dane i umożliwia szybki dostęp do fragmentów sygnału. "
         "MNE-Python czyta i zapisuje HDF5. "
-        "CSV zajme około 10 GB bez kompresji, co sprawia, ze parsowanie trwa godzinami."
+        "CSV zajmie około 10 GB bez kompresji, co sprawia, że parsowanie trwa godzinami."
     ),
     report_en=(
         "HDF5 compresses data and allows fast random access to signal segments. "
@@ -547,7 +547,7 @@ _s2_d2 = Decision(
             label_en="CSV",
             is_correct=False,
             consequence_easy_pl=(
-                "Okolo 10 GB nieskompresowanego tekstu — parsowanie trwa godzinami."
+                "Około 10 GB nieskompresowanego tekstu — parsowanie trwa godzinami."
             ),
             consequence_easy_en=(
                 "Around 10 GB of uncompressed text — parsing takes hours."
@@ -558,7 +558,7 @@ _s2_d2 = Decision(
             label_en="JSON",
             is_correct=False,
             consequence_easy_pl=(
-                "JSON jest jeszcze wiekszy niz CSV dla danych szeregowych."
+                "JSON jest jeszcze większy niż CSV dla danych szeregowych."
             ),
             consequence_easy_en=("JSON: even larger than CSV for time-series data."),
         ),
@@ -567,7 +567,7 @@ _s2_d2 = Decision(
             label_en="EDF/BDF",
             is_correct=False,
             consequence_easy_pl=(
-                "EDF to standard kliniczny, ale slabe wsparcie MNE dla duzych plików."
+                "EDF to standard kliniczny, ale słabe wsparcie MNE dla dużych plików."
             ),
             consequence_easy_en=(
                 "EDF/BDF: clinical standard, but poor MNE-Python support for large files."
@@ -582,7 +582,7 @@ _s2_d3 = Decision(
     context_pl=(
         "Twój eksperyment uruchamia bodzce w oprogramowaniu behawioralnym "
         "i jednoczesnie rejestruje EEG. "
-        "Musisz zdecydowac, czy używać sygnałów TTL do synchronizacji między systemami."
+        "Musisz zdecydować, czy używać sygnałów TTL do synchronizacji między systemami."
     ),
     context_en=(
         "Your experiment triggers stimuli in behavioural software "
@@ -590,14 +590,14 @@ _s2_d3 = Decision(
         "You must decide whether to use TTL signals to synchronise the two systems."
     ),
     hint_medium_pl=(
-        "Zastanów sie, co sie stanie z analiza ERP jezeli zegary dwoch systemow nie sa zsynchronizowane."
+        "Zastanów się, co się stanie z analizą ERP jeżeli zegary dwóch systemów nie są zsynchronizowane."
     ),
     hint_medium_en=(
         "Think about what happens to ERP analysis if two system clocks are not synchronised."
     ),
     report_pl=(
-        "Bez sygnału TTL dryfowanie zegarow niszczy wyrównanie ERP. "
-        "Dwa komputery moga roznics sie o kilka do kilkudziesieciu ms w ciągu godziny."
+        "Bez sygnału TTL dryfowanie zegarów niszczy wyrównanie ERP. "
+        "Dwa komputery mogą różnić się o kilka do kilkudziesięciu ms w ciągu godziny."
     ),
     report_en=(
         "Without TTL, clock drift destroys ERP alignment — data will be useless. "
@@ -616,7 +616,7 @@ _s2_d3 = Decision(
             label_en="No",
             is_correct=False,
             consequence_easy_pl=(
-                "Dryfowanie zegarow niszczy wyrównanie ERP — dane będą bezużyteczne."
+                "Dryfowanie zegarów niszczy wyrównanie ERP — dane będą bezużyteczne."
             ),
             consequence_easy_en=(
                 "Clock drift destroys ERP alignment — data will be useless."
@@ -626,12 +626,12 @@ _s2_d3 = Decision(
 )
 
 _s2_d4 = Decision(
-    title_pl="Czestotliwosc próbkowania EEG",
+    title_pl="Częstotliwość próbkowania EEG",
     title_en="EEG sampling rate",
     context_pl=(
-        "Interesuja cie komponenty ERP: P100, N200 i P300. "
-        "Musisz wybrac częstotliwość próbkowania EEG. "
-        "Wyzsza częstotliwość daje lepsza rozdzielczość, ale tez wieksze pliki."
+        "Interesują cię komponenty ERP: P100, N200 i P300. "
+        "Musisz wybrać częstotliwość próbkowania EEG. "
+        "Wyższa częstotliwość daje lepszą rozdzielczość, ale też większe pliki."
     ),
     context_en=(
         "You are interested in ERP components: P100, N200 and P300. "
@@ -639,17 +639,17 @@ _s2_d4 = Decision(
         "Higher rates give better resolution but also larger files."
     ),
     hint_medium_pl=(
-        "Przypomnij sobie twierdzenie Nyquista: częstotliwość próbkowania musi byc "
-        "co najmniej dwa razy wieksza od najszybszego skladnika, który chcesz uchwycic."
+        "Przypomnij sobie twierdzenie Nyquista: częstotliwość próbkowania musi być "
+        "co najmniej dwa razy większa od najszybszego składnika, który chcesz uchwycić."
     ),
     hint_medium_en=(
         "Recall the Nyquist theorem: sampling rate must be at least twice "
         "the highest frequency component you want to capture."
     ),
     report_pl=(
-        "1000 Hz to standard dla ERP — wystarczy do rozroznienia P100 od N200 "
-        "i nie generuje niepotrzebnie duzych plików. "
-        "128 Hz jest zbyt male dla szybkich komponentow."
+        "1000 Hz to standard dla ERP — wystarczy do rozróżnienia P100 od N200 "
+        "i nie generuje niepotrzebnie dużych plików. "
+        "128 Hz jest zbyt małe dla szybkich komponentów."
     ),
     report_en=(
         "1000 Hz is the ERP standard — sufficient to distinguish P100 from N200 "
@@ -662,7 +662,7 @@ _s2_d4 = Decision(
             label_en="128 Hz",
             is_correct=False,
             consequence_easy_pl=(
-                "128 Hz jest niedostateczne do rozroznienia P100 od N200."
+                "128 Hz jest niedostateczne do rozróżnienia P100 od N200."
             ),
             consequence_easy_en=("128 Hz: insufficient to distinguish P100 from N200."),
         ),
@@ -671,7 +671,7 @@ _s2_d4 = Decision(
             label_en="256 Hz",
             is_correct=False,
             consequence_easy_pl=(
-                "256 Hz to ryzyko aliasingu dla szybkich komponentow."
+                "256 Hz to ryzyko aliasingu dla szybkich komponentów."
             ),
             consequence_easy_en=(
                 "256 Hz: borderline — aliasing risk for fast components."
@@ -688,7 +688,7 @@ _s2_d4 = Decision(
             label_pl="2000 Hz",
             label_en="2000 Hz",
             is_correct=False,
-            consequence_easy_pl=("2000 Hz podwaja rozmiar danych bez zadnej korzysci."),
+            consequence_easy_pl=("2000 Hz podwaja rozmiar danych bez żadnej korzyści."),
             consequence_easy_en=(
                 "2000 Hz: unnecessary resolution, doubles data size without benefit."
             ),
@@ -702,7 +702,7 @@ _s2_d5 = Decision(
     context_pl=(
         "Nagranie wideo twarzy uczestnika trwa 60 minut per sesja. "
         "Masz 30 uczestników. "
-        "Musisz zdecydowac, co przechowywać z nagrania wideo."
+        "Musisz zdecydować, co przechowywać z nagrania wideo."
     ),
     context_en=(
         "Video of the participant's face lasts 60 minutes per session. "
@@ -718,7 +718,7 @@ _s2_d5 = Decision(
     report_pl=(
         "Klatki kluczowe lub tylko metadane (czas mrugniecia, keypoint twarzy) "
         "redukuja rozmiar z ~50 GB do kilku MB per uczestnika. "
-        "Pelne wideo MP4 to problem przestrzenny bez wyraznej korzysci naukowej."
+        "Pełne wideo MP4 to problem przestrzenny bez wyraźnej korzyści naukowej."
     ),
     report_en=(
         "Keyframes or metadata only (blink timestamps, face keypoints) "
@@ -741,11 +741,11 @@ _s2_d5 = Decision(
             consequence_easy_en="",
         ),
         Option(
-            label_pl="Pelne wideo (MP4)",
+            label_pl="Pełne wideo (MP4)",
             label_en="Full video (MP4)",
             is_correct=False,
             consequence_easy_pl=(
-                "Okolo 50 GB na sesje — problem z przestrzeniq przy 30 uczestnikach."
+                "Około 50 GB na sesję — problem z przestrzenią przy 30 uczestnikach."
             ),
             consequence_easy_en=(
                 "Around 50 GB per session — storage problem with 30 participants."
@@ -761,7 +761,7 @@ _s2_d6 = Decision(
         "Bodzce sa wyzwalane synchronicznie w oprogramowaniu behawioralnym i EEG. "
         "Markery zdarzeń można zapisać w osobnym pliku CSV, osadzic w sygnale EEG "
         "lub w obu miejscach jednoczesnie. "
-        "Wybierz strategie zapisu markerow."
+        "Wybierz strategię zapisu markerów."
     ),
     context_en=(
         "Stimuli are triggered synchronously in behavioural software and EEG. "
@@ -770,14 +770,14 @@ _s2_d6 = Decision(
         "Choose the marker storage strategy."
     ),
     hint_medium_pl=(
-        "Zastanów sie nad nadmiarowoscia: co sie stanie, jeśli jeden ze zbiorow danych zostanie uszkodzony?"
+        "Zastanów się nad nadmiarowością: co się stanie, jeśli jeden ze zbiorów danych zostanie uszkodzony?"
     ),
     hint_medium_en=(
         "Think about redundancy: what happens if one of the data sources is corrupted?"
     ),
     report_pl=(
-        "Zapis w obu miejscach zapewnia nadmiarowosc. "
-        "Jeśli jeden plik zostanie uszkodzony lub zaginiony, można odtworzyć markery z drugiego zrodla."
+        "Zapis w obu miejscach zapewnia nadmiarowość. "
+        "Jeśli jeden plik zostanie uszkodzony lub zaginiony, można odtworzyć markery z drugiego źródła."
     ),
     report_en=(
         "Storing in both places provides redundancy. "
@@ -804,15 +804,15 @@ _s2_d6 = Decision(
             label_pl="Osadzone w EEG",
             label_en="Embedded in EEG",
             is_correct=False,
-            consequence_easy_pl=("Jeden rekord — ryzyko utraty przy bledzie formatu."),
+            consequence_easy_pl=("Jeden rekord — ryzyko utraty przy błędzie formatu."),
             consequence_easy_en=("Single record — risk of loss on format error."),
         ),
         Option(
-            label_pl="Zadne",
+            label_pl="Żadne",
             label_en="None",
             is_correct=False,
             consequence_easy_pl=(
-                "Bez markerow niemozliwe wyrównanie EEG z bodzcami po fakcie."
+                "Bez markerów niemożliwe wyrównanie EEG z bodźcami po fakcie."
             ),
             consequence_easy_en=(
                 "Without markers it's impossible to align EEG with stimuli after the fact."
@@ -827,7 +827,7 @@ _s2_d7 = Decision(
     context_pl=(
         "Masz 30 uczestników, każdy z plikiem EEG, CSV behawioralnym i metadanymi. "
         "To łącznie około 100 plików. "
-        "Wybierz schemat organizacji katalogow."
+        "Wybierz schemat organizacji katalogów."
     ),
     context_en=(
         "You have 30 participants, each with an EEG file, behavioural CSV and metadata. "
@@ -835,15 +835,15 @@ _s2_d7 = Decision(
         "Choose a directory organisation scheme."
     ),
     hint_medium_pl=(
-        "Pomysl o tym, jak znaleźć wszystkie pliki konkretnego uczestnika za 2 lata."
+        "Pomyśl o tym, jak znaleźć wszystkie pliki konkretnego uczestnika za 2 lata."
     ),
     hint_medium_en=(
         "Think about how to find all files for a specific participant two years from now."
     ),
     report_pl=(
         "Katalogi per uczestnik lub standard BIDS (Brain Imaging Data Structure) "
-        "ulatwiaja nawigacje i sa zrozumiale dla innych badaczy. "
-        "Wszystko w jednym folderze prowadzi do chaosu juz przy kilkudziesieciu plikach."
+        "ułatwiają nawigację i są zrozumiałe dla innych badaczy. "
+        "Wszystko w jednym folderze prowadzi do chaosu już przy kilkudziesięciu plikach."
     ),
     report_en=(
         "Per-participant directories or BIDS (Brain Imaging Data Structure) "
@@ -880,9 +880,9 @@ scenario2 = Scenario(
     title_pl="Eks. 2: EEG + Wideo",
     title_en="Exp 2: EEG + Video",
     intro_pl=(
-        "Projektujesz multimodalny eksperyment laczacy EEG z nagraniem wideo twarzy "
+        "Projektujesz multimodalny eksperyment łączący EEG z nagraniem wideo twarzy "
         "i danymi behawioralnymi. "
-        "Podejmij decyzje dotyczace formatów, synchronizacji i przechowywania danych."
+        "Podejmij decyzje dotyczące formatów, synchronizacji i przechowywania danych."
     ),
     intro_en=(
         "You are designing a multimodal experiment combining EEG with face video "
@@ -910,8 +910,8 @@ _s3_d1 = Decision(
     title_en="EEG exchange format",
     context_pl=(
         "Prowadzisz wieloośrodkowe badanie kliniczne EEG w 5 szpitalach. "
-        "Każdy ośrodek używać innego oprogramowania do akwizycji. "
-        "Musisz wybrac wspólny format wymiany plików EEG."
+        "Każdy ośrodek używa innego oprogramowania do akwizycji. "
+        "Musisz wybrać wspólny format wymiany plików EEG."
     ),
     context_en=(
         "You run a multi-site clinical EEG study at 5 hospitals. "
@@ -919,13 +919,13 @@ _s3_d1 = Decision(
         "You must choose a common exchange format for EEG files."
     ),
     hint_medium_pl=(
-        "Sprawdz, który format EEG jest standardem w oprogramowaniu klinicznym na calym swiecie."
+        "Sprawdź, który format EEG jest standardem w oprogramowaniu klinicznym na całym świecie."
     ),
     hint_medium_en=(
         "Check which EEG format is the standard in clinical software worldwide."
     ),
     report_pl=(
-        "EDF/BDF to miedzynarodowy standard kliniczny wspierany przez wszystkie systemy EEG. "
+        "EDF/BDF to międzynarodowy standard kliniczny wspierany przez wszystkie systemy EEG. "
         "Zawiera metadane kliniczne i jest czytelny przez każde oprogramowanie do analizy EEG."
     ),
     report_en=(
@@ -954,7 +954,7 @@ _s3_d1 = Decision(
             label_en="HDF5",
             is_correct=False,
             consequence_easy_pl=(
-                "HDF5 nie jest obslugiwany przez kliniczne oprogramowanie EEG."
+                "HDF5 nie jest obsługiwany przez kliniczne oprogramowanie EEG."
             ),
             consequence_easy_en=("HDF5: not supported by clinical EEG software."),
         ),
@@ -972,8 +972,8 @@ _s3_d2 = Decision(
     title_pl="Standaryzacja struktury",
     title_en="Structure standardisation",
     context_pl=(
-        "Każdy szpital prowadzi własna dokumentacje w innych formatach i z innymi nazwami kolumn. "
-        "Przed meta-analiza musisz zdecydowac, jak ujednolicic strukture danych między ośrodkami."
+        "Każdy szpital prowadzi własną dokumentację w innych formatach i z innymi nazwami kolumn. "
+        "Przed meta-analizą musisz zdecydować, jak ujednolicić strukturę danych między ośrodkami."
     ),
     context_en=(
         "Each hospital maintains its own documentation in different formats "
@@ -981,7 +981,7 @@ _s3_d2 = Decision(
         "Before meta-analysis you must decide how to standardise data structure across sites."
     ),
     hint_medium_pl=(
-        "Poszukaj standardu specyficznego dla neuronauki, który definiuje nazwy plików i strukture folderow."
+        "Poszukaj standardu specyficznego dla neuronauki, który definiuje nazwy plików i strukturę folderów."
     ),
     hint_medium_en=(
         "Look for a neuroscience-specific standard that defines file names and folder structure."
@@ -989,7 +989,7 @@ _s3_d2 = Decision(
     report_pl=(
         "BIDS (Brain Imaging Data Structure) to otwarty standard zaprojektowany "
         "specjalnie dla danych neuronaukowych. "
-        "Każdy badacz na swiecie rozumie strukture BIDS bez dokumentacji."
+        "Każdy badacz na świecie rozumie strukturę BIDS bez dokumentacji."
     ),
     report_en=(
         "BIDS (Brain Imaging Data Structure) is an open standard designed "
@@ -1009,17 +1009,17 @@ _s3_d2 = Decision(
             label_en="None",
             is_correct=False,
             consequence_easy_pl=(
-                "Każdy szpital ma inne nazwy kolumn -> niemozliwa meta-analiza."
+                "Każdy szpital ma inne nazwy kolumn -> niemożliwa meta-analiza."
             ),
             consequence_easy_en=(
                 "Each hospital has its own column names -> impossible meta-analysis."
             ),
         ),
         Option(
-            label_pl="Wlasna konwencja",
+            label_pl="Własna konwencja",
             label_en="Own convention",
             is_correct=False,
-            consequence_easy_pl=("Wlasna konwencja: inni naukowcy jej nie znaja."),
+            consequence_easy_pl=("Własna konwencja: inni naukowcy jej nie znają."),
             consequence_easy_en=("Own convention: other scientists won't know it."),
         ),
     ),
@@ -1029,7 +1029,7 @@ _s3_d3 = Decision(
     title_pl="Nazewnictwo plików",
     title_en="File naming",
     context_pl=(
-        "Masz 5 ośrodków, każdy zbiera dane od 50 pacjentow przez 2 lata. "
+        "Masz 5 ośrodków, każdy zbiera dane od 50 pacjentów przez 2 lata. "
         "Pliki EEG będą transferowane między ośrodkami i archiwizowane. "
         "Wybierz schemat nazewnictwa plików."
     ),
@@ -1039,7 +1039,7 @@ _s3_d3 = Decision(
         "Choose the file naming scheme."
     ),
     hint_medium_pl=(
-        "Dobra nazwa pliku powinna byc jednoznaczna między ośrodkami i czytelna po 5 latach."
+        "Dobra nazwa pliku powinna być jednoznaczna między ośrodkami i czytelna po 5 latach."
     ),
     hint_medium_en=(
         "A good file name should be unique across sites and readable after 5 years."
@@ -1073,7 +1073,7 @@ _s3_d3 = Decision(
             label_pl="{ośrodek}_{sub}_{data}.edf",
             label_en="{site}_{sub}_{date}.edf",
             is_correct=False,
-            consequence_easy_pl=("Wlasna konwencja — inne ośrodki będą mialy inne."),
+            consequence_easy_pl=("Własna konwencja — inne ośrodki będą miały inne."),
             consequence_easy_en=(
                 "Own convention — other sites will have different ones."
             ),
@@ -1085,8 +1085,8 @@ _s3_d4 = Decision(
     title_pl="Metadane uczestnika",
     title_en="Participant metadata",
     context_pl=(
-        "Zbierasz dane od pacjentow klinicznych: plec, wiek, diagnoze, leki. "
-        "Musisz zdecydowac, jakie metadane łączyć z danymi EEG "
+        "Zbierasz dane od pacjentów klinicznych: płeć, wiek, diagnozę, leki. "
+        "Musisz zdecydować, jakie metadane łączyć z danymi EEG "
         "i jak je przechowywać."
     ),
     context_en=(
@@ -1095,15 +1095,15 @@ _s3_d4 = Decision(
         "and how to store it."
     ),
     hint_medium_pl=(
-        "Pomysl o RODO: jakie dane moga byc przechowywane razem z sygnalami EEG?"
+        "Pomyśl o RODO: jakie dane mogą być przechowywane razem z sygnałami EEG?"
     ),
     hint_medium_en=(
         "Think about GDPR: which data can be stored together with EEG signals?"
     ),
     report_pl=(
-        "Sidecar JSON z ID + wiek + plec jest zgodny z BIDS i RODO. "
-        "Pełna dokumentacja kliniczna w pliku EEG naruszalaby RODO — "
-        "dane wrazliwe musza byc oddzielone od danych badawczych."
+        "Sidecar JSON z ID + wiek + płeć jest zgodny z BIDS i RODO. "
+        "Pełna dokumentacja kliniczna w pliku EEG naruszałaby RODO — "
+        "dane wrażliwe muszą być oddzielone od danych badawczych."
     ),
     report_en=(
         "JSON sidecar with ID + age + gender is BIDS-compliant and GDPR-safe. "
@@ -1112,7 +1112,7 @@ _s3_d4 = Decision(
     ),
     options=(
         Option(
-            label_pl="ID + wiek + plec w JSON sidecar",
+            label_pl="ID + wiek + płeć w JSON sidecar",
             label_en="ID + age + gender in JSON sidecar",
             is_correct=True,
             consequence_easy_pl="",
@@ -1123,7 +1123,7 @@ _s3_d4 = Decision(
             label_en="ID only",
             is_correct=False,
             consequence_easy_pl=(
-                "Brak metadanych demograficznych — niemozliwa analiza wg wieku/plci."
+                "Brak metadanych demograficznych — niemożliwa analiza wg wieku/płci."
             ),
             consequence_easy_en=(
                 "No demographic metadata — impossible age/gender analysis."
@@ -1133,7 +1133,7 @@ _s3_d4 = Decision(
             label_pl="Pełna dokumentacja kliniczna w EDF",
             label_en="Full clinical record in EDF",
             is_correct=False,
-            consequence_easy_pl=("Naruszenie RODO — dane wrazliwe w pliku danych."),
+            consequence_easy_pl=("Naruszenie RODO — dane wrażliwe w pliku danych."),
             consequence_easy_en=("GDPR violation — sensitive data in data file."),
         ),
     ),
@@ -1145,7 +1145,7 @@ _s3_d5 = Decision(
     context_pl=(
         "Każdy ośrodek generuje raporty kliniczne po badaniu EEG. "
         "Raporty będą później agregowane i automatycznie przetwarzane "
-        "w ramach meta-analizy wieloosrodkowej."
+        "w ramach meta-analizy wieloośrodkowej."
     ),
     context_en=(
         "Each site generates clinical reports after EEG examination. "
@@ -1157,8 +1157,8 @@ _s3_d5 = Decision(
         "Think about which format a Python script can parse easily without NLP."
     ),
     report_pl=(
-        "Ustrukturyzowany JSON lub HL7 FHIR umozliwiaja automatyczne przetwarzanie. "
-        "Tekst w Wordzie lub PDF wymaga drogiego NLP lub recznego parsowania."
+        "Ustrukturyzowany JSON lub HL7 FHIR umożliwiają automatyczne przetwarzanie. "
+        "Tekst w Wordzie lub PDF wymaga drogiego NLP lub ręcznego parsowania."
     ),
     report_en=(
         "Structured JSON or HL7 FHIR enable automated processing. "
@@ -1184,7 +1184,7 @@ _s3_d5 = Decision(
             label_en="Free text Word",
             is_correct=False,
             consequence_easy_pl=(
-                "Niemozliwe automatyczne przetwarzanie bez drogiego NLP."
+                "Niemożliwe automatyczne przetwarzanie bez drogiego NLP."
             ),
             consequence_easy_en=(
                 "Impossible automated processing without expensive NLP."
@@ -1204,9 +1204,9 @@ _s3_d6 = Decision(
     title_pl="Wersjonowanie danych",
     title_en="Data versioning",
     context_pl=(
-        "W trakcie badania pojda poprawki: zmiana protokolu, korekty anotacji, "
+        "W trakcie badania pojdą poprawki: zmiana protokołu, korekty anotacji, "
         "aktualizacja oprogramowania do akwizycji. "
-        "Musisz zdecydowac, jak sledzic wersje plików danych."
+        "Musisz zdecydować, jak śledzić wersje plików danych."
     ),
     context_en=(
         "During the study there will be corrections: protocol changes, annotation fixes, "
@@ -1214,15 +1214,15 @@ _s3_d6 = Decision(
         "You must decide how to track versions of data files."
     ),
     hint_medium_pl=(
-        "Pomysl, jak zachowac historia zmian bez nadpisywania oryginalnych plików."
+        "Pomyśl, jak zachować historię zmian bez nadpisywania oryginalnych plików."
     ),
     hint_medium_en=(
         "Think about how to keep a history of changes without overwriting original files."
     ),
     report_pl=(
-        "Nowe wersje z sufiksem (_v2, _v3) zachowuja wszystkie wersje i sa zrozumiale "
-        "nawet dla użytkowników bez wiedzy o gitcie. "
-        "Nadpisywanie niszczy historyjke i uniemozliwia reprodukcje wynikow."
+        "Nowe wersje z sufiksem (_v2, _v3) zachowują wszystkie wersje i są zrozumiałe "
+        "nawet dla użytkowników bez wiedzy o gicie. "
+        "Nadpisywanie niszczy historię i uniemożliwia reprodukcję wyników."
     ),
     report_en=(
         "New versions with suffix (_v2, _v3) preserve all versions and are understandable "
@@ -1242,7 +1242,7 @@ _s3_d6 = Decision(
             label_en="None",
             is_correct=False,
             consequence_easy_pl=(
-                "Nie wiadomo co sie zmienilo i kiedy -> niereprodukowalne."
+                "Nie wiadomo co się zmieniło i kiedy -> niereprodukowalne."
             ),
             consequence_easy_en=("Unknown what changed and when -> irreproducible."),
         ),
@@ -1258,7 +1258,7 @@ _s3_d6 = Decision(
             label_en="Git LFS",
             is_correct=False,
             consequence_easy_pl=(
-                "Git LFS wymaga wiedzy o gitcie — nieodpowiednie dla klinicystow."
+                "Git LFS wymaga wiedzy o gicie — nieodpowiednie dla klinicystów."
             ),
             consequence_easy_en=(
                 "Git LFS: requires git knowledge — not appropriate for clinicians."
@@ -1274,7 +1274,7 @@ scenario3 = Scenario(
     intro_pl=(
         "Koordynujesz wieloośrodkowe badanie kliniczne EEG w 5 szpitalach w Europie. "
         "Dane będą zbierane przez 2 lata i poddane meta-analizie. "
-        "Podejmij kluczowe decyzje dotyczace standardow i zarzadzania danymi."
+        "Podejmij kluczowe decyzje dotyczące standardów i zarządzania danymi."
     ),
     intro_en=(
         "You coordinate a multi-site clinical EEG study at 5 hospitals across Europe. "
