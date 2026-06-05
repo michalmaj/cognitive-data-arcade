@@ -409,14 +409,14 @@ PL = Strings(
     eld_consequence_fmt="Jezeli wybierzesz {label}:",
     eld_correct_choice_fmt="Dobry wybor! {label}:",
     eld_confirm_hint="ENTER — Potwierdz   ESC — Zmien wybor",
-    intro_hint="nacisnij dowolny klawisz",
-    app_tutorial_title="Jak uzywac menu",
-    app_tutorial_nav="wybierz lekcje",
-    app_tutorial_enter="graj lub czytaj teorie",
+    intro_hint="naciśnij dowolny klawisz",
+    app_tutorial_title="Jak używać menu",
+    app_tutorial_nav="wybierz lekcję",
+    app_tutorial_enter="graj lub czytaj teorię",
     app_tutorial_theory="teoria od razu",
-    app_tutorial_profile="profil i postep",
+    app_tutorial_profile="profil i postęp",
     app_tutorial_options="ustawienia audio",
-    app_tutorial_hint="ENTER / SPACJA - kontynuuj   ESC - pomin",
+    app_tutorial_hint="ENTER / SPACJA — kontynuuj   ESC — pomiń",
 )
 
 
