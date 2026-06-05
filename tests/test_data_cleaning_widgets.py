@@ -80,3 +80,82 @@ def test_nav_keys_return_none():
     t = TableWidget(_rows(10))
     assert t.handle_keydown(pygame.K_DOWN) is None
     assert t.handle_keydown(pygame.K_UP) is None
+
+
+from cognitive_data_arcade.games.data_cleaning.ui_popup import DecisionPopup
+
+
+def _row(accuracy: float = 0.9) -> DataRow:
+    return DataRow(1, 1, 1, -55.0, accuracy)
+
+
+# ── cursor ──────────────────────────────────────────────────────────────────────
+
+def test_popup_cursor_starts_at_zero():
+    p = DecisionPopup(_row(), has_format_fix=False)
+    assert p.cursor == 0
+
+
+def test_popup_down_increments_cursor():
+    p = DecisionPopup(_row(), has_format_fix=False)
+    p.handle_keydown(pygame.K_DOWN)
+    assert p.cursor == 1
+
+
+def test_popup_up_does_not_go_below_zero():
+    p = DecisionPopup(_row(), has_format_fix=False)
+    p.handle_keydown(pygame.K_UP)
+    assert p.cursor == 0
+
+
+def test_popup_cursor_clamps_at_last_choice():
+    p = DecisionPopup(_row(), has_format_fix=False)
+    for _ in range(10):
+        p.handle_keydown(pygame.K_DOWN)
+    assert p.cursor == 2  # 3 choices: delete / median / keep
+
+
+# ── choices without format fix ──────────────────────────────────────────────────
+
+def test_popup_enter_returns_delete_by_default():
+    p = DecisionPopup(_row(), has_format_fix=False)
+    result = p.handle_keydown(pygame.K_RETURN)
+    assert result == "delete"
+
+
+def test_popup_key1_selects_delete():
+    p = DecisionPopup(_row(), has_format_fix=False)
+    p.handle_keydown(pygame.K_1)
+    assert p.handle_keydown(pygame.K_RETURN) == "delete"
+
+
+def test_popup_key2_selects_median():
+    p = DecisionPopup(_row(), has_format_fix=False)
+    p.handle_keydown(pygame.K_2)
+    assert p.handle_keydown(pygame.K_RETURN) == "median"
+
+
+def test_popup_key3_selects_keep():
+    p = DecisionPopup(_row(), has_format_fix=False)
+    p.handle_keydown(pygame.K_3)
+    assert p.handle_keydown(pygame.K_RETURN) == "keep"
+
+
+# ── choices with format fix ─────────────────────────────────────────────────────
+
+def test_popup_format_fix_replaces_median():
+    p = DecisionPopup(_row(accuracy=85.0), has_format_fix=True)
+    p.handle_keydown(pygame.K_2)  # index 1 → fix_format
+    assert p.handle_keydown(pygame.K_RETURN) == "fix_format"
+
+
+def test_popup_format_fix_key3_is_keep():
+    p = DecisionPopup(_row(accuracy=85.0), has_format_fix=True)
+    p.handle_keydown(pygame.K_3)
+    assert p.handle_keydown(pygame.K_RETURN) == "keep"
+
+
+def test_popup_nav_keys_return_none():
+    p = DecisionPopup(_row(), has_format_fix=False)
+    assert p.handle_keydown(pygame.K_DOWN) is None
+    assert p.handle_keydown(pygame.K_UP) is None
