@@ -6,7 +6,6 @@ from cognitive_data_arcade.engine import audio
 from cognitive_data_arcade.engine.game_loop import GameLoop
 from cognitive_data_arcade.engine.i18n import get_strings
 from cognitive_data_arcade.profile.manager import ProfileManager
-from cognitive_data_arcade.ui.menu import LessonMenuScene
 
 
 def main() -> None:
@@ -14,4 +13,5 @@ def main() -> None:
     profile = pm.load()
     strings = get_strings(profile.language)
     audio.init(profile)
-    GameLoop(LessonMenuScene(pm, strings), pm=pm).run(profile.fullscreen)
+    from cognitive_data_arcade.ui.intro_scene import TitleScene
+    GameLoop(TitleScene(pm, strings), pm=pm).run(profile.fullscreen)
