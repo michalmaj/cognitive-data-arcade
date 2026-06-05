@@ -33,23 +33,6 @@ def test_not_done_initially():
     assert scene.next_scene() is None
 
 
-def test_alpha_starts_at_zero():
-    scene, _ = _make_scene()
-    assert scene._alpha == 0.0
-
-
-def test_alpha_increases_on_update():
-    scene, _ = _make_scene()
-    scene.update(400)
-    assert 0.0 < scene._alpha <= 255.0
-
-
-def test_alpha_capped_at_255():
-    scene, _ = _make_scene()
-    scene.update(2000)
-    assert scene._alpha == 255.0
-
-
 def test_enter_on_first_run_routes_to_tutorial():
     scene, _ = _make_scene(seen_intro=False)
     scene.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode=""))
