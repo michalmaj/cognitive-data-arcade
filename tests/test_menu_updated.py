@@ -64,7 +64,7 @@ def test_menu_enter_on_lesson_7_launches_stroop(tmp_path: Path) -> None:
 
     pygame.init()
     scene = _make_menu(tmp_path)
-    for _ in range(6):
+    for _ in range(5):
         scene.handle_event(
             pygame.event.Event(pygame.KEYDOWN, key=pygame.K_DOWN, mod=0, unicode="")
         )
@@ -88,8 +88,8 @@ def test_menu_z_key_launches_stroop_picker(tmp_path: Path) -> None:
 
 def test_menu_enter_on_non_stroop_lesson_does_nothing(tmp_path: Path) -> None:
     scene = _make_menu(tmp_path)
-    # Navigate to lesson 4 (index 3), which should not launch anything
-    for _ in range(3):
+    # Navigate to lesson 6 (index 4) — not yet wired, ENTER should do nothing
+    for _ in range(4):
         scene.handle_event(
             pygame.event.Event(pygame.KEYDOWN, key=pygame.K_DOWN, mod=0, unicode="")
         )
@@ -132,7 +132,7 @@ def test_return_on_lesson8_launches_flanker(tmp_path: Path) -> None:
 
     pygame.init()
     scene = _make_menu(tmp_path)
-    for _ in range(7):
+    for _ in range(6):
         scene.handle_event(
             pygame.event.Event(pygame.KEYDOWN, key=pygame.K_DOWN, mod=0, unicode="")
         )
@@ -148,7 +148,7 @@ def test_return_on_lesson9_launches_gono(tmp_path: Path) -> None:
 
     pygame.init()
     scene = _make_menu(tmp_path)
-    for _ in range(8):
+    for _ in range(7):
         scene.handle_event(
             pygame.event.Event(pygame.KEYDOWN, key=pygame.K_DOWN, mod=0, unicode="")
         )
@@ -164,7 +164,7 @@ def test_return_on_lesson10_launches_nback(tmp_path: Path) -> None:
 
     pygame.init()
     scene = _make_menu(tmp_path)
-    for _ in range(9):
+    for _ in range(8):
         scene.handle_event(
             pygame.event.Event(pygame.KEYDOWN, key=pygame.K_DOWN, mod=0, unicode="")
         )

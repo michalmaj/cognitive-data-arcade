@@ -13,8 +13,7 @@ _LESSONS = [
     (1, "Big Data in Cognitive Science"),
     (2, "Reaction Time Lab"),
     (3, "Event Logs and Data Formats"),
-    (4, "Data Cleaning"),
-    (5, "Missing Values and Outliers"),
+    (4, "04+05 Data Quality Lab"),
     (6, "Exploratory Data Analysis"),
     (7, "Stroop Challenge"),
     (8, "Flanker Arena"),
@@ -101,7 +100,7 @@ class LessonMenuScene(Scene):
             self._done = True
         elif event.key == pygame.K_t:
             lesson_num = _LESSONS[self._selected][0]
-            if lesson_num in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10):
+            if lesson_num in (1, 2, 3, 4, 6, 7, 8, 9, 10):
                 from cognitive_data_arcade.ui.lesson_reader import LessonReaderScene
 
                 back = LessonMenuScene(self._pm, self._strings, self._selected)
@@ -122,6 +121,8 @@ class LessonMenuScene(Scene):
             self._launch_rt_lab()
         elif lesson_num == 3:
             self._launch_event_log_detective()
+        elif lesson_num == 4:
+            self._launch_data_cleaning()
         elif lesson_num == 8:
             self._launch_flanker()
         elif lesson_num == 9:
@@ -133,7 +134,7 @@ class LessonMenuScene(Scene):
 
     def _teoria_available(self) -> bool:
         lesson_num = _LESSONS[self._selected][0]
-        return lesson_num in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+        return lesson_num in (1, 2, 3, 4, 6, 7, 8, 9, 10)
 
     def _handle_popup_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.KEYDOWN:
@@ -179,6 +180,8 @@ class LessonMenuScene(Scene):
                 return EventLogLevelScene(pm, strings)
 
             return _make_eld
+        if lesson_num == 4:
+            return self._make_data_cleaning_game
         if lesson_num == 7:
             pm, strings = self._pm, self._strings
             def _make_stroop():
@@ -301,6 +304,14 @@ class LessonMenuScene(Scene):
             back_scene=pausable,
             esc_scene=LessonMenuScene(self._pm, self._strings, self._selected),
         )
+
+    def _launch_data_cleaning(self) -> None:
+        self._next = self._make_data_cleaning_game()
+        self._done = True
+
+    def _make_data_cleaning_game(self) -> Scene:
+        from cognitive_data_arcade.games.data_cleaning.scene import DataCleaningScene
+        return DataCleaningScene(self._strings, self._pm)
 
     def _launch_stroop(self) -> None:
         from cognitive_data_arcade.ui.stroop_level_scene import StroopLevelScene
