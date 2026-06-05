@@ -158,6 +158,12 @@ class Strings:
     app_tutorial_profile: str
     app_tutorial_options: str
     app_tutorial_hint: str
+    # Data Quality Lab (lessons 04+05)
+    data_cleaning_title: str
+    data_cleaning_intro: str
+    data_cleaning_done_btn: str
+    data_cleaning_report_title: str
+    data_cleaning_replay: str
 
 
 EN = Strings(
@@ -289,6 +295,14 @@ EN = Strings(
     app_tutorial_profile="profile and progress",
     app_tutorial_options="audio settings",
     app_tutorial_hint="ENTER / SPACE - continue   ESC - skip",
+    data_cleaning_title="Data Quality Lab",
+    data_cleaning_intro=(
+        "You received a raw dataset from an experiment. "
+        "Find and fix the data quality issues before analysis."
+    ),
+    data_cleaning_done_btn="F — Done, fix errors",
+    data_cleaning_report_title="CLEANING REPORT",
+    data_cleaning_replay="R — Play again   ESC — menu",
 )
 
 PL = Strings(
@@ -420,6 +434,14 @@ PL = Strings(
     app_tutorial_profile="profil i postęp",
     app_tutorial_options="ustawienia audio",
     app_tutorial_hint="ENTER / SPACJA — kontynuuj   ESC — pomiń",
+    data_cleaning_title="Laboratorium Jakości Danych",
+    data_cleaning_intro=(
+        "Otrzymałeś surowy zbiór danych z eksperymentu. "
+        "Znajdź i popraw problemy z jakością danych przed analizą."
+    ),
+    data_cleaning_done_btn="F — Gotowe, popraw błędy",
+    data_cleaning_report_title="RAPORT CZYSZCZENIA",
+    data_cleaning_replay="R — Zagraj ponownie   ESC — menu",
 )
 
 
