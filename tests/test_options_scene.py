@@ -108,6 +108,34 @@ def test_down_down_focuses_fullscreen_row(pm):
     assert scene._focused == 2
 
 
+def test_down_down_down_focuses_tutorial_row(pm):
+    scene = OptionsScene(pm, EN, None)
+    for _ in range(3):
+        scene.handle_event(_key(pygame.K_DOWN))
+    assert scene._focused == 3
+
+
+def test_enter_on_tutorial_row_toggles(pm):
+    scene = OptionsScene(pm, EN, None)
+    for _ in range(3):
+        scene.handle_event(_key(pygame.K_DOWN))
+    initial = scene._show_tutorial
+    scene.handle_event(_key(pygame.K_RETURN))
+    assert scene._show_tutorial is not initial
+
+
+def test_esc_persists_tutorial_toggle_to_profile(pm):
+    # Default profile has seen_intro=False → show_tutorial=True. Toggle it OFF.
+    scene = OptionsScene(pm, EN, None)
+    for _ in range(3):
+        scene.handle_event(_key(pygame.K_DOWN))
+    scene.handle_event(_key(pygame.K_RETURN))  # toggle: show_tutorial → False
+    assert scene._show_tutorial is False
+    scene.handle_event(_key(pygame.K_ESCAPE))  # save + exit
+    p = pm.load()
+    assert p.seen_intro is True  # show_tutorial=False → seen_intro=True
+
+
 def test_enter_on_fullscreen_row_toggles(pm):
     # Temporarily remove display to avoid set_mode() errors in headless environment
     old_display = pygame.display.get_surface()
