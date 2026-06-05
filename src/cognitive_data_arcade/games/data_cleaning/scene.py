@@ -213,19 +213,66 @@ class DataCleaningScene(Scene):
         else:
             self._load_popup()
 
-    # ── Draw helpers (stubs — implemented in Task 6) ────────────────────────────
+    # ── Draw helpers ─────────────────────────────────────────────────────────────
 
     def _draw_intro(self, surface: pygame.Surface) -> None:
-        pass
+        w, h = surface.get_size()
+        lang = self._strings.language
+        title_surf = self._font_title.render(
+            self._strings.data_cleaning_title, True, _ORANGE
+        )
+        surface.blit(title_surf, (w // 2 - title_surf.get_width() // 2, 80))
+        lines = self._wrap(self._strings.data_cleaning_intro, self._font_body, w - 120)
+        y = 180
+        for line in lines:
+            s = self._font_body.render(line, True, _WHITE)
+            surface.blit(s, (60, y))
+            y += 36
+        hint = "ENTER / SPACJA — dalej" if lang == "pl" else "ENTER / SPACE — continue"
+        hs = self._font_hint.render(hint, True, _DIM)
+        surface.blit(hs, (w // 2 - hs.get_width() // 2, h - 48))
 
     def _draw_identify(self, surface: pygame.Surface) -> None:
-        pass
+        w, h = surface.get_size()
+        title_surf = self._font_title.render(
+            self._strings.data_cleaning_title, True, _ORANGE
+        )
+        surface.blit(title_surf, (40, 12))
+        self._table.draw(surface, x0=40, y0=100)
+        if self._hint_timer > 0 and self._hint_text:
+            hs = self._font_hint.render(self._hint_text, True, self._hint_color)
+            surface.blit(hs, (40, h - 72))
+        ds = self._font_hint.render(
+            self._strings.data_cleaning_done_btn, True, _DIM
+        )
+        surface.blit(ds, (40, h - 40))
 
     def _draw_fix(self, surface: pygame.Surface) -> None:
-        pass
+        w, h = surface.get_size()
+        if self._popup is None:
+            return
+        progress = f"{self._fix_idx + 1} / {len(self._fix_queue)}"
+        ps = self._font_body.render(progress, True, _DIM)
+        surface.blit(ps, (w - ps.get_width() - 40, 20))
+        self._popup.draw(surface)
+        if self._fix_hint_timer > 0 and self._fix_hint_text:
+            hs = self._font_hint.render(
+                self._fix_hint_text, True, self._fix_hint_color
+            )
+            surface.blit(hs, (40, h - 48))
 
     def _draw_report(self, surface: pygame.Surface) -> None:
-        pass
+        from cognitive_data_arcade.games.data_cleaning.ui_report import draw_report
+        draw_report(
+            surface,
+            self._session,
+            self._table.flagged,
+            self._fixes,
+            self._strings,
+            self._font_title,
+            self._font_body,
+            self._font_hint,
+        )
 
     @staticmethod
     def _wrap(text: str, font: pygame.font.Font, max_w: int) -> list[str]:
