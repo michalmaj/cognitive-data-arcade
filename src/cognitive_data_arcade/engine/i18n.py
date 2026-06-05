@@ -128,6 +128,7 @@ class Strings:
     options_music: str
     options_sfx: str
     options_fullscreen: str
+    options_tutorial: str
     options_hint: str
     # Lesson reader
     lesson_theory: str
@@ -263,6 +264,7 @@ EN = Strings(
     options_music="Music",
     options_sfx="SFX",
     options_fullscreen="Fullscreen",
+    options_tutorial="Tutorial",
     options_hint="LEFT / RIGHT  volume    ENTER  toggle    F11  fullscreen    ESC  back",
     lesson_theory="Theory",
     lesson_notes="Notes",
@@ -393,6 +395,7 @@ PL = Strings(
     options_music="Muzyka",
     options_sfx="Dzwieki",
     options_fullscreen="Pelny ekran",
+    options_tutorial="Samouczek",
     options_hint="LEWO / PRAWO  glosnosc    ENTER  przelacz    F11  pelny ekran    ESC  wróc",
     lesson_theory="Teoria",
     lesson_notes="Notatki",

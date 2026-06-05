@@ -15,7 +15,7 @@ _DIM = (100, 100, 150)
 _GREEN = (39, 174, 96)
 _GRAY = (50, 50, 80)
 _STEP = 0.05
-_ROW_Y = [120, 200, 280]
+_ROW_Y = [120, 200, 280, 360]
 _BAR_X = 230
 _BAR_W = 220
 _BAR_H = 18
@@ -38,6 +38,7 @@ class OptionsScene(Scene):
         self._music_vol: float = profile.music_volume
         self._sfx_vol: float = profile.sfx_volume
         self._fullscreen: bool = _display.is_fullscreen()
+        self._show_tutorial: bool = not profile.seen_intro
         self._focused: int = 0
         self._dragging: bool = False
         pygame.font.init()
@@ -53,12 +54,12 @@ class OptionsScene(Scene):
             if self._dragging:
                 self._apply_slider_x(event.pos[0])
             else:
-                for i in range(3):
+                for i in range(4):
                     if self._row_hit_rect(i).collidepoint(event.pos):
                         self._focused = i
             return
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            for i in range(3):
+            for i in range(4):
                 if i < 2 and self._row_bar_rect(i).collidepoint(event.pos):
                     self._focused = i
                     self._dragging = True
@@ -78,7 +79,7 @@ class OptionsScene(Scene):
         elif key == pygame.K_UP:
             self._focused = max(0, self._focused - 1)
         elif key == pygame.K_DOWN:
-            self._focused = min(2, self._focused + 1)
+            self._focused = min(3, self._focused + 1)
         elif key == pygame.K_LEFT:
             self._change_volume(-_STEP)
         elif key == pygame.K_RIGHT:
@@ -87,7 +88,7 @@ class OptionsScene(Scene):
             self._toggle()
 
     def _change_volume(self, delta: float) -> None:
-        if self._focused == 2:
+        if self._focused >= 2:
             return
         if self._focused == 0:
             self._music_vol = max(0.0, min(1.0, self._music_vol + delta))
@@ -107,6 +108,8 @@ class OptionsScene(Scene):
         elif self._focused == 2:
             self._fullscreen = not self._fullscreen
             _display.toggle()
+        elif self._focused == 3:
+            self._show_tutorial = not self._show_tutorial
         audio.play_sfx("select")
 
     def _row_hit_rect(self, row: int) -> pygame.Rect:
@@ -131,6 +134,7 @@ class OptionsScene(Scene):
         profile.music_volume = self._music_vol
         profile.sfx_volume = self._sfx_vol
         profile.fullscreen = self._fullscreen
+        profile.seen_intro = not self._show_tutorial
         self._pm.save(profile)
 
     def update(self, dt_ms: float) -> None:
@@ -188,6 +192,18 @@ class OptionsScene(Scene):
         )
         surface.blit(lbl, (40, _ROW_Y[2]))
         surface.blit(tog, (_BAR_X + _BAR_W + 72, _ROW_Y[2]))
+
+        # Tutorial row (toggle only)
+        active = self._focused == 3
+        color = _ORANGE if active else _DIM
+        prefix = ">" if active else " "
+        lbl = self._font_item.render(f"{prefix} {self._strings.options_tutorial}", True, color)
+        tog = self._font_item.render(
+            "[ON ]" if self._show_tutorial else "[OFF]",
+            True, _GREEN if self._show_tutorial else _DIM,
+        )
+        surface.blit(lbl, (40, _ROW_Y[3]))
+        surface.blit(tog, (_BAR_X + _BAR_W + 72, _ROW_Y[3]))
 
         hint = self._font_hint.render(self._strings.options_hint, True, _DIM)
         surface.blit(hint, (40, h - 32))
