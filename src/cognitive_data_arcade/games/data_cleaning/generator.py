@@ -227,7 +227,7 @@ def compute_stats(rows: list[DataRow]) -> dict[str, float]:
     valid_acc = [r.accuracy for r in rows
                  if r.accuracy is not None and 0.0 <= r.accuracy <= 1.0]
     mean_rt = sum(valid_rt) / len(valid_rt) if valid_rt else 0.0
-    var_rt = (sum((x - mean_rt) ** 2 for x in valid_rt) / len(valid_rt)
+    var_rt = (sum((x - mean_rt) ** 2 for x in valid_rt) / (len(valid_rt) - 1)
               if len(valid_rt) > 1 else 0.0)
     mean_acc = sum(valid_acc) / len(valid_acc) if valid_acc else 0.0
     return {
