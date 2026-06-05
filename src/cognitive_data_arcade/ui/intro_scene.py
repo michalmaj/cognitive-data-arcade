@@ -10,7 +10,7 @@ _BG = (26, 26, 46)
 _WHITE = (240, 240, 240)
 _DIM = (100, 100, 150)
 
-_FADE_MS = 800.0
+_FADE_MS = 100.0
 _TITLE_TEXT = "COGNITIVE DATA ARCADE"
 
 
@@ -27,12 +27,14 @@ class TitleScene(Scene):
 
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.KEYDOWN:
+            self._alpha = 255.0
             if event.key == pygame.K_ESCAPE:
                 self._pm.set_seen_intro(True)
                 self._go_to_menu()
             else:
                 self._advance()
         elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            self._alpha = 255.0
             self._advance()
 
     def _advance(self) -> None:
