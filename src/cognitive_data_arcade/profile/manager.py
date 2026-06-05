@@ -32,6 +32,7 @@ class Profile:
     music_volume: float = 0.7
     sfx_volume: float = 0.8
     fullscreen: bool = False
+    seen_intro: bool = False
 
 
 class ProfileManager:
@@ -87,5 +88,11 @@ class ProfileManager:
     def set_fullscreen(self, enabled: bool) -> Profile:
         profile = self.load()
         profile.fullscreen = enabled
+        self.save(profile)
+        return profile
+
+    def set_seen_intro(self, seen: bool) -> Profile:
+        profile = self.load()
+        profile.seen_intro = seen
         self.save(profile)
         return profile

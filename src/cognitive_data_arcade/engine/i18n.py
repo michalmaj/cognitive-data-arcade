@@ -147,6 +147,16 @@ class Strings:
     eld_consequence_fmt: str
     eld_correct_choice_fmt: str
     eld_confirm_hint: str
+    # Intro screen
+    intro_hint: str
+    # App tutorial
+    app_tutorial_title: str
+    app_tutorial_nav: str
+    app_tutorial_enter: str
+    app_tutorial_theory: str
+    app_tutorial_profile: str
+    app_tutorial_options: str
+    app_tutorial_hint: str
 
 
 EN = Strings(
@@ -269,6 +279,14 @@ EN = Strings(
     eld_consequence_fmt="If you choose {label}:",
     eld_correct_choice_fmt="Good choice! {label}:",
     eld_confirm_hint="ENTER — Confirm   ESC — Change",
+    intro_hint="press any key",
+    app_tutorial_title="How to use the menu",
+    app_tutorial_nav="select lesson",
+    app_tutorial_enter="play or read theory",
+    app_tutorial_theory="theory directly",
+    app_tutorial_profile="profile and progress",
+    app_tutorial_options="audio settings",
+    app_tutorial_hint="ENTER / SPACE - continue   ESC - skip",
 )
 
 PL = Strings(
@@ -391,6 +409,14 @@ PL = Strings(
     eld_consequence_fmt="Jezeli wybierzesz {label}:",
     eld_correct_choice_fmt="Dobry wybor! {label}:",
     eld_confirm_hint="ENTER — Potwierdz   ESC — Zmien wybor",
+    intro_hint="naciśnij dowolny klawisz",
+    app_tutorial_title="Jak używać menu",
+    app_tutorial_nav="wybierz lekcję",
+    app_tutorial_enter="graj lub czytaj teorię",
+    app_tutorial_theory="teoria od razu",
+    app_tutorial_profile="profil i postęp",
+    app_tutorial_options="ustawienia audio",
+    app_tutorial_hint="ENTER / SPACJA — kontynuuj   ESC — pomiń",
 )
 
 
