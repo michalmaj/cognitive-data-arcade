@@ -316,6 +316,7 @@ class LessonMenuScene(Scene):
 
         inner = DataCleaningScene(self._strings, self._pm)
         game_info = get_game_info(self._strings)
+        # DataCleaningScene has its own INTRO phase; HowToPlayScene is redundant
         return PausableGame(
             inner, game_info, self._make_data_cleaning_game, self._strings, self._pm
         )

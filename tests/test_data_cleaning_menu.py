@@ -5,6 +5,7 @@ import pygame
 import pytest
 
 from cognitive_data_arcade.engine.i18n import EN
+from cognitive_data_arcade.engine.pause import PausableGame
 from cognitive_data_arcade.games.data_cleaning.scene import DataCleaningScene
 from cognitive_data_arcade.profile.manager import ProfileManager
 from cognitive_data_arcade.ui.menu import LessonMenuScene, _LESSONS
@@ -40,4 +41,5 @@ def test_data_cleaning_scene_launched_for_lesson_4(pm):
     idx4 = lesson_nums.index(4)
     menu._selected = idx4
     menu._launch_selected_game()
-    assert isinstance(menu._next, DataCleaningScene)
+    assert isinstance(menu._next, PausableGame)
+    assert isinstance(menu._next._inner, DataCleaningScene)

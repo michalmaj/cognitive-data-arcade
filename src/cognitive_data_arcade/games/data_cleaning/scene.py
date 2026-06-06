@@ -231,11 +231,6 @@ class DataCleaningScene(Scene):
 
     # ── Helpers ─────────────────────────────────────────────────────────────────
 
-    def _go_menu(self) -> None:
-        from cognitive_data_arcade.ui.menu import LessonMenuScene
-        self._next = LessonMenuScene(self._pm, self._strings)
-        self._done = True
-
     def _show_identify_hint(self, idx: int) -> None:
         error_type = self._session.ground_truth.get(idx)
         lang = self._strings.language
@@ -319,9 +314,9 @@ class DataCleaningScene(Scene):
 
         # Hint bar
         if lang == "pl":
-            hint = "[1/2/3] poziom  [L] legenda  [ENTER] start  [ESC] menu"
+            hint = "[1/2/3] poziom  [L] legenda  [ENTER] start  [ESC] pauza"
         else:
-            hint = "[1/2/3] difficulty  [L] legend  [ENTER] start  [ESC] menu"
+            hint = "[1/2/3] difficulty  [L] legend  [ENTER] start  [ESC] pause"
         hs = self._font_hint.render(hint, True, _DIM)
         surface.blit(hs, (w // 2 - hs.get_width() // 2, h - 48))
 
