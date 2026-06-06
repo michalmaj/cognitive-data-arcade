@@ -57,6 +57,7 @@ class TableWidget:
         flagged_override: set[int] | None = None,
         x0: int = 40,
         y0: int = 100,
+        hints_visible: bool = True,
     ) -> None:
         flagged = flagged_override if flagged_override is not None else self._flagged
         rows = self._rows
@@ -82,7 +83,12 @@ class TableWidget:
             active = ri == self._cursor
             is_flagged = ri in flagged
 
-            color = _ORANGE if active else (_GREEN if is_flagged else _WHITE)
+            if active:
+                color = _ORANGE
+            elif is_flagged and hints_visible:
+                color = _GREEN
+            else:
+                color = _WHITE
             prefix = "[!]" if is_flagged else "   "
 
             rt_str = f"{row.rt_ms:.1f}" if row.rt_ms is not None else "None"
