@@ -87,6 +87,8 @@ class DataCleaningScene(Scene):
         self._fix_hint_color = _GREEN
         self._fix_hint_timer = 0.0
 
+        self._diff_rects: list[pygame.Rect] = []
+
         # Fonts
         self._font_title = get_font(48)
         self._font_body = get_font(28)
@@ -95,21 +97,24 @@ class DataCleaningScene(Scene):
     # ── Scene interface ──────────────────────────────────────────────────────────
 
     def handle_event(self, event: pygame.event.Event) -> None:
-        if event.type != pygame.KEYDOWN:
-            return
-        key = event.key
-        # L toggles legend in all phases
-        if key == pygame.K_l:
-            self._legend_visible = not self._legend_visible
-            return
-        if self._phase == Phase.INTRO:
-            self._handle_intro(key)
-        elif self._phase == Phase.IDENTIFY:
-            self._handle_identify(key)
-        elif self._phase == Phase.FIX:
-            self._handle_fix(key)
-        elif self._phase == Phase.REPORT:
-            self._handle_report(key)
+        if event.type == pygame.KEYDOWN:
+            key = event.key
+            if key == pygame.K_l:
+                self._legend_visible = not self._legend_visible
+                return
+            if self._phase == Phase.INTRO:
+                self._handle_intro(key)
+            elif self._phase == Phase.IDENTIFY:
+                self._handle_identify(key)
+            elif self._phase == Phase.FIX:
+                self._handle_fix(key)
+            elif self._phase == Phase.REPORT:
+                self._handle_report(key)
+        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            if self._phase == Phase.INTRO:
+                self._handle_intro_click(event.pos)
+            elif self._phase == Phase.IDENTIFY:
+                self._handle_identify_click(event.pos)
 
     def update(self, dt_ms: float) -> None:
         if self._hint_timer > 0:
@@ -153,6 +158,15 @@ class DataCleaningScene(Scene):
             self._set_difficulty((self._diff_idx - 1) % len(ALL_DIFFICULTIES))
         elif key in (pygame.K_RETURN, pygame.K_SPACE):
             self._start_game()
+
+    def _handle_intro_click(self, pos: tuple[int, int]) -> None:
+        for i, rect in enumerate(self._diff_rects):
+            if rect.collidepoint(pos):
+                self._set_difficulty(i)
+                return
+
+    def _handle_identify_click(self, pos: tuple[int, int]) -> None:
+        pass
 
     def _set_difficulty(self, idx: int) -> None:
         self._diff_idx = idx
@@ -288,6 +302,7 @@ class DataCleaningScene(Scene):
             self._strings.difficulty_hard_desc,
         ]
         btn_x = 60
+        self._diff_rects = []
         for i, (label, desc, color) in enumerate(zip(diff_labels, diff_descs, _DIFF_COLORS)):
             is_active = i == self._diff_idx
             btn_color = color if is_active else _DIM
@@ -295,6 +310,7 @@ class DataCleaningScene(Scene):
             surface.blit(btn_surf, (btn_x, y))
             desc_surf = self._font_hint.render(desc, True, btn_color)
             surface.blit(desc_surf, (btn_x + btn_surf.get_width() + 16, y + 4))
+            self._diff_rects.append(pygame.Rect(btn_x, y, w - btn_x - 60, 36))
             y += 40
 
         # Hint bar

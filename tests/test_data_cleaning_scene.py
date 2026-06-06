@@ -4,6 +4,7 @@ from __future__ import annotations
 import pygame
 import pytest
 
+from cognitive_data_arcade.engine import fonts as _fonts_module
 from cognitive_data_arcade.engine.i18n import EN
 from cognitive_data_arcade.games.data_cleaning.difficulty import EASY, MEDIUM, HARD
 from cognitive_data_arcade.games.data_cleaning.scene import DataCleaningScene, Phase
@@ -23,6 +24,8 @@ def _key(k: int) -> pygame.event.Event:
 @pytest.fixture(autouse=True)
 def pg():
     pygame.init()
+    _fonts_module._cache.clear()
+    _fonts_module._found_name = None
     yield
     pygame.quit()
 
@@ -301,3 +304,32 @@ def test_replay_preserves_difficulty():
     next_scene = scene.next_scene()
     assert isinstance(next_scene, DataCleaningScene)
     assert next_scene._difficulty == HARD
+
+
+def _mouse(pos: tuple[int, int]) -> pygame.event.Event:
+    return pygame.event.Event(pygame.MOUSEBUTTONDOWN, pos=pos, button=1)
+
+
+def test_mouse_click_on_medium_button_sets_medium():
+    scene = _make()
+    surface = pygame.Surface((800, 600))
+    scene.draw(surface)                              # populates _diff_rects
+    assert len(scene._diff_rects) == 3
+    scene.handle_event(_mouse(scene._diff_rects[1].center))
+    assert scene._diff_idx == 1
+
+
+def test_mouse_click_on_hard_button_sets_hard():
+    scene = _make()
+    surface = pygame.Surface((800, 600))
+    scene.draw(surface)
+    scene.handle_event(_mouse(scene._diff_rects[2].center))
+    assert scene._diff_idx == 2
+
+
+def test_mouse_click_outside_buttons_ignored():
+    scene = _make()
+    surface = pygame.Surface((800, 600))
+    scene.draw(surface)
+    scene.handle_event(_mouse((0, 0)))
+    assert scene._diff_idx == 0   # EASY unchanged
