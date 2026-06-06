@@ -5,6 +5,7 @@ import pygame
 import pytest
 
 from cognitive_data_arcade.engine.i18n import EN
+from cognitive_data_arcade.games.data_cleaning.difficulty import EASY, MEDIUM, HARD
 from cognitive_data_arcade.games.data_cleaning.scene import DataCleaningScene, Phase
 from cognitive_data_arcade.games.data_cleaning.ui_popup import DecisionPopup
 
@@ -178,3 +179,115 @@ def test_update_does_not_go_below_zero():
     scene._hint_timer = 50.0
     scene.update(500.0)
     assert scene._hint_timer <= 0.0
+
+
+# ── Difficulty defaults ─────────────────────────────────────────────────────────
+
+def test_default_difficulty_is_easy():
+    scene = _make()
+    assert scene._difficulty == EASY
+
+
+def test_hints_visible_true_when_always_mode():
+    scene = _make()
+    # EASY has hints_mode="always" — _hints_visible starts True
+    assert scene._hints_visible is True
+
+
+def test_legend_visible_starts_false():
+    scene = _make()
+    assert scene._legend_visible is False
+
+
+# ── 1/2/3 keys set difficulty in INTRO ─────────────────────────────────────────
+
+def test_key_1_sets_easy_in_intro():
+    scene = _make()
+    scene.handle_event(_key(pygame.K_1))
+    assert scene._difficulty == EASY
+
+
+def test_key_2_sets_medium_in_intro():
+    scene = _make()
+    scene.handle_event(_key(pygame.K_2))
+    assert scene._difficulty == MEDIUM
+
+
+def test_key_3_sets_hard_in_intro():
+    scene = _make()
+    scene.handle_event(_key(pygame.K_3))
+    assert scene._difficulty == HARD
+
+
+# ── Left/Right cycle difficulty in INTRO ────────────────────────────────────────
+
+def test_right_arrow_cycles_to_medium():
+    scene = _make()  # starts on EASY (index 0)
+    scene.handle_event(_key(pygame.K_RIGHT))
+    assert scene._difficulty == MEDIUM
+
+
+def test_left_arrow_wraps_from_easy_to_hard():
+    scene = _make()  # starts on EASY (index 0)
+    scene.handle_event(_key(pygame.K_LEFT))
+    assert scene._difficulty == HARD
+
+
+# ── L key toggles legend ────────────────────────────────────────────────────────
+
+def test_l_key_shows_legend_in_intro():
+    scene = _make()
+    scene.handle_event(_key(pygame.K_l))
+    assert scene._legend_visible is True
+
+
+def test_l_key_hides_legend_on_second_press():
+    scene = _make()
+    scene.handle_event(_key(pygame.K_l))
+    scene.handle_event(_key(pygame.K_l))
+    assert scene._legend_visible is False
+
+
+def test_l_key_toggles_legend_in_identify():
+    scene = _make()
+    scene._phase = Phase.IDENTIFY
+    scene.handle_event(_key(pygame.K_l))
+    assert scene._legend_visible is True
+
+
+# ── H key behaviour ─────────────────────────────────────────────────────────────
+
+def test_h_key_ignored_in_always_mode():
+    scene = _make()  # EASY = always
+    scene._phase = Phase.IDENTIFY
+    assert scene._hints_visible is True
+    scene.handle_event(_key(pygame.K_h))
+    assert scene._hints_visible is True  # unchanged
+
+
+def test_h_key_toggles_in_toggle_mode():
+    scene = DataCleaningScene(EN, _FakePM(), seed=42, difficulty=MEDIUM)
+    scene._phase = Phase.IDENTIFY
+    assert scene._hints_visible is False  # toggle starts False
+    scene.handle_event(_key(pygame.K_h))
+    assert scene._hints_visible is True
+    scene.handle_event(_key(pygame.K_h))
+    assert scene._hints_visible is False
+
+
+def test_h_key_ignored_in_none_mode():
+    scene = DataCleaningScene(EN, _FakePM(), seed=42, difficulty=HARD)
+    scene._phase = Phase.IDENTIFY
+    assert scene._hints_visible is False
+    scene.handle_event(_key(pygame.K_h))
+    assert scene._hints_visible is False
+
+
+# ── ENTER in INTRO regenerates dataset with selected difficulty ─────────────────
+
+def test_enter_generates_medium_rows():
+    scene = _make()
+    scene.handle_event(_key(pygame.K_2))   # select MEDIUM
+    scene.handle_event(_key(pygame.K_RETURN))
+    assert len(scene._session.rows) == 50
+    assert scene._phase == Phase.IDENTIFY
