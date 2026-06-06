@@ -208,7 +208,7 @@ class DataCleaningScene(Scene):
         if key == pygame.K_ESCAPE:
             self._go_menu()
         elif key in (pygame.K_RETURN, pygame.K_r):
-            self._next = DataCleaningScene(self._strings, self._pm)
+            self._next = DataCleaningScene(self._strings, self._pm, difficulty=self._difficulty)
             self._done = True
 
     # ── Helpers ─────────────────────────────────────────────────────────────────
@@ -299,7 +299,7 @@ class DataCleaningScene(Scene):
 
         # Hint bar
         if lang == "pl":
-            hint = "[1/2/3] trudnosc  [L] legenda  [ENTER] start  [ESC] menu"
+            hint = "[1/2/3] poziom  [L] legenda  [ENTER] start  [ESC] menu"
         else:
             hint = "[1/2/3] difficulty  [L] legend  [ENTER] start  [ESC] menu"
         hs = self._font_hint.render(hint, True, _DIM)

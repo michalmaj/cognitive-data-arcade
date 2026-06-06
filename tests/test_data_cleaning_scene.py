@@ -291,3 +291,13 @@ def test_enter_generates_medium_rows():
     scene.handle_event(_key(pygame.K_RETURN))
     assert len(scene._session.rows) == 50
     assert scene._phase == Phase.IDENTIFY
+
+
+def test_replay_preserves_difficulty():
+    scene = DataCleaningScene(EN, _FakePM(), seed=42, difficulty=HARD)
+    scene._phase = Phase.REPORT
+    scene.handle_event(_key(pygame.K_r))
+    assert scene.is_done()
+    next_scene = scene.next_scene()
+    assert isinstance(next_scene, DataCleaningScene)
+    assert next_scene._difficulty == HARD
