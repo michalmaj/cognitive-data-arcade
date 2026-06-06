@@ -225,9 +225,7 @@ class DataCleaningScene(Scene):
             self._advance_fix()
 
     def _handle_report(self, key: int) -> None:
-        if key in (pygame.K_RETURN, pygame.K_r):
-            self._next = DataCleaningScene(self._strings, self._pm, difficulty=self._difficulty)
-            self._done = True
+        pass
 
     # ── Helpers ─────────────────────────────────────────────────────────────────
 

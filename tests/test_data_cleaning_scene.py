@@ -167,20 +167,13 @@ def test_esc_in_report_does_nothing():
     assert not scene.is_done()
 
 
-def test_enter_on_report_creates_new_scene():
+def test_report_keys_do_nothing():
     scene = _make()
     scene._phase = Phase.REPORT
     scene.handle_event(_key(pygame.K_RETURN))
-    assert scene.is_done()
-    assert isinstance(scene.next_scene(), DataCleaningScene)
-
-
-def test_r_on_report_replays():
-    scene = _make()
-    scene._phase = Phase.REPORT
+    assert not scene.is_done()
     scene.handle_event(_key(pygame.K_r))
-    assert scene.is_done()
-    assert isinstance(scene.next_scene(), DataCleaningScene)
+    assert not scene.is_done()
 
 
 # ── update ─────────────────────────────────────────────────────────────────────
@@ -310,15 +303,6 @@ def test_enter_generates_medium_rows():
     assert len(scene._session.rows) == 50
     assert scene._phase == Phase.IDENTIFY
 
-
-def test_replay_preserves_difficulty():
-    scene = DataCleaningScene(EN, _FakePM(), seed=42, difficulty=HARD)
-    scene._phase = Phase.REPORT
-    scene.handle_event(_key(pygame.K_r))
-    assert scene.is_done()
-    next_scene = scene.next_scene()
-    assert isinstance(next_scene, DataCleaningScene)
-    assert next_scene._difficulty == HARD
 
 
 def _mouse(pos: tuple[int, int]) -> pygame.event.Event:

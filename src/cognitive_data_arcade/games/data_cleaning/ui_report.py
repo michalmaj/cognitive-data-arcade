@@ -85,6 +85,7 @@ def draw_report(
         surface.blit(s, (40, y))
         y += 24
 
-    # Bottom hint
-    replay_surf = font_hint.render(strings.data_cleaning_replay, True, _DIM)
-    surface.blit(replay_surf, (w // 2 - replay_surf.get_width() // 2, h - 36))
+    # Bottom hint: player uses ESC to open pause menu and Restart from there
+    esc_hint = "Press ESC for menu" if strings.language != "pl" else "Nacisnij ESC, aby otworzyc menu"
+    esc_surf = font_hint.render(esc_hint, True, _DIM)
+    surface.blit(esc_surf, (w // 2 - esc_surf.get_width() // 2, h - 36))
