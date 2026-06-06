@@ -145,9 +145,7 @@ class DataCleaningScene(Scene):
     # ── Event handlers ──────────────────────────────────────────────────────────
 
     def _handle_intro(self, key: int) -> None:
-        if key == pygame.K_ESCAPE:
-            self._go_menu()
-        elif key == pygame.K_1:
+        if key == pygame.K_1:
             self._set_difficulty(0)
         elif key == pygame.K_2:
             self._set_difficulty(1)
@@ -189,9 +187,7 @@ class DataCleaningScene(Scene):
         self._phase = Phase.IDENTIFY
 
     def _handle_identify(self, key: int) -> None:
-        if key == pygame.K_ESCAPE:
-            self._go_menu()
-        elif key == pygame.K_h:
+        if key == pygame.K_h:
             if self._difficulty.hints_mode == "toggle":
                 self._hints_visible = not self._hints_visible
         elif key == pygame.K_f:
@@ -229,9 +225,7 @@ class DataCleaningScene(Scene):
             self._advance_fix()
 
     def _handle_report(self, key: int) -> None:
-        if key == pygame.K_ESCAPE:
-            self._go_menu()
-        elif key in (pygame.K_RETURN, pygame.K_r):
+        if key in (pygame.K_RETURN, pygame.K_r):
             self._next = DataCleaningScene(self._strings, self._pm, difficulty=self._difficulty)
             self._done = True
 

@@ -145,11 +145,26 @@ def test_fix_single_item_queue_goes_to_report_after_confirm():
 
 # ── REPORT → done ──────────────────────────────────────────────────────────────
 
-def test_esc_on_report_marks_done():
+def test_esc_in_intro_does_nothing():
+    scene = _make()
+    scene.handle_event(_key(pygame.K_ESCAPE))
+    assert scene._phase == Phase.INTRO
+    assert not scene.is_done()
+
+
+def test_esc_in_identify_does_nothing():
+    scene = _make()
+    scene._phase = Phase.IDENTIFY
+    scene.handle_event(_key(pygame.K_ESCAPE))
+    assert scene._phase == Phase.IDENTIFY
+    assert not scene.is_done()
+
+
+def test_esc_in_report_does_nothing():
     scene = _make()
     scene._phase = Phase.REPORT
     scene.handle_event(_key(pygame.K_ESCAPE))
-    assert scene.is_done()
+    assert not scene.is_done()
 
 
 def test_enter_on_report_creates_new_scene():
