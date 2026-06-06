@@ -333,3 +333,34 @@ def test_mouse_click_outside_buttons_ignored():
     scene.draw(surface)
     scene.handle_event(_mouse((0, 0)))
     assert scene._diff_idx == 0   # EASY unchanged
+
+
+def test_mouse_click_on_row_flags_it():
+    scene = _make()
+    scene._phase = Phase.IDENTIFY
+    # Row 0: TABLE_Y0=100, ROW_H=28 → row 0 spans y=[100,128), center y=114
+    scene.handle_event(_mouse((100, 114)))
+    assert 0 in scene._table.flagged
+
+
+def test_mouse_click_on_flagged_row_unflags():
+    scene = _make()
+    scene._phase = Phase.IDENTIFY
+    scene.handle_event(_mouse((100, 114)))
+    scene.handle_event(_mouse((100, 114)))
+    assert 0 not in scene._table.flagged
+
+
+def test_mouse_click_moves_cursor_to_clicked_row():
+    scene = _make()
+    scene._phase = Phase.IDENTIFY
+    # Row 2: y = 100 + 2*28 = 156, center = 170
+    scene.handle_event(_mouse((100, 170)))
+    assert scene._table.cursor == 2
+
+
+def test_mouse_click_above_table_ignored():
+    scene = _make()
+    scene._phase = Phase.IDENTIFY
+    scene.handle_event(_mouse((100, 50)))   # above TABLE_Y0=100
+    assert len(scene._table.flagged) == 0
