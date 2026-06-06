@@ -155,12 +155,15 @@ def get_fix_feedback_text(
 
 # ── Dataset generator ────────────────────────────────────────────────────────────
 
-def generate_dataset(seed: int | None = None) -> CleaningSession:
-    """Generate a synthetic RT dataset with 6-12 injected errors."""
+def generate_dataset(
+    config: "DifficultyConfig",
+    seed: int | None = None,
+) -> CleaningSession:
+    """Generate a synthetic RT dataset with injected errors per config."""
+    from cognitive_data_arcade.games.data_cleaning.difficulty import DifficultyConfig
     rng = random.Random(seed)
-    n_rows = 30
+    n_rows = config.rows
 
-    # Generate 10 participants x 3 trials of clean data
     clean_rows: list[DataRow] = []
     for i in range(n_rows):
         clean_rows.append(DataRow(
@@ -174,7 +177,7 @@ def generate_dataset(seed: int | None = None) -> CleaningSession:
     rows = [DataRow(r.participant_id, r.session, r.trial, r.rt_ms, r.accuracy)
             for r in clean_rows]
 
-    n_errors = rng.randint(6, 12)
+    n_errors = rng.randint(config.errors_min, config.errors_max)
     positions = rng.sample(range(n_rows), n_errors)
     error_types = list(ErrorType)
     ground_truth: dict[int, ErrorType] = {}
@@ -193,17 +196,12 @@ def generate_dataset(seed: int | None = None) -> CleaningSession:
             rows[pos] = DataRow(row.participant_id, row.session, row.trial,
                                 None, row.accuracy)
         elif error_type == ErrorType.DUPLICATE_ROW:
-            # Pick a source that won't be modified by an error
-            # (i.e., is not in the error positions list)
             candidates = [j for j in range(n_rows) if j != pos and j not in positions]
             if not candidates:
-                # Fallback: pick from any unmodified rows we've seen so far
                 candidates = [j for j in range(n_rows) if j != pos and j not in ground_truth]
             if not candidates:
-                # Last resort: pick from any row
                 candidates = [j for j in range(n_rows) if j != pos]
             src_idx = rng.choice(candidates)
-            # Use clean_rows to ensure we get unmodified data
             src = clean_rows[src_idx]
             rows[pos] = DataRow(src.participant_id, src.session, src.trial,
                                 src.rt_ms, src.accuracy)
@@ -211,7 +209,6 @@ def generate_dataset(seed: int | None = None) -> CleaningSession:
             rows[pos] = DataRow(row.participant_id, row.session, row.trial,
                                 row.rt_ms, float(round(row.accuracy * 100)))
 
-        # Add to ground truth after applying the error
         ground_truth[pos] = error_type
 
     return CleaningSession(rows=rows, ground_truth=ground_truth)
