@@ -4,6 +4,7 @@ from __future__ import annotations
 import pygame
 import pytest
 
+from cognitive_data_arcade.engine import fonts as _fonts_module
 from cognitive_data_arcade.engine.i18n import EN
 from cognitive_data_arcade.games.data_cleaning.difficulty import EASY, MEDIUM, HARD
 from cognitive_data_arcade.games.data_cleaning.scene import DataCleaningScene, Phase
@@ -23,6 +24,8 @@ def _key(k: int) -> pygame.event.Event:
 @pytest.fixture(autouse=True)
 def pg():
     pygame.init()
+    _fonts_module._cache.clear()
+    _fonts_module._found_name = None
     yield
     pygame.quit()
 
@@ -142,27 +145,35 @@ def test_fix_single_item_queue_goes_to_report_after_confirm():
 
 # ── REPORT → done ──────────────────────────────────────────────────────────────
 
-def test_esc_on_report_marks_done():
+def test_esc_in_intro_does_nothing():
+    scene = _make()
+    scene.handle_event(_key(pygame.K_ESCAPE))
+    assert scene._phase == Phase.INTRO
+    assert not scene.is_done()
+
+
+def test_esc_in_identify_does_nothing():
+    scene = _make()
+    scene._phase = Phase.IDENTIFY
+    scene.handle_event(_key(pygame.K_ESCAPE))
+    assert scene._phase == Phase.IDENTIFY
+    assert not scene.is_done()
+
+
+def test_esc_in_report_does_nothing():
     scene = _make()
     scene._phase = Phase.REPORT
     scene.handle_event(_key(pygame.K_ESCAPE))
-    assert scene.is_done()
+    assert not scene.is_done()
 
 
-def test_enter_on_report_creates_new_scene():
+def test_report_keys_do_nothing():
     scene = _make()
     scene._phase = Phase.REPORT
     scene.handle_event(_key(pygame.K_RETURN))
-    assert scene.is_done()
-    assert isinstance(scene.next_scene(), DataCleaningScene)
-
-
-def test_r_on_report_replays():
-    scene = _make()
-    scene._phase = Phase.REPORT
+    assert not scene.is_done()
     scene.handle_event(_key(pygame.K_r))
-    assert scene.is_done()
-    assert isinstance(scene.next_scene(), DataCleaningScene)
+    assert not scene.is_done()
 
 
 # ── update ─────────────────────────────────────────────────────────────────────
@@ -293,11 +304,62 @@ def test_enter_generates_medium_rows():
     assert scene._phase == Phase.IDENTIFY
 
 
-def test_replay_preserves_difficulty():
-    scene = DataCleaningScene(EN, _FakePM(), seed=42, difficulty=HARD)
-    scene._phase = Phase.REPORT
-    scene.handle_event(_key(pygame.K_r))
-    assert scene.is_done()
-    next_scene = scene.next_scene()
-    assert isinstance(next_scene, DataCleaningScene)
-    assert next_scene._difficulty == HARD
+
+def _mouse(pos: tuple[int, int]) -> pygame.event.Event:
+    return pygame.event.Event(pygame.MOUSEBUTTONDOWN, pos=pos, button=1)
+
+
+def test_mouse_click_on_medium_button_sets_medium():
+    scene = _make()
+    surface = pygame.Surface((800, 600))
+    scene.draw(surface)                              # populates _diff_rects
+    assert len(scene._diff_rects) == 3
+    scene.handle_event(_mouse(scene._diff_rects[1].center))
+    assert scene._diff_idx == 1
+
+
+def test_mouse_click_on_hard_button_sets_hard():
+    scene = _make()
+    surface = pygame.Surface((800, 600))
+    scene.draw(surface)
+    scene.handle_event(_mouse(scene._diff_rects[2].center))
+    assert scene._diff_idx == 2
+
+
+def test_mouse_click_outside_buttons_ignored():
+    scene = _make()
+    surface = pygame.Surface((800, 600))
+    scene.draw(surface)
+    scene.handle_event(_mouse((0, 0)))
+    assert scene._diff_idx == 0   # EASY unchanged
+
+
+def test_mouse_click_on_row_flags_it():
+    scene = _make()
+    scene._phase = Phase.IDENTIFY
+    # Row 0: TABLE_Y0=100, ROW_H=28 → row 0 spans y=[100,128), center y=114
+    scene.handle_event(_mouse((100, 114)))
+    assert 0 in scene._table.flagged
+
+
+def test_mouse_click_on_flagged_row_unflags():
+    scene = _make()
+    scene._phase = Phase.IDENTIFY
+    scene.handle_event(_mouse((100, 114)))
+    scene.handle_event(_mouse((100, 114)))
+    assert 0 not in scene._table.flagged
+
+
+def test_mouse_click_moves_cursor_to_clicked_row():
+    scene = _make()
+    scene._phase = Phase.IDENTIFY
+    # Row 2: y = 100 + 2*28 = 156, center = 170
+    scene.handle_event(_mouse((100, 170)))
+    assert scene._table.cursor == 2
+
+
+def test_mouse_click_above_table_ignored():
+    scene = _make()
+    scene._phase = Phase.IDENTIFY
+    scene.handle_event(_mouse((100, 50)))   # above TABLE_Y0=100
+    assert len(scene._table.flagged) == 0

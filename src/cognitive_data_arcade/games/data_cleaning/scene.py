@@ -20,7 +20,7 @@ from cognitive_data_arcade.games.data_cleaning.generator import (
 )
 from cognitive_data_arcade.games.data_cleaning.ui_legend import draw_legend_overlay
 from cognitive_data_arcade.games.data_cleaning.ui_popup import DecisionPopup
-from cognitive_data_arcade.games.data_cleaning.ui_table import TableWidget
+from cognitive_data_arcade.games.data_cleaning.ui_table import ROW_H, TableWidget
 
 if TYPE_CHECKING:
     from cognitive_data_arcade.profile.manager import ProfileManager
@@ -38,6 +38,7 @@ _DIFF_COLORS = [(39, 174, 96), (230, 126, 34), (231, 76, 60)]
 _HINT_MS = 2000.0
 _WRONG_HINT_MS = 2500.0
 _CORRECT_HINT_MS = 1500.0
+_TABLE_Y0: int = 100  # y pixel offset where table rows start in IDENTIFY
 
 
 class Phase(enum.Enum):
@@ -87,6 +88,8 @@ class DataCleaningScene(Scene):
         self._fix_hint_color = _GREEN
         self._fix_hint_timer = 0.0
 
+        self._diff_rects: list[pygame.Rect] = []
+
         # Fonts
         self._font_title = get_font(48)
         self._font_body = get_font(28)
@@ -95,21 +98,24 @@ class DataCleaningScene(Scene):
     # ── Scene interface ──────────────────────────────────────────────────────────
 
     def handle_event(self, event: pygame.event.Event) -> None:
-        if event.type != pygame.KEYDOWN:
-            return
-        key = event.key
-        # L toggles legend in all phases
-        if key == pygame.K_l:
-            self._legend_visible = not self._legend_visible
-            return
-        if self._phase == Phase.INTRO:
-            self._handle_intro(key)
-        elif self._phase == Phase.IDENTIFY:
-            self._handle_identify(key)
-        elif self._phase == Phase.FIX:
-            self._handle_fix(key)
-        elif self._phase == Phase.REPORT:
-            self._handle_report(key)
+        if event.type == pygame.KEYDOWN:
+            key = event.key
+            if key == pygame.K_l:
+                self._legend_visible = not self._legend_visible
+                return
+            if self._phase == Phase.INTRO:
+                self._handle_intro(key)
+            elif self._phase == Phase.IDENTIFY:
+                self._handle_identify(key)
+            elif self._phase == Phase.FIX:
+                self._handle_fix(key)
+            elif self._phase == Phase.REPORT:
+                self._handle_report(key)
+        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            if self._phase == Phase.INTRO:
+                self._handle_intro_click(event.pos)
+            elif self._phase == Phase.IDENTIFY:
+                self._handle_identify_click(event.pos)
 
     def update(self, dt_ms: float) -> None:
         if self._hint_timer > 0:
@@ -139,9 +145,7 @@ class DataCleaningScene(Scene):
     # ── Event handlers ──────────────────────────────────────────────────────────
 
     def _handle_intro(self, key: int) -> None:
-        if key == pygame.K_ESCAPE:
-            self._go_menu()
-        elif key == pygame.K_1:
+        if key == pygame.K_1:
             self._set_difficulty(0)
         elif key == pygame.K_2:
             self._set_difficulty(1)
@@ -154,6 +158,24 @@ class DataCleaningScene(Scene):
         elif key in (pygame.K_RETURN, pygame.K_SPACE):
             self._start_game()
 
+    def _handle_intro_click(self, pos: tuple[int, int]) -> None:
+        for i, rect in enumerate(self._diff_rects):
+            if rect.collidepoint(pos):
+                self._set_difficulty(i)
+                return
+
+    def _handle_identify_click(self, pos: tuple[int, int]) -> None:
+        row = (pos[1] - _TABLE_Y0) // ROW_H + self._table.scroll
+        if not (0 <= row < len(self._session.rows)):
+            return
+        self._table.set_cursor(row)
+        result = self._table.flag_toggle(row)
+        if result == "flagged" and self._hints_visible:
+            self._show_identify_hint(row)
+        elif result == "unflagged":
+            self._hint_text = ""
+            self._hint_timer = 0.0
+
     def _set_difficulty(self, idx: int) -> None:
         self._diff_idx = idx
         self._difficulty = ALL_DIFFICULTIES[idx]
@@ -165,9 +187,7 @@ class DataCleaningScene(Scene):
         self._phase = Phase.IDENTIFY
 
     def _handle_identify(self, key: int) -> None:
-        if key == pygame.K_ESCAPE:
-            self._go_menu()
-        elif key == pygame.K_h:
+        if key == pygame.K_h:
             if self._difficulty.hints_mode == "toggle":
                 self._hints_visible = not self._hints_visible
         elif key == pygame.K_f:
@@ -205,18 +225,9 @@ class DataCleaningScene(Scene):
             self._advance_fix()
 
     def _handle_report(self, key: int) -> None:
-        if key == pygame.K_ESCAPE:
-            self._go_menu()
-        elif key in (pygame.K_RETURN, pygame.K_r):
-            self._next = DataCleaningScene(self._strings, self._pm, difficulty=self._difficulty)
-            self._done = True
+        pass
 
     # ── Helpers ─────────────────────────────────────────────────────────────────
-
-    def _go_menu(self) -> None:
-        from cognitive_data_arcade.ui.menu import LessonMenuScene
-        self._next = LessonMenuScene(self._pm, self._strings)
-        self._done = True
 
     def _show_identify_hint(self, idx: int) -> None:
         error_type = self._session.ground_truth.get(idx)
@@ -288,6 +299,7 @@ class DataCleaningScene(Scene):
             self._strings.difficulty_hard_desc,
         ]
         btn_x = 60
+        self._diff_rects = []
         for i, (label, desc, color) in enumerate(zip(diff_labels, diff_descs, _DIFF_COLORS)):
             is_active = i == self._diff_idx
             btn_color = color if is_active else _DIM
@@ -295,13 +307,14 @@ class DataCleaningScene(Scene):
             surface.blit(btn_surf, (btn_x, y))
             desc_surf = self._font_hint.render(desc, True, btn_color)
             surface.blit(desc_surf, (btn_x + btn_surf.get_width() + 16, y + 4))
+            self._diff_rects.append(pygame.Rect(btn_x, y, w - btn_x - 60, 36))
             y += 40
 
         # Hint bar
         if lang == "pl":
-            hint = "[1/2/3] poziom  [L] legenda  [ENTER] start  [ESC] menu"
+            hint = "[1/2/3] poziom  [L] legenda  [ENTER] start  [ESC] pauza"
         else:
-            hint = "[1/2/3] difficulty  [L] legend  [ENTER] start  [ESC] menu"
+            hint = "[1/2/3] difficulty  [L] legend  [ENTER] start  [ESC] pause"
         hs = self._font_hint.render(hint, True, _DIM)
         surface.blit(hs, (w // 2 - hs.get_width() // 2, h - 48))
 
@@ -311,7 +324,7 @@ class DataCleaningScene(Scene):
             self._strings.data_cleaning_title, True, _ORANGE
         )
         surface.blit(title_surf, (40, 12))
-        self._table.draw(surface, x0=40, y0=100, hints_visible=self._hints_visible)
+        self._table.draw(surface, x0=40, y0=_TABLE_Y0, hints_visible=self._hints_visible)
         if self._hint_timer > 0 and self._hint_text:
             hs = self._font_hint.render(self._hint_text, True, self._hint_color)
             surface.blit(hs, (40, h - 72))

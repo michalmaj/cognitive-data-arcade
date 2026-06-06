@@ -310,8 +310,16 @@ class LessonMenuScene(Scene):
         self._done = True
 
     def _make_data_cleaning_game(self) -> Scene:
+        from cognitive_data_arcade.engine.pause import PausableGame
+        from cognitive_data_arcade.games.data_cleaning.info import get_game_info
         from cognitive_data_arcade.games.data_cleaning.scene import DataCleaningScene
-        return DataCleaningScene(self._strings, self._pm)
+
+        inner = DataCleaningScene(self._strings, self._pm)
+        game_info = get_game_info(self._strings)
+        # DataCleaningScene has its own INTRO phase; HowToPlayScene is redundant
+        return PausableGame(
+            inner, game_info, self._make_data_cleaning_game, self._strings, self._pm
+        )
 
     def _launch_stroop(self) -> None:
         from cognitive_data_arcade.ui.stroop_level_scene import StroopLevelScene
