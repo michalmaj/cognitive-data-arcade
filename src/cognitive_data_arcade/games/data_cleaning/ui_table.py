@@ -111,3 +111,26 @@ class TableWidget:
     @property
     def flagged(self) -> set[int]:
         return set(self._flagged)
+
+    @property
+    def scroll(self) -> int:
+        return self._scroll
+
+    def set_cursor(self, idx: int) -> None:
+        """Move cursor to idx, adjusting scroll to keep the row visible."""
+        n = len(self._rows)
+        if not (0 <= idx < n):
+            return
+        self._cursor = idx
+        if self._cursor < self._scroll:
+            self._scroll = self._cursor
+        elif self._cursor >= self._scroll + VISIBLE_ROWS:
+            self._scroll = self._cursor - VISIBLE_ROWS + 1
+
+    def flag_toggle(self, idx: int) -> str:
+        """Toggle flag on row idx. Returns 'flagged' or 'unflagged'."""
+        if idx in self._flagged:
+            self._flagged.discard(idx)
+            return "unflagged"
+        self._flagged.add(idx)
+        return "flagged"

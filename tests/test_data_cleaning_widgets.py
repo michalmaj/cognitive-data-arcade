@@ -175,3 +175,56 @@ def test_draw_with_hints_visible_true_does_not_raise():
     t = TableWidget(_rows(10))
     t.handle_keydown(pygame.K_SPACE)
     t.draw(surface, hints_visible=True)
+
+
+# ── scroll property ──────────────────────────────────────────────────────────────
+
+def test_scroll_property_starts_zero():
+    t = TableWidget(_rows(20))
+    assert t.scroll == 0
+
+
+# ── set_cursor ───────────────────────────────────────────────────────────────────
+
+def test_set_cursor_moves_cursor():
+    t = TableWidget(_rows(20))
+    t.set_cursor(5)
+    assert t.cursor == 5
+
+
+def test_set_cursor_adjusts_scroll_down():
+    # VISIBLE_ROWS = 15; cursor 16 → scroll must be at least 2 (16 - 15 + 1)
+    t = TableWidget(_rows(20))
+    t.set_cursor(16)
+    assert t.scroll == 2
+
+
+def test_set_cursor_adjusts_scroll_up():
+    # Move cursor down to force scroll, then move cursor back up
+    t = TableWidget(_rows(20))
+    t.set_cursor(16)   # scroll = 2
+    t.set_cursor(1)    # cursor 1 < scroll 2 → scroll becomes 1
+    assert t.scroll == 1
+
+
+def test_set_cursor_out_of_range_ignored():
+    t = TableWidget(_rows(5))
+    t.set_cursor(99)
+    assert t.cursor == 0   # unchanged
+
+
+# ── flag_toggle ──────────────────────────────────────────────────────────────────
+
+def test_flag_toggle_flags_row():
+    t = TableWidget(_rows(5))
+    result = t.flag_toggle(2)
+    assert result == "flagged"
+    assert 2 in t.flagged
+
+
+def test_flag_toggle_unflags_row():
+    t = TableWidget(_rows(5))
+    t.flag_toggle(2)
+    result = t.flag_toggle(2)
+    assert result == "unflagged"
+    assert 2 not in t.flagged
