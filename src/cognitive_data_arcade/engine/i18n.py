@@ -164,6 +164,22 @@ class Strings:
     data_cleaning_done_btn: str
     data_cleaning_report_title: str
     data_cleaning_replay: str
+    # Data Quality Lab — difficulty & legend
+    difficulty_label: str
+    difficulty_easy: str
+    difficulty_medium: str
+    difficulty_hard: str
+    difficulty_easy_desc: str
+    difficulty_medium_desc: str
+    difficulty_hard_desc: str
+    legend_title: str
+    legend_col_participant_id: str
+    legend_col_session: str
+    legend_col_trial: str
+    legend_col_rt_ms: str
+    legend_col_accuracy: str
+    hint_key_legend: str
+    hint_key_hints: str
 
 
 EN = Strings(
@@ -303,6 +319,21 @@ EN = Strings(
     data_cleaning_done_btn="F — Done, fix errors",
     data_cleaning_report_title="CLEANING REPORT",
     data_cleaning_replay="R — Play again   ESC — menu",
+    difficulty_label="Difficulty",
+    difficulty_easy="Easy",
+    difficulty_medium="Medium",
+    difficulty_hard="Hard",
+    difficulty_easy_desc="15 rows, 3-6 errors, full hints",
+    difficulty_medium_desc="50 rows, 15-20 errors, [H] hints",
+    difficulty_hard_desc="100 rows, 25-40 errors, no hints",
+    legend_title="Column Legend",
+    legend_col_participant_id="participant_id — participant ID (P001-P999)",
+    legend_col_session="session — session number (1-5)",
+    legend_col_trial="trial — trial number (1-80)",
+    legend_col_rt_ms="rt_ms — reaction time in ms (150-600)",
+    legend_col_accuracy="accuracy — correctness as fraction (0.0-1.0)",
+    hint_key_legend="[L] legend",
+    hint_key_hints="[H] hints",
 )
 
 PL = Strings(
@@ -442,6 +473,21 @@ PL = Strings(
     data_cleaning_done_btn="F — Gotowe, popraw błędy",
     data_cleaning_report_title="RAPORT CZYSZCZENIA",
     data_cleaning_replay="R — Zagraj ponownie   ESC — menu",
+    difficulty_label="Poziom trudności",
+    difficulty_easy="Easy",
+    difficulty_medium="Medium",
+    difficulty_hard="Hard",
+    difficulty_easy_desc="15 wierszy, 3-6 błędów, pełne wskazówki",
+    difficulty_medium_desc="50 wierszy, 15-20 błędów, [H] wskazówki",
+    difficulty_hard_desc="100 wierszy, 25-40 błędów, brak wskazówek",
+    legend_title="Legenda kolumn",
+    legend_col_participant_id="participant_id — ID uczestnika (P001-P999)",
+    legend_col_session="session — numer sesji (1-5)",
+    legend_col_trial="trial — numer próby (1-80)",
+    legend_col_rt_ms="rt_ms — czas reakcji w ms (150-600)",
+    legend_col_accuracy="accuracy — celność jako ułamek (0.0-1.0)",
+    hint_key_legend="[L] legenda",
+    hint_key_hints="[H] wskazówki",
 )
 
 
