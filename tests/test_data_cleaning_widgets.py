@@ -8,7 +8,7 @@ from cognitive_data_arcade.games.data_cleaning.generator import DataRow
 from cognitive_data_arcade.games.data_cleaning.ui_table import TableWidget
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixture(scope="session", autouse=True)
 def pg():
     pygame.init()
     yield
@@ -159,3 +159,19 @@ def test_popup_nav_keys_return_none():
     p = DecisionPopup(_row(), has_format_fix=False)
     assert p.handle_keydown(pygame.K_DOWN) is None
     assert p.handle_keydown(pygame.K_UP) is None
+
+
+# ── draw with hints_visible parameter ───────────────────────────────────────────
+
+def test_draw_with_hints_visible_false_does_not_raise():
+    surface = pygame.Surface((800, 600))
+    t = TableWidget(_rows(10))
+    t.handle_keydown(pygame.K_SPACE)  # flag row 0
+    t.draw(surface, hints_visible=False)  # should not raise
+
+
+def test_draw_with_hints_visible_true_does_not_raise():
+    surface = pygame.Surface((800, 600))
+    t = TableWidget(_rows(10))
+    t.handle_keydown(pygame.K_SPACE)
+    t.draw(surface, hints_visible=True)
