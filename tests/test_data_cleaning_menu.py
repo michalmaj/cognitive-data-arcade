@@ -29,9 +29,9 @@ def test_lesson_5_not_in_lessons_list():
     assert 5 not in lesson_nums
 
 
-def test_lesson_4_title_contains_0405():
+def test_lesson_4_title_is_data_quality_lab():
     titles = {num: title for num, title in _LESSONS}
-    assert "04+05" in titles[4] or "04" in titles[4]
+    assert "Data Quality Lab" in titles[4]
 
 
 def test_data_cleaning_scene_launched_for_lesson_4(pm):

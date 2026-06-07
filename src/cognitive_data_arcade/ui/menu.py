@@ -13,7 +13,7 @@ _LESSONS = [
     (1, "Big Data in Cognitive Science"),
     (2, "Reaction Time Lab"),
     (3, "Event Logs and Data Formats"),
-    (4, "04+05 Data Quality Lab"),
+    (4, "Data Quality Lab"),
     (6, "Exploratory Data Analysis"),
     (7, "Stroop Challenge"),
     (8, "Flanker Arena"),
@@ -376,7 +376,7 @@ class LessonMenuScene(Scene):
 
         for i, (num, name) in enumerate(_LESSONS):
             color = _HIGHLIGHT_COLOR if i == self._selected else _ITEM_COLOR
-            text = self._font_item.render(f"{num:02d}.  {name}", True, color)
+            text = self._font_item.render(f"{i + 1:02d}.  {name}", True, color)
             surface.blit(text, (60, 140 + i * 44))
 
         if self._popup_visible:
