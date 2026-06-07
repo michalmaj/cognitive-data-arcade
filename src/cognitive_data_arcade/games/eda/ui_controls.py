@@ -8,11 +8,9 @@ import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 
 _TRACK = (42, 42, 80)
-_THUMB = (120, 120, 160)
+_DIM = (120, 120, 160)
 _ACTIVE = (243, 156, 18)
 _WHITE = (240, 240, 240)
-_DIM = (120, 120, 160)
-_ORANGE = (243, 156, 18)
 _BG_INPUT = (26, 26, 46)
 
 _THUMB_R = 8
@@ -99,7 +97,7 @@ class Slider:
             fill_color = _ACTIVE if self.focused else _DIM
             pygame.draw.rect(surface, fill_color,
                              (self._x, ty - _TRACK_H // 2, filled, _TRACK_H), border_radius=2)
-        thumb_color = _ACTIVE if self.focused else _THUMB
+        thumb_color = _ACTIVE if self.focused else _DIM
         pygame.draw.circle(surface, thumb_color, (tx, ty), _THUMB_R)
         val_str = f"{self._value}%" if self._spec.label.startswith("%") else str(self._value)
         surface.blit(font_val.render(val_str, True, _WHITE), (self._x + self._w + 10, ty - 10))
@@ -215,6 +213,6 @@ class ControlPanel:
         else:
             txt = self._font.render("___ ms", True, _DIM)
         surface.blit(txt, (self._hyp_rect.x + 8, self._hyp_rect.y + 6))
-        pygame.draw.rect(surface, _ORANGE, self._btn_rect, border_radius=6)
+        pygame.draw.rect(surface, _ACTIVE, self._btn_rect, border_radius=6)
         btn_lbl = self._font.render("GENERUJ", True, (15, 15, 35))
         surface.blit(btn_lbl, btn_lbl.get_rect(center=self._btn_rect.center))
