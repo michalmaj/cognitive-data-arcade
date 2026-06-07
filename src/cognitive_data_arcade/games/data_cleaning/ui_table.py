@@ -108,7 +108,7 @@ class TableWidget:
     ) -> None:
         flagged = flagged_override if flagged_override is not None else self._flagged
         rows = self._rows
-        scroll = self._scrollbar.scroll
+        scroll = self.scroll
 
         # Column header
         hdr_y = y0 - 32

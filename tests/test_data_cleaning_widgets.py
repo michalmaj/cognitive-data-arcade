@@ -277,3 +277,11 @@ def test_handle_mousemotion_during_drag_changes_scroll():
     # Drag down to y=300
     t.handle_mousemotion((470, 300), (1, 0, 0))
     assert t.scroll > 0
+
+
+def test_keydown_down_scrolls_when_cursor_leaves_visible_window():
+    rows = [DataRow(i + 1, 1, i + 1, 400.0, 0.85) for i in range(20)]
+    t = TableWidget(rows)
+    for _ in range(VISIBLE_ROWS):
+        t.handle_keydown(pygame.K_DOWN)
+    assert t.scroll > 0
