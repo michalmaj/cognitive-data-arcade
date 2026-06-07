@@ -4,6 +4,7 @@ from __future__ import annotations
 import pygame
 
 from cognitive_data_arcade.engine.fonts import get_font
+from cognitive_data_arcade.engine.scrollbar import ScrollBar
 from cognitive_data_arcade.games.data_cleaning.generator import DataRow
 
 _ORANGE = (243, 156, 18)
@@ -13,17 +14,37 @@ _DIM = (120, 120, 160)
 
 VISIBLE_ROWS = 15
 ROW_H = 28
+_TABLE_W = 420        # visual width of table content (used to position scrollbar)
+_SCROLLBAR_GAP = 8    # pixels between table content and scrollbar
 
 
 class TableWidget:
     """Scrollable data table with flag-row support."""
 
-    def __init__(self, rows: list[DataRow]) -> None:
+    def __init__(self, rows: list[DataRow], x0: int = 40, y0: int = 100) -> None:
         self._rows = rows
         self._cursor = 0
-        self._scroll = 0
         self._flagged: set[int] = set()
         self._font = get_font(22)
+        self._scrollbar = ScrollBar(
+            total=len(rows),
+            visible=VISIBLE_ROWS,
+            x=x0 + _TABLE_W + _SCROLLBAR_GAP,
+            y=y0,
+            h=VISIBLE_ROWS * ROW_H,
+        )
+
+    @property
+    def scroll(self) -> int:
+        return self._scrollbar.scroll
+
+    @property
+    def cursor(self) -> int:
+        return self._cursor
+
+    @property
+    def flagged(self) -> set[int]:
+        return set(self._flagged)
 
     def handle_keydown(self, key: int) -> str | None:
         """
@@ -34,13 +55,11 @@ class TableWidget:
         if key == pygame.K_UP:
             if self._cursor > 0:
                 self._cursor -= 1
-                if self._cursor < self._scroll:
-                    self._scroll = self._cursor
+                self._sync_scroll()
         elif key == pygame.K_DOWN:
             if self._cursor < n - 1:
                 self._cursor += 1
-                if self._cursor >= self._scroll + VISIBLE_ROWS:
-                    self._scroll = self._cursor - VISIBLE_ROWS + 1
+                self._sync_scroll()
         elif key in (pygame.K_SPACE, pygame.K_RETURN):
             idx = self._cursor
             if idx in self._flagged:
@@ -50,6 +69,34 @@ class TableWidget:
                 self._flagged.add(idx)
                 return "flagged"
         return None
+
+    def set_cursor(self, idx: int) -> None:
+        """Move cursor to idx, adjusting scroll to keep the row visible."""
+        n = len(self._rows)
+        if not (0 <= idx < n):
+            return
+        self._cursor = idx
+        self._sync_scroll()
+
+    def flag_toggle(self, idx: int) -> str:
+        """Toggle flag on row idx. Returns 'flagged' or 'unflagged'."""
+        if idx in self._flagged:
+            self._flagged.discard(idx)
+            return "unflagged"
+        self._flagged.add(idx)
+        return "flagged"
+
+    def handle_wheel(self, dy: int) -> bool:
+        """Scroll by dy rows (positive = down). Returns True if scroll changed."""
+        return self._scrollbar.handle_wheel(dy)
+
+    def handle_mousedown(self, pos: tuple[int, int]) -> bool:
+        """Forward mousedown to scrollbar. Returns True if consumed."""
+        return self._scrollbar.handle_mousedown(pos)
+
+    def handle_mousemotion(self, pos: tuple[int, int], buttons: tuple) -> bool:
+        """Forward mousemotion to scrollbar (drag). Returns True if scroll changed."""
+        return self._scrollbar.handle_mousemotion(pos, buttons)
 
     def draw(
         self,
@@ -61,6 +108,7 @@ class TableWidget:
     ) -> None:
         flagged = flagged_override if flagged_override is not None else self._flagged
         rows = self._rows
+        scroll = self.scroll
 
         # Column header
         hdr_y = y0 - 32
@@ -75,7 +123,7 @@ class TableWidget:
         )
 
         for vi in range(VISIBLE_ROWS):
-            ri = self._scroll + vi
+            ri = scroll + vi
             if ri >= len(rows):
                 break
             row = rows[ri]
@@ -104,33 +152,11 @@ class TableWidget:
             surface.blit(_r(acc_str), (x0 + 270, y))
             surface.blit(_r(prefix), (x0 + 370, y))
 
-    @property
-    def cursor(self) -> int:
-        return self._cursor
+        self._scrollbar.draw(surface)
 
-    @property
-    def flagged(self) -> set[int]:
-        return set(self._flagged)
-
-    @property
-    def scroll(self) -> int:
-        return self._scroll
-
-    def set_cursor(self, idx: int) -> None:
-        """Move cursor to idx, adjusting scroll to keep the row visible."""
-        n = len(self._rows)
-        if not (0 <= idx < n):
-            return
-        self._cursor = idx
-        if self._cursor < self._scroll:
-            self._scroll = self._cursor
-        elif self._cursor >= self._scroll + VISIBLE_ROWS:
-            self._scroll = self._cursor - VISIBLE_ROWS + 1
-
-    def flag_toggle(self, idx: int) -> str:
-        """Toggle flag on row idx. Returns 'flagged' or 'unflagged'."""
-        if idx in self._flagged:
-            self._flagged.discard(idx)
-            return "unflagged"
-        self._flagged.add(idx)
-        return "flagged"
+    def _sync_scroll(self) -> None:
+        scroll = self._scrollbar.scroll
+        if self._cursor < scroll:
+            self._scrollbar.scroll_to(self._cursor)
+        elif self._cursor >= scroll + VISIBLE_ROWS:
+            self._scrollbar.scroll_to(self._cursor - VISIBLE_ROWS + 1)
