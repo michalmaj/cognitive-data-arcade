@@ -106,9 +106,9 @@ class Slider:
 _SLIDER_SPECS = [
     SliderSpec("UCZESTNICY (N)", 5, 100, 20, 1),
     SliderSpec("BAZOWY RT (ms)", 300, 600, 400, 10),
-    SliderSpec("ROZNICA EFEKTU (ms)", 0, 200, 40, 10),
+    SliderSpec("RÓŻNICA EFEKTU (ms)", 0, 200, 40, 10),
     SliderSpec("SZUM / SD (ms)", 10, 200, 80, 10),
-    SliderSpec("% OUTLIEROW", 0, 20, 5, 1),
+    SliderSpec("% OUTLIERÓW", 0, 20, 5, 1),
 ]
 
 
@@ -203,7 +203,7 @@ class ControlPanel:
 
     def draw(self, surface: pygame.Surface) -> None:
         self._sliders.draw(surface)
-        lbl = get_font(18).render("Hipoteza: roznica >=", True, _DIM)
+        lbl = get_font(18).render("Hipoteza: różnica >=", True, _DIM)
         surface.blit(lbl, (30, 360))
         border = _ACTIVE if self._hyp_focused else _TRACK
         pygame.draw.rect(surface, _BG_INPUT, self._hyp_rect, border_radius=4)

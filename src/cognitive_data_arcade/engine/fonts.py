@@ -11,6 +11,7 @@ import pygame
 
 _CANDIDATES = [
     "dejavusans",
+    "arialunicode",
     "arial",
     "helveticaneue",
     "liberationsans",

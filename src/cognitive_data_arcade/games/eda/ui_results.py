@@ -58,7 +58,7 @@ class ChartPanel:
 
     def draw(self, surface: pygame.Surface, x: int, y: int) -> None:
         if self._surface is None:
-            msg = get_font(20).render("Kliknij GENERUJ aby wygenerowac dane", True, _DIM)
+            msg = get_font(20).render("Kliknij GENERUJ aby wygenerować dane", True, _DIM)
             surface.blit(msg, (x + 10, y + _CHART_H // 2))
             return
         surface.blit(self._surface, (x, y))
@@ -91,7 +91,7 @@ class ResultsPanel:
         blit(f"SD:   {r.sd1:6.1f} ms       SD:   {r.sd2:6.1f} ms")
         blit(f"bez outl: {r.mean1_no_out:.1f}       bez outl: {r.mean2_no_out:.1f}", _DIM, small)
         dy += 8
-        blit(f"Obserwowana roznica: {r.observed_diff:+.1f} ms", _ORANGE)
+        blit(f"Obserwowana różnica: {r.observed_diff:+.1f} ms", _ORANGE)
         blit(f"t = {r.t_stat:.2f},  p = {r.p_value:.3f}", _DIM, small)
         dy += 8
 
