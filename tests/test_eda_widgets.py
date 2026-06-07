@@ -124,3 +124,56 @@ def test_control_panel_get_params_keys():
 def test_control_panel_draw_does_not_raise():
     surface = pygame.Surface((800, 600))
     ControlPanel().draw(surface)
+
+
+# -- ChartPanel + ResultsPanel ────────────────────────────────────────────────────
+
+from cognitive_data_arcade.games.eda.simulator import simulate
+from cognitive_data_arcade.games.eda.ui_results import ChartPanel, ResultsPanel
+
+
+def _sim():
+    return simulate(n=20, baseline_ms=400, effect_ms=50, noise_sd=80,
+                    outlier_pct=0.05, rng_seed=42)
+
+
+def test_chart_panel_draw_empty_does_not_raise():
+    surface = pygame.Surface((800, 600))
+    ChartPanel().draw(surface, x=360, y=30)
+
+
+def test_chart_panel_update_and_draw_does_not_raise():
+    surface = pygame.Surface((800, 600))
+    cp = ChartPanel()
+    cp.update(_sim())
+    cp.draw(surface, x=360, y=30)
+
+
+def test_results_panel_draw_empty_does_not_raise():
+    surface = pygame.Surface((800, 600))
+    ResultsPanel().draw(surface, x=360, y=270)
+
+
+def test_results_panel_verdict_confirmed():
+    rp = ResultsPanel()
+    r = _sim()
+    threshold = int(r.observed_diff) - 10
+    rp.update(r, threshold)
+    surface = pygame.Surface((800, 600))
+    rp.draw(surface, x=360, y=270)
+
+
+def test_results_panel_verdict_rejected():
+    rp = ResultsPanel()
+    r = _sim()
+    threshold = int(r.observed_diff) + 100
+    rp.update(r, threshold)
+    surface = pygame.Surface((800, 600))
+    rp.draw(surface, x=360, y=270)
+
+
+def test_results_panel_no_threshold_no_raise():
+    rp = ResultsPanel()
+    rp.update(_sim(), threshold=None)
+    surface = pygame.Surface((800, 600))
+    rp.draw(surface, x=360, y=270)
