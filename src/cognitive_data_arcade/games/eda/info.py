@@ -18,6 +18,8 @@ def get_game_info(strings: Strings) -> GameInfo:
                 ("LEWO / PRAWO", "zmien wartosc suwaka"),
                 ("TAB", "nastepny suwak"),
                 ("ENTER", "generuj dane"),
+                ("L", "legenda suwakow"),
+                ("H", "pomoc / intro"),
                 ("ESC", "pauza"),
             ],
         )
@@ -32,6 +34,8 @@ def get_game_info(strings: Strings) -> GameInfo:
             ("LEFT / RIGHT", "adjust slider value"),
             ("TAB", "next slider"),
             ("ENTER", "generate data"),
+            ("L", "slider legend"),
+            ("H", "help / intro"),
             ("ESC", "pause"),
         ],
     )

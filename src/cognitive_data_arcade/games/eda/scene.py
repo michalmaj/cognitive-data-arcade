@@ -3,12 +3,118 @@ from __future__ import annotations
 
 import pygame
 
+from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.eda.simulator import simulate
 from cognitive_data_arcade.games.eda.ui_controls import ControlPanel
 from cognitive_data_arcade.games.eda.ui_results import ChartPanel, ResultsPanel
 
 _BG = (15, 15, 35)
+_ACTIVE = (243, 156, 18)
+_WHITE = (240, 240, 240)
+_DIM = (120, 120, 160)
+
+_PANEL_X, _PANEL_Y = 60, 30
+_PANEL_W, _PANEL_H = 680, 530
+_VISIBLE_LINES = 24
+
+_LEGEND_LINES: list[tuple[str, bool]] = [
+    ("LEGENDA SUWAKOW", True),
+    ("", False),
+    ("N — UCZESTNICY", True),
+    ("Liczba uczestnikow na warunek.", False),
+    ("Wieksze N = bardziej stabilne wyniki.", False),
+    ("Typowy zakres: 10-30 w lab, 100+ online.", False),
+    ("", False),
+    ("BAZOWY RT (ms)", True),
+    ("Sredni czas reakcji w warunku 1 (bez efektu).", False),
+    ("Typowo: 300-500 ms dla prostego RT.", False),
+    ("Stroop / Flanker moga byc wolniejsze.", False),
+    ("", False),
+    ("ROZNICA EFEKTU (ms)", True),
+    ("O ile ms wolniejszy jest warunek 2 od warunku 1.", False),
+    ("To jest efekt ktory chcesz wykryc.", False),
+    ("Maly efekt: < 20 ms. Duzy: > 80 ms.", False),
+    ("", False),
+    ("SZUM / SD (ms)", True),
+    ("Odchylenie standardowe rozkladu RT.", False),
+    ("Im wiekszy szum wzgledem efektu, tym trudniej", False),
+    ("wykryc roznice. Typowo: 60-120 ms w lab.", False),
+    ("", False),
+    ("% OUTLIEROW", True),
+    ("Odsetek prob z 'luka uwagowa' (800-1500 ms).", False),
+    ("Outliery zaburzaja srednia i t-test.", False),
+    ("Porownaj linie pelna/przerywana na histogramie.", False),
+    ("", False),
+    ("Zamknij: nacisnij L", False),
+]
+
+_HELP_LINES: list[tuple[str, bool]] = [
+    ("EDA SANDBOX — POMOC", True),
+    ("", False),
+    ("Co to jest?", True),
+    ("Wcielasz sie w badacza projektujacego eksperyment RT.", False),
+    ("RT (czas reakcji) mierzy jak szybko uczestnik", False),
+    ("odpowiada na bodziec. Dwa warunki = dwa zestawy prob.", False),
+    ("Cel: sprawdzic czy warunki roznia sie RT.", False),
+    ("", False),
+    ("Petla badania:", True),
+    ("1. Postaw hipoteze: wpisz prog roznicy (ms)", False),
+    ("2. Ustaw parametry suwakami (N, efekt, szum...)", False),
+    ("3. Kliknij GENERUJ lub nacisnij ENTER", False),
+    ("4. Sprawdz wyniki — potwierdzona czy obalona?", False),
+    ("5. Zmodyfikuj parametry i powtorz.", False),
+    ("", False),
+    ("Histogramy — jak czytac?", True),
+    ("Kazdy histogram = rozklad RT w jednym warunku.", False),
+    ("Os X = czas reakcji (ms). Os Y = liczba prób.", False),
+    ("Szerokosc histogramu = szum (SD).", False),
+    ("Przesuniecie srednich = efekt.", False),
+    ("Pelna biala linia = srednia z outlierami.", False),
+    ("Przerywana biala linia = srednia bez outlierow.", False),
+    ("Pomaranczowe slupki = outliery (800-1500 ms).", False),
+    ("", False),
+    ("Efekt vs. szum — kluczowa intuicja:", True),
+    ("Cohen's d = efekt / szum.", False),
+    ("d = 0.2: maly efekt (trudno wykryc).", False),
+    ("d = 0.5: sredni efekt.", False),
+    ("d = 0.8: duzy efekt (latwo wykryc).", False),
+    ("Jesli szum = 80 ms i efekt = 40 ms, d = 0.5.", False),
+    ("Zwiekszaj N zeby wykryc maly efekt przy duzym szumie.", False),
+    ("", False),
+    ("t-statistic i p-value:", True),
+    ("t = roznica srednich / blad standardowy.", False),
+    ("Wieksze |t| = grupy bardziej sie roznia wzgledem szumu.", False),
+    ("p = prawdopodob. uzysk. takiego wyniku GDY efekt = 0.", False),
+    ("p < 0.05 = istotny statystycznie (konwencja APA).", False),
+    ("Uwaga: p > 0.05 NIE znaczy 'brak efektu'.", False),
+    ("Moze znaczyc: za malo uczestnikow (za male N).", False),
+    ("", False),
+    ("Outliery i ich wplyw:", True),
+    ("Outliery zaburzaja srednia i zwiekszaja wariancje.", False),
+    ("Jeden outlier 1500 ms moze przesunasc srednia", False),
+    ("o kilkadziesiat ms przy N=10.", False),
+    ("t-test na surowych danych uwzglednia outliery —", False),
+    ("dlatego t jest mniej czuly gdy outliery sa obecne.", False),
+    ("Porownaj linie pelna / przerywana na histogramie.", False),
+    ("", False),
+    ("Praktyczne wskazowki:", True),
+    ("- Zacznij od N=20, efekt=50, szum=80, outl=5%.", False),
+    ("- Zwieksz N do 100: wyniki bardziej stabilne.", False),
+    ("- Ustaw efekt=0: p powinna byc losowa (false pos.).", False),
+    ("- Zwieksz outliery do 20%: obserwuj co dzieje sie", False),
+    ("  z linia pelna vs przerywana na histogramie.", False),
+    ("", False),
+    ("Klawisze:", True),
+    ("ENTER / klik GENERUJ — generuj nowe dane", False),
+    ("TAB — nastepny suwak", False),
+    ("LEWO / PRAWO — zmien wartosc suwaka", False),
+    ("L — legenda suwakow", False),
+    ("H — ta pomoc", False),
+    ("ESC — menu pauzy", False),
+    ("", False),
+    ("(przewijaj kólkiem myszy)", False),
+]
 
 
 class EDAScene(Scene):
@@ -16,8 +122,32 @@ class EDAScene(Scene):
         self._controls = ControlPanel()
         self._charts = ChartPanel()
         self._results = ResultsPanel()
+        self._show_legend: bool = False
+        self._show_help: bool = False
+        self._help_scroll: int = 0
 
     def handle_event(self, event: pygame.event.Event) -> None:
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_l:
+                self._show_legend = not self._show_legend
+                if self._show_legend:
+                    self._show_help = False
+                return
+            if event.key == pygame.K_h:
+                self._show_help = not self._show_help
+                if self._show_help:
+                    self._show_legend = False
+                    self._help_scroll = 0
+                return
+
+        if event.type == pygame.MOUSEWHEEL and self._show_help:
+            max_scroll = max(0, len(_HELP_LINES) - _VISIBLE_LINES)
+            self._help_scroll = max(0, min(max_scroll, self._help_scroll - event.y))
+            return
+
+        if self._show_legend or self._show_help:
+            return
+
         action = self._controls.handle_event(event)
         if action == "generate":
             params = self._controls.get_params()
@@ -34,6 +164,49 @@ class EDAScene(Scene):
         self._controls.draw(surface)
         self._charts.draw(surface, x=360, y=30)
         self._results.draw(surface, x=360, y=270)
+        if self._show_legend:
+            self._draw_overlay(surface, _LEGEND_LINES, scroll=0)
+        elif self._show_help:
+            self._draw_overlay(surface, _HELP_LINES, scroll=self._help_scroll)
+
+    def _draw_overlay(
+        self,
+        surface: pygame.Surface,
+        lines: list[tuple[str, bool]],
+        scroll: int,
+    ) -> None:
+        dim = pygame.Surface(surface.get_size(), pygame.SRCALPHA)
+        dim.fill((0, 0, 0, 180))
+        surface.blit(dim, (0, 0))
+
+        panel = pygame.Surface((_PANEL_W, _PANEL_H), pygame.SRCALPHA)
+        panel.fill((15, 15, 35, 245))
+        surface.blit(panel, (_PANEL_X, _PANEL_Y))
+        pygame.draw.rect(surface, _ACTIVE,
+                         (_PANEL_X, _PANEL_Y, _PANEL_W, _PANEL_H), 2, border_radius=8)
+
+        font_hdr = get_font(20)
+        font_body = get_font(18)
+        y = _PANEL_Y + 18
+        for text, is_header in lines[scroll:scroll + _VISIBLE_LINES]:
+            if not text:
+                y += 8
+                continue
+            f = font_hdr if is_header else font_body
+            color = _ACTIVE if is_header else _WHITE
+            surface.blit(f.render(text, True, color), (_PANEL_X + 20, y))
+            y += f.size("A")[1] + (6 if is_header else 2)
+
+        max_scroll = max(0, len(lines) - _VISIBLE_LINES)
+        if max_scroll > 0:
+            pct = scroll / max_scroll
+            bar_x = _PANEL_X + _PANEL_W - 10
+            bar_y = _PANEL_Y + 10
+            bar_h = _PANEL_H - 20
+            thumb_h = max(20, round(_VISIBLE_LINES / len(lines) * bar_h))
+            thumb_y = bar_y + round(pct * (bar_h - thumb_h))
+            pygame.draw.rect(surface, (42, 42, 80), (bar_x, bar_y, 6, bar_h), border_radius=3)
+            pygame.draw.rect(surface, _DIM, (bar_x, thumb_y, 6, thumb_h), border_radius=3)
 
     def is_done(self) -> bool:
         return False
