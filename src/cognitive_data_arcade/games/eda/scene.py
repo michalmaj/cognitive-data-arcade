@@ -162,8 +162,8 @@ class EDAScene(Scene):
     def draw(self, surface: pygame.Surface) -> None:
         surface.fill(_BG)
         self._controls.draw(surface)
-        self._charts.draw(surface, x=360, y=30)
-        self._results.draw(surface, x=360, y=270)
+        self._charts.draw(surface, x=360, y=55)
+        self._results.draw(surface, x=360, y=310)
         self._draw_key_hints(surface)
         if self._show_legend:
             self._draw_overlay(surface, _LEGEND_LINES, scroll=0)

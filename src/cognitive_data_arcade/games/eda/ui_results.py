@@ -11,7 +11,7 @@ from cognitive_data_arcade.engine.chart import figure_to_surface
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.games.eda.simulator import SimResult
 
-_CHART_W, _CHART_H = 480, 220
+_CHART_W, _CHART_H = 480, 240
 _C1 = "#3498db"
 _C2 = "#e74c3c"
 _OUT = "#f39c12"
@@ -24,6 +24,40 @@ _FIG_BG = "#0f0f23"
 _AX_BG = "#1a1a3e"
 _SPINE = "#2a2a50"
 _TICK = "#787890"
+
+
+def _interpret(r: SimResult) -> list[tuple[str, tuple]]:
+    n = len(r.cond1)
+    pooled_sd = (r.sd1 + r.sd2) / 2.0
+    d = abs(r.observed_diff) / pooled_sd if pooled_sd > 0 else 0.0
+    lines: list[tuple[str, tuple]] = []
+
+    if r.p_value < 0.05:
+        lines.append((f"Różnica istotna stat. (p={r.p_value:.3f} < 0.05).", _GREEN))
+    else:
+        lines.append((f"Brak istotności stat. (p={r.p_value:.3f} >= 0.05).", _RED))
+
+    if d < 0.2:
+        lines.append((f"Efekt znikomy (d={d:.2f}) — zbyt mały do wykrycia.", _RED))
+    elif d < 0.5:
+        lines.append((f"Efekt mały (d={d:.2f}). Potrzeba dużej próby.", _DIM))
+    elif d < 0.8:
+        lines.append((f"Efekt średni (d={d:.2f}) — wykrywalny przy N ~ 30.", _ORANGE))
+    else:
+        lines.append((f"Efekt duży (d={d:.2f}) — łatwy do wykrycia.", _GREEN))
+
+    if r.p_value >= 0.05 and d >= 0.3:
+        needed = min(200, round(16.0 / (d * d)))
+        if needed > n:
+            lines.append((f"Potrzebujesz ~{needed} os./warunek, masz {n}.", _ORANGE))
+
+    impact = max(abs(r.mean1 - r.mean1_no_out), abs(r.mean2 - r.mean2_no_out))
+    if impact > 20:
+        lines.append((f"Outliery przesunęły średnią o {impact:.0f} ms — uwaga!", _ORANGE))
+    elif impact > 5:
+        lines.append((f"Outliery: mały wpływ na średnią ({impact:.0f} ms).", _DIM))
+
+    return lines
 
 
 class ChartPanel:
@@ -53,7 +87,7 @@ class ChartPanel:
             ax.tick_params(colors=_TICK, labelsize=7)
             for spine in ax.spines.values():
                 spine.set_edgecolor(_SPINE)
-        plt.tight_layout(pad=0.5)
+        plt.tight_layout(pad=0.8)
         self._surface = figure_to_surface(fig, (_CHART_W, _CHART_H))
 
     def draw(self, surface: pygame.Surface, x: int, y: int) -> None:
@@ -79,6 +113,7 @@ class ResultsPanel:
         r = self._result
         font = get_font(20)
         small = get_font(17)
+        interp_font = get_font(18)
         dy = 0
 
         def blit(text: str, color: tuple = _WHITE, f=font) -> None:
@@ -105,3 +140,11 @@ class ResultsPanel:
                 f"  ({r.observed_diff:.0f} {sign} {self._threshold})",
                 color,
             )
+
+        dy += 14
+        pygame.draw.line(surface, (42, 42, 80), (x, y + dy), (x + 440, y + dy))
+        dy += 10
+        blit("Interpretacja:", _DIM, small)
+        dy += 2
+        for text, color in _interpret(r):
+            blit(text, color, interp_font)
