@@ -177,3 +177,42 @@ def test_results_panel_no_threshold_no_raise():
     rp.update(_sim(), threshold=None)
     surface = pygame.Surface((800, 600))
     rp.draw(surface, x=360, y=270)
+
+
+# ── EDAScene ─────────────────────────────────────────────────────────────────────
+
+from cognitive_data_arcade.games.eda.scene import EDAScene
+
+
+def test_eda_scene_is_done_always_false():
+    scene = EDAScene()
+    assert scene.is_done() is False
+
+
+def test_eda_scene_next_scene_is_none():
+    scene = EDAScene()
+    assert scene.next_scene() is None
+
+
+def test_eda_scene_generate_via_enter_does_not_raise():
+    scene = EDAScene()
+    ev = pygame.event.Event(
+        pygame.KEYDOWN, key=pygame.K_RETURN, unicode="\r", mod=0, scancode=0,
+    )
+    scene.handle_event(ev)   # triggers simulate() + updates panels
+
+
+def test_eda_scene_draw_after_generate_does_not_raise():
+    scene = EDAScene()
+    ev = pygame.event.Event(
+        pygame.KEYDOWN, key=pygame.K_RETURN, unicode="\r", mod=0, scancode=0,
+    )
+    scene.handle_event(ev)
+    surface = pygame.Surface((800, 600))
+    scene.draw(surface)
+
+
+def test_eda_scene_draw_before_generate_does_not_raise():
+    scene = EDAScene()
+    surface = pygame.Surface((800, 600))
+    scene.draw(surface)

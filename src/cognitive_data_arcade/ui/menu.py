@@ -129,6 +129,8 @@ class LessonMenuScene(Scene):
             self._launch_gono()
         elif lesson_num == 10:
             self._launch_nback()
+        elif lesson_num == 6:
+            self._launch_eda()
         elif lesson_num == 7:
             self._launch_stroop()
 
@@ -182,6 +184,8 @@ class LessonMenuScene(Scene):
             return _make_eld
         if lesson_num == 4:
             return self._make_data_cleaning_game
+        if lesson_num == 6:
+            return self._make_eda_game
         if lesson_num == 7:
             pm, strings = self._pm, self._strings
             def _make_stroop():
@@ -319,6 +323,21 @@ class LessonMenuScene(Scene):
         # DataCleaningScene has its own INTRO phase; HowToPlayScene is redundant
         return PausableGame(
             inner, game_info, self._make_data_cleaning_game, self._strings, self._pm
+        )
+
+    def _launch_eda(self) -> None:
+        self._next = self._make_eda_game()
+        self._done = True
+
+    def _make_eda_game(self) -> Scene:
+        from cognitive_data_arcade.engine.pause import PausableGame
+        from cognitive_data_arcade.games.eda.info import get_game_info
+        from cognitive_data_arcade.games.eda.scene import EDAScene
+
+        inner = EDAScene()
+        game_info = get_game_info(self._strings)
+        return PausableGame(
+            inner, game_info, self._make_eda_game, self._strings, self._pm
         )
 
     def _launch_stroop(self) -> None:
