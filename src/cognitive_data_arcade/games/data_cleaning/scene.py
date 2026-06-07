@@ -14,6 +14,7 @@ from cognitive_data_arcade.games.data_cleaning.difficulty import (
 )
 from cognitive_data_arcade.games.data_cleaning.generator import (
     FALSE_FLAG_HINT_EN, FALSE_FLAG_HINT_PL,
+    GENERIC_HINT_EN, GENERIC_HINT_PL,
     IDENTIFY_HINTS_EN, IDENTIFY_HINTS_PL,
     CleaningSession, apply_fixes, compute_score, compute_stats,
     generate_dataset, get_fix_feedback, get_fix_feedback_text,
@@ -78,6 +79,7 @@ class DataCleaningScene(Scene):
         self._hint_text = ""
         self._hint_color = _GREEN
         self._hint_timer = 0.0
+        self._h_hint_active = False  # H-key hint persists until H again or cursor move
 
         # FIX state
         self._fix_queue: list[int] = []
@@ -151,9 +153,9 @@ class DataCleaningScene(Scene):
             self._set_difficulty(1)
         elif key == pygame.K_3:
             self._set_difficulty(2)
-        elif key == pygame.K_RIGHT:
+        elif key in (pygame.K_RIGHT, pygame.K_DOWN):
             self._set_difficulty((self._diff_idx + 1) % len(ALL_DIFFICULTIES))
-        elif key == pygame.K_LEFT:
+        elif key in (pygame.K_LEFT, pygame.K_UP):
             self._set_difficulty((self._diff_idx - 1) % len(ALL_DIFFICULTIES))
         elif key in (pygame.K_RETURN, pygame.K_SPACE):
             self._start_game()
@@ -168,13 +170,17 @@ class DataCleaningScene(Scene):
         row = (pos[1] - _TABLE_Y0) // ROW_H + self._table.scroll
         if not (0 <= row < len(self._session.rows)):
             return
+        prev_cursor = self._table.cursor
         self._table.set_cursor(row)
+        if row != prev_cursor:
+            self._clear_h_hint()
         result = self._table.flag_toggle(row)
         if result == "flagged" and self._hints_visible:
             self._show_identify_hint(row)
         elif result == "unflagged":
             self._hint_text = ""
             self._hint_timer = 0.0
+            self._h_hint_active = False
 
     def _set_difficulty(self, idx: int) -> None:
         self._diff_idx = idx
@@ -189,17 +195,21 @@ class DataCleaningScene(Scene):
     def _handle_identify(self, key: int) -> None:
         if key == pygame.K_h:
             if self._difficulty.hints_mode == "toggle":
-                self._hints_visible = not self._hints_visible
+                self._toggle_h_hint()
         elif key == pygame.K_f:
             self._enter_fix_phase()
         else:
+            prev_cursor = self._table.cursor
             result = self._table.handle_keydown(key)
+            if self._table.cursor != prev_cursor:
+                self._clear_h_hint()
             if result == "flagged":
                 if self._hints_visible:
                     self._show_identify_hint(self._table.cursor)
             elif result == "unflagged":
                 self._hint_text = ""
                 self._hint_timer = 0.0
+                self._h_hint_active = False
 
     def _handle_fix(self, key: int) -> None:
         if self._popup is None:
@@ -240,6 +250,32 @@ class DataCleaningScene(Scene):
             self._hint_text = FALSE_FLAG_HINT_PL if lang == "pl" else FALSE_FLAG_HINT_EN
             self._hint_color = _RED
         self._hint_timer = _HINT_MS
+
+    def _toggle_h_hint(self) -> None:
+        if self._h_hint_active:
+            self._hint_text = ""
+            self._h_hint_active = False
+            return
+        cursor = self._table.cursor
+        lang = self._strings.language
+        if cursor in self._table.flagged:
+            error_type = self._session.ground_truth.get(cursor)
+            hints = IDENTIFY_HINTS_PL if lang == "pl" else IDENTIFY_HINTS_EN
+            if error_type is not None:
+                self._hint_text = hints[error_type]
+                self._hint_color = _GREEN
+            else:
+                self._hint_text = FALSE_FLAG_HINT_PL if lang == "pl" else FALSE_FLAG_HINT_EN
+                self._hint_color = _RED
+        else:
+            self._hint_text = GENERIC_HINT_PL if lang == "pl" else GENERIC_HINT_EN
+            self._hint_color = _DIM
+        self._h_hint_active = True
+
+    def _clear_h_hint(self) -> None:
+        if self._h_hint_active:
+            self._hint_text = ""
+            self._h_hint_active = False
 
     def _enter_fix_phase(self) -> None:
         self._fix_queue = sorted(self._table.flagged)
@@ -312,9 +348,9 @@ class DataCleaningScene(Scene):
 
         # Hint bar
         if lang == "pl":
-            hint = "[1/2/3] poziom  [L] legenda  [ENTER] start  [ESC] pauza"
+            hint = "[1/2/3] poziom  [strzalki] zmien  [L] legenda  [ENTER] start  [ESC] pauza"
         else:
-            hint = "[1/2/3] difficulty  [L] legend  [ENTER] start  [ESC] pause"
+            hint = "[1/2/3] difficulty  [arrows] change  [L] legend  [ENTER] start  [ESC] pause"
         hs = self._font_hint.render(hint, True, _DIM)
         surface.blit(hs, (w // 2 - hs.get_width() // 2, h - 48))
 
@@ -325,7 +361,7 @@ class DataCleaningScene(Scene):
         )
         surface.blit(title_surf, (40, 12))
         self._table.draw(surface, x0=40, y0=_TABLE_Y0, hints_visible=self._hints_visible)
-        if self._hint_timer > 0 and self._hint_text:
+        if (self._hint_timer > 0 or self._h_hint_active) and self._hint_text:
             hs = self._font_hint.render(self._hint_text, True, self._hint_color)
             surface.blit(hs, (40, h - 72))
         hint_parts = [self._strings.data_cleaning_done_btn]
