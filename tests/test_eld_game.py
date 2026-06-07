@@ -104,10 +104,10 @@ def test_enter_when_all_decided_goes_to_report():
 
 # ── DECISION navigation ────────────────────────────────────────────────────────
 
-def test_esc_in_decision_returns_to_config_map():
+def test_backspace_in_decision_returns_to_config_map():
     game = _make_game()
     game._state = _State.DECISION
-    game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode=""))
+    game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_BACKSPACE, mod=0, unicode=""))
     assert game._state == _State.CONFIG_MAP
 
 
@@ -196,12 +196,12 @@ def test_popup_enter_confirms_and_closes():
     assert game._state == _State.CONFIG_MAP
 
 
-def test_popup_esc_closes_without_saving():
+def test_popup_backspace_closes_without_saving():
     game = _make_game(difficulty="easy")
     game._state = _State.DECISION
     game._popup_visible = True
     game._node_idx = 0
-    game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode=""))
+    game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_BACKSPACE, mod=0, unicode=""))
     assert not game._popup_visible
     assert game._choices[0] is None
 
@@ -252,11 +252,11 @@ def test_score_zero_when_all_wrong():
 
 # ── REPORT navigation ──────────────────────────────────────────────────────────
 
-def test_report_esc_navigates_to_level_scene():
+def test_report_backspace_navigates_to_level_scene():
     from cognitive_data_arcade.ui.event_log_level_scene import EventLogLevelScene
     game = _make_game()
     game._state = _State.REPORT
-    game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode=""))
+    game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_BACKSPACE, mod=0, unicode=""))
     assert game.is_done()
     assert isinstance(game.next_scene(), EventLogLevelScene)
 
