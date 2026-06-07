@@ -5,7 +5,7 @@ import pygame
 import pytest
 
 from cognitive_data_arcade.games.data_cleaning.generator import DataRow
-from cognitive_data_arcade.games.data_cleaning.ui_table import TableWidget
+from cognitive_data_arcade.games.data_cleaning.ui_table import TableWidget, VISIBLE_ROWS
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -228,3 +228,52 @@ def test_flag_toggle_unflags_row():
     result = t.flag_toggle(2)
     assert result == "unflagged"
     assert 2 not in t.flagged
+
+
+# ── wheel scrolling ──────────────────────────────────────────────────────────────
+
+def test_handle_wheel_scrolls_table():
+    rows = [DataRow(i + 1, 1, i + 1, 400.0, 0.85) for i in range(50)]
+    t = TableWidget(rows)
+    t.handle_wheel(3)
+    assert t.scroll == 3
+
+
+def test_handle_wheel_does_not_exceed_max():
+    rows = [DataRow(i + 1, 1, i + 1, 400.0, 0.85) for i in range(20)]
+    t = TableWidget(rows)
+    t.handle_wheel(999)
+    assert t.scroll == 20 - VISIBLE_ROWS   # max = 5
+
+
+def test_handle_wheel_noop_when_fewer_rows_than_visible():
+    rows = [DataRow(i + 1, 1, i + 1, 400.0, 0.85) for i in range(10)]
+    t = TableWidget(rows)
+    assert not t.handle_wheel(1)
+    assert t.scroll == 0
+
+
+# ── scrollbar mouse ──────────────────────────────────────────────────────────────
+
+def test_handle_mousedown_in_scrollbar_area_returns_true():
+    # Scrollbar is at x = 40 + 420 + 8 = 468 (width 6 -> 468..474)
+    rows = [DataRow(i + 1, 1, i + 1, 400.0, 0.85) for i in range(100)]
+    t = TableWidget(rows)
+    assert t.handle_mousedown((470, 150))   # x inside scrollbar
+
+
+def test_handle_mousedown_outside_scrollbar_area_returns_false():
+    rows = [DataRow(i + 1, 1, i + 1, 400.0, 0.85) for i in range(100)]
+    t = TableWidget(rows)
+    assert not t.handle_mousedown((200, 150))   # x = 200 not in scrollbar
+
+
+def test_handle_mousemotion_during_drag_changes_scroll():
+    rows = [DataRow(i + 1, 1, i + 1, 400.0, 0.85) for i in range(100)]
+    t = TableWidget(rows)
+    # Mousedown on thumb (scroll=0, thumb at top of scrollbar at y0=100). Scrollbar x=468.
+    # thumb_h = max(20, round(15/100 * 420)) = 63. Thumb at y=100..163.
+    t.handle_mousedown((470, 102))   # y=102 is on the thumb
+    # Drag down to y=300
+    t.handle_mousemotion((470, 300), (1, 0, 0))
+    assert t.scroll > 0
