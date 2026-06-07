@@ -204,8 +204,11 @@ class PausableGame(Scene):
         max_key_w = max(
             (self._font_key.size(k)[0] for k, _ in bindings), default=80
         )
+        max_desc_w = max(
+            (self._font_key.size(d)[0] for _, d in bindings), default=160
+        )
         key_col_w = max_key_w + 16
-        panel_w = max(400, 24 + key_col_w + 200 + 24)
+        panel_w = max(400, 24 + key_col_w + max_desc_w + 24)
         panel_h = 56 + n * 36 + 40
         px = (w - panel_w) // 2
         py = (h - panel_h) // 2
