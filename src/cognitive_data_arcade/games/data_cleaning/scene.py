@@ -118,6 +118,12 @@ class DataCleaningScene(Scene):
                 self._handle_intro_click(event.pos)
             elif self._phase == Phase.IDENTIFY:
                 self._handle_identify_click(event.pos)
+        elif event.type == pygame.MOUSEWHEEL:
+            if self._phase == Phase.IDENTIFY:
+                self._table.handle_wheel(-event.y)   # event.y: positive = up in pygame
+        elif event.type == pygame.MOUSEMOTION:
+            if self._phase == Phase.IDENTIFY:
+                self._table.handle_mousemotion(event.pos, event.buttons)
 
     def update(self, dt_ms: float) -> None:
         if self._hint_timer > 0:
@@ -167,6 +173,8 @@ class DataCleaningScene(Scene):
                 return
 
     def _handle_identify_click(self, pos: tuple[int, int]) -> None:
+        if self._table.handle_mousedown(pos):
+            return
         row = (pos[1] - _TABLE_Y0) // ROW_H + self._table.scroll
         if not (0 <= row < len(self._session.rows)):
             return
