@@ -6,6 +6,7 @@ from dataclasses import dataclass
 import pygame
 
 from cognitive_data_arcade.engine import audio
+from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.profile.manager import ProfileManager
@@ -48,11 +49,10 @@ class PausableGame(Scene):
         self._done = False
         self._next: Scene | None = None
         audio.play_music("game")
-        pygame.font.init()
-        self._font_title = pygame.font.SysFont(None, 52)
-        self._font_item = pygame.font.SysFont(None, 34)
-        self._font_key = pygame.font.SysFont(None, 30)
-        self._font_hint = pygame.font.SysFont(None, 26)
+        self._font_title = get_font(52)
+        self._font_item = get_font(34)
+        self._font_key = get_font(30)
+        self._font_hint = get_font(26)
 
     def _update_pause_selected(self, pos: tuple[int, int]) -> None:
         from cognitive_data_arcade.engine.mouse import hit
@@ -199,8 +199,13 @@ class PausableGame(Scene):
 
     def _draw_keyref(self, surface: pygame.Surface) -> None:
         w, h = surface.get_size()
-        n = len(self._game_info.key_bindings)
-        panel_w = 400
+        bindings = self._game_info.key_bindings
+        n = len(bindings)
+        max_key_w = max(
+            (self._font_key.size(k)[0] for k, _ in bindings), default=80
+        )
+        key_col_w = max_key_w + 16
+        panel_w = max(400, 24 + key_col_w + 200 + 24)
         panel_h = 56 + n * 36 + 40
         px = (w - panel_w) // 2
         py = (h - panel_h) // 2
@@ -210,12 +215,13 @@ class PausableGame(Scene):
         pygame.draw.rect(
             surface, _BORDER, (px, py, panel_w, panel_h), 1, border_radius=8
         )
+        desc_x = px + 24 + key_col_w
         ky = py + 16
-        for key, desc in self._game_info.key_bindings:
+        for key, desc in bindings:
             key_surf = self._font_key.render(key, True, _KEY_COLOR)
             surface.blit(key_surf, (px + 24, ky))
             desc_surf = self._font_key.render(desc, True, _WHITE)
-            surface.blit(desc_surf, (px + 130, ky))
+            surface.blit(desc_surf, (desc_x, ky))
             ky += 36
         hint = self._font_hint.render(self._strings.pause_hint_esc_back, True, _DIM)
         surface.blit(
