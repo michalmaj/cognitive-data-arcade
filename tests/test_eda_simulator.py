@@ -75,3 +75,10 @@ def test_rng_seed_gives_deterministic_results():
     r1 = _run(rng_seed=99)
     r2 = _run(rng_seed=99)
     np.testing.assert_array_equal(r1.cond1, r2.cond1)
+
+
+def test_welch_t_guard_n_equals_one():
+    # n=1 triggers early return (0.0, 1.0) in _welch_t
+    r = simulate(n=1, baseline_ms=400, effect_ms=50, noise_sd=80, outlier_pct=0.0, rng_seed=42)
+    assert r.t_stat == 0.0
+    assert r.p_value == 1.0

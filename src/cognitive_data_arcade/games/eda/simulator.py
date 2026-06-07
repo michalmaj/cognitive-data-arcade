@@ -20,7 +20,7 @@ class SimResult:
     observed_diff: float       # mean2 - mean1
     mean1_no_out: float
     mean2_no_out: float
-    t_stat: float              # positive when cond2 > cond1
+    t_stat: float              # positive when cond2 > cond1; computed on raw data (outliers included)
     p_value: float             # two-tailed Welch t-test
 
 
