@@ -30,7 +30,7 @@ class ScrollBar:
         return self._scroll
 
     def scroll_to(self, value: int) -> None:
-        """Set scroll position, clamped to valid range. Used by TableWidget._sync_scroll."""
+        """Set scroll position, clamped to valid range."""
         self._scroll = max(0, min(self._max_scroll(), value))
 
     def set_total(self, total: int) -> None:
@@ -70,7 +70,7 @@ class ScrollBar:
         if self._total <= self._visible:
             return False
         px, py = pos
-        if not (self._x <= px <= self._x + self._width):
+        if not (self._x <= px < self._x + self._width):
             return False
         # Click is within scrollbar column -- consume it
         th = self._thumb_h()

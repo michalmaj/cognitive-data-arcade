@@ -46,7 +46,7 @@ def test_track_click_below_thumb_jumps():
     # At scroll=0: thumb_y=0, thumb_h=45. Click at y=150 is below thumb.
     # new_s = round((150 - 0 - 45) / (300 - 45) * 85) = round(34.98) = 35
     sb.handle_mousedown((3, 150))
-    assert 30 <= sb.scroll <= 55
+    assert sb.scroll == 35
 
 
 def test_no_op_when_all_visible():
@@ -103,4 +103,4 @@ def test_drag_updates_scroll(pg):
     # Drag to y=200 -> thumb_top = 200 - 22 = 178
     # new_s = round((178 - 0) / (300 - 45) * 85) = round(59.3) ~= 59
     sb.handle_mousemotion((3, 200), (1, 0, 0))
-    assert sb.scroll > 0
+    assert sb.scroll == 59
