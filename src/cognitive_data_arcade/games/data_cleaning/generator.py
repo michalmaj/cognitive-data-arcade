@@ -53,6 +53,10 @@ IDENTIFY_HINTS_PL: dict[ErrorType, str] = {
 FALSE_FLAG_HINT_EN = "This value looks fine — no data quality issue detected."
 FALSE_FLAG_HINT_PL = "Ta wartość wygląda prawidłowo — nie wykryto problemu z jakością danych."
 
+# Generic hint shown by H key on unflagged rows (Medium difficulty)
+GENERIC_HINT_EN = "Possible errors: negative RT, placeholders (9999/-99), missing RT, duplicates."
+GENERIC_HINT_PL = "Możliwe błędy: ujemny RT, wartości zastępcze (9999/-99), brak RT, duplikaty."
+
 # ── Fix-phase feedback lookup ────────────────────────────────────────────────────
 
 _FIX_FEEDBACK: dict[tuple[ErrorType, str], str] = {

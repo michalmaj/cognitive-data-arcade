@@ -230,7 +230,7 @@ def test_key_3_sets_hard_in_intro():
     assert scene._difficulty == HARD
 
 
-# ── Left/Right cycle difficulty in INTRO ────────────────────────────────────────
+# ── Left/Right/Up/Down cycle difficulty in INTRO ───────────────────────────────
 
 def test_right_arrow_cycles_to_medium():
     scene = _make()  # starts on EASY (index 0)
@@ -241,6 +241,18 @@ def test_right_arrow_cycles_to_medium():
 def test_left_arrow_wraps_from_easy_to_hard():
     scene = _make()  # starts on EASY (index 0)
     scene.handle_event(_key(pygame.K_LEFT))
+    assert scene._difficulty == HARD
+
+
+def test_down_arrow_cycles_to_medium():
+    scene = _make()  # starts on EASY (index 0)
+    scene.handle_event(_key(pygame.K_DOWN))
+    assert scene._difficulty == MEDIUM
+
+
+def test_up_arrow_wraps_from_easy_to_hard():
+    scene = _make()  # starts on EASY (index 0)
+    scene.handle_event(_key(pygame.K_UP))
     assert scene._difficulty == HARD
 
 
@@ -271,27 +283,55 @@ def test_l_key_toggles_legend_in_identify():
 def test_h_key_ignored_in_always_mode():
     scene = _make()  # EASY = always
     scene._phase = Phase.IDENTIFY
-    assert scene._hints_visible is True
+    assert scene._h_hint_active is False
     scene.handle_event(_key(pygame.K_h))
-    assert scene._hints_visible is True  # unchanged
+    assert scene._h_hint_active is False  # Easy never shows H hint
 
 
-def test_h_key_toggles_in_toggle_mode():
+def test_h_key_shows_generic_hint_on_unflagged_in_medium():
     scene = DataCleaningScene(EN, _FakePM(), seed=42, difficulty=MEDIUM)
     scene._phase = Phase.IDENTIFY
-    assert scene._hints_visible is False  # toggle starts False
+    assert scene._h_hint_active is False
     scene.handle_event(_key(pygame.K_h))
-    assert scene._hints_visible is True
+    assert scene._h_hint_active is True
+    assert scene._hint_text != ""
+
+
+def test_h_key_clears_hint_on_second_press_in_medium():
+    scene = DataCleaningScene(EN, _FakePM(), seed=42, difficulty=MEDIUM)
+    scene._phase = Phase.IDENTIFY
     scene.handle_event(_key(pygame.K_h))
-    assert scene._hints_visible is False
+    assert scene._h_hint_active is True
+    scene.handle_event(_key(pygame.K_h))
+    assert scene._h_hint_active is False
+    assert scene._hint_text == ""
+
+
+def test_h_key_shows_specific_hint_on_flagged_row_in_medium():
+    scene = DataCleaningScene(EN, _FakePM(), seed=42, difficulty=MEDIUM)
+    scene._phase = Phase.IDENTIFY
+    scene.handle_event(_key(pygame.K_SPACE))  # flag row 0
+    scene.handle_event(_key(pygame.K_h))
+    assert scene._h_hint_active is True
+    assert scene._hint_text != ""
+
+
+def test_h_hint_clears_on_cursor_move():
+    scene = DataCleaningScene(EN, _FakePM(), seed=42, difficulty=MEDIUM)
+    scene._phase = Phase.IDENTIFY
+    scene.handle_event(_key(pygame.K_h))
+    assert scene._h_hint_active is True
+    scene.handle_event(_key(pygame.K_DOWN))
+    assert scene._h_hint_active is False
+    assert scene._hint_text == ""
 
 
 def test_h_key_ignored_in_none_mode():
     scene = DataCleaningScene(EN, _FakePM(), seed=42, difficulty=HARD)
     scene._phase = Phase.IDENTIFY
-    assert scene._hints_visible is False
+    assert scene._h_hint_active is False
     scene.handle_event(_key(pygame.K_h))
-    assert scene._hints_visible is False
+    assert scene._h_hint_active is False
 
 
 # ── ENTER in INTRO regenerates dataset with selected difficulty ─────────────────
