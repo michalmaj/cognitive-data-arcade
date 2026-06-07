@@ -333,11 +333,18 @@ class LessonMenuScene(Scene):
         from cognitive_data_arcade.engine.pause import PausableGame
         from cognitive_data_arcade.games.eda.info import get_game_info
         from cognitive_data_arcade.games.eda.scene import EDAScene
+        from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
 
         inner = EDAScene()
         game_info = get_game_info(self._strings)
-        return PausableGame(
+        pausable = PausableGame(
             inner, game_info, self._make_eda_game, self._strings, self._pm
+        )
+        return HowToPlayScene(
+            game_info,
+            self._strings,
+            back_scene=pausable,
+            esc_scene=LessonMenuScene(self._pm, self._strings, self._selected),
         )
 
     def _launch_stroop(self) -> None:
