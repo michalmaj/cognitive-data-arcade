@@ -88,6 +88,7 @@ class EventLogLevelScene(Scene):
             self._launch()
 
     def _launch(self) -> None:
+        from cognitive_data_arcade.engine.pause import PausableGame
         from cognitive_data_arcade.games.event_log_detective.game import EventLogDetectiveGame
         from cognitive_data_arcade.games.event_log_detective.info import get_game_info
         from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
@@ -99,10 +100,12 @@ class EventLogLevelScene(Scene):
 
         inner = EventLogDetectiveGame(scenario, difficulty, strings, pm)
         game_info = get_game_info(strings)
+        restart_factory = lambda: EventLogLevelScene(pm, strings)
+        pausable = PausableGame(inner, game_info, restart_factory, strings, pm)
         self._next = HowToPlayScene(
             game_info,
             strings,
-            back_scene=inner,
+            back_scene=pausable,
             esc_scene=EventLogLevelScene(pm, strings),
         )
         self._done = True

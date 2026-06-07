@@ -141,12 +141,12 @@ class EventLogDetectiveGame(Scene):
     def _handle_intro(self, event: pygame.event.Event) -> None:
         if event.key in (pygame.K_RETURN, pygame.K_SPACE):
             self._state = _State.CONFIG_MAP
-        elif event.key == pygame.K_ESCAPE:
+        elif event.key == pygame.K_BACKSPACE:
             self._go_level_scene()
 
     def _handle_config_map(self, event: pygame.event.Event) -> None:
         n = len(self._scenario.decisions)
-        if event.key == pygame.K_ESCAPE:
+        if event.key == pygame.K_BACKSPACE:
             self._go_level_scene()
         elif event.key == pygame.K_UP:
             self._node_idx = max(0, self._node_idx - 1)
@@ -185,7 +185,7 @@ class EventLogDetectiveGame(Scene):
                     self._confirm_decision()
             else:
                 self._confirm_decision()
-        elif event.key == pygame.K_ESCAPE:
+        elif event.key == pygame.K_BACKSPACE:
             self._hint_visible = False
             self._state = _State.CONFIG_MAP
 
@@ -193,7 +193,7 @@ class EventLogDetectiveGame(Scene):
         if event.key == pygame.K_RETURN:
             self._popup_visible = False
             self._confirm_decision()
-        elif event.key == pygame.K_ESCAPE:
+        elif event.key == pygame.K_BACKSPACE:
             self._popup_visible = False
 
     def _handle_report(self, event: pygame.event.Event) -> None:
@@ -203,7 +203,7 @@ class EventLogDetectiveGame(Scene):
                 self._scenario, self._difficulty, self._strings, self._pm
             )
             self._done = True
-        elif event.key == pygame.K_ESCAPE:
+        elif event.key == pygame.K_BACKSPACE:
             self._go_level_scene()
 
     def _handle_mouse_motion(self, pos: tuple[int, int]) -> None:
@@ -381,14 +381,14 @@ class EventLogDetectiveGame(Scene):
         # Bottom hint
         if self._all_decided():
             if lang == "pl":
-                hint = "ENTER — raport   ESC — menu"
+                hint = "ENTER — raport   BACKSPACE — wroc"
             else:
-                hint = "ENTER — report   ESC — menu"
+                hint = "ENTER — report   BACKSPACE — back"
         else:
             if lang == "pl":
-                hint = "UP/DN — wybierz   ENTER — decyduj   ESC — menu"
+                hint = "UP/DN — wybierz   ENTER — decyduj   BACKSPACE — wroc"
             else:
-                hint = "UP/DN — select   ENTER — decide   ESC — menu"
+                hint = "UP/DN — select   ENTER — decide   BACKSPACE — back"
         hint_surf = self._font_hint.render(hint, True, _DIM)
         surface.blit(hint_surf, (w // 2 - hint_surf.get_width() // 2, h - 40))
 
@@ -442,9 +442,9 @@ class EventLogDetectiveGame(Scene):
                     hy += 28
 
         if lang == "pl":
-            back_hint = "ESC — wroc do mapy"
+            back_hint = "BACKSPACE — wroc do mapy   ESC — pauza"
         else:
-            back_hint = "ESC — back to map"
+            back_hint = "BACKSPACE — back to map   ESC — pause"
         back_surf = self._font_hint.render(back_hint, True, _DIM)
         surface.blit(back_surf, (w // 2 - back_surf.get_width() // 2, h - 40))
 
