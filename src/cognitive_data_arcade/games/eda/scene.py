@@ -164,10 +164,23 @@ class EDAScene(Scene):
         self._controls.draw(surface)
         self._charts.draw(surface, x=360, y=30)
         self._results.draw(surface, x=360, y=270)
+        self._draw_key_hints(surface)
         if self._show_legend:
             self._draw_overlay(surface, _LEGEND_LINES, scroll=0)
         elif self._show_help:
             self._draw_overlay(surface, _HELP_LINES, scroll=self._help_scroll)
+
+    def _draw_key_hints(self, surface: pygame.Surface) -> None:
+        font = get_font(16)
+        x = 30
+        y = surface.get_height() - 28
+        for key, label in (("L", "legenda"), ("H", "pomoc")):
+            k = font.render(f"[{key}]", True, _ACTIVE)
+            lb = font.render(f" {label}   ", True, _DIM)
+            surface.blit(k, (x, y))
+            x += k.get_width()
+            surface.blit(lb, (x, y))
+            x += lb.get_width()
 
     def _draw_overlay(
         self,
@@ -188,6 +201,7 @@ class EDAScene(Scene):
         font_hdr = get_font(20)
         font_body = get_font(18)
         y = _PANEL_Y + 18
+        surface.set_clip(pygame.Rect(_PANEL_X + 2, _PANEL_Y + 2, _PANEL_W - 14, _PANEL_H - 4))
         for text, is_header in lines[scroll:scroll + _VISIBLE_LINES]:
             if not text:
                 y += 8
@@ -196,6 +210,7 @@ class EDAScene(Scene):
             color = _ACTIVE if is_header else _WHITE
             surface.blit(f.render(text, True, color), (_PANEL_X + 20, y))
             y += f.size("A")[1] + (6 if is_header else 2)
+        surface.set_clip(None)
 
         max_scroll = max(0, len(lines) - _VISIBLE_LINES)
         if max_scroll > 0:
