@@ -146,7 +146,7 @@ class VisualSearchLevelScene(Scene):
 
         # Mode row (2 tiles)
         mode_label = font_row.render("Tryb bodźców", True, _DIM)
-        surface.blit(mode_label, (60, _ROW1_Y + (_TILE_H - font_row.get_height()) // 2))
+        surface.blit(mode_label, (60, _ROW1_Y - font_row.get_height() - 8))
         for i, (name, desc) in enumerate(zip(_MODE_LABELS, _MODE_DESCS)):
             rect = _tile_rect(i, _ROW1_Y)
             selected = (i == self._mode_idx)
@@ -167,7 +167,7 @@ class VisualSearchLevelScene(Scene):
 
         # Difficulty row (3 tiles)
         diff_label = font_row.render("Trudność", True, _DIM)
-        surface.blit(diff_label, (60, _ROW2_Y + (_TILE_H - font_row.get_height()) // 2))
+        surface.blit(diff_label, (60, _ROW2_Y - font_row.get_height() - 8))
         for i, (name, desc) in enumerate(zip(_DIFF_LABELS, _DIFF_DESCS)):
             rect = _tile_rect(i, _ROW2_Y)
             selected = (i == self._diff_idx)
