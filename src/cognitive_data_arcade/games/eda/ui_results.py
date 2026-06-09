@@ -12,6 +12,7 @@ from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.games.eda.simulator import SimResult
 
 _CHART_W, _CHART_H = 480, 240
+_DPI = 100
 _C1 = "#3498db"
 _C2 = "#e74c3c"
 _OUT = "#f39c12"
@@ -65,7 +66,12 @@ class ChartPanel:
         self._surface: pygame.Surface | None = None
 
     def update(self, result: SimResult) -> None:
-        fig, (ax1, ax2) = plt.subplots(1, 2, facecolor=_FIG_BG)
+        fig, (ax1, ax2) = plt.subplots(
+            1, 2,
+            facecolor=_FIG_BG,
+            figsize=(_CHART_W / _DPI, _CHART_H / _DPI),
+            dpi=_DPI,
+        )
         _data = [
             (ax1, result.cond1, result.outlier_mask1, _C1, "Warunek 1 (baseline)",
              result.mean1, result.mean1_no_out),
@@ -87,7 +93,7 @@ class ChartPanel:
             ax.tick_params(colors=_TICK, labelsize=7)
             for spine in ax.spines.values():
                 spine.set_edgecolor(_SPINE)
-        plt.tight_layout(pad=0.8)
+        plt.tight_layout(pad=1.2)
         self._surface = figure_to_surface(fig, (_CHART_W, _CHART_H))
 
     def draw(self, surface: pygame.Surface, x: int, y: int) -> None:
