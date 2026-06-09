@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import random
-from typing import List
 
 import pygame
 import pytest
@@ -107,4 +106,22 @@ def test_draw_item_no_crash() -> None:
         draw_item(surface, item, font)
     items_s = generate_items("shapes", "conjunction", True, 8, _rng())
     for item in items_s:
+        draw_item(surface, item, font)
+
+
+def test_generate_items_invalid_mode() -> None:
+    with pytest.raises(ValueError, match="mode"):
+        generate_items("video", "feature", True, 8, _rng())
+
+
+def test_generate_items_invalid_condition() -> None:
+    with pytest.raises(ValueError, match="condition"):
+        generate_items("letters", "serial", True, 8, _rng())
+
+
+def test_draw_item_unknown_kind_raises() -> None:
+    surface = pygame.Surface((1024, 768))
+    font = pygame.font.SysFont(None, 40)
+    item = Item(x=100.0, y=100.0, is_target=False, kind="triangle_red")
+    with pytest.raises(ValueError, match="Unknown item kind"):
         draw_item(surface, item, font)

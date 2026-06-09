@@ -45,6 +45,8 @@ class Item:
 def _grid_positions(
     set_size: int, screen_w: int, screen_h: int, rng: random.Random
 ) -> list[tuple[float, float]]:
+    if set_size not in GRID_PARAMS:
+        raise ValueError(f"Unsupported set_size {set_size!r}; valid: {sorted(GRID_PARAMS)}")
     cols, rows, spacing = GRID_PARAMS[set_size]
     total_w = (cols - 1) * spacing
     total_h = (rows - 1) * spacing
@@ -69,6 +71,12 @@ def generate_items(
     screen_w: int = 1024,
     screen_h: int = 768,
 ) -> list[Item]:
+    valid_modes = {"letters", "shapes"}
+    valid_conditions = {"feature", "conjunction"}
+    if mode not in valid_modes:
+        raise ValueError(f"mode must be one of {valid_modes}, got {mode!r}")
+    if condition not in valid_conditions:
+        raise ValueError(f"condition must be one of {valid_conditions}, got {condition!r}")
     key = (mode, condition)
     target_kind = _TARGET_KIND[key]
     distractor_pool = _DISTRACTOR_POOL[key]
@@ -106,3 +114,5 @@ def draw_item(
     elif item.kind == "square_orange":
         half = _SHAPE_RADIUS
         pygame.draw.rect(surface, _COLOR_ORANGE, (cx - half, cy - half, half * 2, half * 2))
+    else:
+        raise ValueError(f"Unknown item kind: {item.kind!r}")
