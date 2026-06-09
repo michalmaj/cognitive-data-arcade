@@ -9,6 +9,7 @@ from cognitive_data_arcade.games.visual_search.config import (
     FEEDBACK_MS,
     ITI_MS,
     TIMEOUT_MS,
+    BLOCK_BREAK_MS,
 )
 
 
@@ -33,8 +34,8 @@ def test_vsconfig_defaults() -> None:
 
 def test_vsconfig_medium() -> None:
     cfg = VSConfig(mode="shapes", difficulty="medium")
-    assert cfg.set_size == 16
-    assert cfg.trials_per_block == 24
+    assert cfg.set_size == SET_SIZES["medium"]
+    assert cfg.trials_per_block == TRIALS_PER_BLOCK["medium"]
 
 
 def test_timing_constants_positive() -> None:
@@ -42,3 +43,16 @@ def test_timing_constants_positive() -> None:
     assert FEEDBACK_MS > 0
     assert ITI_MS > 0
     assert TIMEOUT_MS > 0
+    assert BLOCK_BREAK_MS > 0
+
+
+def test_vsconfig_invalid_difficulty() -> None:
+    import pytest
+    with pytest.raises(ValueError, match="difficulty"):
+        VSConfig(mode="letters", difficulty="impossible")
+
+
+def test_vsconfig_invalid_mode() -> None:
+    import pytest
+    with pytest.raises(ValueError, match="mode"):
+        VSConfig(mode="video", difficulty="easy")
