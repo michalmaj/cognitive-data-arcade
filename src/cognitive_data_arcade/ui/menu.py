@@ -101,7 +101,7 @@ class LessonMenuScene(Scene):
             self._done = True
         elif event.key == pygame.K_t:
             lesson_num = _LESSONS[self._selected][0]
-            if lesson_num in (1, 2, 3, 4, 6, 7, 8, 9, 10):
+            if lesson_num in (1, 2, 3, 4, 6, 7, 8, 9, 10, 11):
                 from cognitive_data_arcade.ui.lesson_reader import LessonReaderScene
 
                 back = LessonMenuScene(self._pm, self._strings, self._selected)
@@ -139,7 +139,7 @@ class LessonMenuScene(Scene):
 
     def _teoria_available(self) -> bool:
         lesson_num = _LESSONS[self._selected][0]
-        return lesson_num in (1, 2, 3, 4, 6, 7, 8, 9, 10)
+        return lesson_num in (1, 2, 3, 4, 6, 7, 8, 9, 10, 11)
 
     def _handle_popup_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.KEYDOWN:
