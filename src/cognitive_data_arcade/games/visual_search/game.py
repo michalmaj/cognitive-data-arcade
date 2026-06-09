@@ -7,7 +7,6 @@ import math
 import random
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Optional
 
 import pygame
 
@@ -114,7 +113,7 @@ class VisualSearchGame(Scene):
         self._current_items: list[Item] = []
         self._last_correct: bool = False
         self._last_rt: float = 0.0
-        self._next_scene_cache: Optional[Scene] = None
+        self._next_scene_cache: Scene | None = None
 
         self._font_fix  = get_font(60)
         self._font_fb   = get_font(48)
@@ -146,6 +145,7 @@ class VisualSearchGame(Scene):
                 self._respond("present")
         elif self._phase == _Phase.BLOCK_BREAK:
             if event.key in (pygame.K_RETURN, pygame.K_SPACE):
+                self._load_trial()
                 self._phase = _Phase.ITI
                 self._phase_timer = 0.0
         elif self._phase == _Phase.SUMMARY:
@@ -172,7 +172,7 @@ class VisualSearchGame(Scene):
         t = self._trials[self._trial_idx]
         if response == "timeout":
             rt_ms = float("nan")
-            correct = not t["target_present"]
+            correct = False
         else:
             rt_ms = float(pygame.time.get_ticks() - self._rt_start)
             expected = "present" if t["target_present"] else "absent"
@@ -245,10 +245,11 @@ class VisualSearchGame(Scene):
             surface.blit(fb, (cx - fb.get_width() // 2, cy - fb.get_height() // 2))
 
         elif self._phase == _Phase.BLOCK_BREAK:
-            done  = self._trial_idx
-            total = len(self._trials)
-            msg  = self._font_fb.render(f"Koniec bloku 1 - {done}/{total}", True, _WHITE)
-            hint = self._font_info.render("Teraz szukanie zlezone. ENTER aby kontynuowac.", True, _DIM)
+            done      = self._trial_idx
+            total     = len(self._trials)
+            block_num = self._trial_idx // self._config.trials_per_block
+            msg  = self._font_fb.render(f"Koniec bloku {block_num} — {done}/{total}", True, _WHITE)
+            hint = self._font_info.render("Teraz szukanie złożone. ENTER aby kontynuować.", True, _DIM)
             surface.blit(msg,  (cx - msg.get_width() // 2, cy - 40))
             surface.blit(hint, (cx - hint.get_width() // 2, cy + 40))
 
@@ -270,11 +271,11 @@ class VisualSearchGame(Scene):
         col_rt  = cx - 60
         col_acc = cx + 120
         surface.blit(self._font_info.render("Warunek", True, _DIM),    (cx - 260, y))
-        surface.blit(self._font_info.render("Sredni RT", True, _DIM),  (col_rt,   y))
-        surface.blit(self._font_info.render("Trafnosc", True, _DIM),   (col_acc,  y))
+        surface.blit(self._font_info.render("Średni RT", True, _DIM),  (col_rt,   y))
+        surface.blit(self._font_info.render("Trafność", True, _DIM),   (col_acc,  y))
         y += 40
 
-        for condition, label in (("feature", "Feature (proste)"), ("conjunction", "Zlezone")):
+        for condition, label in (("feature", "Feature (proste)"), ("conjunction", "Złożone")):
             rts = [
                 r.rt_ms for r in self._records
                 if r.condition == condition and r.correct and not math.isnan(r.rt_ms)
@@ -293,5 +294,5 @@ class VisualSearchGame(Scene):
             surface.blit(acc_s, (col_acc,  y))
             y += 50
 
-        hint = self._font_info.render("ENTER / ESC - wyjdz", True, _DIM)
+        hint = self._font_info.render("ENTER / ESC — wyjdź", True, _DIM)
         surface.blit(hint, (cx - hint.get_width() // 2, y + 40))

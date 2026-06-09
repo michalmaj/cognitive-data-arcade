@@ -92,11 +92,34 @@ def test_csv_written_after_response(tmp_path: Path) -> None:
 
 
 def test_timeout_records_trial(tmp_path: Path) -> None:
-    game = _make_game(tmp_path)
     csv_path = tmp_path / "vs.csv"
-    # Advance through fixation into search
-    game.update(600.0)
-    # Advance past timeout
-    game.update(float(TIMEOUT_MS + 100))
-    # Game should have recorded a trial (timeout = absent response)
-    game.draw(pygame.Surface((1024, 768)))  # must not crash in feedback phase
+    pm = ProfileManager(tmp_path / "profile.json")
+    cfg = VSConfig(mode="letters", difficulty="easy")
+    game = VisualSearchGame(cfg, pm, PL, "pid", "sid", csv_path)
+    game.update(600.0)                          # advance through fixation to SEARCH
+    game.update(float(TIMEOUT_MS + 100))        # advance past timeout
+    game.draw(pygame.Surface((1024, 768)))      # must not crash in FEEDBACK
+    assert csv_path.exists(), "CSV not written after timeout"
+    lines = csv_path.read_text().splitlines()
+    assert len(lines) == 2                      # header + 1 trial
+    assert "timeout" in lines[1], "timeout not recorded in CSV"
+
+
+def test_block_break_loads_new_trial(tmp_path: Path) -> None:
+    game = _make_game(tmp_path)
+    n = game._config.trials_per_block
+    # Advance through all trials in block 1
+    for _ in range(n):
+        game.update(600.0)    # FIXATION -> SEARCH
+        event = pygame.event.Event(pygame.KEYDOWN, {"key": pygame.K_f, "mod": 0, "unicode": "f"})
+        game.handle_event(event)   # respond
+        game.update(500.0)    # FEEDBACK -> ITI
+        game.update(400.0)    # ITI -> FIXATION (ready for next)
+    # Should now be in BLOCK_BREAK
+    assert game._phase.value == "block_break"
+    # Press ENTER to continue to block 2
+    enter = pygame.event.Event(pygame.KEYDOWN, {"key": pygame.K_RETURN, "mod": 0, "unicode": ""})
+    game.handle_event(enter)
+    # After pressing ENTER, _current_items should be loaded for trial index n
+    assert game._trial_idx == n
+    assert len(game._current_items) == game._config.set_size
