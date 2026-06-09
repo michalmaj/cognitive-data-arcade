@@ -19,6 +19,7 @@ _LESSONS = [
     (8, "Flanker Arena"),
     (9, "Go/No-Go Guard"),
     (10, "N-Back Memory Grid"),
+    (11, "Visual Search Lab"),
 ]
 
 _BG = (26, 26, 46)
@@ -100,7 +101,7 @@ class LessonMenuScene(Scene):
             self._done = True
         elif event.key == pygame.K_t:
             lesson_num = _LESSONS[self._selected][0]
-            if lesson_num in (1, 2, 3, 4, 6, 7, 8, 9, 10):
+            if lesson_num in (1, 2, 3, 4, 6, 7, 8, 9, 10, 11):
                 from cognitive_data_arcade.ui.lesson_reader import LessonReaderScene
 
                 back = LessonMenuScene(self._pm, self._strings, self._selected)
@@ -129,6 +130,8 @@ class LessonMenuScene(Scene):
             self._launch_gono()
         elif lesson_num == 10:
             self._launch_nback()
+        elif lesson_num == 11:
+            self._launch_visual_search()
         elif lesson_num == 6:
             self._launch_eda()
         elif lesson_num == 7:
@@ -136,7 +139,7 @@ class LessonMenuScene(Scene):
 
     def _teoria_available(self) -> bool:
         lesson_num = _LESSONS[self._selected][0]
-        return lesson_num in (1, 2, 3, 4, 6, 7, 8, 9, 10)
+        return lesson_num in (1, 2, 3, 4, 6, 7, 8, 9, 10, 11)
 
     def _handle_popup_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.KEYDOWN:
@@ -210,6 +213,12 @@ class LessonMenuScene(Scene):
                 from cognitive_data_arcade.ui.nback_level_scene import NBackLevelScene
                 return NBackLevelScene(pm, strings)
             return _make_nback
+        if lesson_num == 11:
+            pm, strings = self._pm, self._strings
+            def _make_vs() -> Scene:
+                from cognitive_data_arcade.ui.visual_search_level_scene import VisualSearchLevelScene
+                return VisualSearchLevelScene(pm, strings)
+            return _make_vs
         return None
 
     def _confirm_popup(self) -> None:
@@ -379,6 +388,14 @@ class LessonMenuScene(Scene):
 
         self._next = NBackLevelScene(self._pm, self._strings)
         self._done = True
+
+    def _launch_visual_search(self) -> None:
+        self._next = self._make_visual_search_game()
+        self._done = True
+
+    def _make_visual_search_game(self) -> Scene:
+        from cognitive_data_arcade.ui.visual_search_level_scene import VisualSearchLevelScene
+        return VisualSearchLevelScene(self._pm, self._strings)
 
     def update(self, dt_ms: float) -> None:
         pass
