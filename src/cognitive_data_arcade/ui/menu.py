@@ -22,6 +22,7 @@ _LESSONS = [
     (9, "Go/No-Go Guard"),
     (10, "N-Back Memory Grid"),
     (11, "Visual Search Lab"),
+    (12, "Cognitive Dashboard"),
 ]
 
 _BG = (26, 26, 46)
@@ -134,6 +135,8 @@ class LessonMenuScene(Scene):
             self._launch_nback()
         elif lesson_num == 11:
             self._launch_visual_search()
+        elif lesson_num == 12:
+            self._launch_cognitive_dashboard()
         elif lesson_num == 6:
             self._launch_eda()
         elif lesson_num == 7:
@@ -225,6 +228,12 @@ class LessonMenuScene(Scene):
                 from cognitive_data_arcade.ui.visual_search_level_scene import VisualSearchLevelScene
                 return VisualSearchLevelScene(pm, strings)
             return _make_vs
+        if lesson_num == 12:
+            pm, strings = self._pm, self._strings
+            def _make_cd() -> Scene:
+                from cognitive_data_arcade.games.cognitive_dashboard.mode_scene import CognitiveDashboardModeScene
+                return CognitiveDashboardModeScene(pm, strings)
+            return _make_cd
         return None
 
     def _confirm_popup(self) -> None:
@@ -402,6 +411,16 @@ class LessonMenuScene(Scene):
     def _make_visual_search_game(self) -> Scene:
         from cognitive_data_arcade.ui.visual_search_level_scene import VisualSearchLevelScene
         return VisualSearchLevelScene(self._pm, self._strings)
+
+    def _launch_cognitive_dashboard(self) -> None:
+        self._next = self._make_cognitive_dashboard_scene()
+        self._done = True
+
+    def _make_cognitive_dashboard_scene(self) -> Scene:
+        from cognitive_data_arcade.games.cognitive_dashboard.mode_scene import (
+            CognitiveDashboardModeScene,
+        )
+        return CognitiveDashboardModeScene(self._pm, self._strings)
 
     def update(self, dt_ms: float) -> None:
         pass
