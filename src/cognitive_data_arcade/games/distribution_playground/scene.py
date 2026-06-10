@@ -15,7 +15,7 @@ _WHITE  = (240, 240, 240)
 _DIM    = (120, 120, 160)
 _ACTIVE = (243, 156, 18)
 _NAV_H  = 48
-_PHASE_NAMES = ["Eksploracja", "Zgadywanie", "Porownanie"]
+_PHASE_NAMES = ["Eksploracja", "Zgadywanie", "Porównanie"]
 
 
 class DistributionPlaygroundScene(Scene):
@@ -75,7 +75,7 @@ class DistributionPlaygroundScene(Scene):
         surface.blit(font_nav.render("<", True, _WHITE), (20, 10))
         surface.blit(font_nav.render(">", True, _WHITE), (1024 - 36, 10))
 
-        surface.blit(font_sub.render("LEWO / PRAWO = zmien faze", True, _DIM), (20, _NAV_H - 16))
+        surface.blit(font_sub.render("LEWO / PRAWO = zmień fazę", True, _DIM), (20, _NAV_H - 16))
 
 
 def _offset_mouse_event(event: pygame.event.Event, dy: int) -> pygame.event.Event:

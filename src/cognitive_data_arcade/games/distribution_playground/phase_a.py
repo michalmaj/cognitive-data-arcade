@@ -36,35 +36,35 @@ _DPI     = 100
 
 _SLIDERS: dict[str, list[SliderSpec]] = {
     "normal": [
-        SliderSpec("Srednia (mu) ms", 200, 800, 400, 10),
+        SliderSpec("Średnia (mu) ms", 200, 800, 400, 10),
         SliderSpec("Odch. std (sigma) ms", 20, 200, 80, 10),
-        SliderSpec("Probka (N)", 20, 200, 50, 10),
+        SliderSpec("Próbka (N)", 20, 200, 50, 10),
     ],
     "uniform": [
         SliderSpec("Minimum ms", 100, 600, 300, 10),
         SliderSpec("Maksimum ms", 300, 1000, 600, 10),
-        SliderSpec("Probka (N)", 20, 200, 50, 10),
+        SliderSpec("Próbka (N)", 20, 200, 50, 10),
     ],
     "exgaussian": [
-        SliderSpec("Srednia (mu) ms", 200, 600, 350, 10),
+        SliderSpec("Średnia (mu) ms", 200, 600, 350, 10),
         SliderSpec("Odch. std (sigma) ms", 20, 150, 60, 10),
         SliderSpec("Ogon exp. (tau) ms", 20, 300, 100, 10),
-        SliderSpec("Probka (N)", 20, 200, 50, 10),
+        SliderSpec("Próbka (N)", 20, 200, 50, 10),
     ],
 }
 
 _POPUP_CONTENT: dict[str, ContextInfo] = {
-    "mu":    ContextInfo("Srednia (mu)", "Centrum rozkladu. mu = suma(x) / N", "Przesuwa caly rozklad w lewo/prawo"),
-    "sigma": ContextInfo("Odch. std (sigma)", "Przecietne odchylenie od sredniej.", "Wieksze sigma -> szerszy, nizszy rozklad"),
-    "tau":   ContextInfo("Ogon exp. (tau)", "Srednia skladowej wykladniczej w Ex-Gaussian", "Wieksze tau -> dluzszy ogon prawostronny"),
-    "N":     ContextInfo("Probka (N)", "Liczba losowanych obserwacji", "Wieksze N -> bardziej stabilny histogram"),
-    "min":   ContextInfo("Minimum", "Dolna granica rozkladu jednostajnego", "Przesuwa lewy kraniec rozkladu"),
-    "max":   ContextInfo("Maksimum", "Gorna granica rozkladu jednostajnego", "Przesuwa prawy kraniec rozkladu"),
-    "mean":  ContextInfo("Srednia probkowa", "x_sr = suma(x_i) / N", "Czula na outliery"),
-    "median":ContextInfo("Mediana", "Wartosc srodkowa po posortowaniu probki", "Odporna na outliery"),
-    "sd":    ContextInfo("Odchylenie std.", "Przecietne odchylenie obserwacji od sredniej", "Wieksze SD = szerszy rozklad"),
-    "iqr":   ContextInfo("IQR", "Q3 - Q1: srodkowe 50% danych", "Odporny na outliery miernik rozrzutu"),
-    "skew":  ContextInfo("Skosnosc", "Miara asymetrii. 0=symetryczny, >0=ogon w prawo", "RT-y maja skosnosc >0 (prawy ogon)"),
+    "mu":    ContextInfo("Średnia (mu)", "Centrum rozkładu. mu = suma(x) / N", "Przesuwa cały rozkład w lewo/prawo"),
+    "sigma": ContextInfo("Odch. std (sigma)", "Przeciętne odchylenie od średniej.", "Większe sigma -> szerszy, niższy rozkład"),
+    "tau":   ContextInfo("Ogon exp. (tau)", "Średnia składowej wykładniczej w Ex-Gaussian", "Większe tau -> dłuższy ogon prawostronny"),
+    "N":     ContextInfo("Próbka (N)", "Liczba losowanych obserwacji", "Większe N -> bardziej stabilny histogram"),
+    "min":   ContextInfo("Minimum", "Dolna granica rozkładu jednostajnego", "Przesuwa lewy kraniec rozkładu"),
+    "max":   ContextInfo("Maksimum", "Górna granica rozkładu jednostajnego", "Przesuwa prawy kraniec rozkładu"),
+    "mean":  ContextInfo("Średnia próbkowa", "x_sr = suma(x_i) / N", "Czuła na outliery"),
+    "median":ContextInfo("Mediana", "Wartość środkowa po posortowaniu próbki", "Odporna na outliery"),
+    "sd":    ContextInfo("Odchylenie std.", "Przeciętne odchylenie obserwacji od średniej", "Większe SD = szerszy rozkład"),
+    "iqr":   ContextInfo("IQR", "Q3 - Q1: środkowe 50% danych", "Odporny na outliery miernik rozrzutu"),
+    "skew":  ContextInfo("Skośność", "Miara asymetrii. 0=symetryczny, >0=ogon w prawo", "RT-y mają skośność >0 (prawy ogon)"),
 }
 
 
@@ -74,7 +74,7 @@ def _param_key(label: str) -> str:
         return "min"
     if "maksimum" in lo or lo.startswith("maks"):
         return "max"
-    if "mu" in lo or "srednia" in lo:
+    if "mu" in lo or "srednia" in lo or "średnia" in lo:
         return "mu"
     if "sigma" in lo or "odch" in lo:
         return "sigma"
@@ -180,18 +180,17 @@ class PhaseAScene(Scene):
 
 def _draw_stats(surface: pygame.Surface, r: SimResult, y: int) -> None:
     font = get_font(15)
-    col = _DIM
     stats = [
-        ("Srednia", f"{r.mean:.1f} ms"),
+        ("Średnia", f"{r.mean:.1f} ms"),
         ("Mediana", f"{r.median:.1f} ms"),
         ("SD",      f"{r.sd:.1f} ms"),
         ("IQR",     f"{r.iqr:.1f} ms"),
-        ("Skosnosc",f"{r.skewness:.2f}"),
+        ("Skośność",f"{r.skewness:.2f}"),
     ]
     for i, (lbl, val) in enumerate(stats):
         col_x = 12 + (i % 2) * 160
         row_y = y + (i // 2) * 22
-        surface.blit(font.render(f"{lbl}: {val}", True, _DIM), (col_x, row_y))
+        surface.blit(font.render(f"{lbl}: {val}", True, (120, 120, 160)), (col_x, row_y))
 
 
 def _render_chart(r: SimResult) -> pygame.Surface:
@@ -204,5 +203,5 @@ def _render_chart(r: SimResult) -> pygame.Surface:
     for spine in ax.spines.values():
         spine.set_color("#2a2a50")
     ax.set_xlabel("RT (ms)", color="#787890", fontsize=9)
-    ax.set_ylabel("Gestosc", color="#787890", fontsize=9)
+    ax.set_ylabel("Gęstość", color="#787890", fontsize=9)
     return figure_to_surface(fig, (_CHART_W, _CHART_H))
