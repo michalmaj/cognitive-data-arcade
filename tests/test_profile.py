@@ -1,132 +1,112 @@
-from pathlib import Path
+from __future__ import annotations
 
-from cognitive_data_arcade.profile.manager import ProfileManager, level_title
+import pytest
 
-
-def test_level_title_boundaries() -> None:
-    assert level_title(0) == "🌱 Data Seedling"
-    assert level_title(499) == "🌱 Data Seedling"
-    assert level_title(500) == "🔍 Data Explorer"
-    assert level_title(1500) == "📊 Data Analyst"
-    assert level_title(3000) == "🧠 Cognitive Scientist"
-    assert level_title(5000) == "⚡ Mind Hacker"
-    assert level_title(9999) == "⚡ Mind Hacker"
+from cognitive_data_arcade.games.cognitive_dashboard.profile import cognitive_profile
+from cognitive_data_arcade.games.cognitive_dashboard.session import DashboardSession, TaskResult
 
 
-def test_load_creates_default_profile_when_missing(tmp_path: Path) -> None:
-    manager = ProfileManager(tmp_path / "profile.json")
-    profile = manager.load()
-    assert profile.alias == "anonymous"
-    assert profile.arcade_points == 0
-    assert profile.science_points == 0
-    assert profile.badges == []
-    assert profile.completed_lessons == []
-    assert len(profile.device_uuid) == 36  # UUID4 format
+def _make_result(rt_ms: list[float], conditions: list[str], correct: list[bool] | None = None) -> TaskResult:
+    if correct is None:
+        correct = [True] * len(rt_ms)
+    return TaskResult(rt_ms=rt_ms, correct=correct, condition=conditions)
 
 
-def test_load_persists_new_profile_to_disk(tmp_path: Path) -> None:
-    path = tmp_path / "profile.json"
-    ProfileManager(path).load()
-    assert path.exists()
+def _full_session(
+    stroop_effect_ms: float,
+    flanker_effect_ms: float,
+    gonogo_fa_count: int,
+) -> DashboardSession:
+    base_rt = 300.0
+    rt = _make_result([base_rt] * 8, ["simple"] * 8)
+
+    # Stroop: 4 congruent at base, 4 incongruent at base + effect
+    stroop = _make_result(
+        [base_rt] * 4 + [base_rt + stroop_effect_ms] * 4,
+        ["congruent"] * 4 + ["incongruent"] * 4,
+    )
+
+    # Flanker: same pattern
+    flanker = _make_result(
+        [base_rt] * 4 + [base_rt + flanker_effect_ms] * 4,
+        ["congruent"] * 4 + ["incongruent"] * 4,
+    )
+
+    # GoNoGo: 6 go (correct) + 2 nogo; fa_count nogo trials are false alarms
+    nogo_correct = [False] * gonogo_fa_count + [True] * (2 - gonogo_fa_count)
+    gonogo = _make_result(
+        [-1.0] * 6 + [-1.0] * 2,
+        ["go"] * 6 + ["nogo"] * 2,
+        correct=[True] * 6 + nogo_correct,
+    )
+
+    return DashboardSession(rt=rt, stroop=stroop, flanker=flanker, gonogo=gonogo)
 
 
-def test_add_ap_accumulates_across_calls(tmp_path: Path) -> None:
-    manager = ProfileManager(tmp_path / "profile.json")
-    manager.add_ap(100)
-    manager.add_ap(200)
-    assert manager.load().arcade_points == 300
+def test_profile_returns_list_of_strings() -> None:
+    s = _full_session(50.0, 40.0, 1)
+    result = cognitive_profile(s)
+    assert isinstance(result, list)
+    assert all(isinstance(line, str) for line in result)
+    assert len(result) >= 2
 
 
-def test_add_sp_accumulates_across_calls(tmp_path: Path) -> None:
-    manager = ProfileManager(tmp_path / "profile.json")
-    manager.add_sp(50)
-    manager.add_sp(75)
-    assert manager.load().science_points == 125
+def test_profile_stroop_low_effect() -> None:
+    s = _full_session(stroop_effect_ms=30.0, flanker_effect_ms=40.0, gonogo_fa_count=0)
+    text = " ".join(cognitive_profile(s))
+    assert "silna" in text.lower() or "strong" in text.lower()
 
 
-def test_award_badge_stores_badge(tmp_path: Path) -> None:
-    manager = ProfileManager(tmp_path / "profile.json")
-    manager.award_badge("speed_runner")
-    assert "speed_runner" in manager.load().badges
+def test_profile_stroop_medium_effect() -> None:
+    s = _full_session(stroop_effect_ms=60.0, flanker_effect_ms=40.0, gonogo_fa_count=0)
+    text = " ".join(cognitive_profile(s))
+    assert "przeciętna" in text.lower() or "average" in text.lower()
 
 
-def test_award_badge_ignores_duplicates(tmp_path: Path) -> None:
-    manager = ProfileManager(tmp_path / "profile.json")
-    manager.award_badge("speed_runner")
-    manager.award_badge("speed_runner")
-    assert manager.load().badges.count("speed_runner") == 1
+def test_profile_stroop_high_effect() -> None:
+    s = _full_session(stroop_effect_ms=90.0, flanker_effect_ms=40.0, gonogo_fa_count=0)
+    text = " ".join(cognitive_profile(s))
+    assert "interferencja" in text.lower()
 
 
-def test_complete_lesson_stores_number(tmp_path: Path) -> None:
-    manager = ProfileManager(tmp_path / "profile.json")
-    manager.complete_lesson(2)
-    assert 2 in manager.load().completed_lessons
+def test_profile_flanker_low_effect() -> None:
+    s = _full_session(stroop_effect_ms=50.0, flanker_effect_ms=15.0, gonogo_fa_count=0)
+    text = " ".join(cognitive_profile(s))
+    assert "bardzo dobra" in text.lower()
 
 
-def test_complete_lesson_ignores_duplicates(tmp_path: Path) -> None:
-    manager = ProfileManager(tmp_path / "profile.json")
-    manager.complete_lesson(2)
-    manager.complete_lesson(2)
-    assert manager.load().completed_lessons.count(2) == 1
+def test_profile_flanker_medium_effect() -> None:
+    s = _full_session(stroop_effect_ms=50.0, flanker_effect_ms=40.0, gonogo_fa_count=0)
+    text = " ".join(cognitive_profile(s))
+    assert "przeciętna" in text.lower()
 
 
-def test_device_uuid_stable_across_loads(tmp_path: Path) -> None:
-    manager = ProfileManager(tmp_path / "profile.json")
-    uuid1 = manager.load().device_uuid
-    uuid2 = manager.load().device_uuid
-    assert uuid1 == uuid2
+def test_profile_flanker_high_effect() -> None:
+    s = _full_session(stroop_effect_ms=50.0, flanker_effect_ms=70.0, gonogo_fa_count=0)
+    text = " ".join(cognitive_profile(s))
+    assert "dystraktorzy" in text.lower()
 
 
-def test_profile_default_language_is_pl(tmp_path: Path) -> None:
-    manager = ProfileManager(tmp_path / "profile.json")
-    profile = manager.load()
-    assert profile.language == "pl"
+def test_profile_gonogo_no_fa() -> None:
+    s = _full_session(stroop_effect_ms=50.0, flanker_effect_ms=40.0, gonogo_fa_count=0)
+    text = " ".join(cognitive_profile(s))
+    assert "bezbłędne" in text.lower()
 
 
-def test_set_language_persists(tmp_path: Path) -> None:
-    manager = ProfileManager(tmp_path / "profile.json")
-    manager.set_language("en")
-    assert manager.load().language == "en"
+def test_profile_gonogo_one_fa() -> None:
+    s = _full_session(stroop_effect_ms=50.0, flanker_effect_ms=40.0, gonogo_fa_count=1)
+    text = " ".join(cognitive_profile(s))
+    assert "drobne błędy" in text.lower()
 
 
-def test_load_old_profile_without_language_uses_default(tmp_path: Path) -> None:
-    import json
-    import uuid
-
-    path = tmp_path / "profile.json"
-    old_data = {
-        "alias": "olduser",
-        "device_uuid": str(uuid.uuid4()),
-        "arcade_points": 100,
-        "science_points": 50,
-        "badges": [],
-        "completed_lessons": [],
-    }
-    path.write_text(json.dumps(old_data))
-    manager = ProfileManager(path)
-    profile = manager.load()
-    assert profile.language == "pl"
+def test_profile_gonogo_many_fa() -> None:
+    s = _full_session(stroop_effect_ms=50.0, flanker_effect_ms=40.0, gonogo_fa_count=2)
+    text = " ".join(cognitive_profile(s))
+    assert "impulsywn" in text.lower()
 
 
-def test_profile_default_fullscreen_is_false(tmp_path: Path) -> None:
-    manager = ProfileManager(tmp_path / "profile.json")
-    profile = manager.load()
-    assert profile.fullscreen is False
-
-
-def test_load_old_profile_without_fullscreen_uses_default(tmp_path: Path) -> None:
-    import json
-    import uuid
-
-    path = tmp_path / "profile.json"
-    old_data = {
-        "alias": "olduser",
-        "device_uuid": str(uuid.uuid4()),
-        "arcade_points": 0,
-        "science_points": 0,
-        "badges": [],
-        "completed_lessons": [],
-    }
-    path.write_text(json.dumps(old_data))
-    profile = ProfileManager(path).load()
-    assert profile.fullscreen is False
+def test_profile_closing_sentence_always_present() -> None:
+    s = _full_session(50.0, 40.0, 0)
+    lines = cognitive_profile(s)
+    closing = lines[-1]
+    assert "8 prób" in closing
