@@ -66,3 +66,15 @@ def test_generate_synthetic_stroop_all_correct() -> None:
 def test_generate_synthetic_flanker_all_correct() -> None:
     s = generate_synthetic()
     assert all(s.flanker.correct)
+
+
+def test_generate_synthetic_gonogo_correct_rejections_have_minus_one_rt() -> None:
+    # Run multiple times to get at least one correct rejection (85% likely per nogo trial)
+    found_correct_rejection = False
+    for _ in range(20):
+        s = generate_synthetic()
+        for rt, correct, cond in zip(s.gonogo.rt_ms, s.gonogo.correct, s.gonogo.condition):
+            if cond == "nogo" and correct:
+                assert rt == -1.0, f"Correct rejection should have rt=-1.0, got {rt}"
+                found_correct_rejection = True
+    assert found_correct_rejection, "No correct rejections found in 20 runs — fa_rate may be broken"
