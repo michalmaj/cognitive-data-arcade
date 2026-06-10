@@ -141,6 +141,7 @@ _INCONGRUENT_TRIALS = [
 
 
 def _make_stroop_trials() -> list[dict]:
+    assert len(_CONGRUENT_TRIALS) + len(_INCONGRUENT_TRIALS) == MINI_TRIALS
     trials = (
         [{"word": w, "ink": i, "condition": "congruent"} for w, i in _CONGRUENT_TRIALS]
         + [{"word": w, "ink": i, "condition": "incongruent"} for w, i in _INCONGRUENT_TRIALS]
@@ -258,6 +259,7 @@ _FLANKER_TRIALS = [
 
 
 def _make_flanker_trials() -> list[dict]:
+    assert len(_FLANKER_TRIALS) == MINI_TRIALS
     trials = list(_FLANKER_TRIALS)
     random.shuffle(trials)
     return trials
@@ -359,7 +361,10 @@ class MiniFlankerScene(Scene):
 # ── MiniGoNoGoScene ───────────────────────────────────────────────────────────
 
 def _make_gonogo_trials() -> list[dict]:
-    trials = [{"trial_type": "go"}] * (MINI_TRIALS - 2) + [{"trial_type": "nogo"}] * 2
+    trials = (
+        [{"trial_type": "go"} for _ in range(MINI_TRIALS - 2)]
+        + [{"trial_type": "nogo"} for _ in range(2)]
+    )
     random.shuffle(trials)
     return trials
 
