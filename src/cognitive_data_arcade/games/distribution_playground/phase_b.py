@@ -35,22 +35,28 @@ _DPI    = 100
 _MAX_HINTS = 3
 _SUCCESS_THRESHOLD = 85.0
 
+# Button layout: 3 equal buttons with 8 px gaps, 12 px side margins
+_BW  = (_LEFT_W - 24 - 16) // 3  # = 116
+_BH  = 30
+_BX0 = 12
+_BY  = _AREA_H - 50
+
 _SLIDERS: dict[str, list[SliderSpec]] = {
     "normal": [
-        SliderSpec("Srednia (mu) ms", 200, 800, 400, 10),
+        SliderSpec("Średnia (mu) ms", 200, 800, 400, 10),
         SliderSpec("Odch. std (sigma) ms", 20, 200, 80, 10),
-        SliderSpec("Probka (N)", 20, 200, 50, 10),
+        SliderSpec("Próbka (N)", 20, 200, 50, 10),
     ],
     "uniform": [
         SliderSpec("Minimum ms", 100, 600, 300, 10),
         SliderSpec("Maksimum ms", 300, 1000, 600, 10),
-        SliderSpec("Probka (N)", 20, 200, 50, 10),
+        SliderSpec("Próbka (N)", 20, 200, 50, 10),
     ],
     "exgaussian": [
-        SliderSpec("Srednia (mu) ms", 200, 600, 350, 10),
+        SliderSpec("Średnia (mu) ms", 200, 600, 350, 10),
         SliderSpec("Odch. std (sigma) ms", 20, 150, 60, 10),
         SliderSpec("Ogon exp. (tau) ms", 20, 300, 100, 10),
-        SliderSpec("Probka (N)", 20, 200, 50, 10),
+        SliderSpec("Próbka (N)", 20, 200, 50, 10),
     ],
 }
 
@@ -119,10 +125,14 @@ class PhaseBScene(Scene):
             )
             self._success = score >= _SUCCESS_THRESHOLD
 
+    def _button_rects(self) -> list[pygame.Rect]:
+        return [
+            pygame.Rect(_BX0 + i * (_BW + 8), _BY, _BW, _BH)
+            for i in range(3)
+        ]
+
     def handle_event(self, event: pygame.event.Event) -> None:
-        hint_rect    = pygame.Rect(20, _AREA_H - 80, 120, 30)
-        give_up_rect = pygame.Rect(150, _AREA_H - 80, 120, 30)
-        new_rect     = pygame.Rect(280, _AREA_H - 80, 120, 30)
+        hint_rect, give_up_rect, new_rect = self._button_rects()
 
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             if hint_rect.collidepoint(event.pos):
@@ -185,31 +195,38 @@ class PhaseBScene(Scene):
                       (_LEFT_W + 8, _AREA_H - 90))
 
         if self._success:
-            area.blit(get_font(18).render("Swietnie! Dalej ->", True, _GREEN),
+            area.blit(get_font(18).render("Świetnie! Dalej >>", True, _GREEN),
                       (_LEFT_W + 8, _AREA_H - 60))
 
+        # Info block: left panel, below sliders (max slider y ~ 296)
+        info_y = 310
         if self._hints_used >= 1 and self._target:
             area.blit(font.render(f"Typ: {self._target.dist_type}", True, _ORANGE),
-                      (20, _AREA_H - 120))
+                      (16, info_y))
+            info_y += 22
         if self._revealed and self._target:
-            for i, (k, v) in enumerate(self._target.params.items()):
-                area.blit(font.render(f"Cel {k}: {v:.0f}", True, _DIM),
-                          (20, _AREA_H - 140 + i * 18))
+            area.blit(font.render("Cel rozkładu:", True, _DIM), (16, info_y))
+            info_y += 20
+            for k, v in self._target.params.items():
+                area.blit(font.render(f"  {k} = {v:.0f}", True, _WHITE), (16, info_y))
+                info_y += 18
 
-        for lbl, rect, enabled in [
-            ("Wskazowka",  pygame.Rect(20, _AREA_H - 80, 120, 30), self._hints_used < _MAX_HINTS),
-            ("Poddaj sie", pygame.Rect(150, _AREA_H - 80, 120, 30), not self._revealed),
-            ("Nowy cel",   pygame.Rect(280, _AREA_H - 80, 120, 30), True),
-        ]:
+        # Fixed bottom: counter then buttons
+        area.blit(font.render(f"Wskazówki: {self._hints_used}/{_MAX_HINTS}", True, _DIM),
+                  (16, _AREA_H - 82))
+
+        for i, (lbl, enabled) in enumerate([
+            ("Wskazówka", self._hints_used < _MAX_HINTS),
+            ("Poddaj się", not self._revealed),
+            ("Nowy cel",  True),
+        ]):
+            rect = self._button_rects()[i]
             col = (60, 60, 100) if enabled else (40, 40, 60)
             pygame.draw.rect(area, col, rect, border_radius=4)
             pygame.draw.rect(area, (100, 100, 160), rect, width=1, border_radius=4)
             tw, th = font.size(lbl)
             area.blit(font.render(lbl, True, _WHITE if enabled else _DIM),
                       (rect.x + (rect.w - tw) // 2, rect.y + (rect.h - th) // 2))
-
-        area.blit(font.render(f"Wskazowki: {self._hints_used}/{_MAX_HINTS}", True, _DIM),
-                  (20, _AREA_H - 105))
 
         surface.blit(area, (0, offset_y))
 

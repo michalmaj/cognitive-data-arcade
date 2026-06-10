@@ -36,28 +36,28 @@ _DPI     = 100
 
 _SLIDERS_BY_TYPE: dict[str, list[SliderSpec]] = {
     "normal": [
-        SliderSpec("Srednia (mu) ms", 200, 800, 400, 10),
+        SliderSpec("Średnia (mu) ms", 200, 800, 400, 10),
         SliderSpec("Odch. std (sigma) ms", 20, 200, 80, 10),
-        SliderSpec("Probka (N)", 20, 200, 50, 10),
+        SliderSpec("Próbka (N)", 20, 200, 50, 10),
     ],
     "uniform": [
         SliderSpec("Minimum ms", 100, 600, 300, 10),
         SliderSpec("Maksimum ms", 300, 1000, 600, 10),
-        SliderSpec("Probka (N)", 20, 200, 50, 10),
+        SliderSpec("Próbka (N)", 20, 200, 50, 10),
     ],
     "exgaussian": [
-        SliderSpec("Srednia (mu) ms", 200, 600, 350, 10),
+        SliderSpec("Średnia (mu) ms", 200, 600, 350, 10),
         SliderSpec("Odch. std (sigma) ms", 20, 150, 60, 10),
         SliderSpec("Ogon exp. (tau) ms", 20, 300, 100, 10),
-        SliderSpec("Probka (N)", 20, 200, 50, 10),
+        SliderSpec("Próbka (N)", 20, 200, 50, 10),
     ],
 }
 
 _POPUP_STATS = {
-    "delta":    ContextInfo("Delta srednia", "Roznica srednich: x_sr_B - x_sr_A", "Pokazuje przesuniecie, ale nie uwzglednia zmiennosci"),
-    "cohens_d": ContextInfo("Cohen's d", "Standaryzowana roznica: (mu_A-mu_B)/sigma_pool. d>0.8=duzy efekt", "Pozwala porownac efekt niezaleznie od jednostki"),
-    "p_value":  ContextInfo("p-value (test Welcha)", "Prawdop. wyniku przy H0: mu_A=mu_B", "p<0.05 = odrzucamy H0; ale zalezy od N!"),
-    "sd_ratio": ContextInfo("sigma_A / sigma_B", "Stosunek odchylen standardowych obu prob", "Roznica zmiennosci miedzy grupami"),
+    "delta":    ContextInfo("Delta średnia", "Różnica średnich: x_sr_B - x_sr_A", "Pokazuje przesunięcie, ale nie uwzględnia zmienności"),
+    "cohens_d": ContextInfo("Cohen's d", "Standaryzowana różnica: (mu_A-mu_B)/sigma_pool. d>0.8=duży efekt", "Pozwala porównać efekt niezależnie od jednostki"),
+    "p_value":  ContextInfo("p-value (test Welcha)", "Prawdop. wyniku przy H0: mu_A=mu_B", "p<0.05 = odrzucamy H0; ale zależy od N!"),
+    "sd_ratio": ContextInfo("sigma_A / sigma_B", "Stosunek odchyleń standardowych obu prób", "Różnica zmienności między grupami"),
 }
 
 
@@ -190,7 +190,7 @@ def _draw_compare_stats(
     font   = get_font(15)
     x = _CHART_W + 8
     y = 280
-    surface.blit(font_h.render("Porownanie", True, _ORANGE), (x, y - 24))
+    surface.blit(font_h.render("Porównanie", True, _ORANGE), (x, y - 24))
 
     rows = [
         f"Delta srednia: {c.delta_mean:+.1f} ms",
