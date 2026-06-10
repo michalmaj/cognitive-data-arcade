@@ -73,3 +73,121 @@ def simulate(
         dist_type=dist_type,
         params=dict(params),
     )
+
+
+# ── Welch t-test (pure numpy, no scipy) ─────────────────────────────────────
+
+def _betacf(a: float, b: float, x: float) -> float:
+    """Lentz continued-fraction expansion for regularised incomplete beta."""
+    qab, qap = a + b, a + 1.0
+    c, d = 1.0, 1.0 - qab * x / qap
+    if abs(d) < 1e-30:
+        d = 1e-30
+    d = 1.0 / d
+    h = d
+    for m in range(1, 201):
+        m2 = 2 * m
+        aa = m * (b - m) * x / ((a - 1.0 + m2) * (a + m2))
+        d = 1.0 + aa * d
+        if abs(d) < 1e-30:
+            d = 1e-30
+        c = 1.0 + aa / c
+        if abs(c) < 1e-30:
+            c = 1e-30
+        d = 1.0 / d
+        h *= d * c
+        aa = -(a + m) * (qab + m) * x / ((a + m2) * (qap + m2))
+        d = 1.0 + aa * d
+        if abs(d) < 1e-30:
+            d = 1e-30
+        c = 1.0 + aa / c
+        if abs(c) < 1e-30:
+            c = 1e-30
+        d = 1.0 / d
+        delta = d * c
+        h *= delta
+        if abs(delta - 1.0) < 3e-7:
+            break
+    return h
+
+
+def _betainc(x: float, a: float, b: float) -> float:
+    if x <= 0.0:
+        return 0.0
+    if x >= 1.0:
+        return 1.0
+    lbeta = math.lgamma(a) + math.lgamma(b) - math.lgamma(a + b)
+    front = math.exp(a * math.log(x) + b * math.log(1.0 - x) - lbeta)
+    if x < (a + 1.0) / (a + b + 2.0):
+        return front * _betacf(a, b, x) / a
+    return 1.0 - front * _betacf(b, a, 1.0 - x) / b
+
+
+def _welch_t(a: np.ndarray, b: np.ndarray) -> tuple[float, float]:
+    na, nb = len(a), len(b)
+    if na < 2 or nb < 2:
+        return 0.0, 1.0
+    ma, mb = float(a.mean()), float(b.mean())
+    va = float(a.var(ddof=1))
+    vb = float(b.var(ddof=1))
+    se2 = va / na + vb / nb
+    if se2 <= 0.0:
+        return 0.0, 1.0
+    t = (mb - ma) / math.sqrt(se2)
+    df = se2 ** 2 / ((va / na) ** 2 / (na - 1) + (vb / nb) ** 2 / (nb - 1))
+    x = df / (df + t ** 2)
+    p = float(np.clip(_betainc(x, df / 2.0, 0.5), 0.0, 1.0))
+    return t, p
+
+
+# ── Public functions ─────────────────────────────────────────────────────────
+
+def compare(a: SimResult, b: SimResult) -> CompareResult:
+    pooled_sd = (a.sd + b.sd) / 2.0
+    cohens_d = (a.mean - b.mean) / pooled_sd if pooled_sd > 0 else 0.0
+    _, p = _welch_t(a.samples, b.samples)
+    sd_ratio = a.sd / b.sd if b.sd > 0 else 1.0
+    return CompareResult(
+        delta_mean=b.mean - a.mean,
+        cohens_d=cohens_d,
+        p_value=p,
+        sd_ratio=sd_ratio,
+    )
+
+
+def random_target(rng: np.random.Generator) -> SimResult:
+    dist_type = rng.choice(["normal", "uniform", "exgaussian"])
+    ranges = _PARAM_RANGES[dist_type]
+    params: dict[str, float] = {}
+    for k, (lo, hi) in ranges.items():
+        if k == "N":
+            params[k] = float(int(rng.integers(int(lo), int(hi) + 1, endpoint=True)))
+        else:
+            step = 10.0
+            steps = int((hi - lo) / step)
+            params[k] = min(hi, lo + float(rng.integers(0, steps + 1, endpoint=True)) * step)
+    return simulate(dist_type, params, rng_seed=int(rng.integers(0, 2**31)))
+
+
+def match_score(
+    student_type: str,
+    student_params: dict[str, float],
+    target_type: str,
+    target_params: dict[str, float],
+) -> float:
+    """0-100 match score. Type mismatch returns 0."""
+    if student_type != target_type:
+        return 0.0
+    ranges = _PARAM_RANGES[target_type]
+    proximities = []
+    for k, (lo, hi) in ranges.items():
+        span = hi - lo
+        if span <= 0:
+            continue
+        student_val = student_params.get(k, lo)
+        target_val = target_params.get(k, lo)
+        prox = max(0.0, 1.0 - abs(student_val - target_val) / span)
+        proximities.append(prox)
+    if not proximities:
+        return 100.0
+    return round(sum(proximities) / len(proximities) * 100.0, 1)

@@ -2,7 +2,7 @@
 from __future__ import annotations
 import numpy as np
 from cognitive_data_arcade.games.distribution_playground.simulator import (
-    SimResult, CompareResult, simulate,
+    SimResult, CompareResult, simulate, compare, random_target, match_score,
 )
 
 def test_simresult_has_expected_fields():
@@ -80,3 +80,72 @@ def test_iqr_positive():
 def test_median_stored():
     r = simulate("normal", {"mu": 400, "sigma": 80, "N": 50}, rng_seed=12)
     assert isinstance(r.median, float)
+
+# ── compare() ───────────────────────────────────────────────────────────────
+
+def test_compare_delta_mean_sign():
+    a = simulate("normal", {"mu": 400, "sigma": 80, "N": 100}, rng_seed=1)
+    b = simulate("normal", {"mu": 500, "sigma": 80, "N": 100}, rng_seed=2)
+    c = compare(a, b)
+    assert c.delta_mean > 0   # mean_b - mean_a > 0
+
+def test_compare_p_value_range():
+    a = simulate("normal", {"mu": 400, "sigma": 80, "N": 100}, rng_seed=1)
+    b = simulate("normal", {"mu": 500, "sigma": 80, "N": 100}, rng_seed=2)
+    c = compare(a, b)
+    assert 0.0 <= c.p_value <= 1.0
+
+def test_compare_cohens_d_large_effect():
+    a = simulate("normal", {"mu": 400, "sigma": 50, "N": 100}, rng_seed=1)
+    b = simulate("normal", {"mu": 600, "sigma": 50, "N": 100}, rng_seed=2)
+    c = compare(a, b)
+    assert abs(c.cohens_d) > 1.0
+
+def test_compare_sd_ratio():
+    a = simulate("normal", {"mu": 400, "sigma": 80, "N": 100}, rng_seed=1)
+    b = simulate("normal", {"mu": 400, "sigma": 160, "N": 100}, rng_seed=2)
+    c = compare(a, b)
+    assert abs(c.sd_ratio - 0.5) < 0.2
+
+# ── random_target() ────────────────────────────────────────────────────────
+
+def test_random_target_returns_simresult():
+    rng = np.random.default_rng(42)
+    r = random_target(rng)
+    assert isinstance(r, SimResult)
+    assert r.dist_type in ("normal", "uniform", "exgaussian")
+
+def test_random_target_params_within_range():
+    from cognitive_data_arcade.games.distribution_playground.simulator import _PARAM_RANGES
+    for seed in range(20):
+        rng = np.random.default_rng(seed)
+        r = random_target(rng)
+        ranges = _PARAM_RANGES[r.dist_type]
+        for k, (lo, hi) in ranges.items():
+            assert lo <= r.params[k] <= hi, f"{k}={r.params[k]} out of [{lo},{hi}]"
+
+# ── match_score() ──────────────────────────────────────────────────────────
+
+def test_match_score_perfect():
+    rng = np.random.default_rng(7)
+    target = random_target(rng)
+    score = match_score(target.dist_type, target.params, target.dist_type, target.params)
+    assert score == 100.0
+
+def test_match_score_wrong_type_is_zero():
+    rng = np.random.default_rng(7)
+    target = random_target(rng)
+    if target.dist_type == "normal":
+        student_type = "uniform"
+        student_params = {"min": 300, "max": 600, "N": 50}
+    else:
+        student_type = "normal"
+        student_params = {"mu": 400, "sigma": 80, "N": 50}
+    score = match_score(student_type, student_params, target.dist_type, target.params)
+    assert score == 0.0
+
+def test_match_score_partial():
+    target_params = {"mu": 400, "sigma": 80, "N": 50}
+    student_params = {"mu": 600, "sigma": 80, "N": 50}
+    score = match_score("normal", student_params, "normal", target_params)
+    assert 0.0 < score < 100.0
