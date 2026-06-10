@@ -33,7 +33,7 @@ class Slider:
         self._value = spec.default
         self._dragging = False
         self.focused: bool = False
-        self.rect = pygame.Rect(x - 6, y - 2, w + 12, 36)
+        self.rect = pygame.Rect(x - 6, y - 2, w + 12, 42)
 
     @property
     def value(self) -> int:
@@ -47,7 +47,7 @@ class Slider:
         return self._x + round(ratio * self._w)
 
     def _track_y(self) -> int:
-        return self._y + 20
+        return self._y + 26
 
     def _set_from_pixel(self, px: int) -> None:
         ratio = (px - self._x) / max(1, self._w)

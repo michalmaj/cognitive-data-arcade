@@ -70,16 +70,16 @@ _POPUP_CONTENT: dict[str, ContextInfo] = {
 
 def _param_key(label: str) -> str:
     lo = label.lower()
+    if "minimum" in lo or lo.startswith("min"):
+        return "min"
+    if "maksimum" in lo or lo.startswith("maks"):
+        return "max"
     if "mu" in lo or "srednia" in lo:
         return "mu"
     if "sigma" in lo or "odch" in lo:
         return "sigma"
     if "tau" in lo or "ogon" in lo:
         return "tau"
-    if "minimum" in lo or lo.startswith("min"):
-        return "min"
-    if "maksimum" in lo or lo.startswith("maks"):
-        return "max"
     return "N"
 
 
