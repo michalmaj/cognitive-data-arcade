@@ -78,25 +78,33 @@ class CognitiveDashboardScene(Scene):
                 self._session.flanker, self._session.gonogo][idx]
 
     def _launch_task(self, idx: int) -> None:
-        s = self._session
-        pm, strings = self._pm, self._strings
-
-        def back() -> Scene:
-            return CognitiveDashboardScene(s, strings, pm)
-
+        from cognitive_data_arcade.engine.pause import PausableGame
+        from cognitive_data_arcade.games.cognitive_dashboard.info import get_game_info
         from cognitive_data_arcade.games.cognitive_dashboard.mini_tasks import (
             MiniFlankerScene,
             MiniGoNoGoScene,
             MiniRTScene,
             MiniStroopScene,
         )
-        factories = [
+
+        s = self._session
+        pm, strings = self._pm, self._strings
+
+        def back() -> Scene:
+            return CognitiveDashboardScene(s, strings, pm)
+
+        scene_factories = [
             lambda: MiniRTScene(s, back),
             lambda: MiniStroopScene(s, back),
             lambda: MiniFlankerScene(s, back),
             lambda: MiniGoNoGoScene(s, back),
         ]
-        self._next = factories[idx]()
+
+        def make_pausable() -> Scene:
+            inner = scene_factories[idx]()
+            return PausableGame(inner, get_game_info(strings), make_pausable, strings, pm)
+
+        self._next = make_pausable()
         self._done = True
 
     def handle_event(self, event: pygame.event.Event) -> None:
