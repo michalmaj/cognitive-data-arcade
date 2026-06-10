@@ -46,12 +46,12 @@ def test_draw_complete_session_no_crash(tmp_path) -> None:
     scene.draw(pygame.Surface((1024, 768)))
 
 
-def test_esc_exits(tmp_path) -> None:
+def test_esc_does_not_exit_scene(tmp_path) -> None:
+    # ESC is intercepted by PausableGame wrapper; the scene itself stays alive
     scene = _make_scene(tmp_path)
     event = pygame.event.Event(pygame.KEYDOWN, {"key": pygame.K_ESCAPE, "mod": 0, "unicode": ""})
     scene.handle_event(event)
-    assert scene.is_done()
-    assert scene.next_scene() is not None
+    assert not scene.is_done()
 
 
 def test_synthetic_button_visible_when_empty(tmp_path) -> None:

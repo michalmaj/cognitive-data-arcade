@@ -57,15 +57,23 @@ class CognitiveDashboardModeScene(Scene):
                 self._launch(self._selected)
 
     def _launch(self, idx: int) -> None:
+        from cognitive_data_arcade.engine.pause import PausableGame
         from cognitive_data_arcade.games.cognitive_dashboard.config import generate_synthetic
         from cognitive_data_arcade.games.cognitive_dashboard.dashboard_scene import CognitiveDashboardScene
+        from cognitive_data_arcade.games.cognitive_dashboard.info import get_game_info
 
         if idx == 0:
             session = DashboardSession()
         else:
             session = generate_synthetic()
 
-        self._next = CognitiveDashboardScene(session, self._strings, self._pm)
+        strings, pm = self._strings, self._pm
+
+        def make_dashboard() -> Scene:
+            inner = CognitiveDashboardScene(session, strings, pm)
+            return PausableGame(inner, get_game_info(strings), make_dashboard, strings, pm)
+
+        self._next = make_dashboard()
         self._done = True
 
     def update(self, dt_ms: float) -> None:

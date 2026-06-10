@@ -77,14 +77,15 @@ class CognitiveDashboardScene(Scene):
     _DP_Y = (_H - _DP_H) // 2
 
     # ── What-if-panel geometry ─────────────────────────────────────
-    _WI_W, _WI_H  = 720, 470
+    _WI_W, _WI_H  = 720, 500
     _WI_X = (_W - _WI_W) // 2
     _WI_Y = (_H - _WI_H) // 2
     _WI_TRACK_W   = 360
     _WI_TRACK_X   = _WI_X + 220      # slider track left edge
     _WI_STROOP_Y  = _WI_Y + 76
     _WI_FLANKER_Y = _WI_Y + 160
-    _WI_FA_Y      = _WI_Y + 244
+    _WI_FA_Y      = _WI_Y + 244      # label row
+    _WI_FA_BTN_Y  = _WI_Y + 278      # buttons row (separate from label)
 
     def __init__(
         self,
@@ -137,10 +138,10 @@ class CognitiveDashboardScene(Scene):
     def _wi_btn_rect(self) -> pygame.Rect:
         profile_y = _ROW2_Y + _TILE_H + 20
         btn_y = profile_y + 34 + 4 * 26 + 10   # just below the 4 profile lines
-        return pygame.Rect(40, btn_y, 280, 28)
+        return pygame.Rect(40, btn_y, 320, 28)
 
     def _fa_btn_rect(self, val: int) -> pygame.Rect:
-        return pygame.Rect(self._WI_TRACK_X + val * 52, self._WI_FA_Y, 44, 32)
+        return pygame.Rect(self._WI_TRACK_X + val * 52, self._WI_FA_BTN_Y, 44, 32)
 
     # ── scene protocol ─────────────────────────────────────────────
 
@@ -158,7 +159,10 @@ class CognitiveDashboardScene(Scene):
         pm, strings = self._pm, self._strings
 
         def back() -> Scene:
-            return CognitiveDashboardScene(s, strings, pm)
+            def make_dash() -> Scene:
+                inner = CognitiveDashboardScene(s, strings, pm)
+                return PausableGame(inner, get_game_info(strings), make_dash, strings, pm)
+            return make_dash()
 
         scene_factories = [
             lambda: MiniRTScene(s, back),
@@ -192,11 +196,7 @@ class CognitiveDashboardScene(Scene):
 
         # ── Normal dashboard events ────────────────────────────────
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
-                from cognitive_data_arcade.ui.menu import LessonMenuScene
-                self._next = LessonMenuScene(self._pm, self._strings)
-                self._done = True
-            elif event.key == pygame.K_LEFT:
+            if event.key == pygame.K_LEFT:
                 self._selected = max(0, self._selected - 1)
             elif event.key == pygame.K_RIGHT:
                 self._selected = min(3, self._selected + 1)
@@ -285,7 +285,7 @@ class CognitiveDashboardScene(Scene):
         title = get_font(42).render("Cognitive Dashboard", True, _WHITE)
         surface.blit(title, (40, 46))
 
-        esc_hint = get_font(24).render("ESC = menu", True, _DIM)
+        esc_hint = get_font(24).render("ESC = pauza", True, _DIM)
         surface.blit(esc_hint, (w - esc_hint.get_width() - 20, 50))
 
         for i in range(4):
@@ -296,7 +296,7 @@ class CognitiveDashboardScene(Scene):
         elif self._show_synthetic_button():
             self._draw_synthetic_button(surface, w, h)
 
-        hint = get_font(22).render("strzalki + ENTER = zagraj / szczegoly zadania", True, _DIM)
+        hint = get_font(22).render("strzałki + ENTER = zagraj / szczegóły zadania", True, _DIM)
         surface.blit(hint, (w // 2 - hint.get_width() // 2, h - 34))
 
         # Overlays (drawn last, on top of everything)
@@ -318,7 +318,7 @@ class CognitiveDashboardScene(Scene):
         if result is not None:
             pygame.draw.rect(surface, color, rect, border_radius=8)
             tc = _BG
-            detail_hint = get_font(18).render("klik = szczegoly", True, _BG)
+            detail_hint = get_font(18).render("klik = szczegóły", True, _BG)
             surface.blit(detail_hint, (rect.right - detail_hint.get_width() - 8, rect.bottom - 22))
         else:
             border_color = color if selected else _DIM
@@ -345,7 +345,7 @@ class CognitiveDashboardScene(Scene):
         acc = _accuracy(result.correct)
         surface.blit(font.render(f"avg RT: {avg:.0f} ms", True, tc), (rect.x + 16, y))
         y += 28
-        surface.blit(font.render(f"trafnosc: {acc:.0f}%", True, tc), (rect.x + 16, y))
+        surface.blit(font.render(f"trafność: {acc:.0f}%", True, tc), (rect.x + 16, y))
         y += 28
 
         if idx == 1:
@@ -372,7 +372,7 @@ class CognitiveDashboardScene(Scene):
         # What-if button below profile
         btn = self._wi_btn_rect()
         pygame.draw.rect(surface, _DIM, btn, 1, border_radius=4)
-        lbl = get_font(20).render("Co by bylo gdyby? ->", True, _ORANGE)
+        lbl = get_font(20).render("Co by było gdyby? ->", True, _ORANGE)
         surface.blit(lbl, (btn.x + 8, btn.y + 5))
 
     def _draw_synthetic_button(self, surface: pygame.Surface, w: int, h: int) -> None:
@@ -393,9 +393,9 @@ class CognitiveDashboardScene(Scene):
         pygame.draw.rect(surface, _PANEL, (px, py, pw, ph), border_radius=10)
         pygame.draw.rect(surface, _TASK_COLORS[idx], (px, py, pw, ph), 2, border_radius=10)
 
-        title = get_font(26).render(f"{_TASK_NAMES[idx]} — proba po probie", True, _WHITE)
+        title = get_font(26).render(f"{_TASK_NAMES[idx]} — próba po próbie", True, _WHITE)
         surface.blit(title, (px + 18, py + 14))
-        close_hint = get_font(20).render("ESC / klik poza = zamknij", True, _DIM)
+        close_hint = get_font(20).render("klik poza = zamknij", True, _DIM)
         surface.blit(close_hint, (px + pw - close_hint.get_width() - 12, py + 18))
 
         # Chart area
@@ -487,7 +487,7 @@ class CognitiveDashboardScene(Scene):
         else:
             legend = [(_GREEN, "go: trafiony"),
                       (_DIM, "go: timeout / nogo: ok (CR)"),
-                      (_RED, "nogo: falszywy alarm")]
+                      (_RED, "nogo: fałszywy alarm")]
         for i, (color, label) in enumerate(legend):
             lx = x + i * 210
             pygame.draw.rect(surface, color, (lx, y + 5, 12, 12), border_radius=2)
@@ -501,9 +501,9 @@ class CognitiveDashboardScene(Scene):
         pygame.draw.rect(surface, _PANEL, (px, py, pw, ph), border_radius=10)
         pygame.draw.rect(surface, _ORANGE, (px, py, pw, ph), 2, border_radius=10)
 
-        title = get_font(28).render("Co by bylo gdyby?", True, _ORANGE)
+        title = get_font(28).render("Co by było gdyby?", True, _ORANGE)
         surface.blit(title, (px + 18, py + 14))
-        close_hint = get_font(20).render("ESC = zamknij", True, _DIM)
+        close_hint = get_font(20).render("klik poza = zamknij", True, _DIM)
         surface.blit(close_hint, (px + pw - close_hint.get_width() - 14, py + 18))
 
         # Real session values for markers
@@ -524,8 +524,8 @@ class CognitiveDashboardScene(Scene):
         self._draw_slider(surface, "flanker", "Efekt Flankera:",
                           self._WI_FLANKER_Y, self._wi_flanker, _WI_FLANKER_MAX, real_flanker)
 
-        # GoNoGo FA buttons
-        fa_lbl = get_font(22).render("Falszywe alarmy GoNoGo:", True, _WHITE)
+        # GoNoGo FA — label on its own line, buttons on the row below
+        fa_lbl = get_font(22).render("Fałszywe alarmy GoNoGo:", True, _WHITE)
         surface.blit(fa_lbl, (px + 18, self._WI_FA_Y + 6))
         for val in range(3):
             btn = self._fa_btn_rect(val)
@@ -537,12 +537,12 @@ class CognitiveDashboardScene(Scene):
             surface.blit(num, (btn.centerx - num.get_width() // 2,
                                btn.centery - num.get_height() // 2))
         if real_fa is not None:
-            real_fa_lbl = get_font(17).render(f"Twoj wynik: {real_fa}", True, _ORANGE)
+            real_fa_lbl = get_font(17).render(f"Twój wynik: {real_fa}", True, _ORANGE)
             surface.blit(real_fa_lbl,
-                         (self._WI_TRACK_X + 3 * 52 + 10, self._WI_FA_Y + 8))
+                         (self._WI_TRACK_X + 3 * 52 + 10, self._WI_FA_BTN_Y + 8))
 
         # Separator
-        sep_y = self._WI_FA_Y + 50
+        sep_y = self._WI_FA_BTN_Y + 42
         pygame.draw.line(surface, _DIM, (px + 18, sep_y), (px + pw - 18, sep_y), 1)
 
         # Hypothetical profile
@@ -576,7 +576,7 @@ class CognitiveDashboardScene(Scene):
         if real_val is not None:
             mx = tx + int(real_val / max_val * tw)
             pygame.draw.line(surface, _ORANGE, (mx, y - 4), (mx, y + 26), 3)
-            rl = get_font(16).render(f"Twoj wynik: {real_val:.0f} ms", True, _ORANGE)
+            rl = get_font(16).render(f"Twój wynik: {real_val:.0f} ms", True, _ORANGE)
             rlx = max(tx, min(mx - rl.get_width() // 2, tx + tw - rl.get_width()))
             surface.blit(rl, (rlx, y + 28))
 
@@ -592,23 +592,23 @@ class CognitiveDashboardScene(Scene):
     def _hypothetical_profile(stroop_eff: float, flanker_eff: float, fa: int) -> list[str]:
         lines: list[str] = []
         if stroop_eff < 40:
-            lines.append("Odpornosc na interferencje: silna (<40 ms)")
+            lines.append("Odporność na interferencję: silna (<40 ms)")
         elif stroop_eff <= 80:
-            lines.append(f"Odpornosc na interferencje: przecietna ({stroop_eff:.0f} ms)")
+            lines.append(f"Odporność na interferencję: przeciętna ({stroop_eff:.0f} ms)")
         else:
-            lines.append(f"Efekt Stroopa wyrazny — duza interferencja ({stroop_eff:.0f} ms)")
+            lines.append(f"Efekt Stroopa wyraźny — duża interferencja ({stroop_eff:.0f} ms)")
 
         if flanker_eff < 25:
             lines.append("Selektywna uwaga: bardzo dobra (<25 ms)")
         elif flanker_eff <= 60:
-            lines.append(f"Selektywna uwaga: przecietna ({flanker_eff:.0f} ms)")
+            lines.append(f"Selektywna uwaga: przeciętna ({flanker_eff:.0f} ms)")
         else:
-            lines.append(f"Dystraktorzy spowalniaja reakcje ({flanker_eff:.0f} ms)")
+            lines.append(f"Dystraktorzy spowalniają reakcję ({flanker_eff:.0f} ms)")
 
         if fa == 0:
-            lines.append("Hamowanie impulsow: bezbladne")
+            lines.append("Hamowanie impulsów: bezbłędne")
         elif fa == 1:
-            lines.append("Hamowanie impulsow: dobre (drobne bledy)")
+            lines.append("Hamowanie impulsów: dobre (drobne błędy)")
         else:
-            lines.append("Tendencja do impulsywnosci — trudnosc z hamowaniem")
+            lines.append("Tendencja do impulsywności — trudność z hamowaniem")
         return lines
