@@ -52,7 +52,7 @@ def cognitive_profile(session: DashboardSession) -> list[str]:
     if fa == 0:
         lines.append("Hamowanie impulsów: bezbłędne (zero fałszywych alarmów).")
     elif fa == 1:
-        lines.append(f"Hamowanie impulsów: dobre ({fa} drobne błędy na próbach no-go).")
+        lines.append("Hamowanie impulsów: dobre (drobne błędy na próbach no-go).")
     else:
         lines.append(f"Tendencja do impulsywności — trudność z hamowaniem ({fa} fałszywe alarmy).")
 
