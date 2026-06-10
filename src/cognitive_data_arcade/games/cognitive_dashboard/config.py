@@ -5,7 +5,9 @@ FIXATION_MS: int = 500
 FEEDBACK_MS: int = 400
 TIMEOUT_MS: int = 3000
 
-SYNTHETIC_PARAMS: dict = {
+# "gonogo"."nogo" only has "fa_rate" (a probability) — no RT distribution,
+# because correct rejections are non-responses rather than timed keypresses.
+SYNTHETIC_PARAMS: dict[str, dict[str, dict[str, float]]] = {
     "rt": {
         "simple": {"mean": 320.0, "sd": 60.0, "lo": 150.0, "hi": 800.0},
     },

@@ -9,6 +9,14 @@ class TaskResult:
     correct: list[bool]
     condition: list[str]
 
+    def __post_init__(self) -> None:
+        n = len(self.rt_ms)
+        if len(self.correct) != n or len(self.condition) != n:
+            raise ValueError(
+                f"TaskResult lists must all have the same length: "
+                f"rt_ms={n}, correct={len(self.correct)}, condition={len(self.condition)}"
+            )
+
 
 @dataclass
 class DashboardSession:
