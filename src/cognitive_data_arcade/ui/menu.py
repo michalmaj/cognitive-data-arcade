@@ -9,11 +9,13 @@ from cognitive_data_arcade.engine.i18n import Strings, get_strings
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.profile.manager import ProfileManager
 
+# Lesson numbers follow the course README. Lesson 5 is absent because lessons 04 and 05
+# (Data Cleaning + Missing Values) are merged into a single game (entry 4, "Data Quality Lab").
 _LESSONS = [
     (1, "Big Data in Cognitive Science"),
     (2, "Reaction Time Lab"),
     (3, "Event Logs and Data Formats"),
-    (4, "Data Quality Lab"),
+    (4, "Data Quality Lab"),  # covers README lessons 04 + 05
     (6, "Exploratory Data Analysis"),
     (7, "Stroop Challenge"),
     (8, "Flanker Arena"),
@@ -101,7 +103,7 @@ class LessonMenuScene(Scene):
             self._done = True
         elif event.key == pygame.K_t:
             lesson_num = _LESSONS[self._selected][0]
-            if lesson_num in (1, 2, 3, 4, 6, 7, 8, 9, 10, 11):
+            if self._teoria_available():
                 from cognitive_data_arcade.ui.lesson_reader import LessonReaderScene
 
                 back = LessonMenuScene(self._pm, self._strings, self._selected)
@@ -138,8 +140,12 @@ class LessonMenuScene(Scene):
             self._launch_stroop()
 
     def _teoria_available(self) -> bool:
+        import importlib.util
         lesson_num = _LESSONS[self._selected][0]
-        return lesson_num in (1, 2, 3, 4, 6, 7, 8, 9, 10, 11)
+        spec = importlib.util.find_spec(
+            f"cognitive_data_arcade.lessons.lesson_{lesson_num:02d}"
+        )
+        return spec is not None
 
     def _handle_popup_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.KEYDOWN:
