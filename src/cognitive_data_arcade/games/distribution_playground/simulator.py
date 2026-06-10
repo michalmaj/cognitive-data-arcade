@@ -166,6 +166,9 @@ def random_target(rng: np.random.Generator) -> SimResult:
             step = 10.0
             steps = int((hi - lo) / step)
             params[k] = min(hi, lo + float(rng.integers(0, steps + 1, endpoint=True)) * step)
+    # For uniform distribution ensure min < max (independent sampling can violate this)
+    if dist_type == "uniform" and params.get("min", 0) >= params.get("max", 1):
+        params["min"] = params["max"] - 10.0
     return simulate(dist_type, params, rng_seed=int(rng.integers(0, 2**31)))
 
 
