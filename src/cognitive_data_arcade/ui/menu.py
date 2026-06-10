@@ -23,6 +23,7 @@ _LESSONS = [
     (10, "N-Back Memory Grid"),
     (11, "Visual Search Lab"),
     (12, "Cognitive Dashboard"),
+    (13, "Distribution Playground"),
 ]
 
 _BG = (26, 26, 46)
@@ -137,6 +138,8 @@ class LessonMenuScene(Scene):
             self._launch_visual_search()
         elif lesson_num == 12:
             self._launch_cognitive_dashboard()
+        elif lesson_num == 13:
+            self._launch_distribution_playground()
         elif lesson_num == 6:
             self._launch_eda()
         elif lesson_num == 7:
@@ -234,6 +237,8 @@ class LessonMenuScene(Scene):
                 from cognitive_data_arcade.games.cognitive_dashboard.mode_scene import CognitiveDashboardModeScene
                 return CognitiveDashboardModeScene(pm, strings)
             return _make_cd
+        if lesson_num == 13:
+            return self._make_distribution_playground
         return None
 
     def _confirm_popup(self) -> None:
@@ -421,6 +426,21 @@ class LessonMenuScene(Scene):
             CognitiveDashboardModeScene,
         )
         return CognitiveDashboardModeScene(self._pm, self._strings)
+
+    def _launch_distribution_playground(self) -> None:
+        self._next = self._make_distribution_playground()
+        self._done = True
+
+    def _make_distribution_playground(self) -> Scene:
+        from cognitive_data_arcade.engine.pause import PausableGame
+        from cognitive_data_arcade.games.distribution_playground.info import get_game_info
+        from cognitive_data_arcade.games.distribution_playground.scene import (
+            DistributionPlaygroundScene,
+        )
+        inner = DistributionPlaygroundScene()
+        game_info = get_game_info(self._strings)
+        return PausableGame(inner, game_info, self._make_distribution_playground,
+                            self._strings, self._pm)
 
     def update(self, dt_ms: float) -> None:
         pass
