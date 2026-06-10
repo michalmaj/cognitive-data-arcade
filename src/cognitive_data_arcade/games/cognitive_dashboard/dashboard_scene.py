@@ -6,7 +6,7 @@ from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.cognitive_dashboard.profile import cognitive_profile
-from cognitive_data_arcade.games.cognitive_dashboard.session import DashboardSession
+from cognitive_data_arcade.games.cognitive_dashboard.session import DashboardSession, TaskResult
 from cognitive_data_arcade.profile.manager import ProfileManager
 
 _BG      = (26, 26, 46)
@@ -73,7 +73,7 @@ class CognitiveDashboardScene(Scene):
         s = self._session
         return s.rt is None and s.stroop is None and s.flanker is None and s.gonogo is None
 
-    def _task_result(self, idx: int):
+    def _task_result(self, idx: int) -> TaskResult | None:
         return [self._session.rt, self._session.stroop,
                 self._session.flanker, self._session.gonogo][idx]
 
@@ -183,7 +183,7 @@ class CognitiveDashboardScene(Scene):
         else:
             self._draw_tile_metrics(surface, rect, idx, result)
 
-    def _draw_tile_metrics(self, surface: pygame.Surface, rect: pygame.Rect, idx: int, result) -> None:
+    def _draw_tile_metrics(self, surface: pygame.Surface, rect: pygame.Rect, idx: int, result: TaskResult) -> None:
         font = get_font(24)
         tc = _BG
         y = rect.y + 48
@@ -216,7 +216,7 @@ class CognitiveDashboardScene(Scene):
             surface.blit(txt, (40, profile_y + 34 + i * 26))
 
     def _draw_synthetic_button(self, surface: pygame.Surface, w: int, h: int) -> None:
-        btn_rect = pygame.Rect(w // 2 - 200, h - 90, 400, 44)
+        btn_rect = pygame.Rect(w // 2 - 200, h - 110, 400, 44)
         pygame.draw.rect(surface, _DIM, btn_rect, border_radius=6)
         lbl = get_font(24).render("S = wygeneruj dane losowe", True, _WHITE)
         surface.blit(lbl, (btn_rect.centerx - lbl.get_width() // 2,
