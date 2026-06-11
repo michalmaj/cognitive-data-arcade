@@ -38,39 +38,39 @@ _N_SIM    = 1000
 
 _POPUPS_A: dict[str, ContextInfo] = {
     "slider_n": ContextInfo(
-        title="N na grupe",
-        body="Liczba uczestnikow w kazdej z dwoch grup. Wieksze N -> mniejszy blad standardowy -> latwiej wykryc efekt.",
-        impact="Przesun N do 300 przy d=0.10 — p spadnie ponizej 0.05 mimo trywialnego efektu!",
+        title="N na grupę",
+        body="Liczba uczestników w każdej z dwóch grup. Większe N -> mniejszy błąd standardowy -> łatwiej wykryć efekt.",
+        impact="Przesuń N do 300 przy d=0.10 — p spadnie poniżej 0.05 mimo trywialnego efektu!",
     ),
     "slider_d": ContextInfo(
         title="Cohen's d — prawdziwy rozmiar efektu",
-        body="d = roznica srednich / odchylenie pooled. Skala: <0.10 pomijalny, 0.10-0.30 maly, 0.30-0.50 sredni, 0.50-0.80 duzy.",
+        body="d = różnica średnich / odchylenie pooled. Skala: <0.10 pomijalny, 0.10-0.30 mały, 0.30-0.50 średni, 0.50-0.80 duży.",
         impact="d=0.10 to efekt realny, ale w praktyce bez znaczenia klinicznego.",
     ),
     "alpha_btn": ContextInfo(
-        title="Poziom istotnosci alfa",
-        body="Prawdopodobienstwo bledu I rodzaju — odrzucenia H0 gdy jest prawdziwa. alfa=0.05 to konwencja, nie prawo natury.",
-        impact="alfa=0.01 zmniejsza falszywe alarmy, ale zwieksza przeoczenia (blad II rodzaju).",
+        title="Poziom istotności alfa",
+        body="Prawdopodobieństwo błędu I rodzaju — odrzucenia H0 gdy jest prawdziwa. alfa=0.05 to konwencja, nie prawo natury.",
+        impact="alfa=0.01 zmniejsza fałszywe alarmy, ale zwiększa przeoczenia (błąd II rodzaju).",
     ),
     "chart_curves": ContextInfo(
-        title="Rozklady populacji — wizualizacja efektu",
-        body="Niebieska krzywa = kontrola, pomaranczowa = interwencja. Strzalka d pokazuje odleglosc miedzy srednimi w jednostkach SD.",
-        impact="Male d oznacza duze nakladanie sie rozkladow — ciezko odroznic grupy.",
+        title="Rozkłady populacji — wizualizacja efektu",
+        body="Niebieska krzywa = kontrola, pomarańczowa = interwencja. Strzałka d pokazuje odległość między średnimi w jednostkach SD.",
+        impact="Małe d oznacza duże nakładanie się rozkładów — ciężko odróżnić grupy.",
     ),
     "chart_dots": ContextInfo(
-        title="Proba — dane z biezacego eksperymentu",
-        body="Losowa proba o zadanym N z populacji o zadanym d. Kazde odswiezenie losuje nowa probe.",
-        impact="Przy malym N wyniki sa bardzo zmienne — p zmienia sie drastycznie miedzy probami.",
+        title="Próba — dane z bieżącego eksperymentu",
+        body="Losowa próba o zadanym N z populacji o zadanym d. Każde odświeżenie losuje nową próbę.",
+        impact="Przy małym N wyniki są bardzo zmienne — p zmienia się drastycznie między próbami.",
     ),
     "chart_hist": ContextInfo(
         title="Histogram p-value z 1000 symulacji",
-        body="Dystrybucja p-value po 1000 niezaleznych eksperymentach o tym samym N i d. Czerwony slupek = p < alfa.",
-        impact="Przy d=0 histogram powinien byc jednostajny (kazde p rownie prawdopodobne).",
+        body="Dystrybucja p-value po 1000 niezależnych eksperymentach o tym samym N i d. Czerwony słupek = p < alfa.",
+        impact="Przy d=0 histogram powinien być jednostajny (każde p równie prawdopodobne).",
     ),
     "stats_block": ContextInfo(
         title="Blok statystyk",
-        body="t-stat: obserwowana statystyka testowa. Moc: prawdopodobienstwo wykrycia efektu o tym d przy tym N i alfa.",
-        impact="Moc < 50% oznacza ze badanie jest za slabe — czesciej przeoczysz efekt niz go wykryjesz.",
+        body="t-stat: obserwowana statystyka testowa. Moc: prawdopodobieństwo wykrycia efektu o tym d przy tym N i alfa.",
+        impact="Moc < 50% oznacza że badanie jest za słabe — częściej przeoczysz efekt niż go wykryjesz.",
     ),
 }
 
@@ -89,7 +89,7 @@ class PhaseAScene(Scene):
     def __init__(self) -> None:
         self._done = False
         x0, w = 16, _LEFT_W - 32
-        self._sl_n = _FloatSlider("N na grupe", 10, 500, 50, 10, x0, 60, w, fmt=".0f")
+        self._sl_n = _FloatSlider("N na grupę", 10, 500, 50, 10, x0, 60, w, fmt=".0f")
         self._sl_d = _FloatSlider("Cohen's d (prawdziwy)", 0.0, 1.0, 0.50, 0.05, x0, 128, w)
         self._alpha_btn = _AlphaButtons(x0, 222, 80, 28)
         self._result: TwoGroupResult | None = None
@@ -149,7 +149,7 @@ class PhaseAScene(Scene):
             ax1.text(d / 2, mid_y + 0.02, f"d={d:.2f}",
                      ha="center", color="white", fontsize=8)
         ax1.legend(fontsize=8, facecolor=_FIG_BG, labelcolor="white", framealpha=0.5)
-        ax1.set_title("Rozklady populacji", color="white", fontsize=9)
+        ax1.set_title("Rozkłady populacji", color="white", fontsize=9)
         _style_ax(ax1)
 
         # Chart 2: dot plot of sample
@@ -167,7 +167,7 @@ class PhaseAScene(Scene):
                 [f"Kontrola\nN={n}", f"Interwencja\nN={n}"],
                 color="white", fontsize=8,
             )
-        ax2.set_title("Dane z biezacej proby", color="white", fontsize=9)
+        ax2.set_title("Dane z bieżącej próby", color="white", fontsize=9)
         _style_ax(ax2)
 
         # Chart 3: p-value histogram
@@ -246,7 +246,7 @@ class PhaseAScene(Scene):
             surface.blit(self._chart_surf, (_LEFT_W, -self._scroll_y))
 
         if self._max_scroll() > 0:
-            hint = get_font(13).render("kolko myszy = przewijanie", True, _TRACK)
+            hint = get_font(13).render("kółko myszy = przewijanie", True, _TRACK)
             surface.blit(hint, (_LEFT_W + 8, _AREA_H - 18))
 
         self._popup.draw(surface)
@@ -278,9 +278,9 @@ class PhaseAScene(Scene):
             pygame.draw.rect(surface, _RED, warn_rect, 2, border_radius=4)
             font_w = get_font(13)
             lines = [
-                "Pulapka!",
+                "Pułapka!",
                 f"p={r.p_value:.3f} ale d={r.cohens_d:.2f} (trywialny)",
-                "Stat. istotne != wazne klinicznie!",
+                "Stat. istotne != ważne klinicznie!",
             ]
             wy = y + 8
             for line in lines:
