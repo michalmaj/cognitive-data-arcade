@@ -3,12 +3,13 @@ from __future__ import annotations
 import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 
-_WHITE  = (240, 240, 240)
-_DIM    = (120, 120, 160)
-_ORANGE = (243, 156, 18)
-_BLUE   = ( 52, 152, 219)
-_TRACK  = ( 42,  42,  80)
-_PANEL  = ( 18,  18,  42)
+_WHITE      = (240, 240, 240)
+_DIM        = (120, 120, 160)
+_ORANGE     = (243, 156, 18)
+_BLUE       = ( 52, 152, 219)
+_BLUE_DARK  = ( 26,  58,  90)
+_TRACK      = ( 42,  42,  80)
+_PANEL      = ( 18,  18,  42)
 
 
 class _FloatSlider:
@@ -119,13 +120,13 @@ class _AlphaButtons:
     def draw(self, surface: pygame.Surface) -> None:
         font = get_font(16)
         gap = 6
-        lbl_surf = font.render("Alpha (α)", True, _DIM)
+        lbl_surf = font.render("Alpha", True, _DIM)
         surface.blit(lbl_surf, (self._x, self._y - 22))
         for i, alpha in enumerate(self._ALPHAS):
             bx = self._x + i * (self._w + gap)
             btn = pygame.Rect(bx, self._y, self._w, self._h)
             selected = i == self._selected
-            bg    = (26,  58,  90) if selected else (18, 18, 42)
+            bg    = _BLUE_DARK   if selected else _PANEL
             border = _BLUE       if selected else (42, 42, 80)
             bw     = 2           if selected else 1
             pygame.draw.rect(surface, bg, btn, border_radius=3)
