@@ -89,11 +89,11 @@ _POPUPS_A: dict[str, ContextInfo] = {
 }
 
 _SCALE_CELLS = [
-    ("silna -",    (192,  57,  43), (240, 240, 240), "bardzo silna -"),
-    ("umiark. -",  (231,  76,  60), (240, 240, 240), "umiarkowana -"),
-    ("slaba",      ( 42,  42,  80), (160, 160, 200), "slaba +"),
-    ("umiark. +",  ( 41, 128, 185), (240, 240, 240), "umiarkowana +"),
-    ("silna +",    ( 26, 111, 181), (240, 240, 240), "bardzo silna +"),
+    ("silna -",    (192,  57,  43), (240, 240, 240)),
+    ("umiark. -",  (231,  76,  60), (240, 240, 240)),
+    ("slaba",      ( 42,  42,  80), (160, 160, 200)),
+    ("umiark. +",  ( 41, 128, 185), (240, 240, 240)),
+    ("silna +",    ( 26, 111, 181), (240, 240, 240)),
 ]
 
 
@@ -217,14 +217,13 @@ class PhaseAScene(Scene):
         if self._popup.handle_event(event):
             return
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            changed = any(sl.handle_mousedown(event.pos) for sl in self._sliders)
+            results = [sl.handle_mousedown(event.pos) for sl in self._sliders]
+            changed = any(results)
             if changed:
                 self._regenerate()
         elif event.type == pygame.MOUSEMOTION:
-            changed = any(
-                sl.handle_mousemotion(event.pos, event.buttons)
-                for sl in self._sliders
-            )
+            results = [sl.handle_mousemotion(event.pos, event.buttons) for sl in self._sliders]
+            changed = any(results)
             if changed:
                 self._regenerate()
 
@@ -247,7 +246,7 @@ class PhaseAScene(Scene):
 
         if self._result:
             _draw_stats(area, self._result)
-            _draw_scale(area, self._result.strength)
+            _draw_scale(area, self._result.r)
 
         if self._chart_surf:
             title_font = get_font(14)
@@ -274,16 +273,23 @@ def _draw_stats(surface: pygame.Surface, result: CorrResult) -> None:
         surface.blit(font.render(val, True, _WHITE), (140, row_y))
 
 
-def _draw_scale(surface: pygame.Surface, strength: str) -> None:
+def _draw_scale(surface: pygame.Surface, r: float) -> None:
     font = get_font(10)
     y  = _AREA_H - 78
     x0 = 12
     w  = _LEFT_W - 24
     cw = w // 5
-    for i, (label, bg, fg, match_key) in enumerate(_SCALE_CELLS):
+    a = abs(r)
+    if a < 0.10:
+        highlight = 2        # center: near zero
+    elif a < 0.50:
+        highlight = 3 if r >= 0 else 1    # moderate
+    else:
+        highlight = 4 if r >= 0 else 0    # strong / very strong
+    for i, (label, bg, fg) in enumerate(_SCALE_CELLS):
         rx = x0 + i * cw
         pygame.draw.rect(surface, bg, (rx, y, cw - 2, 28))
-        if strength == match_key:
+        if i == highlight:
             pygame.draw.rect(surface, (243, 156, 18), (rx, y, cw - 2, 28), 1)
         tw = font.size(label)[0]
         surface.blit(font.render(label, True, fg), (rx + (cw - 2 - tw) // 2, y + 9))
