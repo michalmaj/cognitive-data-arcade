@@ -25,6 +25,7 @@ _LESSONS = [
     (12, "Cognitive Dashboard"),
     (13, "Distribution Playground"),
     (14, "Correlation Trap"),
+    (15, "Hypothesis Arena"),
 ]
 
 _BG = (26, 26, 46)
@@ -143,6 +144,8 @@ class LessonMenuScene(Scene):
             self._launch_distribution_playground()
         elif lesson_num == 14:
             self._launch_correlation_trap()
+        elif lesson_num == 15:
+            self._launch_hypothesis_arena()
         elif lesson_num == 6:
             self._launch_eda()
         elif lesson_num == 7:
@@ -244,6 +247,8 @@ class LessonMenuScene(Scene):
             return self._make_distribution_playground
         if lesson_num == 14:
             return self._make_correlation_trap
+        if lesson_num == 15:
+            return self._make_hypothesis_arena
         return None
 
     def _confirm_popup(self) -> None:
@@ -460,6 +465,19 @@ class LessonMenuScene(Scene):
         inner = CorrelationTrapScene()
         game_info = get_game_info(self._strings)
         return PausableGame(inner, game_info, self._make_correlation_trap,
+                            self._strings, self._pm)
+
+    def _launch_hypothesis_arena(self) -> None:
+        self._next = self._make_hypothesis_arena()
+        self._done = True
+
+    def _make_hypothesis_arena(self) -> Scene:
+        from cognitive_data_arcade.engine.pause import PausableGame
+        from cognitive_data_arcade.games.hypothesis_arena.info import get_game_info
+        from cognitive_data_arcade.games.hypothesis_arena.scene import HypothesisArenaScene
+        inner = HypothesisArenaScene()
+        game_info = get_game_info(self._strings)
+        return PausableGame(inner, game_info, self._make_hypothesis_arena,
                             self._strings, self._pm)
 
     def update(self, dt_ms: float) -> None:

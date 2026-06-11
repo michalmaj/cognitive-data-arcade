@@ -12,6 +12,7 @@ dependencies = [
     "numpy>=2.4.4",
     "pandas>=3.0.3",
     "pygame>=2.6.1",
+    "scipy>=1.14.0",
 ]
 
 [project.scripts]
