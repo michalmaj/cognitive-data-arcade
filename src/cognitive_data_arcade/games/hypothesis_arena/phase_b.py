@@ -189,7 +189,7 @@ class PhaseBScene(Scene):
         counter = f"Scenariusz {self._scenario_idx + 1} / {len(_SCENARIOS)}"
         surface.blit(font_sm.render(counter, True, _ORANGE), (12, 6))
         surface.blit(font_lg.render(sc.title_pl, True, _WHITE), (12, 22))
-        ctx = sc.context_pl[:88]
+        ctx = sc.context_pl if len(sc.context_pl) <= 88 else sc.context_pl[:85].rsplit(" ", 1)[0] + "..."
         surface.blit(font_sm.render(ctx, True, _DIM), (12, 54))
         chip = font_sm.render(f"max N = {sc.max_n}", True, _DIM)
         surface.blit(chip, (_AREA_W - chip.get_width() - 12, 18))

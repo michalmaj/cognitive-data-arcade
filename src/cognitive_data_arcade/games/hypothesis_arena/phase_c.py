@@ -231,7 +231,7 @@ class PhaseCScene(Scene):
             font_w = get_font(13)
             d = self._sl_d.value
             lines = [
-                "Za małą moc!",
+                "Za mała moc!",
                 f"{beta * 100:.0f}% szans że przeoczysz",
                 f"prawdziwy efekt d={d:.2f}",
             ]
