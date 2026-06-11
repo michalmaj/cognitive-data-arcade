@@ -48,3 +48,22 @@ def test_draw_no_crash_all_phases():
         scene.draw(surf)
         ev = pygame.event.Event(pygame.KEYDOWN, {"key": pygame.K_RIGHT, "mod": 0, "unicode": ""})
         scene.handle_event(ev)
+
+
+def test_right_arrow_wraps_from_phase_3_to_1():
+    from cognitive_data_arcade.games.correlation_trap.scene import CorrelationTrapScene
+    scene = CorrelationTrapScene()
+    # advance to phase 3
+    ev_right = pygame.event.Event(pygame.KEYDOWN, {"key": pygame.K_RIGHT, "mod": 0, "unicode": ""})
+    scene.handle_event(ev_right)  # 1 → 2
+    scene.handle_event(ev_right)  # 2 → 3
+    assert scene.current_phase() == 3
+    scene.handle_event(ev_right)  # 3 → 1 (wrap)
+    assert scene.current_phase() == 1
+
+
+def test_mouse_event_offset():
+    from cognitive_data_arcade.games.correlation_trap.scene import _offset_mouse_event
+    ev = pygame.event.Event(pygame.MOUSEBUTTONDOWN, {"pos": (100, 200), "button": 1})
+    adjusted = _offset_mouse_event(ev, dy=-48)
+    assert adjusted.pos == (100, 152)   # y reduced by 48
