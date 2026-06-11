@@ -127,7 +127,7 @@ class _AlphaButtons:
             btn = pygame.Rect(bx, self._y, self._w, self._h)
             selected = i == self._selected
             bg    = _BLUE_DARK   if selected else _PANEL
-            border = _BLUE       if selected else (42, 42, 80)
+            border = _BLUE       if selected else _TRACK
             bw     = 2           if selected else 1
             pygame.draw.rect(surface, bg, btn, border_radius=3)
             pygame.draw.rect(surface, border, btn, bw, border_radius=3)
