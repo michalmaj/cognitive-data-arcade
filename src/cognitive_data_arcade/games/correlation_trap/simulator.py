@@ -37,7 +37,7 @@ def strength_label(r: float) -> str:
     if a < 0.10:
         return "brak"
     if a < 0.30:
-        return f"slaba {sign}"
+        return f"słaba {sign}"
     if a < 0.50:
         return f"umiarkowana {sign}"
     if a < 0.70:
@@ -70,86 +70,86 @@ def generate_correlated(
 _SCENARIOS: list[Scenario] = [
     Scenario(
         key="ice_cream",
-        claim_pl="Wyzsze spozycie lodow koreluje z liczba utoniec w danym miesiacu.",
+        claim_pl="Wyższe spożycie lodów koreluje z liczbą utonięć w danym miesiącu.",
         r_display=0.88,
         n=120,
         is_causal=False,
         confound_pl="Pora roku (lato)",
         explanation_pl=(
-            "Latem jest cieplej — wiecej osob plywa (-> utonecia) i je lody.\n"
-            "Pora roku jest wspolna przyczyna obu zmiennych!"
+            "Latem jest cieplej — więcej osób pływa (-> utonięcia) i je lody.\n"
+            "Pora roku jest wspólną przyczyną obu zmiennych!"
         ),
     ),
     Scenario(
         key="cage_films",
-        claim_pl="Liczba filmow z Nicolasem Cage koreluje z liczba utoniec w basenach.",
+        claim_pl="Liczba filmów z Nicolasem Cage koreluje z liczbą utonięć w basenach.",
         r_display=0.67,
         n=11,
         is_causal=False,
         confound_pl="Brak — czysto przypadkowa",
         explanation_pl=(
-            "Klasyczny przyklad ze spurious-correlations.com.\n"
-            "Przy malym N (11 lat) latwo o przypadkowa korelacje!"
+            "Klasyczny przykład ze spurious-correlations.com.\n"
+            "Przy małym N (11 lat) łatwo o przypadkową korelację!"
         ),
     ),
     Scenario(
         key="iphone_suicide",
-        claim_pl="Sprzedaz iPhone koreluje ze wskaznikiem samobojstw w USA.",
+        claim_pl="Sprzedaż iPhone koreluje ze wskaźnikiem samobójstw w USA.",
         r_display=0.93,
         n=10,
         is_causal=False,
         confound_pl="Trend czasowy (2007-2017)",
         explanation_pl=(
-            "Obie zmienne rosly w czasie z roznych powodow.\n"
-            "Trend czasowy tworzy korelacje bez zwiazku przyczynowego!"
+            "Obie zmienne rosły w czasie z różnych powodów.\n"
+            "Trend czasowy tworzy korelację bez związku przyczynowego!"
         ),
     ),
     Scenario(
         key="storks",
-        claim_pl="Liczba bocianow w krajach Europy koreluje z liczba urodzin.",
+        claim_pl="Liczba bocianów w krajach Europy koreluje z liczbą urodzeń.",
         r_display=0.62,
         n=17,
         is_causal=False,
         confound_pl="Obszary wiejskie / rolnicze",
         explanation_pl=(
-            "Bociany gniezdza sie na wsi, gdzie tez rodzi sie wiecej dzieci.\n"
+            "Bociany gniazdują na wsi, gdzie też rodzi się więcej dzieci.\n"
             "Wiejski charakter regionu to zmienna ukryta!"
         ),
     ),
     Scenario(
         key="shoe_reading",
-        claim_pl="U dzieci rozmiar buta koreluje z umiejetnoscia czytania.",
+        claim_pl="U dzieci rozmiar buta koreluje z umiejętnością czytania.",
         r_display=0.78,
         n=60,
         is_causal=False,
         confound_pl="Wiek dziecka",
         explanation_pl=(
-            "Starsze dzieci maja wieksze stopy i lepiej czytaja.\n"
-            "Wiek jest zmienna ukryta laczaca obie obserwacje!"
+            "Starsze dzieci mają większe stopy i lepiej czytają.\n"
+            "Wiek jest zmienną ukrytą łączącą obie obserwacje!"
         ),
     ),
     Scenario(
         key="smoking_cancer",
-        claim_pl="Liczba wypalanych papierosow dziennie koreluje z ryzykiem raka pluc.",
+        claim_pl="Liczba wypalanych papierosów dziennie koreluje z ryzykiem raka płuc.",
         r_display=0.85,
         n=200,
         is_causal=True,
         confound_pl="",
         explanation_pl=(
-            "Zaleznosc przyczynowa potwierdzona eksperymentami i badaniami kohortowymi!\n"
-            "Substancje smoliste uszkadzaja DNA komorek pluc."
+            "Zależność przyczynowa potwierdzona eksperymentami i badaniami kohortowymi!\n"
+            "Substancje smoliste uszkadzają DNA komórek płuc."
         ),
     ),
     Scenario(
         key="sleep_rt",
-        claim_pl="Krotszy czas snu koreluje z dluzszym czasem reakcji (r = -0.72).",
+        claim_pl="Krótszy czas snu koreluje z dłuższym czasem reakcji (r = -0.72).",
         r_display=-0.72,
         n=80,
         is_causal=True,
         confound_pl="",
         explanation_pl=(
-            "Eksperymenty ze zmienionym snem potwierdzaja przyczynowosc.\n"
-            "Mniej snu -> wolniejsze przetwarzanie poznawcze -> dluzszy RT."
+            "Eksperymenty ze zmienionym snem potwierdzają przyczynowość.\n"
+            "Mniej snu -> wolniejsze przetwarzanie poznawcze -> dłuższy RT."
         ),
     ),
     Scenario(
@@ -160,8 +160,8 @@ _SCENARIOS: list[Scenario] = [
         is_causal=True,
         confound_pl="",
         explanation_pl=(
-            "Eksperymenty potwierdzaja: wiecej nauki -> lepszy wynik.\n"
-            "Uwaga: zdolnosci bazowe tez maja role (zmienna moderujaca)!"
+            "Eksperymenty potwierdzają: więcej nauki -> lepszy wynik.\n"
+            "Uwaga: zdolności bazowe też mają rolę (zmienna moderująca)!"
         ),
     ),
 ]
@@ -169,12 +169,12 @@ _SCENARIOS: list[Scenario] = [
 
 _SANDBOX_VARS: list[dict] = [
     {"key": "lody",         "label": "Lody"},
-    {"key": "utonecia",     "label": "Utonecia"},
+    {"key": "utonecia",     "label": "Utonięcia"},
     {"key": "cage",         "label": "Cage (filmy)"},
-    {"key": "iphone",       "label": "iPhone (sprzedaz)"},
+    {"key": "iphone",       "label": "iPhone (sprzedaż)"},
     {"key": "czas_reakcji", "label": "Czas reakcji"},
     {"key": "nback",        "label": "N-back (wynik)"},
-    {"key": "slonce",       "label": "Slonce (dni)"},
+    {"key": "slonce",       "label": "Słońce (dni)"},
     {"key": "temperatura",  "label": "Temperatura"},
     {"key": "sen",          "label": "Sen (godz.)"},
     {"key": "nauka",        "label": "Nauka (godz.)"},

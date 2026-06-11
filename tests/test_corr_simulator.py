@@ -76,12 +76,12 @@ def test_strength_label_brak():
 
 def test_strength_label_slaba():
     lbl = strength_label(0.25)
-    assert "slaba" in lbl
+    assert "słaba" in lbl
     assert "+" in lbl
 
 def test_strength_label_slaba_negative():
     lbl = strength_label(-0.25)
-    assert "slaba" in lbl
+    assert "słaba" in lbl
     assert "-" in lbl
 
 def test_strength_label_umiarkowana():

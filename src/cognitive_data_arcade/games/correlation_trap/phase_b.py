@@ -44,42 +44,42 @@ _POPUPS_B: dict[str, ContextInfo] = {
     "scatter": ContextInfo(
         title="Scatter — wykres korelacji",
         body=(
-            "r pokazuje sile liniowego zwiazku miedzy zmiennymi.\n"
-            "Nie mowi nic o kierunku przyczynowosci!"
+            "r pokazuje siłę liniowego związku między zmiennymi.\n"
+            "Nie mówi nic o kierunku przyczynowości!"
         ),
-        impact="Wysoka korelacja jest konieczna, ale nie wystarczajaca dla przyczynowosci.",
+        impact="Wysoka korelacja jest konieczna, ale nie wystarczająca dla przyczynowości.",
     ),
     "btn_yes": ContextInfo(
-        title="Przyczynowosc (causation)",
+        title="Przyczynowość (causation)",
         body=(
             "A -> B gdy manipulacja A (eksperyment) zmienia B.\n"
-            "Wymaga: temporalnosc, sila, specyficznosc, koherencja."
+            "Wymaga: temporalność, siłę, specyficzność, koherencję."
         ),
-        impact="Tylko eksperymenty z randomizacja (RCT) pozwalaja wnioskowac o przyczynowosci.",
+        impact="Tylko eksperymenty z randomizacją (RCT) pozwalają wnioskować o przyczynowości.",
     ),
     "btn_no": ContextInfo(
-        title="Korelacja bez przyczynowosci",
+        title="Korelacja bez przyczynowości",
         body=(
-            "Przyczyny korelacji bez zwiazku przyczynowego:\n"
-            "1) Zmienna ukryta  2) Przypadek (male N)  3) Trend czasowy"
+            "Przyczyny korelacji bez związku przyczynowego:\n"
+            "1) Zmienna ukryta  2) Przypadek (małe N)  3) Trend czasowy"
         ),
         impact="Liczba obserwacji nie wyklucza zmiennej ukrytej!",
     ),
     "confound_reveal": ContextInfo(
         title="Zmienna ukryta (confounding variable)",
         body=(
-            "Trzecia zmienna Z wplywa zarowno na X jak i Y.\n"
-            "Powoduje pozorna korelacje X<->Y bez zwiazku przyczynowego."
+            "Trzecia zmienna Z wpływa zarówno na X jak i Y.\n"
+            "Powoduje pozorną korelację X<->Y bez związku przyczynowego."
         ),
-        impact="Kontroluj zmienne ukryte przez randomizacje lub dopasowywanie.",
+        impact="Kontroluj zmienne ukryte przez randomizację lub dopasowywanie.",
     ),
     "r_display": ContextInfo(
-        title="Interpretacja wyswietlanego r",
+        title="Interpretacja wyświetlanego r",
         body=(
-            "Wysoka r NIE dowodzi przyczynowosci.\n"
-            "Lody i utonecia maja r=0.88 ale lody nie zabijaja!"
+            "Wysoka r NIE dowodzi przyczynowości.\n"
+            "Lody i utonięcia mają r=0.88 ale lody nie zabijają!"
         ),
-        impact="Sila korelacji nie informuje o mechanizmie przyczynowym.",
+        impact="Siła korelacji nie informuje o mechanizmie przyczynowym.",
     ),
 }
 
@@ -199,10 +199,10 @@ class PhaseBScene(Scene):
             f14 = get_font(14)
             f13 = get_font(13)
             if s.is_causal:
-                verdict_lbl = "Tak! Przyczynowosc"
+                verdict_lbl = "Tak! Przyczynowość"
                 verdict_col = _GREEN
             else:
-                verdict_lbl = "Pulapka!"
+                verdict_lbl = "Pułapka!"
                 verdict_col = _RED
             area.blit(f14.render(verdict_lbl, True, verdict_col), (vx + 8, _TOP_H + 12))
             if s.confound_pl:
@@ -213,9 +213,9 @@ class PhaseBScene(Scene):
                 area.blit(f14.render("+10 pkt", True, _GREEN), (vx + 8, _TOP_H + _SCATTER_H - 30))
 
         # buttons
-        _draw_button(area, font_btn, "TAK — przyczynowosc", self._btn_rects[0],
+        _draw_button(area, font_btn, "TAK — przyczynowość", self._btn_rects[0],
                      (26, 74, 42), (39, 174, 96), visible=(self._state == "waiting"))
-        _draw_button(area, font_btn, "NIE — pulapka",       self._btn_rects[1],
+        _draw_button(area, font_btn, "NIE — pułapka",       self._btn_rects[1],
                      (74, 26, 26), (231, 76, 60), visible=(self._state == "waiting"))
         _draw_button(area, font_btn, "Dalej ->",            self._btn_rects[2],
                      (18, 18, 60), (52, 152, 219), visible=(self._state == "revealed"))
@@ -228,7 +228,7 @@ def _draw_summary(area: pygame.Surface, correct: int) -> None:
     lines = [
         (f"Wynik: {correct} / {total} poprawnych", font, _WHITE),
         ("", f16, _DIM),
-        ("Kliknij by zagrac jeszcze raz.", f16, _DIM),
+        ("Kliknij by zagrać jeszcze raz.", f16, _DIM),
     ]
     y = _AREA_H // 2 - 40
     for line, f, col in lines:

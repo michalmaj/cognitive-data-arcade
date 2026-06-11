@@ -33,65 +33,65 @@ _POPUPS_A: dict[str, ContextInfo] = {
     "slider_r": ContextInfo(
         title="Korelacja Pearsona (r)",
         body=(
-            "r mierzy liniowy zwiazek miedzy zmiennymi. Zakres: -1 do +1.\n"
-            "r=0 to brak zwiazku liniowego."
+            "r mierzy liniowy związek między zmiennymi. Zakres: -1 do +1.\n"
+            "r=0 to brak związku liniowego."
         ),
-        impact="Wyzsze |r| -> punkty blizej linii trendu.",
+        impact="Wyższe |r| -> punkty bliżej linii trendu.",
     ),
     "slider_n": ContextInfo(
         title="Liczba obserwacji (N)",
         body=(
-            "Wieksze N -> stabilniejsze szacunki r.\n"
-            "Przy malym N nawet duze r moze byc przypadkowe."
+            "Większe N -> stabilniejsze szacunki r.\n"
+            "Przy małym N nawet duże r może być przypadkowe."
         ),
-        impact="N < 30 to za malo by ufac r bez testu istotnosci.",
+        impact="N < 30 to za mało by ufać r bez testu istotności.",
     ),
     "slider_noise": ContextInfo(
         title="Szum (noise)",
         body=(
-            "Dodatkowy rozrzut Y niezalezny od r strukturalnego.\n"
-            "Wizualnie chmura wyglada mniej 'liniowo'."
+            "Dodatkowy rozrzut Y niezależny od r strukturalnego.\n"
+            "Wizualnie chmura wygląda mniej 'liniowo'."
         ),
-        impact="Duzy szum przy r=0.8 pokazuje ze wizualna ocena moze mylic.",
+        impact="Duży szum przy r=0.8 pokazuje że wizualna ocena może mylić.",
     ),
     "scatter": ContextInfo(
         title="Wykres punktowy (scatterplot)",
         body=(
-            "Kazda kropka to jedna obserwacja (X, Y).\n"
-            "Ksztalt chmury: liniowy, krzywoliniowy lub brak zwiazku."
+            "Każda kropka to jedna obserwacja (X, Y).\n"
+            "Kształt chmury: liniowy, krzywoliniowy lub brak związku."
         ),
         impact="Zawsze patrz na wykres przed podaniem r!",
     ),
     "stat_r": ContextInfo(
         title="r Pearsona — co to znaczy?",
         body=(
-            "r = cov(X,Y) / (sigma_X * sigma_Y). Zaklada liniowosc.\n"
-            "Nieliniowe zaleznosci daja r ~ 0 mimo wzorca."
+            "r = cov(X,Y) / (sigma_X * sigma_Y). Zakłada liniowość.\n"
+            "Nieliniowe zależności dają r ~ 0 mimo wzorca."
         ),
-        impact="Zawsze wykreslaj dane — samo r nie wystarcza!",
+        impact="Zawsze wykreślaj dane — samo r nie wystarcza!",
     ),
     "stat_r2": ContextInfo(
-        title="R2 — wspolczynnik determinacji",
+        title="R2 — współczynnik determinacji",
         body=(
-            "R2 = r^2 mowi jaki % wariancji Y wyjasnaja X.\n"
-            "R2=0.49 -> X wyjasnaia 49% wariancji Y."
+            "R2 = r^2 mówi jaki % wariancji Y wyjaśniają X.\n"
+            "R2=0.49 -> X wyjaśnia 49% wariancji Y."
         ),
-        impact="Pozostale 1-R2 to wariancja niewyjasniona modelem.",
+        impact="Pozostałe 1-R2 to wariancja niewyjaśniona modelem.",
     ),
     "strength_scale": ContextInfo(
-        title="Sila korelacji — skala werbalna",
+        title="Siła korelacji — skala werbalna",
         body=(
-            "|r| < 0.3 slaba; 0.3-0.5 umiarkowana;\n"
-            "0.5-0.7 silna; > 0.7 bardzo silna. Wartosci umowne!"
+            "|r| < 0.3 słaba; 0.3-0.5 umiarkowana;\n"
+            "0.5-0.7 silna; > 0.7 bardzo silna. Wartości umowne!"
         ),
-        impact="W psychologii r=0.3 bywa wazne mimo 'slabej' etykiety.",
+        impact="W psychologii r=0.3 bywa ważne mimo 'słabej' etykiety.",
     ),
 }
 
 _SCALE_CELLS = [
     ("silna -",    (192,  57,  43), (240, 240, 240)),
     ("umiark. -",  (231,  76,  60), (240, 240, 240)),
-    ("slaba",      ( 42,  42,  80), (160, 160, 200)),
+    ("słaba",      ( 42,  42,  80), (160, 160, 200)),
     ("umiark. +",  ( 41, 128, 185), (240, 240, 240)),
     ("silna +",    ( 26, 111, 181), (240, 240, 240)),
 ]
@@ -182,7 +182,7 @@ class PhaseAScene(Scene):
         self._done = False
         x0, w = 20, _LEFT_W - 40
         self._sl_r     = _FloatSlider("Korelacja (r)",  -1.0, 1.0,  0.50, 0.01, x0, 80,  w)
-        self._sl_n     = _FloatSlider("Probka (N)",     20,   500,  150,  10,   x0, 148, w, fmt=".0f")
+        self._sl_n     = _FloatSlider("Próbka (N)",     20,   500,  150,  10,   x0, 148, w, fmt=".0f")
         self._sl_noise = _FloatSlider("Szum (noise)",    0.0,  1.0,  0.00, 0.05, x0, 216, w)
         self._sliders  = [self._sl_r, self._sl_n, self._sl_noise]
         self._result: CorrResult | None = None
@@ -264,7 +264,7 @@ def _draw_stats(surface: pygame.Surface, result: CorrResult) -> None:
     stats = [
         ("r Pearson",    f"{result.r:+.3f}"),
         ("R2",           f"{result.r2:.3f}"),
-        ("Sila",         result.strength),
+        ("Siła",         result.strength),
         ("N obserwacji", str(len(result.x))),
     ]
     for i, (lbl, val) in enumerate(stats):
