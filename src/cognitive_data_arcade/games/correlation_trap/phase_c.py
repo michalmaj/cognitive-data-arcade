@@ -36,60 +36,60 @@ _ROW_H     = 26   # dropdown row height
 
 _POPUPS_C: dict[str, ContextInfo] = {
     "dropdown_x": ContextInfo(
-        title="Zmienna X (os pozioma)",
+        title="Zmienna X (oś pozioma)",
         body=(
-            "Zmienna X to predyktor lub niezalezna w ukladzie.\n"
-            "Tu wybierasz co wyswietlic na osi poziomej wykresu."
+            "Zmienna X to predyktor lub niezależna w układzie.\n"
+            "Tu wybierasz co wyświetlić na osi poziomej wykresu."
         ),
         impact="Zamiana X i Y nie zmienia r Pearsona (jest symetryczny)!",
     ),
     "dropdown_y": ContextInfo(
-        title="Zmienna Y (os pionowa)",
+        title="Zmienna Y (oś pionowa)",
         body=(
-            "Zmienna Y to wynik lub zalezna w ukladzie.\n"
-            "Tu wybierasz co wyswietlic na osi pionowej wykresu."
+            "Zmienna Y to wynik lub zależna w układzie.\n"
+            "Tu wybierasz co wyświetlić na osi pionowej wykresu."
         ),
         impact="Zamiana X i Y nie zmienia r Pearsona (jest symetryczny)!",
     ),
     "scatter": ContextInfo(
         title="Eksploracja par zmiennych",
         body=(
-            "Sandbox pozwala zestawic dowolne dwie zmienne.\n"
-            "Znajdz pary z r > 0.8 — przyczynowosc czy zmienna ukryta?"
+            "Sandbox pozwala zestawić dowolne dwie zmienne.\n"
+            "Znajdź pary z r > 0.8 — przyczynowość czy zmienna ukryta?"
         ),
-        impact="Wysoka r w danych obserwacyjnych prawie zawsze wymaga wyjasnienia.",
+        impact="Wysoka r w danych obserwacyjnych prawie zawsze wymaga wyjaśnienia.",
     ),
     "r_hero": ContextInfo(
         title="r Pearsona dla wybranej pary",
         body=(
             "Obliczony na 120 syntetycznych punktach danych.\n"
-            "Dane odzwierciedlaja realistyczne korelacje z literatury."
+            "Dane odzwierciedlają realistyczne korelacje z literatury."
         ),
-        impact="Porownaj kilka par — znajdz najsilniejsza i najslabsza korelacje!",
+        impact="Porównaj kilka par — znajdź najsilniejszą i najsłabszą korelację!",
     ),
     "r2_display": ContextInfo(
         title="R2 dla wybranej pary",
         body=(
-            "R2 mowi jaki % zmiennosci Y wyjasnaja zmienna X.\n"
-            "R2=0.77 oznacza ze X 'odpowiada' za 77% wariancji Y."
+            "R2 mówi jaki % zmienności Y wyjaśniają zmienną X.\n"
+            "R2=0.77 oznacza że X 'odpowiada' za 77% wariancji Y."
         ),
-        impact="Ale 'wyjasniac' nie znaczy 'powodowac'!",
+        impact="Ale 'wyjaśniać' nie znaczy 'powodować'!",
     ),
     "swap_btn": ContextInfo(
-        title="Zamien osie (<->)",
+        title="Zamień osie (<->)",
         body=(
-            "Zamienia X i Y miejscami. Wykres sie obraca,\n"
+            "Zamienia X i Y miejscami. Wykres się obraca,\n"
             "ale r Pearsona pozostaje identyczne!"
         ),
-        impact="Dowod ze korelacja Pearsona jest symetryczna: r(X,Y) = r(Y,X).",
+        impact="Dowód że korelacja Pearsona jest symetryczna: r(X,Y) = r(Y,X).",
     ),
     "strength_label": ContextInfo(
-        title="Sila korelacji",
+        title="Siła korelacji",
         body=(
-            "|r| < 0.3 slaba; 0.3-0.5 umiarkowana;\n"
+            "|r| < 0.3 słaba; 0.3-0.5 umiarkowana;\n"
             "0.5-0.7 silna; > 0.7 bardzo silna."
         ),
-        impact="Znalazles pary z rozna sila? Zastanow sie co je laczy!",
+        impact="Znalazłeś pary z różną siłą? Zastanów się co je łączy!",
     ),
 }
 
@@ -264,9 +264,9 @@ class PhaseCScene(Scene):
         # top bar
         pygame.draw.rect(area, (18, 18, 42), (0, 0, 1024, _TOP_H))
         f14 = get_font(14)
-        area.blit(f14.render("Os X:", True, _DIM), (12, (_TOP_H - f14.get_height()) // 2))
+        area.blit(f14.render("Oś X:", True, _DIM), (12, (_TOP_H - f14.get_height()) // 2))
         area.blit(f14.render("vs.", True, _DIM), (272, (_TOP_H - f14.get_height()) // 2))
-        area.blit(f14.render("Os Y:", True, _DIM), (310, (_TOP_H - f14.get_height()) // 2))
+        area.blit(f14.render("Oś Y:", True, _DIM), (310, (_TOP_H - f14.get_height()) // 2))
         pygame.draw.rect(area, (18, 18, 60), self._swap_rect, border_radius=4)
         pygame.draw.rect(area, (52, 152, 219), self._swap_rect, 1, border_radius=4)
         sw_lbl = "<->"
@@ -288,7 +288,7 @@ class PhaseCScene(Scene):
 
         # hint bar
         pygame.draw.rect(area, (18, 18, 42), (0, _AREA_H - _HINT_H, 1024, _HINT_H))
-        hint = "Wyprobuj rozne kombinacje — znajdz najsilniejsza i najslabsza korelacje!"
+        hint = "Wypróbuj różne kombinacje — znajdź najsilniejszą i najsłabszą korelację!"
         f13 = get_font(13)
         tw  = f13.size(hint)[0]
         area.blit(f13.render(hint, True, _DIM), ((1024 - tw) // 2, _AREA_H - _HINT_H + 12))

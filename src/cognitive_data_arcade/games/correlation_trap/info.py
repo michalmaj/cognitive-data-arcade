@@ -9,13 +9,13 @@ def get_game_info(strings: Strings) -> GameInfo:
         return GameInfo(
             title="Correlation Trap",
             description_lines=[
-                "Odkryj roznice miedzy korelacja a przyczynowoscia.",
-                "Faza A: eksploruj jak wyglada r na wykresie punktowym.",
-                "Faza B: wykryj ktorej korelacje sa pulapkami.",
+                "Odkryj różnicę między korelacją a przyczynowością.",
+                "Faza A: eksploruj jak wygląda r na wykresie punktowym.",
+                "Faza B: wykryj które korelacje są pułapkami.",
                 "Faza C: zestawiaj dowolne pary zmiennych.",
             ],
             key_bindings=[
-                ("LEWO / PRAWO", "zmien faze"),
+                ("LEWO / PRAWO", "zmień fazę"),
                 ("PPM (prawy klik)", "kontekstowa pomoc"),
                 ("ESC", "pauza"),
             ],

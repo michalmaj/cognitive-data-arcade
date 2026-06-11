@@ -4,20 +4,20 @@ from __future__ import annotations
 CONTENT: dict[str, dict[str, list[str]]] = {
     "pl": {
         "theory": [
-            "Korelacja Pearsona (r) mierzy sile i kierunek liniowego zwiazku miedzy dwiema zmiennymi. Zakres: od -1 (idealna ujemna) przez 0 (brak zwiazku) do +1 (idealna dodatnia). r^2 (wspolczynnik determinacji) mowi jaki procent zmiennosci Y wyjasnaja X.",
-            "Korelacja NIE oznacza przyczynowosci. Istnieja trzy glowne powody pozornej korelacji bez zwiazku przyczynowego: 1) Zmienna ukryta (confounding) -- trzecia zmienna Z wplywa na obie. 2) Przypadek -- przy malym N latwo o spurious correlation. 3) Trend czasowy -- obie zmienne rosna w czasie z roznych powodow.",
-            "Jak ustalamy przyczynowosc? Zlotym standardem jest eksperyment z randomizacja (RCT): losowo przydzielamy uczestnikow do grup i manipulujemy zmienna X. Bez randomizacji mozemy uzywac badan naturalnych, analizy regresji z kontrola zmiennych ukrytych lub kryteriow Bradforda-Hilla (sila, specyficznosc, koherencja, temporalnosc).",
-            "Przyklad klasyczny: spozycie lodow koreluje z liczba utoniec (r=0.88). Pulapka -- wspolna przyczyna to pora roku. Latem ludzie jada wiecej lodow i wiecej plywa. Przyklad przyczynowy: palenie papierosow i rak pluc -- potwierdzony w setkach badan kohortowych i eksperymentow na zwierzetach.",
+            "Korelacja Pearsona (r) mierzy siłę i kierunek liniowego związku między dwiema zmiennymi. Zakres: od -1 (idealna ujemna) przez 0 (brak związku) do +1 (idealna dodatnia). r^2 (współczynnik determinacji) mówi jaki procent zmienności Y wyjaśniają X.",
+            "Korelacja NIE oznacza przyczynowości. Istnieją trzy główne powody pozornej korelacji bez związku przyczynowego: 1) Zmienna ukryta (confounding) -- trzecia zmienna Z wpływa na obie. 2) Przypadek -- przy małym N łatwo o spurious correlation. 3) Trend czasowy -- obie zmienne rosną w czasie z różnych powodów.",
+            "Jak ustalamy przyczynowość? Złotym standardem jest eksperyment z randomizacją (RCT): losowo przydzielamy uczestników do grup i manipulujemy zmienną X. Bez randomizacji możemy używać badań naturalnych, analizy regresji z kontrolą zmiennych ukrytych lub kryteriów Bradforda-Hilla (siła, specyficzność, koherencja, temporalność).",
+            "Przykład klasyczny: spożycie lodów koreluje z liczbą utonięć (r=0.88). Pułapka -- wspólna przyczyna to pora roku. Latem ludzie jedzą więcej lodów i więcej pływają. Przykład przyczynowy: palenie papierosów i rak płuc -- potwierdzony w setkach badań kohortowych i eksperymentów na zwierzętach.",
         ],
         "notes": [
-            "Przy malym N nawet duze r moze byc przypadkowe. Przed wyciaganiem wnioskow zawsze sprawdzaj: ile mamy obserwacji? Jaki jest 95% przedzial ufnosci dla r? Zasada: N < 30 to za malo by ufac r bez testu istotnosci.",
-            "Sila korelacji nie informuje o mechanizmie przyczynowym. r=0.93 miedzy sprzedaza iPhone a wskaznikiem samobojstw w USA to trend czasowy, nie przyczynowosc. Zawsze pytaj: co moze byc wspolna przyczyna? Czy jest tu trend czasowy? Jaki bylby wynik eksperymentu?",
-            "Korelacja Pearsona zaklada liniowosc zwiazku i normalnosc obu zmiennych. Dla zwiazkow nieliniowych (np. odwrocone U) r ~ 0 mimo wyraznego wzorca. Zawsze patrz na wykres punktowy -- samo r nie wystarcza!",
+            "Przy małym N nawet duże r może być przypadkowe. Przed wyciąganiem wniosków zawsze sprawdzaj: ile mamy obserwacji? Jaki jest 95% przedział ufności dla r? Zasada: N < 30 to za mało by ufać r bez testu istotności.",
+            "Siła korelacji nie informuje o mechanizmie przyczynowym. r=0.93 między sprzedażą iPhone a wskaźnikiem samobójstw w USA to trend czasowy, nie przyczynowość. Zawsze pytaj: co może być wspólną przyczyną? Czy jest tu trend czasowy? Jaki byłby wynik eksperymentu?",
+            "Korelacja Pearsona zakłada liniowość związku i normalność obu zmiennych. Dla związków nieliniowych (np. odwrócone U) r ~ 0 mimo wyraźnego wzorca. Zawsze patrz na wykres punktowy -- samo r nie wystarcza!",
         ],
         "tasks": [
-            "W Fazie A: ustaw r=0.9, N=20 i r=0.9, N=200. Jak rozni sie wyglad chmury punktow? Teraz utrzymaj r=0.9, N=200 i zwieksz szum do 0.8. Jak zmienilo sie wizualne wrazenie? Czy r sie zmienilo?",
-            "W Fazie B: przejdz przez wszystkie 8 scenariuszy. Dla kazdego spurious -- znajdz zmienna ukryta zanim klikniesz 'Poddaj sie'. Dla kazdego causal -- zastanow sie jak mozna to sprawdzic eksperymentalnie.",
-            "W Fazie C: znajdz 3 pary zmiennych z r > 0.7. Dla kazdej zapisz: czy to przyczynowosc, zmienna ukryta czy trend czasowy? Potem znajdz pare z r najblizszym 0 -- co laczy te zmienne?",
+            "W Fazie A: ustaw r=0.9, N=20 i r=0.9, N=200. Jak różni się wygląd chmury punktów? Teraz utrzymaj r=0.9, N=200 i zwiększ szum do 0.8. Jak zmieniło się wizualne wrażenie? Czy r się zmieniło?",
+            "W Fazie B: przejdź przez wszystkie 8 scenariuszy. Dla każdego spurious -- znajdź zmienną ukrytą zanim klikniesz 'Poddaj się'. Dla każdego causal -- zastanów się jak można to sprawdzić eksperymentalnie.",
+            "W Fazie C: znajdź 3 pary zmiennych z r > 0.7. Dla każdej zapisz: czy to przyczynowość, zmienna ukryta czy trend czasowy? Potem znajdź parę z r najbliższym 0 -- co łączy te zmienne?",
         ],
     },
     "en": {

@@ -76,7 +76,7 @@ class CorrelationTrapScene(Scene):
         surface.blit(font_nav.render("<", True, _WHITE), (20, 10))
         surface.blit(font_nav.render(">", True, _WHITE), (1024 - 36, 10))
 
-        surface.blit(font_sub.render("LEWO / PRAWO = zmien faze", True, _DIM),
+        surface.blit(font_sub.render("LEWO / PRAWO = zmień fazę", True, _DIM),
                      (20, _NAV_H - 16))
 
 
