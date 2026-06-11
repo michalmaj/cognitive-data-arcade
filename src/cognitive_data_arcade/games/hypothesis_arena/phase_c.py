@@ -22,8 +22,10 @@ _ORANGE = (243, 156,  18)
 _BLUE   = ( 52, 152, 219)
 _GREEN  = ( 39, 174,  96)
 _RED    = (231,  76,  60)
-_FIG_BG = "#0f0f23"
-_AX_BG  = "#1a1a3e"
+_FIG_BG         = "#0f0f23"
+_AX_BG          = "#1a1a3e"
+_DARK_ORANGE_BG = (58, 42, 16)
+_MUTED          = (80, 80, 100)
 
 _LEFT_W   = 300
 _AREA_H   = 672
@@ -224,7 +226,7 @@ class PhaseCScene(Scene):
             y += 36
         if power < 0.50:
             warn_rect = pygame.Rect(8, y + 8, _LEFT_W - 16, 68)
-            pygame.draw.rect(surface, (58, 42, 16), warn_rect, border_radius=4)
+            pygame.draw.rect(surface, _DARK_ORANGE_BG, warn_rect, border_radius=4)
             pygame.draw.rect(surface, _ORANGE, warn_rect, 2, border_radius=4)
             font_w = get_font(13)
             d = self._sl_d.value
@@ -274,7 +276,7 @@ class PhaseCScene(Scene):
             (0, 0, (58, 26, 26), _RED,    f"{alpha*100:.0f}%",       "Błąd I rodzaju",   "Fałszywy alarm",   "= alfa"),
             (1, 0, (26, 58, 26), _GREEN,  f"{power*100:.0f}%",       "MOC testu",        "Trafne wykrycie",  "= 1-beta"),
             (0, 1, (20, 20, 50), _PANEL,  f"{(1-alpha)*100:.0f}%",   "Poprawna decyzja", "Brak efektu OK",   "= 1-alfa"),
-            (1, 1, (58, 42, 16), _ORANGE, f"{beta*100:.0f}%",        "Błąd II rodzaju",  "Przeoczony efekt", "= beta"),
+            (1, 1, _DARK_ORANGE_BG, _ORANGE, f"{beta*100:.0f}%",      "Błąd II rodzaju",  "Przeoczony efekt", "= beta"),
         ]
         for ci, ri, bg, border, big_val, main_lbl, sub_lbl, eq_lbl in cells:
             x = col_x[ci]
@@ -287,8 +289,8 @@ class PhaseCScene(Scene):
             big = font_big.render(big_val, True, text_col)
             right_surf.blit(big, (x + 8, y + 8))
             right_surf.blit(font_sm.render(main_lbl, True, text_col), (x + 8, y + 44))
-            right_surf.blit(font_sm.render(sub_lbl,  True, (80, 80, 100)), (x + 8, y + 60))
-            right_surf.blit(font_sm.render(eq_lbl,   True, (80, 80, 100)), (x + 8, y + 76))
+            right_surf.blit(font_sm.render(sub_lbl,  True, _MUTED), (x + 8, y + 60))
+            right_surf.blit(font_sm.render(eq_lbl,   True, _MUTED), (x + 8, y + 76))
 
     def is_done(self) -> bool:
         return self._done
