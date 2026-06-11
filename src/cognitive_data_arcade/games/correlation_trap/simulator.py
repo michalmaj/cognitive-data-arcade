@@ -1,5 +1,6 @@
 from __future__ import annotations
 from dataclasses import dataclass
+import hashlib
 import math
 import numpy as np
 
@@ -147,7 +148,7 @@ _SCENARIOS: list[Scenario] = [
         is_causal=True,
         confound_pl="",
         explanation_pl=(
-            "Eksperymenty ze zmienionym snem potwierdzaja przyczynowos.\n"
+            "Eksperymenty ze zmienionym snem potwierdzaja przyczynowosc.\n"
             "Mniej snu -> wolniejsze przetwarzanie poznawcze -> dluzszy RT."
         ),
     ),
@@ -205,5 +206,5 @@ def _sandbox_corr(x_key: str, y_key: str) -> float:
 
 
 def _sandbox_seed(x_key: str, y_key: str) -> int:
-    pair = tuple(sorted([x_key, y_key]))
-    return hash(pair) & 0xFFFF
+    pair = "_".join(sorted([x_key, y_key]))
+    return int(hashlib.md5(pair.encode()).hexdigest(), 16) & 0xFFFF
