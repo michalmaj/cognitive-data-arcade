@@ -24,6 +24,7 @@ _LESSONS = [
     (11, "Visual Search Lab"),
     (12, "Cognitive Dashboard"),
     (13, "Distribution Playground"),
+    (14, "Correlation Trap"),
 ]
 
 _BG = (26, 26, 46)
@@ -140,6 +141,8 @@ class LessonMenuScene(Scene):
             self._launch_cognitive_dashboard()
         elif lesson_num == 13:
             self._launch_distribution_playground()
+        elif lesson_num == 14:
+            self._launch_correlation_trap()
         elif lesson_num == 6:
             self._launch_eda()
         elif lesson_num == 7:
@@ -239,6 +242,8 @@ class LessonMenuScene(Scene):
             return _make_cd
         if lesson_num == 13:
             return self._make_distribution_playground
+        if lesson_num == 14:
+            return self._make_correlation_trap
         return None
 
     def _confirm_popup(self) -> None:
@@ -440,6 +445,21 @@ class LessonMenuScene(Scene):
         inner = DistributionPlaygroundScene()
         game_info = get_game_info(self._strings)
         return PausableGame(inner, game_info, self._make_distribution_playground,
+                            self._strings, self._pm)
+
+    def _launch_correlation_trap(self) -> None:
+        self._next = self._make_correlation_trap()
+        self._done = True
+
+    def _make_correlation_trap(self) -> Scene:
+        from cognitive_data_arcade.engine.pause import PausableGame
+        from cognitive_data_arcade.games.correlation_trap.info import get_game_info
+        from cognitive_data_arcade.games.correlation_trap.scene import (
+            CorrelationTrapScene,
+        )
+        inner = CorrelationTrapScene()
+        game_info = get_game_info(self._strings)
+        return PausableGame(inner, game_info, self._make_correlation_trap,
                             self._strings, self._pm)
 
     def update(self, dt_ms: float) -> None:
