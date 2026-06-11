@@ -6,7 +6,7 @@ CONTENT: dict[str, dict[str, list[str]]] = {
         "theory": [
             "Korelacja Pearsona (r) mierzy sile i kierunek liniowego zwiazku miedzy dwiema zmiennymi. Zakres: od -1 (idealna ujemna) przez 0 (brak zwiazku) do +1 (idealna dodatnia). r^2 (wspolczynnik determinacji) mowi jaki procent zmiennosci Y wyjasnaja X.",
             "Korelacja NIE oznacza przyczynowosci. Istnieja trzy glowne powody pozornej korelacji bez zwiazku przyczynowego: 1) Zmienna ukryta (confounding) -- trzecia zmienna Z wplywa na obie. 2) Przypadek -- przy malym N latwo o spurious correlation. 3) Trend czasowy -- obie zmienne rosna w czasie z roznych powodow.",
-            "Jak ustalamy przyczynowos c? Zlotym standardem jest eksperyment z randomizacja (RCT): losowo przydzielamy uczestnikow do grup i manipulujemy zmienna X. Bez randomizacji mozemy uzywac badan naturalnych, analizy regresji z kontrola zmiennych ukrytych lub kryteriow Bradforda-Hilla (sila, specyficznosc, koherencja, temporalnosc).",
+            "Jak ustalamy przyczynowosc? Zlotym standardem jest eksperyment z randomizacja (RCT): losowo przydzielamy uczestnikow do grup i manipulujemy zmienna X. Bez randomizacji mozemy uzywac badan naturalnych, analizy regresji z kontrola zmiennych ukrytych lub kryteriow Bradforda-Hilla (sila, specyficznosc, koherencja, temporalnosc).",
             "Przyklad klasyczny: spozycie lodow koreluje z liczba utoniec (r=0.88). Pulapka -- wspolna przyczyna to pora roku. Latem ludzie jada wiecej lodow i wiecej plywa. Przyklad przyczynowy: palenie papierosow i rak pluc -- potwierdzony w setkach badan kohortowych i eksperymentow na zwierzetach.",
         ],
         "notes": [
