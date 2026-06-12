@@ -77,7 +77,7 @@ class HypothesisArenaScene(Scene):
                 pygame.draw.line(surface, _ORANGE, (tx + 4, _NAV_H - 3), (tx + tab_w - 4, _NAV_H - 3), 2)
         # hint
         hint = font_sm.render("LEWO / PRAWO = zmień fazę", True, _DIM)
-        surface.blit(hint, (_W // 2 - hint.get_width() // 2, _NAV_H - 14))
+        surface.blit(hint, (20, _NAV_H - 16))
         # inner scene
         self._inner.fill(_BG)
         self._active.draw(self._inner)
