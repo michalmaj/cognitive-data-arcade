@@ -115,7 +115,8 @@ class _VerticalSlider:
     def handle_mousedown(self, pos: tuple[int, int]) -> bool:
         px, py = pos
         ty = self._thumb_y()
-        if abs(px - self._x) <= 22 and abs(py - ty) <= 14:
+        in_track = self._y_top <= py <= self._y_bot
+        if abs(px - self._x) <= 22 and in_track and abs(py - ty) <= 14:
             self._set_from_pixel(py)
             self._dragging = True
             return True
