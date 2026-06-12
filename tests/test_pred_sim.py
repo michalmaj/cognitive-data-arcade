@@ -38,3 +38,20 @@ def test_predict_value():
     from cognitive_data_arcade.games.prediction_slider.simulator import predict
     result = predict(x_val=5.0, slope=2.0, intercept=1.0)
     assert abs(result - 11.0) < 1e-9
+
+
+def test_simulate_scenario_bounds():
+    from cognitive_data_arcade.games.prediction_slider.simulator import _SCENARIOS, simulate_scenario
+    sc = _SCENARIOS[0]  # sleep_test: x_min=4.0, x_max=10.0
+    x, y = simulate_scenario(sc)
+    assert len(x) == sc.n
+    assert len(y) == sc.n
+    assert float(x.min()) >= sc.x_min - 1e-9
+    assert float(x.max()) <= sc.x_max + 1e-9
+
+
+def test_scenarios_count_and_unique_keys():
+    from cognitive_data_arcade.games.prediction_slider.simulator import _SCENARIOS
+    assert len(_SCENARIOS) == 5
+    keys = [sc.key for sc in _SCENARIOS]
+    assert len(keys) == len(set(keys)), "Scenario keys must be unique"
