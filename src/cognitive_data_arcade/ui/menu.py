@@ -26,6 +26,7 @@ _LESSONS = [
     (13, "Distribution Playground"),
     (14, "Correlation Trap"),
     (15, "Hypothesis Arena"),
+    (16, "Prediction Slider"),
 ]
 
 _BG = (26, 26, 46)
@@ -146,6 +147,8 @@ class LessonMenuScene(Scene):
             self._launch_correlation_trap()
         elif lesson_num == 15:
             self._launch_hypothesis_arena()
+        elif lesson_num == 16:
+            self._launch_prediction_slider()
         elif lesson_num == 6:
             self._launch_eda()
         elif lesson_num == 7:
@@ -249,6 +252,8 @@ class LessonMenuScene(Scene):
             return self._make_correlation_trap
         if lesson_num == 15:
             return self._make_hypothesis_arena
+        if lesson_num == 16:
+            return self._make_prediction_slider
         return None
 
     def _confirm_popup(self) -> None:
@@ -478,6 +483,19 @@ class LessonMenuScene(Scene):
         inner = HypothesisArenaScene()
         game_info = get_game_info(self._strings)
         return PausableGame(inner, game_info, self._make_hypothesis_arena,
+                            self._strings, self._pm)
+
+    def _launch_prediction_slider(self) -> None:
+        self._next = self._make_prediction_slider()
+        self._done = True
+
+    def _make_prediction_slider(self) -> Scene:
+        from cognitive_data_arcade.engine.pause import PausableGame
+        from cognitive_data_arcade.games.prediction_slider.info import get_game_info
+        from cognitive_data_arcade.games.prediction_slider.scene import PredictionSliderScene
+        inner = PredictionSliderScene()
+        game_info = get_game_info(self._strings)
+        return PausableGame(inner, game_info, self._make_prediction_slider,
                             self._strings, self._pm)
 
     def update(self, dt_ms: float) -> None:
