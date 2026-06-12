@@ -36,6 +36,7 @@ _HIGHLIGHT_COLOR = (243, 156, 18)
 
 _MENU_TOP = 140
 _ROW_H = 44
+_VISIBLE = (720 - _MENU_TOP) // _ROW_H  # rows that fit on screen
 _POPUP_W = 320
 _POPUP_H = 160
 
@@ -49,6 +50,7 @@ class LessonMenuScene(Scene):
         self._done = False
         self._popup_visible: bool = False
         self._popup_selected: int = 0  # 0=Play, 1=Teoria
+        self._scroll_top: int = 0
         audio.play_music("menu")
         pygame.font.init()
         self._font_title = pygame.font.SysFont(None, 52)
@@ -60,14 +62,16 @@ class LessonMenuScene(Scene):
             return
         if event.type == pygame.MOUSEMOTION:
             x, y = event.pos
-            idx = (y - _MENU_TOP) // _ROW_H
-            if 0 <= idx < len(_LESSONS):
+            row = (y - _MENU_TOP) // _ROW_H
+            idx = self._scroll_top + row
+            if 0 <= row < _VISIBLE and 0 <= idx < len(_LESSONS):
                 self._selected = idx
             return
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             x, y = event.pos
-            idx = (y - _MENU_TOP) // _ROW_H
-            if 0 <= idx < len(_LESSONS):
+            row = (y - _MENU_TOP) // _ROW_H
+            idx = self._scroll_top + row
+            if 0 <= row < _VISIBLE and 0 <= idx < len(_LESSONS):
                 self._selected = idx
                 self._popup_visible = True
                 self._popup_selected = 0
@@ -78,9 +82,11 @@ class LessonMenuScene(Scene):
             self._done = True
         elif event.key == pygame.K_UP:
             self._selected = max(0, self._selected - 1)
+            self._clamp_scroll()
             audio.play_sfx("navigate")
         elif event.key == pygame.K_DOWN:
             self._selected = min(len(_LESSONS) - 1, self._selected + 1)
+            self._clamp_scroll()
             audio.play_sfx("navigate")
         elif event.key == pygame.K_p:
             from cognitive_data_arcade.ui.profile_screen import ProfileScene
@@ -119,6 +125,10 @@ class LessonMenuScene(Scene):
                 self._done = True
         elif event.key == pygame.K_z:
             self._launch_stroop_picker()
+
+    def _clamp_scroll(self) -> None:
+        self._scroll_top = max(0, min(self._selected, self._scroll_top))
+        self._scroll_top = min(self._scroll_top, max(0, self._selected - _VISIBLE + 1))
 
     def _launch_selected_game(self) -> None:
         audio.play_sfx("select")
@@ -518,10 +528,17 @@ class LessonMenuScene(Scene):
         )
         surface.blit(subtitle, (42, 96))
 
-        for i, (num, name) in enumerate(_LESSONS):
+        visible_end = min(self._scroll_top + _VISIBLE, len(_LESSONS))
+        for i in range(self._scroll_top, visible_end):
+            num, name = _LESSONS[i]
             color = _HIGHLIGHT_COLOR if i == self._selected else _ITEM_COLOR
             text = self._font_item.render(f"{i + 1:02d}.  {name}", True, color)
-            surface.blit(text, (60, 140 + i * 44))
+            surface.blit(text, (60, _MENU_TOP + (i - self._scroll_top) * _ROW_H))
+        if self._scroll_top > 0:
+            surface.blit(self._font_item.render("^", True, _ITEM_COLOR), (24, _MENU_TOP))
+        if visible_end < len(_LESSONS):
+            surface.blit(self._font_item.render("v", True, _ITEM_COLOR),
+                         (24, _MENU_TOP + (_VISIBLE - 1) * _ROW_H))
 
         if self._popup_visible:
             self._draw_popup(surface)
