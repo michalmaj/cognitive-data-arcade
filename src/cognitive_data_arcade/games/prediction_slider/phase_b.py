@@ -178,7 +178,7 @@ class PhaseBScene(Scene):
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             pos = event.pos
             confirm_rect = pygame.Rect(_AREA_W - 180, _AREA_H - 52, 164, 36)
-            next_rect    = pygame.Rect(_AREA_W - 180, _AREA_H - 52, 164, 36)
+            next_rect    = pygame.Rect(_AREA_W - 200, _AREA_H - 52, 184, 36)
             if self._state == "waiting" and confirm_rect.collidepoint(pos):
                 self._confirm()
                 return
