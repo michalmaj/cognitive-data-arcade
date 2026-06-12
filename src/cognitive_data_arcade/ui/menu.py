@@ -67,6 +67,12 @@ class LessonMenuScene(Scene):
             if 0 <= row < _VISIBLE and 0 <= idx < len(_LESSONS):
                 self._selected = idx
             return
+        if event.type == pygame.MOUSEWHEEL:
+            self._scroll_top = max(0, min(
+                self._scroll_top - event.y,
+                max(0, len(_LESSONS) - _VISIBLE),
+            ))
+            return
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             x, y = event.pos
             row = (y - _MENU_TOP) // _ROW_H
