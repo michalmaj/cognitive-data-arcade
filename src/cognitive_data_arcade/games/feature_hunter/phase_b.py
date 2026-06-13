@@ -261,25 +261,57 @@ class PhaseBScene(Scene):
         lbl = get_font(16).render("Zatwierdź", True, col)
         surface.blit(lbl, (_W // 2 - lbl.get_width() // 2, _CONFIRM_Y + 8))
 
+    @staticmethod
+    def _wrap_text(text: str, font: pygame.font.Font, max_w: int) -> list[str]:
+        words = text.split()
+        lines: list[str] = []
+        current = ""
+        for word in words:
+            test = (current + " " + word).strip()
+            if font.size(test)[0] <= max_w:
+                current = test
+            else:
+                if current:
+                    lines.append(current)
+                current = word
+        if current:
+            lines.append(current)
+        return lines
+
     def _draw_hint_popup(self, surface: pygame.Surface) -> None:
         card = self._hint_card
         if card is None:
             return
-        popup_w, popup_h = 150, 58
-        px = min(card.rect.right + 6, _W - popup_w - 2)
-        py = card.rect.top
+        r_val = card.feature.correlation
+        direction = "wzrost" if r_val > 0 else "spadek"
+
+        if self._difficulty.hints == "full":
+            popup_w, popup_h = 260, 100
+        else:
+            popup_w, popup_h = 190, 46
+
+        px = min(card.rect.right + 6, _W - popup_w - 4)
+        py = max(_CZONE_Y + 2, min(card.rect.top, _H - popup_h - 4))
         pygame.draw.rect(surface, _PANEL, (px, py, popup_w, popup_h), border_radius=4)
         pygame.draw.rect(surface, _DIM, (px, py, popup_w, popup_h), 1, border_radius=4)
+
         if self._difficulty.hints == "full":
-            r_val = card.feature.correlation
-            r_surf = get_font(13).render(f"r = {r_val:.2f}", True, _ORANGE)
-            surface.blit(r_surf, (px + 6, py + 8))
-            direction = "wzrost" if r_val > 0 else "spadek"
-            d_surf = get_font(11).render(f"Trend: {direction}", True, _DIM)
-            surface.blit(d_surf, (px + 6, py + 30))
+            # r value + direction
+            r_surf = get_font(13).render(f"r = {r_val:+.2f}  ({direction})", True, _ORANGE)
+            surface.blit(r_surf, (px + 8, py + 8))
+            # separator line
+            pygame.draw.line(surface, _DIM, (px + 8, py + 28), (px + popup_w - 8, py + 28))
+            # hint text wrapped
+            hint = card.feature.hint_pl
+            if hint:
+                font_hint = get_font(11)
+                lines = self._wrap_text(hint, font_hint, popup_w - 16)
+                for i, line in enumerate(lines[:4]):
+                    surf = font_hint.render(line, True, _WHITE)
+                    surface.blit(surf, (px + 8, py + 34 + i * 16))
         else:
             s = get_font(11).render("Sprawdź wykres uważnie", True, _DIM)
-            surface.blit(s, (px + 6, py + 20))
+            surface.blit(s, (px + 8, py + 15))
 
     def _draw_reveal_overlays(self, surface: pygame.Surface) -> None:
         for card in self._cards:
