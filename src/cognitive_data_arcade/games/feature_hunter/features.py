@@ -56,7 +56,7 @@ FEATURE_BANK: list[Feature] = [
     Feature("Ból głowy", "headache", "physiological", 0.55, 0.35, "Ból głowy (0-10)", "Czas reakcji (ms)"),
     Feature("Nawodnienie", "hydration", "physiological", -0.40, 0.40, "Nawodnienie (ml/dzień)", "Czas reakcji (ms)"),
     Feature("Glikemia", "blood_glucose", "physiological", -0.35, 0.44, "Poziom glukozy (mg/dL)", "Czas reakcji (ms)"),
-    Feature("Temperatura ciala", "body_temp", "physiological", 0.32, 0.48, "Temperatura ciala (C)", "Czas reakcji (ms)"),
+    Feature("Temperatura ciała", "body_temp", "physiological", 0.32, 0.48, "Temperatura ciała (C)", "Czas reakcji (ms)"),
     Feature("Leki psychoaktywne", "psychoactive_meds", "physiological", 0.42, 0.42, "Leki (0/1)", "Czas reakcji (ms)"),
     Feature("Faza cyklu", "cycle_phase", "physiological", 0.22, 0.50, "Faza cyklu (1-4)", "Czas reakcji (ms)"),
     # --- environmental (10) ---
