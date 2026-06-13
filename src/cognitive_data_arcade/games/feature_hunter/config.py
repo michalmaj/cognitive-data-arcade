@@ -1,5 +1,6 @@
 from __future__ import annotations
 from dataclasses import dataclass
+from typing import Literal
 
 
 @dataclass(frozen=True)
@@ -7,7 +8,7 @@ class DifficultyConfig:
     name_pl: str
     card_count: int
     timer_s: float | None       # None = no timer
-    hints: str                  # "full" | "scatter_only" | "none"
+    hints: Literal["full", "scatter_only", "none"]
     time_bonus_per_5s: int
     min_signal_correlation: float   # abs(r) threshold for signal features
     max_noise_correlation: float    # abs(r) threshold for noise features

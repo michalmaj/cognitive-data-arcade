@@ -118,7 +118,7 @@ def draw_features(
     n = difficulty.card_count
     # Ensure at least 1 noise and 1 signal
     noise_pick = rng.sample(noises, min(1, len(noises)))
-    signal_pick = rng.sample(signals, min(n - 1, len(signals)))
+    signal_pick = rng.sample(signals, min(max(1, n - 1), len(signals)))
     pool = noise_pick + signal_pick
     if len(pool) < n:
         # Fallback: fill from full bank avoiding duplicates
