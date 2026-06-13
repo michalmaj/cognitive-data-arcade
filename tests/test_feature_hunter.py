@@ -122,3 +122,27 @@ def test_grid_layout_all_difficulties():
     assert grid_layout(4) == (2, 2)
     assert grid_layout(6) == (3, 2)
     assert grid_layout(8) == (4, 2)
+
+
+def test_round_score_perfect_easy():
+    from cognitive_data_arcade.games.feature_hunter.phase_b import compute_round_score
+    from cognitive_data_arcade.games.feature_hunter.config import EASY
+    score = compute_round_score(correct=4, total=4, timer_remaining=0.0, difficulty=EASY)
+    assert score == 4 * 10 + 20  # 60
+
+
+def test_round_score_hard_with_time_bonus():
+    from cognitive_data_arcade.games.feature_hunter.phase_b import compute_round_score
+    from cognitive_data_arcade.games.feature_hunter.config import HARD
+    # 8 correct, 15s remaining → 80 + 20 + (15//5)*2 = 106
+    score = compute_round_score(correct=8, total=8, timer_remaining=15.0, difficulty=HARD)
+    assert score == 80 + 20 + 6  # 106
+
+
+def test_round_score_partial():
+    from cognitive_data_arcade.games.feature_hunter.phase_b import compute_round_score
+    from cognitive_data_arcade.games.feature_hunter.config import MEDIUM
+    # 4/6 correct, no time bonus (timer_remaining counts but no perfect bonus)
+    score = compute_round_score(correct=4, total=6, timer_remaining=20.0, difficulty=MEDIUM)
+    # 4*10 + 0 (no perfect) + (20//5)*1 = 40 + 4 = 44
+    assert score == 44
