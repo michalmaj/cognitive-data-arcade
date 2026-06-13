@@ -22,13 +22,16 @@ _BLUE  = (52, 152, 219)
 
 _W, _H    = 1024, 720
 _TOP_H    = 64
+_INSTR_H  = 22
 _BIN_W    = 160
-_CZONE_X  = _BIN_W                      # 160
-_CZONE_W  = _W - 2 * _BIN_W            # 704
-_CZONE_Y  = _TOP_H                      # 64
-_CZONE_H  = _H - _TOP_H - 50           # 606
+_CZONE_X  = _BIN_W                          # 160
+_CZONE_W  = _W - 2 * _BIN_W                # 704
+_CZONE_Y  = _TOP_H + _INSTR_H              # 86
+_CZONE_H  = _H - _TOP_H - _INSTR_H - 50   # 584
 _CONFIRM_Y = _H - 46
 _TOTAL_ROUNDS = 5
+
+_INSTR_TEXT = "Sortuj cechy: wyraźny trend na wykresie → PRZYDATNE  |  losowe punkty → SZUM"
 
 
 def compute_round_score(
@@ -125,6 +128,7 @@ class PhaseBScene(Scene):
     def _handle_playing_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
+                self._hint_card = None
                 if self._all_assigned():
                     btn = pygame.Rect(_W // 2 - 100, _CONFIRM_Y, 200, 36)
                     if btn.collidepoint(event.pos):
@@ -173,6 +177,7 @@ class PhaseBScene(Scene):
     def draw(self, surface: pygame.Surface) -> None:
         surface.fill(_BG)
         self._draw_top_bar(surface)
+        self._draw_instruction_banner(surface)
         self._draw_bins(surface)
         self._draw_cards(surface)
         if self._state == "playing":
@@ -183,6 +188,11 @@ class PhaseBScene(Scene):
             self._draw_reveal_overlays(surface)
             self._draw_reveal_summary(surface)
             self._draw_next_round_button(surface)
+
+    def _draw_instruction_banner(self, surface: pygame.Surface) -> None:
+        pygame.draw.rect(surface, (12, 12, 28), (0, _TOP_H, _W, _INSTR_H))
+        txt = get_font(11).render(_INSTR_TEXT, True, _DIM)
+        surface.blit(txt, (_W // 2 - txt.get_width() // 2, _TOP_H + (_INSTR_H - txt.get_height()) // 2))
 
     def _draw_top_bar(self, surface: pygame.Surface) -> None:
         pygame.draw.rect(surface, _PANEL, (0, 0, _W, _TOP_H))
