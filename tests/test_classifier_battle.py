@@ -100,3 +100,18 @@ def test_compute_round_score_beat_knn():
     accs = {"liniowy": 0.80, "knn": 0.80, "drzewo": 0.80}
     score = compute_round_score(0.95, accs)
     assert score == 95 + 15 + 20  # beat both
+
+
+def test_draw_canvas_smoke():
+    import pygame
+    pygame.init()
+    pygame.display.set_mode((1, 1))
+    from cognitive_data_arcade.games.classifier_battle.widgets import DrawCanvas
+    from cognitive_data_arcade.games.classifier_battle.scenarios import SCENARIOS, generate_data
+    canvas = DrawCanvas(pygame.Rect(0, 0, 750, 600))
+    X, y = generate_data(SCENARIOS[0], seed=0)
+    canvas.load_data(X, y)
+    surf = pygame.Surface((750, 600))
+    canvas.draw(surf)
+    assert not canvas.is_valid()   # no polyline yet
+    pygame.quit()
