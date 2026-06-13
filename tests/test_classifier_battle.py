@@ -37,3 +37,66 @@ def test_generate_data_two_classes():
     for s in SCENARIOS:
         _, y = generate_data(s, seed=7)
         assert 0 in y and 1 in y, f"{s.name_pl}: both classes must be present"
+
+
+def test_player_accuracy_range():
+    from cognitive_data_arcade.games.classifier_battle.scenarios import SCENARIOS, generate_data
+    from cognitive_data_arcade.games.classifier_battle.classifier import player_accuracy
+    X, y = generate_data(SCENARIOS[0], seed=1)
+    # vertical line at x=0.5 in normalised space, spanning full height
+    polyline = [(0.5, 0.0), (0.5, 1.0)]
+    acc = player_accuracy(polyline, X, y)
+    assert 0.0 <= acc <= 1.0
+
+
+def test_player_accuracy_perfect_blobs():
+    from cognitive_data_arcade.games.classifier_battle.scenarios import SCENARIOS, generate_data
+    from cognitive_data_arcade.games.classifier_battle.classifier import player_accuracy
+    import numpy as np
+    # blobs: class 0 centred at (0.25, 0.5), class 1 at (0.75, 0.5)
+    # a vertical line at x=0.5 should separate them well
+    X, y = generate_data(SCENARIOS[0], seed=42)
+    polyline = [(0.5, 0.0), (0.5, 1.0)]
+    acc = player_accuracy(polyline, X, y)
+    assert acc >= 0.80, f"Expected >= 0.80 for clean blobs, got {acc:.2f}"
+
+
+def test_classifier_accuracies_keys():
+    from cognitive_data_arcade.games.classifier_battle.scenarios import SCENARIOS, generate_data
+    from cognitive_data_arcade.games.classifier_battle.classifier import classifier_accuracies
+    X, y = generate_data(SCENARIOS[0], seed=0)
+    accs = classifier_accuracies(X, y, seed=0)
+    assert set(accs.keys()) == {"liniowy", "knn", "drzewo"}
+
+
+def test_classifier_accuracies_range():
+    from cognitive_data_arcade.games.classifier_battle.scenarios import SCENARIOS, generate_data
+    from cognitive_data_arcade.games.classifier_battle.classifier import classifier_accuracies
+    X, y = generate_data(SCENARIOS[0], seed=0)
+    accs = classifier_accuracies(X, y, seed=0)
+    for name, acc in accs.items():
+        assert 0.0 <= acc <= 1.0, f"{name}: {acc}"
+
+
+def test_compute_round_score_no_bonus():
+    from cognitive_data_arcade.games.classifier_battle.classifier import compute_round_score
+    # player at 60%, classifiers all at 80% -> no bonus
+    accs = {"liniowy": 0.80, "knn": 0.80, "drzewo": 0.80}
+    score = compute_round_score(0.60, accs)
+    assert score == 60
+
+
+def test_compute_round_score_beat_linear():
+    from cognitive_data_arcade.games.classifier_battle.classifier import compute_round_score
+    # player at 85%, linear at 75%, knn at 90%
+    accs = {"liniowy": 0.75, "knn": 0.90, "drzewo": 0.80}
+    score = compute_round_score(0.85, accs)
+    assert score == 85 + 15  # beat linear only
+
+
+def test_compute_round_score_beat_knn():
+    from cognitive_data_arcade.games.classifier_battle.classifier import compute_round_score
+    # player at 95%, all classifiers at 80%
+    accs = {"liniowy": 0.80, "knn": 0.80, "drzewo": 0.80}
+    score = compute_round_score(0.95, accs)
+    assert score == 95 + 15 + 20  # beat both
