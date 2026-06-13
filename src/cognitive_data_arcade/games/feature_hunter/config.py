@@ -14,7 +14,7 @@ class DifficultyConfig:
 
 
 EASY = DifficultyConfig(
-    name_pl="Latwy",
+    name_pl="Łatwy",
     card_count=4,
     timer_s=None,
     hints="full",
@@ -24,7 +24,7 @@ EASY = DifficultyConfig(
 )
 
 MEDIUM = DifficultyConfig(
-    name_pl="Sredni",
+    name_pl="Średni",
     card_count=6,
     timer_s=45.0,
     hints="scatter_only",
