@@ -102,3 +102,23 @@ def test_compute_accuracy_delta_signal_beats_noise():
     acc_with_n, acc_without_n = compute_accuracy_delta(noise_feat, seed=0)
     assert acc_with_s > acc_without_s
     assert acc_with_n <= acc_without_n + 0.05  # noise barely helps
+
+
+def test_render_card_returns_correct_size():
+    import pygame
+    pygame.init()
+    pygame.display.set_mode((1, 1))
+    from cognitive_data_arcade.games.feature_hunter.features import FEATURE_BANK
+    from cognitive_data_arcade.games.feature_hunter.widgets import render_card
+    surf = render_card(FEATURE_BANK[0], card_w=200, card_h=240, seed=0)
+    assert isinstance(surf, pygame.Surface)
+    assert surf.get_width() == 200
+    assert surf.get_height() == 240
+    pygame.quit()
+
+
+def test_grid_layout_all_difficulties():
+    from cognitive_data_arcade.games.feature_hunter.widgets import grid_layout
+    assert grid_layout(4) == (2, 2)
+    assert grid_layout(6) == (3, 2)
+    assert grid_layout(8) == (4, 2)
