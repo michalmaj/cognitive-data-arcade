@@ -170,3 +170,42 @@ def test_lesson_17_content():
         for key in ("theory", "notes", "tasks"):
             assert key in CONTENT[lang]
             assert len(CONTENT[lang][key]) >= 2
+
+
+def test_lesson_17_in_menu():
+    from cognitive_data_arcade.ui.menu import _LESSONS
+    nums = [num for num, _ in _LESSONS]
+    assert 17 in nums, "Lesson 17 must be in _LESSONS"
+
+
+def test_lesson_17_name_in_menu():
+    from cognitive_data_arcade.ui.menu import _LESSONS
+    name = next((n for num, n in _LESSONS if num == 17), None)
+    assert name == "Feature Hunter"
+
+
+def test_game_factory_for_17_returns_callable(tmp_path):
+    import pygame
+    pygame.init()
+    pygame.display.set_mode((1024, 720))
+    from cognitive_data_arcade.engine.i18n import get_strings
+    from cognitive_data_arcade.profile.manager import ProfileManager
+    from cognitive_data_arcade.ui.menu import LessonMenuScene
+    strings = get_strings("pl")
+    pm = ProfileManager(tmp_path / "profile.json")
+    scene = LessonMenuScene(pm, strings)
+    factory = scene._game_factory_for(17)
+    assert callable(factory), "_game_factory_for(17) must return a callable"
+    pygame.quit()
+
+
+def test_feature_hunter_scene_smoke(tmp_path):
+    import pygame
+    pygame.init()
+    pygame.display.set_mode((1024, 720))
+    from cognitive_data_arcade.games.feature_hunter.game import FeatHunterScene
+    s = FeatHunterScene()
+    surf = pygame.Surface((1024, 720))
+    s.draw(surf)
+    assert not s.is_done()
+    pygame.quit()
