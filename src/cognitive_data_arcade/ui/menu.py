@@ -7,6 +7,7 @@ import pygame
 from cognitive_data_arcade.engine import audio
 from cognitive_data_arcade.engine.i18n import Strings, get_strings
 from cognitive_data_arcade.engine.scene import Scene
+from cognitive_data_arcade.engine.scrollbar import ScrollBar
 from cognitive_data_arcade.profile.manager import ProfileManager
 
 # Lesson numbers follow the course README. Lesson 5 is absent because lessons 04 and 05
@@ -37,6 +38,8 @@ _HIGHLIGHT_COLOR = (243, 156, 18)
 _MENU_TOP = 140
 _ROW_H = 44
 _VISIBLE = (720 - _MENU_TOP) // _ROW_H  # rows that fit on screen
+_SB_X = 1010   # scrollbar x position (right edge)
+_SB_W = 8
 _POPUP_W = 320
 _POPUP_H = 160
 
@@ -50,7 +53,14 @@ class LessonMenuScene(Scene):
         self._done = False
         self._popup_visible: bool = False
         self._popup_selected: int = 0  # 0=Play, 1=Teoria
-        self._scroll_top: int = 0
+        self._scrollbar = ScrollBar(
+            total=len(_LESSONS),
+            visible=_VISIBLE,
+            x=_SB_X,
+            y=_MENU_TOP,
+            h=_VISIBLE * _ROW_H,
+            width=_SB_W,
+        )
         audio.play_music("menu")
         pygame.font.init()
         self._font_title = pygame.font.SysFont(None, 52)
@@ -61,22 +71,22 @@ class LessonMenuScene(Scene):
             self._handle_popup_event(event)
             return
         if event.type == pygame.MOUSEMOTION:
+            self._scrollbar.handle_mousemotion(event.pos, event.buttons)
             x, y = event.pos
             row = (y - _MENU_TOP) // _ROW_H
-            idx = self._scroll_top + row
+            idx = self._scrollbar.scroll + row
             if 0 <= row < _VISIBLE and 0 <= idx < len(_LESSONS):
                 self._selected = idx
             return
         if event.type == pygame.MOUSEWHEEL:
-            self._scroll_top = max(0, min(
-                self._scroll_top - event.y,
-                max(0, len(_LESSONS) - _VISIBLE),
-            ))
+            self._scrollbar.handle_wheel(-event.y)
             return
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            if self._scrollbar.handle_mousedown(event.pos):
+                return
             x, y = event.pos
             row = (y - _MENU_TOP) // _ROW_H
-            idx = self._scroll_top + row
+            idx = self._scrollbar.scroll + row
             if 0 <= row < _VISIBLE and 0 <= idx < len(_LESSONS):
                 self._selected = idx
                 self._popup_visible = True
@@ -133,8 +143,11 @@ class LessonMenuScene(Scene):
             self._launch_stroop_picker()
 
     def _clamp_scroll(self) -> None:
-        self._scroll_top = max(0, min(self._selected, self._scroll_top))
-        self._scroll_top = min(self._scroll_top, max(0, self._selected - _VISIBLE + 1))
+        top = self._scrollbar.scroll
+        if self._selected < top:
+            self._scrollbar.scroll_to(self._selected)
+        elif self._selected >= top + _VISIBLE:
+            self._scrollbar.scroll_to(self._selected - _VISIBLE + 1)
 
     def _launch_selected_game(self) -> None:
         audio.play_sfx("select")
@@ -534,17 +547,14 @@ class LessonMenuScene(Scene):
         )
         surface.blit(subtitle, (42, 96))
 
-        visible_end = min(self._scroll_top + _VISIBLE, len(_LESSONS))
-        for i in range(self._scroll_top, visible_end):
+        top = self._scrollbar.scroll
+        visible_end = min(top + _VISIBLE, len(_LESSONS))
+        for i in range(top, visible_end):
             num, name = _LESSONS[i]
             color = _HIGHLIGHT_COLOR if i == self._selected else _ITEM_COLOR
             text = self._font_item.render(f"{i + 1:02d}.  {name}", True, color)
-            surface.blit(text, (60, _MENU_TOP + (i - self._scroll_top) * _ROW_H))
-        if self._scroll_top > 0:
-            surface.blit(self._font_item.render("^", True, _ITEM_COLOR), (24, _MENU_TOP))
-        if visible_end < len(_LESSONS):
-            surface.blit(self._font_item.render("v", True, _ITEM_COLOR),
-                         (24, _MENU_TOP + (_VISIBLE - 1) * _ROW_H))
+            surface.blit(text, (60, _MENU_TOP + (i - top) * _ROW_H))
+        self._scrollbar.draw(surface)
 
         if self._popup_visible:
             self._draw_popup(surface)
