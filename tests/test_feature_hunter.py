@@ -146,3 +146,27 @@ def test_round_score_partial():
     score = compute_round_score(correct=4, total=6, timer_remaining=20.0, difficulty=MEDIUM)
     # 4*10 + 0 (no perfect) + (20//5)*1 = 40 + 4 = 44
     assert score == 44
+
+
+def test_get_game_info_pl():
+    import pygame
+    pygame.init()
+    pygame.display.set_mode((1, 1))
+    from cognitive_data_arcade.engine.i18n import get_strings
+    from cognitive_data_arcade.engine.pause import GameInfo
+    from cognitive_data_arcade.games.feature_hunter.info import get_game_info
+    strings = get_strings("pl")
+    info = get_game_info(strings)
+    assert isinstance(info, GameInfo)
+    assert info.title == "Feature Hunter"
+    assert len(info.description_lines) >= 2
+    pygame.quit()
+
+
+def test_lesson_17_content():
+    from cognitive_data_arcade.lessons.lesson_17 import CONTENT
+    for lang in ("pl", "en"):
+        assert lang in CONTENT
+        for key in ("theory", "notes", "tasks"):
+            assert key in CONTENT[lang]
+            assert len(CONTENT[lang][key]) >= 2
