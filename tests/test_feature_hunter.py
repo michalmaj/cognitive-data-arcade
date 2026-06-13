@@ -63,3 +63,42 @@ def test_draw_features_always_includes_noise():
         features = draw_features(EASY, session_seed=seed, round_idx=0)
         noise_count = sum(1 for f in features if not f.is_signal)
         assert noise_count >= 1, f"seed={seed}: no noise feature in round"
+
+
+def test_simulate_scatter_shape():
+    from cognitive_data_arcade.games.feature_hunter.features import FEATURE_BANK
+    from cognitive_data_arcade.games.feature_hunter.simulator import simulate_scatter
+    x, y = simulate_scatter(FEATURE_BANK[0], n_points=60, seed=1)
+    assert len(x) == 60
+    assert len(y) == 60
+
+
+def test_simulate_scatter_normalised():
+    from cognitive_data_arcade.games.feature_hunter.features import FEATURE_BANK
+    from cognitive_data_arcade.games.feature_hunter.simulator import simulate_scatter
+    import numpy as np
+    x, y = simulate_scatter(FEATURE_BANK[0], n_points=60, seed=2)
+    assert float(np.min(x)) >= 0.0 - 1e-6
+    assert float(np.max(x)) <= 1.0 + 1e-6
+    assert float(np.min(y)) >= 0.0 - 1e-6
+    assert float(np.max(y)) <= 1.0 + 1e-6
+
+
+def test_simulate_scatter_deterministic():
+    from cognitive_data_arcade.games.feature_hunter.features import FEATURE_BANK
+    from cognitive_data_arcade.games.feature_hunter.simulator import simulate_scatter
+    import numpy as np
+    x1, y1 = simulate_scatter(FEATURE_BANK[1], n_points=40, seed=99)
+    x2, y2 = simulate_scatter(FEATURE_BANK[1], n_points=40, seed=99)
+    np.testing.assert_array_equal(x1, x2)
+
+
+def test_compute_accuracy_delta_signal_beats_noise():
+    from cognitive_data_arcade.games.feature_hunter.features import FEATURE_BANK
+    from cognitive_data_arcade.games.feature_hunter.simulator import compute_accuracy_delta
+    signal_feat = next(f for f in FEATURE_BANK if abs(f.correlation) > 0.6)
+    noise_feat = next(f for f in FEATURE_BANK if abs(f.correlation) < 0.05)
+    acc_with_s, acc_without_s = compute_accuracy_delta(signal_feat, seed=0)
+    acc_with_n, acc_without_n = compute_accuracy_delta(noise_feat, seed=0)
+    assert acc_with_s > acc_without_s
+    assert acc_with_n <= acc_without_n + 0.05  # noise barely helps
