@@ -163,3 +163,18 @@ def test_lesson_18_name_in_menu():
     from cognitive_data_arcade.ui.menu import _LESSONS
     name = next((n for num, n in _LESSONS if num == 18), None)
     assert name == "Classifier Battle"
+
+
+def test_game_factory_for_18_returns_callable(tmp_path):
+    import pygame
+    pygame.init()
+    pygame.display.set_mode((1024, 720))
+    from cognitive_data_arcade.engine.i18n import get_strings
+    from cognitive_data_arcade.profile.manager import ProfileManager
+    from cognitive_data_arcade.ui.menu import LessonMenuScene
+    strings = get_strings("pl")
+    pm = ProfileManager(tmp_path / "profile.json")
+    scene = LessonMenuScene(pm, strings)
+    factory = scene._game_factory_for(18)
+    assert callable(factory), "_game_factory_for(18) must return a callable"
+    pygame.quit()
