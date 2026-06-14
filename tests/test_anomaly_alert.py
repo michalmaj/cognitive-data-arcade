@@ -91,3 +91,95 @@ def test_find_clicked_element_returns_first_hit():
         Element(100.0, 100.0, 0.0, 0.0, True,  "B"),
     ]
     assert find_clicked_element(els, (100, 100)) == 0
+
+
+import os
+os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
+os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
+
+
+def _pygame():
+    import pygame
+    pygame.init()
+    return pygame
+
+
+def test_render_timeseries_returns_surface_and_elements():
+    pg = _pygame()
+    from cognitive_data_arcade.games.anomaly_alert.scenarios import SCENARIOS
+    from cognitive_data_arcade.games.anomaly_alert.renderers import render_timeseries
+    surf, els = render_timeseries(SCENARIOS[0], 42)
+    assert isinstance(surf, pg.Surface)
+    assert len(els) > 0
+    assert sum(e.is_anomaly for e in els) == 2
+
+
+def test_render_barchart_returns_surface_and_elements():
+    pg = _pygame()
+    from cognitive_data_arcade.games.anomaly_alert.scenarios import SCENARIOS
+    from cognitive_data_arcade.games.anomaly_alert.renderers import render_barchart
+    surf, els = render_barchart(SCENARIOS[1], 42)
+    assert isinstance(surf, pg.Surface)
+    assert sum(e.is_anomaly for e in els) == 2
+
+
+def test_render_scatter_returns_surface_and_elements():
+    pg = _pygame()
+    from cognitive_data_arcade.games.anomaly_alert.scenarios import SCENARIOS
+    from cognitive_data_arcade.games.anomaly_alert.renderers import render_scatter
+    surf, els = render_scatter(SCENARIOS[2], 42)
+    assert isinstance(surf, pg.Surface)
+    assert sum(e.is_anomaly for e in els) == 2
+
+
+def test_render_histogram_returns_surface_and_elements():
+    pg = _pygame()
+    from cognitive_data_arcade.games.anomaly_alert.scenarios import SCENARIOS
+    from cognitive_data_arcade.games.anomaly_alert.renderers import render_histogram
+    surf, els = render_histogram(SCENARIOS[3], 42)
+    assert isinstance(surf, pg.Surface)
+    assert sum(e.is_anomaly for e in els) == 2
+
+
+def test_render_boxplot_returns_surface_and_elements():
+    pg = _pygame()
+    from cognitive_data_arcade.games.anomaly_alert.scenarios import SCENARIOS
+    from cognitive_data_arcade.games.anomaly_alert.renderers import render_boxplot
+    surf, els = render_boxplot(SCENARIOS[4], 42)
+    assert isinstance(surf, pg.Surface)
+    assert sum(e.is_anomaly for e in els) == 2
+
+
+def test_render_heatmap_returns_surface_and_elements():
+    pg = _pygame()
+    from cognitive_data_arcade.games.anomaly_alert.scenarios import SCENARIOS
+    from cognitive_data_arcade.games.anomaly_alert.renderers import render_heatmap
+    surf, els = render_heatmap(SCENARIOS[5], 42)
+    assert isinstance(surf, pg.Surface)
+    assert sum(e.is_anomaly for e in els) == 2
+
+
+def test_chart_renderer_dict_covers_all_scenarios():
+    from cognitive_data_arcade.games.anomaly_alert.renderers import CHART_RENDERER
+    from cognitive_data_arcade.games.anomaly_alert.scenarios import SCENARIOS
+    for s in SCENARIOS:
+        assert s.chart_type in CHART_RENDERER, f"Missing renderer for {s.chart_type}"
+
+
+def test_render_surface_size():
+    pg = _pygame()
+    from cognitive_data_arcade.games.anomaly_alert.scenarios import SCENARIOS
+    from cognitive_data_arcade.games.anomaly_alert.renderers import render_timeseries
+    surf, _ = render_timeseries(SCENARIOS[0], 0)
+    assert surf.get_width() == 680
+    assert surf.get_height() == 624
+
+
+def test_elements_have_valid_pixel_coords():
+    pg = _pygame()
+    from cognitive_data_arcade.games.anomaly_alert.scenarios import SCENARIOS
+    from cognitive_data_arcade.games.anomaly_alert.renderers import render_timeseries
+    _, els = render_timeseries(SCENARIOS[0], 0)
+    for el in els:
+        assert 0 <= el.x_px <= 680, f"x_px out of range: {el.x_px}"
+        assert 0 <= el.y_px <= 624, f"y_px out of range: {el.y_px}"
