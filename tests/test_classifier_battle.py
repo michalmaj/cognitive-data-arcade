@@ -115,3 +115,15 @@ def test_draw_canvas_smoke():
     canvas.draw(surf)
     assert not canvas.is_valid()   # no polyline yet
     pygame.quit()
+
+
+def test_classifier_battle_scene_smoke(tmp_path):
+    import pygame
+    pygame.init()
+    pygame.display.set_mode((1024, 720))
+    from cognitive_data_arcade.games.classifier_battle.game import ClassifierBattleScene
+    s = ClassifierBattleScene()
+    surf = pygame.Surface((1024, 720))
+    s.draw(surf)
+    assert not s.is_done()
+    pygame.quit()
