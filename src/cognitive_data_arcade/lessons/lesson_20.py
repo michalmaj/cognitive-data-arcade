@@ -10,7 +10,7 @@ CONTENT: dict[str, dict[str, list[str]]] = {
             "kazdy przypadek wymaga oceny kontekstowej.",
             "Klasyczna regula 3 sigma: w rozkladzie normalnym ponad 99.7% obserwacji lezy w zakresie "
             "plus minus 3 odchylenia standardowego od sredniej. Punkt poza tym zakresem jest podejrzany. "
-            "W seriach czasowych takie skoki to czesto artefakty sprzeetowe.",
+            "W seriach czasowych takie skoki to czesto artefakty sprzętowe.",
             "Kryterium Tukeya dla boxplota: outlier to punkt lezacy dalej niz "
             "1.5 x IQR (rozstep miedzikwartylowy) od krawedzi pudelka. "
             "To standardowa definicja uzywana przez matplotlib i wiekszosc narzedzi statystycznych.",
@@ -31,7 +31,7 @@ CONTENT: dict[str, dict[str, list[str]]] = {
             "anomalie od normalnego punktu? Co sprawilo, ze byla trudna?",
             "Porownaj reguly wykrywania w rundach 1 (3 sigma) i 5 (Tukey IQR). "
             "Kiedy regula 3 sigma zawodzi przy skosnych rozkladach?",
-            "Wyobraz sobie, ze jestes badaczem EEG. Czy usunalbyss anomalne komorki "
+            "Wyobraz sobie, ze jestes badaczem EEG. Czy usunałbyś anomalne komorki "
             "z macierzy korelacji automatycznie? Uzasadnij odpowiedz.",
         ],
     },
