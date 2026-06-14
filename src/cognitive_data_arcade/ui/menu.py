@@ -29,6 +29,7 @@ _LESSONS = [
     (15, "Hypothesis Arena"),
     (16, "Prediction Slider"),
     (17, "Feature Hunter"),
+    (18, "Classifier Battle"),
 ]
 
 _BG = (26, 26, 46)
@@ -181,6 +182,8 @@ class LessonMenuScene(Scene):
             self._launch_prediction_slider()
         elif lesson_num == 17:
             self._launch_feature_hunter()
+        elif lesson_num == 18:
+            self._launch_classifier_battle()
         elif lesson_num == 6:
             self._launch_eda()
         elif lesson_num == 7:
@@ -288,6 +291,8 @@ class LessonMenuScene(Scene):
             return self._make_prediction_slider
         if lesson_num == 17:
             return self._make_feature_hunter
+        if lesson_num == 18:
+            return self._make_classifier_battle
         return None
 
     def _confirm_popup(self) -> None:
@@ -543,6 +548,19 @@ class LessonMenuScene(Scene):
         inner = FeatHunterScene()
         game_info = get_game_info(self._strings)
         return PausableGame(inner, game_info, self._make_feature_hunter,
+                            self._strings, self._pm)
+
+    def _launch_classifier_battle(self) -> None:
+        self._next = self._make_classifier_battle()
+        self._done = True
+
+    def _make_classifier_battle(self) -> Scene:
+        from cognitive_data_arcade.engine.pause import PausableGame
+        from cognitive_data_arcade.games.classifier_battle.game import ClassifierBattleScene
+        from cognitive_data_arcade.games.classifier_battle.info import get_game_info
+        inner = ClassifierBattleScene()
+        game_info = get_game_info(self._strings)
+        return PausableGame(inner, game_info, self._make_classifier_battle,
                             self._strings, self._pm)
 
     def update(self, dt_ms: float) -> None:
