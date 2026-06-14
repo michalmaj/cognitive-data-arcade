@@ -116,3 +116,12 @@ def test_slider_clamping():
     ev = pygame.event.Event(pygame.MOUSEBUTTONDOWN, button=1, pos=(-100, 10))
     s.handle_event(ev)
     assert s.value == 50
+
+
+def test_overfitting_monster_scene_instantiates():
+    import os; os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
+    import pygame; pygame.init()
+    from cognitive_data_arcade.games.overfitting_monster.game import OverfittingMonsterScene
+    scene = OverfittingMonsterScene()
+    assert not scene.is_done()
+    assert scene.next_scene() is None
