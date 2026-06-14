@@ -125,3 +125,13 @@ def test_overfitting_monster_scene_instantiates():
     scene = OverfittingMonsterScene()
     assert not scene.is_done()
     assert scene.next_scene() is None
+
+
+def test_polish_diacritics_in_scenarios():
+    from cognitive_data_arcade.games.overfitting_monster.scenarios import SCENARIOS
+    required = ["ó", "ę", "ą", "ś", "ź", "ż", "ń", "ł", "ć"]
+    all_text = " ".join(
+        s.name_pl + s.hint_pl + s.insight_pl for s in SCENARIOS
+    )
+    missing = [ch for ch in required if ch not in all_text]
+    assert not missing, f"Missing Polish diacritics in scenarios: {missing}"

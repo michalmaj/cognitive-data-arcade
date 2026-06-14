@@ -74,7 +74,7 @@ SCENARIOS: list[Scenario] = [
         ),
         insight_pl=(
             "Zaszumione dane to sytuacja, gdy większe k pomaga — wygładza szum "
-            "zamiast zapamiętywać go. Gap train-test przy małym k będzie duży."
+            "zamiast zapamiętywać go. Błędów uogólnień przy małym k będzie dużo."
         ),
     ),
     Scenario(
