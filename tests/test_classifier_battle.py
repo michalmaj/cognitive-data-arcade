@@ -127,3 +127,39 @@ def test_classifier_battle_scene_smoke(tmp_path):
     s.draw(surf)
     assert not s.is_done()
     pygame.quit()
+
+
+def test_get_game_info_pl():
+    import pygame
+    pygame.init()
+    pygame.display.set_mode((1, 1))
+    from cognitive_data_arcade.engine.i18n import get_strings
+    from cognitive_data_arcade.engine.pause import GameInfo
+    from cognitive_data_arcade.games.classifier_battle.info import get_game_info
+    strings = get_strings("pl")
+    info = get_game_info(strings)
+    assert isinstance(info, GameInfo)
+    assert info.title == "Classifier Battle"
+    assert len(info.description_lines) >= 2
+    pygame.quit()
+
+
+def test_lesson_18_content():
+    from cognitive_data_arcade.lessons.lesson_18 import CONTENT
+    for lang in ("pl", "en"):
+        assert lang in CONTENT
+        for key in ("theory", "notes", "tasks"):
+            assert key in CONTENT[lang]
+            assert len(CONTENT[lang][key]) >= 2
+
+
+def test_lesson_18_in_menu():
+    from cognitive_data_arcade.ui.menu import _LESSONS
+    nums = [num for num, _ in _LESSONS]
+    assert 18 in nums, "Lesson 18 must be in _LESSONS"
+
+
+def test_lesson_18_name_in_menu():
+    from cognitive_data_arcade.ui.menu import _LESSONS
+    name = next((n for num, n in _LESSONS if num == 18), None)
+    assert name == "Classifier Battle"
