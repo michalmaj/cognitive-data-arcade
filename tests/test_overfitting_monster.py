@@ -35,3 +35,58 @@ def test_generate_data_deterministic():
     X1, y1 = generate_data(SCENARIOS[0], seed=99)
     X2, y2 = generate_data(SCENARIOS[0], seed=99)
     np.testing.assert_array_equal(X1, X2)
+
+
+def test_split_data_sizes():
+    from cognitive_data_arcade.games.overfitting_monster.classifier import split_data
+    X = np.random.default_rng(0).random((80, 2))
+    y = np.array([0] * 40 + [1] * 40, dtype=np.int32)
+    X_tr, y_tr, X_te, y_te = split_data(X, y, split_pct=70, seed=1)
+    assert len(X_tr) + len(X_te) == 80
+    assert abs(len(X_tr) - 56) <= 1   # 70% of 80 = 56
+
+
+def test_split_data_deterministic():
+    from cognitive_data_arcade.games.overfitting_monster.classifier import split_data
+    X = np.random.default_rng(0).random((60, 2))
+    y = np.zeros(60, dtype=np.int32)
+    r1 = split_data(X, y, split_pct=70, seed=5)
+    r2 = split_data(X, y, split_pct=70, seed=5)
+    np.testing.assert_array_equal(r1[0], r2[0])
+
+
+def test_knn_accuracies_keys():
+    from cognitive_data_arcade.games.overfitting_monster.classifier import knn_accuracies
+    X_tr = np.array([[0.1, 0.1], [0.2, 0.2], [0.8, 0.8], [0.9, 0.9]])
+    y_tr = np.array([0, 0, 1, 1], dtype=np.int32)
+    X_te = np.array([[0.15, 0.15], [0.85, 0.85]])
+    y_te = np.array([0, 1], dtype=np.int32)
+    result = knn_accuracies(X_tr, y_tr, X_te, y_te, k=1)
+    assert set(result.keys()) == {"train", "test"}
+    assert 0.0 <= result["train"] <= 1.0
+    assert 0.0 <= result["test"] <= 1.0
+
+
+def test_knn_k1_train_perfect():
+    from cognitive_data_arcade.games.overfitting_monster.classifier import knn_accuracies
+    # k=1: each point is its own nearest neighbour -> always 100% train accuracy
+    X_tr = np.array([[0.1, 0.1], [0.5, 0.5], [0.9, 0.9]])
+    y_tr = np.array([0, 0, 1], dtype=np.int32)
+    X_te = np.array([[0.2, 0.2]])
+    y_te = np.array([0], dtype=np.int32)
+    result = knn_accuracies(X_tr, y_tr, X_te, y_te, k=1)
+    assert result["train"] == 1.0
+
+
+def test_compute_gap_stars():
+    from cognitive_data_arcade.games.overfitting_monster.classifier import compute_gap_stars
+    assert compute_gap_stars(0.90, 0.88) == 3   # gap = 2 pp
+    assert compute_gap_stars(0.90, 0.80) == 2   # gap = 10 pp
+    assert compute_gap_stars(0.95, 0.70) == 1   # gap = 25 pp
+
+
+def test_compute_round_score():
+    from cognitive_data_arcade.games.overfitting_monster.classifier import compute_round_score
+    assert compute_round_score(0.85, stars=3) == 85 + 20   # 105
+    assert compute_round_score(0.85, stars=2) == 85 + 10   # 95
+    assert compute_round_score(0.85, stars=1) == 85 + 0    # 85
