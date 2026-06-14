@@ -90,3 +90,29 @@ def test_compute_round_score():
     assert compute_round_score(0.85, stars=3) == 85 + 20   # 105
     assert compute_round_score(0.85, stars=2) == 85 + 10   # 95
     assert compute_round_score(0.85, stars=1) == 85 + 0    # 85
+
+
+def test_slider_initial_value():
+    # SliderWidget must not import pygame at module level — import inside function
+    import os; os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
+    import pygame; pygame.init()
+    from cognitive_data_arcade.games.overfitting_monster.widgets import SliderWidget
+    rect = pygame.Rect(100, 100, 200, 20)
+    s = SliderWidget(rect, min_val=1, max_val=15, value=7)
+    assert s.value == 7
+
+
+def test_slider_clamping():
+    import os; os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
+    import pygame; pygame.init()
+    from cognitive_data_arcade.games.overfitting_monster.widgets import SliderWidget
+    rect = pygame.Rect(0, 0, 300, 20)
+    s = SliderWidget(rect, min_val=50, max_val=80, value=70)
+    # Simulate click far to the right (should clamp to max)
+    ev = pygame.event.Event(pygame.MOUSEBUTTONDOWN, button=1, pos=(500, 10))
+    s.handle_event(ev)
+    assert s.value == 80
+    # Simulate click far to the left (should clamp to min)
+    ev = pygame.event.Event(pygame.MOUSEBUTTONDOWN, button=1, pos=(-100, 10))
+    s.handle_event(ev)
+    assert s.value == 50
