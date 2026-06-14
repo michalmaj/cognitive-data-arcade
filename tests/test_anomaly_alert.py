@@ -183,3 +183,12 @@ def test_elements_have_valid_pixel_coords():
     for el in els:
         assert 0 <= el.x_px <= 680, f"x_px out of range: {el.x_px}"
         assert 0 <= el.y_px <= 624, f"y_px out of range: {el.y_px}"
+
+
+def test_anomaly_alert_scene_instantiates():
+    import os; os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
+    import pygame; pygame.init()
+    from cognitive_data_arcade.games.anomaly_alert.game import AnomalyAlertScene
+    scene = AnomalyAlertScene()
+    assert not scene.is_done()
+    assert scene.next_scene() is None
