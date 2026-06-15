@@ -54,6 +54,7 @@ class SharedInputBar:
         self._state = state
         self._active_preset = 0
         self._custom_active = False
+        pygame.key.set_repeat(400, 50)  # hold backspace to delete continuously
 
         btn_w = 90
         btn_gap = 6
