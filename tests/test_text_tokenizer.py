@@ -194,3 +194,45 @@ def test_phase_frequency_returns_surface():
     surf = pygame.Surface((1024, 636))
     scene.draw(surf, result)
     pygame.quit()
+
+
+def test_text_tokenizer_scene_instantiates():
+    import os; os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
+    os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
+    import pygame
+    try:
+        pygame.quit()
+    except:
+        pass
+    from cognitive_data_arcade.engine import fonts as fonts_mod
+    fonts_mod._cache.clear()
+    pygame.init()
+    from cognitive_data_arcade.games.text_tokenizer.scene import TextTokenizerLabScene
+    scene = TextTokenizerLabScene()
+    assert not scene.is_done()
+    surf = pygame.Surface((1024, 720))
+    scene.draw(surf)
+    pygame.quit()
+
+
+def test_text_tokenizer_tab_navigation():
+    import os; os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
+    os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
+    import pygame
+    try:
+        pygame.quit()
+    except:
+        pass
+    from cognitive_data_arcade.engine import fonts as fonts_mod
+    fonts_mod._cache.clear()
+    pygame.init()
+    from cognitive_data_arcade.games.text_tokenizer.scene import TextTokenizerLabScene
+    scene = TextTokenizerLabScene()
+    assert scene.current_tab() == 0
+    event = pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RIGHT, mod=0, unicode="")
+    scene.handle_event(event)
+    assert scene.current_tab() == 1
+    event2 = pygame.event.Event(pygame.KEYDOWN, key=pygame.K_LEFT, mod=0, unicode="")
+    scene.handle_event(event2)
+    assert scene.current_tab() == 0
+    pygame.quit()
