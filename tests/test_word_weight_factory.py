@@ -146,3 +146,16 @@ def test_step_idf_scene_renders():
     surface = pygame.Surface((804, 672))
     scene.draw(surface, matrix)  # must not raise
     pygame.quit()
+
+
+def test_word_weight_factory_scene_instantiates():
+    import cognitive_data_arcade.engine.fonts as _fonts
+    _fonts._cache.clear()
+    _fonts._found_name = None
+    pygame.init()
+    pygame.display.set_mode((1024, 720))
+    from cognitive_data_arcade.games.word_weight_factory.scene import WordWeightFactoryScene
+    scene = WordWeightFactoryScene()
+    surface = pygame.Surface((1024, 720))
+    scene.draw(surface)   # must not raise
+    pygame.quit()
