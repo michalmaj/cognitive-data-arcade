@@ -71,7 +71,7 @@ class PhaseNgramsScene(Scene):
         cy = 56
         cx = 12
         for gram, count in sorted(counts.items(), key=lambda kv: -kv[1]):
-            label = " - ".join(gram)
+            label = "[" + " - ".join(gram) + "]"
             lw = font_11.size(label)[0] + 12
             badge_w = (font_11.size(f"x{count}")[0] + 8) if count > 1 else 0
             total_w = lw + badge_w
@@ -109,13 +109,13 @@ class PhaseNgramsScene(Scene):
 
     def _make_insight(self, result: TokenizerState, counts: Counter) -> str:
         n = self._state.ngram_n
+        if n >= 3 and len(result.tokens) < 6:
+            return ("Tekst za krotki na powtarzajace sie trigramy — "
+                    "sprobuj dluzszego.")
         repeated = [(g, c) for g, c in counts.items() if c > 1]
         if repeated and n > 1:
             top = max(repeated, key=lambda x: x[1])
             gram_str = " ".join(top[0])
-            return (f'"{gram_str}" pojawia sie {top[1]}x - '
-                    f"n-gramy wykrywaja kolokacje ktorych unigramy nie widza.")
-        if n >= 3 and len(result.tokens) < 6:
-            return ("Tekst za krotki na powtarzajace sie trigramy - "
-                    "sprobuj dluzszego.")
+            return (f'"{gram_str}" pojawia sie {top[1]}x — '
+                    f"n-gramy wykrywaja kolokacje, ktorych unigramy nie widza.")
         return "N-gramy = sekwencje N sasiadujacych tokenow. Niebieskie = powtarzajace sie."
