@@ -109,8 +109,8 @@ class PhaseRoundResultScene(Scene):
         for i, el in enumerate(elements):
             if not el.is_anomaly and i not in selected:
                 continue
-            cx = int(el.x_px) + _CHART_X
-            cy = int(el.y_px) + _CHART_Y
+            cx = int(el.x_px + el.w_px / 2) + _CHART_X
+            cy = int(el.y_px + el.h_px / 2) + _CHART_Y
 
             if el.is_anomaly and i in selected:
                 # True positive: green ring

@@ -143,11 +143,11 @@ class PhaseRoundScene(Scene):
         # Chart
         surface.blit(self._chart_surf, (_CHART_X, _CHART_Y))
 
-        # Selection overlays
+        # Selection overlays — draw at element centre
         for i in self._selected:
             el = self._elements[i]
-            cx = int(el.x_px) + _CHART_X
-            cy = int(el.y_px) + _CHART_Y
+            cx = int(el.x_px + el.w_px / 2) + _CHART_X
+            cy = int(el.y_px + el.h_px / 2) + _CHART_Y
             pygame.draw.circle(surface, _AMBER, (cx, cy), 14, 3)
 
         # Right panel
