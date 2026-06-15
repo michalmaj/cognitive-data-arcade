@@ -166,6 +166,9 @@ class WordWeightFactoryScene(Scene):
 
         surface.blit(content_surf, (0, _PIPE_H))
 
+        # Draw CorpusPanel tooltip on top of everything (screen coords)
+        self._corpus_panel.draw_tooltip(surface, _PIPE_H)
+
 
 def _offset_mouse(event: pygame.event.Event, dx: int = 0, dy: int = 0) -> pygame.event.Event:
     d = dict(event.__dict__)

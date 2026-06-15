@@ -23,6 +23,27 @@ _ROW_H   = 30
 _HDR_H   = 28
 _MAX_COLS = 19
 
+_TOOLTIP_W   = 300
+_TOOLTIP_PAD = 8
+_TOOLTIP_LINE = 18
+
+
+def _draw_tooltip_box(surface: pygame.Surface, lines: list[str], pos: tuple[int, int]) -> None:
+    bh = len(lines) * _TOOLTIP_LINE + _TOOLTIP_PAD * 2
+    sw, sh = surface.get_size()
+    tx = max(4, min(pos[0], sw - _TOOLTIP_W - 4))
+    ty = max(4, min(pos[1], sh - bh - 4))
+    r = pygame.Rect(tx, ty, _TOOLTIP_W, bh)
+    pygame.draw.rect(surface, (12, 12, 30), r, border_radius=4)
+    pygame.draw.rect(surface, _PURPLE, r, 1, border_radius=4)
+    font10 = get_font(10)
+    for i, line in enumerate(lines):
+        if not line:
+            continue
+        col = _AMBER if i == 0 else _WHITE
+        s = font10.render(line, True, col)
+        surface.blit(s, (tx + _TOOLTIP_PAD, ty + _TOOLTIP_PAD + i * _TOOLTIP_LINE))
+
 
 def _green_cell(value: float, max_val: float) -> tuple[int, int, int]:
     if max_val == 0:
@@ -41,13 +62,22 @@ class StepBowScene(Scene):
         self._selected_col: int | None = None
         self._selected_cell: tuple[int, int] | None = None  # (row, col)
         self._col_offset = 0  # horizontal scroll
+        self._tooltip: list[str] | None = None
+        self._tooltip_pos: tuple[int, int] = (0, 0)
+        self._last_matrix: WeightMatrix | None = None
 
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.MOUSEWHEEL:
             self._col_offset = max(0, self._col_offset - event.x - event.y)
-        if event.type != pygame.MOUSEBUTTONDOWN or event.button != 1:
+        if event.type != pygame.MOUSEBUTTONDOWN:
             return
         pos = event.pos
+        if event.button == 3:
+            self._open_tooltip(pos)
+            return
+        if event.button != 1:
+            return
+        self._tooltip = None
         # Column header click
         hdr_y = 28
         for ci in range(_MAX_COLS):
@@ -69,6 +99,97 @@ class StepBowScene(Scene):
                     self._selected_col = None
                     return
 
+    def _open_tooltip(self, pos: tuple[int, int]) -> None:
+        px, py = pos
+        if px < 0 or px >= _W:
+            return
+        m = self._last_matrix
+        hdr_y = 28
+        iy = _STEP_H - 40
+        # Insight banner
+        if py >= iy - 6:
+            self._tooltip = [
+                "Bag of Words — spostrzezenie",
+                "",
+                "BoW ignoruje kolejnosc slow.",
+                "Dlugie dokumenty maja wyzsze",
+                "wartosci — stad potrzeba TF.",
+            ]
+            self._tooltip_pos = pos
+            return
+        # Column header zone
+        if hdr_y <= py < hdr_y + _HDR_H and m is not None:
+            for ci in range(_MAX_COLS):
+                x0 = _LABEL_W + ci * _COL_W
+                if x0 <= px < x0 + _COL_W:
+                    j = self._col_offset + ci
+                    if j < len(m.vocab):
+                        tok = m.vocab[j]
+                        N = len(m.doc_titles)
+                        V = len(m.vocab)
+                        total = sum(m.bow[i][j] for i in range(N))
+                        df = sum(1 for i in range(N) if m.bow[i][j] > 0)
+                        self._tooltip = [
+                            f"Token: \"{tok}\"",
+                            "",
+                            f"Suma w korpusie: {total}",
+                            f"Wystepuje w {df} z {N} dok.",
+                            "",
+                            "LPM = zaznacz kolumne",
+                        ]
+                        self._tooltip_pos = pos
+                        return
+        # Row label zone
+        if py >= hdr_y + _HDR_H and px < _LABEL_W and m is not None:
+            N = len(m.doc_titles)
+            V = len(m.vocab)
+            ri = (py - (hdr_y + _HDR_H)) // _ROW_H
+            if 0 <= ri < N:
+                doc_len = sum(m.bow[ri])
+                self._tooltip = [
+                    f"Dokument: \"{m.doc_titles[ri]}\"",
+                    "",
+                    f"Dlugosc: {doc_len} tokenow",
+                    f"Rozne tokeny: {sum(1 for j in range(V) if m.bow[ri][j] > 0)}",
+                ]
+                self._tooltip_pos = pos
+                return
+        # Cell zone
+        if py >= hdr_y + _HDR_H and m is not None:
+            N = len(m.doc_titles)
+            V = len(m.vocab)
+            ri = (py - (hdr_y + _HDR_H)) // _ROW_H
+            if 0 <= ri < N:
+                for ci in range(_MAX_COLS):
+                    x0 = _LABEL_W + ci * _COL_W
+                    if x0 <= px < x0 + _COL_W:
+                        j = self._col_offset + ci
+                        if j < V:
+                            tok = m.vocab[j]
+                            cnt = m.bow[ri][j]
+                            dtitle = m.doc_titles[ri]
+                            self._tooltip = [
+                                f"Token \"{tok}\" w \"{dtitle}\"",
+                                "",
+                                f"BoW = {cnt}",
+                                "",
+                                "BoW = surowe zliczenia.",
+                                "Nie uwzglednia dlugosci dok.",
+                                "LPM = zaznacz komorke",
+                            ]
+                            self._tooltip_pos = pos
+                            return
+        # Fallback — formula
+        self._tooltip = [
+            "Bag of Words (BoW)",
+            "",
+            "Zlicza ile razy kazdy token",
+            "pojawia sie w dokumencie.",
+            "",
+            "Ignoruje kolejnosc slow.",
+        ]
+        self._tooltip_pos = pos
+
     def update(self, dt_ms: float = 0.0) -> None:
         pass
 
@@ -79,6 +200,8 @@ class StepBowScene(Scene):
         return None
 
     def draw(self, surface: pygame.Surface, matrix: WeightMatrix | None = None) -> None:
+        if matrix is not None:
+            self._last_matrix = matrix
         surface.fill(_BG)
         if matrix is None or not matrix.vocab:
             msg = get_font(12).render("Brak tokenow — zmien ustawienia.", True, _DIM)
@@ -170,3 +293,6 @@ class StepBowScene(Scene):
         pygame.draw.line(surface, _PURPLE, (0, iy - 6), (0, iy + 40), 3)
         ins = get_font(11).render(insight, True, (200, 180, 220))
         surface.blit(ins, (8, iy + 4))
+
+        if self._tooltip:
+            _draw_tooltip_box(surface, self._tooltip, self._tooltip_pos)
