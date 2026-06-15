@@ -31,6 +31,7 @@ _LESSONS = [
     (17, "Feature Hunter"),
     (18, "Classifier Battle"),
     (19, "Overfitting Monster"),
+    (20, "Anomaly Alert"),
 ]
 
 _BG = (26, 26, 46)
@@ -187,6 +188,8 @@ class LessonMenuScene(Scene):
             self._launch_classifier_battle()
         elif lesson_num == 19:
             self._launch_overfitting_monster()
+        elif lesson_num == 20:
+            self._launch_anomaly_alert()
         elif lesson_num == 6:
             self._launch_eda()
         elif lesson_num == 7:
@@ -298,6 +301,8 @@ class LessonMenuScene(Scene):
             return self._make_classifier_battle
         if lesson_num == 19:
             return self._make_overfitting_monster
+        if lesson_num == 20:
+            return self._make_anomaly_alert
         return None
 
     def _confirm_popup(self) -> None:
@@ -579,6 +584,19 @@ class LessonMenuScene(Scene):
         inner = OverfittingMonsterScene()
         game_info = get_game_info(self._strings)
         return PausableGame(inner, game_info, self._make_overfitting_monster,
+                            self._strings, self._pm)
+
+    def _launch_anomaly_alert(self) -> None:
+        self._next = self._make_anomaly_alert()
+        self._done = True
+
+    def _make_anomaly_alert(self) -> Scene:
+        from cognitive_data_arcade.engine.pause import PausableGame
+        from cognitive_data_arcade.games.anomaly_alert.game import AnomalyAlertScene
+        from cognitive_data_arcade.games.anomaly_alert.info import get_game_info
+        inner = AnomalyAlertScene()
+        game_info = get_game_info(self._strings)
+        return PausableGame(inner, game_info, self._make_anomaly_alert,
                             self._strings, self._pm)
 
     def update(self, dt_ms: float) -> None:
