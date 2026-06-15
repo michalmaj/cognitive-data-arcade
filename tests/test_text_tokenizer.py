@@ -252,3 +252,11 @@ def test_lesson_21_pl_has_content():
     from cognitive_data_arcade.lessons import lesson_21
     combined = " ".join(lesson_21.CONTENT["pl"]["theory"])
     assert len(combined) > 200
+
+
+def test_menu_includes_l21():
+    from cognitive_data_arcade.ui.menu import _LESSONS
+    numbers = [n for n, _ in _LESSONS]
+    assert 21 in numbers
+    names = {n: name for n, name in _LESSONS}
+    assert "Text Tokenizer Lab" in names[21]
