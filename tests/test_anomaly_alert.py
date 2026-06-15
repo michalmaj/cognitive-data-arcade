@@ -192,3 +192,22 @@ def test_anomaly_alert_scene_instantiates():
     scene = AnomalyAlertScene()
     assert not scene.is_done()
     assert scene.next_scene() is None
+
+
+def test_menu_has_lesson_20():
+    from cognitive_data_arcade.ui.menu import _LESSONS
+    lesson_nums = [n for n, _ in _LESSONS]
+    assert 20 in lesson_nums
+
+
+def test_lesson_20_has_pl_content():
+    from cognitive_data_arcade.lessons.lesson_20 import CONTENT
+    assert "pl" in CONTENT
+    assert len(CONTENT["pl"]["theory"]) >= 3
+    assert len(CONTENT["pl"]["tasks"]) >= 2
+
+
+def test_lesson_20_has_en_content():
+    from cognitive_data_arcade.lessons.lesson_20 import CONTENT
+    assert "en" in CONTENT
+    assert len(CONTENT["en"]["theory"]) >= 3
