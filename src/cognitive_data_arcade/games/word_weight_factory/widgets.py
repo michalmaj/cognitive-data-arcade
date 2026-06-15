@@ -76,8 +76,6 @@ class CorpusPanel:
         if wlasny_rect.collidepoint(pos):
             self._state.selected_idx = len(_PRESETS)
             self._custom_active = True
-            if not self._state.custom_text:
-                self._state.custom_text = ""
             return True
 
         # Checkboxes
@@ -106,7 +104,7 @@ class CorpusPanel:
 
         # Document rows
         docs = self._state.active_docs()
-        for i, (title, _text) in enumerate(_PRESETS):
+        for i, (title, _text, _lang) in enumerate(_PRESETS):
             y = _DOCS_TOP + i * _DOC_ROW_H
             active = i == self._state.selected_idx and not self._custom_active
             bg = (30, 28, 12) if active else _PANEL
