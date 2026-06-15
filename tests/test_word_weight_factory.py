@@ -120,3 +120,29 @@ def test_engine_vocab_sorted():
         lowercase=True, rm_punct=False, rm_stops=False, lang="en",
     )
     assert m.vocab == sorted(m.vocab)
+
+
+import os
+os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
+os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
+
+import pygame
+
+
+def test_step_idf_scene_renders():
+    pygame.init()
+    pygame.display.set_mode((804, 672))
+    from cognitive_data_arcade.games.word_weight_factory.corpus import CorpusState
+    from cognitive_data_arcade.games.word_weight_factory.engine import WeightEngine
+    from cognitive_data_arcade.games.word_weight_factory.step_idf import StepIdfScene
+    state = CorpusState()
+    scene = StepIdfScene(state)
+    docs = state.active_docs()
+    matrix = WeightEngine().process(
+        docs=[t for _, t in docs],
+        titles=[ti for ti, _ in docs],
+        lowercase=True, rm_punct=True, rm_stops=False, lang="pl",
+    )
+    surface = pygame.Surface((804, 672))
+    scene.draw(surface, matrix)  # must not raise
+    pygame.quit()
