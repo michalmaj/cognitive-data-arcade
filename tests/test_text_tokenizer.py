@@ -236,3 +236,19 @@ def test_text_tokenizer_tab_navigation():
     scene.handle_event(event2)
     assert scene.current_tab() == 0
     pygame.quit()
+
+
+def test_lesson_21_content_structure():
+    from cognitive_data_arcade.lessons import lesson_21
+    content = lesson_21.CONTENT
+    for lang in ("pl", "en"):
+        assert lang in content
+        for key in ("theory", "notes", "tasks"):
+            assert key in content[lang]
+            assert len(content[lang][key]) >= 2
+
+
+def test_lesson_21_pl_has_content():
+    from cognitive_data_arcade.lessons import lesson_21
+    combined = " ".join(lesson_21.CONTENT["pl"]["theory"])
+    assert len(combined) > 200
