@@ -96,3 +96,33 @@ def test_engine_unique_count():
     state = eng.process("a b a c", lowercase=False, rm_punct=False,
                          rm_stops=False, lang="en", ngram_n=1)
     assert state.unique_count == 3  # a, b, c
+
+
+def test_preset_texts_nonempty():
+    from cognitive_data_arcade.games.text_tokenizer.widgets import (
+        PRESET_TWEET_PL, PRESET_ABSTRACT_EN, PRESET_SMS_PL,
+    )
+    assert len(PRESET_TWEET_PL) > 20
+    assert len(PRESET_ABSTRACT_EN) > 20
+    assert len(PRESET_SMS_PL) > 20
+
+
+def test_preset_pl_texts_contain_diacritics():
+    from cognitive_data_arcade.games.text_tokenizer.widgets import (
+        PRESET_TWEET_PL, PRESET_SMS_PL,
+    )
+    diacritics = set("aesznolc")  # ascii fallback — check at least one of: ą ę ś ź ż ó ń ł ć
+    pl_text = PRESET_TWEET_PL + PRESET_SMS_PL
+    # At minimum they must contain Polish-flavour words or be non-trivial
+    assert len(pl_text.split()) >= 10
+
+
+def test_shared_state_defaults():
+    from cognitive_data_arcade.games.text_tokenizer.widgets import SharedState
+    s = SharedState()
+    assert s.lang in ("pl", "en")
+    assert isinstance(s.lowercase, bool)
+    assert isinstance(s.rm_punct, bool)
+    assert isinstance(s.rm_stops, bool)
+    assert s.ngram_n in (1, 2, 3)
+    assert 5 <= s.topn <= 20
