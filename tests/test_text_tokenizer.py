@@ -169,3 +169,28 @@ def test_phase_ngrams_instantiates():
     surf = pygame.Surface((1024, 636))
     scene.draw(surf, result)
     pygame.quit()
+
+
+def test_phase_frequency_returns_surface():
+    import os; os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
+    os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
+    import pygame
+    try:
+        pygame.quit()
+    except:
+        pass
+    from cognitive_data_arcade.engine import fonts as fonts_mod
+    fonts_mod._cache.clear()
+    pygame.init()
+    from cognitive_data_arcade.games.text_tokenizer.engine import TokenizerEngine
+    from cognitive_data_arcade.games.text_tokenizer.phase_frequency import PhaseFrequencyScene
+    from cognitive_data_arcade.games.text_tokenizer.widgets import SharedState
+    state = SharedState()
+    scene = PhaseFrequencyScene(state)
+    result = TokenizerEngine().process(
+        state.text, state.lowercase, state.rm_punct,
+        state.rm_stops, state.lang, state.ngram_n,
+    )
+    surf = pygame.Surface((1024, 636))
+    scene.draw(surf, result)
+    pygame.quit()
