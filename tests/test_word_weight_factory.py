@@ -168,3 +168,11 @@ def test_lesson_22_content_structure():
         for key in ("theory", "notes", "tasks"):
             assert key in CONTENT[lang], f"Missing '{key}' in CONTENT['{lang}']"
             assert len(CONTENT[lang][key]) >= 1
+
+
+def test_menu_has_lesson_22():
+    from cognitive_data_arcade.ui.menu import _LESSONS
+    nums = [num for num, _ in _LESSONS]
+    assert 22 in nums
+    idx = nums.index(22)
+    assert _LESSONS[idx][1] == "Word Weight Factory"
