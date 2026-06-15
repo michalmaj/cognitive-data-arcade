@@ -126,3 +126,21 @@ def test_shared_state_defaults():
     assert isinstance(s.rm_stops, bool)
     assert s.ngram_n in (1, 2, 3)
     assert 5 <= s.topn <= 20
+
+
+def test_phase_tokenizer_instantiates():
+    import os; os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
+    os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
+    import pygame; pygame.init()
+    from cognitive_data_arcade.games.text_tokenizer.engine import TokenizerEngine
+    from cognitive_data_arcade.games.text_tokenizer.phase_tokenizer import PhaseTokenizerScene
+    from cognitive_data_arcade.games.text_tokenizer.widgets import SharedState
+    state = SharedState()
+    scene = PhaseTokenizerScene(state)
+    result = TokenizerEngine().process(
+        state.text, state.lowercase, state.rm_punct,
+        state.rm_stops, state.lang, state.ngram_n,
+    )
+    surf = pygame.Surface((1024, 636))
+    scene.draw(surf, result)  # must not raise
+    pygame.quit()
