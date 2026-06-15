@@ -1,0 +1,18 @@
+from __future__ import annotations
+
+STOP_WORDS_PL: frozenset[str] = frozenset({
+    "i", "w", "z", "na", "do", "nie", "sie", "ze", "jest",
+    "jak", "ale", "czy", "po", "co", "te", "ten", "ta", "tego",
+    "tej", "tym", "przez", "dla", "o", "byc", "sa", "byl", "byla",
+    "bylo", "lub", "tez", "juz", "jeszcze", "tylko", "ich",
+    "go", "jej", "mu", "im", "nas", "sobie", "pan", "pani", "ona", "ono",
+    "tam", "tu", "tutaj", "nigdy",
+})
+
+STOP_WORDS_EN: frozenset[str] = frozenset({
+    "the", "is", "in", "of", "and", "to", "a", "that", "was",
+    "it", "for", "on", "are", "with", "as", "at", "be", "this",
+    "have", "from", "or", "an", "but", "not", "by", "were", "been",
+    "they", "we", "you", "he", "she", "all", "his", "her", "their",
+    "which", "had", "has", "would", "there", "can", "if", "about",
+})

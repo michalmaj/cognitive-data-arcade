@@ -32,6 +32,7 @@ _LESSONS = [
     (18, "Classifier Battle"),
     (19, "Overfitting Monster"),
     (20, "Anomaly Alert"),
+    (21, "Text Tokenizer Lab"),
 ]
 
 _BG = (26, 26, 46)
@@ -190,6 +191,8 @@ class LessonMenuScene(Scene):
             self._launch_overfitting_monster()
         elif lesson_num == 20:
             self._launch_anomaly_alert()
+        elif lesson_num == 21:
+            self._launch_text_tokenizer()
         elif lesson_num == 6:
             self._launch_eda()
         elif lesson_num == 7:
@@ -303,6 +306,8 @@ class LessonMenuScene(Scene):
             return self._make_overfitting_monster
         if lesson_num == 20:
             return self._make_anomaly_alert
+        if lesson_num == 21:
+            return self._make_text_tokenizer
         return None
 
     def _confirm_popup(self) -> None:
@@ -597,6 +602,19 @@ class LessonMenuScene(Scene):
         inner = AnomalyAlertScene()
         game_info = get_game_info(self._strings)
         return PausableGame(inner, game_info, self._make_anomaly_alert,
+                            self._strings, self._pm)
+
+    def _launch_text_tokenizer(self) -> None:
+        self._next = self._make_text_tokenizer()
+        self._done = True
+
+    def _make_text_tokenizer(self) -> Scene:
+        from cognitive_data_arcade.engine.pause import PausableGame
+        from cognitive_data_arcade.games.text_tokenizer.info import get_game_info
+        from cognitive_data_arcade.games.text_tokenizer.scene import TextTokenizerLabScene
+        inner = TextTokenizerLabScene()
+        game_info = get_game_info(self._strings)
+        return PausableGame(inner, game_info, self._make_text_tokenizer,
                             self._strings, self._pm)
 
     def update(self, dt_ms: float) -> None:
