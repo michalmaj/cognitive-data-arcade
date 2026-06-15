@@ -81,7 +81,7 @@ class SharedInputBar:
             for i, rect in enumerate(self._btn_rects):
                 if rect.collidepoint(event.pos):
                     self._active_preset = i
-                    if i < 3:
+                    if i < len(_PRESETS) - 1:
                         label, text, lang = _PRESETS[i]
                         self._state.text = text
                         self._state.lang = lang
@@ -90,6 +90,8 @@ class SharedInputBar:
                         self._custom_active = True
                         if not self._state.text:
                             self._state.text = PRESET_TWEET_PL
+                        if self._state.lang not in ("pl", "en"):
+                            self._state.lang = "pl"
                     return True
             if self._custom_active and self._lang_toggle_rect.collidepoint(event.pos):
                 self._state.lang = "en" if self._state.lang == "pl" else "pl"
