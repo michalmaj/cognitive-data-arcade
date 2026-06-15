@@ -144,7 +144,6 @@ class PhaseFrequencyScene(Scene):
         surface.blit(ins_s, (8, iy + 4))
 
     def _make_insight(self, result: TokenizerState) -> str:
-        stops = STOP_WORDS_PL if self._state.lang == "pl" else STOP_WORDS_EN
         vals = list(result.freq.values())
         if len(vals) >= 2 and vals[0] >= 2 * vals[1]:
             return ("Prawo Zipfa: najczestszy token pojawia sie ~2x czesciej "
