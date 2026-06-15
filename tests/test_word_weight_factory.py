@@ -159,3 +159,12 @@ def test_word_weight_factory_scene_instantiates():
     surface = pygame.Surface((1024, 720))
     scene.draw(surface)   # must not raise
     pygame.quit()
+
+
+def test_lesson_22_content_structure():
+    from cognitive_data_arcade.lessons.lesson_22 import CONTENT
+    for lang in ("pl", "en"):
+        assert lang in CONTENT
+        for key in ("theory", "notes", "tasks"):
+            assert key in CONTENT[lang], f"Missing '{key}' in CONTENT['{lang}']"
+            assert len(CONTENT[lang][key]) >= 1
