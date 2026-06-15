@@ -21,6 +21,10 @@ _DOC_ROW_H = 28
 _DOCS_TOP   = 44          # y inside the panel surface
 _CHK_SIZE   = 14
 
+_TOOLTIP_W    = 240
+_TOOLTIP_PAD  = 8
+_TOOLTIP_LINE = 18
+
 
 class CorpusPanel:
     def __init__(self, state: CorpusState) -> None:
@@ -43,6 +47,9 @@ class CorpusPanel:
         # Lang toggle rect
         self._lang_rect  = pygame.Rect(8, chk_top + 112, 60, 20)
 
+        self._tooltip_lines: list[str] | None = None
+        self._tooltip_panel_pos: tuple[int, int] = (0, 0)
+
     # ------------------------------------------------------------------
     def is_custom_active(self) -> bool:
         return self._custom_active
@@ -58,9 +65,16 @@ class CorpusPanel:
                 self._state.custom_text += event.unicode
                 return True
 
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
+            if event.pos[0] < _PANEL_W and event.pos[1] >= 0:
+                self._open_tooltip(event.pos)
+                return True
+            return False
+
         if event.type != pygame.MOUSEBUTTONDOWN or event.button != 1:
             return False
 
+        self._tooltip_lines = None
         pos = event.pos
 
         # Document rows
@@ -91,6 +105,90 @@ class CorpusPanel:
             return True
 
         return False
+
+    # ------------------------------------------------------------------
+    def _open_tooltip(self, pos: tuple[int, int]) -> None:
+        # Document rows
+        for i, (title, text, _lang) in enumerate(_PRESETS):
+            row_rect = pygame.Rect(4, _DOCS_TOP + i * _DOC_ROW_H, _PANEL_W - 8, _DOC_ROW_H - 2)
+            if row_rect.collidepoint(pos):
+                words = text.split()[:6]
+                snippet = " ".join(words) + ("..." if len(text.split()) > 6 else "")
+                self._tooltip_lines = [
+                    f"Dok: {title}",
+                    "",
+                    snippet,
+                    "",
+                    "LPM = wybierz ten dokument",
+                ]
+                self._tooltip_panel_pos = pos
+                return
+        # Wlasny row
+        wi = len(_PRESETS)
+        wlasny_rect = pygame.Rect(4, _DOCS_TOP + wi * _DOC_ROW_H, _PANEL_W - 8, _DOC_ROW_H - 2)
+        if wlasny_rect.collidepoint(pos):
+            self._tooltip_lines = [
+                "Wlasny tekst",
+                "",
+                "Wpisz swoj tekst i obserwuj",
+                "jak zmienia sie macierze",
+                "BoW / TF / IDF / TF-IDF.",
+            ]
+            self._tooltip_panel_pos = pos
+            return
+        # Checkboxes
+        _chk_explanations = [
+            ["Lowercase", "", "Zamienia litery na male.", "'Ala' i 'ala' to ten sam token."],
+            ["Usun interpunkcje", "", "Usuwa kropki, przecinki.", "'slowo.' staje sie 'slowo'."],
+            ["Usun stop words", "", "Usuwa slowa bez wartosci", "informacyjnej (i, w, z, ale...)."],
+        ]
+        for i, rect in enumerate(self._chk_rects):
+            expanded = pygame.Rect(rect.x - 2, rect.y - 4, _PANEL_W - 12, rect.h + 8)
+            if expanded.collidepoint(pos):
+                self._tooltip_lines = _chk_explanations[i]
+                self._tooltip_panel_pos = pos
+                return
+        # Lang toggle (only visible when custom active)
+        if self._custom_active and self._lang_rect.collidepoint(pos):
+            self._tooltip_lines = [
+                "Jezyk stop words",
+                "",
+                "PL = polski slownik slow",
+                "EN = angielski slownik slow",
+                "LPM = przelacz jezyk",
+            ]
+            self._tooltip_panel_pos = pos
+            return
+        self._tooltip_lines = [
+            "Panel korpusu",
+            "",
+            "Wybierz dokument z listy",
+            "lub wpisz wlasny tekst.",
+            "Opcje filtruja tokeny",
+            "w calym potoku.",
+        ]
+        self._tooltip_panel_pos = pos
+
+    def draw_tooltip(self, surface: pygame.Surface, pipe_h: int) -> None:
+        if not self._tooltip_lines:
+            return
+        lines = self._tooltip_lines
+        n = len(lines)
+        bh = n * _TOOLTIP_LINE + _TOOLTIP_PAD * 2
+        sx = self._tooltip_panel_pos[0]
+        sy = self._tooltip_panel_pos[1] + pipe_h
+        tx = max(_PANEL_W + 4, min(sx + _PANEL_W, surface.get_width() - _TOOLTIP_W - 4))
+        ty = max(pipe_h + 4, min(sy, surface.get_height() - bh - 4))
+        r = pygame.Rect(tx, ty, _TOOLTIP_W, bh)
+        pygame.draw.rect(surface, (12, 12, 30), r, border_radius=4)
+        pygame.draw.rect(surface, _PURPLE, r, 1, border_radius=4)
+        font10 = get_font(10)
+        for i, line in enumerate(lines):
+            if not line:
+                continue
+            col = _AMBER if i == 0 else _WHITE
+            s = font10.render(line, True, col)
+            surface.blit(s, (tx + _TOOLTIP_PAD, ty + _TOOLTIP_PAD + i * _TOOLTIP_LINE))
 
     # ------------------------------------------------------------------
     def draw(self, surface: pygame.Surface) -> None:

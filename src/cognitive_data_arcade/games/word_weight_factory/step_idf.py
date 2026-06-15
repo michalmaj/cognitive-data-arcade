@@ -101,6 +101,8 @@ class StepIdfScene(Scene):
 
     def _open_tooltip(self, pos: tuple[int, int]) -> None:
         px, py = pos
+        if px < 0 or px >= _W:
+            return
         # Is click inside chart area?
         if not (_CHART_Y <= py < _CHART_Y + _CHART_H):
             return

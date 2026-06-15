@@ -18,14 +18,79 @@ _PURPLE = (155, 89, 182)
 _STEP_H = 672
 _W      = 804
 
+_TOOLTIP_W   = 300
+_TOOLTIP_PAD = 8
+_TOOLTIP_LINE = 18
+
+
+def _draw_tooltip_box(surface: pygame.Surface, lines: list[str], pos: tuple[int, int]) -> None:
+    bh = len(lines) * _TOOLTIP_LINE + _TOOLTIP_PAD * 2
+    sw, sh = surface.get_size()
+    tx = max(4, min(pos[0], sw - _TOOLTIP_W - 4))
+    ty = max(4, min(pos[1], sh - bh - 4))
+    r = pygame.Rect(tx, ty, _TOOLTIP_W, bh)
+    pygame.draw.rect(surface, (12, 12, 30), r, border_radius=4)
+    pygame.draw.rect(surface, _PURPLE, r, 1, border_radius=4)
+    font10 = get_font(10)
+    for i, line in enumerate(lines):
+        if not line:
+            continue
+        col = _AMBER if i == 0 else _WHITE
+        s = font10.render(line, True, col)
+        surface.blit(s, (tx + _TOOLTIP_PAD, ty + _TOOLTIP_PAD + i * _TOOLTIP_LINE))
+
 
 class StepCorpusScene(Scene):
     def __init__(self, state: CorpusState) -> None:
         self._state = state
         self._done = False
+        self._chip_data: list[tuple[pygame.Rect, str, bool]] = []  # (rect, token, is_stop)
+        self._tooltip: list[str] | None = None
+        self._tooltip_pos: tuple[int, int] = (0, 0)
 
     def handle_event(self, event: pygame.event.Event) -> None:
-        pass  # corpus panel handles all events
+        if event.type != pygame.MOUSEBUTTONDOWN:
+            return
+        if event.button == 3:
+            self._open_tooltip(event.pos)
+        elif event.button == 1:
+            self._tooltip = None
+
+    def _open_tooltip(self, pos: tuple[int, int]) -> None:
+        px, py = pos
+        if px < 0 or px >= _W:
+            return
+        # Check chip hit
+        for rect, tok, is_stop in self._chip_data:
+            if rect.collidepoint(pos):
+                if is_stop:
+                    self._tooltip = [
+                        f"Stop word: \"{tok}\"",
+                        "",
+                        "To czesto wystepujace slowo",
+                        "bez wartosci informacyjnej.",
+                        "Wlacz 'Rm stops' aby je usunac.",
+                    ]
+                else:
+                    self._tooltip = [
+                        f"Token: \"{tok}\"",
+                        "",
+                        "Ten token trafi do slownika.",
+                        "Bedzie kolumna w macierzy BoW.",
+                    ]
+                self._tooltip_pos = pos
+                return
+        # Fallback
+        self._tooltip = [
+            "Krok 1 — Korpus",
+            "",
+            "Tu widzisz tokeny dokumentu.",
+            "Zielony = wejdzie do macierzy.",
+            "Szary   = stop word (pomijany).",
+            "",
+            "PPM na tokenie = szczegoly",
+        ]
+        self._tooltip_pos = pos
 
     def update(self, dt_ms: float = 0.0) -> None:
         pass
@@ -85,6 +150,7 @@ class StepCorpusScene(Scene):
 
         chip_x, chip_y = 8, y + 14
         font10 = get_font(10)
+        self._chip_data = []
         for tok in tokens:
             is_stop = tok.lower() in stops
             cw = font10.size(tok)[0] + 10
@@ -93,10 +159,12 @@ class StepCorpusScene(Scene):
                 chip_y += 22
             border = (80, 80, 100) if is_stop else _GREEN
             col    = (80, 80, 100) if is_stop else _GREEN
-            pygame.draw.rect(surface, (20, 20, 40), (chip_x, chip_y, cw, 18), border_radius=3)
-            pygame.draw.rect(surface, border,       (chip_x, chip_y, cw, 18), 1, border_radius=3)
+            chip_rect = pygame.Rect(chip_x, chip_y, cw, 18)
+            pygame.draw.rect(surface, (20, 20, 40), chip_rect, border_radius=3)
+            pygame.draw.rect(surface, border,       chip_rect, 1, border_radius=3)
             lbl = font10.render(tok, True, col)
             surface.blit(lbl, (chip_x + 5, chip_y + (18 - lbl.get_height()) // 2))
+            self._chip_data.append((chip_rect, tok, is_stop))
             chip_x += cw + 5
 
         # Insight banner
@@ -107,3 +175,6 @@ class StepCorpusScene(Scene):
         pygame.draw.line(surface, _PURPLE, (0, iy - 6), (0, iy + 40), 3)
         ins = get_font(11).render(insight[:110], True, (200, 180, 220))
         surface.blit(ins, (8, iy + 4))
+
+        if self._tooltip:
+            _draw_tooltip_box(surface, self._tooltip, self._tooltip_pos)

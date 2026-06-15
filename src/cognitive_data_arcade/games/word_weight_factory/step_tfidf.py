@@ -10,6 +10,7 @@ from cognitive_data_arcade.games.word_weight_factory.engine import WeightMatrix
 from cognitive_data_arcade.games.word_weight_factory.step_bow import (
     _BG, _WHITE, _DIM, _AMBER, _PURPLE,
     _STEP_H, _W, _LABEL_W, _COL_W, _ROW_H, _HDR_H, _MAX_COLS,
+    _draw_tooltip_box,
 )
 
 
@@ -29,13 +30,22 @@ class StepTfidfScene(Scene):
         self._done = False
         self._selected_cell: tuple[int, int] | None = None
         self._col_offset = 0
+        self._tooltip: list[str] | None = None
+        self._tooltip_pos: tuple[int, int] = (0, 0)
+        self._last_matrix: WeightMatrix | None = None
 
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.MOUSEWHEEL:
             self._col_offset = max(0, self._col_offset - event.x - event.y)
-        if event.type != pygame.MOUSEBUTTONDOWN or event.button != 1:
+        if event.type != pygame.MOUSEBUTTONDOWN:
             return
         pos = event.pos
+        if event.button == 3:
+            self._open_tooltip(pos)
+            return
+        if event.button != 1:
+            return
+        self._tooltip = None
         HDR_TOP = 52
         for ri in range(20):
             for ci in range(_MAX_COLS):
@@ -44,6 +54,95 @@ class StepTfidfScene(Scene):
                 if pygame.Rect(x0, y0, _COL_W, _ROW_H).collidepoint(pos):
                     self._selected_cell = (ri, self._col_offset + ci)
                     return
+
+    def _open_tooltip(self, pos: tuple[int, int]) -> None:
+        px, py = pos
+        if px < 0 or px >= _W:
+            return
+        HDR_TOP = 52
+        m = self._last_matrix
+        iy = _STEP_H - 40
+        # Insight banner
+        if py >= iy - 6:
+            self._tooltip = [
+                "TF-IDF — spostrzezenie",
+                "",
+                "Lacze czestotliwosc w dok.",
+                "z rzadkoscia w korpusie.",
+                "Wysoki TF-IDF = slowo wazne",
+                "i unikalne dla tego dokumentu.",
+            ]
+            self._tooltip_pos = pos
+            return
+        # Formula area
+        if py < HDR_TOP:
+            self._tooltip = [
+                "TF-IDF — miara wagi terminu",
+                "",
+                "TF-IDF(t, d) = TF(t, d) x IDF(t)",
+                "",
+                "TF  = czestotliwosc w dok.",
+                "IDF = rzadkosc w korpusie",
+                "",
+                "Wysoki wynik = token wazny",
+                "i charakterystyczny dla dok.",
+            ]
+            self._tooltip_pos = pos
+            return
+        if m is None:
+            return
+        N = len(m.doc_titles)
+        V = len(m.vocab)
+        # Column header
+        if HDR_TOP <= py < HDR_TOP + _HDR_H:
+            for ci in range(_MAX_COLS):
+                x0 = _LABEL_W + ci * _COL_W
+                if x0 <= px < x0 + _COL_W:
+                    j = self._col_offset + ci
+                    if j < V:
+                        tok = m.vocab[j]
+                        idf_val = m.idf[j]
+                        self._tooltip = [
+                            f"Token: \"{tok}\"",
+                            "",
+                            f"IDF = {idf_val:.4f}",
+                            "",
+                            "IDF wplywa na cala kolumne.",
+                        ]
+                        self._tooltip_pos = pos
+                        return
+        # Cell zone
+        if py >= HDR_TOP + _HDR_H:
+            ri = (py - (HDR_TOP + _HDR_H)) // _ROW_H
+            if 0 <= ri < N:
+                for ci in range(_MAX_COLS):
+                    x0 = _LABEL_W + ci * _COL_W
+                    if x0 <= px < x0 + _COL_W:
+                        j = self._col_offset + ci
+                        if j < V:
+                            tok = m.vocab[j]
+                            tf_val = m.tf[ri][j]
+                            idf_val = m.idf[j]
+                            tfidf = m.tfidf[ri][j]
+                            dtitle = m.doc_titles[ri]
+                            self._tooltip = [
+                                f"TF-IDF(\"{tok}\", \"{dtitle}\")",
+                                "",
+                                f"= TF x IDF",
+                                f"= {tf_val:.4f} x {idf_val:.4f}",
+                                f"= {tfidf:.4f}",
+                                "",
+                                "LPM = zaznacz komorke",
+                            ]
+                            self._tooltip_pos = pos
+                            return
+        self._tooltip = [
+            "TF-IDF — macierz wag",
+            "",
+            "Kolor = waga tokenu w dok.",
+            "Cieplejszy = wazniejszy.",
+        ]
+        self._tooltip_pos = pos
 
     def update(self, dt_ms: float = 0.0) -> None:
         pass
@@ -55,6 +154,8 @@ class StepTfidfScene(Scene):
         return None
 
     def draw(self, surface: pygame.Surface, matrix: WeightMatrix | None = None) -> None:
+        if matrix is not None:
+            self._last_matrix = matrix
         surface.fill(_BG)
         if matrix is None or not matrix.vocab:
             msg = get_font(12).render("Brak tokenow.", True, _DIM)
@@ -133,7 +234,7 @@ class StepTfidfScene(Scene):
         if flat_tfidf and flat_tfidf[0][0] > 0.2:
             best_val, best_tok, best_doc = flat_tfidf[0]
             insight = (f"Najwyzszy TF-IDF: '{best_tok}' w '{best_doc}'"
-                       f" ({best_val:.3f}) -- to slowo wyróznia ten dokument.")
+                       f" ({best_val:.3f}) -- to slowo wyroznia ten dokument.")
         else:
             insight = "TF-IDF laczy czestotliwosc w dokumencie z rzadkoscia w korpusie."
         iy = _STEP_H - 40
@@ -141,3 +242,6 @@ class StepTfidfScene(Scene):
         pygame.draw.line(surface, _PURPLE, (0, iy - 6), (0, iy + 40), 3)
         ins = get_font(11).render(insight[:115], True, (200, 180, 220))
         surface.blit(ins, (8, iy + 4))
+
+        if self._tooltip:
+            _draw_tooltip_box(surface, self._tooltip, self._tooltip_pos)
