@@ -189,3 +189,12 @@ def test_emotion_classifier_scene_instantiates():
     scene = EmotionClassifierScene()
     assert not scene.is_done()
     assert scene.next_scene() is None
+
+
+def test_lesson_23_content_structure():
+    from cognitive_data_arcade.lessons.lesson_23 import CONTENT
+    for lang in ("pl", "en"):
+        assert lang in CONTENT
+        for key in ("theory", "notes", "tasks"):
+            assert key in CONTENT[lang]
+            assert len(CONTENT[lang][key]) >= 2
