@@ -97,6 +97,18 @@ def test_sentence_bank_ascii_only():
     for s in SENTENCE_BANK:
         assert not non_ascii.search(s.text), f"Diacritics in text: {s.text}"
         assert not non_ascii.search(s.explanation), f"Diacritics in explanation: {s.explanation}"
+        for k in s.word_scores:
+            assert not non_ascii.search(k), f"Diacritics in word_scores key: {k}"
+
+
+def test_chip_tokens_cover_word_scores_keys():
+    from cognitive_data_arcade.games.emotion_classifier.sentences import SENTENCE_BANK
+    for s in SENTENCE_BANK:
+        tokens = {tok.rstrip('.,;:!?').lower() for tok in s.text.split()}
+        for key in s.word_scores:
+            assert key in tokens, (
+                f"word_scores key '{key}' not found as chip token in: {s.text}"
+            )
 
 
 def test_sentence_bank_trap_types():

@@ -74,16 +74,17 @@ class PhaseRoundScene(Scene):
         # Check word chips
         for rect, word in self._chip_rects:
             if rect.collidepoint(event.pos):
+                key = word.rstrip('.,;:!?').lower()
                 if event.button == 1:
-                    if self._tagged.get(word) == "positive":
-                        del self._tagged[word]
+                    if self._tagged.get(key) == "positive":
+                        del self._tagged[key]
                     else:
-                        self._tagged[word] = "positive"
+                        self._tagged[key] = "positive"
                 elif event.button == 3:
-                    if self._tagged.get(word) == "negative":
-                        del self._tagged[word]
+                    if self._tagged.get(key) == "negative":
+                        del self._tagged[key]
                     else:
-                        self._tagged[word] = "negative"
+                        self._tagged[key] = "negative"
                 return
 
         # Right-click on sentence area (not on a chip) → show hint
@@ -149,7 +150,7 @@ class PhaseRoundScene(Scene):
 
         font = get_font(13)
         for rect, word in self._chip_rects:
-            tag = self._tagged.get(word)
+            tag = self._tagged.get(word.rstrip('.,;:!?').lower())
             if tag == "positive":
                 pygame.draw.rect(surface, _GREEN, rect, border_radius=13)
                 col = _WHITE
