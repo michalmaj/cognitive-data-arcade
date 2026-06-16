@@ -14,16 +14,16 @@ _DIM    = (120, 120, 160)
 _PURPLE = (155, 89, 182)
 
 _LINES = [
-    "Twoim zadaniem jest oznaczyc slowa o wyraznym sentymencie.",
-    "Lewym przyciskiem (LPM) zaznaczasz slowa pozytywne,",
-    "prawym (PPM) -- negatywne. Kliknij ponownie, aby odznaczac.",
+    "Twoim zadaniem jest oznaczyć słowa o wyraźnym sentymencie.",
+    "Lewym przyciskiem (LPM) zaznaczasz słowa pozytywne,",
+    "prawym (PPM) -- negatywne. Kliknij ponownie, aby odznaczać.",
     "",
-    "Obserwuj panel po prawej -- leksykon sumuje wagi na zywo.",
-    "Odkryj, gdzie leksykon sie myli: negacja, intensywnosc, ironia.",
+    "Obserwuj panel po prawej -- leksykon sumuje wagi na żywo.",
+    "Odkryj, gdzie leksykon się myli: negacja, intensywność, ironia.",
     "",
-    "Jesli chcesz wskazowki, kliknij PPM na pustym miejscu zdania.",
+    "Jeśli chcesz wskazówki, kliknij PPM na pustym miejscu zdania.",
     "",
-    "8 rund. Zdobadz jak najwiecej punktow!",
+    "8 rund. Zdobądź jak najwięcej punktów!",
 ]
 
 
@@ -62,7 +62,7 @@ class PhaseIntroScene(Scene):
         btn = pygame.Rect(_W // 2 - 130, _H - 90, 260, 50)
         pygame.draw.rect(surface, _PANEL, btn, border_radius=8)
         pygame.draw.rect(surface, _PURPLE, btn, 2, border_radius=8)
-        lbl = get_font(20).render("Zacznij gre", True, _PURPLE)
+        lbl = get_font(20).render("Zacznij grę", True, _PURPLE)
         surface.blit(lbl, (_W // 2 - lbl.get_width() // 2, _H - 74))
 
     def is_done(self) -> bool:

@@ -3,15 +3,15 @@ from __future__ import annotations
 
 LEXICON: dict[str, int] = {
     # +2: strongly positive
-    "doskonaly": 2, "doskonale": 2, "doskonala": 2,
+    "doskonały": 2, "doskonale": 2, "doskonała": 2,
     "znakomity": 2, "znakomite": 2, "znakomita": 2,
-    "swietny": 2, "swietnie": 2, "swietna": 2,
+    "świetny": 2, "świetnie": 2, "świetna": 2,
     "rewelacyjny": 2, "rewelacyjne": 2, "rewelacyjna": 2,
     "fantastyczny": 2, "fantastyczne": 2, "fantastyczna": 2,
     "genialny": 2, "genialne": 2, "genialnie": 2,
     "perfekcyjny": 2, "perfekcyjnie": 2,
     "sukces": 2, "sukcesem": 2,
-    "imponujacy": 2, "imponujace": 2,
+    "imponujący": 2, "imponujące": 2,
     "rewelacja": 2,
     "super": 2,
     # +1: mildly positive
@@ -20,47 +20,47 @@ LEXICON: dict[str, int] = {
     "zadowolony": 1, "zadowoleni": 1, "zadowolenie": 1, "zadowolenia": 1,
     "trafny": 1, "trafne": 1,
     "szybki": 1, "szybko": 1,
-    "uzyteczny": 1, "uzyteczne": 1, "uzyteczna": 1,
+    "użyteczny": 1, "użyteczne": 1, "użyteczna": 1,
     "ciekawy": 1, "ciekawe": 1,
     "udany": 1, "udane": 1,
-    "niezle": 1, "niezla": 1, "niezly": 1,
+    "nieźle": 1, "nieźła": 1, "nieźły": 1,
     "poprawny": 1, "poprawnie": 1, "poprawna": 1,
     "brawo": 1,
     # -1: mildly negative
-    "trudny": -1, "trudne": -1, "trudno": -1, "trudnosci": -1,
-    "slaby": -1, "slabe": -1, "slabo": -1,
+    "trudny": -1, "trudne": -1, "trudno": -1, "trudności": -1,
+    "słaby": -1, "słabe": -1, "słabo": -1,
     "powolny": -1, "powolnie": -1,
-    "blad": -1, "bledna": -1, "bledow": -1, "bledami": -1,
-    "problem": -1, "problemy": -1, "problemow": -1,
-    "watpliwy": -1, "watpliwe": -1, "watpliwosci": -1,
-    "rozczarowujacy": -1, "rozczarowujace": -1, "rozczarowani": -1,
-    "zle": -1,
+    "błąd": -1, "błędna": -1, "błędów": -1, "błędami": -1,
+    "problem": -1, "problemy": -1, "problemów": -1,
+    "wątpliwy": -1, "wątpliwe": -1, "wątpliwości": -1,
+    "rozczarowujący": -1, "rozczarowujące": -1, "rozczarowani": -1,
+    "źle": -1,
     # -2: strongly negative
     "fatalny": -2, "fatalne": -2, "fatalnie": -2,
     "katastrofa": -2, "katastroficzny": -2, "katastroficzne": -2,
     "tragiczny": -2, "tragiczne": -2, "tragicznie": -2,
     "koszmarny": -2, "koszmarne": -2, "koszmarnie": -2,
-    "bezuzyteczny": -2, "bezuzyteczne": -2, "bezuzyteczna": -2,
-    "porazka": -2,
+    "bezużyteczny": -2, "bezużyteczne": -2, "bezużyteczna": -2,
+    "porażka": -2,
     "klapa": -2,
 }
 
 TRAP_LABELS: dict[str, str] = {
-    "clear_pos": "LATWY: Pozytywny",
-    "clear_neg": "LATWY: Negatywny",
-    "negation":  "PULAPKA: Negacja",
-    "intensity": "PULAPKA: Intensywnosc",
-    "irony":     "PULAPKA: Ironia",
-    "mixed":     "PULAPKA: Mieszany",
+    "clear_pos": "ŁATWY: Pozytywny",
+    "clear_neg": "ŁATWY: Negatywny",
+    "negation":  "PUŁAPKA: Negacja",
+    "intensity": "PUŁAPKA: Intensywność",
+    "irony":     "PUŁAPKA: Ironia",
+    "mixed":     "PUŁAPKA: Mieszany",
 }
 
 TRAP_HINTS: dict[str, str] = {
-    "clear_pos": "To zdanie ma wyrazne slowa pozytywne. Powinno byc latwe.",
-    "clear_neg": "To zdanie ma wyrazne slowa negatywne. Powinno byc latwe.",
-    "negation":  "To zdanie zawiera slowo negujace. Czy leksykon je zauwazy?",
-    "intensity": "Uwaga na stopniowanie -- czy 'dobry' i 'doskonaly' to to samo?",
+    "clear_pos": "To zdanie ma wyraźne słowa pozytywne. Powinno być łatwe.",
+    "clear_neg": "To zdanie ma wyraźne słowa negatywne. Powinno być łatwe.",
+    "negation":  "To zdanie zawiera słowo negujące. Czy leksykon je zauważy?",
+    "intensity": "Uwaga na stopniowanie — czy 'dobry' i 'doskonały' to to samo?",
     "irony":     "Czy to zdanie brzmi zbyt pozytywnie jak na kontekst?",
-    "mixed":     "To zdanie laczy kilka trudnosci naraz.",
+    "mixed":     "To zdanie łączy kilka trudności naraz.",
 }
 
 

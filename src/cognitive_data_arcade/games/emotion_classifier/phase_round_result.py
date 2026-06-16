@@ -30,7 +30,7 @@ _VERDICT_TEXT   = {
     "mixed":    "MIESZANY",
 }
 
-_NEGATION_WORDS = {"nie", "nikt", "zadnych", "zadne", "nigdy"}
+_NEGATION_WORDS = {"nie", "nikt", "żadnych", "żadne", "nigdy"}
 
 
 class PhaseRoundResultScene(Scene):
@@ -145,9 +145,9 @@ class PhaseRoundResultScene(Scene):
     def _draw_verdict_boxes(self, surface: pygame.Surface, y: int) -> int:
         box_w = (_W - 80 - 24) // 3
         boxes = [
-            ("Leksykon powiedzial", self._lexicon_verdict),
+            ("Leksykon powiedział", self._lexicon_verdict),
             ("Prawdziwy sentyment", self._sentence.truth),
-            ("Ty powiedziales", self._player_verdict),
+            ("Ty powiedziałeś", self._player_verdict),
         ]
         for i, (label, verdict) in enumerate(boxes):
             bx = 40 + i * (box_w + 12)
@@ -179,9 +179,9 @@ class PhaseRoundResultScene(Scene):
         r = self._result
         parts = [
             (f"Trafione tagi: +{r['correct_pts']}", _GREEN if r['correct_pts'] else _DIM),
-            (f"Bledy: {r['wrong_pts']}", _RED if r['wrong_pts'] else _DIM),
-            (f"Pobiles leksykon: +{r['beat_bonus']}", _AMBER if r['beat_bonus'] else _DIM),
-            (f"Szybkosc: +{r['speed_bonus']}", _PURPLE if r['speed_bonus'] else _DIM),
+            (f"Błędy: {r['wrong_pts']}", _RED if r['wrong_pts'] else _DIM),
+            (f"Pobiłeś leksykon: +{r['beat_bonus']}", _AMBER if r['beat_bonus'] else _DIM),
+            (f"Szybkość: +{r['speed_bonus']}", _PURPLE if r['speed_bonus'] else _DIM),
         ]
         x = 40
         for text, col in parts:

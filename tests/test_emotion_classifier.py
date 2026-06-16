@@ -11,14 +11,14 @@ def test_lexicon_classify_positive():
 
 def test_lexicon_classify_negative():
     from cognitive_data_arcade.games.emotion_classifier.lexicon import classify
-    verdict, total = classify({"porazka": -2, "fatalne": -2})
+    verdict, total = classify({"porażka": -2, "fatalne": -2})
     assert verdict == "negative"
     assert total == -4
 
 
 def test_lexicon_classify_neutral():
     from cognitive_data_arcade.games.emotion_classifier.lexicon import classify
-    verdict, total = classify({"dobry": 1, "blad": -1})
+    verdict, total = classify({"dobry": 1, "błąd": -1})
     assert verdict == "neutral"
     assert total == 0
 
@@ -89,16 +89,6 @@ def test_sentence_bank_non_empty():
     from cognitive_data_arcade.games.emotion_classifier.sentences import SENTENCE_BANK
     assert len(SENTENCE_BANK) >= 40
 
-
-def test_sentence_bank_ascii_only():
-    import re
-    from cognitive_data_arcade.games.emotion_classifier.sentences import SENTENCE_BANK
-    non_ascii = re.compile(r'[^\x00-\x7F]')
-    for s in SENTENCE_BANK:
-        assert not non_ascii.search(s.text), f"Diacritics in text: {s.text}"
-        assert not non_ascii.search(s.explanation), f"Diacritics in explanation: {s.explanation}"
-        for k in s.word_scores:
-            assert not non_ascii.search(k), f"Diacritics in word_scores key: {k}"
 
 
 def test_chip_tokens_cover_word_scores_keys():
