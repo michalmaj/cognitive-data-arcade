@@ -181,3 +181,11 @@ def test_phase_session_result_renders():
     assert not scene.is_done()
     scene.draw(surf)  # must not raise
     assert scene.next_scene() is None
+
+
+def test_emotion_classifier_scene_instantiates():
+    _pygame()
+    from cognitive_data_arcade.games.emotion_classifier.game import EmotionClassifierScene
+    scene = EmotionClassifierScene()
+    assert not scene.is_done()
+    assert scene.next_scene() is None
