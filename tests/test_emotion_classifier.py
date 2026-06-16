@@ -69,6 +69,7 @@ def test_compute_round_score_beat_bonus():
         elapsed_s=5.0,
     )
     assert beat == 15
+    assert speed == 5  # elapsed_s=5.0 < 15.0
 
 
 def test_trap_labels_all_five():

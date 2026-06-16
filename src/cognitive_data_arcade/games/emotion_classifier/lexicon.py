@@ -58,7 +58,7 @@ TRAP_HINTS: dict[str, str] = {
     "clear_pos": "To zdanie ma wyrazne slowa pozytywne. Powinno byc latwe.",
     "clear_neg": "To zdanie ma wyrazne slowa negatywne. Powinno byc latwe.",
     "negation":  "To zdanie zawiera slowo negujace. Czy leksykon je zauwazy?",
-    "intensity": "Uwaga na stopniowanie — czy 'dobry' i 'doskonaly' to to samo?",
+    "intensity": "Uwaga na stopniowanie -- czy 'dobry' i 'doskonaly' to to samo?",
     "irony":     "Czy to zdanie brzmi zbyt pozytywnie jak na kontekst?",
     "mixed":     "To zdanie laczy kilka trudnosci naraz.",
 }
@@ -98,7 +98,7 @@ def compute_round_score(
         else:
             wrong_pts -= 2
 
-    player_ws = {w: LEXICON[w] for w in tagged_words if w in LEXICON}
+    player_ws = {w: word_scores[w] for w in tagged_words if w in word_scores}
     player_verdict, _ = classify(player_ws)
     lexicon_verdict, _ = classify(word_scores)
     beat_bonus = 15 if (player_verdict == truth and lexicon_verdict != truth) else 0
