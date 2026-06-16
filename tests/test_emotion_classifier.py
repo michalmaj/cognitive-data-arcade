@@ -126,3 +126,24 @@ def test_session_draw_first_two_clear():
         session = draw_session(SENTENCE_BANK)
         assert session[0].trap == "clear_pos"
         assert session[1].trap == "clear_neg"
+
+
+import os
+os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
+os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
+
+
+def _pygame():
+    import pygame
+    pygame.init()
+    return pygame
+
+
+def test_phase_intro_scene_renders():
+    pg = _pygame()
+    from cognitive_data_arcade.games.emotion_classifier.phase_intro import PhaseIntroScene
+    scene = PhaseIntroScene()
+    surf = pg.Surface((1024, 720))
+    assert not scene.is_done()
+    scene.draw(surf)  # must not raise
+    assert scene.next_scene() is None
