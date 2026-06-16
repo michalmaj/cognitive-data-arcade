@@ -34,6 +34,7 @@ _LESSONS = [
     (20, "Anomaly Alert"),
     (21, "Text Tokenizer Lab"),
     (22, "Word Weight Factory"),
+    (23, "Emotion Classifier"),
 ]
 
 _BG = (26, 26, 46)
@@ -196,6 +197,8 @@ class LessonMenuScene(Scene):
             self._launch_text_tokenizer()
         elif lesson_num == 22:
             self._launch_word_weight_factory()
+        elif lesson_num == 23:
+            self._launch_emotion_classifier()
         elif lesson_num == 6:
             self._launch_eda()
         elif lesson_num == 7:
@@ -313,6 +316,8 @@ class LessonMenuScene(Scene):
             return self._make_text_tokenizer
         if lesson_num == 22:
             return self._make_word_weight_factory
+        if lesson_num == 23:
+            return self._make_emotion_classifier
         return None
 
     def _confirm_popup(self) -> None:
@@ -633,6 +638,19 @@ class LessonMenuScene(Scene):
         inner = WordWeightFactoryScene()
         game_info = get_game_info(self._strings)
         return PausableGame(inner, game_info, self._make_word_weight_factory,
+                            self._strings, self._pm)
+
+    def _launch_emotion_classifier(self) -> None:
+        self._next = self._make_emotion_classifier()
+        self._done = True
+
+    def _make_emotion_classifier(self) -> Scene:
+        from cognitive_data_arcade.engine.pause import PausableGame
+        from cognitive_data_arcade.games.emotion_classifier.info import get_game_info
+        from cognitive_data_arcade.games.emotion_classifier.game import EmotionClassifierScene
+        inner = EmotionClassifierScene()
+        game_info = get_game_info(self._strings)
+        return PausableGame(inner, game_info, self._make_emotion_classifier,
                             self._strings, self._pm)
 
     def update(self, dt_ms: float) -> None:
