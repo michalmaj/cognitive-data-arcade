@@ -190,9 +190,9 @@ SENTENCE_BANK: list[Sentence] = [
         "Leksykon sumuje +1+2 = POZYTYWNY. Ale 'nie imponujace' to korekta w dol.",
     ),
     Sentence(
-        "Wydajnosc systemu jest dobra, lecz daleka od swietnej.",
+        "Wydajnosc systemu jest dobra, lecz swietna nie jest.",
         "intensity", {"dobra": 1, "swietna": 2}, "neutral",
-        "Leksykon sumuje +1+2 = +3 = POZYTYWNY. Ale 'daleka od swietnej' to krytyka.",
+        "Leksykon sumuje +1+2 = POZYTYWNY. Ale 'swietna nie jest' to negacja intensywnosci.",
     ),
     Sentence(
         "Rezultaty sa pozytywne, ale nie spektakularne.",
@@ -232,8 +232,8 @@ SENTENCE_BANK: list[Sentence] = [
     # ── irony ──────────────────────────────────────────────────────────────────
     Sentence(
         "Swietna robota -- kolejny blad w danych, brawo.",
-        "irony", {"swietna": 2, "brawo": 1}, "negative",
-        "Leksykon widzi 'swietna' (+2) i 'brawo' (+1) = POZYTYWNY. To ironia -- sens jest negatywny.",
+        "irony", {"swietna": 2, "blad": -1, "brawo": 1}, "negative",
+        "Leksykon widzi 'swietna' (+2), 'blad' (-1), 'brawo' (+1) = +2 = POZYTYWNY. To ironia -- sens jest negatywny.",
     ),
     Sentence(
         "No brawo, znowu zepsulismy eksperyment przez nieuwage.",
