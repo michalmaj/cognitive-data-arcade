@@ -6,6 +6,7 @@ from typing import Callable
 import pygame
 
 from cognitive_data_arcade.engine import audio
+from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
 
@@ -74,10 +75,9 @@ class LessonReaderScene(Scene):
         self._next: Scene | None = None
         self._slides = _load_content(lesson_num, strings.language)
         self._idx = 0
-        pygame.font.init()
-        self._font_section = pygame.font.SysFont(None, 32)
-        self._font_text = pygame.font.SysFont(None, 28)
-        self._font_hint = pygame.font.SysFont(None, 24)
+        self._font_section = get_font(32)
+        self._font_text = get_font(28)
+        self._font_hint = get_font(24)
 
     def _section_label(self, section: str) -> str:
         return {
