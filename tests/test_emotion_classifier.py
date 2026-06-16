@@ -198,3 +198,9 @@ def test_lesson_23_content_structure():
         for key in ("theory", "notes", "tasks"):
             assert key in CONTENT[lang]
             assert len(CONTENT[lang][key]) >= 2
+
+
+def test_menu_has_lesson_23():
+    from cognitive_data_arcade.ui.menu import _LESSONS
+    lesson_nums = [n for n, _ in _LESSONS]
+    assert 23 in lesson_nums
