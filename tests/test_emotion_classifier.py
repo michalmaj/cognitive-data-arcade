@@ -147,3 +147,37 @@ def test_phase_intro_scene_renders():
     assert not scene.is_done()
     scene.draw(surf)  # must not raise
     assert scene.next_scene() is None
+
+
+def test_calc_stats_groups_clear():
+    from cognitive_data_arcade.games.emotion_classifier.phase_session_result import _calc_stats
+    results = [
+        {"trap": "clear_pos", "beat_lexicon": True},
+        {"trap": "clear_neg", "beat_lexicon": False},
+        {"trap": "negation", "beat_lexicon": True},
+    ]
+    stats = _calc_stats(results)
+    assert stats["clear"] == (1, 2)
+    assert stats["negation"] == (1, 1)
+    assert stats["intensity"] == (0, 0)
+
+
+def test_calc_stats_empty():
+    from cognitive_data_arcade.games.emotion_classifier.phase_session_result import _calc_stats
+    stats = _calc_stats([])
+    for cat in ("clear", "negation", "intensity", "irony", "mixed"):
+        assert stats[cat] == (0, 0)
+
+
+def test_phase_session_result_renders():
+    pg = _pygame()
+    from cognitive_data_arcade.games.emotion_classifier.phase_session_result import PhaseSessionResultScene
+    round_results = [
+        {"trap": "clear_pos", "beat_lexicon": True},
+        {"trap": "negation", "beat_lexicon": False},
+    ]
+    scene = PhaseSessionResultScene(session_score=75, round_results=round_results)
+    surf = pg.Surface((1024, 720))
+    assert not scene.is_done()
+    scene.draw(surf)  # must not raise
+    assert scene.next_scene() is None

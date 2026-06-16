@@ -1,6 +1,8 @@
 # src/cognitive_data_arcade/games/emotion_classifier/phase_session_result.py
 from __future__ import annotations
 
+import random
+
 import pygame
 
 from cognitive_data_arcade.engine.fonts import get_font
@@ -59,7 +61,6 @@ class PhaseSessionResultScene(Scene):
         self._round_results = round_results
         self._done = False
         self._next: Scene | None = None
-        import random
         self._insight = random.choice(_AHA_INSIGHTS)
 
     def handle_event(self, event: pygame.event.Event) -> None:
