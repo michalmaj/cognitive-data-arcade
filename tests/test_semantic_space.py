@@ -1,5 +1,9 @@
 from __future__ import annotations
 
+import os
+os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
+os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
+
 
 def test_words_all_in_valid_clusters():
     from cognitive_data_arcade.games.semantic_space.word_data import WORDS, CLUSTERS
@@ -88,3 +92,11 @@ def test_analogy_missions_have_formula():
             assert "=" in m.formula
             assert len(m.answers) == 1
             assert len(m.distractors) == 3
+
+
+def test_game_scene_instantiates():
+    import pygame; pygame.init()
+    from cognitive_data_arcade.games.semantic_space.game import SemanticSpaceScene
+    scene = SemanticSpaceScene()
+    assert not scene.is_done()
+    assert scene.next_scene() is None
