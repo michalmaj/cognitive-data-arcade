@@ -83,3 +83,46 @@ def test_trap_hints_all_five():
     for key in ("clear_pos", "clear_neg", "negation", "intensity", "irony", "mixed"):
         assert key in TRAP_HINTS
         assert TRAP_HINTS[key]  # non-empty string
+
+
+def test_sentence_bank_non_empty():
+    from cognitive_data_arcade.games.emotion_classifier.sentences import SENTENCE_BANK
+    assert len(SENTENCE_BANK) >= 40
+
+
+def test_sentence_bank_ascii_only():
+    import re
+    from cognitive_data_arcade.games.emotion_classifier.sentences import SENTENCE_BANK
+    non_ascii = re.compile(r'[^\x00-\x7F]')
+    for s in SENTENCE_BANK:
+        assert not non_ascii.search(s.text), f"Diacritics in text: {s.text}"
+        assert not non_ascii.search(s.explanation), f"Diacritics in explanation: {s.explanation}"
+
+
+def test_sentence_bank_trap_types():
+    from cognitive_data_arcade.games.emotion_classifier.sentences import SENTENCE_BANK
+    traps = {s.trap for s in SENTENCE_BANK}
+    assert traps >= {"clear_pos", "clear_neg", "negation", "intensity", "irony", "mixed"}
+
+
+def test_sentence_bank_truth_values():
+    from cognitive_data_arcade.games.emotion_classifier.sentences import SENTENCE_BANK
+    valid = {"positive", "negative", "neutral", "mixed"}
+    for s in SENTENCE_BANK:
+        assert s.truth in valid, f"Bad truth '{s.truth}' in: {s.text}"
+
+
+def test_session_draw_8_no_repeat():
+    from cognitive_data_arcade.games.emotion_classifier.sentences import SENTENCE_BANK, draw_session
+    session = draw_session(SENTENCE_BANK)
+    assert len(session) == 8
+    texts = [s.text for s in session]
+    assert len(texts) == len(set(texts)), "Duplicate sentence in session"
+
+
+def test_session_draw_first_two_clear():
+    from cognitive_data_arcade.games.emotion_classifier.sentences import SENTENCE_BANK, draw_session
+    for _ in range(10):  # random draw, repeat to be sure
+        session = draw_session(SENTENCE_BANK)
+        assert session[0].trap == "clear_pos"
+        assert session[1].trap == "clear_neg"
