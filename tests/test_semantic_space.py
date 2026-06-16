@@ -48,3 +48,43 @@ def test_bridge_words_reference_valid_clusters():
         for c in clusters:
             assert c in CLUSTERS, f"{c} not a valid cluster"
         assert difficulty in (2, 3)
+
+
+def test_build_session_length():
+    from cognitive_data_arcade.games.semantic_space.missions import build_session
+    assert len(build_session()) == 8
+
+
+def test_build_session_types():
+    from cognitive_data_arcade.games.semantic_space.missions import build_session
+    types = [m.type for m in build_session()]
+    assert types.count("neighbors") == 2
+    assert types.count("odd_one_out") == 2
+    assert types.count("bridge") == 2
+    assert types.count("analogy") == 2
+
+
+def test_build_session_difficulty_ascending():
+    from cognitive_data_arcade.games.semantic_space.missions import build_session
+    session = build_session()
+    assert session[0].difficulty == 1
+    assert session[1].difficulty == 1
+    assert session[-1].difficulty == 3
+
+
+def test_neighbors_answers_in_words():
+    from cognitive_data_arcade.games.semantic_space.missions import build_session
+    from cognitive_data_arcade.games.semantic_space.word_data import WORDS
+    for m in build_session():
+        if m.type == "neighbors":
+            for key in m.answers:
+                assert key in WORDS
+
+
+def test_analogy_missions_have_formula():
+    from cognitive_data_arcade.games.semantic_space.missions import build_session
+    for m in build_session():
+        if m.type == "analogy":
+            assert "=" in m.formula
+            assert len(m.answers) == 1
+            assert len(m.distractors) == 3
