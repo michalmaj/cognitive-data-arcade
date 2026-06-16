@@ -100,3 +100,25 @@ def test_game_scene_instantiates():
     scene = SemanticSpaceScene()
     assert not scene.is_done()
     assert scene.next_scene() is None
+
+
+def test_phase_intro_renders():
+    import pygame; pygame.init()
+    from cognitive_data_arcade.games.semantic_space.phase_intro import PhaseIntroScene
+    scene = PhaseIntroScene()
+    surf = pygame.Surface((1024, 720))
+    assert not scene.is_done()
+    scene.draw(surf)   # must not raise
+    assert scene.next_scene() is None
+
+
+def test_phase_intro_advances_on_space():
+    import pygame; pygame.init()
+    from cognitive_data_arcade.games.semantic_space.phase_intro import PhaseIntroScene
+    scene = PhaseIntroScene()
+    # 3 slides: first 2 advance slide index, 3rd triggers scene transition
+    for _ in range(3):
+        ev = pygame.event.Event(pygame.KEYDOWN, {"key": pygame.K_SPACE, "mod": 0, "unicode": " ", "scancode": 0})
+        scene.handle_event(ev)
+    assert scene.is_done()
+    assert scene.next_scene() is not None

@@ -1,0 +1,33 @@
+from __future__ import annotations
+
+import pygame
+
+from cognitive_data_arcade.engine.scene import Scene
+from cognitive_data_arcade.games.semantic_space.missions import Mission
+
+
+class PhaseMissionScene(Scene):
+    def __init__(
+        self,
+        missions: list[Mission],
+        round_idx: int,
+        session_score: int,
+        round_results: list[dict],
+    ) -> None:
+        self._done = False
+        self._next: Scene | None = None
+
+    def handle_event(self, event: pygame.event.Event) -> None:
+        pass
+
+    def update(self, dt_ms: float = 0.0) -> None:
+        pass
+
+    def draw(self, surface: pygame.Surface) -> None:
+        surface.fill((15, 15, 35))
+
+    def is_done(self) -> bool:
+        return self._done
+
+    def next_scene(self) -> Scene | None:
+        return self._next
