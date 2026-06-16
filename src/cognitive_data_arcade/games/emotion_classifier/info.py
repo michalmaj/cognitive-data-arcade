@@ -10,15 +10,15 @@ def get_game_info(strings: Strings) -> GameInfo:
         return GameInfo(
             title="Emotion Classifier",
             description_lines=[
-                "Oznaczaj slowa pozytywne (LPM) i negatywne (PPM) w zdaniach.",
-                "Obserwuj jak leksykon sumuje wagi -- i gdzie sie myli.",
-                "8 rund: negacja, ironia, intensywnosc. Pobij klasyfikator!",
+                "Oznaczaj słowa pozytywne (LPM) i negatywne (PPM) w zdaniach.",
+                "Obserwuj jak leksykon sumuje wagi -- i gdzie się myli.",
+                "8 rund: negacja, ironia, intensywność. Pobij klasyfikator!",
             ],
             key_bindings=[
-                ("LPM na slowie", "oznacz jako pozytywne"),
-                ("PPM na slowie", "oznacz jako negatywne"),
-                ("PPM na zdaniu", "podpowiedz o pulapce"),
-                ("SPACJA", "zatwierdz odpowiedz"),
+                ("LPM na słowie", "oznacz jako pozytywne"),
+                ("PPM na słowie", "oznacz jako negatywne"),
+                ("PPM na zdaniu", "podpowiedź o pułapce"),
+                ("SPACJA", "zatwierdź odpowiedź"),
             ],
         )
     return GameInfo(

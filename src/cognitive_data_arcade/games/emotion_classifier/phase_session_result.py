@@ -21,9 +21,9 @@ _GREY     = (80, 80, 100)
 
 _CATEGORIES = ["clear", "negation", "intensity", "irony", "mixed"]
 _CAT_LABELS = {
-    "clear":     "Latwe",
+    "clear":     "Łatwe",
     "negation":  "Negacja",
-    "intensity": "Intensywnosc",
+    "intensity": "Intensywność",
     "irony":     "Ironia",
     "mixed":     "Mieszany",
 }
@@ -36,10 +36,10 @@ _BAR_COLORS = {
 }
 _AHA_INSIGHTS = [
     "Negacja to kryptonit leksykonu -- ML radzi sobie lepiej.",
-    "Ironia wymaga rozumienia kontekstu, ktorego leksykon nie ma.",
-    "Intensywnosc slow to cos wiecej niz ich obecnosc.",
-    "Prawdziwy NLP to nie slownik -- to model rozumiejacy sens.",
-    "Leksykon to prosta heurystyka. ML to uogolnienie z kontekstu.",
+    "Ironia wymaga rozumienia kontekstu, którego leksykon nie ma.",
+    "Intensywność słów to coś więcej niż ich obecność.",
+    "Prawdziwy NLP to nie słownik -- to model rozumiejący sens.",
+    "Leksykon to prosta heurystyka. ML to uogólnienie z kontekstu.",
 ]
 
 
@@ -86,7 +86,7 @@ class PhaseSessionResultScene(Scene):
         score_lbl = get_font(36).render(f"{self._session_score} pkt", True, _AMBER)
         surface.blit(score_lbl, (_W // 2 - score_lbl.get_width() // 2, 72))
 
-        sub = get_font(13).render("Ile razy pobiles leksykon?", True, _DIM)
+        sub = get_font(13).render("Ile razy pobiłeś leksykon?", True, _DIM)
         surface.blit(sub, (_W // 2 - sub.get_width() // 2, 118))
 
         self._draw_bar_chart(surface, 150)

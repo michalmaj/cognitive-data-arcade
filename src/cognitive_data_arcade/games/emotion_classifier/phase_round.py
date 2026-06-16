@@ -141,7 +141,7 @@ class PhaseRoundScene(Scene):
 
     def _draw_sentence_area(self, surface: pygame.Surface) -> None:
         instr = get_font(12).render(
-            "Oznacz slowa jako pozytywne (LPM) lub negatywne (PPM):", True, _DIM
+            "Oznacz słowa jako pozytywne (LPM) lub negatywne (PPM):", True, _DIM
         )
         surface.blit(instr, (_LEFT_PAD, _TOP_H + 16))
 
@@ -178,7 +178,7 @@ class PhaseRoundScene(Scene):
 
         # SUBMIT button
         pygame.draw.rect(surface, _PURPLE, _SUBMIT_RECT, border_radius=8)
-        btn_lbl = get_font(15).render("ZATWIERDZ (SPACJA)", True, _WHITE)
+        btn_lbl = get_font(15).render("ZATWIERDŹ (SPACJA)", True, _WHITE)
         surface.blit(btn_lbl, (
             _SUBMIT_RECT.centerx - btn_lbl.get_width() // 2,
             _SUBMIT_RECT.centery - btn_lbl.get_height() // 2,
@@ -232,7 +232,7 @@ class PhaseRoundScene(Scene):
                 total += lex_score
                 slbl = font11.render(f"{lex_score:+d}", True, _GREEN if lex_score > 0 else _RED)
             else:
-                slbl = font11.render("nie w slowniku", True, _GREY)
+                slbl = font11.render("nie w słowniku", True, _GREY)
             surface.blit(slbl, (_PANEL_X + _PANEL_W - slbl.get_width() - 16, y + (26 - slbl.get_height()) // 2))
             y += 30
 
@@ -263,7 +263,7 @@ class PhaseRoundScene(Scene):
         surface.blit(vlbl, (vbox.centerx - vlbl.get_width() // 2, y + 22))
         y += 62
 
-        note = get_font(10).render("Leksykon liczy sume wag.", True, _GREY)
+        note = get_font(10).render("Leksykon liczy sumę wag.", True, _GREY)
         surface.blit(note, (_PANEL_X + 16, y))
         note2 = get_font(10).render("Negacja? Ironia? Sam nie rozumie.", True, _GREY)
         surface.blit(note2, (_PANEL_X + 16, y + 14))
