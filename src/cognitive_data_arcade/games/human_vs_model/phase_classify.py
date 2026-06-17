@@ -22,6 +22,10 @@ _GREEN    = (39, 174, 96)
 _RED      = (231, 76, 60)
 _GREY     = (60, 60, 80)
 
+_BASE_SCORE  = 10
+_BEAT_BONUS  = 5
+_AI_THINK_MS = 1500.0
+
 _OPT_Y_START = _TOP_H + 200  # = 244
 _OPT_H       = 42
 _OPT_STEP    = 52             # height + gap
@@ -83,15 +87,15 @@ class PhaseClassifyScene(Scene):
     def _submit(self, chosen: str) -> None:
         self._selected  = chosen
         self._state     = "ai_thinking"
-        self._ai_timer  = 1500.0
+        self._ai_timer  = _AI_THINK_MS
         self._anim_tick = 0.0
 
     def _calc_score(self) -> None:
         ch              = self._challenge
         self._correct   = self._selected == ch.answer
         self._beat_ai   = self._correct and ch.model_answer != ch.answer
-        base            = 10 if self._correct else 0
-        bonus           = 5 if self._beat_ai else 0
+        base            = _BASE_SCORE if self._correct else 0
+        bonus           = _BEAT_BONUS if self._beat_ai else 0
         self._round_score = base + bonus
 
     def _advance(self) -> None:
@@ -131,7 +135,7 @@ class PhaseClassifyScene(Scene):
         pygame.draw.line(surface, _GREY, (0, _TOP_H), (_W, _TOP_H))
         phase_lbl = get_font(13).render("EASY (C)", True, _GREEN)
         surface.blit(phase_lbl, (16, (_TOP_H - phase_lbl.get_height()) // 2))
-        rnd = get_font(13).render(f"Runda {self._round_idx + 1}/3", True, _DIM)
+        rnd = get_font(13).render(f"Runda {self._round_idx + 1}/{len(self._challenges)}", True, _DIM)
         surface.blit(rnd, (_W // 2 - rnd.get_width() // 2, (_TOP_H - rnd.get_height()) // 2))
         score_lbl = get_font(13).render(f"{self._session_score} pkt", True, _AMBER)
         surface.blit(score_lbl, (_W - score_lbl.get_width() - 16, (_TOP_H - score_lbl.get_height()) // 2))
