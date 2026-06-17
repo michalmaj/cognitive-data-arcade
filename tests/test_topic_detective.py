@@ -51,3 +51,26 @@ def test_data_counts():
     from cognitive_data_arcade.games.topic_detective.topic_data import DOCUMENTS, TOPICS
     assert len(TOPICS) == 5
     assert len(DOCUMENTS) == 15
+
+
+def test_build_session_length():
+    from cognitive_data_arcade.games.topic_detective.missions import build_session
+    assert len(build_session()) == 8
+
+
+def test_build_session_order():
+    from cognitive_data_arcade.games.topic_detective.missions import build_session
+    types = [m.type for m in build_session()]
+    assert types[:3] == ["name_topic", "name_topic", "name_topic"]
+    assert types[3:6] == ["assign_doc", "assign_doc", "assign_doc"]
+    assert types[6:] == ["intruder", "intruder"]
+
+
+def test_build_session_difficulty_ascending():
+    from cognitive_data_arcade.games.topic_detective.missions import build_session
+    session = build_session()
+    assert session[0].difficulty == 1
+    assert session[1].difficulty == 1
+    assert session[2].difficulty == 2
+    assert session[6].difficulty == 2
+    assert session[7].difficulty == 3
