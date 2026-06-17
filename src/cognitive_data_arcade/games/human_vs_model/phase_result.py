@@ -96,7 +96,7 @@ class PhaseResultScene(Scene):
         surface.blit(score_surf, (_W // 2 - score_surf.get_width() // 2, 160))
 
         # Beat AI line
-        beat_text = f"Razy pobil AI: {self._beat_ai_count}/9"
+        beat_text = f"Razy pobil AI: {self._beat_ai_count}/8"
         beat_surf = get_font(18).render(beat_text, True, _WHITE)
         surface.blit(beat_surf, (_W // 2 - beat_surf.get_width() // 2, 200))
 
