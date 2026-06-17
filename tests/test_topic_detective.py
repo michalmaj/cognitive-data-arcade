@@ -70,3 +70,11 @@ def test_build_session_difficulty_ascending():
     from cognitive_data_arcade.games.topic_detective.missions import build_session
     session = build_session()
     assert [m.difficulty for m in session] == [1, 1, 2, 1, 2, 2, 2, 3]
+
+
+def test_game_scene_instantiates():
+    import pygame; pygame.init()
+    from cognitive_data_arcade.games.topic_detective.game import TopicDetectiveScene
+    scene = TopicDetectiveScene()
+    assert not scene.is_done()
+    assert scene.next_scene() is None
