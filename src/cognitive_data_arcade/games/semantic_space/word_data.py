@@ -117,7 +117,7 @@ ANALOGIES: list[tuple] = [
     ),
     (
         "pies", "szczenię", "kot", "kotek",
-        ["kocur", "kociął", "kotka"],
+        ["kocur", "kociak", "kotka"],
         "Dorosły–młody: embeddingi kodują wzorce morfologiczne.",
         "Adult–young: embeddings encode morphological patterns.",
     ),

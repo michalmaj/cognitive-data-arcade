@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from cognitive_data_arcade.games.semantic_space.word_data import ANALOGIES, BRIDGE_WORDS
+from cognitive_data_arcade.games.semantic_space.word_data import ANALOGIES, BRIDGE_WORDS, SIMILARITIES
 
 
 @dataclass
@@ -24,7 +24,7 @@ def build_session() -> list[Mission]:
         Mission(
             type="neighbors",
             target="radosc",
-            answers=["szczescie", "milosc", "nadzieja"],
+            answers=[k for k, _ in SIMILARITIES["radosc"][:3]],
             distractors=[],
             hint_pl="Slowa blisko siebie w przestrzeni = podobne znaczenie.",
             hint_en="Words close in space = similar meaning.",
@@ -44,7 +44,7 @@ def build_session() -> list[Mission]:
         Mission(
             type="neighbors",
             target="mecz",
-            answers=["druzyna", "zwyciestwo", "tenis"],
+            answers=[k for k, _ in SIMILARITIES["mecz"][:3]],
             distractors=[],
             hint_pl="Na granicy klastra — szukaj slow w podobnym kontekscie uzycia.",
             hint_en="Near a cluster boundary — look for words used in similar contexts.",

@@ -330,7 +330,7 @@ class PhaseMissionScene(Scene):
             wd = WORDS[key]
             cl_color = CLUSTERS[wd["cluster"]]["color"]
             is_selected = key in self._selected
-            is_target   = key == target_key
+            is_target   = key == target_key and m.type != "bridge"
             is_hover    = key == self._hover
             is_active   = key in active
 
