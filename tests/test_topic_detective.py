@@ -135,3 +135,32 @@ def test_phase_mission_intruder_renders():
     surf = pygame.Surface((1024, 720))
     assert not scene.is_done()
     scene.draw(surf)
+
+
+def test_phase_result_renders():
+    import pygame; pygame.init()
+    from cognitive_data_arcade.games.topic_detective.phase_result import PhaseResultScene
+    results = [
+        {"type": "name_topic", "correct": True,  "score": 15},
+        {"type": "name_topic", "correct": False, "score": 0},
+        {"type": "name_topic", "correct": True,  "score": 15},
+        {"type": "assign_doc", "correct": True,  "score": 20},
+        {"type": "assign_doc", "correct": False, "score": 0},
+        {"type": "assign_doc", "correct": True,  "score": 20},
+        {"type": "intruder",   "correct": True,  "score": 25},
+        {"type": "intruder",   "correct": False, "score": 0},
+    ]
+    scene = PhaseResultScene(session_score=95, round_results=results)
+    surf = pygame.Surface((1024, 720))
+    assert not scene.is_done()
+    scene.draw(surf)
+    assert scene.next_scene() is None
+
+
+def test_lesson_25_content_structure():
+    from cognitive_data_arcade.lessons.lesson_25 import CONTENT
+    for lang in ("pl", "en"):
+        assert lang in CONTENT
+        for key in ("theory", "notes", "tasks"):
+            assert key in CONTENT[lang], f"missing {key} in {lang}"
+            assert len(CONTENT[lang][key]) >= 2, f"{lang}.{key} has too few items"
