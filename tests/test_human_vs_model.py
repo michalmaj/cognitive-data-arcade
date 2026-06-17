@@ -96,3 +96,58 @@ def test_phase_intro_advances_on_space():
         scene.handle_event(ev)
     assert scene.is_done()
     assert scene.next_scene() is not None
+
+
+def test_phase_classify_renders():
+    import pygame; pygame.init()
+    from cognitive_data_arcade.games.human_vs_model.challenge_data import CLASSIFY_CHALLENGES
+    from cognitive_data_arcade.games.human_vs_model.phase_classify import PhaseClassifyScene
+    scene = PhaseClassifyScene(CLASSIFY_CHALLENGES, 0, 0, 0)
+    surf = pygame.Surface((1024, 720))
+    assert not scene.is_done()
+    scene.draw(surf)
+
+
+def test_phase_classify_submit_correct():
+    import pygame; pygame.init()
+    from cognitive_data_arcade.games.human_vs_model.challenge_data import CLASSIFY_CHALLENGES
+    from cognitive_data_arcade.games.human_vs_model.phase_classify import PhaseClassifyScene
+    scene = PhaseClassifyScene(CLASSIFY_CHALLENGES, 0, 0, 0)
+    # CLASSIFY_CHALLENGES[0].answer = "Pozytywny" at index 0 in options
+    # Option buttons: y_start = 44+200=244, each h=42, step=52
+    # Button 0 center: y = 244 + 0*52 + 21 = 265
+    correct = CLASSIFY_CHALLENGES[0].answer
+    opt_idx = CLASSIFY_CHALLENGES[0].options.index(correct)
+    click_y = 44 + 200 + opt_idx * 52 + 21
+    ev = pygame.event.Event(pygame.MOUSEBUTTONDOWN, {"button": 1, "pos": (256, click_y)})
+    scene.handle_event(ev)
+    scene.update(2000.0)  # skip AI thinking (> 1500ms)
+    space = pygame.event.Event(pygame.KEYDOWN, {
+        "key": pygame.K_SPACE, "mod": 0, "unicode": " ", "scancode": 0
+    })
+    scene.handle_event(space)
+    assert scene.is_done()
+    nxt = scene.next_scene()
+    assert nxt is not None
+    assert nxt._session_score >= 10
+
+
+def test_phase_classify_beat_ai_bonus():
+    import pygame; pygame.init()
+    from cognitive_data_arcade.games.human_vs_model.challenge_data import CLASSIFY_CHALLENGES
+    from cognitive_data_arcade.games.human_vs_model.phase_classify import PhaseClassifyScene
+    # CLASSIFY_CHALLENGES[0]: model_answer="Negatywny" != answer="Pozytywny" -> AI fails
+    scene = PhaseClassifyScene(CLASSIFY_CHALLENGES, 0, 0, 0)
+    correct = CLASSIFY_CHALLENGES[0].answer
+    opt_idx = CLASSIFY_CHALLENGES[0].options.index(correct)
+    click_y = 44 + 200 + opt_idx * 52 + 21
+    ev = pygame.event.Event(pygame.MOUSEBUTTONDOWN, {"button": 1, "pos": (256, click_y)})
+    scene.handle_event(ev)
+    scene.update(2000.0)
+    space = pygame.event.Event(pygame.KEYDOWN, {
+        "key": pygame.K_SPACE, "mod": 0, "unicode": " ", "scancode": 0
+    })
+    scene.handle_event(space)
+    assert scene.is_done()
+    nxt = scene.next_scene()
+    assert nxt._session_score >= 15  # base 10 + beat-AI bonus 5
