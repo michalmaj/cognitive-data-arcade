@@ -164,3 +164,9 @@ def test_lesson_25_content_structure():
         for key in ("theory", "notes", "tasks"):
             assert key in CONTENT[lang], f"missing {key} in {lang}"
             assert len(CONTENT[lang][key]) >= 2, f"{lang}.{key} has too few items"
+
+
+def test_menu_has_lesson_25():
+    from cognitive_data_arcade.ui.menu import _LESSONS
+    nums = [n for n, _ in _LESSONS]
+    assert 25 in nums
