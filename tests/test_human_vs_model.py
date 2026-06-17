@@ -151,3 +151,32 @@ def test_phase_classify_beat_ai_bonus():
     assert scene.is_done()
     nxt = scene.next_scene()
     assert nxt._session_score >= 15  # base 10 + beat-AI bonus 5
+
+
+def test_phase_detect_renders():
+    import pygame; pygame.init()
+    from cognitive_data_arcade.games.human_vs_model.challenge_data import DETECT_CHALLENGES
+    from cognitive_data_arcade.games.human_vs_model.phase_detect import PhaseDetectScene
+    scene = PhaseDetectScene(DETECT_CHALLENGES, 0, 0, 0)
+    surf = pygame.Surface((1024, 720))
+    assert not scene.is_done()
+    scene.draw(surf)
+
+
+def test_phase_detect_submit_correct():
+    import pygame; pygame.init()
+    from cognitive_data_arcade.games.human_vs_model.challenge_data import DETECT_CHALLENGES
+    from cognitive_data_arcade.games.human_vs_model.phase_detect import PhaseDetectScene
+    scene = PhaseDetectScene(DETECT_CHALLENGES, 0, 0, 0)
+    # "Lewy" button center: x=133, y=406
+    ev = pygame.event.Event(pygame.MOUSEBUTTONDOWN, {"button": 1, "pos": (133, 406)})
+    scene.handle_event(ev)
+    scene.update(2000.0)   # skip AI thinking
+    space = pygame.event.Event(pygame.KEYDOWN, {
+        "key": pygame.K_SPACE, "mod": 0, "unicode": " ", "scancode": 0
+    })
+    scene.handle_event(space)
+    assert scene.is_done()
+    nxt = scene.next_scene()
+    assert nxt is not None
+    assert nxt._session_score >= 30  # base 20 + beat-AI bonus 10
