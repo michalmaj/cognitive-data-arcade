@@ -54,3 +54,22 @@ def test_difficulty_values():
         assert c.difficulty == 2
     for c in COMPLETE_CHALLENGES:
         assert c.difficulty == 3
+
+
+def test_game_scene_instantiates():
+    import pygame; pygame.init()
+    from cognitive_data_arcade.games.human_vs_model.game import HumanVsModelScene
+    scene = HumanVsModelScene()
+    assert not scene.is_done()
+    assert scene.next_scene() is None
+
+
+def test_get_game_info_bilingual():
+    from cognitive_data_arcade.engine.i18n import get_strings
+    from cognitive_data_arcade.games.human_vs_model.info import get_game_info
+    for lang in ("pl", "en"):
+        strings = get_strings(lang)
+        info = get_game_info(strings)
+        assert info.title
+        assert len(info.description_lines) >= 2
+        assert len(info.key_bindings) >= 2
