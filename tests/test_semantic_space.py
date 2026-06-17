@@ -171,3 +171,12 @@ def test_phase_result_renders():
     assert not scene.is_done()
     scene.draw(surf)   # must not raise
     assert scene.next_scene() is None
+
+
+def test_lesson_24_content_structure():
+    from cognitive_data_arcade.lessons.lesson_24 import CONTENT
+    for lang in ("pl", "en"):
+        assert lang in CONTENT
+        for key in ("theory", "notes", "tasks"):
+            assert key in CONTENT[lang]
+            assert len(CONTENT[lang][key]) >= 2
