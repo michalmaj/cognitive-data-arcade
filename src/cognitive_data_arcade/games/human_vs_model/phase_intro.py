@@ -88,7 +88,7 @@ class PhaseIntroScene(Scene):
             if line:
                 surf = get_font(16).render(line, True, _DIM)
                 surface.blit(surf, (_W // 2 - surf.get_width() // 2, y))
-            y += 40
+            y += 38
 
         for i in range(len(_SLIDES)):
             col = _GOLD if i == self._slide else (50, 50, 80)
