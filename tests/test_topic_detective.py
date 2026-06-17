@@ -99,3 +99,39 @@ def test_phase_intro_advances_on_space():
         scene.handle_event(ev)
     assert scene.is_done()
     assert scene.next_scene() is not None
+
+
+def test_phase_mission_name_topic_renders():
+    import pygame; pygame.init()
+    from cognitive_data_arcade.games.topic_detective.missions import build_session
+    from cognitive_data_arcade.games.topic_detective.phase_mission import PhaseMissionScene
+    session = build_session()
+    # Mission 0 is name_topic
+    scene = PhaseMissionScene(missions=session, round_idx=0, session_score=0, round_results=[])
+    surf = pygame.Surface((1024, 720))
+    assert not scene.is_done()
+    scene.draw(surf)
+
+
+def test_phase_mission_assign_doc_renders():
+    import pygame; pygame.init()
+    from cognitive_data_arcade.games.topic_detective.missions import build_session
+    from cognitive_data_arcade.games.topic_detective.phase_mission import PhaseMissionScene
+    session = build_session()
+    # Mission 3 is assign_doc
+    scene = PhaseMissionScene(missions=session, round_idx=3, session_score=0, round_results=[])
+    surf = pygame.Surface((1024, 720))
+    assert not scene.is_done()
+    scene.draw(surf)
+
+
+def test_phase_mission_intruder_renders():
+    import pygame; pygame.init()
+    from cognitive_data_arcade.games.topic_detective.missions import build_session
+    from cognitive_data_arcade.games.topic_detective.phase_mission import PhaseMissionScene
+    session = build_session()
+    # Mission 6 is intruder
+    scene = PhaseMissionScene(missions=session, round_idx=6, session_score=0, round_results=[])
+    surf = pygame.Surface((1024, 720))
+    assert not scene.is_done()
+    scene.draw(surf)
