@@ -221,3 +221,13 @@ def test_phase_complete_submit_correct():
     nxt = scene.next_scene()
     assert nxt is not None
     assert nxt._session_score >= 30  # base score; could be 45 if beat-AI
+
+
+def test_phase_result_renders():
+    import pygame; pygame.init()
+    from cognitive_data_arcade.games.human_vs_model.phase_result import PhaseResultScene
+    scene = PhaseResultScene(session_score=270, beat_ai_count=9)
+    surf = pygame.Surface((1024, 720))
+    assert not scene.is_done()
+    scene.draw(surf)
+    assert scene._session_score == 270
