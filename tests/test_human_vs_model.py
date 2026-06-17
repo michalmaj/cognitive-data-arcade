@@ -231,3 +231,13 @@ def test_phase_result_renders():
     assert not scene.is_done()
     scene.draw(surf)
     assert scene._session_score == 270
+
+
+def test_menu_has_lesson_26():
+    import os
+    os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
+    os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
+    import pygame; pygame.init()
+    from cognitive_data_arcade.ui.menu import _LESSONS
+    lesson_nums = [n for n, _ in _LESSONS]
+    assert 26 in lesson_nums

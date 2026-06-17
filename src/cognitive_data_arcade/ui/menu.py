@@ -37,6 +37,7 @@ _LESSONS = [
     (23, "Emotion Classifier"),
     (24, "Semantic Space Explorer"),
     (25, "Topic Detective"),
+    (26, "Human vs Model"),
 ]
 
 _BG = (26, 26, 46)
@@ -205,6 +206,8 @@ class LessonMenuScene(Scene):
             self._launch_semantic_space()
         elif lesson_num == 25:
             self._launch_topic_detective()
+        elif lesson_num == 26:
+            self._launch_human_vs_model()
         elif lesson_num == 6:
             self._launch_eda()
         elif lesson_num == 7:
@@ -328,6 +331,8 @@ class LessonMenuScene(Scene):
             return self._make_semantic_space
         if lesson_num == 25:
             return self._make_topic_detective
+        if lesson_num == 26:
+            return self._make_human_vs_model
         return None
 
     def _confirm_popup(self) -> None:
@@ -661,6 +666,19 @@ class LessonMenuScene(Scene):
         inner = TopicDetectiveScene()
         game_info = get_game_info(self._strings)
         return PausableGame(inner, game_info, self._make_topic_detective,
+                            self._strings, self._pm)
+
+    def _launch_human_vs_model(self) -> None:
+        self._next = self._make_human_vs_model()
+        self._done = True
+
+    def _make_human_vs_model(self) -> Scene:
+        from cognitive_data_arcade.engine.pause import PausableGame
+        from cognitive_data_arcade.games.human_vs_model.game import HumanVsModelScene
+        from cognitive_data_arcade.games.human_vs_model.info import get_game_info
+        inner = HumanVsModelScene()
+        game_info = get_game_info(self._strings)
+        return PausableGame(inner, game_info, self._make_human_vs_model,
                             self._strings, self._pm)
 
     def _launch_semantic_space(self) -> None:
