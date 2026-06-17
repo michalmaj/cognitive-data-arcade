@@ -47,7 +47,7 @@ TOPICS: dict[str, dict] = {
         "color": (155, 89, 182),
         "words": [
             "komputer", "algorytm", "siec", "dane", "program",
-            "sztuczna", "model", "baza", "interfejs", "chmura",
+            "serwer", "model", "baza", "interfejs", "chmura",
             "robot", "sensor",
         ],
     },

@@ -21,7 +21,7 @@ def test_documents_weights_sum_to_one():
 def test_documents_dominant_is_max_weight():
     from cognitive_data_arcade.games.topic_detective.topic_data import DOCUMENTS
     for i, doc in enumerate(DOCUMENTS):
-        max_key = max(doc["weights"], key=doc["weights"].__getitem__)
+        max_key = max(doc["weights"], key=lambda k: doc["weights"][k])
         assert doc["dominant"] == max_key, (
             f"doc {i}: dominant={doc['dominant']} but max weight is {max_key}"
         )
@@ -39,3 +39,15 @@ def test_intruder_not_in_topic_words():
 def test_intruder_sets_count():
     from cognitive_data_arcade.games.topic_detective.topic_data import INTRUDER_SETS
     assert len(INTRUDER_SETS) == 8
+
+
+def test_intruder_set_words_length():
+    from cognitive_data_arcade.games.topic_detective.topic_data import INTRUDER_SETS
+    for i, s in enumerate(INTRUDER_SETS):
+        assert len(s["words"]) == 8, f"intruder set {i} has {len(s['words'])} words, expected 8"
+
+
+def test_data_counts():
+    from cognitive_data_arcade.games.topic_detective.topic_data import DOCUMENTS, TOPICS
+    assert len(TOPICS) == 5
+    assert len(DOCUMENTS) == 15
