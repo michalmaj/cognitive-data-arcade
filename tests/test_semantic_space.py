@@ -122,3 +122,36 @@ def test_phase_intro_advances_on_space():
         scene.handle_event(ev)
     assert scene.is_done()
     assert scene.next_scene() is not None
+
+
+def test_phase_mission_renders():
+    import pygame; pygame.init()
+    from cognitive_data_arcade.games.semantic_space.missions import build_session
+    from cognitive_data_arcade.games.semantic_space.phase_mission import PhaseMissionScene
+    session = build_session()
+    scene = PhaseMissionScene(missions=session, round_idx=0, session_score=0, round_results=[])
+    surf = pygame.Surface((1024, 720))
+    assert not scene.is_done()
+    scene.draw(surf)   # must not raise
+
+
+def test_phase_mission_space_no_submit_when_empty():
+    import pygame; pygame.init()
+    from cognitive_data_arcade.games.semantic_space.missions import build_session
+    from cognitive_data_arcade.games.semantic_space.phase_mission import PhaseMissionScene
+    session = build_session()
+    scene = PhaseMissionScene(missions=session, round_idx=0, session_score=0, round_results=[])
+    ev = pygame.event.Event(pygame.KEYDOWN, {"key": pygame.K_SPACE, "mod": 0, "unicode": " ", "scancode": 0})
+    scene.handle_event(ev)
+    assert not scene.is_done()   # neighbors needs 3 selected first
+
+
+def test_phase_mission_analogy_scene_renders():
+    import pygame; pygame.init()
+    from cognitive_data_arcade.games.semantic_space.missions import build_session
+    from cognitive_data_arcade.games.semantic_space.phase_mission import PhaseMissionScene
+    session = build_session()
+    # Mission 6 (idx=6) is analogy type
+    scene = PhaseMissionScene(missions=session, round_idx=6, session_score=0, round_results=[])
+    surf = pygame.Surface((1024, 720))
+    scene.draw(surf)   # must not raise
