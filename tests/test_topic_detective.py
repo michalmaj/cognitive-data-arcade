@@ -69,8 +69,4 @@ def test_build_session_order():
 def test_build_session_difficulty_ascending():
     from cognitive_data_arcade.games.topic_detective.missions import build_session
     session = build_session()
-    assert session[0].difficulty == 1
-    assert session[1].difficulty == 1
-    assert session[2].difficulty == 2
-    assert session[6].difficulty == 2
-    assert session[7].difficulty == 3
+    assert [m.difficulty for m in session] == [1, 1, 2, 1, 2, 2, 2, 3]
