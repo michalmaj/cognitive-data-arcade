@@ -155,3 +155,19 @@ def test_phase_mission_analogy_scene_renders():
     scene = PhaseMissionScene(missions=session, round_idx=6, session_score=0, round_results=[])
     surf = pygame.Surface((1024, 720))
     scene.draw(surf)   # must not raise
+
+
+def test_phase_result_renders():
+    import pygame; pygame.init()
+    from cognitive_data_arcade.games.semantic_space.phase_result import PhaseResultScene
+    results = [
+        {"type": "neighbors",   "correct": True,  "score": 30},
+        {"type": "odd_one_out", "correct": False, "score": 0},
+        {"type": "bridge",      "correct": True,  "score": 25},
+        {"type": "analogy",     "correct": True,  "score": 30},
+    ]
+    scene = PhaseResultScene(session_score=85, round_results=results)
+    surf = pygame.Surface((1024, 720))
+    assert not scene.is_done()
+    scene.draw(surf)   # must not raise
+    assert scene.next_scene() is None
