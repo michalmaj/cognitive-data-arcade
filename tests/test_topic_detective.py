@@ -78,3 +78,24 @@ def test_game_scene_instantiates():
     scene = TopicDetectiveScene()
     assert not scene.is_done()
     assert scene.next_scene() is None
+
+
+def test_phase_intro_renders():
+    import pygame; pygame.init()
+    from cognitive_data_arcade.games.topic_detective.phase_intro import PhaseIntroScene
+    scene = PhaseIntroScene()
+    surf = pygame.Surface((1024, 720))
+    assert not scene.is_done()
+    scene.draw(surf)
+    assert scene.next_scene() is None
+
+
+def test_phase_intro_advances_on_space():
+    import pygame; pygame.init()
+    from cognitive_data_arcade.games.topic_detective.phase_intro import PhaseIntroScene
+    scene = PhaseIntroScene()
+    for _ in range(3):
+        ev = pygame.event.Event(pygame.KEYDOWN, {"key": pygame.K_SPACE, "mod": 0, "unicode": " ", "scancode": 0})
+        scene.handle_event(ev)
+    assert scene.is_done()
+    assert scene.next_scene() is not None
