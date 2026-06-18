@@ -36,7 +36,7 @@ CONTENT: dict[str, dict[str, list[str]]] = {
             "i rundzie 3 (siec bezskalowa). "
             "Dlaczego asymetria spreader/fact-checker rosnie razem z 'bezskalowoscia'?",
             "Pomysl o realnym przykladzie moderowania huba: "
-            "usuwanie kont influencerow, ograniczanie zasięgu postow, "
+            "usuwanie kont influencerow, ograniczanie zasiegu postow, "
             "etykiety fact-checkowe na tresciach o duzym zasiegu. "
             "Co mowilyby dane o efektywnosci kazdej z tych metod?",
             "Policz, ile klikniec potrzebal Spreader, a ile Fact-Checker, "
