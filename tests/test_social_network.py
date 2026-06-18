@@ -54,3 +54,18 @@ def test_hub_node_max_degree():
     nodes = [Node(x=0, y=0, degree=1), Node(x=1, y=0, degree=4), Node(x=2, y=0, degree=2)]
     g = Graph(nodes=nodes, edges=[])
     assert hub_node_index(g) == 1
+
+
+def test_game_scene_instantiates():
+    from cognitive_data_arcade.games.social_network.game import SocialNetworkScene
+    scene = SocialNetworkScene()
+    assert scene is not None
+
+
+def test_game_renders():
+    import pygame
+    from cognitive_data_arcade.games.social_network.game import SocialNetworkScene
+    pygame.display.init()
+    surface = pygame.Surface((1024, 720))
+    scene = SocialNetworkScene()
+    scene.draw(surface)  # must not raise
