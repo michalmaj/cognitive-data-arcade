@@ -33,3 +33,22 @@ def test_network_reproducible():
     g1 = build_graph(ROUNDS[0])
     g2 = build_graph(ROUNDS[0])
     assert g1.edges == g2.edges
+
+
+def test_game_scene_instantiates():
+    import pygame
+    pygame.init()
+    from cognitive_data_arcade.games.misinformation.game import MisinformationScene
+    scene = MisinformationScene()
+    assert scene is not None
+    pygame.quit()
+
+
+def test_game_renders():
+    import pygame
+    pygame.init()
+    surface = pygame.Surface((1024, 720))
+    from cognitive_data_arcade.games.misinformation.game import MisinformationScene
+    scene = MisinformationScene()
+    scene.draw(surface)  # must not raise
+    pygame.quit()
