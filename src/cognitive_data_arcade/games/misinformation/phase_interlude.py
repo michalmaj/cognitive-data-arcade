@@ -9,7 +9,6 @@ from cognitive_data_arcade.games.misinformation.networks import ROUNDS
 
 _W, _H = 1024, 720
 _BG    = (12, 12, 20)
-_AUTO_ADVANCE_MS = 2500.0
 
 
 class PhaseInterludeScene(Scene):
@@ -24,7 +23,6 @@ class PhaseInterludeScene(Scene):
         self._act = act
         self._act_score = act_score
         self._session_scores = list(session_scores)
-        self._timer = 0.0
         self._done = False
         self._next: Scene | None = None
 
@@ -33,11 +31,7 @@ class PhaseInterludeScene(Scene):
             self._advance()
 
     def update(self, dt_ms: float = 0.0) -> None:
-        if self._done:
-            return
-        self._timer += dt_ms
-        if self._timer >= _AUTO_ADVANCE_MS:
-            self._advance()
+        pass
 
     def _advance(self) -> None:
         if self._done:

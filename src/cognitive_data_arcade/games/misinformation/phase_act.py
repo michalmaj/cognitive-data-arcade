@@ -13,7 +13,7 @@ from cognitive_data_arcade.games.social_network.graph import hub_node_index, sir
 _W, _H   = 1024, 720
 _TOP_H   = 60
 _BOT_H   = 60
-_ACT_SECS = 30.0
+_ACT_SECS = 60.0
 _SIR_MS  = 500.0
 _WIN_SPREAD  = 0.60
 _WIN_CONTAIN = 0.20
