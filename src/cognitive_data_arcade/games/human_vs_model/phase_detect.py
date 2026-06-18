@@ -177,15 +177,15 @@ class PhaseDetectScene(Scene):
         task_lbl = get_font(11).render("WYKRYJ TEKST CZLOWIEKA", True, _DIM)
         surface.blit(task_lbl, (16, _TOP_H + 34))
 
-        # Text boxes
-        box1_rect = pygame.Rect(16, 74, 480, 120)
-        box2_rect = pygame.Rect(16, 204, 480, 120)
+        # Text boxes — start below header area (TY + line + task label ends ~y=92)
+        box1_rect = pygame.Rect(16, 110, 480, 110)
+        box2_rect = pygame.Rect(16, 240, 480, 110)
 
         # Labels above boxes
         lbl1 = get_font(11).render("Tekst 1:", True, _DIM)
-        surface.blit(lbl1, (16, 58))
+        surface.blit(lbl1, (16, 96))
         lbl2 = get_font(11).render("Tekst 2:", True, _DIM)
-        surface.blit(lbl2, (16, 188))
+        surface.blit(lbl2, (16, 226))
 
         # Draw box borders
         pygame.draw.rect(surface, _GREY, box1_rect, 1)
