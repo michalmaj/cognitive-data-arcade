@@ -69,3 +69,35 @@ def test_game_renders():
     surface = pygame.Surface((1024, 720))
     scene = SocialNetworkScene()
     scene.draw(surface)  # must not raise
+
+
+def test_add_node_limit():
+    import pygame
+    from cognitive_data_arcade.games.social_network.game import SocialNetworkScene
+    scene = SocialNetworkScene()
+    # default mode is "add_node"; fire 35 clicks inside left panel area
+    for i in range(35):
+        x = 50 + (i % 10) * 30
+        y = 100 + (i // 10) * 30
+        event = pygame.event.Event(pygame.MOUSEBUTTONDOWN, {"button": 1, "pos": (x, y)})
+        scene.handle_event(event)
+    assert len(scene._left.nodes) <= 30
+
+
+def test_add_edge_no_duplicate():
+    import pygame
+    from cognitive_data_arcade.games.social_network.game import SocialNetworkScene
+    scene = SocialNetworkScene()
+    # Add 2 nodes at known positions
+    e1 = pygame.event.Event(pygame.MOUSEBUTTONDOWN, {"button": 1, "pos": (100, 150)})
+    e2 = pygame.event.Event(pygame.MOUSEBUTTONDOWN, {"button": 1, "pos": (200, 150)})
+    scene.handle_event(e1)
+    scene.handle_event(e2)
+    assert len(scene._left.nodes) == 2
+    # Switch to add_edge mode directly (white-box)
+    scene._mode = "add_edge"
+    # Try to create the same edge twice
+    for _ in range(2):
+        scene.handle_event(e1)  # select node 0
+        scene.handle_event(e2)  # select node 1 -> create/attempt edge
+    assert len(scene._left.edges) == 1
