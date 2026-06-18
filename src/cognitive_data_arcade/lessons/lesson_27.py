@@ -30,7 +30,7 @@ CONTENT: dict[str, dict[str, list[str]]] = {
         "tasks": [
             "Zbuduj siec z jednym centralnym hubem (gwiazda) i uruchom spread od huba. "
             "Potem zbuduj lancuch (kazdy wezel polaczony tylko z nastepnym) i uruchom od peryferium. "
-            "Porownaj szybkosc rozprzestrzeniania -- co decyduje o rozznicy?",
+            "Porownaj szybkosc rozprzestrzeniania -- co decyduje o roznicy?",
             "Wygeneruj siec Random i Scale-free dla tej samej liczby wezlow. "
             "Uruchom spread od huba na obu jednoczesnie. "
             "Ktora epidemia osiaga szczyt szybciej? Dlaczego?",
