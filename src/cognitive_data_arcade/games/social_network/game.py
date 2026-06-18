@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 import math
 
 import pygame
@@ -221,22 +222,67 @@ class SocialNetworkScene(Scene):
         self._max_i_right = 0.0
 
     # ------------------------------------------------------------------
-    # Spread helpers — stubs, implemented in Task 4
+    # Spread helpers
 
     def _start_spread(self, from_hub: bool) -> None:
-        pass
+        if not self._left.nodes:
+            return
+        # Reset left network nodes to S, set patient zero
+        self._left = copy.deepcopy(self._left)
+        for nd in self._left.nodes:
+            nd.state = "S"
+        idx_l = hub_node_index(self._left) if from_hub else periphery_node_index(self._left)
+        self._left.nodes[idx_l].state = "I"
+        # Reset right network nodes to S, set patient zero
+        if self._right is not None:
+            self._right = copy.deepcopy(self._right)
+            for nd in self._right.nodes:
+                nd.state = "S"
+            idx_r = hub_node_index(self._right) if from_hub else periphery_node_index(self._right)
+            self._right.nodes[idx_r].state = "I"
+        self._step_count = 0
+        self._max_i_left = 0.0
+        self._max_i_right = 0.0
+        self._auto_play = False
+        self._sir_timer = 0.0
+        self._state = "spread"
 
     def _do_sir_step(self) -> None:
-        pass
+        self._left = sir_step(self._left, self._p_infect, _P_RECOVER)
+        self._step_count += 1
+        n_left = len(self._left.nodes) or 1
+        i_frac_left = sum(1 for nd in self._left.nodes if nd.state == "I") / n_left * 100
+        if i_frac_left > self._max_i_left:
+            self._max_i_left = i_frac_left
+        if self._right is not None:
+            self._right = sir_step(self._right, self._p_infect, _P_RECOVER)
+            n_right = len(self._right.nodes) or 1
+            i_frac_right = sum(1 for nd in self._right.nodes if nd.state == "I") / n_right * 100
+            if i_frac_right > self._max_i_right:
+                self._max_i_right = i_frac_right
 
     def _reset_spread(self) -> None:
-        pass
+        for nd in self._left.nodes:
+            nd.state = "S"
+        if self._right is not None:
+            for nd in self._right.nodes:
+                nd.state = "S"
+        self._step_count = 0
+        self._max_i_left = 0.0
+        self._max_i_right = 0.0
+        self._auto_play = False
+        self._sir_timer = 0.0
+        self._state = "build"
 
     # ------------------------------------------------------------------
     # Update
 
     def update(self, dt_ms: float = 0.0) -> None:
-        pass  # implemented in Task 4
+        if self._state == "spread" and self._auto_play:
+            self._sir_timer += dt_ms
+            if self._sir_timer >= _SIR_TICK_MS:
+                self._sir_timer -= _SIR_TICK_MS
+                self._do_sir_step()
 
     # ------------------------------------------------------------------
     # Drawing
