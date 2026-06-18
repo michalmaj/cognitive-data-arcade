@@ -101,3 +101,9 @@ def test_add_edge_no_duplicate():
         scene.handle_event(e1)  # select node 0
         scene.handle_event(e2)  # select node 1 -> create/attempt edge
     assert len(scene._left.edges) == 1
+
+
+def test_menu_has_lesson_27():
+    from cognitive_data_arcade.ui.menu import _LESSONS
+    lesson_nums = [num for num, _ in _LESSONS]
+    assert 27 in lesson_nums
