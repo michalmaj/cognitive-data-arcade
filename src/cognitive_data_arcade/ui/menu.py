@@ -39,6 +39,7 @@ _LESSONS = [
     (25, "Topic Detective"),
     (26, "Human vs Model"),
     (27, "Social Network Simulator"),
+    (28, "Misinformation Spread"),
 ]
 
 _BG = (26, 26, 46)
@@ -211,6 +212,8 @@ class LessonMenuScene(Scene):
             self._launch_human_vs_model()
         elif lesson_num == 27:
             self._launch_social_network()
+        elif lesson_num == 28:
+            self._launch_misinformation()
         elif lesson_num == 6:
             self._launch_eda()
         elif lesson_num == 7:
@@ -338,6 +341,8 @@ class LessonMenuScene(Scene):
             return self._make_human_vs_model
         if lesson_num == 27:
             return self._make_social_network
+        if lesson_num == 28:
+            return self._make_misinformation
         return None
 
     def _confirm_popup(self) -> None:
@@ -697,6 +702,19 @@ class LessonMenuScene(Scene):
         inner = SocialNetworkScene()
         game_info = get_game_info(self._strings)
         return PausableGame(inner, game_info, self._make_social_network,
+                            self._strings, self._pm)
+
+    def _launch_misinformation(self) -> None:
+        self._next = self._make_misinformation()
+        self._done = True
+
+    def _make_misinformation(self) -> Scene:
+        from cognitive_data_arcade.engine.pause import PausableGame
+        from cognitive_data_arcade.games.misinformation.game import MisinformationScene
+        from cognitive_data_arcade.games.misinformation.info import get_game_info
+        inner = MisinformationScene()
+        game_info = get_game_info(self._strings)
+        return PausableGame(inner, game_info, self._make_misinformation,
                             self._strings, self._pm)
 
     def _launch_semantic_space(self) -> None:
