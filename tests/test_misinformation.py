@@ -52,3 +52,9 @@ def test_game_renders():
     scene = MisinformationScene()
     scene.draw(surface)  # must not raise
     pygame.quit()
+
+
+def test_menu_has_lesson_28():
+    from cognitive_data_arcade.ui.menu import _LESSONS
+    nums = [n for n, _ in _LESSONS]
+    assert 28 in nums
