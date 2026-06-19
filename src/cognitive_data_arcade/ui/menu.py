@@ -40,6 +40,7 @@ _LESSONS = [
     (26, "Human vs Model"),
     (27, "Social Network Simulator"),
     (28, "Misinformation Spread"),
+    (29, "Recommendation Bubble"),
 ]
 
 _BG = (26, 26, 46)
@@ -214,6 +215,8 @@ class LessonMenuScene(Scene):
             self._launch_social_network()
         elif lesson_num == 28:
             self._launch_misinformation()
+        elif lesson_num == 29:
+            self._launch_recommendation_bubble()
         elif lesson_num == 6:
             self._launch_eda()
         elif lesson_num == 7:
@@ -343,6 +346,8 @@ class LessonMenuScene(Scene):
             return self._make_social_network
         if lesson_num == 28:
             return self._make_misinformation
+        if lesson_num == 29:
+            return self._make_recommendation_bubble
         return None
 
     def _confirm_popup(self) -> None:
@@ -715,6 +720,19 @@ class LessonMenuScene(Scene):
         inner = MisinformationScene()
         game_info = get_game_info(self._strings)
         return PausableGame(inner, game_info, self._make_misinformation,
+                            self._strings, self._pm)
+
+    def _launch_recommendation_bubble(self) -> None:
+        self._next = self._make_recommendation_bubble()
+        self._done = True
+
+    def _make_recommendation_bubble(self) -> Scene:
+        from cognitive_data_arcade.engine.pause import PausableGame
+        from cognitive_data_arcade.games.recommendation_bubble.game import RecommendationBubbleScene
+        from cognitive_data_arcade.games.recommendation_bubble.info import get_game_info
+        inner = RecommendationBubbleScene()
+        game_info = get_game_info(self._strings)
+        return PausableGame(inner, game_info, self._make_recommendation_bubble,
                             self._strings, self._pm)
 
     def _launch_semantic_space(self) -> None:

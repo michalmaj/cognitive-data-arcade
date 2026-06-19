@@ -307,3 +307,9 @@ def test_lesson_29_structure():
         assert len(CONTENT[lang]["theory"]) == 4
         assert len(CONTENT[lang]["notes"]) == 2
         assert len(CONTENT[lang]["tasks"]) == 3
+
+
+def test_menu_has_lesson_29():
+    from cognitive_data_arcade.ui.menu import _LESSONS
+    nums = [n for n, _ in _LESSONS]
+    assert 29 in nums
