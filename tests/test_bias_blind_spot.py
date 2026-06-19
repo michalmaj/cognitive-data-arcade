@@ -125,3 +125,24 @@ def test_phase_regulator_renders():
     scene.draw(surface)  # must not raise
     assert not scene.is_done()
     pygame.quit()
+
+
+# ---------------------------------------------------------------------------
+# Task 7 — PhaseResultScene render smoke
+# ---------------------------------------------------------------------------
+
+def test_phase_result_renders():
+    pygame.init()
+    surface = pygame.Surface((1024, 720))
+    from cognitive_data_arcade.games.bias_blind_spot.game_state import GameState
+    from cognitive_data_arcade.games.bias_blind_spot.phase_result import PhaseResultScene
+    state = GameState()
+    state.act1_correct = True
+    state.bias_rounds = [21.0, 14.0, 9.0]
+    state.accuracy_rounds = [0.76, 0.71, 0.58]
+    state.score_engineer = 72
+    state.regulator_choice = "parity"
+    scene = PhaseResultScene(state)
+    scene.update(0)
+    scene.draw(surface)  # must not raise
+    pygame.quit()
