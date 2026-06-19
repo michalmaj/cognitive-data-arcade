@@ -148,3 +148,28 @@ def test_phase_user_timer_extends_when_too_few_clicks():
     scene.update(31_000.0)
     assert not scene.is_done()
     pygame.quit()
+
+
+def test_phase_interlude_space_advances():
+    import pygame
+    pygame.init()
+    from cognitive_data_arcade.games.recommendation_bubble.phase_interlude import PhaseInterludeScene
+    from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState
+    scene = PhaseInterludeScene(GameState(), next_act="curator")
+    assert not scene.is_done()
+    scene.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_SPACE))
+    assert scene.is_done()
+    assert scene.next_scene() is not None
+    pygame.quit()
+
+
+def test_phase_interlude_algo_next():
+    import pygame
+    pygame.init()
+    from cognitive_data_arcade.games.recommendation_bubble.phase_interlude import PhaseInterludeScene
+    from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState
+    scene = PhaseInterludeScene(GameState(), next_act="algo")
+    scene.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_SPACE))
+    from cognitive_data_arcade.games.recommendation_bubble.phase_algo import PhaseAlgoScene
+    assert isinstance(scene.next_scene(), PhaseAlgoScene)
+    pygame.quit()
