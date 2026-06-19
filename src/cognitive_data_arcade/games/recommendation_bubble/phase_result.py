@@ -82,7 +82,7 @@ class PhaseResultScene(Scene):
         from cognitive_data_arcade.games.recommendation_bubble.game_state import (
             generate_slots, curated_profile,
         )
-        slots = generate_slots(self._state.bubble, n=6, seed=1)
+        slots = self._state.curator_slots or generate_slots(self._state.bubble, n=6, seed=1)
         return curated_profile(slots)
 
     def _draw_bar_chart(

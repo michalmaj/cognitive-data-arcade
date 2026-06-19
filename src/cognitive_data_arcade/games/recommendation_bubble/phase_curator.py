@@ -84,6 +84,7 @@ class PhaseCuratorScene(Scene):
         d2 = diversity(cp)
         self._state.diversity_act2 = d2
         self._state.score_curator = int(d2 * 100)
+        self._state.curator_slots = list(self._slots)
         from cognitive_data_arcade.games.recommendation_bubble.phase_interlude import PhaseInterludeScene
         self._next = PhaseInterludeScene(self._state, next_act="algo")
         self._done = True

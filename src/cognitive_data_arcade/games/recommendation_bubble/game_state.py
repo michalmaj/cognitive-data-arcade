@@ -62,3 +62,4 @@ class GameState:
     diversity_act2: float = 0.0
     diversity_act3: float = 0.0
     algo_clicked_cats: list[str] = field(default_factory=list)
+    curator_slots: list[str] = field(default_factory=list)
