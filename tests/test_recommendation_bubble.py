@@ -110,3 +110,41 @@ def test_phase_intro_advances_on_keydown():
     assert scene.is_done()
     assert scene.next_scene() is not None
     pygame.quit()
+
+
+def test_phase_user_click_increments_category():
+    import pygame
+    pygame.init()
+    from cognitive_data_arcade.games.recommendation_bubble.phase_user import PhaseUserScene
+    from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState
+    scene = PhaseUserScene(GameState())
+    # click on first bar (SPORT row y=120..189)
+    scene.handle_event(pygame.event.Event(pygame.MOUSEBUTTONDOWN, button=1, pos=(512, 155)))
+    assert scene._clicks["SPORT"] == 1
+    pygame.quit()
+
+
+def test_phase_user_timer_expires_with_enough_clicks():
+    import pygame
+    pygame.init()
+    from cognitive_data_arcade.games.recommendation_bubble.phase_user import PhaseUserScene, _MIN_CLICKS
+    from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState
+    scene = PhaseUserScene(GameState())
+    for _ in range(_MIN_CLICKS):
+        scene._clicks["SPORT"] += 1
+    scene.update(35_000.0)  # 35s > 30s limit
+    assert scene.is_done()
+    assert scene.next_scene() is not None
+    pygame.quit()
+
+
+def test_phase_user_timer_extends_when_too_few_clicks():
+    import pygame
+    pygame.init()
+    from cognitive_data_arcade.games.recommendation_bubble.phase_user import PhaseUserScene
+    from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState
+    scene = PhaseUserScene(GameState())
+    # no clicks, advance past 30s — should NOT be done (extends timer)
+    scene.update(31_000.0)
+    assert not scene.is_done()
+    pygame.quit()
