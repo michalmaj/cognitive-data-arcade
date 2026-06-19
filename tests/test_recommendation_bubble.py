@@ -74,3 +74,15 @@ def test_game_state_defaults():
     assert abs(sum(gs.bubble.values()) - 1.0) < 1e-9
     assert gs.score_curator == 0
     assert gs.score_algo == 0
+    assert gs.diversity_act1 == 0.0
+    assert gs.diversity_act2 == 0.0
+    assert gs.diversity_act3 == 0.0
+    assert gs.algo_clicked_cats == []
+
+
+def test_engagement_values():
+    from cognitive_data_arcade.games.recommendation_bubble.game_state import (
+        ENGAGEMENT, CATEGORIES,
+    )
+    assert all(cat in ENGAGEMENT for cat in CATEGORIES)
+    assert ENGAGEMENT["SPORT"] == max(ENGAGEMENT.values())
