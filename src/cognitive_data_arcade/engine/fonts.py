@@ -33,10 +33,15 @@ _found_name: str | None = None
 def get_font(size: int) -> pygame.font.Font:
     """Return a font at *size* that can render Polish diacritics."""
     global _found_name
-    if size in _cache:
-        return _cache[size]
-
     pygame.font.init()
+    if size in _cache:
+        try:
+            _cache[size].size("a")
+            return _cache[size]
+        except Exception:
+            _cache.clear()
+            _found_name = None
+
     if _found_name is None:
         avail = _available()
         for candidate in _candidates_normalised():
@@ -51,6 +56,13 @@ def get_font(size: int) -> pygame.font.Font:
 
     _cache[size] = font
     return font
+
+
+def reset() -> None:
+    """Clear the font cache. Call after pygame.quit() to avoid dangling C pointers."""
+    global _found_name
+    _cache.clear()
+    _found_name = None
 
 
 def _candidates_normalised() -> list[str]:
