@@ -299,3 +299,11 @@ def test_game_renders_3_frames():
         scene.update(16.0)
         scene.draw(surface)
     pygame.quit()
+
+
+def test_lesson_29_structure():
+    from cognitive_data_arcade.lessons.lesson_29 import CONTENT
+    for lang in ("pl", "en"):
+        assert len(CONTENT[lang]["theory"]) == 4
+        assert len(CONTENT[lang]["notes"]) == 2
+        assert len(CONTENT[lang]["tasks"]) == 3
