@@ -61,3 +61,19 @@ def test_stars_formula():
     assert stars_from_score(45) == 2
     assert stars_from_score(44) == 1
     assert stars_from_score(0) == 1
+
+
+# ---------------------------------------------------------------------------
+# Task 2 — PhaseIntroScene render smoke
+# ---------------------------------------------------------------------------
+
+def test_phase_intro_renders():
+    pygame.init()
+    surface = pygame.Surface((1024, 720))
+    from cognitive_data_arcade.games.bias_blind_spot.game_state import GameState
+    from cognitive_data_arcade.games.bias_blind_spot.phase_intro import PhaseIntroScene
+    scene = PhaseIntroScene(GameState())
+    scene.update(0)
+    scene.draw(surface)  # must not raise
+    assert not scene.is_done()
+    pygame.quit()
