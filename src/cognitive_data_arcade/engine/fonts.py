@@ -28,15 +28,32 @@ def _available() -> frozenset[str]:
 
 _cache: dict[int, pygame.font.Font] = {}
 _found_name: str | None = None
+_pygame_initialized: bool = False
 
 
 def get_font(size: int) -> pygame.font.Font:
     """Return a font at *size* that can render Polish diacritics."""
-    global _found_name
+    global _found_name, _pygame_initialized
+
+    # Clear cache if pygame was quit and reinitialized
+    try:
+        if pygame.display.get_surface() is None and _pygame_initialized:
+            _cache.clear()
+    except:
+        pass
+
     if size in _cache:
-        return _cache[size]
+        try:
+            # Verify the font is still valid by checking its size
+            _cache[size].size(size)
+            return _cache[size]
+        except:
+            # Font is stale, clear the cache
+            _cache.clear()
 
     pygame.font.init()
+    _pygame_initialized = True
+
     if _found_name is None:
         avail = _available()
         for candidate in _candidates_normalised():

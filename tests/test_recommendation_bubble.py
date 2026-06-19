@@ -250,3 +250,31 @@ def test_phase_algo_score_stored_after_timeout():
     assert scene.is_done()
     assert scene._state.score_algo == scene._score
     pygame.quit()
+
+
+def test_phase_result_stars_formula():
+    import pygame
+    pygame.init()
+    from cognitive_data_arcade.games.recommendation_bubble.phase_result import PhaseResultScene
+    from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState
+    gs = GameState()
+    gs.score_curator = 70
+    assert PhaseResultScene(gs)._stars == 3
+    gs2 = GameState()
+    gs2.score_curator = 50
+    assert PhaseResultScene(gs2)._stars == 2
+    gs3 = GameState()
+    gs3.score_curator = 20
+    assert PhaseResultScene(gs3)._stars == 1
+    pygame.quit()
+
+
+def test_phase_result_renders():
+    import pygame
+    pygame.init()
+    from cognitive_data_arcade.games.recommendation_bubble.phase_result import PhaseResultScene
+    from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState
+    scene = PhaseResultScene(GameState())
+    surface = pygame.Surface((1024, 720))
+    scene.draw(surface)
+    pygame.quit()
