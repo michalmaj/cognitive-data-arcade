@@ -86,3 +86,27 @@ def test_engagement_values():
     )
     assert all(cat in ENGAGEMENT for cat in CATEGORIES)
     assert ENGAGEMENT["SPORT"] == max(ENGAGEMENT.values())
+
+
+def test_phase_intro_renders():
+    import pygame
+    pygame.init()
+    from cognitive_data_arcade.games.recommendation_bubble.phase_intro import PhaseIntroScene
+    from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState
+    scene = PhaseIntroScene(GameState())
+    surface = pygame.Surface((1024, 720))
+    scene.draw(surface)
+    pygame.quit()
+
+
+def test_phase_intro_advances_on_keydown():
+    import pygame
+    pygame.init()
+    from cognitive_data_arcade.games.recommendation_bubble.phase_intro import PhaseIntroScene
+    from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState
+    scene = PhaseIntroScene(GameState())
+    assert not scene.is_done()
+    scene.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_SPACE))
+    assert scene.is_done()
+    assert scene.next_scene() is not None
+    pygame.quit()
