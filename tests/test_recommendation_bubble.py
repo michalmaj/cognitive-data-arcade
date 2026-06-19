@@ -212,3 +212,41 @@ def test_phase_curator_score_stored_in_state():
     assert scene.is_done()
     assert scene._state.score_curator >= 0
     pygame.quit()
+
+
+def test_phase_algo_click_adds_engagement():
+    import pygame
+    pygame.init()
+    from cognitive_data_arcade.games.recommendation_bubble.phase_algo import PhaseAlgoScene
+    from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState, ENGAGEMENT
+    scene = PhaseAlgoScene(GameState())
+    # force first tile to SPORT for deterministic test
+    scene._displayed[0] = "SPORT"
+    rect = scene._tile_rect(0)
+    scene.handle_event(pygame.event.Event(pygame.MOUSEBUTTONDOWN, button=1, pos=rect.center))
+    assert scene._score == ENGAGEMENT["SPORT"]
+    pygame.quit()
+
+
+def test_phase_algo_tile_replaced_after_click():
+    import pygame
+    pygame.init()
+    from cognitive_data_arcade.games.recommendation_bubble.phase_algo import PhaseAlgoScene
+    from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState
+    scene = PhaseAlgoScene(GameState())
+    rect = scene._tile_rect(0)
+    scene.handle_event(pygame.event.Event(pygame.MOUSEBUTTONDOWN, button=1, pos=rect.center))
+    assert len(scene._displayed) == 6
+    pygame.quit()
+
+
+def test_phase_algo_score_stored_after_timeout():
+    import pygame
+    pygame.init()
+    from cognitive_data_arcade.games.recommendation_bubble.phase_algo import PhaseAlgoScene
+    from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState
+    scene = PhaseAlgoScene(GameState())
+    scene.update(35_000.0)
+    assert scene.is_done()
+    assert scene._state.score_algo == scene._score
+    pygame.quit()
