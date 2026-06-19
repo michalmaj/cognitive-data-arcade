@@ -93,3 +93,19 @@ def test_phase_applicant_renders():
     scene.draw(surface)  # must not raise
     assert not scene.is_done()
     pygame.quit()
+
+
+# ---------------------------------------------------------------------------
+# Task 5 — PhaseEngineerScene render smoke
+# ---------------------------------------------------------------------------
+
+def test_phase_engineer_renders():
+    pygame.init()
+    surface = pygame.Surface((1024, 720))
+    from cognitive_data_arcade.games.bias_blind_spot.game_state import GameState
+    from cognitive_data_arcade.games.bias_blind_spot.phase_engineer import PhaseEngineerScene
+    scene = PhaseEngineerScene(GameState())
+    scene.update(0)
+    scene.draw(surface)  # must not raise
+    assert not scene.is_done()
+    pygame.quit()
