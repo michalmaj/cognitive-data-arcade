@@ -173,3 +173,42 @@ def test_phase_interlude_algo_next():
     from cognitive_data_arcade.games.recommendation_bubble.phase_algo import PhaseAlgoScene
     assert isinstance(scene.next_scene(), PhaseAlgoScene)
     pygame.quit()
+
+
+def test_phase_curator_swap_decrements_counter():
+    import pygame
+    pygame.init()
+    from cognitive_data_arcade.games.recommendation_bubble.phase_curator import PhaseCuratorScene
+    from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState
+    scene = PhaseCuratorScene(GameState())
+    initial_swaps = scene._swaps_left
+    scene._selected_slot = 0
+    scene._do_swap("NAUKA")
+    assert scene._swaps_left == initial_swaps - 1
+    pygame.quit()
+
+
+def test_phase_curator_no_swap_when_exhausted():
+    import pygame
+    pygame.init()
+    from cognitive_data_arcade.games.recommendation_bubble.phase_curator import PhaseCuratorScene
+    from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState
+    scene = PhaseCuratorScene(GameState())
+    scene._swaps_left = 0
+    scene._selected_slot = 0
+    original = scene._slots[0]
+    scene._do_swap("NAUKA")
+    assert scene._slots[0] == original
+    pygame.quit()
+
+
+def test_phase_curator_score_stored_in_state():
+    import pygame
+    pygame.init()
+    from cognitive_data_arcade.games.recommendation_bubble.phase_curator import PhaseCuratorScene
+    from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState
+    scene = PhaseCuratorScene(GameState())
+    scene.update(50_000.0)  # 50s > 45s limit
+    assert scene.is_done()
+    assert scene._state.score_curator >= 0
+    pygame.quit()
