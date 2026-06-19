@@ -278,3 +278,24 @@ def test_phase_result_renders():
     surface = pygame.Surface((1024, 720))
     scene.draw(surface)
     pygame.quit()
+
+
+def test_game_scene_instantiates():
+    import pygame
+    pygame.init()
+    from cognitive_data_arcade.games.recommendation_bubble.game import RecommendationBubbleScene
+    scene = RecommendationBubbleScene()
+    assert scene is not None
+    pygame.quit()
+
+
+def test_game_renders_3_frames():
+    import pygame
+    pygame.init()
+    surface = pygame.Surface((1024, 720))
+    from cognitive_data_arcade.games.recommendation_bubble.game import RecommendationBubbleScene
+    scene = RecommendationBubbleScene()
+    for _ in range(3):
+        scene.update(16.0)
+        scene.draw(surface)
+    pygame.quit()
