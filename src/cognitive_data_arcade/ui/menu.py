@@ -11,57 +11,487 @@ from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.engine.scrollbar import ScrollBar
 from cognitive_data_arcade.profile.manager import ProfileManager
 
+# ── Layout ──────────────────────────────────────────────────────────────────
+_W, _H        = 1024, 640
+_TOPBAR_H     = 56
+_HINTBAR_H    = 28
+_SIDEBAR_W    = 340
+_SIDEBAR_H    = _H - _TOPBAR_H - _HINTBAR_H    # 556
+_PANEL_X      = _SIDEBAR_W + 1                  # 341
+_PANEL_W      = _W - _PANEL_X                   # 683
+_SB_TRACK_W   = 4
+_SB_X         = _SIDEBAR_W - _SB_TRACK_W - 2   # 334
+
+# ── Palette ─────────────────────────────────────────────────────────────────
+_C_BG          = (13, 15, 26)
+_C_SURFACE     = (22, 24, 40)
+_C_SURFACE2    = (30, 32, 56)
+_C_ACCENT      = (99, 102, 241)
+_C_ACCENT_LIGHT= (129, 140, 248)
+_C_ACCENT_BG   = (20, 22, 52)
+_C_HOVER_BG    = (19, 21, 34)
+_C_TEXT        = (240, 241, 255)
+_C_TEXT_DIM    = (90, 96, 144)
+_C_TEXT_DARK   = (61, 64, 96)
+_C_TEXT_XDARK  = (45, 48, 82)
+
+_TYPE_COLORS: dict[str, tuple[int, int, int]] = {
+    "arcade": _C_ACCENT,
+    "lab":    (34, 211, 238),
+    "puzzle": (251, 191, 36),
+}
+
+# ── Lesson catalogue ──────────────────────────────────────────────────────────
+_LESSON_DATA: list[dict] = [
+    # ── Module 1 ──
+    {
+        "num": 1, "name": "Big Data in Cognitive Science", "type": "lab",
+        "desc_pl": (
+            "Skąd pochodzi big data w nauce kognitywnej?\n"
+            "Odkryj, jak dane z tysięcy uczestników\n"
+            "rozkładają się i co nam o nich mówią."
+        ),
+        "desc_en": (
+            "Where does cognitive big data come from?\n"
+            "Explore how data from thousands of participants\n"
+            "distributes and what patterns it reveals."
+        ),
+    },
+    {
+        "num": 2, "name": "Reaction Time Lab", "type": "arcade",
+        "desc_pl": (
+            "Jak szybko reagujesz na bodziec wizualny?\n"
+            "Naciśnij SPACJĘ gdy zaświeci kółko — mierzysz\n"
+            "czas reakcji, kluczową zmienną w badaniach."
+        ),
+        "desc_en": (
+            "How fast do you react to a visual stimulus?\n"
+            "Press SPACE when the circle lights up and measure\n"
+            "reaction time, a key variable in research."
+        ),
+    },
+    {
+        "num": 3, "name": "Event Log Detective", "type": "puzzle",
+        "desc_pl": (
+            "Detektyw danych: zbadaj zdarzenia w logu\n"
+            "eksperymentu i wykryj co poszło nie tak.\n"
+            "Poznaj formaty danych w psychologii."
+        ),
+        "desc_en": (
+            "Data detective: investigate events in an\n"
+            "experiment log and find what went wrong.\n"
+            "Learn data formats used in psychology research."
+        ),
+    },
+    {
+        "num": 4, "name": "Data Quality Lab", "type": "lab",
+        "desc_pl": (
+            "Czy Twoje dane są gotowe do analizy?\n"
+            "Wykryj błędy, wartości odstające i braki\n"
+            "w surowym zbiorze danych z eksperymentu."
+        ),
+        "desc_en": (
+            "Are your data ready for analysis?\n"
+            "Detect errors, outliers and missing values\n"
+            "in a raw dataset from a psychology experiment."
+        ),
+    },
+    {
+        "num": 6, "name": "EDA Sandbox", "type": "lab",
+        "desc_pl": (
+            "Zanim uruchomisz model — poznaj swoje dane.\n"
+            "Eksploruj rozkłady, korelacje i wzorce\n"
+            "w interaktywnej piaskownicy EDA."
+        ),
+        "desc_en": (
+            "Before running a model — understand your data.\n"
+            "Explore distributions, correlations and patterns\n"
+            "in an interactive EDA sandbox."
+        ),
+    },
+    # ── Module 2 ──
+    {
+        "num": 7, "name": "Stroop Challenge", "type": "arcade",
+        "desc_pl": (
+            "Nazwij kolor tuszu — nie słowo!\n"
+            "Efekt Stroopa mierzy konflikt poznawczy\n"
+            "między automatycznym czytaniem a uwagą."
+        ),
+        "desc_en": (
+            "Name the ink colour — not the word!\n"
+            "The Stroop effect measures cognitive conflict\n"
+            "between automatic reading and attention."
+        ),
+    },
+    {
+        "num": 8, "name": "Flanker Arena", "type": "arcade",
+        "desc_pl": (
+            "Ignoruj otaczające strzałki, reaguj na środek.\n"
+            "Zadanie Eriksena testuje selektywną uwagę\n"
+            "i zdolność do ignorowania dystraktorów."
+        ),
+        "desc_en": (
+            "Ignore surrounding arrows, react to the centre.\n"
+            "The Eriksen Flanker tests selective attention\n"
+            "and the ability to suppress distractors."
+        ),
+    },
+    {
+        "num": 9, "name": "Go/No-Go Guard", "type": "arcade",
+        "desc_pl": (
+            "Reaguj na zielony sygnał, hamuj na czerwony.\n"
+            "Mierz czas reakcji i kontrolę impulsów —\n"
+            "kluczowe zmienne w badaniach nad uwagą."
+        ),
+        "desc_en": (
+            "React to green signals, stop for red ones.\n"
+            "Measure reaction time and impulse control —\n"
+            "key variables in attention and inhibition research."
+        ),
+    },
+    {
+        "num": 10, "name": "N-Back Memory Grid", "type": "arcade",
+        "desc_pl": (
+            "Czy ta figura pojawiała się N kroków temu?\n"
+            "N-Back obciąża pamięć roboczą i testuje\n"
+            "jej pojemność w czasie rzeczywistym."
+        ),
+        "desc_en": (
+            "Did that shape appear N steps ago?\n"
+            "N-Back loads working memory and tests\n"
+            "its capacity in real time."
+        ),
+    },
+    {
+        "num": 11, "name": "Visual Search Lab", "type": "arcade",
+        "desc_pl": (
+            "Znajdź cel ukryty wśród dystraktorów.\n"
+            "Czas przeszukiwania ujawnia strategie uwagi\n"
+            "i efektywność wzrokowego filtrowania."
+        ),
+        "desc_en": (
+            "Find the target hidden among distractors.\n"
+            "Search time reveals attentional strategies\n"
+            "and the efficiency of visual filtering."
+        ),
+    },
+    {
+        "num": 12, "name": "Cognitive Dashboard", "type": "lab",
+        "desc_pl": (
+            "Zestawienie Twoich wyników z wszystkich\n"
+            "gier kognitywnych. Porównaj swój profil\n"
+            "poznawczy z danymi referencyjnymi."
+        ),
+        "desc_en": (
+            "A summary of your results across all\n"
+            "cognitive games. Compare your cognitive\n"
+            "profile against reference data."
+        ),
+    },
+    # ── Module 3 ──
+    {
+        "num": 13, "name": "Distribution Playground", "type": "lab",
+        "desc_pl": (
+            "Zmień parametry, obserwuj jak zmienia się rozkład.\n"
+            "Normalne, Poissona, t-Studenta — intuicyjnie\n"
+            "zrozum kształty danych w psychologii."
+        ),
+        "desc_en": (
+            "Change parameters, watch the distribution shift.\n"
+            "Normal, Poisson, t-Student — build intuition\n"
+            "for data shapes in psychology research."
+        ),
+    },
+    {
+        "num": 14, "name": "Correlation Trap", "type": "lab",
+        "desc_pl": (
+            "Korelacja to nie przyczynowość! Odkryj\n"
+            "fałszywe zależności w danych i naucz się\n"
+            "odróżniać związek statystyczny od przyczynowego."
+        ),
+        "desc_en": (
+            "Correlation is not causation! Discover\n"
+            "spurious relationships in data and learn to\n"
+            "distinguish statistical from causal links."
+        ),
+    },
+    {
+        "num": 15, "name": "Hypothesis Arena", "type": "lab",
+        "desc_pl": (
+            "Testuj hipotezy na symulowanych danych.\n"
+            "Poznaj p-value, poziom istotności i moc testu —\n"
+            "filary wnioskowania statystycznego."
+        ),
+        "desc_en": (
+            "Test hypotheses on simulated data.\n"
+            "Learn p-values, significance levels and power —\n"
+            "the pillars of statistical inference."
+        ),
+    },
+    {
+        "num": 16, "name": "Prediction Slider", "type": "lab",
+        "desc_pl": (
+            "Przesuń suwakiem i przewiduj wyniki.\n"
+            "Odkryj, jak model liniowy minimalizuje błąd\n"
+            "i kiedy prognoza zawodzi."
+        ),
+        "desc_en": (
+            "Drag the slider and make predictions.\n"
+            "See how a linear model minimises error\n"
+            "and when predictions break down."
+        ),
+    },
+    # ── Module 4 ──
+    {
+        "num": 17, "name": "Feature Hunter", "type": "arcade",
+        "desc_pl": (
+            "Które cechy najbardziej wpływają na predykcję?\n"
+            "Odkryj ważność zmiennych przez eliminację\n"
+            "i zbuduj intuicję feature selection."
+        ),
+        "desc_en": (
+            "Which features most influence the prediction?\n"
+            "Discover variable importance through elimination\n"
+            "and build intuition for feature selection."
+        ),
+    },
+    {
+        "num": 18, "name": "Classifier Battle", "type": "arcade",
+        "desc_pl": (
+            "Wybierz klasyfikator, dostosuj hiperparametry.\n"
+            "Porównaj SVM, las losowy i sieć neuronową\n"
+            "na rzeczywistych danych psychologicznych."
+        ),
+        "desc_en": (
+            "Pick a classifier, tune hyperparameters.\n"
+            "Compare SVM, random forest and neural nets\n"
+            "on real psychology data."
+        ),
+    },
+    {
+        "num": 19, "name": "Overfitting Monster", "type": "arcade",
+        "desc_pl": (
+            "Czy Twój model zapamiętał dane treningowe?\n"
+            "Odkryj overfitting przez krzywą uczenia\n"
+            "i regularyzację jako lekarstwo."
+        ),
+        "desc_en": (
+            "Did your model memorise the training data?\n"
+            "Discover overfitting through learning curves\n"
+            "and regularisation as the cure."
+        ),
+    },
+    {
+        "num": 20, "name": "Anomaly Alert", "type": "arcade",
+        "desc_pl": (
+            "Wykryj anomalie w strumieniu danych.\n"
+            "Poznaj algorytmy detekcji wartości odstających\n"
+            "i zastosowania w analizie danych kognitywnych."
+        ),
+        "desc_en": (
+            "Detect anomalies in a data stream.\n"
+            "Learn outlier detection algorithms and their\n"
+            "applications in cognitive data analysis."
+        ),
+    },
+    # ── Module 5 ──
+    {
+        "num": 21, "name": "Text Tokenizer Lab", "type": "lab",
+        "desc_pl": (
+            "Jak komputer widzi tekst? Tokenizuj zdania,\n"
+            "usuń stop words, stwórz bag-of-words —\n"
+            "pierwsze kroki w NLP."
+        ),
+        "desc_en": (
+            "How does a computer see text? Tokenise sentences,\n"
+            "remove stop words, build a bag-of-words —\n"
+            "first steps in NLP."
+        ),
+    },
+    {
+        "num": 22, "name": "Word Weight Factory", "type": "lab",
+        "desc_pl": (
+            "TF-IDF waży słowa według ważności.\n"
+            "Odkryj, które słowa najlepiej opisują dokument\n"
+            "w zbiorze tekstów psychologicznych."
+        ),
+        "desc_en": (
+            "TF-IDF weights words by importance.\n"
+            "Discover which words best characterise a document\n"
+            "in a psychology text corpus."
+        ),
+    },
+    {
+        "num": 23, "name": "Emotion Classifier", "type": "lab",
+        "desc_pl": (
+            "Czy komputer rozpozna emocje w tekście?\n"
+            "Wytrenuj i oceń klasyfikator uczuć\n"
+            "na danych z opisów eksperymentów."
+        ),
+        "desc_en": (
+            "Can a computer recognise emotion in text?\n"
+            "Train and evaluate a sentiment classifier\n"
+            "on data from experiment descriptions."
+        ),
+    },
+    {
+        "num": 24, "name": "Semantic Space Explorer", "type": "lab",
+        "desc_pl": (
+            "Zbadaj przestrzeń semantyczną słów.\n"
+            "Odkryj jak word embeddings reprezentują\n"
+            "znaczenie i relacje językowe."
+        ),
+        "desc_en": (
+            "Explore the semantic space of words.\n"
+            "See how word embeddings represent\n"
+            "meaning and language relationships."
+        ),
+    },
+    {
+        "num": 25, "name": "Topic Detective", "type": "puzzle",
+        "desc_pl": (
+            "Jakie tematy kryją się w korpusie tekstów?\n"
+            "Użyj LDA do odkrycia ukrytych tematów\n"
+            "i zidentyfikuj kto o czym pisał."
+        ),
+        "desc_en": (
+            "What topics hide in a text corpus?\n"
+            "Use LDA to uncover latent topics\n"
+            "and identify who wrote about what."
+        ),
+    },
+    {
+        "num": 26, "name": "Human vs Model", "type": "arcade",
+        "desc_pl": (
+            "Czy model językowy przechytrzy Ciebie?\n"
+            "Porównaj swoje klasyfikacje z modelem\n"
+            "i odkryj gdzie AI wygrywa, a gdzie przegrywa."
+        ),
+        "desc_en": (
+            "Can a language model outsmart you?\n"
+            "Compare your classifications against a model's\n"
+            "and see where AI wins and where it fails."
+        ),
+    },
+    # ── Module 6 ──
+    {
+        "num": 27, "name": "Social Network Simulator", "type": "lab",
+        "desc_pl": (
+            "Jak informacja rozprzestrzenia się w sieci?\n"
+            "Symuluj model SIR na grafie społecznym\n"
+            "i obserwuj dynamikę szerzenia się treści."
+        ),
+        "desc_en": (
+            "How does information spread in a network?\n"
+            "Simulate an SIR model on a social graph\n"
+            "and watch the dynamics of content spread."
+        ),
+    },
+    {
+        "num": 28, "name": "Misinformation Spread", "type": "arcade",
+        "desc_pl": (
+            "Powstrzymaj fake newsy zanim się rozejdą!\n"
+            "Decyduj co moderować w sieci społecznej —\n"
+            "uczysz się o wirusowości dezinformacji."
+        ),
+        "desc_en": (
+            "Stop fake news before they spread!\n"
+            "Decide what to moderate in a social network —\n"
+            "learn about the virality of misinformation."
+        ),
+    },
+    {
+        "num": 29, "name": "Recommendation Bubble", "type": "lab",
+        "desc_pl": (
+            "Czy algorytmy rekomendacji tworzą bańkę filtrującą?\n"
+            "Symuluj personalizację treści i zmierz\n"
+            "jak komora pogłosowa informacyjna się nasila."
+        ),
+        "desc_en": (
+            "Do recommendation algorithms create filter bubbles?\n"
+            "Simulate content personalisation and measure\n"
+            "how information echo chambers intensify."
+        ),
+    },
+    {
+        "num": 30, "name": "Bias Blind Spot", "type": "puzzle",
+        "desc_pl": (
+            "Czy rozpoznasz bias w projekcie badania?\n"
+            "Zidentyfikuj ukryte założenia i błędy metodologiczne\n"
+            "w opisach eksperymentów naukowych."
+        ),
+        "desc_en": (
+            "Can you spot bias in a research design?\n"
+            "Identify hidden assumptions and methodological flaws\n"
+            "in scientific experiment descriptions."
+        ),
+    },
+    {
+        "num": 32, "name": "The Architect's Trial", "type": "arcade",
+        "desc_pl": (
+            "Finalne wyzwanie: zaprojektuj własne badanie.\n"
+            "Połącz wiedzę ze wszystkich modułów\n"
+            "i obróń swój projekt przed krytykami."
+        ),
+        "desc_en": (
+            "The final challenge: design your own study.\n"
+            "Combine knowledge from all modules\n"
+            "and defend your research design."
+        ),
+    },
+    {
+        "num": 31, "name": "You Were the Dataset", "type": "lab",
+        "desc_pl": (
+            "Przez cały kurs byłeś częścią datasetu.\n"
+            "Przeanalizuj swoje własne dane kognitywne\n"
+            "i napisz raport z badań nad sobą."
+        ),
+        "desc_en": (
+            "Throughout the course you were part of the dataset.\n"
+            "Analyse your own cognitive data collected\n"
+            "and write a report on your own research."
+        ),
+    },
+]
+
+# ── Module structure ──────────────────────────────────────────────────────────
+# (header_pl, header_en, start_idx_in_LESSON_DATA, count)
+_MODULES: list[tuple[str, str, int, int]] = [
+    ("Modul 1 · Dane i Podstawy",         "Module 1 · Data Basics",             0,  5),
+    ("Modul 2 · Eksperymenty Kognitywne", "Module 2 · Cognitive Experiments",   5,  6),
+    ("Modul 3 · Statystyka",              "Module 3 · Statistics",             11,  4),
+    ("Modul 4 · Machine Learning",        "Module 4 · Machine Learning",       15,  4),
+    ("Modul 5 · Jezyk i NLP",             "Module 5 · Language & NLP",         19,  6),
+    ("Modul 6 · Sieci Etyka i Final",     "Module 6 · Networks, Ethics & Finale", 25, 6),
+]
+
+# ── Virtual sidebar row list ───────────────────────────────────────────────────
+# Each entry: (kind, param, y_offset_px, height_px)
+#   kind="header" → param = module index (0-5)
+#   kind="item"   → param = _LESSON_DATA index (0-30)
+_H_MODULE_ROW = 32
+_H_ITEM_ROW   = 36
+
+_VIRTUAL_ROWS: list[tuple[str, int, int, int]] = []
+_vy = 0
+for _mi, (_mpl, _men, _mstart, _mcount) in enumerate(_MODULES):
+    _VIRTUAL_ROWS.append(("header", _mi, _vy, _H_MODULE_ROW))
+    _vy += _H_MODULE_ROW
+    for _li in range(_mstart, _mstart + _mcount):
+        _VIRTUAL_ROWS.append(("item", _li, _vy, _H_ITEM_ROW))
+        _vy += _H_ITEM_ROW
+_VIRTUAL_H = _vy  # 1308
+
 # Lesson numbers follow the course README. Lesson 5 is absent because lessons 04 and 05
 # (Data Cleaning + Missing Values) are merged into a single game (entry 4, "Data Quality Lab").
-_LESSONS = [
-    (1, "Big Data in Cognitive Science"),
-    (2, "Reaction Time Lab"),
-    (3, "Event Logs and Data Formats"),
-    (4, "Data Quality Lab"),  # covers README lessons 04 + 05
-    (6, "Exploratory Data Analysis"),
-    (7, "Stroop Challenge"),
-    (8, "Flanker Arena"),
-    (9, "Go/No-Go Guard"),
-    (10, "N-Back Memory Grid"),
-    (11, "Visual Search Lab"),
-    (12, "Cognitive Dashboard"),
-    (13, "Distribution Playground"),
-    (14, "Correlation Trap"),
-    (15, "Hypothesis Arena"),
-    (16, "Prediction Slider"),
-    (17, "Feature Hunter"),
-    (18, "Classifier Battle"),
-    (19, "Overfitting Monster"),
-    (20, "Anomaly Alert"),
-    (21, "Text Tokenizer Lab"),
-    (22, "Word Weight Factory"),
-    (23, "Emotion Classifier"),
-    (24, "Semantic Space Explorer"),
-    (25, "Topic Detective"),
-    (26, "Human vs Model"),
-    (27, "Social Network Simulator"),
-    (28, "Misinformation Spread"),
-    (29, "Recommendation Bubble"),
-    (30, "Bias Blind Spot"),
-    (32, "The Architect's Trial"),
-    (31, "You Were the Dataset"),
-]
+# Compatibility shim: keep _LESSONS for any remaining references
+_LESSONS = [(d["num"], d["name"]) for d in _LESSON_DATA]
 
 _BG = (26, 26, 46)
 _TITLE_COLOR = (240, 240, 240)
 _ITEM_COLOR = (160, 160, 160)
 _HIGHLIGHT_COLOR = (243, 156, 18)
 
-_MENU_TOP = 140
-_ROW_H = 44
-_VISIBLE = (720 - _MENU_TOP) // _ROW_H  # rows that fit on screen
-_SB_X = 1010   # scrollbar x position (right edge)
-_SB_W = 8
-_POPUP_W = 400
-_POPUP_H = 180
-_POPUP_BTN_LEFT = 24    # x offset of Play button
-_POPUP_BTN_RIGHT = 212  # x offset of Theory button
-_POPUP_BTN_W = 160      # hit-test width for each button
 
 
 class LessonMenuScene(Scene):
@@ -69,64 +499,77 @@ class LessonMenuScene(Scene):
         self._pm = profile_manager
         self._strings = strings
         self._selected = selected
+        self._hovered: int | None = None
         self._next: Scene | None = None
         self._done = False
-        self._popup_visible: bool = False
-        self._popup_selected: int = 0  # 0=Play, 1=Teoria
+        self._play_btn_rect: pygame.Rect | None = None
+        self._teoria_btn_rect: pygame.Rect | None = None
+
         self._scrollbar = ScrollBar(
-            total=len(_LESSONS),
-            visible=_VISIBLE,
+            total=_VIRTUAL_H,
+            visible=_SIDEBAR_H,
             x=_SB_X,
-            y=_MENU_TOP,
-            h=_VISIBLE * _ROW_H,
-            width=_SB_W,
+            y=_TOPBAR_H,
+            h=_SIDEBAR_H,
+            width=_SB_TRACK_W,
         )
+        # Scroll so that the initially selected item is vertically centred
+        for kind, param, row_vy, _row_vh in _VIRTUAL_ROWS:
+            if kind == "item" and param == selected:
+                max_s = max(0, _VIRTUAL_H - _SIDEBAR_H)
+                center = row_vy - (_SIDEBAR_H // 2)
+                self._scrollbar.scroll_to(max(0, min(max_s, center)))
+                break
+
         audio.play_music("menu")
         pygame.font.init()
-        self._font_title = get_font(52)
-        self._font_item = get_font(34)
+        self._font_topbar_title = get_font(28)
+        self._font_topbar_sub   = get_font(16)
+        self._font_mod_header   = get_font(13)
+        self._font_item_num     = get_font(14)
+        self._font_item_name    = get_font(18)
+        self._font_panel_module = get_font(14)
+        self._font_panel_badge  = get_font(15)
+        self._font_panel_title  = get_font(38)
+        self._font_panel_desc   = get_font(18)
+        self._font_btn          = get_font(18)
+        self._font_hintbar      = get_font(14)
 
     def handle_event(self, event: pygame.event.Event) -> None:
-        if self._popup_visible:
-            self._handle_popup_event(event)
-            return
-        if event.type == pygame.MOUSEMOTION:
-            self._scrollbar.handle_mousemotion(event.pos, event.buttons)
-            x, y = event.pos
-            row = (y - _MENU_TOP) // _ROW_H
-            idx = self._scrollbar.scroll + row
-            if 0 <= row < _VISIBLE and 0 <= idx < len(_LESSONS):
-                self._selected = idx
-            return
-        if event.type == pygame.MOUSEWHEEL:
-            self._scrollbar.handle_wheel(-event.y)
-            return
-        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            if self._scrollbar.handle_mousedown(event.pos):
-                return
-            x, y = event.pos
-            row = (y - _MENU_TOP) // _ROW_H
-            idx = self._scrollbar.scroll + row
-            if 0 <= row < _VISIBLE and 0 <= idx < len(_LESSONS):
-                self._selected = idx
-                self._popup_visible = True
-                self._popup_selected = 0
-            return
-        if event.type != pygame.KEYDOWN:
-            return
+        if event.type == pygame.KEYDOWN:
+            self._handle_key(event)
+        elif event.type == pygame.MOUSEMOTION:
+            self._handle_mouse_motion(event)
+        elif event.type == pygame.MOUSEWHEEL:
+            self._scrollbar.handle_wheel(-event.y * _H_ITEM_ROW)
+        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            self._handle_mouse_click(event)
+
+    def _handle_key(self, event: pygame.event.Event) -> None:
         if event.key == pygame.K_ESCAPE:
             self._done = True
         elif event.key == pygame.K_UP:
             self._selected = max(0, self._selected - 1)
-            self._clamp_scroll()
+            self._ensure_visible()
             audio.play_sfx("navigate")
         elif event.key == pygame.K_DOWN:
-            self._selected = min(len(_LESSONS) - 1, self._selected + 1)
-            self._clamp_scroll()
+            self._selected = min(len(_LESSON_DATA) - 1, self._selected + 1)
+            self._ensure_visible()
             audio.play_sfx("navigate")
+        elif event.key == pygame.K_RETURN:
+            self._launch_selected_game()
+        elif event.key == pygame.K_t:
+            if self._teoria_available():
+                lesson_num = _LESSON_DATA[self._selected]["num"]
+                from cognitive_data_arcade.ui.lesson_reader import LessonReaderScene
+                back = LessonMenuScene(self._pm, self._strings, self._selected)
+                self._next = LessonReaderScene(
+                    lesson_num, self._strings, back,
+                    play_factory=self._game_factory_for(lesson_num),
+                )
+                self._done = True
         elif event.key == pygame.K_p:
             from cognitive_data_arcade.ui.profile_screen import ProfileScene
-
             back = LessonMenuScene(self._pm, self._strings, self._selected)
             self._next = ProfileScene(self._pm, self._strings, back)
             self._done = True
@@ -136,42 +579,71 @@ class LessonMenuScene(Scene):
             self._strings = get_strings(new_lang)
         elif event.key == pygame.K_a:
             from cognitive_data_arcade.ui.session_picker import SessionPickerScene
-
             sessions_dir = Path("data") / "generated" / "reaction_time"
             self._next = SessionPickerScene(sessions_dir, self._strings, self._pm)
             self._done = True
-        elif event.key == pygame.K_RETURN:
-            self._launch_selected_game()
         elif event.key == pygame.K_o:
             from cognitive_data_arcade.ui.options_scene import OptionsScene
-
             back = LessonMenuScene(self._pm, self._strings, self._selected)
             self._next = OptionsScene(self._pm, self._strings, back)
             self._done = True
-        elif event.key == pygame.K_t:
-            lesson_num = _LESSONS[self._selected][0]
-            if self._teoria_available():
-                from cognitive_data_arcade.ui.lesson_reader import LessonReaderScene
-
-                back = LessonMenuScene(self._pm, self._strings, self._selected)
-                self._next = LessonReaderScene(
-                    lesson_num, self._strings, back,
-                    play_factory=self._game_factory_for(lesson_num),
-                )
-                self._done = True
         elif event.key == pygame.K_z:
             self._launch_stroop_picker()
 
-    def _clamp_scroll(self) -> None:
-        top = self._scrollbar.scroll
-        if self._selected < top:
-            self._scrollbar.scroll_to(self._selected)
-        elif self._selected >= top + _VISIBLE:
-            self._scrollbar.scroll_to(self._selected - _VISIBLE + 1)
+    def _handle_mouse_motion(self, event: pygame.event.Event) -> None:
+        self._scrollbar.handle_mousemotion(event.pos, event.buttons)
+        x, y = event.pos
+        if 0 <= x < _SIDEBAR_W and _TOPBAR_H <= y < _TOPBAR_H + _SIDEBAR_H:
+            self._hovered = self._lesson_idx_at(y)
+        else:
+            self._hovered = None
+
+    def _handle_mouse_click(self, event: pygame.event.Event) -> None:
+        x, y = event.pos
+        if 0 <= x < _SIDEBAR_W and _TOPBAR_H <= y < _TOPBAR_H + _SIDEBAR_H:
+            if self._scrollbar.handle_mousedown(event.pos):
+                return
+            idx = self._lesson_idx_at(y)
+            if idx is not None:
+                self._selected = idx
+            return
+        if self._play_btn_rect and self._play_btn_rect.collidepoint(x, y):
+            audio.play_sfx("select")
+            self._launch_selected_game()
+        elif (
+            self._teoria_btn_rect
+            and self._teoria_btn_rect.collidepoint(x, y)
+            and self._teoria_available()
+        ):
+            lesson_num = _LESSON_DATA[self._selected]["num"]
+            from cognitive_data_arcade.ui.lesson_reader import LessonReaderScene
+            back = LessonMenuScene(self._pm, self._strings, self._selected)
+            self._next = LessonReaderScene(
+                lesson_num, self._strings, back,
+                play_factory=self._game_factory_for(lesson_num),
+            )
+            self._done = True
+
+    def _lesson_idx_at(self, screen_y: int) -> int | None:
+        vy = screen_y - _TOPBAR_H + self._scrollbar.scroll
+        for kind, param, row_vy, row_vh in _VIRTUAL_ROWS:
+            if kind == "item" and row_vy <= vy < row_vy + row_vh:
+                return param
+        return None
+
+    def _ensure_visible(self) -> None:
+        for kind, param, row_vy, row_vh in _VIRTUAL_ROWS:
+            if kind == "item" and param == self._selected:
+                scroll = self._scrollbar.scroll
+                if row_vy < scroll:
+                    self._scrollbar.scroll_to(row_vy)
+                elif row_vy + row_vh > scroll + _SIDEBAR_H:
+                    self._scrollbar.scroll_to(row_vy + row_vh - _SIDEBAR_H)
+                break
 
     def _launch_selected_game(self) -> None:
         audio.play_sfx("select")
-        lesson_num = _LESSONS[self._selected][0]
+        lesson_num = _LESSON_DATA[self._selected]["num"]
         if lesson_num == 1:
             self._launch_big_data_map()
         elif lesson_num == 2:
@@ -237,42 +709,11 @@ class LessonMenuScene(Scene):
 
     def _teoria_available(self) -> bool:
         import importlib.util
-        lesson_num = _LESSONS[self._selected][0]
+        lesson_num = _LESSON_DATA[self._selected]["num"]
         spec = importlib.util.find_spec(
             f"cognitive_data_arcade.lessons.lesson_{lesson_num:02d}"
         )
         return spec is not None
-
-    def _handle_popup_event(self, event: pygame.event.Event) -> None:
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
-                self._popup_visible = False
-            elif event.key in (pygame.K_LEFT, pygame.K_RIGHT, pygame.K_TAB):
-                self._popup_selected = 1 - self._popup_selected
-            elif event.key == pygame.K_RETURN:
-                self._confirm_popup()
-        elif event.type in (pygame.MOUSEMOTION, pygame.MOUSEBUTTONDOWN):
-            surf = pygame.display.get_surface()
-            if surf is None:
-                return
-            w, h = surf.get_size()
-            px = (w - _POPUP_W) // 2
-            py = (h - _POPUP_H) // 2
-            play_rect = pygame.Rect(px + _POPUP_BTN_LEFT, py + 80, _POPUP_BTN_W, 44)
-            teoria_rect = pygame.Rect(px + _POPUP_BTN_RIGHT, py + 80, _POPUP_BTN_W, 44)
-            from cognitive_data_arcade.engine.mouse import hit
-            if event.type == pygame.MOUSEMOTION:
-                if hit(play_rect, event.pos):
-                    self._popup_selected = 0
-                elif hit(teoria_rect, event.pos) and self._teoria_available():
-                    self._popup_selected = 1
-            elif event.button == 1:
-                if hit(play_rect, event.pos):
-                    self._popup_selected = 0
-                    self._confirm_popup()
-                elif hit(teoria_rect, event.pos) and self._teoria_available():
-                    self._popup_selected = 1
-                    self._confirm_popup()
 
     def _game_factory_for(self, lesson_num: int):
         if lesson_num == 1:
@@ -368,44 +809,6 @@ class LessonMenuScene(Scene):
         if lesson_num == 31:
             return self._make_you_were_the_dataset
         return None
-
-    def _confirm_popup(self) -> None:
-        self._popup_visible = False
-        if self._popup_selected == 0:
-            self._launch_selected_game()
-        elif self._popup_selected == 1 and self._teoria_available():
-            lesson_num = _LESSONS[self._selected][0]
-            from cognitive_data_arcade.ui.lesson_reader import LessonReaderScene
-
-            back = LessonMenuScene(self._pm, self._strings, self._selected)
-            self._next = LessonReaderScene(
-                lesson_num, self._strings, back,
-                play_factory=self._game_factory_for(lesson_num),
-            )
-            self._done = True
-
-    def _draw_popup(self, surface: pygame.Surface) -> None:
-        w, h = surface.get_size()
-        overlay = pygame.Surface((w, h), pygame.SRCALPHA)
-        overlay.fill((0, 0, 0, 140))
-        surface.blit(overlay, (0, 0))
-        px = (w - _POPUP_W) // 2
-        py = (h - _POPUP_H) // 2
-        pygame.draw.rect(surface, (18, 18, 42), (px, py, _POPUP_W, _POPUP_H), border_radius=8)
-        pygame.draw.rect(surface, (42, 42, 80), (px, py, _POPUP_W, _POPUP_H), 1, border_radius=8)
-        name = _LESSONS[self._selected][1]
-        title_surf = self._font_item.render(name, True, (240, 240, 240))
-        surface.blit(title_surf, (px + _POPUP_W // 2 - title_surf.get_width() // 2, py + 16))
-        play_color = _HIGHLIGHT_COLOR if self._popup_selected == 0 else _ITEM_COLOR
-        play_surf = self._font_item.render(f"[ {self._strings.label_play_game} ]", True, play_color)
-        surface.blit(play_surf, (px + _POPUP_BTN_LEFT, py + 80))
-        teoria_color = (70, 70, 112)
-        if self._teoria_available():
-            teoria_color = _HIGHLIGHT_COLOR if self._popup_selected == 1 else _ITEM_COLOR
-        teoria_surf = self._font_item.render(f"[ {self._strings.label_theory_lesson} ]", True, teoria_color)
-        surface.blit(teoria_surf, (px + _POPUP_BTN_RIGHT, py + 80))
-        hint_surf = self._font_item.render(self._strings.label_esc_close, True, (70, 70, 112))
-        surface.blit(hint_surf, (px + _POPUP_W // 2 - hint_surf.get_width() // 2, py + _POPUP_H - 38))
 
     def _launch_big_data_map(self) -> None:
         self._next = self._make_big_data_map_game()
@@ -829,24 +1232,171 @@ class LessonMenuScene(Scene):
         return self._next
 
     def draw(self, surface: pygame.Surface) -> None:
-        surface.fill(_BG)
+        surface.fill(_C_BG)
+        self._draw_topbar(surface)
+        self._draw_sidebar(surface)
+        self._draw_panel(surface)
+        self._draw_hintbar(surface)
 
-        title = self._font_title.render(self._strings.menu_title, True, _TITLE_COLOR)
-        surface.blit(title, (40, 36))
+    def _draw_topbar(self, surface: pygame.Surface) -> None:
+        pygame.draw.rect(surface, _C_BG, (0, 0, _W, _TOPBAR_H))
+        pygame.draw.line(surface, _C_SURFACE, (0, _TOPBAR_H - 1), (_W, _TOPBAR_H - 1))
 
-        subtitle = self._font_item.render(
-            self._strings.menu_subtitle, True, _ITEM_COLOR
+        title = self._font_topbar_title.render("Cognitive Data Arcade", True, _C_TEXT)
+        ty = (_TOPBAR_H - title.get_height()) // 2
+        surface.blit(title, (28, ty))
+
+        sub = self._font_topbar_sub.render(
+            self._strings.menu_topbar_subtitle, True, _C_TEXT_DARK
         )
-        surface.blit(subtitle, (42, 96))
+        surface.blit(sub, (28 + title.get_width() + 14, ty + 2))
 
-        top = self._scrollbar.scroll
-        visible_end = min(top + _VISIBLE, len(_LESSONS))
-        for i in range(top, visible_end):
-            num, name = _LESSONS[i]
-            color = _HIGHLIGHT_COLOR if i == self._selected else _ITEM_COLOR
-            text = self._font_item.render(f"{i + 1:02d}.  {name}", True, color)
-            surface.blit(text, (60, _MENU_TOP + (i - top) * _ROW_H))
+        badge_txt = self._font_topbar_sub.render(
+            self._strings.menu_lang_badge, True, _C_TEXT_DARK
+        )
+        bw = badge_txt.get_width() + 18
+        bh = badge_txt.get_height() + 8
+        bx = _W - bw - 20
+        by = (_TOPBAR_H - bh) // 2
+        pygame.draw.rect(surface, _C_SURFACE, (bx, by, bw, bh), border_radius=4)
+        pygame.draw.rect(surface, _C_SURFACE2, (bx, by, bw, bh), 1, border_radius=4)
+        surface.blit(badge_txt, (bx + 9, by + 4))
+
+    def _draw_sidebar(self, surface: pygame.Surface) -> None:
+        pygame.draw.rect(surface, _C_BG, (0, _TOPBAR_H, _SIDEBAR_W, _SIDEBAR_H))
+        pygame.draw.line(
+            surface, _C_SURFACE,
+            (_SIDEBAR_W, _TOPBAR_H), (_SIDEBAR_W, _TOPBAR_H + _SIDEBAR_H - 1),
+        )
+
+        lang = self._strings.language
+        scroll_px = self._scrollbar.scroll
+
+        for kind, param, vy, vh in _VIRTUAL_ROWS:
+            sy = _TOPBAR_H + vy - scroll_px
+            if sy + vh <= _TOPBAR_H or sy >= _TOPBAR_H + _SIDEBAR_H:
+                continue
+
+            if kind == "header":
+                label = self._strings.menu_modules[param]
+                if param > 0 and sy > _TOPBAR_H:
+                    pygame.draw.line(surface, _C_SURFACE, (0, sy), (_SIDEBAR_W, sy))
+                txt = self._font_mod_header.render(label, True, _C_TEXT_DARK)
+                surface.blit(txt, (20, sy + (vh - txt.get_height()) // 2))
+
+            else:
+                i = param
+                d = _LESSON_DATA[i]
+                is_active = i == self._selected
+                is_hover  = i == self._hovered
+
+                if is_active:
+                    pygame.draw.rect(surface, _C_ACCENT_BG, (0, sy, _SIDEBAR_W, vh))
+                    pygame.draw.rect(surface, _C_ACCENT, (0, sy, 3, vh))
+                elif is_hover:
+                    pygame.draw.rect(surface, _C_HOVER_BG, (0, sy, _SIDEBAR_W, vh))
+
+                num_color  = _C_ACCENT if is_active else _C_TEXT_XDARK
+                name_color = _C_TEXT if is_active else (_C_TEXT_DIM if not is_hover else (110, 120, 160))
+
+                num_surf  = self._font_item_num.render(f"{i + 1:02d}", True, num_color)
+                name_surf = self._font_item_name.render(d["name"], True, name_color)
+                mid_y = sy + vh // 2
+
+                surface.blit(num_surf, (20, mid_y - num_surf.get_height() // 2))
+                surface.blit(name_surf, (48, mid_y - name_surf.get_height() // 2))
+
+                dot_color = _TYPE_COLORS[d["type"]]
+                pygame.draw.circle(surface, dot_color, (_SIDEBAR_W - 16, mid_y), 4)
+
         self._scrollbar.draw(surface)
 
-        if self._popup_visible:
-            self._draw_popup(surface)
+    def _draw_panel(self, surface: pygame.Surface) -> None:
+        pygame.draw.rect(surface, _C_BG, (_PANEL_X, _TOPBAR_H, _PANEL_W, _SIDEBAR_H))
+
+        d = _LESSON_DATA[self._selected]
+        lang = self._strings.language
+
+        mod_label = ""
+        for mi, (m_pl, m_en, start, count) in enumerate(_MODULES):
+            if start <= self._selected < start + count:
+                mod_label = self._strings.menu_modules[mi]
+                break
+
+        x0 = _PANEL_X + 36
+        y = _TOPBAR_H + max(20, (_SIDEBAR_H - 200) // 2)
+
+        mod_surf = self._font_panel_module.render(mod_label, True, _C_TEXT_DARK)
+        surface.blit(mod_surf, (x0, y))
+        y += mod_surf.get_height() + 10
+
+        lesson_label = f"{self._strings.menu_lesson_prefix} {self._selected + 1}"
+        bl_surf = self._font_panel_badge.render(lesson_label, True, _C_TEXT_DARK)
+        bw = bl_surf.get_width() + 18
+        bh = bl_surf.get_height() + 8
+        pygame.draw.rect(surface, _C_SURFACE, (x0, y, bw, bh), border_radius=4)
+        pygame.draw.rect(surface, _C_SURFACE2, (x0, y, bw, bh), 1, border_radius=4)
+        surface.blit(bl_surf, (x0 + 9, y + 4))
+
+        tx = x0 + bw + 8
+        dot_color = _TYPE_COLORS[d["type"]]
+        pygame.draw.circle(surface, dot_color, (tx + 5, y + bh // 2), 5)
+        type_surf = self._font_panel_badge.render(d["type"], True, _C_ACCENT_LIGHT)
+        surface.blit(type_surf, (tx + 14, y + 4))
+        y += bh + 16
+
+        title_surf = self._font_panel_title.render(d["name"], True, _C_TEXT)
+        surface.blit(title_surf, (x0, y))
+        y += title_surf.get_height() + 14
+
+        desc = d["desc_pl"] if lang == "pl" else d["desc_en"]
+        for line in desc.split("\n"):
+            line_surf = self._font_panel_desc.render(line, True, _C_TEXT_DIM)
+            surface.blit(line_surf, (x0, y))
+            y += line_surf.get_height() + 3
+        y += 14
+
+        self._play_btn_rect = self._draw_panel_button(
+            surface, x0, y, self._strings.label_play_game, primary=True
+        )
+        teoria_ok = self._teoria_available()
+        self._teoria_btn_rect = self._draw_panel_button(
+            surface, x0 + self._play_btn_rect.width + 10, y,
+            self._strings.label_theory_lesson,
+            primary=False, disabled=not teoria_ok,
+        )
+
+    def _draw_panel_button(
+        self,
+        surface: pygame.Surface,
+        x: int,
+        y: int,
+        label: str,
+        primary: bool,
+        disabled: bool = False,
+    ) -> pygame.Rect:
+        txt_color = (
+            _C_TEXT if primary and not disabled
+            else _C_ACCENT_LIGHT if not disabled
+            else _C_TEXT_DARK
+        )
+        txt = self._font_btn.render(label, True, txt_color)
+        w = txt.get_width() + 44
+        h = 40
+        rect = pygame.Rect(x, y, w, h)
+        bg = _C_ACCENT if primary and not disabled else _C_SURFACE
+        pygame.draw.rect(surface, bg, rect, border_radius=6)
+        if not primary:
+            pygame.draw.rect(surface, _C_SURFACE2, rect, 1, border_radius=6)
+        surface.blit(txt, (x + 22, y + (h - txt.get_height()) // 2))
+        return rect
+
+    def _draw_hintbar(self, surface: pygame.Surface) -> None:
+        by = _H - _HINTBAR_H
+        pygame.draw.rect(surface, _C_BG, (0, by, _W, _HINTBAR_H))
+        pygame.draw.line(surface, _C_SURFACE, (0, by), (_W, by))
+        x = 20
+        for item in self._strings.menu_hintbar_items:
+            surf = self._font_hintbar.render(item, True, _C_TEXT_XDARK)
+            surface.blit(surf, (x, by + (_HINTBAR_H - surf.get_height()) // 2))
+            x += surf.get_width() + 20

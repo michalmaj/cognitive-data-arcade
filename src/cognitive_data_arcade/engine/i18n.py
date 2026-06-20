@@ -140,6 +140,12 @@ class Strings:
     label_play_game: str
     label_theory_lesson: str
     label_esc_close: str
+    # Menu redesign
+    menu_topbar_subtitle: str
+    menu_lang_badge: str
+    menu_lesson_prefix: str
+    menu_hintbar_items: tuple
+    menu_modules: tuple
     # Event Log Detective
     eld_hint_key: str
     eld_report_title: str
@@ -296,6 +302,24 @@ EN = Strings(
     label_play_game="Play",
     label_theory_lesson="Theory",
     label_esc_close="ESC — close",
+    menu_topbar_subtitle="31 games · 6 modules",
+    menu_lang_badge="EN · L change",
+    menu_lesson_prefix="Lesson",
+    menu_hintbar_items=(
+        "^v  nav",
+        "Enter  play",
+        "T  theory",
+        "P  profile",
+        "ESC  quit",
+    ),
+    menu_modules=(
+        "MODULE 1 · DATA BASICS",
+        "MODULE 2 · COGNITIVE EXPERIMENTS",
+        "MODULE 3 · STATISTICS",
+        "MODULE 4 · MACHINE LEARNING",
+        "MODULE 5 · LANGUAGE & NLP",
+        "MODULE 6 · NETWORKS, ETHICS & FINALE",
+    ),
     eld_hint_key="H — hint",
     eld_report_title="EXPERIMENT REPORT",
     eld_score_fmt="Score: {correct}/{total}  [{diff} x{mult}] = {pts} pts",
@@ -450,6 +474,24 @@ PL = Strings(
     label_play_game="Graj",
     label_theory_lesson="Teoria",
     label_esc_close="ESC — zamknij",
+    menu_topbar_subtitle="31 gier · 6 modułów",
+    menu_lang_badge="PL · L zmień",
+    menu_lesson_prefix="Lekcja",
+    menu_hintbar_items=(
+        "^v  nawigacja",
+        "Enter  graj",
+        "T  teoria",
+        "P  profil",
+        "ESC  wyjdź",
+    ),
+    menu_modules=(
+        "MODUŁ 1 · DANE I PODSTAWY",
+        "MODUŁ 2 · EKSPERYMENTY KOGNITYWNE",
+        "MODUŁ 3 · STATYSTYKA",
+        "MODUŁ 4 · MACHINE LEARNING",
+        "MODUŁ 5 · JĘZYK I NLP",
+        "MODUŁ 6 · SIECI ETYKA I FINAŁ",
+    ),
     eld_hint_key="H — wskazówka",
     eld_report_title="RAPORT EKSPERYMENTU",
     eld_score_fmt="Wynik: {correct}/{total}  [{diff} x{mult}] = {pts} pkt",

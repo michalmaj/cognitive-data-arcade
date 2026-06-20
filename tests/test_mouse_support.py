@@ -42,31 +42,31 @@ def _make_menu():
     return LessonMenuScene(pm, strings)
 
 
-def test_menu_mousemotion_sets_selected():
+def test_menu_sidebar_mousemotion_hovers_item():
+    pygame.init()
     menu = _make_menu()
-    # Row 2 center: y = 140 + 2*44 + 22 = 250
-    event = pygame.event.Event(pygame.MOUSEMOTION, pos=(200, 250))
+    # Module 1 header: virtual y 0-31
+    # item 0: virtual y 32-67 → screen y = 56 + 32 = 88, center = 88+18 = 106
+    event = pygame.event.Event(pygame.MOUSEMOTION, pos=(100, 106), buttons=(0, 0, 0))
     menu.handle_event(event)
-    assert menu._selected == 2
+    assert menu._hovered == 0
 
 
-def test_menu_mousebuttondown_shows_popup():
+def test_menu_sidebar_click_selects_item():
+    pygame.init()
     menu = _make_menu()
-    event = pygame.event.Event(pygame.MOUSEBUTTONDOWN, pos=(200, 150), button=1)
+    # item 1: virtual y 68-103 → screen y = 56 + 68 = 124, center = 124+18 = 142
+    event = pygame.event.Event(pygame.MOUSEBUTTONDOWN, pos=(100, 142), button=1)
     menu.handle_event(event)
-    assert menu._popup_visible is True
+    assert menu._selected == 1
 
 
-def test_menu_popup_esc_closes():
+def test_menu_sidebar_click_does_not_show_popup():
+    pygame.init()
     menu = _make_menu()
-    # Open popup on row 0
-    click = pygame.event.Event(pygame.MOUSEBUTTONDOWN, pos=(200, 150), button=1)
-    menu.handle_event(click)
-    assert menu._popup_visible
-    # Close with ESC
-    esc = pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode="")
-    menu.handle_event(esc)
-    assert not menu._popup_visible
+    event = pygame.event.Event(pygame.MOUSEBUTTONDOWN, pos=(100, 142), button=1)
+    menu.handle_event(event)
+    assert not getattr(menu, "_popup_visible", False)
 
 
 def test_menu_teoria_available_for_lesson_1():

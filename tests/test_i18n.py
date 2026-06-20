@@ -168,3 +168,24 @@ def test_en_and_pl_have_options_fullscreen_string() -> None:
     assert len(EN.options_fullscreen) > 3
     assert len(PL.options_fullscreen) > 3
     assert EN.options_fullscreen != PL.options_fullscreen
+
+
+def test_strings_has_menu_topbar_fields():
+    from cognitive_data_arcade.engine.i18n import EN, PL
+    assert hasattr(EN, "menu_topbar_subtitle")
+    assert hasattr(EN, "menu_lang_badge")
+    assert hasattr(EN, "menu_lesson_prefix")
+    assert hasattr(EN, "menu_hintbar_items")
+    assert hasattr(EN, "menu_modules")
+
+
+def test_menu_modules_has_6_entries():
+    from cognitive_data_arcade.engine.i18n import EN, PL
+    assert len(EN.menu_modules) == 6
+    assert len(PL.menu_modules) == 6
+
+
+def test_menu_hintbar_items_has_5_entries():
+    from cognitive_data_arcade.engine.i18n import EN, PL
+    assert len(EN.menu_hintbar_items) == 5
+    assert len(PL.menu_hintbar_items) == 5
