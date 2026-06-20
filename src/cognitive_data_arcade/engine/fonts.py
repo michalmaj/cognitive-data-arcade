@@ -1,38 +1,30 @@
-"""Font loading utility.
-
-pygame.font.SysFont(None, ...) uses the default system font which often lacks
-Unicode coverage for Polish diacritics. This module tries a priority list of
-fonts known to support full Latin Extended-A (Polish characters).
-"""
-
+"""Font loading utility — loads bundled Inter-Regular.ttf for crisp, modern text."""
 from __future__ import annotations
+
+from pathlib import Path
 
 import pygame
 
-_CANDIDATES = [
+_BUNDLED = Path("assets") / "fonts" / "Inter-Regular.ttf"
+
+_FALLBACK_CANDIDATES = [
     "dejavusans",
     "arialunicode",
     "arial",
     "helveticaneue",
     "liberationsans",
-    "noto sans",
+    "notosans",
     "freesans",
     "droidsans",
 ]
 
-
-def _available() -> frozenset[str]:
-    pygame.font.init()
-    return frozenset(pygame.font.get_fonts())
-
-
 _cache: dict[int, pygame.font.Font] = {}
-_found_name: str | None = None
+_bundled_ok: bool | None = None
 
 
 def get_font(size: int) -> pygame.font.Font:
-    """Return a font at *size* that can render Polish diacritics."""
-    global _found_name
+    """Return Inter at *size*, falling back to system fonts if the file is missing."""
+    global _bundled_ok
     pygame.font.init()
     if size in _cache:
         try:
@@ -40,19 +32,15 @@ def get_font(size: int) -> pygame.font.Font:
             return _cache[size]
         except Exception:
             _cache.clear()
-            _found_name = None
+            _bundled_ok = None
 
-    if _found_name is None:
-        avail = _available()
-        for candidate in _candidates_normalised():
-            if candidate in avail:
-                _found_name = candidate
-                break
+    if _bundled_ok is None:
+        _bundled_ok = _BUNDLED.exists()
 
-    if _found_name is not None:
-        font = pygame.font.SysFont(_found_name, size)
+    if _bundled_ok:
+        font = pygame.font.Font(str(_BUNDLED), size)
     else:
-        font = pygame.font.SysFont(None, size)
+        font = _load_system_font(size)
 
     _cache[size] = font
     return font
@@ -60,10 +48,15 @@ def get_font(size: int) -> pygame.font.Font:
 
 def reset() -> None:
     """Clear the font cache. Call after pygame.quit() to avoid dangling C pointers."""
-    global _found_name
+    global _bundled_ok
     _cache.clear()
-    _found_name = None
+    _bundled_ok = None
 
 
-def _candidates_normalised() -> list[str]:
-    return [c.replace(" ", "").lower() for c in _CANDIDATES]
+def _load_system_font(size: int) -> pygame.font.Font:
+    pygame.font.init()
+    avail = frozenset(pygame.font.get_fonts())
+    for candidate in [c.replace(" ", "").lower() for c in _FALLBACK_CANDIDATES]:
+        if candidate in avail:
+            return pygame.font.SysFont(candidate, size)
+    return pygame.font.SysFont(None, size)

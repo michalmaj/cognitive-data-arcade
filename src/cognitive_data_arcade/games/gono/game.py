@@ -8,6 +8,7 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 
 import pygame
+from cognitive_data_arcade.engine.fonts import get_font
 
 from cognitive_data_arcade.engine import audio
 from cognitive_data_arcade.engine.i18n import Strings
@@ -102,9 +103,9 @@ class GoNoGoGame(Scene):
         self._iti_duration = float(random.randint(config.iti_min_ms, config.iti_max_ms))
         self._profile_before = profile_manager.load()
         pygame.font.init()
-        self._font_fix = pygame.font.SysFont(None, 80)
-        self._font_fb = pygame.font.SysFont(None, 60)
-        self._font_hint = pygame.font.SysFont(None, 28)
+        self._font_fix = get_font(80)
+        self._font_fb = get_font(60)
+        self._font_hint = get_font(28)
 
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type != pygame.KEYDOWN:

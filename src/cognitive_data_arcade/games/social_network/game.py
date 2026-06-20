@@ -4,6 +4,7 @@ import copy
 import math
 
 import pygame
+from cognitive_data_arcade.engine.fonts import get_font
 
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.social_network.graph import (
@@ -76,9 +77,9 @@ class SocialNetworkScene(Scene):
         self._next: Scene | None = None
 
         pygame.font.init()
-        self._font_sm = pygame.font.SysFont(None, 22)
-        self._font_md = pygame.font.SysFont(None, 28)
-        self._font_lg = pygame.font.SysFont(None, 36)
+        self._font_sm = get_font(22)
+        self._font_md = get_font(28)
+        self._font_lg = get_font(36)
 
         _by = _BOT_Y + 15
         self._btn_add_node    = pygame.Rect(10,  10, 90, 30)

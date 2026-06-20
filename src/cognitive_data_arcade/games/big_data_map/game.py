@@ -4,6 +4,7 @@ import math
 from dataclasses import dataclass
 
 import pygame
+from cognitive_data_arcade.engine.fonts import get_font
 
 from cognitive_data_arcade.engine import audio
 from cognitive_data_arcade.engine.i18n import Strings
@@ -226,9 +227,9 @@ class BigDataMapGame(Scene):
         self._in_l2: bool = False
         self._l1_idx: int = 0
         self._l2_idx: int = 0
-        self._font_title = pygame.font.SysFont(None, 32)
-        self._font_node = pygame.font.SysFont(None, 18)
-        self._font_info = pygame.font.SysFont(None, 22)
+        self._font_title = get_font(32)
+        self._font_node = get_font(18)
+        self._font_info = get_font(22)
         self._node_rects: list[pygame.Rect] = []
 
     def handle_event(self, event: pygame.event.Event) -> None:

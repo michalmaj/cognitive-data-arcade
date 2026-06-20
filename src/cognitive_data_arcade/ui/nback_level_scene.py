@@ -4,6 +4,7 @@ import datetime
 from pathlib import Path
 
 import pygame
+from cognitive_data_arcade.engine.fonts import get_font
 
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.pause import PausableGame
@@ -35,8 +36,8 @@ class NBackLevelScene(Scene):
         self._done = False
         self._next: Scene | None = None
         pygame.font.init()
-        self._font_title = pygame.font.SysFont(None, 52)
-        self._font_item = pygame.font.SysFont(None, 34)
+        self._font_title = get_font(52)
+        self._font_item = get_font(34)
 
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.MOUSEMOTION:

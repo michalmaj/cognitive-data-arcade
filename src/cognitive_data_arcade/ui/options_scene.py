@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import pygame
+from cognitive_data_arcade.engine.fonts import get_font
 
 from cognitive_data_arcade.engine import audio
 from cognitive_data_arcade.engine import display as _display
@@ -42,9 +43,9 @@ class OptionsScene(Scene):
         self._focused: int = 0
         self._dragging: bool = False
         pygame.font.init()
-        self._font_title = pygame.font.SysFont(None, 52)
-        self._font_item = pygame.font.SysFont(None, 36)
-        self._font_hint = pygame.font.SysFont(None, 26)
+        self._font_title = get_font(52)
+        self._font_item = get_font(36)
+        self._font_hint = get_font(26)
 
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.MOUSEBUTTONUP and event.button == 1:

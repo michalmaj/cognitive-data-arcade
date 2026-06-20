@@ -4,6 +4,7 @@ from collections.abc import Callable
 from pathlib import Path
 
 import pygame
+from cognitive_data_arcade.engine.fonts import get_font
 
 from cognitive_data_arcade.engine.badges import SessionResult
 from cognitive_data_arcade.engine.i18n import Strings, level_title
@@ -47,11 +48,11 @@ class SessionSummaryScene(Scene):
         self._csv_path = csv_path
         self._analysis_factory = analysis_factory
         self._go_to_analysis = False
-        self._font_sm = pygame.font.SysFont(None, 24)
-        self._font_title = pygame.font.SysFont(None, 56)
-        self._font_sub = pygame.font.SysFont(None, 30)
-        self._font_stat = pygame.font.SysFont(None, 52)
-        self._font_hint = pygame.font.SysFont(None, 26)
+        self._font_sm = get_font(24)
+        self._font_title = get_font(56)
+        self._font_sub = get_font(30)
+        self._font_stat = get_font(52)
+        self._font_hint = get_font(26)
 
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:

@@ -9,6 +9,7 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 
 import pygame
+from cognitive_data_arcade.engine.fonts import get_font
 
 from cognitive_data_arcade.engine import audio
 from cognitive_data_arcade.engine.badges import BadgeEngine, SessionResult
@@ -99,10 +100,10 @@ class FlankerGame(Scene):
         self._last_rt = 0.0
         self._next_cache: Scene | None = None
         pygame.font.init()
-        self._font_arrow = pygame.font.SysFont(None, 110)
-        self._font_fix = pygame.font.SysFont(None, 80)
-        self._font_fb = pygame.font.SysFont(None, 60)
-        self._font_info = pygame.font.SysFont(None, 28)
+        self._font_arrow = get_font(110)
+        self._font_fix = get_font(80)
+        self._font_fb = get_font(60)
+        self._font_info = get_font(28)
 
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type != pygame.KEYDOWN:

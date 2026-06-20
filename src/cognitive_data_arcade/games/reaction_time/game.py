@@ -7,6 +7,7 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 
 import pygame
+from cognitive_data_arcade.engine.fonts import get_font
 
 from cognitive_data_arcade.engine import audio
 from cognitive_data_arcade.engine.badges import BadgeEngine, SessionResult
@@ -111,10 +112,10 @@ class ReactionTimeGame(Scene):
         self._next_cache: Scene | None = None
 
         pygame.font.init()
-        self._font_sm = pygame.font.SysFont(None, 26)
-        self._font_med = pygame.font.SysFont(None, 36)
-        self._font_lg = pygame.font.SysFont(None, 72)
-        self._font_hint = pygame.font.SysFont(None, 24)
+        self._font_sm = get_font(26)
+        self._font_med = get_font(36)
+        self._font_lg = get_font(72)
+        self._font_hint = get_font(24)
 
     # ── Scene interface ───────────────────────────────────────────────────────
 
