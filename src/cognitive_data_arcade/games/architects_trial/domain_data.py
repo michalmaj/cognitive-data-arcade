@@ -33,7 +33,7 @@ DOMAIN_DATA: dict[str, dict] = {
                   "Nie przegap zadnego zagrozenia. Wysoka czulosc.",
                   "Wiecej falsz. alarmow", "orange", -20, 0, 30),
             _card("minimize_fp", "Minimalizuj FP",
-                  "Nie nejaj niewinnych rodzin. Wysoka specyficznosc.",
+                  "Nie nekaj niewinnych rodzin. Wysoka specyficznosc.",
                   "Mozesz przeoczyc zagrozenie", "orange", 25, 0, -15),
             _card("balance_f1", "Balans F1",
                   "Kompromis miedzy czuloscia a specyficznoscia.",
