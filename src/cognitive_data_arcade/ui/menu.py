@@ -57,8 +57,11 @@ _ROW_H = 44
 _VISIBLE = (720 - _MENU_TOP) // _ROW_H  # rows that fit on screen
 _SB_X = 1010   # scrollbar x position (right edge)
 _SB_W = 8
-_POPUP_W = 320
-_POPUP_H = 160
+_POPUP_W = 400
+_POPUP_H = 180
+_POPUP_BTN_LEFT = 24    # x offset of Play button
+_POPUP_BTN_RIGHT = 212  # x offset of Theory button
+_POPUP_BTN_W = 160      # hit-test width for each button
 
 
 class LessonMenuScene(Scene):
@@ -255,8 +258,8 @@ class LessonMenuScene(Scene):
             w, h = surf.get_size()
             px = (w - _POPUP_W) // 2
             py = (h - _POPUP_H) // 2
-            play_rect = pygame.Rect(px + 20, py + 80, 120, 40)
-            teoria_rect = pygame.Rect(px + 180, py + 80, 120, 40)
+            play_rect = pygame.Rect(px + _POPUP_BTN_LEFT, py + 80, _POPUP_BTN_W, 44)
+            teoria_rect = pygame.Rect(px + _POPUP_BTN_RIGHT, py + 80, _POPUP_BTN_W, 44)
             from cognitive_data_arcade.engine.mouse import hit
             if event.type == pygame.MOUSEMOTION:
                 if hit(play_rect, event.pos):
@@ -395,14 +398,14 @@ class LessonMenuScene(Scene):
         surface.blit(title_surf, (px + _POPUP_W // 2 - title_surf.get_width() // 2, py + 16))
         play_color = _HIGHLIGHT_COLOR if self._popup_selected == 0 else _ITEM_COLOR
         play_surf = self._font_item.render(f"[ {self._strings.label_play_game} ]", True, play_color)
-        surface.blit(play_surf, (px + 20, py + 80))
+        surface.blit(play_surf, (px + _POPUP_BTN_LEFT, py + 80))
         teoria_color = (70, 70, 112)
         if self._teoria_available():
             teoria_color = _HIGHLIGHT_COLOR if self._popup_selected == 1 else _ITEM_COLOR
         teoria_surf = self._font_item.render(f"[ {self._strings.label_theory_lesson} ]", True, teoria_color)
-        surface.blit(teoria_surf, (px + 180, py + 80))
+        surface.blit(teoria_surf, (px + _POPUP_BTN_RIGHT, py + 80))
         hint_surf = self._font_item.render(self._strings.label_esc_close, True, (70, 70, 112))
-        surface.blit(hint_surf, (px + _POPUP_W // 2 - hint_surf.get_width() // 2, py + _POPUP_H - 30))
+        surface.blit(hint_surf, (px + _POPUP_W // 2 - hint_surf.get_width() // 2, py + _POPUP_H - 38))
 
     def _launch_big_data_map(self) -> None:
         self._next = self._make_big_data_map_game()
