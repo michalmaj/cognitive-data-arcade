@@ -133,6 +133,12 @@ def test_phase_result_renders():
     pygame.quit()
 
 
+def test_menu_has_lesson_31():
+    from cognitive_data_arcade.ui.menu import _LESSONS
+    nums = [n for n, _ in _LESSONS]
+    assert 31 in nums
+
+
 def test_lesson_31_structure():
     from cognitive_data_arcade.lessons.lesson_31 import CONTENT
     for lang in ("pl", "en"):
