@@ -7,6 +7,11 @@ import pygame
 
 _BUNDLED = Path("assets") / "fonts" / "Inter-Regular.ttf"
 
+# Inter renders ~1.87x taller than pygame's bitmap SysFont(None,...) at the same
+# nominal size.  All size constants in the codebase were calibrated for the bitmap
+# font, so we scale down uniformly so that Inter fits the existing layout geometry.
+_SCALE = 0.72
+
 _FALLBACK_CANDIDATES = [
     "dejavusans",
     "arialunicode",
@@ -37,10 +42,11 @@ def get_font(size: int) -> pygame.font.Font:
     if _bundled_ok is None:
         _bundled_ok = _BUNDLED.exists()
 
+    actual = max(10, round(size * _SCALE))
     if _bundled_ok:
-        font = pygame.font.Font(str(_BUNDLED), size)
+        font = pygame.font.Font(str(_BUNDLED), actual)
     else:
-        font = _load_system_font(size)
+        font = _load_system_font(actual)
 
     _cache[size] = font
     return font
