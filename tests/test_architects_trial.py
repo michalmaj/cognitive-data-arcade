@@ -203,3 +203,15 @@ def test_lesson_32_structure():
         assert len(CONTENT[lang]["theory"]) == 4
         assert len(CONTENT[lang]["notes"]) == 2
         assert len(CONTENT[lang]["tasks"]) == 3
+
+
+def test_menu_has_architects_trial():
+    from cognitive_data_arcade.ui.menu import _LESSONS
+    nums = [n for n, _ in _LESSONS]
+    assert 32 in nums
+
+
+def test_menu_order_30_before_31():
+    from cognitive_data_arcade.ui.menu import _LESSONS
+    nums = [n for n, _ in _LESSONS]
+    assert nums.index(32) < nums.index(31)
