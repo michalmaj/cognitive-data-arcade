@@ -41,6 +41,7 @@ _LESSONS = [
     (27, "Social Network Simulator"),
     (28, "Misinformation Spread"),
     (29, "Recommendation Bubble"),
+    (30, "Bias Blind Spot"),
 ]
 
 _BG = (26, 26, 46)
@@ -217,6 +218,8 @@ class LessonMenuScene(Scene):
             self._launch_misinformation()
         elif lesson_num == 29:
             self._launch_recommendation_bubble()
+        elif lesson_num == 30:
+            self._launch_bias_blind_spot()
         elif lesson_num == 6:
             self._launch_eda()
         elif lesson_num == 7:
@@ -348,6 +351,8 @@ class LessonMenuScene(Scene):
             return self._make_misinformation
         if lesson_num == 29:
             return self._make_recommendation_bubble
+        if lesson_num == 30:
+            return self._make_bias_blind_spot
         return None
 
     def _confirm_popup(self) -> None:
@@ -733,6 +738,19 @@ class LessonMenuScene(Scene):
         inner = RecommendationBubbleScene()
         game_info = get_game_info(self._strings)
         return PausableGame(inner, game_info, self._make_recommendation_bubble,
+                            self._strings, self._pm)
+
+    def _launch_bias_blind_spot(self) -> None:
+        self._next = self._make_bias_blind_spot()
+        self._done = True
+
+    def _make_bias_blind_spot(self) -> Scene:
+        from cognitive_data_arcade.engine.pause import PausableGame
+        from cognitive_data_arcade.games.bias_blind_spot.game import BiasBlindSpotScene
+        from cognitive_data_arcade.games.bias_blind_spot.info import get_game_info
+        inner = BiasBlindSpotScene()
+        game_info = get_game_info(self._strings)
+        return PausableGame(inner, game_info, self._make_bias_blind_spot,
                             self._strings, self._pm)
 
     def _launch_semantic_space(self) -> None:
