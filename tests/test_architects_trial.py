@@ -181,3 +181,16 @@ def test_phase_result_renders():
     scene.draw(surface)
     assert not scene.is_done()
     pygame.quit()
+
+
+def test_game_renders_3_frames():
+    import pygame
+    pygame.init()
+    surface = pygame.Surface((1024, 720))
+    from cognitive_data_arcade.games.architects_trial.game import ArchitectsTrialScene
+    scene = ArchitectsTrialScene()
+    for _ in range(3):
+        scene.update(16)
+        scene.draw(surface)
+    assert not scene.is_done()
+    pygame.quit()
