@@ -131,3 +131,25 @@ def test_phase_result_renders():
     scene.update(0)
     scene.draw(surface)
     pygame.quit()
+
+
+def test_game_renders_3_frames():
+    import pygame
+    from unittest.mock import patch
+    pygame.init()
+    surface = pygame.Surface((1024, 720))
+    from cognitive_data_arcade.games.you_were_the_dataset.game import YouWereTheDatasetScene
+    # Patch check_prerequisites so the game starts at PhasePrerequisiteScene
+    # (no real CSV read during test — avoids dependency on data/generated/ files)
+    _all_missing = {"reaction_time": False, "stroop": False, "flanker": False,
+                    "gono": False, "nback": False}
+    with patch(
+        "cognitive_data_arcade.games.you_were_the_dataset.game.check_prerequisites",
+        return_value=_all_missing,
+    ):
+        scene = YouWereTheDatasetScene(pm=None, strings=None)
+    for _ in range(3):
+        scene.update(16)
+        scene.draw(surface)
+    assert not scene.is_done()
+    pygame.quit()
