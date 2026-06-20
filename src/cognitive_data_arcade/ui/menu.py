@@ -495,7 +495,6 @@ _HIGHLIGHT_COLOR = (243, 156, 18)
 _MENU_TOP = 140
 _ROW_H = 44
 _VISIBLE = (720 - _MENU_TOP) // _ROW_H  # rows that fit on screen
-_SB_X = 1010   # scrollbar x position (right edge)
 _SB_W = 8
 _POPUP_W = 400
 _POPUP_H = 180
