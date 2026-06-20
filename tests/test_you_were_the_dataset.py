@@ -51,3 +51,19 @@ def test_synthetic_profile_is_synthetic():
     assert SYNTHETIC_PROFILE.rt_median_ms > 0
     assert 0 <= SYNTHETIC_PROFILE.gono_false_alarm_rate <= 1.0
     assert SYNTHETIC_PROFILE.nback_max_level >= 1
+
+
+def test_phase_prerequisite_renders():
+    import pygame
+    pygame.init()
+    surface = pygame.Surface((1024, 720))
+    from cognitive_data_arcade.games.you_were_the_dataset.game_state import GameState
+    from cognitive_data_arcade.games.you_were_the_dataset.phase_prerequisite import PhasePrerequisiteScene
+    from pathlib import Path
+    state = GameState()
+    # Pass empty tmp-like path so all games show as missing (no crash expected)
+    scene = PhasePrerequisiteScene(state, game_factories={}, _data_dir=Path("/nonexistent"))
+    scene.update(0)
+    scene.draw(surface)
+    assert not scene.is_done()
+    pygame.quit()
