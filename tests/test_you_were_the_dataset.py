@@ -67,3 +67,19 @@ def test_phase_prerequisite_renders():
     scene.draw(surface)
     assert not scene.is_done()
     pygame.quit()
+
+
+def test_phase_reveal_renders():
+    import pygame
+    pygame.init()
+    surface = pygame.Surface((1024, 720))
+    from cognitive_data_arcade.games.you_were_the_dataset.game_state import GameState
+    from cognitive_data_arcade.games.you_were_the_dataset.phase_reveal import PhaseRevealScene
+    from cognitive_data_arcade.games.you_were_the_dataset.synthetic_data import SYNTHETIC_PROFILE
+    state = GameState()
+    state.profile = SYNTHETIC_PROFILE  # pre-load so no CSV read during test
+    scene = PhaseRevealScene(state)
+    scene.update(0)
+    scene.draw(surface)
+    assert not scene.is_done()
+    pygame.quit()
