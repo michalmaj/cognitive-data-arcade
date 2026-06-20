@@ -163,3 +163,21 @@ def test_phase_tribunal_renders():
     scene.draw(surface)
     assert not scene.is_done()
     pygame.quit()
+
+
+def test_phase_result_renders():
+    import pygame
+    pygame.init()
+    surface = pygame.Surface((1024, 720))
+    from cognitive_data_arcade.games.architects_trial.game_state import GameState
+    from cognitive_data_arcade.games.architects_trial.phase_result import PhaseResultScene
+    state = GameState()
+    state.domain = "social"
+    state.fairness_score = 45
+    state.compliance_score = 55
+    state.effectiveness_score = 70
+    scene = PhaseResultScene(state)
+    scene.update(0)
+    scene.draw(surface)
+    assert not scene.is_done()
+    pygame.quit()
