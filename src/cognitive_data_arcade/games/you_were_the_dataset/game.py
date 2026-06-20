@@ -17,6 +17,9 @@ class YouWereTheDatasetScene(Scene):
         self._state._pm = pm       # type: ignore[attr-defined]
         self._state._strings = strings  # type: ignore[attr-defined]
 
+        self._done = False
+        self._next: Scene | None = None
+
         factories = self._build_game_factories()
         prereqs = check_prerequisites()
         if all(prereqs.values()):
@@ -68,17 +71,30 @@ class YouWereTheDatasetScene(Scene):
         self._current.handle_event(event)
 
     def update(self, dt_ms: float = 0.0) -> None:
+        if self._done:
+            return
         self._current.update(dt_ms)
         if self._current.is_done():
             nxt = self._current.next_scene()
-            if nxt is not None:
+            if nxt is None or type(nxt).__name__ == "LessonMenuScene":
+                # Phase chain ended (Menu clicked) — return to lesson menu.
+                # Detect LessonMenuScene by name to handle nested coordinators
+                # (Replay creates a new YouWereTheDatasetScene as self._current;
+                # when that inner instance finishes with Menu it returns LessonMenuScene).
+                self._done = True
+                if nxt is not None:
+                    self._next = nxt
+                elif self._pm is not None and self._strings is not None:
+                    from cognitive_data_arcade.ui.menu import LessonMenuScene
+                    self._next = LessonMenuScene(self._pm, self._strings)
+            else:
                 self._current = nxt
 
     def draw(self, surface: pygame.Surface) -> None:
         self._current.draw(surface)
 
     def is_done(self) -> bool:
-        return self._current.is_done() and self._current.next_scene() is None
+        return self._done
 
     def next_scene(self) -> Scene | None:
-        return None
+        return self._next
