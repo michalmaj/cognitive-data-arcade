@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import pygame
+from cognitive_data_arcade.engine.fonts import get_font
 
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
@@ -30,10 +31,10 @@ class AnalysisScene(Scene):
         self._back = back_scene
         self._done = False
         pygame.font.init()
-        self._font_title = pygame.font.SysFont(None, 34)
-        self._font_label = pygame.font.SysFont(None, 24)
-        self._font_value = pygame.font.SysFont(None, 36)
-        self._font_hint = pygame.font.SysFont(None, 24)
+        self._font_title = get_font(34)
+        self._font_label = get_font(24)
+        self._font_value = get_font(36)
+        self._font_hint = get_font(24)
 
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:

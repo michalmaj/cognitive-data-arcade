@@ -4,6 +4,7 @@ import datetime
 from pathlib import Path
 
 import pygame
+from cognitive_data_arcade.engine.fonts import get_font
 
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.pause import PausableGame
@@ -37,11 +38,11 @@ class StroopLevelScene(Scene):
         self._next: Scene | None = None
         self._hover_diff: int = -1  # which tile is hovered (-1 = none)
         pygame.font.init()
-        self._font_title = pygame.font.SysFont(None, 52)
-        self._font_row = pygame.font.SysFont(None, 36)
-        self._font_tile = pygame.font.SysFont(None, 32)
-        self._font_desc = pygame.font.SysFont(None, 26)
-        self._font_hint = pygame.font.SysFont(None, 28)
+        self._font_title = get_font(52)
+        self._font_row = get_font(36)
+        self._font_tile = get_font(32)
+        self._font_desc = get_font(26)
+        self._font_hint = get_font(28)
 
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.MOUSEMOTION:

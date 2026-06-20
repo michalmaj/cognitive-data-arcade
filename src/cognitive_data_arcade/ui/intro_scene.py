@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import pygame
+from cognitive_data_arcade.engine.fonts import get_font
 
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
@@ -26,8 +27,8 @@ class TitleScene(Scene):
     def _init_fonts(self) -> None:
         if self._font_title is None:
             pygame.font.init()
-            self._font_title = pygame.font.SysFont(None, 64)
-            self._font_hint = pygame.font.SysFont(None, 26)
+            self._font_title = get_font(64)
+            self._font_hint = get_font(26)
 
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.KEYDOWN:

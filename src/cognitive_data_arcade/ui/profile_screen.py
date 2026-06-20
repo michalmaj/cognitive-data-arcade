@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import pygame
+from cognitive_data_arcade.engine.fonts import get_font
 
 from cognitive_data_arcade.engine.badges import BADGE_REGISTRY, Badge
 from cognitive_data_arcade.engine.i18n import Strings, level_progress, level_title
@@ -37,10 +38,10 @@ class ProfileScene(Scene):
         self._editing_alias = False
         self._alias_buffer = ""
         pygame.font.init()
-        self._font_sm = pygame.font.SysFont(None, 22)
-        self._font_med = pygame.font.SysFont(None, 28)
-        self._font_large = pygame.font.SysFont(None, 46)
-        self._font_label = pygame.font.SysFont(None, 24)
+        self._font_sm = get_font(22)
+        self._font_med = get_font(28)
+        self._font_large = get_font(46)
+        self._font_label = get_font(24)
 
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and not self._editing_alias:

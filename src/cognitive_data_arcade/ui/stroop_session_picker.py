@@ -7,6 +7,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 import pygame
+from cognitive_data_arcade.engine.fonts import get_font
 
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
@@ -57,9 +58,9 @@ class StroopSessionPickerScene(Scene):
         self._done = False
         self._next: Scene | None = None
         pygame.font.init()
-        self._font_title = pygame.font.SysFont(None, 32)
-        self._font_row = pygame.font.SysFont(None, 24)
-        self._font_hint = pygame.font.SysFont(None, 24)
+        self._font_title = get_font(32)
+        self._font_row = get_font(24)
+        self._font_hint = get_font(24)
         self._sessions = self._load_sessions()
 
     # ── data loading ──────────────────────────────────────────────────────────

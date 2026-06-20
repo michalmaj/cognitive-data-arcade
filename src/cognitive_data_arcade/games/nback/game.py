@@ -8,6 +8,7 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 
 import pygame
+from cognitive_data_arcade.engine.fonts import get_font
 
 from cognitive_data_arcade.engine import audio
 from cognitive_data_arcade.engine.i18n import Strings
@@ -107,9 +108,9 @@ class NBackGame(Scene):
         self._next: Scene | None = None
         self._profile_before = profile_manager.load()
         pygame.font.init()
-        self._font_letter = pygame.font.SysFont(None, 100)
-        self._font_hint = pygame.font.SysFont(None, 28)
-        self._font_block = pygame.font.SysFont(None, 40)
+        self._font_letter = get_font(100)
+        self._font_hint = get_font(28)
+        self._font_block = get_font(40)
 
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type != pygame.KEYDOWN:

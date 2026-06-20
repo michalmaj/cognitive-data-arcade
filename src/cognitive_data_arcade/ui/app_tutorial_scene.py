@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import pygame
+from cognitive_data_arcade.engine.fonts import get_font
 
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
@@ -27,9 +28,9 @@ class AppTutorialScene(Scene):
         self._done = False
         self._next: Scene | None = None
         pygame.font.init()
-        self._font_title = pygame.font.SysFont(None, 44)
-        self._font_key = pygame.font.SysFont(None, 30)
-        self._font_hint = pygame.font.SysFont(None, 26)
+        self._font_title = get_font(44)
+        self._font_key = get_font(30)
+        self._font_hint = get_font(26)
         self._key_rows: list[tuple[str, str]] = [
             ("UP / DOWN", strings.app_tutorial_nav),
             ("ENTER", strings.app_tutorial_enter),
