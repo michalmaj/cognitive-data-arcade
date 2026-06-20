@@ -11,41 +11,481 @@ from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.engine.scrollbar import ScrollBar
 from cognitive_data_arcade.profile.manager import ProfileManager
 
+# ── Layout ──────────────────────────────────────────────────────────────────
+_W, _H        = 1024, 640
+_TOPBAR_H     = 56
+_HINTBAR_H    = 28
+_SIDEBAR_W    = 340
+_SIDEBAR_H    = _H - _TOPBAR_H - _HINTBAR_H    # 556
+_PANEL_X      = _SIDEBAR_W + 1                  # 341
+_PANEL_W      = _W - _PANEL_X                   # 683
+_SB_TRACK_W   = 4
+_SB_X         = _SIDEBAR_W - _SB_TRACK_W - 2   # 334
+
+# ── Palette ─────────────────────────────────────────────────────────────────
+_C_BG          = (13, 15, 26)
+_C_SURFACE     = (22, 24, 40)
+_C_SURFACE2    = (30, 32, 56)
+_C_ACCENT      = (99, 102, 241)
+_C_ACCENT_LIGHT= (129, 140, 248)
+_C_ACCENT_BG   = (20, 22, 52)
+_C_HOVER_BG    = (19, 21, 34)
+_C_TEXT        = (240, 241, 255)
+_C_TEXT_DIM    = (90, 96, 144)
+_C_TEXT_DARK   = (61, 64, 96)
+_C_TEXT_XDARK  = (45, 48, 82)
+
+_TYPE_COLORS: dict[str, tuple[int, int, int]] = {
+    "arcade": _C_ACCENT,
+    "lab":    (34, 211, 238),
+    "puzzle": (251, 191, 36),
+}
+
+# ── Lesson catalogue ──────────────────────────────────────────────────────────
+_LESSON_DATA: list[dict] = [
+    # ── Module 1 ──
+    {
+        "num": 1, "name": "Big Data in Cognitive Science", "type": "lab",
+        "desc_pl": (
+            "Skąd pochodzi big data w nauce kognitywnej?\n"
+            "Odkryj, jak dane z tysięcy uczestników\n"
+            "rozkładają się i co nam o nich mówią."
+        ),
+        "desc_en": (
+            "Where does cognitive big data come from?\n"
+            "Explore how data from thousands of participants\n"
+            "distributes and what patterns it reveals."
+        ),
+    },
+    {
+        "num": 2, "name": "Reaction Time Lab", "type": "arcade",
+        "desc_pl": (
+            "Jak szybko reagujesz na bodziec wizualny?\n"
+            "Naciśnij SPACJĘ gdy zaświeci kółko — mierzysz\n"
+            "czas reakcji, kluczową zmienną w badaniach."
+        ),
+        "desc_en": (
+            "How fast do you react to a visual stimulus?\n"
+            "Press SPACE when the circle lights up and measure\n"
+            "reaction time, a key variable in research."
+        ),
+    },
+    {
+        "num": 3, "name": "Event Log Detective", "type": "puzzle",
+        "desc_pl": (
+            "Detektyw danych: zbadaj zdarzenia w logu\n"
+            "eksperymentu i wykryj co poszło nie tak.\n"
+            "Poznaj formaty danych w psychologii."
+        ),
+        "desc_en": (
+            "Data detective: investigate events in an\n"
+            "experiment log and find what went wrong.\n"
+            "Learn data formats used in psychology research."
+        ),
+    },
+    {
+        "num": 4, "name": "Data Quality Lab", "type": "lab",
+        "desc_pl": (
+            "Czy Twoje dane są gotowe do analizy?\n"
+            "Wykryj błędy, wartości odstające i braki\n"
+            "w surowym zbiorze danych z eksperymentu."
+        ),
+        "desc_en": (
+            "Are your data ready for analysis?\n"
+            "Detect errors, outliers and missing values\n"
+            "in a raw dataset from a psychology experiment."
+        ),
+    },
+    {
+        "num": 6, "name": "EDA Sandbox", "type": "lab",
+        "desc_pl": (
+            "Zanim uruchomisz model — poznaj swoje dane.\n"
+            "Eksploruj rozkłady, korelacje i wzorce\n"
+            "w interaktywnej piaskownicy EDA."
+        ),
+        "desc_en": (
+            "Before running a model — understand your data.\n"
+            "Explore distributions, correlations and patterns\n"
+            "in an interactive EDA sandbox."
+        ),
+    },
+    # ── Module 2 ──
+    {
+        "num": 7, "name": "Stroop Challenge", "type": "arcade",
+        "desc_pl": (
+            "Nazwij kolor tuszu — nie słowo!\n"
+            "Efekt Stroopa mierzy konflikt poznawczy\n"
+            "między automatycznym czytaniem a uwagą."
+        ),
+        "desc_en": (
+            "Name the ink colour — not the word!\n"
+            "The Stroop effect measures cognitive conflict\n"
+            "between automatic reading and attention."
+        ),
+    },
+    {
+        "num": 8, "name": "Flanker Arena", "type": "arcade",
+        "desc_pl": (
+            "Ignoruj otaczające strzałki, reaguj na środek.\n"
+            "Zadanie Eriksena testuje selektywną uwagę\n"
+            "i zdolność do ignorowania dystraktorów."
+        ),
+        "desc_en": (
+            "Ignore surrounding arrows, react to the centre.\n"
+            "The Eriksen Flanker tests selective attention\n"
+            "and the ability to suppress distractors."
+        ),
+    },
+    {
+        "num": 9, "name": "Go/No-Go Guard", "type": "arcade",
+        "desc_pl": (
+            "Reaguj na zielony sygnał, hamuj na czerwony.\n"
+            "Mierz czas reakcji i kontrolę impulsów —\n"
+            "kluczowe zmienne w badaniach nad uwagą."
+        ),
+        "desc_en": (
+            "React to green signals, stop for red ones.\n"
+            "Measure reaction time and impulse control —\n"
+            "key variables in attention and inhibition research."
+        ),
+    },
+    {
+        "num": 10, "name": "N-Back Memory Grid", "type": "arcade",
+        "desc_pl": (
+            "Czy ta figura pojawiała się N kroków temu?\n"
+            "N-Back obciąża pamięć roboczą i testuje\n"
+            "jej pojemność w czasie rzeczywistym."
+        ),
+        "desc_en": (
+            "Did that shape appear N steps ago?\n"
+            "N-Back loads working memory and tests\n"
+            "its capacity in real time."
+        ),
+    },
+    {
+        "num": 11, "name": "Visual Search Lab", "type": "arcade",
+        "desc_pl": (
+            "Znajdź cel ukryty wśród dystraktorów.\n"
+            "Czas przeszukiwania ujawnia strategie uwagi\n"
+            "i efektywność wzrokowego filtrowania."
+        ),
+        "desc_en": (
+            "Find the target hidden among distractors.\n"
+            "Search time reveals attentional strategies\n"
+            "and the efficiency of visual filtering."
+        ),
+    },
+    {
+        "num": 12, "name": "Cognitive Dashboard", "type": "lab",
+        "desc_pl": (
+            "Zestawienie Twoich wyników z wszystkich\n"
+            "gier kognitywnych. Porównaj swój profil\n"
+            "poznawczy z danymi referencyjnymi."
+        ),
+        "desc_en": (
+            "A summary of your results across all\n"
+            "cognitive games. Compare your cognitive\n"
+            "profile against reference data."
+        ),
+    },
+    # ── Module 3 ──
+    {
+        "num": 13, "name": "Distribution Playground", "type": "lab",
+        "desc_pl": (
+            "Zmień parametry, obserwuj jak zmienia się rozkład.\n"
+            "Normalne, Poissona, t-Studenta — intuicyjnie\n"
+            "zrozum kształty danych w psychologii."
+        ),
+        "desc_en": (
+            "Change parameters, watch the distribution shift.\n"
+            "Normal, Poisson, t-Student — build intuition\n"
+            "for data shapes in psychology research."
+        ),
+    },
+    {
+        "num": 14, "name": "Correlation Trap", "type": "lab",
+        "desc_pl": (
+            "Korelacja to nie przyczynowość! Odkryj\n"
+            "fałszywe zależności w danych i naucz się\n"
+            "odróżniać związek statystyczny od przyczynowego."
+        ),
+        "desc_en": (
+            "Correlation is not causation! Discover\n"
+            "spurious relationships in data and learn to\n"
+            "distinguish statistical from causal links."
+        ),
+    },
+    {
+        "num": 15, "name": "Hypothesis Arena", "type": "lab",
+        "desc_pl": (
+            "Testuj hipotezy na symulowanych danych.\n"
+            "Poznaj p-value, poziom istotności i moc testu —\n"
+            "filary wnioskowania statystycznego."
+        ),
+        "desc_en": (
+            "Test hypotheses on simulated data.\n"
+            "Learn p-values, significance levels and power —\n"
+            "the pillars of statistical inference."
+        ),
+    },
+    {
+        "num": 16, "name": "Prediction Slider", "type": "lab",
+        "desc_pl": (
+            "Przesuń suwakiem i przewiduj wyniki.\n"
+            "Odkryj, jak model liniowy minimalizuje błąd\n"
+            "i kiedy prognoza zawodzi."
+        ),
+        "desc_en": (
+            "Drag the slider and make predictions.\n"
+            "See how a linear model minimises error\n"
+            "and when predictions break down."
+        ),
+    },
+    # ── Module 4 ──
+    {
+        "num": 17, "name": "Feature Hunter", "type": "arcade",
+        "desc_pl": (
+            "Które cechy najbardziej wpływają na predykcję?\n"
+            "Odkryj ważność zmiennych przez eliminację\n"
+            "i zbuduj intuicję feature selection."
+        ),
+        "desc_en": (
+            "Which features most influence the prediction?\n"
+            "Discover variable importance through elimination\n"
+            "and build intuition for feature selection."
+        ),
+    },
+    {
+        "num": 18, "name": "Classifier Battle", "type": "arcade",
+        "desc_pl": (
+            "Wybierz klasyfikator, dostosuj hiperparametry.\n"
+            "Porównaj SVM, las losowy i sieć neuronową\n"
+            "na rzeczywistych danych psychologicznych."
+        ),
+        "desc_en": (
+            "Pick a classifier, tune hyperparameters.\n"
+            "Compare SVM, random forest and neural nets\n"
+            "on real psychology data."
+        ),
+    },
+    {
+        "num": 19, "name": "Overfitting Monster", "type": "arcade",
+        "desc_pl": (
+            "Czy Twój model zapamiętał dane treningowe?\n"
+            "Odkryj overfitting przez krzywą uczenia\n"
+            "i regularyzację jako lekarstwo."
+        ),
+        "desc_en": (
+            "Did your model memorise the training data?\n"
+            "Discover overfitting through learning curves\n"
+            "and regularisation as the cure."
+        ),
+    },
+    {
+        "num": 20, "name": "Anomaly Alert", "type": "arcade",
+        "desc_pl": (
+            "Wykryj anomalie w strumieniu danych.\n"
+            "Poznaj algorytmy detekcji wartości odstających\n"
+            "i zastosowania w analizie danych kognitywnych."
+        ),
+        "desc_en": (
+            "Detect anomalies in a data stream.\n"
+            "Learn outlier detection algorithms and their\n"
+            "applications in cognitive data analysis."
+        ),
+    },
+    # ── Module 5 ──
+    {
+        "num": 21, "name": "Text Tokenizer Lab", "type": "lab",
+        "desc_pl": (
+            "Jak komputer widzi tekst? Tokenizuj zdania,\n"
+            "usuń stop words, stwórz bag-of-words —\n"
+            "pierwsze kroki w NLP."
+        ),
+        "desc_en": (
+            "How does a computer see text? Tokenise sentences,\n"
+            "remove stop words, build a bag-of-words —\n"
+            "first steps in NLP."
+        ),
+    },
+    {
+        "num": 22, "name": "Word Weight Factory", "type": "lab",
+        "desc_pl": (
+            "TF-IDF waży słowa według ważności.\n"
+            "Odkryj, które słowa najlepiej opisują dokument\n"
+            "w zbiorze tekstów psychologicznych."
+        ),
+        "desc_en": (
+            "TF-IDF weights words by importance.\n"
+            "Discover which words best characterise a document\n"
+            "in a psychology text corpus."
+        ),
+    },
+    {
+        "num": 23, "name": "Emotion Classifier", "type": "lab",
+        "desc_pl": (
+            "Czy komputer rozpozna emocje w tekście?\n"
+            "Wytrenuj i oceń klasyfikator uczuć\n"
+            "na danych z opisów eksperymentów."
+        ),
+        "desc_en": (
+            "Can a computer recognise emotion in text?\n"
+            "Train and evaluate a sentiment classifier\n"
+            "on data from experiment descriptions."
+        ),
+    },
+    {
+        "num": 24, "name": "Semantic Space Explorer", "type": "lab",
+        "desc_pl": (
+            "Zbadaj przestrzeń semantyczną słów.\n"
+            "Odkryj jak word embeddings reprezentują\n"
+            "znaczenie i relacje językowe."
+        ),
+        "desc_en": (
+            "Explore the semantic space of words.\n"
+            "See how word embeddings represent\n"
+            "meaning and language relationships."
+        ),
+    },
+    {
+        "num": 25, "name": "Topic Detective", "type": "puzzle",
+        "desc_pl": (
+            "Jakie tematy kryją się w korpusie tekstów?\n"
+            "Użyj LDA do odkrycia ukrytych tematów\n"
+            "i zidentyfikuj kto o czym pisał."
+        ),
+        "desc_en": (
+            "What topics hide in a text corpus?\n"
+            "Use LDA to uncover latent topics\n"
+            "and identify who wrote about what."
+        ),
+    },
+    {
+        "num": 26, "name": "Human vs Model", "type": "arcade",
+        "desc_pl": (
+            "Czy model językowy przechytrzy Ciebie?\n"
+            "Porównaj swoje klasyfikacje z modelem\n"
+            "i odkryj gdzie AI wygrywa, a gdzie przegrywa."
+        ),
+        "desc_en": (
+            "Can a language model outsmart you?\n"
+            "Compare your classifications against a model's\n"
+            "and see where AI wins and where it fails."
+        ),
+    },
+    # ── Module 6 ──
+    {
+        "num": 27, "name": "Social Network Simulator", "type": "lab",
+        "desc_pl": (
+            "Jak informacja rozprzestrzenia się w sieci?\n"
+            "Symuluj model SIR na grafie społecznym\n"
+            "i obserwuj dynamikę szerzenia się treści."
+        ),
+        "desc_en": (
+            "How does information spread in a network?\n"
+            "Simulate an SIR model on a social graph\n"
+            "and watch the dynamics of content spread."
+        ),
+    },
+    {
+        "num": 28, "name": "Misinformation Spread", "type": "arcade",
+        "desc_pl": (
+            "Powstrzymaj fake newsy zanim się rozejdą!\n"
+            "Decyduj co moderować w sieci społecznej —\n"
+            "uczysz się o wirusowości dezinformacji."
+        ),
+        "desc_en": (
+            "Stop fake news before they spread!\n"
+            "Decide what to moderate in a social network —\n"
+            "learn about the virality of misinformation."
+        ),
+    },
+    {
+        "num": 29, "name": "Recommendation Bubble", "type": "lab",
+        "desc_pl": (
+            "Czy algorytmy rekomendacji tworzą bańkę filtrującą?\n"
+            "Symuluj personalizację treści i zmierz\n"
+            "jak komora pogłosowa informacyjna się nasila."
+        ),
+        "desc_en": (
+            "Do recommendation algorithms create filter bubbles?\n"
+            "Simulate content personalisation and measure\n"
+            "how information echo chambers intensify."
+        ),
+    },
+    {
+        "num": 30, "name": "Bias Blind Spot", "type": "puzzle",
+        "desc_pl": (
+            "Czy rozpoznasz bias w projekcie badania?\n"
+            "Zidentyfikuj ukryte założenia i błędy metodologiczne\n"
+            "w opisach eksperymentów naukowych."
+        ),
+        "desc_en": (
+            "Can you spot bias in a research design?\n"
+            "Identify hidden assumptions and methodological flaws\n"
+            "in scientific experiment descriptions."
+        ),
+    },
+    {
+        "num": 32, "name": "The Architect's Trial", "type": "arcade",
+        "desc_pl": (
+            "Finalne wyzwanie: zaprojektuj własne badanie.\n"
+            "Połącz wiedzę ze wszystkich modułów\n"
+            "i obróń swój projekt przed krytykami."
+        ),
+        "desc_en": (
+            "The final challenge: design your own study.\n"
+            "Combine knowledge from all modules\n"
+            "and defend your research design."
+        ),
+    },
+    {
+        "num": 31, "name": "You Were the Dataset", "type": "lab",
+        "desc_pl": (
+            "Przez cały kurs byłeś częścią datasetu.\n"
+            "Przeanalizuj swoje własne dane kognitywne\n"
+            "i napisz raport z badań nad sobą."
+        ),
+        "desc_en": (
+            "Throughout the course you were part of the dataset.\n"
+            "Analyse your own cognitive data collected\n"
+            "and write a report on your own research."
+        ),
+    },
+]
+
+# ── Module structure ──────────────────────────────────────────────────────────
+# (header_pl, header_en, start_idx_in_LESSON_DATA, count)
+_MODULES: list[tuple[str, str, int, int]] = [
+    ("Modul 1 · Dane i Podstawy",         "Module 1 · Data Basics",             0,  5),
+    ("Modul 2 · Eksperymenty Kognitywne", "Module 2 · Cognitive Experiments",   5,  6),
+    ("Modul 3 · Statystyka",              "Module 3 · Statistics",             11,  4),
+    ("Modul 4 · Machine Learning",        "Module 4 · Machine Learning",       15,  4),
+    ("Modul 5 · Jezyk i NLP",             "Module 5 · Language & NLP",         19,  6),
+    ("Modul 6 · Sieci Etyka i Final",     "Module 6 · Networks, Ethics & Finale", 25, 6),
+]
+
+# ── Virtual sidebar row list ───────────────────────────────────────────────────
+# Each entry: (kind, param, y_offset_px, height_px)
+#   kind="header" → param = module index (0-5)
+#   kind="item"   → param = _LESSON_DATA index (0-30)
+_H_MODULE_ROW = 32
+_H_ITEM_ROW   = 36
+
+_VIRTUAL_ROWS: list[tuple[str, int, int, int]] = []
+_vy = 0
+for _mi, (_mpl, _men, _mstart, _mcount) in enumerate(_MODULES):
+    _VIRTUAL_ROWS.append(("header", _mi, _vy, _H_MODULE_ROW))
+    _vy += _H_MODULE_ROW
+    for _li in range(_mstart, _mstart + _mcount):
+        _VIRTUAL_ROWS.append(("item", _li, _vy, _H_ITEM_ROW))
+        _vy += _H_ITEM_ROW
+_VIRTUAL_H = _vy  # 1308
+
 # Lesson numbers follow the course README. Lesson 5 is absent because lessons 04 and 05
 # (Data Cleaning + Missing Values) are merged into a single game (entry 4, "Data Quality Lab").
-_LESSONS = [
-    (1, "Big Data in Cognitive Science"),
-    (2, "Reaction Time Lab"),
-    (3, "Event Logs and Data Formats"),
-    (4, "Data Quality Lab"),  # covers README lessons 04 + 05
-    (6, "Exploratory Data Analysis"),
-    (7, "Stroop Challenge"),
-    (8, "Flanker Arena"),
-    (9, "Go/No-Go Guard"),
-    (10, "N-Back Memory Grid"),
-    (11, "Visual Search Lab"),
-    (12, "Cognitive Dashboard"),
-    (13, "Distribution Playground"),
-    (14, "Correlation Trap"),
-    (15, "Hypothesis Arena"),
-    (16, "Prediction Slider"),
-    (17, "Feature Hunter"),
-    (18, "Classifier Battle"),
-    (19, "Overfitting Monster"),
-    (20, "Anomaly Alert"),
-    (21, "Text Tokenizer Lab"),
-    (22, "Word Weight Factory"),
-    (23, "Emotion Classifier"),
-    (24, "Semantic Space Explorer"),
-    (25, "Topic Detective"),
-    (26, "Human vs Model"),
-    (27, "Social Network Simulator"),
-    (28, "Misinformation Spread"),
-    (29, "Recommendation Bubble"),
-    (30, "Bias Blind Spot"),
-    (32, "The Architect's Trial"),
-    (31, "You Were the Dataset"),
-]
+# Compatibility shim: keep _LESSONS for any remaining references
+_LESSONS = [(d["num"], d["name"]) for d in _LESSON_DATA]
 
 _BG = (26, 26, 46)
 _TITLE_COLOR = (240, 240, 240)
