@@ -146,3 +146,19 @@ def test_phase_result_renders():
     scene.update(0)
     scene.draw(surface)  # must not raise
     pygame.quit()
+
+
+# ---------------------------------------------------------------------------
+# Task 8 — BiasBlindSpotScene coordinator smoke
+# ---------------------------------------------------------------------------
+
+def test_game_renders_3_frames():
+    pygame.init()
+    surface = pygame.Surface((1024, 720))
+    from cognitive_data_arcade.games.bias_blind_spot.game import BiasBlindSpotScene
+    scene = BiasBlindSpotScene()
+    for _ in range(3):
+        scene.update(16)
+        scene.draw(surface)
+    assert not scene.is_done()
+    pygame.quit()
