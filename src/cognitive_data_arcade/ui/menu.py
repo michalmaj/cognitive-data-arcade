@@ -545,46 +545,40 @@ class LessonMenuScene(Scene):
         self._font_hintbar      = get_font(14)
 
     def handle_event(self, event: pygame.event.Event) -> None:
-        if self._popup_visible:
-            self._handle_popup_event(event)
-            return
-        if event.type == pygame.MOUSEMOTION:
-            self._scrollbar.handle_mousemotion(event.pos, event.buttons)
-            x, y = event.pos
-            row = (y - _MENU_TOP) // _ROW_H
-            idx = self._scrollbar.scroll + row
-            if 0 <= row < _VISIBLE and 0 <= idx < len(_LESSONS):
-                self._selected = idx
-            return
-        if event.type == pygame.MOUSEWHEEL:
-            self._scrollbar.handle_wheel(-event.y)
-            return
-        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            if self._scrollbar.handle_mousedown(event.pos):
-                return
-            x, y = event.pos
-            row = (y - _MENU_TOP) // _ROW_H
-            idx = self._scrollbar.scroll + row
-            if 0 <= row < _VISIBLE and 0 <= idx < len(_LESSONS):
-                self._selected = idx
-                self._popup_visible = True
-                self._popup_selected = 0
-            return
-        if event.type != pygame.KEYDOWN:
-            return
+        if event.type == pygame.KEYDOWN:
+            self._handle_key(event)
+        elif event.type == pygame.MOUSEMOTION:
+            self._handle_mouse_motion(event)
+        elif event.type == pygame.MOUSEWHEEL:
+            self._scrollbar.handle_wheel(-event.y * _H_ITEM_ROW)
+        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            self._handle_mouse_click(event)
+
+    def _handle_key(self, event: pygame.event.Event) -> None:
         if event.key == pygame.K_ESCAPE:
             self._done = True
         elif event.key == pygame.K_UP:
             self._selected = max(0, self._selected - 1)
-            self._clamp_scroll()
+            self._ensure_visible()
             audio.play_sfx("navigate")
         elif event.key == pygame.K_DOWN:
-            self._selected = min(len(_LESSONS) - 1, self._selected + 1)
-            self._clamp_scroll()
+            self._selected = min(len(_LESSON_DATA) - 1, self._selected + 1)
+            self._ensure_visible()
             audio.play_sfx("navigate")
+        elif event.key == pygame.K_RETURN:
+            self._launch_selected_game()
+        elif event.key == pygame.K_t:
+            if self._teoria_available():
+                lesson_num = _LESSON_DATA[self._selected]["num"]
+                from cognitive_data_arcade.ui.lesson_reader import LessonReaderScene
+                back = LessonMenuScene(self._pm, self._strings, self._selected)
+                self._next = LessonReaderScene(
+                    lesson_num, self._strings, back,
+                    play_factory=self._game_factory_for(lesson_num),
+                )
+                self._done = True
         elif event.key == pygame.K_p:
             from cognitive_data_arcade.ui.profile_screen import ProfileScene
-
             back = LessonMenuScene(self._pm, self._strings, self._selected)
             self._next = ProfileScene(self._pm, self._strings, back)
             self._done = True
@@ -594,42 +588,71 @@ class LessonMenuScene(Scene):
             self._strings = get_strings(new_lang)
         elif event.key == pygame.K_a:
             from cognitive_data_arcade.ui.session_picker import SessionPickerScene
-
             sessions_dir = Path("data") / "generated" / "reaction_time"
             self._next = SessionPickerScene(sessions_dir, self._strings, self._pm)
             self._done = True
-        elif event.key == pygame.K_RETURN:
-            self._launch_selected_game()
         elif event.key == pygame.K_o:
             from cognitive_data_arcade.ui.options_scene import OptionsScene
-
             back = LessonMenuScene(self._pm, self._strings, self._selected)
             self._next = OptionsScene(self._pm, self._strings, back)
             self._done = True
-        elif event.key == pygame.K_t:
-            lesson_num = _LESSONS[self._selected][0]
-            if self._teoria_available():
-                from cognitive_data_arcade.ui.lesson_reader import LessonReaderScene
-
-                back = LessonMenuScene(self._pm, self._strings, self._selected)
-                self._next = LessonReaderScene(
-                    lesson_num, self._strings, back,
-                    play_factory=self._game_factory_for(lesson_num),
-                )
-                self._done = True
         elif event.key == pygame.K_z:
             self._launch_stroop_picker()
 
-    def _clamp_scroll(self) -> None:
-        top = self._scrollbar.scroll
-        if self._selected < top:
-            self._scrollbar.scroll_to(self._selected)
-        elif self._selected >= top + _VISIBLE:
-            self._scrollbar.scroll_to(self._selected - _VISIBLE + 1)
+    def _handle_mouse_motion(self, event: pygame.event.Event) -> None:
+        self._scrollbar.handle_mousemotion(event.pos, event.buttons)
+        x, y = event.pos
+        if 0 <= x < _SIDEBAR_W and _TOPBAR_H <= y < _TOPBAR_H + _SIDEBAR_H:
+            self._hovered = self._lesson_idx_at(y)
+        else:
+            self._hovered = None
+
+    def _handle_mouse_click(self, event: pygame.event.Event) -> None:
+        x, y = event.pos
+        if 0 <= x < _SIDEBAR_W and _TOPBAR_H <= y < _TOPBAR_H + _SIDEBAR_H:
+            if self._scrollbar.handle_mousedown(event.pos):
+                return
+            idx = self._lesson_idx_at(y)
+            if idx is not None:
+                self._selected = idx
+            return
+        if self._play_btn_rect and self._play_btn_rect.collidepoint(x, y):
+            audio.play_sfx("select")
+            self._launch_selected_game()
+        elif (
+            self._teoria_btn_rect
+            and self._teoria_btn_rect.collidepoint(x, y)
+            and self._teoria_available()
+        ):
+            lesson_num = _LESSON_DATA[self._selected]["num"]
+            from cognitive_data_arcade.ui.lesson_reader import LessonReaderScene
+            back = LessonMenuScene(self._pm, self._strings, self._selected)
+            self._next = LessonReaderScene(
+                lesson_num, self._strings, back,
+                play_factory=self._game_factory_for(lesson_num),
+            )
+            self._done = True
+
+    def _lesson_idx_at(self, screen_y: int) -> int | None:
+        vy = screen_y - _TOPBAR_H + self._scrollbar.scroll
+        for kind, param, row_vy, row_vh in _VIRTUAL_ROWS:
+            if kind == "item" and row_vy <= vy < row_vy + row_vh:
+                return param
+        return None
+
+    def _ensure_visible(self) -> None:
+        for kind, param, row_vy, row_vh in _VIRTUAL_ROWS:
+            if kind == "item" and param == self._selected:
+                scroll = self._scrollbar.scroll
+                if row_vy < scroll:
+                    self._scrollbar.scroll_to(row_vy)
+                elif row_vy + row_vh > scroll + _SIDEBAR_H:
+                    self._scrollbar.scroll_to(row_vy + row_vh - _SIDEBAR_H)
+                break
 
     def _launch_selected_game(self) -> None:
         audio.play_sfx("select")
-        lesson_num = _LESSONS[self._selected][0]
+        lesson_num = _LESSON_DATA[self._selected]["num"]
         if lesson_num == 1:
             self._launch_big_data_map()
         elif lesson_num == 2:
@@ -695,42 +718,11 @@ class LessonMenuScene(Scene):
 
     def _teoria_available(self) -> bool:
         import importlib.util
-        lesson_num = _LESSONS[self._selected][0]
+        lesson_num = _LESSON_DATA[self._selected]["num"]
         spec = importlib.util.find_spec(
             f"cognitive_data_arcade.lessons.lesson_{lesson_num:02d}"
         )
         return spec is not None
-
-    def _handle_popup_event(self, event: pygame.event.Event) -> None:
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
-                self._popup_visible = False
-            elif event.key in (pygame.K_LEFT, pygame.K_RIGHT, pygame.K_TAB):
-                self._popup_selected = 1 - self._popup_selected
-            elif event.key == pygame.K_RETURN:
-                self._confirm_popup()
-        elif event.type in (pygame.MOUSEMOTION, pygame.MOUSEBUTTONDOWN):
-            surf = pygame.display.get_surface()
-            if surf is None:
-                return
-            w, h = surf.get_size()
-            px = (w - _POPUP_W) // 2
-            py = (h - _POPUP_H) // 2
-            play_rect = pygame.Rect(px + _POPUP_BTN_LEFT, py + 80, _POPUP_BTN_W, 44)
-            teoria_rect = pygame.Rect(px + _POPUP_BTN_RIGHT, py + 80, _POPUP_BTN_W, 44)
-            from cognitive_data_arcade.engine.mouse import hit
-            if event.type == pygame.MOUSEMOTION:
-                if hit(play_rect, event.pos):
-                    self._popup_selected = 0
-                elif hit(teoria_rect, event.pos) and self._teoria_available():
-                    self._popup_selected = 1
-            elif event.button == 1:
-                if hit(play_rect, event.pos):
-                    self._popup_selected = 0
-                    self._confirm_popup()
-                elif hit(teoria_rect, event.pos) and self._teoria_available():
-                    self._popup_selected = 1
-                    self._confirm_popup()
 
     def _game_factory_for(self, lesson_num: int):
         if lesson_num == 1:
@@ -826,21 +818,6 @@ class LessonMenuScene(Scene):
         if lesson_num == 31:
             return self._make_you_were_the_dataset
         return None
-
-    def _confirm_popup(self) -> None:
-        self._popup_visible = False
-        if self._popup_selected == 0:
-            self._launch_selected_game()
-        elif self._popup_selected == 1 and self._teoria_available():
-            lesson_num = _LESSONS[self._selected][0]
-            from cognitive_data_arcade.ui.lesson_reader import LessonReaderScene
-
-            back = LessonMenuScene(self._pm, self._strings, self._selected)
-            self._next = LessonReaderScene(
-                lesson_num, self._strings, back,
-                play_factory=self._game_factory_for(lesson_num),
-            )
-            self._done = True
 
     def _launch_big_data_map(self) -> None:
         self._next = self._make_big_data_map_game()
