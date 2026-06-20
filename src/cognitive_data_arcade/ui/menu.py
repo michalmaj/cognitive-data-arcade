@@ -492,15 +492,6 @@ _TITLE_COLOR = (240, 240, 240)
 _ITEM_COLOR = (160, 160, 160)
 _HIGHLIGHT_COLOR = (243, 156, 18)
 
-_MENU_TOP = 140
-_ROW_H = 44
-_VISIBLE = (720 - _MENU_TOP) // _ROW_H  # rows that fit on screen
-_SB_W = 8
-_POPUP_W = 400
-_POPUP_H = 180
-_POPUP_BTN_LEFT = 24    # x offset of Play button
-_POPUP_BTN_RIGHT = 212  # x offset of Theory button
-_POPUP_BTN_W = 160      # hit-test width for each button
 
 
 class LessonMenuScene(Scene):

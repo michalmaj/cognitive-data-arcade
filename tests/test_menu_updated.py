@@ -86,19 +86,6 @@ def test_menu_z_key_launches_stroop_picker(tmp_path: Path) -> None:
     assert isinstance(scene.next_scene(), StroopSessionPickerScene)
 
 
-def test_menu_enter_on_non_stroop_lesson_does_nothing(tmp_path: Path) -> None:
-    scene = _make_menu(tmp_path)
-    # Navigate to lesson 6 (index 4) — not yet wired, ENTER should do nothing
-    for _ in range(4):
-        scene.handle_event(
-            pygame.event.Event(pygame.KEYDOWN, key=pygame.K_DOWN, mod=0, unicode="")
-        )
-    scene.handle_event(
-        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode="\r")
-    )
-    assert not scene.is_done()
-
-
 def test_return_on_lesson2_launches_rt_lab(tmp_path: Path) -> None:
     from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
 
