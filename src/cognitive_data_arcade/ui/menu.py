@@ -3,7 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 
 import pygame
-from cognitive_data_arcade.engine.fonts import get_font
+from cognitive_data_arcade.engine.fonts import get_font, get_font_medium
 
 from cognitive_data_arcade.engine import audio
 from cognitive_data_arcade.engine.i18n import Strings, get_strings
@@ -523,16 +523,16 @@ class LessonMenuScene(Scene):
 
         audio.play_music("menu")
         pygame.font.init()
-        self._font_topbar_title = get_font(28)
+        self._font_topbar_title = get_font_medium(28)
         self._font_topbar_sub   = get_font(16)
         self._font_mod_header   = get_font(13)
         self._font_item_num     = get_font(14)
         self._font_item_name    = get_font(18)
         self._font_panel_module = get_font(14)
         self._font_panel_badge  = get_font(15)
-        self._font_panel_title  = get_font(38)
+        self._font_panel_title  = get_font_medium(38)
         self._font_panel_desc   = get_font(18)
-        self._font_btn          = get_font(18)
+        self._font_btn          = get_font_medium(18)
         self._font_hintbar      = get_font(14)
 
     def handle_event(self, event: pygame.event.Event) -> None:
