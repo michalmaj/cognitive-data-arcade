@@ -118,7 +118,12 @@ class PausableGame(Scene):
         if not self._paused:
             self._inner.update(dt_ms)
         if self._inner.is_done() and not self._done:
-            self._next = self._inner.next_scene()
+            nxt = self._inner.next_scene()
+            if nxt is None:
+                from cognitive_data_arcade.ui.menu import LessonMenuScene
+                self._next = LessonMenuScene(self._pm, self._strings)
+            else:
+                self._next = nxt
             self._done = True
 
     def is_done(self) -> bool:
