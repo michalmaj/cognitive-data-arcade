@@ -69,3 +69,17 @@ def test_score_clamped_to_100():
     s.fairness_score = 90
     s.fairness_score = min(100, max(0, s.fairness_score + 50))
     assert s.fairness_score == 100
+
+
+def test_phase_intro_renders():
+    import pygame
+    pygame.init()
+    surface = pygame.Surface((1024, 720))
+    from cognitive_data_arcade.games.architects_trial.game_state import GameState
+    from cognitive_data_arcade.games.architects_trial.phase_intro import PhaseIntroScene
+    state = GameState()
+    scene = PhaseIntroScene(state)
+    scene.update(100)
+    scene.draw(surface)
+    assert not scene.is_done()
+    pygame.quit()
