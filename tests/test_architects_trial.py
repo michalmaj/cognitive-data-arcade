@@ -97,3 +97,34 @@ def test_phase_domain_picker_renders():
     scene.draw(surface)
     assert not scene.is_done()
     pygame.quit()
+
+
+def test_phase_act_renders():
+    import pygame
+    pygame.init()
+    surface = pygame.Surface((1024, 720))
+    from cognitive_data_arcade.games.architects_trial.game_state import GameState
+    from cognitive_data_arcade.games.architects_trial.phase_act import PhaseActScene
+    state = GameState()
+    state.domain = "social"
+    scene = PhaseActScene(state, act_num=1)
+    scene.update(0)
+    scene.draw(surface)
+    assert not scene.is_done()
+    pygame.quit()
+
+
+def test_phase_act_applies_score_deltas():
+    from cognitive_data_arcade.games.architects_trial.game_state import GameState
+    from cognitive_data_arcade.games.architects_trial.domain_data import DOMAIN_DATA
+    state = GameState()
+    state.domain = "social"
+    card = DOMAIN_DATA["social"]["act1_cards"][0]  # "registries": f+10, c+20, e+10
+    state.fairness_score = min(100, max(0, state.fairness_score + card.fairness_delta))
+    state.compliance_score = min(100, max(0, state.compliance_score + card.compliance_delta))
+    state.effectiveness_score = min(100, max(0, state.effectiveness_score + card.effectiveness_delta))
+    state.decisions.append(card.key)
+    assert state.fairness_score == 10
+    assert state.compliance_score == 20
+    assert state.effectiveness_score == 10
+    assert state.decisions == ["registries"]
