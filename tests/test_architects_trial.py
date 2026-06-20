@@ -83,3 +83,17 @@ def test_phase_intro_renders():
     scene.draw(surface)
     assert not scene.is_done()
     pygame.quit()
+
+
+def test_phase_domain_picker_renders():
+    import pygame
+    pygame.init()
+    surface = pygame.Surface((1024, 720))
+    from cognitive_data_arcade.games.architects_trial.game_state import GameState
+    from cognitive_data_arcade.games.architects_trial.phase_domain_picker import PhaseDomainPickerScene
+    state = GameState()
+    scene = PhaseDomainPickerScene(state)
+    scene.update(0)
+    scene.draw(surface)
+    assert not scene.is_done()
+    pygame.quit()
