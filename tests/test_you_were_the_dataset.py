@@ -133,6 +133,14 @@ def test_phase_result_renders():
     pygame.quit()
 
 
+def test_lesson_31_structure():
+    from cognitive_data_arcade.lessons.lesson_31 import CONTENT
+    for lang in ("pl", "en"):
+        assert len(CONTENT[lang]["theory"]) == 4
+        assert len(CONTENT[lang]["notes"]) == 2
+        assert len(CONTENT[lang]["tasks"]) == 3
+
+
 def test_game_renders_3_frames():
     import pygame
     from unittest.mock import patch
