@@ -42,6 +42,7 @@ _LESSONS = [
     (28, "Misinformation Spread"),
     (29, "Recommendation Bubble"),
     (30, "Bias Blind Spot"),
+    (31, "You Were the Dataset"),
 ]
 
 _BG = (26, 26, 46)
@@ -220,6 +221,8 @@ class LessonMenuScene(Scene):
             self._launch_recommendation_bubble()
         elif lesson_num == 30:
             self._launch_bias_blind_spot()
+        elif lesson_num == 31:
+            self._launch_you_were_the_dataset()
         elif lesson_num == 6:
             self._launch_eda()
         elif lesson_num == 7:
@@ -353,6 +356,8 @@ class LessonMenuScene(Scene):
             return self._make_recommendation_bubble
         if lesson_num == 30:
             return self._make_bias_blind_spot
+        if lesson_num == 31:
+            return self._make_you_were_the_dataset
         return None
 
     def _confirm_popup(self) -> None:
@@ -751,6 +756,19 @@ class LessonMenuScene(Scene):
         inner = BiasBlindSpotScene()
         game_info = get_game_info(self._strings)
         return PausableGame(inner, game_info, self._make_bias_blind_spot,
+                            self._strings, self._pm)
+
+    def _launch_you_were_the_dataset(self) -> None:
+        self._next = self._make_you_were_the_dataset()
+        self._done = True
+
+    def _make_you_were_the_dataset(self) -> Scene:
+        from cognitive_data_arcade.engine.pause import PausableGame
+        from cognitive_data_arcade.games.you_were_the_dataset.game import YouWereTheDatasetScene
+        from cognitive_data_arcade.games.you_were_the_dataset.info import get_game_info
+        inner = YouWereTheDatasetScene(self._pm, self._strings)
+        game_info = get_game_info(self._strings)
+        return PausableGame(inner, game_info, self._make_you_were_the_dataset,
                             self._strings, self._pm)
 
     def _launch_semantic_space(self) -> None:
