@@ -1,0 +1,53 @@
+"""Tests for L31 You Were the Dataset."""
+from __future__ import annotations
+import csv
+from pathlib import Path
+import pytest
+
+
+def test_game_state_defaults():
+    from cognitive_data_arcade.games.you_were_the_dataset.game_state import GameState
+    s = GameState()
+    assert s.profile is None
+    assert s.current_card == 0
+
+
+def test_prerequisites_all_present(tmp_path):
+    from cognitive_data_arcade.games.you_were_the_dataset.profile_loader import (
+        check_prerequisites, REQUIRED_GAMES,
+    )
+    for name in REQUIRED_GAMES:
+        d = tmp_path / name
+        d.mkdir()
+        (d / "session.csv").write_text("col\nval\n")
+    result = check_prerequisites(tmp_path)
+    assert all(result.values())
+
+
+def test_prerequisites_some_missing(tmp_path):
+    from cognitive_data_arcade.games.you_were_the_dataset.profile_loader import (
+        check_prerequisites,
+    )
+    (tmp_path / "stroop").mkdir()
+    (tmp_path / "stroop" / "s.csv").write_text("col\nval\n")
+    result = check_prerequisites(tmp_path)
+    assert result["stroop"] is True
+    assert result["flanker"] is False
+
+
+def test_rt_percentile_fast():
+    from cognitive_data_arcade.games.you_were_the_dataset.profile_loader import _rt_percentile
+    assert _rt_percentile(155) >= 90
+
+
+def test_rt_percentile_slow():
+    from cognitive_data_arcade.games.you_were_the_dataset.profile_loader import _rt_percentile
+    assert _rt_percentile(560) <= 10
+
+
+def test_synthetic_profile_is_synthetic():
+    from cognitive_data_arcade.games.you_were_the_dataset.synthetic_data import SYNTHETIC_PROFILE
+    assert SYNTHETIC_PROFILE.is_synthetic is True
+    assert SYNTHETIC_PROFILE.rt_median_ms > 0
+    assert 0 <= SYNTHETIC_PROFILE.gono_false_alarm_rate <= 1.0
+    assert SYNTHETIC_PROFILE.nback_max_level >= 1
