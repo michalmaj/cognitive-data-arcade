@@ -842,29 +842,6 @@ class LessonMenuScene(Scene):
             )
             self._done = True
 
-    def _draw_popup(self, surface: pygame.Surface) -> None:
-        w, h = surface.get_size()
-        overlay = pygame.Surface((w, h), pygame.SRCALPHA)
-        overlay.fill((0, 0, 0, 140))
-        surface.blit(overlay, (0, 0))
-        px = (w - _POPUP_W) // 2
-        py = (h - _POPUP_H) // 2
-        pygame.draw.rect(surface, (18, 18, 42), (px, py, _POPUP_W, _POPUP_H), border_radius=8)
-        pygame.draw.rect(surface, (42, 42, 80), (px, py, _POPUP_W, _POPUP_H), 1, border_radius=8)
-        name = _LESSONS[self._selected][1]
-        title_surf = self._font_item.render(name, True, (240, 240, 240))
-        surface.blit(title_surf, (px + _POPUP_W // 2 - title_surf.get_width() // 2, py + 16))
-        play_color = _HIGHLIGHT_COLOR if self._popup_selected == 0 else _ITEM_COLOR
-        play_surf = self._font_item.render(f"[ {self._strings.label_play_game} ]", True, play_color)
-        surface.blit(play_surf, (px + _POPUP_BTN_LEFT, py + 80))
-        teoria_color = (70, 70, 112)
-        if self._teoria_available():
-            teoria_color = _HIGHLIGHT_COLOR if self._popup_selected == 1 else _ITEM_COLOR
-        teoria_surf = self._font_item.render(f"[ {self._strings.label_theory_lesson} ]", True, teoria_color)
-        surface.blit(teoria_surf, (px + _POPUP_BTN_RIGHT, py + 80))
-        hint_surf = self._font_item.render(self._strings.label_esc_close, True, (70, 70, 112))
-        surface.blit(hint_surf, (px + _POPUP_W // 2 - hint_surf.get_width() // 2, py + _POPUP_H - 38))
-
     def _launch_big_data_map(self) -> None:
         self._next = self._make_big_data_map_game()
         self._done = True
@@ -1287,24 +1264,171 @@ class LessonMenuScene(Scene):
         return self._next
 
     def draw(self, surface: pygame.Surface) -> None:
-        surface.fill(_BG)
+        surface.fill(_C_BG)
+        self._draw_topbar(surface)
+        self._draw_sidebar(surface)
+        self._draw_panel(surface)
+        self._draw_hintbar(surface)
 
-        title = self._font_title.render(self._strings.menu_title, True, _TITLE_COLOR)
-        surface.blit(title, (40, 36))
+    def _draw_topbar(self, surface: pygame.Surface) -> None:
+        pygame.draw.rect(surface, _C_BG, (0, 0, _W, _TOPBAR_H))
+        pygame.draw.line(surface, _C_SURFACE, (0, _TOPBAR_H - 1), (_W, _TOPBAR_H - 1))
 
-        subtitle = self._font_item.render(
-            self._strings.menu_subtitle, True, _ITEM_COLOR
+        title = self._font_topbar_title.render("Cognitive Data Arcade", True, _C_TEXT)
+        ty = (_TOPBAR_H - title.get_height()) // 2
+        surface.blit(title, (28, ty))
+
+        sub = self._font_topbar_sub.render(
+            self._strings.menu_topbar_subtitle, True, _C_TEXT_DARK
         )
-        surface.blit(subtitle, (42, 96))
+        surface.blit(sub, (28 + title.get_width() + 14, ty + 2))
 
-        top = self._scrollbar.scroll
-        visible_end = min(top + _VISIBLE, len(_LESSONS))
-        for i in range(top, visible_end):
-            num, name = _LESSONS[i]
-            color = _HIGHLIGHT_COLOR if i == self._selected else _ITEM_COLOR
-            text = self._font_item.render(f"{i + 1:02d}.  {name}", True, color)
-            surface.blit(text, (60, _MENU_TOP + (i - top) * _ROW_H))
+        badge_txt = self._font_topbar_sub.render(
+            self._strings.menu_lang_badge, True, _C_TEXT_DARK
+        )
+        bw = badge_txt.get_width() + 18
+        bh = badge_txt.get_height() + 8
+        bx = _W - bw - 20
+        by = (_TOPBAR_H - bh) // 2
+        pygame.draw.rect(surface, _C_SURFACE, (bx, by, bw, bh), border_radius=4)
+        pygame.draw.rect(surface, _C_SURFACE2, (bx, by, bw, bh), 1, border_radius=4)
+        surface.blit(badge_txt, (bx + 9, by + 4))
+
+    def _draw_sidebar(self, surface: pygame.Surface) -> None:
+        pygame.draw.rect(surface, _C_BG, (0, _TOPBAR_H, _SIDEBAR_W, _SIDEBAR_H))
+        pygame.draw.line(
+            surface, _C_SURFACE,
+            (_SIDEBAR_W, _TOPBAR_H), (_SIDEBAR_W, _TOPBAR_H + _SIDEBAR_H - 1),
+        )
+
+        lang = self._strings.language
+        scroll_px = self._scrollbar.scroll
+
+        for kind, param, vy, vh in _VIRTUAL_ROWS:
+            sy = _TOPBAR_H + vy - scroll_px
+            if sy + vh <= _TOPBAR_H or sy >= _TOPBAR_H + _SIDEBAR_H:
+                continue
+
+            if kind == "header":
+                label = self._strings.menu_modules[param]
+                if param > 0 and sy > _TOPBAR_H:
+                    pygame.draw.line(surface, _C_SURFACE, (0, sy), (_SIDEBAR_W, sy))
+                txt = self._font_mod_header.render(label, True, _C_TEXT_DARK)
+                surface.blit(txt, (20, sy + (vh - txt.get_height()) // 2))
+
+            else:
+                i = param
+                d = _LESSON_DATA[i]
+                is_active = i == self._selected
+                is_hover  = i == self._hovered
+
+                if is_active:
+                    pygame.draw.rect(surface, _C_ACCENT_BG, (0, sy, _SIDEBAR_W, vh))
+                    pygame.draw.rect(surface, _C_ACCENT, (0, sy, 3, vh))
+                elif is_hover:
+                    pygame.draw.rect(surface, _C_HOVER_BG, (0, sy, _SIDEBAR_W, vh))
+
+                num_color  = _C_ACCENT if is_active else _C_TEXT_XDARK
+                name_color = _C_TEXT if is_active else (_C_TEXT_DIM if not is_hover else (110, 120, 160))
+
+                num_surf  = self._font_item_num.render(f"{i + 1:02d}", True, num_color)
+                name_surf = self._font_item_name.render(d["name"], True, name_color)
+                mid_y = sy + vh // 2
+
+                surface.blit(num_surf, (20, mid_y - num_surf.get_height() // 2))
+                surface.blit(name_surf, (48, mid_y - name_surf.get_height() // 2))
+
+                dot_color = _TYPE_COLORS[d["type"]]
+                pygame.draw.circle(surface, dot_color, (_SIDEBAR_W - 16, mid_y), 4)
+
         self._scrollbar.draw(surface)
 
-        if self._popup_visible:
-            self._draw_popup(surface)
+    def _draw_panel(self, surface: pygame.Surface) -> None:
+        pygame.draw.rect(surface, _C_BG, (_PANEL_X, _TOPBAR_H, _PANEL_W, _SIDEBAR_H))
+
+        d = _LESSON_DATA[self._selected]
+        lang = self._strings.language
+
+        mod_label = ""
+        for mi, (m_pl, m_en, start, count) in enumerate(_MODULES):
+            if start <= self._selected < start + count:
+                mod_label = self._strings.menu_modules[mi]
+                break
+
+        x0 = _PANEL_X + 36
+        y = _TOPBAR_H + max(20, (_SIDEBAR_H - 200) // 2)
+
+        mod_surf = self._font_panel_module.render(mod_label, True, _C_TEXT_DARK)
+        surface.blit(mod_surf, (x0, y))
+        y += mod_surf.get_height() + 10
+
+        lesson_label = f"{self._strings.menu_lesson_prefix} {self._selected + 1}"
+        bl_surf = self._font_panel_badge.render(lesson_label, True, _C_TEXT_DARK)
+        bw = bl_surf.get_width() + 18
+        bh = bl_surf.get_height() + 8
+        pygame.draw.rect(surface, _C_SURFACE, (x0, y, bw, bh), border_radius=4)
+        pygame.draw.rect(surface, _C_SURFACE2, (x0, y, bw, bh), 1, border_radius=4)
+        surface.blit(bl_surf, (x0 + 9, y + 4))
+
+        tx = x0 + bw + 8
+        dot_color = _TYPE_COLORS[d["type"]]
+        pygame.draw.circle(surface, dot_color, (tx + 5, y + bh // 2), 5)
+        type_surf = self._font_panel_badge.render(d["type"], True, _C_ACCENT_LIGHT)
+        surface.blit(type_surf, (tx + 14, y + 4))
+        y += bh + 16
+
+        title_surf = self._font_panel_title.render(d["name"], True, _C_TEXT)
+        surface.blit(title_surf, (x0, y))
+        y += title_surf.get_height() + 14
+
+        desc = d["desc_pl"] if lang == "pl" else d["desc_en"]
+        for line in desc.split("\n"):
+            line_surf = self._font_panel_desc.render(line, True, _C_TEXT_DIM)
+            surface.blit(line_surf, (x0, y))
+            y += line_surf.get_height() + 3
+        y += 14
+
+        self._play_btn_rect = self._draw_panel_button(
+            surface, x0, y, self._strings.label_play_game, primary=True
+        )
+        teoria_ok = self._teoria_available()
+        self._teoria_btn_rect = self._draw_panel_button(
+            surface, x0 + self._play_btn_rect.width + 10, y,
+            self._strings.label_theory_lesson,
+            primary=False, disabled=not teoria_ok,
+        )
+
+    def _draw_panel_button(
+        self,
+        surface: pygame.Surface,
+        x: int,
+        y: int,
+        label: str,
+        primary: bool,
+        disabled: bool = False,
+    ) -> pygame.Rect:
+        txt_color = (
+            _C_TEXT if primary and not disabled
+            else _C_ACCENT_LIGHT if not disabled
+            else _C_TEXT_DARK
+        )
+        txt = self._font_btn.render(label, True, txt_color)
+        w = txt.get_width() + 44
+        h = 40
+        rect = pygame.Rect(x, y, w, h)
+        bg = _C_ACCENT if primary and not disabled else _C_SURFACE
+        pygame.draw.rect(surface, bg, rect, border_radius=6)
+        if not primary:
+            pygame.draw.rect(surface, _C_SURFACE2, rect, 1, border_radius=6)
+        surface.blit(txt, (x + 22, y + (h - txt.get_height()) // 2))
+        return rect
+
+    def _draw_hintbar(self, surface: pygame.Surface) -> None:
+        by = _H - _HINTBAR_H
+        pygame.draw.rect(surface, _C_BG, (0, by, _W, _HINTBAR_H))
+        pygame.draw.line(surface, _C_SURFACE, (0, by), (_W, by))
+        x = 20
+        for item in self._strings.menu_hintbar_items:
+            surf = self._font_hintbar.render(item, True, _C_TEXT_XDARK)
+            surface.blit(surf, (x, by + (_HINTBAR_H - surf.get_height()) // 2))
+            x += surf.get_width() + 20
