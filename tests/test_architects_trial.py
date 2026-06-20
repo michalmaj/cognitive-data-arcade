@@ -128,3 +128,19 @@ def test_phase_act_applies_score_deltas():
     assert state.compliance_score == 20
     assert state.effectiveness_score == 10
     assert state.decisions == ["registries"]
+
+
+def test_phase_consequences_renders():
+    import pygame
+    pygame.init()
+    surface = pygame.Surface((1024, 720))
+    from cognitive_data_arcade.games.architects_trial.game_state import GameState
+    from cognitive_data_arcade.games.architects_trial.phase_consequences import PhaseConsequencesScene
+    state = GameState()
+    state.domain = "social"
+    state.decisions = ["registries", "minimize_fn", "kpi_interventions"]
+    scene = PhaseConsequencesScene(state)
+    scene.update(500)
+    scene.draw(surface)
+    assert not scene.is_done()
+    pygame.quit()
