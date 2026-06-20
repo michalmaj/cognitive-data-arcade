@@ -508,22 +508,41 @@ class LessonMenuScene(Scene):
         self._pm = profile_manager
         self._strings = strings
         self._selected = selected
+        self._hovered: int | None = None
         self._next: Scene | None = None
         self._done = False
-        self._popup_visible: bool = False
-        self._popup_selected: int = 0  # 0=Play, 1=Teoria
+        self._play_btn_rect: pygame.Rect | None = None
+        self._teoria_btn_rect: pygame.Rect | None = None
+
         self._scrollbar = ScrollBar(
-            total=len(_LESSONS),
-            visible=_VISIBLE,
+            total=_VIRTUAL_H,
+            visible=_SIDEBAR_H,
             x=_SB_X,
-            y=_MENU_TOP,
-            h=_VISIBLE * _ROW_H,
-            width=_SB_W,
+            y=_TOPBAR_H,
+            h=_SIDEBAR_H,
+            width=_SB_TRACK_W,
         )
+        # Scroll so that the initially selected item is vertically centred
+        for kind, param, row_vy, _row_vh in _VIRTUAL_ROWS:
+            if kind == "item" and param == selected:
+                max_s = max(0, _VIRTUAL_H - _SIDEBAR_H)
+                center = row_vy - (_SIDEBAR_H // 2)
+                self._scrollbar.scroll_to(max(0, min(max_s, center)))
+                break
+
         audio.play_music("menu")
         pygame.font.init()
-        self._font_title = get_font(52)
-        self._font_item = get_font(34)
+        self._font_topbar_title = get_font(28)
+        self._font_topbar_sub   = get_font(16)
+        self._font_mod_header   = get_font(13)
+        self._font_item_num     = get_font(14)
+        self._font_item_name    = get_font(18)
+        self._font_panel_module = get_font(14)
+        self._font_panel_badge  = get_font(15)
+        self._font_panel_title  = get_font(38)
+        self._font_panel_desc   = get_font(18)
+        self._font_btn          = get_font(18)
+        self._font_hintbar      = get_font(14)
 
     def handle_event(self, event: pygame.event.Event) -> None:
         if self._popup_visible:
