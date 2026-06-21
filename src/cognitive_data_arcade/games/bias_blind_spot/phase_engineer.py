@@ -23,7 +23,7 @@ from cognitive_data_arcade.engine.colors import (
     ORANGE as _ORANGE,
 )
 
-_W, _H = 1024, 720
+_W, _H = 1024, 768
 _PANEL = (16, 20, 36)
 _C_ENG = (39, 174, 96)
 

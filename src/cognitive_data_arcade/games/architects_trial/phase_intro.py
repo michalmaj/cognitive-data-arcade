@@ -12,7 +12,7 @@ from cognitive_data_arcade.engine.colors import (
     PURPLE as _PURPLE,
 )
 
-_W, _H = 1024, 720
+_W, _H = 1024, 768
 
 # (text, color, t_show_ms, font_size)
 _LINES = [

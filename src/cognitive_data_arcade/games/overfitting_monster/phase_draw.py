@@ -27,7 +27,7 @@ from cognitive_data_arcade.engine.colors import (
 
 _PANEL = (18, 18, 42)
 
-_W, _H = 1024, 720
+_W, _H = 1024, 768
 _TOP_H = 56
 _SCATTER = pygame.Rect(12, _TOP_H + 4, 680, _H - _TOP_H - 8)
 _PANEL_R = pygame.Rect(704, _TOP_H + 4, 308, _H - _TOP_H - 8)

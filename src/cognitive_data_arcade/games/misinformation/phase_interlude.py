@@ -9,7 +9,7 @@ from cognitive_data_arcade.games.misinformation.networks import ROUNDS
 
 from cognitive_data_arcade.engine.colors import BG as _BG
 
-_W, _H = 1024, 720
+_W, _H = 1024, 768
 
 
 class PhaseInterludeScene(Scene):

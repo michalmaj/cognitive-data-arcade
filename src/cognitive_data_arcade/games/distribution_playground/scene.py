@@ -60,7 +60,7 @@ class DistributionPlaygroundScene(Scene):
     def draw(self, surface: pygame.Surface) -> None:
         surface.fill(_BG)
         self._draw_nav(surface)
-        inner = pygame.Surface((1024, 720 - _NAV_H))
+        inner = pygame.Surface((1024, 768 - _NAV_H))
         inner.fill(_BG)
         phase_scene = self._active()
         phase_scene.draw(inner, offset_y=0)

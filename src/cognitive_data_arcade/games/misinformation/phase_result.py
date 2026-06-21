@@ -16,7 +16,7 @@ from cognitive_data_arcade.engine.colors import (
     BLUE as _BLUE,
 )
 
-_W, _H = 1024, 720
+_W, _H = 1024, 768
 _PANEL = (18, 18, 32)
 _GOLD = (243, 156, 18)
 _GREY = (60, 60, 80)

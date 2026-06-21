@@ -17,7 +17,7 @@ from cognitive_data_arcade.engine.colors import (
     RED as _RED,
 )
 
-_W, _H = 1024, 720
+_W, _H = 1024, 768
 _PANEL = (18, 18, 42)
 _AMBER = (240, 165, 0)
 _GREY = (80, 80, 100)

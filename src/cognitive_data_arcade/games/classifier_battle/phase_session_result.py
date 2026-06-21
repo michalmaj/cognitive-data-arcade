@@ -23,7 +23,7 @@ from cognitive_data_arcade.engine.colors import (
 _PANEL = (18, 18, 42)
 _FIG_BG = "#0f0f23"
 _AX_BG = "#1a1a3e"
-_W, _H = 1024, 720
+_W, _H = 1024, 768
 
 
 class PhaseSessionResultScene(Scene):

@@ -12,7 +12,7 @@ from cognitive_data_arcade.engine.colors import (
     PURPLE as _PURPLE,
 )
 
-_W, _H = 1024, 720
+_W, _H = 1024, 768
 _PANEL = (16, 20, 36)
 _HOVER = (45, 55, 90)
 _CARD_BG = (22, 30, 50)

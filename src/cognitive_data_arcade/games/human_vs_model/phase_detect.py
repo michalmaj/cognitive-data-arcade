@@ -6,7 +6,7 @@ from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.human_vs_model.challenge_data import DetectChallenge
 
-_W, _H = 1024, 720
+_W, _H = 1024, 768
 _TOP_H = 44
 _MID = 512
 from cognitive_data_arcade.engine.colors import (

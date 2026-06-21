@@ -13,7 +13,7 @@ from cognitive_data_arcade.engine.colors import (
     DIM as _DIM,
 )
 
-_W, _H = 1024, 720
+_W, _H = 1024, 768
 _PANEL = (16, 20, 36)
 _GOLD = (243, 156, 18)
 

@@ -9,7 +9,7 @@ from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.semantic_space.missions import Mission
 from cognitive_data_arcade.games.semantic_space.word_data import CLUSTERS, SIMILARITIES, WORDS
 
-_W, _H = 1024, 720
+_W, _H = 1024, 768
 _TOP_H = 44
 _LEFT_W = 320
 _MAP_X = _LEFT_W + 8

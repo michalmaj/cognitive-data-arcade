@@ -11,7 +11,7 @@ from cognitive_data_arcade.engine.chart import figure_to_surface
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 
-_W, _H = 1024, 720
+_W, _H = 1024, 768
 from cognitive_data_arcade.engine.colors import (
     BG as _BG,
     WHITE as _WHITE,

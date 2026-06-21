@@ -10,7 +10,7 @@ from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.misinformation.networks import NetworkConfig, build_graph
 from cognitive_data_arcade.games.social_network.graph import hub_node_index, sir_step
 
-_W, _H = 1024, 720
+_W, _H = 1024, 768
 _TOP_H = 60
 _BOT_H = 60
 _ACT_SECS = 60.0

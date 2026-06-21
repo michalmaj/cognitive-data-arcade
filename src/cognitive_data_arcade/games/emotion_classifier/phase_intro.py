@@ -13,7 +13,7 @@ from cognitive_data_arcade.engine.colors import (
     PURPLE as _PURPLE,
 )
 
-_W, _H = 1024, 720
+_W, _H = 1024, 768
 _PANEL = (18, 18, 42)
 
 _LINES = [

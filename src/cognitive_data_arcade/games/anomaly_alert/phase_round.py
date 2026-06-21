@@ -9,7 +9,7 @@ from cognitive_data_arcade.games.anomaly_alert.detector import find_clicked_elem
 from cognitive_data_arcade.games.anomaly_alert.renderers import CHART_RENDERER
 from cognitive_data_arcade.games.anomaly_alert.scenarios import Scenario
 
-_W, _H = 1024, 720
+_W, _H = 1024, 768
 _CHART_X, _CHART_Y = 0, 56
 _CHART_W, _CHART_H = 680, 624
 _PANEL_X = 680

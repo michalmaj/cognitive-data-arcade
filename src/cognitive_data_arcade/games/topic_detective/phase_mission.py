@@ -9,7 +9,7 @@ from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.topic_detective.missions import Mission
 from cognitive_data_arcade.games.topic_detective.topic_data import TOPICS
 
-_W, _H = 1024, 720
+_W, _H = 1024, 768
 _TOP_H = 44
 _LEFT_W = 320
 from cognitive_data_arcade.engine.colors import (

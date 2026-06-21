@@ -19,7 +19,7 @@ _PANEL = (18, 18, 42)
 
 _NAV_H = 48
 _W = 1024
-_INNER_H = 720 - _NAV_H  # 672
+_INNER_H = 768 - _NAV_H  # 720
 
 _PHASE_NAMES = ["Eksploracja", "Eksperyment", "Sandbox"]
 

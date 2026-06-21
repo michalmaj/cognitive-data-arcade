@@ -13,7 +13,7 @@ from cognitive_data_arcade.games.emotion_classifier.lexicon import (
 )
 from cognitive_data_arcade.games.emotion_classifier.sentences import Sentence
 
-_W, _H = 1024, 720
+_W, _H = 1024, 768
 _PANEL_X = 744
 _PANEL_W = 280
 _TOP_H = 50

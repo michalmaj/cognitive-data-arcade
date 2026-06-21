@@ -11,10 +11,10 @@ from cognitive_data_arcade.games.text_tokenizer.phase_ngrams import PhaseNgramsS
 from cognitive_data_arcade.games.text_tokenizer.phase_tokenizer import PhaseTokenizerScene
 from cognitive_data_arcade.games.text_tokenizer.widgets import SharedInputBar, SharedState
 
-_W, _H = 1024, 720
+_W, _H = 1024, 768
 _INPUT_BAR_H = 48
 _NAV_H = 36
-_PHASE_H = _H - _INPUT_BAR_H - _NAV_H  # 636
+_PHASE_H = _H - _INPUT_BAR_H - _NAV_H  # 684
 
 from cognitive_data_arcade.engine.colors import (
     BG as _BG,

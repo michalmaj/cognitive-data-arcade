@@ -16,7 +16,7 @@ from cognitive_data_arcade.engine.colors import (
 )
 
 _PANEL = (18, 18, 42)
-_W, _H = 1024, 720
+_W, _H = 1024, 768
 
 _DIFFICULTIES = [
     (EASY, _GREEN, "4 cechy  |  bez limitu czasu  |  podpowiedzi z r"),

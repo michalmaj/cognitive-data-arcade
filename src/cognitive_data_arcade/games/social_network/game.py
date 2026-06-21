@@ -17,7 +17,7 @@ from cognitive_data_arcade.games.social_network.graph import (
     sir_step,
 )
 
-_W, _H = 1024, 720
+_W, _H = 1024, 768
 _TOP_H = 50
 _BOT_H = 150
 _MID_X = 512

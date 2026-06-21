@@ -17,7 +17,7 @@ from cognitive_data_arcade.engine.colors import (
 )
 
 _PANEL = (18, 18, 42)
-_W, _H = 1024, 720
+_W, _H = 1024, 768
 
 _LINES = [
     "Jesteś badaczem ML. Twoim zadaniem: dobrać k dla KNN i podział danych,",
