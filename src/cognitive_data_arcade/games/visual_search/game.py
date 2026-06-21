@@ -218,10 +218,17 @@ class VisualSearchGame(Scene):
         if not self.is_done():
             return None
         if self._next_scene_cache is None:
-            from cognitive_data_arcade.ui.menu import LessonMenuScene
-
-            self._next_scene_cache = LessonMenuScene(self._pm, self._strings)
+            self._next_scene_cache = self._build_next_scene()
         return self._next_scene_cache
+
+    def _build_next_scene(self) -> Scene:
+        from cognitive_data_arcade.ui.menu import LessonMenuScene
+        from cognitive_data_arcade.ui.visual_search_analysis_scene import (
+            VisualSearchAnalysisScene,
+        )
+
+        menu = LessonMenuScene(self._pm, self._strings)
+        return VisualSearchAnalysisScene(self._csv_path, self._strings, menu)
 
     def draw(self, surface: pygame.Surface) -> None:
         surface.fill(_BG)
