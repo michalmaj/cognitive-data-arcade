@@ -16,9 +16,9 @@ _GOLD = (243, 156, 18)
 _GREEN = (34, 197, 94)
 
 _AHA = [
-    "Byles jednoczesnie naukowcem i uczestnikiem.",
-    "Kazde klikniecie bylo danymi.",
-    "Dane to slad Twojego zachowania.",
+    "Byłeś jednocześnie naukowcem i uczestnikiem.",
+    "Każde kliknięcie było danymi.",
+    "Dane to ślad Twojego zachowania.",
 ]
 
 
@@ -56,7 +56,7 @@ class PhaseResultScene(Scene):
         pygame.draw.rect(surface, _PANEL, (0, 0, _W, 60))
 
         # Title
-        title = get_font(26).render("Kognitywny Profil Ukonczony", True, _WHITE)
+        title = get_font(26).render("Kognitywny Profil Ukończony", True, _WHITE)
         surface.blit(title, (_W // 2 - title.get_width() // 2, 14))
 
         # 3 gold stars
@@ -72,7 +72,7 @@ class PhaseResultScene(Scene):
                 ("Efekt Stroopa", f"+{p.stroop_effect_ms:.0f} ms"),
                 ("Efekt Flankera", f"+{p.flanker_effect_ms:.0f} ms"),
                 ("Inhibicja (FA rate)", f"{p.gono_false_alarm_rate * 100:.1f}%"),
-                ("Pamiec robocza", f"N = {p.nback_max_level}"),
+                ("Pamięć robocza", f"N = {p.nback_max_level}"),
             ]
             row_h = 36
             table_top = 130
