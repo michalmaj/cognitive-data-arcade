@@ -1,38 +1,38 @@
-"""Lesson 24 -- Semantic Space Explorer (embeddings & semantic similarity)."""
+"""Lesson 24 - Semantic Space Explorer (embeddings & semantic similarity)."""
 
 from __future__ import annotations
 
 CONTENT: dict[str, dict[str, list[str]]] = {
     "pl": {
         "theory": [
-            "Embedding to reprezentacja slowa jako wektora liczb. "
-            "Slowa uczone na duzych tekstach - 'kot' i 'pies' pojawiaja sie w podobnych zdaniach, "
-            "wiec ich wektory sa blisko siebie w przestrzeni wielowymiarowej.",
-            "Podobienstwo kosinusowe (cosine similarity) mierzy kat miedzy wektorami. "
-            "Wynik bliski 1.0 = bardzo podobne, bliski 0.0 = niepowiazane, ujemny = przeciwstawne. "
-            "Mierzymy kat, nie odleglosc - skala wektora nie ma znaczenia.",
-            "Klastry semantyczne wylaniaja sie automatycznie: emocje blisko emocji, "
-            "zwierzeta blisko zwierzat. Nikt nie programowal tych kategorii - "
-            "model nauczyl sie ich z kontekstu.",
-            "Analogie wektorowe: krol - mezczyzna + kobieta = krolowa. "
-            "To odkrycie z 2013 roku (Word2Vec, Mikolov) pokazalo, ze embeddingi "
-            "koduja relacje semantyczne jako arytmetyke wektorow.",
+            "Embedding to reprezentacja słowa jako wektora liczb. "
+            "Słowa uczone na dużych tekstach - 'kot' i 'pies' pojawiają się w podobnych zdaniach, "
+            "więc ich wektory są blisko siebie w przestrzeni wielowymiarowej.",
+            "Podobieństwo kosinusowe (cosine similarity) mierzy kąt między wektorami. "
+            "Wynik bliski 1.0 = bardzo podobne, bliski 0.0 = niepowiązane, ujemny = przeciwstawne. "
+            "Mierzymy kąt, nie odległość - skala wektora nie ma znaczenia.",
+            "Klastry semantyczne wyłaniają się automatycznie: emocje blisko emocji, "
+            "zwierzęta blisko zwierząt. Nikt nie programował tych kategorii - "
+            "model nauczył się ich z kontekstu.",
+            "Analogie wektorowe: król - mężczyzna + kobieta = królowa. "
+            "To odkrycie z 2013 roku (Word2Vec, Mikolov) pokazało, że embeddingi "
+            "kodują relacje semantyczne jako arytmetykę wektorów.",
         ],
         "notes": [
-            "Embeddingi maja wady: bias spoleczny (lekarz = mezczyzna), "
-            "polisemia (bank = rzeka / finansowy), brak rozumienia negacji ('nie dobry' != 'zly'). "
-            "LLM z kontekstem (BERT, GPT) czesciowo rozwiazuja te problemy.",
+            "Embeddingi mają wady: bias społeczny (lekarz = mężczyzna), "
+            "polisemia (bank = rzeka / finansowy), brak rozumienia negacji ('nie dobry' != 'zły'). "
+            "LLM z kontekstem (BERT, GPT) częściowo rozwiązują te problemy.",
             "Popularne modele: Word2Vec (2013), GloVe (2014), FastText (2016), "
             "oraz kontekstowe: ELMo, BERT, GPT. "
-            "Kazde slowo dostaje inny wektor w zaleznosci od zdania w modelach kontekstowych.",
+            "Każde słowo dostaje inny wektor w zależności od zdania w modelach kontekstowych.",
         ],
         "tasks": [
-            "Zagraj w Semantic Space Explorer - w ktorej misji bladziles najczesciej? "
-            "Co to mowi o Twoim rozumieniu klastrow semantycznych?",
-            "Wymien 3 polskie slowa, ktore Twoim zdaniem sa na granicy dwoch kategorii semantycznych. "
-            "Dlaczego sa trudne do jednoznacznego zaklasyfikowania?",
-            "Porownaj podobienstwo kosinusowe a odleglosc euklidesowa dla wektorow slow. "
-            "Kiedy kazda miara jest lepsza?",
+            "Zagraj w Semantic Space Explorer - w której misji błądziłeś najczęściej? "
+            "Co to mówi o Twoim rozumieniu klastrów semantycznych?",
+            "Wymień 3 polskie słowa, które Twoim zdaniem są na granicy dwóch kategorii semantycznych. "
+            "Dlaczego są trudne do jednoznacznego zaklasyfikowania?",
+            "Porównaj podobieństwo kosinusowe a odległość euklidesową dla wektorów słów. "
+            "Kiedy każda miara jest lepsza?",
         ],
     },
     "en": {

@@ -17,14 +17,14 @@ CONTENT: dict[str, dict[str, list[str]]] = {
             "Stop words (słowa funkcyjne) to wyrazy tak częste, że niosą mało informacji: "
             "'i', 'w', 'się', 'że', 'na'. Usunięcie ich zmniejsza szum i przyspiesza obliczenia, "
             "ale może uszkodzić zdania wymagające kontekstu gramatycznego. "
-            "W analizie kognitywnej stop words bywają ważne -- np. częstość 'nie' sygnalizuje negację.",
+            "W analizie kognitywnej stop words bywają ważne - np. częstość 'nie' sygnalizuje negację.",
             "N-gramy to sekwencje n kolejnych tokenów. Bigram 'czas reakcji' niesie więcej znaczenia "
             "niż dwa osobne słowa 'czas' i 'reakcji'. Trigramy ('długi czas reakcji') dodają jeszcze "
             "więcej kontekstu. W psychologii eksperymentalnej n-gramy pomagają wykryć powtarzające się "
             "frazy w opisach uczestników badania.",
             "Prawo Zipfa głosi, że częstość słowa jest odwrotnie proporcjonalna do jego rangi: "
             "najczęstsze słowo pojawia się mniej więcej dwa razy częściej niż drugie, trzy razy "
-            "częściej niż trzecie itd. To zjawisko obserwujemy w każdym języku naturalnym -- "
+            "częściej niż trzecie itd. To zjawisko obserwujemy w każdym języku naturalnym - "
             "kilka słów dominuje, podczas gdy ogromna większość występuje rzadko.",
         ],
         "notes": [
@@ -61,14 +61,14 @@ CONTENT: dict[str, dict[str, list[str]]] = {
             "Stop words are function words so frequent they carry little information: "
             "'the', 'in', 'is', 'a', 'of'. Removing them reduces noise and speeds up computation, "
             "but can damage sentences that require grammatical context. "
-            "In cognitive analysis stop words sometimes matter -- e.g. frequency of 'not' signals negation.",
+            "In cognitive analysis stop words sometimes matter - e.g. frequency of 'not' signals negation.",
             "N-grams are sequences of n consecutive tokens. The bigram 'reaction time' carries more "
             "meaning than the two separate words 'reaction' and 'time'. Trigrams ('long reaction time') "
             "add even more context. In experimental psychology n-grams help detect recurring phrases "
             "in participant descriptions.",
             "Zipf's law states that a word's frequency is inversely proportional to its rank: "
             "the most frequent word appears roughly twice as often as the second, three times as often "
-            "as the third, and so on. This phenomenon is observed in every natural language -- "
+            "as the third, and so on. This phenomenon is observed in every natural language - "
             "a few words dominate while the vast majority appear rarely.",
         ],
         "notes": [
