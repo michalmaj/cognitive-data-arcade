@@ -20,6 +20,7 @@ from cognitive_data_arcade.engine.scene import Scene
 def _fmt_rt(value: float) -> str:
     return "— ms" if math.isnan(value) else f"{value:.0f} ms"
 
+
 _BORDER = (42, 42, 80)
 _CHART_X = 10
 _CHART_Y = 45

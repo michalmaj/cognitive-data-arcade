@@ -23,6 +23,7 @@ from cognitive_data_arcade.engine.colors import (
     GREEN as _GREEN,
     RED as _RED,
 )
+
 _W, _H = 1024, 768
 
 

@@ -15,6 +15,7 @@ from cognitive_data_arcade.engine.colors import (
     DIM as _DIM,
     ORANGE as _ORANGE,
 )
+
 _W, _H = 1024, 768
 
 _BTN_W, _BTN_H = 440, 100

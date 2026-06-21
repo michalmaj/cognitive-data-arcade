@@ -15,6 +15,7 @@ from cognitive_data_arcade.engine.colors import (
     ORANGE as _ORANGE,
     DIM as _DIM,
 )
+
 _CHART_X = 20
 _CHART_Y = 20
 _STATS_X = 720
