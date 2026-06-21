@@ -26,8 +26,25 @@ def _gonogo_fa_count(session: DashboardSession) -> int:
     return sum(1 for cond, ok in zip(g.condition, g.correct) if cond == "nogo" and not ok)
 
 
+def _rt_baseline(session: DashboardSession) -> float | None:
+    rt = session.rt
+    if rt is None:
+        return None
+    valid = [r for r in rt.rt_ms if r > 0]
+    return sum(valid) / len(valid) if valid else None
+
+
 def cognitive_profile(session: DashboardSession) -> list[str]:
     lines: list[str] = []
+
+    rt_avg = _rt_baseline(session)
+    if rt_avg is not None:
+        if rt_avg < 220:
+            lines.append(f"Czas reakcji bazowy: bardzo szybki ({rt_avg:.0f} ms).")
+        elif rt_avg <= 320:
+            lines.append(f"Czas reakcji bazowy: przeciętny ({rt_avg:.0f} ms).")
+        else:
+            lines.append(f"Czas reakcji bazowy: wolniejszy niż norma ({rt_avg:.0f} ms).")
 
     stroop_eff = _stroop_effect(session)
     if stroop_eff < 40:
@@ -35,7 +52,7 @@ def cognitive_profile(session: DashboardSession) -> list[str]:
     elif stroop_eff <= 80:
         lines.append(f"Odporność na interferencję: przeciętna (efekt Stroopa {stroop_eff:.0f} ms).")
     else:
-        lines.append(f"Efekt Stroopa wyraźnie widoczny — duża interferencja ({stroop_eff:.0f} ms).")
+        lines.append(f"Efekt Stroopa wyraźnie widoczny - duża interferencja ({stroop_eff:.0f} ms).")
 
     flanker_eff = _flanker_effect(session)
     if flanker_eff < 25:
@@ -53,7 +70,7 @@ def cognitive_profile(session: DashboardSession) -> list[str]:
     elif fa == 1:
         lines.append("Hamowanie impulsów: dobre (drobne błędy na próbach no-go).")
     else:
-        lines.append(f"Tendencja do impulsywności — trudność z hamowaniem ({fa} fałszywe alarmy).")
+        lines.append(f"Tendencja do impulsywności - trudność z hamowaniem ({fa} fałszywe alarmy).")
 
-    lines.append("Pamiętaj — to tylko 8 prób. Więcej danych = pewniejszy wynik.")
+    lines.append("Pamiętaj - to tylko 8 prób. Więcej danych = pewniejszy wynik.")
     return lines
