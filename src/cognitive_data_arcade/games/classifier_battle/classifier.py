@@ -50,8 +50,9 @@ def predict_labels(
     xs_poly = np.array([p[0] for p in polyline], dtype=float)
     ys_poly = np.array([p[1] for p in polyline], dtype=float)
 
-    sides = np.array([X[i, 0] < _interp_boundary_x(xs_poly, ys_poly, float(X[i, 1]))
-                      for i in range(len(X))])
+    sides = np.array(
+        [X[i, 0] < _interp_boundary_x(xs_poly, ys_poly, float(X[i, 1])) for i in range(len(X))]
+    )
     left_class0 = int(np.sum((y == 0) & sides))
     right_class0 = int(np.sum((y == 0) & ~sides))
     if left_class0 >= right_class0:
@@ -59,9 +60,7 @@ def predict_labels(
     return np.where(sides, 1, 0).astype(np.int32)
 
 
-def classifier_accuracies(
-    X: np.ndarray, y: np.ndarray, seed: int = 0
-) -> dict[str, float]:
+def classifier_accuracies(X: np.ndarray, y: np.ndarray, seed: int = 0) -> dict[str, float]:
     """5-fold cross-validated accuracy for three standard classifiers."""
     clfs: dict[str, object] = {
         "liniowy": LogisticRegression(max_iter=1000, random_state=seed),

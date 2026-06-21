@@ -37,7 +37,10 @@ class PhaseIntroScene(Scene):
     def _advance(self) -> None:
         if self._done:
             return
-        from cognitive_data_arcade.games.architects_trial.phase_domain_picker import PhaseDomainPickerScene
+        from cognitive_data_arcade.games.architects_trial.phase_domain_picker import (
+            PhaseDomainPickerScene,
+        )
+
         self._next = PhaseDomainPickerScene(self._state)
         self._done = True
 

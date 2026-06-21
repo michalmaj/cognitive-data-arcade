@@ -1,14 +1,21 @@
 from __future__ import annotations
 import dataclasses
-import pytest
 from cognitive_data_arcade.games.flanker.config import (
-    QUICK, STANDARD, FULL,
-    DIFFICULTY_EASY, DIFFICULTY_MEDIUM, DIFFICULTY_HARD,
+    QUICK,
+    STANDARD,
+    FULL,
+    DIFFICULTY_EASY,
+    DIFFICULTY_MEDIUM,
+    DIFFICULTY_HARD,
     FlankerConfig,
 )
 from cognitive_data_arcade.games.gono.config import (
-    QUICK as GONO_QUICK, STANDARD as GONO_STANDARD, FULL as GONO_FULL,
-    DIFFICULTY_EASY as GONO_EASY, DIFFICULTY_MEDIUM as GONO_MEDIUM, DIFFICULTY_HARD as GONO_HARD,
+    QUICK as GONO_QUICK,
+    STANDARD as GONO_STANDARD,
+    FULL as GONO_FULL,
+    DIFFICULTY_EASY as GONO_EASY,
+    DIFFICULTY_MEDIUM as GONO_MEDIUM,
+    DIFFICULTY_HARD as GONO_HARD,
     GoNoGoConfig,
 )
 

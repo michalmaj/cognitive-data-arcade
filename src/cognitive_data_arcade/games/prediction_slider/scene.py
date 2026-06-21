@@ -5,26 +5,34 @@ import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 
-_BG     = (15,  15,  35)
-_PANEL  = (18,  18,  42)
-_WHITE  = (240, 240, 240)
-_DIM    = (120, 120, 160)
-_ORANGE = (243, 156,  18)
+_BG = (15, 15, 35)
+_PANEL = (18, 18, 42)
+_WHITE = (240, 240, 240)
+_DIM = (120, 120, 160)
+_ORANGE = (243, 156, 18)
 
-_NAV_H   = 48
-_W       = 1024
+_NAV_H = 48
+_W = 1024
 _INNER_H = 720 - _NAV_H  # 672
 
 _PHASE_NAMES = ["Eksploracja", "Gra", "Sandbox"]
 
 
 class _StubScene(Scene):
-    def handle_event(self, event: pygame.event.Event) -> None: pass
-    def update(self, dt_ms: float = 0.0) -> None: pass
+    def handle_event(self, event: pygame.event.Event) -> None:
+        pass
+
+    def update(self, dt_ms: float = 0.0) -> None:
+        pass
+
     def draw(self, surface: pygame.Surface) -> None:
         surface.fill((20, 20, 50))
-    def is_done(self) -> bool: return False
-    def next_scene(self) -> Scene | None: return None
+
+    def is_done(self) -> bool:
+        return False
+
+    def next_scene(self) -> Scene | None:
+        return None
 
 
 def _load_phases() -> list[Scene]:
@@ -32,6 +40,7 @@ def _load_phases() -> list[Scene]:
         from cognitive_data_arcade.games.prediction_slider.phase_a import PhaseAScene
         from cognitive_data_arcade.games.prediction_slider.phase_b import PhaseBScene
         from cognitive_data_arcade.games.prediction_slider.phase_c import PhaseCScene
+
         return [PhaseAScene(), PhaseBScene(), PhaseCScene()]
     except ImportError:
         return [_StubScene(), _StubScene(), _StubScene()]
@@ -82,11 +91,13 @@ class PredictionSliderScene(Scene):
             tx = tab_x0 + i * tab_w
             active = i == self._phase_idx
             col = _ORANGE if active else _DIM
-            lbl = f"{i+1}. {name}"
+            lbl = f"{i + 1}. {name}"
             tw = font.size(lbl)[0]
             surface.blit(font.render(lbl, True, col), (tx + (tab_w - tw) // 2, (_NAV_H - 20) // 2))
             if active:
-                pygame.draw.line(surface, _ORANGE, (tx + 4, _NAV_H - 3), (tx + tab_w - 4, _NAV_H - 3), 2)
+                pygame.draw.line(
+                    surface, _ORANGE, (tx + 4, _NAV_H - 3), (tx + tab_w - 4, _NAV_H - 3), 2
+                )
         hint = font_sm.render("LEWO / PRAWO = zmień fazę", True, _DIM)
         surface.blit(hint, (20, _NAV_H - 16))
         self._inner.fill(_BG)

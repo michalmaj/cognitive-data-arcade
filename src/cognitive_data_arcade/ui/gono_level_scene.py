@@ -11,8 +11,12 @@ from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.pause import PausableGame
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.gono.config import (
-    QUICK, STANDARD, FULL,
-    DIFFICULTY_EASY, DIFFICULTY_MEDIUM, DIFFICULTY_HARD,
+    QUICK,
+    STANDARD,
+    FULL,
+    DIFFICULTY_EASY,
+    DIFFICULTY_MEDIUM,
+    DIFFICULTY_HARD,
 )
 from cognitive_data_arcade.profile.manager import ProfileManager
 from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
@@ -26,8 +30,8 @@ _HOVER_COLOR = (60, 60, 100)
 _DIM = (100, 100, 150)
 _WHITE = (240, 240, 240)
 _TILES_X = 188
-_ROW1_Y = 180   # session row y
-_ROW2_Y = 360   # difficulty row y
+_ROW1_Y = 180  # session row y
+_ROW2_Y = 360  # difficulty row y
 
 
 def _tile_rect(col: int, row_y: int) -> pygame.Rect:
@@ -39,8 +43,8 @@ class GoNoGoLevelScene(Scene):
         self._pm = pm
         self._strings = strings
         self._session_idx: int = 1  # default Standard
-        self._diff_idx: int = 1     # default Medium
-        self._active_row: int = 0   # 0=session row, 1=difficulty row
+        self._diff_idx: int = 1  # default Medium
+        self._active_row: int = 0  # 0=session row, 1=difficulty row
         self._hover_session: int = -1
         self._hover_diff: int = -1
         self._done = False
@@ -100,9 +104,12 @@ class GoNoGoLevelScene(Scene):
     def _launch(self) -> None:
         from cognitive_data_arcade.games.gono.game import GoNoGoGame
         from cognitive_data_arcade.games.gono.info import get_game_info
+
         session_presets = [QUICK, STANDARD, FULL]
         diff_overrides = [DIFFICULTY_EASY, DIFFICULTY_MEDIUM, DIFFICULTY_HARD]
-        config = dataclasses.replace(session_presets[self._session_idx], **diff_overrides[self._diff_idx])
+        config = dataclasses.replace(
+            session_presets[self._session_idx], **diff_overrides[self._diff_idx]
+        )
         profile = self._pm.load()
         pid = profile.device_uuid
         sid = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -152,8 +159,8 @@ class GoNoGoLevelScene(Scene):
         ]
         for i, (name, desc) in enumerate(zip(session_names, session_descs)):
             rect = _tile_rect(i, _ROW1_Y)
-            selected = (i == self._session_idx)
-            hovered = (i == self._hover_session)
+            selected = i == self._session_idx
+            hovered = i == self._hover_session
             if selected:
                 pygame.draw.rect(surface, _SELECTED_COLOR, rect, border_radius=8)
                 text_color = _BG
@@ -184,8 +191,8 @@ class GoNoGoLevelScene(Scene):
         ]
         for i, (name, desc) in enumerate(zip(diff_names, diff_descs)):
             rect = _tile_rect(i, _ROW2_Y)
-            selected = (i == self._diff_idx)
-            hovered = (i == self._hover_diff)
+            selected = i == self._diff_idx
+            hovered = i == self._hover_diff
             if selected:
                 pygame.draw.rect(surface, _SELECTED_COLOR, rect, border_radius=8)
                 text_color = _BG

@@ -8,35 +8,49 @@ from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.you_were_the_dataset.game_state import GameState
 
 _W, _H = 1024, 720
-_BG     = (4, 6, 12)
-_WHITE  = (248, 250, 252)
-_DIM    = (148, 163, 184)
+_BG = (4, 6, 12)
+_WHITE = (248, 250, 252)
+_DIM = (148, 163, 184)
 _PURPLE = (167, 139, 250)
 
 # (lines_list, t_start_ms)
 _CARDS = [
     (
-        ["Skad pochodzi ta wiedza?", "",
-         "Kazde klikniecie SPACJI", "-> plik CSV -> obliczenie -> ten wynik."],
+        [
+            "Skad pochodzi ta wiedza?",
+            "",
+            "Kazde klikniecie SPACJI",
+            "-> plik CSV -> obliczenie -> ten wynik.",
+        ],
         0,
     ),
     (
-        ["Byles jednoczesnie:", "",
-         "  naukowcem -- kto zbiera dane", "  i uczestnikiem -- kto je generuje."],
+        [
+            "Byles jednoczesnie:",
+            "",
+            "  naukowcem -- kto zbiera dane",
+            "  i uczestnikiem -- kto je generuje.",
+        ],
         3000,
     ),
     (
-        ["Dane to nie liczby.", "",
-         "Dane to slad zachowania.", "Twojego zachowania.", "",
-         "Teraz wiesz skad AI wie", "co wiesz, czego chcesz, kim jestes."],
+        [
+            "Dane to nie liczby.",
+            "",
+            "Dane to slad zachowania.",
+            "Twojego zachowania.",
+            "",
+            "Teraz wiesz skad AI wie",
+            "co wiesz, czego chcesz, kim jestes.",
+        ],
         6000,
     ),
 ]
 _ADVANCE_AFTER = 6000  # allow SPACE-to-advance only after all cards visible
 
 # Lines that get purple/white highlight (by card index, line index)
-_HIGHLIGHT_WHITE = {(0, 0), (1, 0), (2, 0)}   # first line of each card
-_HIGHLIGHT_PURPLE = {(2, 3), (2, 6)}           # "Twojego zachowania." and "kim jestes."
+_HIGHLIGHT_WHITE = {(0, 0), (1, 0), (2, 0)}  # first line of each card
+_HIGHLIGHT_PURPLE = {(2, 3), (2, 6)}  # "Twojego zachowania." and "kim jestes."
 
 
 class PhaseConnectionScene(Scene):
@@ -49,13 +63,20 @@ class PhaseConnectionScene(Scene):
     def handle_event(self, event: pygame.event.Event) -> None:
         if self._done:
             return
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and self._t >= _ADVANCE_AFTER:
+        if (
+            event.type == pygame.KEYDOWN
+            and event.key == pygame.K_SPACE
+            and self._t >= _ADVANCE_AFTER
+        ):
             self._advance()
-        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and self._t >= _ADVANCE_AFTER:
+        elif (
+            event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and self._t >= _ADVANCE_AFTER
+        ):
             self._advance()
 
     def _advance(self) -> None:
         from cognitive_data_arcade.games.you_were_the_dataset.phase_result import PhaseResultScene
+
         self._next = PhaseResultScene(self._state)
         self._done = True
 

@@ -16,11 +16,11 @@ _INPUT_BAR_H = 48
 _NAV_H = 36
 _PHASE_H = _H - _INPUT_BAR_H - _NAV_H  # 636
 
-_BG     = (15, 15, 35)
+_BG = (15, 15, 35)
 _NAV_BG = (12, 12, 28)
-_WHITE  = (240, 240, 240)
-_DIM    = (120, 120, 160)
-_AMBER  = (243, 156, 18)
+_WHITE = (240, 240, 240)
+_DIM = (120, 120, 160)
+_AMBER = (243, 156, 18)
 _PURPLE = (155, 89, 182)
 
 _TAB_NAMES = ["1 - Tokenizer", "2 - N-gramy", "3 - Czestotliwosc"]
@@ -79,8 +79,7 @@ class TextTokenizerLabScene(Scene):
         changed = self._input_bar.handle_event(event)
 
         # Phase events (offset y by input bar + nav height)
-        if event.type in (pygame.MOUSEBUTTONDOWN, pygame.MOUSEBUTTONUP,
-                           pygame.MOUSEMOTION):
+        if event.type in (pygame.MOUSEBUTTONDOWN, pygame.MOUSEBUTTONUP, pygame.MOUSEMOTION):
             adj = _offset_mouse(event, dy=-(_INPUT_BAR_H + _NAV_H))
             self._phases[self._tab].handle_event(adj)
         elif not changed:

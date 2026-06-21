@@ -32,18 +32,18 @@ PRESET_MEMORY_EN = (
 
 # (title, text, lang) — lang used for stop-word removal
 _PRESETS: list[tuple[str, str, str]] = [
-    ("Stroop PL",  PRESET_STROOP_PL,  "pl"),
-    ("N-Back EN",  PRESET_NBACK_EN,   "en"),
+    ("Stroop PL", PRESET_STROOP_PL, "pl"),
+    ("N-Back EN", PRESET_NBACK_EN, "en"),
     ("Flanker PL", PRESET_FLANKER_PL, "pl"),
-    ("Memory EN",  PRESET_MEMORY_EN,  "en"),
+    ("Memory EN", PRESET_MEMORY_EN, "en"),
 ]
 
 
 @dataclass
 class CorpusState:
-    selected_idx: int = 0    # which doc row is highlighted
+    selected_idx: int = 0  # which doc row is highlighted
     custom_text: str = ""
-    lang: str = "pl"         # PL/EN toggle (custom mode) + stop-word lang
+    lang: str = "pl"  # PL/EN toggle (custom mode) + stop-word lang
     lowercase: bool = True
     rm_punct: bool = True
     rm_stops: bool = False

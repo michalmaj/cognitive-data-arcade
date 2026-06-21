@@ -1,5 +1,6 @@
 # src/cognitive_data_arcade/games/bias_blind_spot/phase_regulator.py
 """Act 3 -- Regulator: choose fairness criterion, see consequence table."""
+
 from __future__ import annotations
 import pygame
 from cognitive_data_arcade.engine.fonts import get_font
@@ -7,13 +8,13 @@ from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.bias_blind_spot.game_state import GameState, CONSEQUENCE_TABLE
 
 _W, _H = 1024, 720
-_BG    = (8, 12, 20)
+_BG = (8, 12, 20)
 _PANEL = (16, 20, 36)
 _WHITE = (240, 240, 240)
-_DIM   = (130, 130, 150)
+_DIM = (130, 130, 150)
 _GREEN = (39, 174, 96)
-_RED   = (231, 76, 60)
-_GOLD  = (243, 156, 18)
+_RED = (231, 76, 60)
+_GOLD = (243, 156, 18)
 
 _PANELS = [
     {
@@ -100,6 +101,7 @@ class PhaseRegulatorScene(Scene):
         if self._done:
             return
         from cognitive_data_arcade.games.bias_blind_spot.phase_result import PhaseResultScene
+
         self._next = PhaseResultScene(self._state)
         self._done = True
 
@@ -112,7 +114,7 @@ class PhaseRegulatorScene(Scene):
         f11 = get_font(11)
         for i, p in enumerate(_PANELS):
             r = self._panel_rect(i)
-            is_chosen = (self._chosen == p["key"])
+            is_chosen = self._chosen == p["key"]
             bg = (20, 20, 30)
             border = p["color"] if is_chosen else (60, 60, 80)
             pygame.draw.rect(surface, bg, r, border_radius=8)
@@ -149,7 +151,7 @@ class PhaseRegulatorScene(Scene):
             surface.blit(ls, (_TABLE_LEFT, y))
             y += 22
 
-        acc_s = f11.render(f"Dokladnosc modelu: {row['accuracy']*100:.0f}%", True, _WHITE)
+        acc_s = f11.render(f"Dokladnosc modelu: {row['accuracy'] * 100:.0f}%", True, _WHITE)
         surface.blit(acc_s, (_TABLE_LEFT, y + 6))
 
         ay = y + 36
@@ -161,8 +163,13 @@ class PhaseRegulatorScene(Scene):
         pygame.draw.rect(surface, _PANEL, _BTN_ADV, border_radius=6)
         pygame.draw.rect(surface, _WHITE, _BTN_ADV, 1, border_radius=6)
         bl = f13.render("Przejdz do wynikow  [klik]", True, _WHITE)
-        surface.blit(bl, (_BTN_ADV.x + _BTN_ADV.w // 2 - bl.get_width() // 2,
-                           _BTN_ADV.y + _BTN_ADV.h // 2 - bl.get_height() // 2))
+        surface.blit(
+            bl,
+            (
+                _BTN_ADV.x + _BTN_ADV.w // 2 - bl.get_width() // 2,
+                _BTN_ADV.y + _BTN_ADV.h // 2 - bl.get_height() // 2,
+            ),
+        )
 
     def draw(self, surface: pygame.Surface) -> None:
         surface.fill(_BG)

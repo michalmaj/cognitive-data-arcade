@@ -89,14 +89,19 @@ class Slider:
         font_val = get_font(20)
         surface.blit(font_lbl.render(self._spec.label, True, _DIM), (self._x, self._y))
         ty = self._track_y()
-        pygame.draw.rect(surface, _TRACK,
-                         (self._x, ty - _TRACK_H // 2, self._w, _TRACK_H), border_radius=2)
+        pygame.draw.rect(
+            surface, _TRACK, (self._x, ty - _TRACK_H // 2, self._w, _TRACK_H), border_radius=2
+        )
         tx = self._thumb_x()
         filled = max(0, tx - self._x)
         if filled > 0:
             fill_color = _ACTIVE if self.focused else _DIM
-            pygame.draw.rect(surface, fill_color,
-                             (self._x, ty - _TRACK_H // 2, filled, _TRACK_H), border_radius=2)
+            pygame.draw.rect(
+                surface,
+                fill_color,
+                (self._x, ty - _TRACK_H // 2, filled, _TRACK_H),
+                border_radius=2,
+            )
         thumb_color = _ACTIVE if self.focused else _DIM
         pygame.draw.circle(surface, thumb_color, (tx, ty), _THUMB_R)
         val_str = f"{self._value}%" if self._spec.label.startswith("%") else str(self._value)
@@ -115,8 +120,7 @@ _SLIDER_SPECS = [
 class SliderGroup:
     def __init__(self, x: int = 30, y0: int = 80) -> None:
         self._sliders = [
-            Slider(spec, x, y0 + i * _SLIDER_GAP)
-            for i, spec in enumerate(_SLIDER_SPECS)
+            Slider(spec, x, y0 + i * _SLIDER_GAP) for i, spec in enumerate(_SLIDER_SPECS)
         ]
         self._focused_idx = 0
         self._sliders[0].focused = True

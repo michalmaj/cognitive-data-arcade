@@ -133,9 +133,7 @@ class EventLogLevelScene(Scene):
         else:
             exp_label_text = "Experiment"
         exp_label = self._font_hint.render(exp_label_text, True, _DIM)
-        surface.blit(
-            exp_label, (10, _ROW1_Y + (_TILE_H - self._font_hint.get_height()) // 2)
-        )
+        surface.blit(exp_label, (10, _ROW1_Y + (_TILE_H - self._font_hint.get_height()) // 2))
 
         # Experiment tiles
         for i, scenario in enumerate(SCENARIOS):
@@ -170,9 +168,7 @@ class EventLogLevelScene(Scene):
             old_clip = surface.get_clip()
             surface.set_clip(rect)
             prefix_surf = self._font_tile.render(prefix, True, text_color)
-            surface.blit(
-                prefix_surf, (rect.centerx - prefix_surf.get_width() // 2, rect.y + 10)
-            )
+            surface.blit(prefix_surf, (rect.centerx - prefix_surf.get_width() // 2, rect.y + 10))
             if subtitle:
                 sub_surf = self._font_desc.render(subtitle, True, text_color)
                 surface.blit(
@@ -180,16 +176,12 @@ class EventLogLevelScene(Scene):
                     (rect.centerx - sub_surf.get_width() // 2, rect.y + 40),
                 )
             desc_surf = self._font_desc.render(desc, True, text_color)
-            surface.blit(
-                desc_surf, (rect.centerx - desc_surf.get_width() // 2, rect.y + 64)
-            )
+            surface.blit(desc_surf, (rect.centerx - desc_surf.get_width() // 2, rect.y + 64))
             surface.set_clip(old_clip)
 
         # Difficulty row label — same small font as experiment label
         diff_label = self._font_hint.render(self._strings.picker_difficulty, True, _DIM)
-        surface.blit(
-            diff_label, (10, _ROW2_Y + (_TILE_H - self._font_hint.get_height()) // 2)
-        )
+        surface.blit(diff_label, (10, _ROW2_Y + (_TILE_H - self._font_hint.get_height()) // 2))
 
         diff_names = [
             self._strings.level_easy,
@@ -226,12 +218,8 @@ class EventLogLevelScene(Scene):
             surface.set_clip(rect)
             name_surf = self._font_tile.render(name, True, text_color)
             desc_surf = self._font_desc.render(desc, True, text_color)
-            surface.blit(
-                name_surf, (rect.centerx - name_surf.get_width() // 2, rect.y + 18)
-            )
-            surface.blit(
-                desc_surf, (rect.centerx - desc_surf.get_width() // 2, rect.y + 52)
-            )
+            surface.blit(name_surf, (rect.centerx - name_surf.get_width() // 2, rect.y + 18))
+            surface.blit(desc_surf, (rect.centerx - desc_surf.get_width() // 2, rect.y + 52))
             surface.set_clip(old_clip)
 
         # Active-row indicator

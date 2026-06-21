@@ -23,13 +23,21 @@ def _key(k: int) -> pygame.event.Event:
 
 
 class _Back(Scene):
-    def handle_event(self, e): pass
-    def update(self, dt): pass
-    def draw(self, s): pass
-    def is_done(self): return False
+    def handle_event(self, e):
+        pass
+
+    def update(self, dt):
+        pass
+
+    def draw(self, s):
+        pass
+
+    def is_done(self):
+        return False
 
 
 # --- lesson 01 exists (created in Task 2) ---
+
 
 def test_space_navigates_forward():
     scene = LessonReaderScene(1, EN, None)

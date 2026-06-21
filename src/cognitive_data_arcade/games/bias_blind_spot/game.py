@@ -9,6 +9,7 @@ class BiasBlindSpotScene(Scene):
     def __init__(self) -> None:
         self._state = GameState()
         from cognitive_data_arcade.games.bias_blind_spot.phase_intro import PhaseIntroScene
+
         self._current: Scene = PhaseIntroScene(self._state)
 
     def handle_event(self, event: pygame.event.Event) -> None:

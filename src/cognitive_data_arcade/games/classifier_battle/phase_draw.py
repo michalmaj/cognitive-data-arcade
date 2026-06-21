@@ -5,24 +5,26 @@ import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.classifier_battle.classifier import (
-    classifier_accuracies, compute_round_score, player_accuracy,
+    classifier_accuracies,
+    compute_round_score,
+    player_accuracy,
 )
-from cognitive_data_arcade.games.classifier_battle.scenarios import SCENARIOS, Scenario, generate_data
+from cognitive_data_arcade.games.classifier_battle.scenarios import Scenario, generate_data
 from cognitive_data_arcade.games.classifier_battle.widgets import DrawCanvas
 
-_BG    = (15, 15, 35)
+_BG = (15, 15, 35)
 _PANEL = (18, 18, 42)
 _WHITE = (240, 240, 240)
-_DIM   = (120, 120, 160)
+_DIM = (120, 120, 160)
 _YELLOW = (243, 156, 18)
-_GREEN  = (39, 174, 96)
-_RED    = (231, 76, 60)
-_BLUE   = (52, 152, 219)
+_GREEN = (39, 174, 96)
+_RED = (231, 76, 60)
+_BLUE = (52, 152, 219)
 
 _W, _H = 1024, 720
 _TOP_H = 56
 _CANVAS_RECT = pygame.Rect(12, _TOP_H + 4, 750, _H - _TOP_H - 4 - 60)
-_BTN_CLEAR   = pygame.Rect(778, 650, 110, 40)
+_BTN_CLEAR = pygame.Rect(778, 650, 110, 40)
 _BTN_CONFIRM = pygame.Rect(900, 650, 112, 40)
 
 _POPUP_W, _POPUP_H = 290, 150
@@ -109,8 +111,10 @@ class PhaseDrawScene(Scene):
         new_results = self._round_results + [result]
 
         from cognitive_data_arcade.games.classifier_battle.phase_round_result import (
-            PhaseRoundResultScene, RoundDisplay,
+            PhaseRoundResultScene,
+            RoundDisplay,
         )
+
         display = RoundDisplay(
             scenario=self._scenario,
             player_acc=acc,
@@ -139,12 +143,14 @@ class PhaseDrawScene(Scene):
         pygame.draw.rect(surface, _PANEL, (0, 0, _W, _TOP_H))
         title = get_font(20).render(
             f"Runda {self._round_idx + 1}/{_TOTAL_ROUNDS}  —  {self._scenario.name_pl}",
-            True, _WHITE,
+            True,
+            _WHITE,
         )
         surface.blit(title, (20, 16))
         instr = get_font(13).render(
             "Narysuj granicę  |  PPM = podpowiedź  |  potwierdź gdy linia przechodzi przez cały ekran",
-            True, _DIM,
+            True,
+            _DIM,
         )
         surface.blit(instr, (_W - instr.get_width() - 16, 20))
 
@@ -174,13 +180,15 @@ class PhaseDrawScene(Scene):
             msg = get_font(12).render("Narysuj od góry do dołu!", True, _RED)
             surface.blit(msg, (panel.x + 8, panel.y + 40))
 
-    def _draw_button(self, surface: pygame.Surface, rect: pygame.Rect,
-                     label: str, color: tuple) -> None:
+    def _draw_button(
+        self, surface: pygame.Surface, rect: pygame.Rect, label: str, color: tuple
+    ) -> None:
         pygame.draw.rect(surface, _PANEL, rect, border_radius=6)
         pygame.draw.rect(surface, color, rect, 2, border_radius=6)
         lbl = get_font(16).render(label, True, color)
-        surface.blit(lbl, (rect.centerx - lbl.get_width() // 2,
-                            rect.centery - lbl.get_height() // 2))
+        surface.blit(
+            lbl, (rect.centerx - lbl.get_width() // 2, rect.centery - lbl.get_height() // 2)
+        )
 
     def _draw_popup(self, surface: pygame.Surface) -> None:
         mx, my = self._popup_pos

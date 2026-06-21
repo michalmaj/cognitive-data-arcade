@@ -47,4 +47,5 @@ def test_virtual_rows_item_count():
 
 def test_virtual_h_is_correct():
     from cognitive_data_arcade.ui.menu import _VIRTUAL_H
+
     assert _VIRTUAL_H == 6 * 32 + 31 * 36  # 1308

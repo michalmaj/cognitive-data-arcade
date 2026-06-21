@@ -8,21 +8,21 @@ LETTERS = ("B", "C", "D", "F", "G", "H", "K", "T")
 
 
 class Trial(NamedTuple):
-    position: int   # 0-8
-    letter: str     # one of LETTERS
+    position: int  # 0-8
+    letter: str  # one of LETTERS
     pos_match: bool
     let_match: bool
 
 
 @dataclass(frozen=True)
 class NBackConfig:
-    n: int | None                          # 1, 2, 3, or None (adaptive)
+    n: int | None  # 1, 2, 3, or None (adaptive)
     trials_per_block: int = 20
-    num_blocks: int = 4                    # 80 trials total
+    num_blocks: int = 4  # 80 trials total
     stimulus_ms: int = 500
-    isi_ms: int = 2000                     # response window after stimulus offset
-    iti_ms: int = 300                      # blank inter-trial interval
-    between_blocks_ms: int = 1500          # auto-advance pause between blocks
+    isi_ms: int = 2000  # response window after stimulus offset
+    iti_ms: int = 300  # blank inter-trial interval
+    between_blocks_ms: int = 1500  # auto-advance pause between blocks
     target_rate: float = 0.33
     adaptive_up_threshold: float = 0.80
     adaptive_down_threshold: float = 0.50

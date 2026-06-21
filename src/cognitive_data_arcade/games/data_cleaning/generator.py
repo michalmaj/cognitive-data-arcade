@@ -5,6 +5,10 @@ import enum
 import math
 import random
 from dataclasses import dataclass
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from cognitive_data_arcade.games.data_cleaning.difficulty import DifficultyConfig
 
 
 class ErrorType(enum.Enum):
@@ -128,8 +132,12 @@ _FIX_WRONG_PL: dict[ErrorType, str] = {
 
 _FALSE_POS_CORRECT_EN = "Good judgment — this row looks fine, no action needed."
 _FALSE_POS_WRONG_EN = "Incorrect: this row has no data quality issue — keeping is the right choice."
-_FALSE_POS_CORRECT_PL = "Dobra ocena — ten wiersz wygląda prawidłowo, żadna akcja nie jest potrzebna."
-_FALSE_POS_WRONG_PL = "Nieprawidłowo: ten wiersz nie ma problemu z jakością — zachowanie go to właściwy wybór."
+_FALSE_POS_CORRECT_PL = (
+    "Dobra ocena — ten wiersz wygląda prawidłowo, żadna akcja nie jest potrzebna."
+)
+_FALSE_POS_WRONG_PL = (
+    "Nieprawidłowo: ten wiersz nie ma problemu z jakością — zachowanie go to właściwy wybór."
+)
 
 
 def get_fix_feedback(error_type: ErrorType | None, fix: str) -> str:
@@ -139,9 +147,7 @@ def get_fix_feedback(error_type: ErrorType | None, fix: str) -> str:
     return _FIX_FEEDBACK.get((error_type, fix), "wrong")
 
 
-def get_fix_feedback_text(
-    error_type: ErrorType | None, fix: str, level: str, lang: str
-) -> str:
+def get_fix_feedback_text(error_type: ErrorType | None, fix: str, level: str, lang: str) -> str:
     """Return human-readable feedback for the FIX phase."""
     if error_type is None:
         if level == "correct":
@@ -159,27 +165,28 @@ def get_fix_feedback_text(
 
 # ── Dataset generator ────────────────────────────────────────────────────────────
 
+
 def generate_dataset(
     config: "DifficultyConfig",
     seed: int | None = None,
 ) -> CleaningSession:
     """Generate a synthetic RT dataset with injected errors per config."""
-    from cognitive_data_arcade.games.data_cleaning.difficulty import DifficultyConfig
     rng = random.Random(seed)
     n_rows = config.rows
 
     clean_rows: list[DataRow] = []
     for i in range(n_rows):
-        clean_rows.append(DataRow(
-            participant_id=(i // 3) + 1,
-            session=1,
-            trial=(i % 3) + 1,
-            rt_ms=round(rng.uniform(250.0, 750.0), 1),
-            accuracy=round(rng.uniform(0.65, 1.00), 2),
-        ))
+        clean_rows.append(
+            DataRow(
+                participant_id=(i // 3) + 1,
+                session=1,
+                trial=(i % 3) + 1,
+                rt_ms=round(rng.uniform(250.0, 750.0), 1),
+                accuracy=round(rng.uniform(0.65, 1.00), 2),
+            )
+        )
 
-    rows = [DataRow(r.participant_id, r.session, r.trial, r.rt_ms, r.accuracy)
-            for r in clean_rows]
+    rows = [DataRow(r.participant_id, r.session, r.trial, r.rt_ms, r.accuracy) for r in clean_rows]
 
     n_errors = rng.randint(config.errors_min, config.errors_max)
     positions = rng.sample(range(n_rows), n_errors)
@@ -191,14 +198,23 @@ def generate_dataset(
         row = rows[pos]
 
         if error_type == ErrorType.NEGATIVE_RT:
-            rows[pos] = DataRow(row.participant_id, row.session, row.trial,
-                                float(-rng.randint(10, 200)), row.accuracy)
+            rows[pos] = DataRow(
+                row.participant_id,
+                row.session,
+                row.trial,
+                float(-rng.randint(10, 200)),
+                row.accuracy,
+            )
         elif error_type == ErrorType.OUTLIER_PLACEHOLDER:
-            rows[pos] = DataRow(row.participant_id, row.session, row.trial,
-                                rng.choice(_OUTLIER_VALUES), row.accuracy)
+            rows[pos] = DataRow(
+                row.participant_id,
+                row.session,
+                row.trial,
+                rng.choice(_OUTLIER_VALUES),
+                row.accuracy,
+            )
         elif error_type == ErrorType.MISSING_VALUE:
-            rows[pos] = DataRow(row.participant_id, row.session, row.trial,
-                                None, row.accuracy)
+            rows[pos] = DataRow(row.participant_id, row.session, row.trial, None, row.accuracy)
         elif error_type == ErrorType.DUPLICATE_ROW:
             candidates = [j for j in range(n_rows) if j != pos and j not in positions]
             if not candidates:
@@ -207,11 +223,15 @@ def generate_dataset(
                 candidates = [j for j in range(n_rows) if j != pos]
             src_idx = rng.choice(candidates)
             src = clean_rows[src_idx]
-            rows[pos] = DataRow(src.participant_id, src.session, src.trial,
-                                src.rt_ms, src.accuracy)
+            rows[pos] = DataRow(src.participant_id, src.session, src.trial, src.rt_ms, src.accuracy)
         elif error_type == ErrorType.WRONG_FORMAT_ACCURACY:
-            rows[pos] = DataRow(row.participant_id, row.session, row.trial,
-                                row.rt_ms, float(round(row.accuracy * 100)))
+            rows[pos] = DataRow(
+                row.participant_id,
+                row.session,
+                row.trial,
+                row.rt_ms,
+                float(round(row.accuracy * 100)),
+            )
 
         ground_truth[pos] = error_type
 
@@ -220,16 +240,21 @@ def generate_dataset(
 
 # ── Stats and scoring ────────────────────────────────────────────────────────────
 
+
 def compute_stats(rows: list[DataRow]) -> dict[str, float]:
     """Summary statistics; filters out invalid/missing/wrong-format values."""
-    valid_rt = [r.rt_ms for r in rows
-                if r.rt_ms is not None and -50.0 < r.rt_ms < 9000.0
-                and r.rt_ms not in _OUTLIER_VALUES]
-    valid_acc = [r.accuracy for r in rows
-                 if r.accuracy is not None and 0.0 <= r.accuracy <= 1.0]
+    valid_rt = [
+        r.rt_ms
+        for r in rows
+        if r.rt_ms is not None and -50.0 < r.rt_ms < 9000.0 and r.rt_ms not in _OUTLIER_VALUES
+    ]
+    valid_acc = [r.accuracy for r in rows if r.accuracy is not None and 0.0 <= r.accuracy <= 1.0]
     mean_rt = sum(valid_rt) / len(valid_rt) if valid_rt else 0.0
-    var_rt = (sum((x - mean_rt) ** 2 for x in valid_rt) / (len(valid_rt) - 1)
-              if len(valid_rt) > 1 else 0.0)
+    var_rt = (
+        sum((x - mean_rt) ** 2 for x in valid_rt) / (len(valid_rt) - 1)
+        if len(valid_rt) > 1
+        else 0.0
+    )
     mean_acc = sum(valid_acc) / len(valid_acc) if valid_acc else 0.0
     return {
         "n_rows": float(len(rows)),
@@ -247,12 +272,14 @@ def apply_fixes(
     """Apply student fixes and return the cleaned row list."""
     rows = session.rows
     # Compute median RT from un-flagged rows (for imputation)
-    clean_rt = sorted(r.rt_ms for i, r in enumerate(rows)
-                      if r.rt_ms is not None and i not in flagged)
+    clean_rt = sorted(
+        r.rt_ms for i, r in enumerate(rows) if r.rt_ms is not None and i not in flagged
+    )
     if clean_rt:
         mid = len(clean_rt) // 2
-        median_rt = (clean_rt[mid] if len(clean_rt) % 2 == 1
-                     else (clean_rt[mid - 1] + clean_rt[mid]) / 2.0)
+        median_rt = (
+            clean_rt[mid] if len(clean_rt) % 2 == 1 else (clean_rt[mid - 1] + clean_rt[mid]) / 2.0
+        )
     else:
         median_rt = 500.0
 
@@ -265,12 +292,12 @@ def apply_fixes(
         if fix == "delete":
             continue
         elif fix == "median":
-            result.append(DataRow(row.participant_id, row.session, row.trial,
-                                  median_rt, row.accuracy))
+            result.append(
+                DataRow(row.participant_id, row.session, row.trial, median_rt, row.accuracy)
+            )
         elif fix == "fix_format":
             new_acc = row.accuracy / 100.0 if row.accuracy is not None else None
-            result.append(DataRow(row.participant_id, row.session, row.trial,
-                                  row.rt_ms, new_acc))
+            result.append(DataRow(row.participant_id, row.session, row.trial, row.rt_ms, new_acc))
         else:  # keep
             result.append(row)
     return result
@@ -292,7 +319,8 @@ def compute_score(
     det_rate = len(found) / total_errors if total_errors > 0 else 0.0
 
     correct_fixes = sum(
-        1 for idx in flagged
+        1
+        for idx in flagged
         if get_fix_feedback(session.ground_truth.get(idx), fixes.get(idx, "keep")) == "correct"
     )
     fix_rate = correct_fixes / len(flagged) if flagged else 0.0

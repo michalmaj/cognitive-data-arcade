@@ -4,19 +4,24 @@ import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.recommendation_bubble.game_state import (
-    GameState, CATEGORIES, CAT_COLORS, ENGAGEMENT,
-    diversity, profile_from_clicks, generate_slots,
+    GameState,
+    CATEGORIES,
+    CAT_COLORS,
+    ENGAGEMENT,
+    diversity,
+    profile_from_clicks,
+    generate_slots,
 )
 
 _W, _H = 1024, 720
-_BG     = (10, 10, 20)
-_PANEL  = (20, 14, 30)
-_WHITE  = (240, 240, 240)
-_DIM    = (140, 140, 160)
+_BG = (10, 10, 20)
+_PANEL = (20, 14, 30)
+_WHITE = (240, 240, 240)
+_DIM = (140, 140, 160)
 _C_ALGO = (230, 126, 34)
-_GOLD   = (243, 156, 18)
+_GOLD = (243, 156, 18)
 
-_ACT_SECS  = 30.0
+_ACT_SECS = 30.0
 _TILE_W, _TILE_H = 290, 80
 _TILE_COLS = 2
 _GRID_X = (_W - _TILE_COLS * _TILE_W - 20) // 2
@@ -41,7 +46,8 @@ class PhaseAlgoScene(Scene):
         return pygame.Rect(
             _GRID_X + col * (_TILE_W + 20),
             _GRID_Y + row * (_TILE_H + 14),
-            _TILE_W, _TILE_H,
+            _TILE_W,
+            _TILE_H,
         )
 
     def _spawn_tile(self) -> str:
@@ -73,8 +79,11 @@ class PhaseAlgoScene(Scene):
         self._state.score_algo = self._score
         self._state.algo_clicked_cats = list(self._clicked_cats)
         clicks = {cat: self._clicked_cats.count(cat) for cat in CATEGORIES}
-        self._state.diversity_act3 = diversity(profile_from_clicks(clicks)) if self._clicked_cats else 0.0
+        self._state.diversity_act3 = (
+            diversity(profile_from_clicks(clicks)) if self._clicked_cats else 0.0
+        )
         from cognitive_data_arcade.games.recommendation_bubble.phase_result import PhaseResultScene
+
         self._next = PhaseResultScene(self._state)
         self._done = True
 

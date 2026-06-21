@@ -1,21 +1,24 @@
 # src/cognitive_data_arcade/games/bias_blind_spot/phase_applicant.py
 """Act 1 -- Applicant: 6 loan cards in 2x3 grid, pattern question, redlining reveal."""
+
 from __future__ import annotations
 import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.bias_blind_spot.game_state import (
-    GameState, APPLICANTS, ACT1_CORRECT,
+    GameState,
+    APPLICANTS,
+    ACT1_CORRECT,
 )
 
 _W, _H = 1024, 720
-_BG    = (8, 12, 20)
+_BG = (8, 12, 20)
 _PANEL = (16, 20, 36)
 _WHITE = (240, 240, 240)
-_DIM   = (130, 130, 150)
+_DIM = (130, 130, 150)
 _GREEN = (39, 174, 96)
-_RED   = (231, 76, 60)
-_GOLD  = (243, 156, 18)
+_RED = (231, 76, 60)
+_GOLD = (243, 156, 18)
 _C_APP = (155, 89, 182)
 
 _CARD_W, _CARD_H = 440, 145
@@ -24,9 +27,9 @@ _GRID_TOP = 68
 _GRID_LEFT = (_W - 2 * _CARD_W - _CARD_GAP_X) // 2
 
 _CHOICES = [
-    ("income",  "A) Wysokosc dochodu"),
+    ("income", "A) Wysokosc dochodu"),
     ("zipcode", "B) Kod pocztowy / dzielnica"),
-    ("credit",  "C) Historia kredytowa"),
+    ("credit", "C) Historia kredytowa"),
 ]
 _BTN_H = 44
 _BTN_W = 280
@@ -67,7 +70,7 @@ class PhaseApplicantScene(Scene):
                     self._choice_idx = i
                     self._answered = True
                     self._state.act1_choice = key
-                    self._state.act1_correct = (key == ACT1_CORRECT)
+                    self._state.act1_correct = key == ACT1_CORRECT
                     self._revealed = True
                     break
 
@@ -78,6 +81,7 @@ class PhaseApplicantScene(Scene):
         if self._done:
             return
         from cognitive_data_arcade.games.bias_blind_spot.phase_interlude import PhaseInterludeScene
+
         lines = [
             ("Czas zostac inzynierem modelu.", (39, 174, 96)),
             ("Bedziesz usuwac cechy -- i obserwowac bias.", (140, 140, 160)),
@@ -181,8 +185,13 @@ class PhaseApplicantScene(Scene):
                 pygame.draw.rect(surface, _PANEL, btn_r, border_radius=6)
                 pygame.draw.rect(surface, _DIM, btn_r, 1, border_radius=6)
                 ls = get_font(13).render(label, True, _WHITE)
-                surface.blit(ls, (btn_r.x + btn_r.w // 2 - ls.get_width() // 2,
-                                  btn_r.y + btn_r.h // 2 - ls.get_height() // 2))
+                surface.blit(
+                    ls,
+                    (
+                        btn_r.x + btn_r.w // 2 - ls.get_width() // 2,
+                        btn_r.y + btn_r.h // 2 - ls.get_height() // 2,
+                    ),
+                )
 
         if self._revealed:
             self._draw_reveal(surface)

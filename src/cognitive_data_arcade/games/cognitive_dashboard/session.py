@@ -20,10 +20,10 @@ class TaskResult:
 
 @dataclass
 class DashboardSession:
-    rt:      TaskResult | None = None
-    stroop:  TaskResult | None = None
+    rt: TaskResult | None = None
+    stroop: TaskResult | None = None
     flanker: TaskResult | None = None
-    gonogo:  TaskResult | None = None
+    gonogo: TaskResult | None = None
     synthetic: bool = False
 
     def is_complete(self) -> bool:

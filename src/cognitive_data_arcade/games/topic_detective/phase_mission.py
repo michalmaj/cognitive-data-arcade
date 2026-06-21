@@ -9,29 +9,29 @@ from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.topic_detective.missions import Mission
 from cognitive_data_arcade.games.topic_detective.topic_data import TOPICS
 
-_W, _H      = 1024, 720
-_TOP_H      = 44
-_LEFT_W     = 320
-_BG         = (15, 15, 35)
-_TOP_BG     = (10, 10, 28)
-_LEFT_BG    = (12, 12, 32)
-_RIGHT_BG   = (12, 12, 30)
-_WHITE      = (240, 240, 240)
-_DIM        = (100, 100, 140)
-_AMBER      = (240, 165, 0)
-_GREEN      = (39, 174, 96)
-_RED        = (231, 76, 60)
-_GREY       = (60, 60, 80)
+_W, _H = 1024, 720
+_TOP_H = 44
+_LEFT_W = 320
+_BG = (15, 15, 35)
+_TOP_BG = (10, 10, 28)
+_LEFT_BG = (12, 12, 32)
+_RIGHT_BG = (12, 12, 30)
+_WHITE = (240, 240, 240)
+_DIM = (100, 100, 140)
+_AMBER = (240, 165, 0)
+_GREEN = (39, 174, 96)
+_RED = (231, 76, 60)
+_GREY = (60, 60, 80)
 
 _TYPE_LABELS = {
     "name_topic": "NAZWIJ TEMAT",
-    "assign_doc":  "PRZYPISZ DOKUMENT",
-    "intruder":    "INTRUZ W TEMACIE",
+    "assign_doc": "PRZYPISZ DOKUMENT",
+    "intruder": "INTRUZ W TEMACIE",
 }
 _TYPE_COLORS = {
     "name_topic": (240, 165, 0),
-    "assign_doc":  (52, 152, 219),
-    "intruder":    (231, 76, 60),
+    "assign_doc": (52, 152, 219),
+    "intruder": (231, 76, 60),
 }
 
 _BUTTONS_Y = _TOP_H + 220
@@ -45,16 +45,16 @@ class PhaseMissionScene(Scene):
         session_score: int,
         round_results: list[dict],
     ) -> None:
-        self._missions      = missions
-        self._mission       = missions[round_idx]
-        self._round_idx     = round_idx
+        self._missions = missions
+        self._mission = missions[round_idx]
+        self._round_idx = round_idx
         self._session_score = session_score
         self._round_results = round_results
         self._selected: set[str] = set()
-        self._answered      = False
-        self._is_correct    = False
-        self._reveal_timer  = 0.0
-        self._pending_score   = session_score
+        self._answered = False
+        self._is_correct = False
+        self._reveal_timer = 0.0
+        self._pending_score = session_score
         self._pending_results = list(round_results)
         self._done = False
         self._next: Scene | None = None
@@ -125,19 +125,19 @@ class PhaseMissionScene(Scene):
         m = self._mission
         chosen = next(iter(self._selected))
         if m.type == "name_topic":
-            self._is_correct = (chosen == m.answer)
+            self._is_correct = chosen == m.answer
             self._finish(15 if self._is_correct else -5)
         elif m.type == "assign_doc":
-            self._is_correct = (chosen == m.answer)
+            self._is_correct = chosen == m.answer
             raw = 20 if self._is_correct else -5
             round_score = max(0, raw)
             result = {"type": m.type, "correct": self._is_correct, "score": round_score}
-            self._pending_score   = self._session_score + round_score
+            self._pending_score = self._session_score + round_score
             self._pending_results = self._round_results + [result]
             self._answered = True
             self._reveal_timer = 1500.0
         elif m.type == "intruder":
-            self._is_correct = (chosen == m.answer)
+            self._is_correct = chosen == m.answer
             self._finish(25 if self._is_correct else -10)
 
     def _finish(self, raw: int) -> None:
@@ -156,6 +156,7 @@ class PhaseMissionScene(Scene):
             )
         else:
             from cognitive_data_arcade.games.topic_detective.phase_result import PhaseResultScene
+
             self._next = PhaseResultScene(session_score=new_score, round_results=new_results)
         self._done = True
 
@@ -198,14 +199,17 @@ class PhaseMissionScene(Scene):
         badge = get_font(10).render(_TYPE_LABELS[m.type], True, color)
         bx = 16
         pygame.draw.rect(
-            surface, _BG,
+            surface,
+            _BG,
             (bx - 4, y - 2, badge.get_width() + 8, badge.get_height() + 4),
             border_radius=4,
         )
         pygame.draw.rect(
-            surface, color,
+            surface,
+            color,
             (bx - 4, y - 2, badge.get_width() + 8, badge.get_height() + 4),
-            1, border_radius=4,
+            1,
+            border_radius=4,
         )
         surface.blit(badge, (bx, y))
         y += badge.get_height() + 12
@@ -220,31 +224,39 @@ class PhaseMissionScene(Scene):
     def _draw_left_name_topic(self, surface: pygame.Surface, y: int) -> None:
         m = self._mission
         desc = get_font(13).render("Ktory temat pasuje do tych slow?", True, _DIM)
-        surface.blit(desc, (16, y)); y += 26
+        surface.blit(desc, (16, y))
+        y += 26
 
         for word in m.payload["top5_words"]:
             cs = get_font(14).render(word, True, _AMBER)
             cx = _LEFT_W // 2 - cs.get_width() // 2
             pygame.draw.rect(
-                surface, (28, 20, 10),
+                surface,
+                (28, 20, 10),
                 (cx - 8, y - 2, cs.get_width() + 16, cs.get_height() + 4),
                 border_radius=4,
             )
-            surface.blit(cs, (cx, y)); y += 28
+            surface.blit(cs, (cx, y))
+            y += 28
 
         for rect, tk in self._topic_button_rects():
             td = TOPICS[tk]
             is_sel = tk in self._selected
-            bg = tuple(c // 2 for c in td["color"]) if is_sel else tuple(c // 4 for c in td["color"])
+            bg = (
+                tuple(c // 2 for c in td["color"]) if is_sel else tuple(c // 4 for c in td["color"])
+            )
             pygame.draw.rect(surface, bg, rect, border_radius=6)
             pygame.draw.rect(surface, td["color"], rect, 2 if is_sel else 1, border_radius=6)
             lbl = get_font(13).render(td["label_pl"], True, _WHITE if is_sel else _DIM)
-            surface.blit(lbl, (rect.centerx - lbl.get_width() // 2, rect.centery - lbl.get_height() // 2))
+            surface.blit(
+                lbl, (rect.centerx - lbl.get_width() // 2, rect.centery - lbl.get_height() // 2)
+            )
 
     def _draw_left_assign_doc(self, surface: pygame.Surface, y: int) -> None:
         m = self._mission
         desc = get_font(12).render("Ktory temat dominuje w tym tekscie?", True, _DIM)
-        surface.blit(desc, (16, y)); y += 22
+        surface.blit(desc, (16, y))
+        y += 22
 
         words = m.payload["text_pl"].split()
         line_buf = ""
@@ -254,11 +266,13 @@ class PhaseMissionScene(Scene):
                 line_buf = candidate
             else:
                 surf = get_font(12).render(line_buf, True, _WHITE)
-                surface.blit(surf, (16, y)); y += 18
+                surface.blit(surf, (16, y))
+                y += 18
                 line_buf = word
         if line_buf:
             surf = get_font(12).render(line_buf, True, _WHITE)
-            surface.blit(surf, (16, y)); y += 18
+            surface.blit(surf, (16, y))
+            y += 18
         y += 8
 
         if not self._answered:
@@ -267,10 +281,16 @@ class PhaseMissionScene(Scene):
                 pygame.draw.rect(surface, tuple(c // 4 for c in td["color"]), rect, border_radius=6)
                 pygame.draw.rect(surface, td["color"], rect, 1, border_radius=6)
                 lbl = get_font(13).render(td["label_pl"], True, _DIM)
-                surface.blit(lbl, (rect.centerx - lbl.get_width() // 2, rect.centery - lbl.get_height() // 2))
+                surface.blit(
+                    lbl, (rect.centerx - lbl.get_width() // 2, rect.centery - lbl.get_height() // 2)
+                )
         else:
             res_color = _GREEN if self._is_correct else _RED
-            res_text = "Poprawnie!" if self._is_correct else f"Blad -- dominuje: {TOPICS[m.answer]['label_pl']}"
+            res_text = (
+                "Poprawnie!"
+                if self._is_correct
+                else f"Blad -- dominuje: {TOPICS[m.answer]['label_pl']}"
+            )
             res_surf = get_font(13).render(res_text, True, res_color)
             surface.blit(res_surf, (16, _BUTTONS_Y))
             hint = get_font(11).render("Spacja = dalej", True, _GREY)
@@ -280,7 +300,8 @@ class PhaseMissionScene(Scene):
         m = self._mission
         topic_label = TOPICS[m.payload["topic_key"]]["label_pl"]
         desc = get_font(12).render(f"Temat: {topic_label} -- kliknij intruza!", True, _DIM)
-        surface.blit(desc, (16, y)); y += 22
+        surface.blit(desc, (16, y))
+        y += 22
 
         for rect, word in self._chip_rects():
             is_sel = word in self._selected
@@ -290,14 +311,18 @@ class PhaseMissionScene(Scene):
             pygame.draw.rect(surface, bg, rect, border_radius=4)
             pygame.draw.rect(surface, border, rect, 1, border_radius=4)
             cl = get_font(13).render(word, True, _WHITE if is_sel else _DIM)
-            surface.blit(cl, (rect.centerx - cl.get_width() // 2, rect.centery - cl.get_height() // 2))
+            surface.blit(
+                cl, (rect.centerx - cl.get_width() // 2, rect.centery - cl.get_height() // 2)
+            )
 
         if self._selected:
             btn = pygame.Rect(16, _H - 64, _LEFT_W - 32, 44)
             pygame.draw.rect(surface, (30, 10, 10), btn, border_radius=6)
             pygame.draw.rect(surface, _RED, btn, 2, border_radius=6)
             bl = get_font(14).render("ZATWIERDZ (SPACJA)", True, _WHITE)
-            surface.blit(bl, (btn.centerx - bl.get_width() // 2, btn.centery - bl.get_height() // 2))
+            surface.blit(
+                bl, (btn.centerx - bl.get_width() // 2, btn.centery - bl.get_height() // 2)
+            )
 
     def _draw_right_panel(self, surface: pygame.Surface) -> None:
         m = self._mission
@@ -340,14 +365,14 @@ class PhaseMissionScene(Scene):
         weights = m.payload["weights"]
         bar_y = _TOP_H + 22 + 5 * (80 + 6) + 10
         hdr = get_font(10).render("ROZKLAD LDA (odkryty):", True, _AMBER)
-        surface.blit(hdr, (rx + 8, bar_y)); bar_y += 16
+        surface.blit(hdr, (rx + 8, bar_y))
+        bar_y += 16
         for tk, weight in sorted(weights.items(), key=lambda x: -x[1]):
             td = TOPICS[tk]
             bar_w = int((rw - 32) * weight)
             color = td["color"]
             pygame.draw.rect(
-                surface, tuple(c // 4 for c in color),
-                (rx + 8, bar_y, rw - 32, 14), border_radius=3
+                surface, tuple(c // 4 for c in color), (rx + 8, bar_y, rw - 32, 14), border_radius=3
             )
             if bar_w > 0:
                 pygame.draw.rect(surface, color, (rx + 8, bar_y, bar_w, 14), border_radius=3)
@@ -365,7 +390,8 @@ class PhaseMissionScene(Scene):
         y = _TOP_H + 32
         for word in td["words"]:
             wl = get_font(12).render(f"  {word}", True, _DIM)
-            surface.blit(wl, (rx + 8, y)); y += 22
+            surface.blit(wl, (rx + 8, y))
+            y += 22
 
     def is_done(self) -> bool:
         return self._done

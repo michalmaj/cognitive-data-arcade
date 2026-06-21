@@ -14,8 +14,8 @@ _DIM = (120, 120, 160)
 
 VISIBLE_ROWS = 15
 ROW_H = 28
-_TABLE_W = 420        # visual width of table content (used to position scrollbar)
-_SCROLLBAR_GAP = 8    # pixels between table content and scrollbar
+_TABLE_W = 420  # visual width of table content (used to position scrollbar)
+_SCROLLBAR_GAP = 8  # pixels between table content and scrollbar
 
 
 class TableWidget:
@@ -112,15 +112,18 @@ class TableWidget:
 
         # Column header
         hdr_y = y0 - 32
-        cols = [(x0, "ID"), (x0 + 50, "Ses"), (x0 + 100, "Trial"),
-                (x0 + 160, "RT (ms)"), (x0 + 270, "Accuracy"), (x0 + 370, "")]
+        cols = [
+            (x0, "ID"),
+            (x0 + 50, "Ses"),
+            (x0 + 100, "Trial"),
+            (x0 + 160, "RT (ms)"),
+            (x0 + 270, "Accuracy"),
+            (x0 + 370, ""),
+        ]
         for cx, label in cols:
             s = self._font.render(label, True, _DIM)
             surface.blit(s, (cx, hdr_y))
-        pygame.draw.line(
-            surface, _DIM,
-            (x0, hdr_y + 24), (surface.get_width() - x0, hdr_y + 24), 1
-        )
+        pygame.draw.line(surface, _DIM, (x0, hdr_y + 24), (surface.get_width() - x0, hdr_y + 24), 1)
 
         for vi in range(VISIBLE_ROWS):
             ri = scroll + vi

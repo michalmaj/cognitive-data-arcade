@@ -5,7 +5,7 @@ import pygame
 
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
-from cognitive_data_arcade.games.anomaly_alert.detector import Element, find_clicked_element
+from cognitive_data_arcade.games.anomaly_alert.detector import find_clicked_element
 from cognitive_data_arcade.games.anomaly_alert.renderers import CHART_RENDERER
 from cognitive_data_arcade.games.anomaly_alert.scenarios import Scenario
 
@@ -14,13 +14,13 @@ _CHART_X, _CHART_Y = 0, 56
 _CHART_W, _CHART_H = 680, 624
 _PANEL_X = 680
 _TOP_H = 56
-_BG    = (15, 15, 35)
+_BG = (15, 15, 35)
 _PANEL = (18, 18, 42)
 _WHITE = (240, 240, 240)
-_DIM   = (120, 120, 160)
-_BLUE  = (52, 152, 219)
+_DIM = (120, 120, 160)
+_BLUE = (52, 152, 219)
 _GREEN = (46, 204, 113)
-_RED   = (231, 76, 60)
+_RED = (231, 76, 60)
 _AMBER = (243, 156, 18)
 
 _CONFIRM_RECT = pygame.Rect(690, 650, 324, 44)
@@ -90,7 +90,9 @@ class PhaseRoundScene(Scene):
                     self._selected.add(idx)
 
     def _confirm(self) -> None:
-        from cognitive_data_arcade.games.anomaly_alert.phase_round_result import PhaseRoundResultScene
+        from cognitive_data_arcade.games.anomaly_alert.phase_round_result import (
+            PhaseRoundResultScene,
+        )
         from cognitive_data_arcade.games.anomaly_alert.detector import compute_round_score
 
         found = sum(1 for i in self._selected if self._elements[i].is_anomaly)
@@ -189,10 +191,13 @@ class PhaseRoundScene(Scene):
         pygame.draw.rect(surface, (10, 10, 25), _CONFIRM_RECT, border_radius=6)
         pygame.draw.rect(surface, _GREEN, _CONFIRM_RECT, 2, border_radius=6)
         lbl2 = get_font(18).render("Zatwierdz", True, _GREEN)
-        surface.blit(lbl2, (
-            _CONFIRM_RECT.centerx - lbl2.get_width() // 2,
-            _CONFIRM_RECT.centery - lbl2.get_height() // 2,
-        ))
+        surface.blit(
+            lbl2,
+            (
+                _CONFIRM_RECT.centerx - lbl2.get_width() // 2,
+                _CONFIRM_RECT.centery - lbl2.get_height() // 2,
+            ),
+        )
 
         # Hint popup
         if self._popup_visible:

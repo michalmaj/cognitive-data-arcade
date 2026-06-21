@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
@@ -11,23 +12,24 @@ from cognitive_data_arcade.engine.context_popup import ContextInfo, ContextPopup
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.correlation_trap.simulator import (
-    CorrResult, generate_correlated,
+    CorrResult,
+    generate_correlated,
 )
 
-_BG     = (15, 15, 35)
-_PANEL  = (18, 18, 42)
-_WHITE  = (240, 240, 240)
-_DIM    = (120, 120, 160)
+_BG = (15, 15, 35)
+_PANEL = (18, 18, 42)
+_WHITE = (240, 240, 240)
+_DIM = (120, 120, 160)
 _ORANGE = (243, 156, 18)
-_TRACK  = (42, 42, 80)
+_TRACK = (42, 42, 80)
 _FIG_BG = "#0f0f23"
-_AX_BG  = "#1a1a3e"
+_AX_BG = "#1a1a3e"
 
-_LEFT_W  = 389
-_AREA_H  = 672
+_LEFT_W = 389
+_AREA_H = 672
 _CHART_W = 610
 _CHART_H = 540
-_DPI     = 100
+_DPI = 100
 
 _POPUPS_A: dict[str, ContextInfo] = {
     "slider_r": ContextInfo(
@@ -73,8 +75,7 @@ _POPUPS_A: dict[str, ContextInfo] = {
     "stat_r2": ContextInfo(
         title="R2 — współczynnik determinacji",
         body=(
-            "R2 = r^2 mówi jaki % wariancji Y wyjaśniają X.\n"
-            "R2=0.49 -> X wyjaśnia 49% wariancji Y."
+            "R2 = r^2 mówi jaki % wariancji Y wyjaśniają X.\nR2=0.49 -> X wyjaśnia 49% wariancji Y."
         ),
         impact="Pozostałe 1-R2 to wariancja niewyjaśniona modelem.",
     ),
@@ -89,11 +90,11 @@ _POPUPS_A: dict[str, ContextInfo] = {
 }
 
 _SCALE_CELLS = [
-    ("silna -",    (192,  57,  43), (240, 240, 240)),
-    ("umiark. -",  (231,  76,  60), (240, 240, 240)),
-    ("słaba",      ( 42,  42,  80), (160, 160, 200)),
-    ("umiark. +",  ( 41, 128, 185), (240, 240, 240)),
-    ("silna +",    ( 26, 111, 181), (240, 240, 240)),
+    ("silna -", (192, 57, 43), (240, 240, 240)),
+    ("umiark. -", (231, 76, 60), (240, 240, 240)),
+    ("słaba", (42, 42, 80), (160, 160, 200)),
+    ("umiark. +", (41, 128, 185), (240, 240, 240)),
+    ("silna +", (26, 111, 181), (240, 240, 240)),
 ]
 
 
@@ -164,16 +165,13 @@ class _FloatSlider:
         surface.blit(font_lbl.render(self._label, True, _DIM), (self._x, self._y))
         val_str = format(self._value, self._fmt)
         vw = font_val.size(val_str)[0]
-        surface.blit(font_val.render(val_str, True, _WHITE),
-                     (self._x + self._w - vw, self._y))
+        surface.blit(font_val.render(val_str, True, _WHITE), (self._x + self._w - vw, self._y))
         ty = self._track_y()
-        pygame.draw.rect(surface, _TRACK,
-                         (self._x, ty - 2, self._w, 4), border_radius=2)
+        pygame.draw.rect(surface, _TRACK, (self._x, ty - 2, self._w, 4), border_radius=2)
         tx = self._thumb_x()
         filled = max(0, tx - self._x)
         if filled > 0:
-            pygame.draw.rect(surface, _ORANGE,
-                             (self._x, ty - 2, filled, 4), border_radius=2)
+            pygame.draw.rect(surface, _ORANGE, (self._x, ty - 2, filled, 4), border_radius=2)
         pygame.draw.circle(surface, _ORANGE, (tx, ty), 8)
 
 
@@ -181,10 +179,10 @@ class PhaseAScene(Scene):
     def __init__(self) -> None:
         self._done = False
         x0, w = 20, _LEFT_W - 40
-        self._sl_r     = _FloatSlider("Korelacja (r)",  -1.0, 1.0,  0.50, 0.01, x0, 80,  w)
-        self._sl_n     = _FloatSlider("Próbka (N)",     20,   500,  150,  10,   x0, 148, w, fmt=".0f")
-        self._sl_noise = _FloatSlider("Szum (noise)",    0.0,  1.0,  0.00, 0.05, x0, 216, w)
-        self._sliders  = [self._sl_r, self._sl_n, self._sl_noise]
+        self._sl_r = _FloatSlider("Korelacja (r)", -1.0, 1.0, 0.50, 0.01, x0, 80, w)
+        self._sl_n = _FloatSlider("Próbka (N)", 20, 500, 150, 10, x0, 148, w, fmt=".0f")
+        self._sl_noise = _FloatSlider("Szum (noise)", 0.0, 1.0, 0.00, 0.05, x0, 216, w)
+        self._sliders = [self._sl_r, self._sl_n, self._sl_noise]
         self._result: CorrResult | None = None
         self._chart_surf: pygame.Surface | None = None
         self._popup = ContextPopup()
@@ -194,22 +192,22 @@ class PhaseAScene(Scene):
     def _register_popups(self) -> None:
         self._popup.clear()
         scatter_rect = pygame.Rect(_LEFT_W + 4, 8, _CHART_W, _CHART_H)
-        stat_r_rect  = pygame.Rect(12, 290, _LEFT_W - 24, 22)
+        stat_r_rect = pygame.Rect(12, 290, _LEFT_W - 24, 22)
         stat_r2_rect = pygame.Rect(12, 314, _LEFT_W - 24, 22)
-        scale_rect   = pygame.Rect(12, _AREA_H - 78, _LEFT_W - 24, 32)
-        self._popup.register(self._sl_r.rect,     _POPUPS_A["slider_r"])
-        self._popup.register(self._sl_n.rect,     _POPUPS_A["slider_n"])
+        scale_rect = pygame.Rect(12, _AREA_H - 78, _LEFT_W - 24, 32)
+        self._popup.register(self._sl_r.rect, _POPUPS_A["slider_r"])
+        self._popup.register(self._sl_n.rect, _POPUPS_A["slider_n"])
         self._popup.register(self._sl_noise.rect, _POPUPS_A["slider_noise"])
-        self._popup.register(scatter_rect,        _POPUPS_A["scatter"])
-        self._popup.register(stat_r_rect,         _POPUPS_A["stat_r"])
-        self._popup.register(stat_r2_rect,        _POPUPS_A["stat_r2"])
-        self._popup.register(scale_rect,          _POPUPS_A["strength_scale"])
+        self._popup.register(scatter_rect, _POPUPS_A["scatter"])
+        self._popup.register(stat_r_rect, _POPUPS_A["stat_r"])
+        self._popup.register(stat_r2_rect, _POPUPS_A["stat_r2"])
+        self._popup.register(scale_rect, _POPUPS_A["strength_scale"])
 
     def _regenerate(self) -> None:
-        r     = self._sl_r.value
-        n     = int(self._sl_n.value)
+        r = self._sl_r.value
+        n = int(self._sl_n.value)
         noise = self._sl_noise.value
-        seed  = n * 7 + 42
+        seed = n * 7 + 42
         self._result = generate_correlated(r, noise, n, seed=seed)
         self._chart_surf = _render_chart(self._result)
 
@@ -250,8 +248,10 @@ class PhaseAScene(Scene):
 
         if self._chart_surf:
             title_font = get_font(14)
-            area.blit(title_font.render("Wykres punktowy — X vs Y", True, _DIM),
-                      (_LEFT_W + 4 + (_CHART_W - title_font.size("Wykres punktowy — X vs Y")[0]) // 2, 8))
+            area.blit(
+                title_font.render("Wykres punktowy — X vs Y", True, _DIM),
+                (_LEFT_W + 4 + (_CHART_W - title_font.size("Wykres punktowy — X vs Y")[0]) // 2, 8),
+            )
             area.blit(self._chart_surf, (_LEFT_W + 4, 28))
 
         self._popup.draw(area)
@@ -262,9 +262,9 @@ def _draw_stats(surface: pygame.Surface, result: CorrResult) -> None:
     font = get_font(15)
     y = 280
     stats = [
-        ("r Pearson",    f"{result.r:+.3f}"),
-        ("R2",           f"{result.r2:.3f}"),
-        ("Siła",         result.strength),
+        ("r Pearson", f"{result.r:+.3f}"),
+        ("R2", f"{result.r2:.3f}"),
+        ("Siła", result.strength),
         ("N obserwacji", str(len(result.x))),
     ]
     for i, (lbl, val) in enumerate(stats):
@@ -275,17 +275,17 @@ def _draw_stats(surface: pygame.Surface, result: CorrResult) -> None:
 
 def _draw_scale(surface: pygame.Surface, r: float) -> None:
     font = get_font(10)
-    y  = _AREA_H - 78
+    y = _AREA_H - 78
     x0 = 12
-    w  = _LEFT_W - 24
+    w = _LEFT_W - 24
     cw = w // 5
     a = abs(r)
     if a < 0.10:
-        highlight = 2        # center: near zero
+        highlight = 2  # center: near zero
     elif a < 0.50:
-        highlight = 3 if r >= 0 else 1    # moderate
+        highlight = 3 if r >= 0 else 1  # moderate
     else:
-        highlight = 4 if r >= 0 else 0    # strong / very strong
+        highlight = 4 if r >= 0 else 0  # strong / very strong
     for i, (label, bg, fg) in enumerate(_SCALE_CELLS):
         rx = x0 + i * cw
         pygame.draw.rect(surface, bg, (rx, y, cw - 2, 28))
@@ -309,7 +309,8 @@ def _render_chart(result: CorrResult) -> pygame.Surface:
     y_line = [m * xv + b for xv in x_line]
     ax.plot(x_line, y_line, color="#f39c12", linestyle="--", alpha=0.6)
     ax.text(
-        0.98, 0.98,
+        0.98,
+        0.98,
         f"r = {result.r:+.3f}",
         transform=ax.transAxes,
         color="#f39c12",

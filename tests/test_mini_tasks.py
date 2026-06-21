@@ -8,7 +8,11 @@ import pytest
 
 from cognitive_data_arcade.engine import fonts as _fonts_module
 from cognitive_data_arcade.engine.scene import Scene
-from cognitive_data_arcade.games.cognitive_dashboard.config import FIXATION_MS, MINI_TRIALS, TIMEOUT_MS
+from cognitive_data_arcade.games.cognitive_dashboard.config import (
+    FIXATION_MS,
+    MINI_TRIALS,
+    TIMEOUT_MS,
+)
 from cognitive_data_arcade.games.cognitive_dashboard.mini_tasks import (
     MiniFlankerScene,
     MiniGoNoGoScene,
@@ -28,10 +32,17 @@ def pg() -> None:
 
 
 class _Stub(Scene):
-    def handle_event(self, e: pygame.event.Event) -> None: pass
-    def update(self, dt: float) -> None: pass
-    def draw(self, s: pygame.Surface) -> None: pass
-    def is_done(self) -> bool: return False
+    def handle_event(self, e: pygame.event.Event) -> None:
+        pass
+
+    def update(self, dt: float) -> None:
+        pass
+
+    def draw(self, s: pygame.Surface) -> None:
+        pass
+
+    def is_done(self) -> bool:
+        return False
 
 
 def _back() -> Callable[[], Scene]:
@@ -44,6 +55,7 @@ def _keydown(key: int) -> pygame.event.Event:
 
 # ── MiniRTScene ──────────────────────────────────────────────────────────────
 
+
 def test_mini_rt_not_done_initially() -> None:
     s = DashboardSession()
     scene = MiniRTScene(s, _back())
@@ -54,9 +66,9 @@ def test_mini_rt_done_after_all_trials() -> None:
     s = DashboardSession()
     scene = MiniRTScene(s, _back())
     for _ in range(MINI_TRIALS):
-        scene.update(float(FIXATION_MS + 10))   # FIXATION → STIMULUS
+        scene.update(float(FIXATION_MS + 10))  # FIXATION → STIMULUS
         scene.handle_event(_keydown(pygame.K_SPACE))
-        scene.update(500.0)                      # FEEDBACK → next
+        scene.update(500.0)  # FEEDBACK → next
     assert scene.is_done()
     assert s.rt is not None
     assert len(s.rt.rt_ms) == MINI_TRIALS
@@ -66,9 +78,9 @@ def test_mini_rt_done_after_all_trials() -> None:
 def test_mini_rt_timeout_records_miss() -> None:
     s = DashboardSession()
     scene = MiniRTScene(s, _back())
-    scene.update(float(FIXATION_MS + 10))       # FIXATION → STIMULUS
-    scene.update(float(TIMEOUT_MS + 10))        # timeout
-    scene.update(500.0)                         # FEEDBACK → next trial
+    scene.update(float(FIXATION_MS + 10))  # FIXATION → STIMULUS
+    scene.update(float(TIMEOUT_MS + 10))  # timeout
+    scene.update(500.0)  # FEEDBACK → next trial
     # Not done yet — only 1 trial recorded
     assert not scene.is_done()
 
@@ -81,6 +93,7 @@ def test_mini_rt_draw_no_crash() -> None:
 
 
 # ── MiniStroopScene ──────────────────────────────────────────────────────────
+
 
 def test_mini_stroop_conditions_balanced() -> None:
     s = DashboardSession()
@@ -102,6 +115,7 @@ def test_mini_stroop_draw_no_crash() -> None:
 
 # ── MiniFlankerScene ─────────────────────────────────────────────────────────
 
+
 def test_mini_flanker_conditions_balanced() -> None:
     s = DashboardSession()
     scene = MiniFlankerScene(s, _back())
@@ -121,6 +135,7 @@ def test_mini_flanker_draw_no_crash() -> None:
 
 
 # ── MiniGoNoGoScene ──────────────────────────────────────────────────────────
+
 
 def test_mini_gonogo_conditions_count() -> None:
     s = DashboardSession()

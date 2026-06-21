@@ -6,10 +6,10 @@ from cognitive_data_arcade.games.recommendation_bubble.game_state import GameSta
 
 _W, _H = 1024, 720
 _BG = (12, 12, 20)
-_C_USER    = (155, 89, 182)
+_C_USER = (155, 89, 182)
 _C_CURATOR = (39, 174, 96)
-_C_ALGO    = (230, 126, 34)
-_DIM       = (140, 140, 160)
+_C_ALGO = (230, 126, 34)
+_DIM = (140, 140, 160)
 
 
 class PhaseInterludeScene(Scene):
@@ -32,28 +32,36 @@ class PhaseInterludeScene(Scene):
             return
         self._done = True
         if self._next_act == "curator":
-            from cognitive_data_arcade.games.recommendation_bubble.phase_curator import PhaseCuratorScene
+            from cognitive_data_arcade.games.recommendation_bubble.phase_curator import (
+                PhaseCuratorScene,
+            )
+
             self._next = PhaseCuratorScene(self._state)
         else:
             from cognitive_data_arcade.games.recommendation_bubble.phase_algo import PhaseAlgoScene
+
             self._next = PhaseAlgoScene(self._state)
 
     def draw(self, surface: pygame.Surface) -> None:
         surface.fill(_BG)
         if self._next_act == "curator":
             d1 = self._state.diversity_act1
-            d_color = (231, 76, 60) if d1 < 0.35 else ((243, 156, 18) if d1 < 0.65 else (46, 204, 113))
+            d_color = (
+                (231, 76, 60) if d1 < 0.35 else ((243, 156, 18) if d1 < 0.65 else (46, 204, 113))
+            )
             lines = [
-                (f"Twoj profil: roznorodnosc {int(d1*100)}%", d_color),
+                (f"Twoj profil: roznorodnosc {int(d1 * 100)}%", d_color),
                 ("", (0, 0, 0)),
                 ("Teraz jestes KURATOREM.", _C_CURATOR),
                 ("Masz 5 zamian, zeby zdywersyfikowac kolejke.", _DIM),
             ]
         else:
             d2 = self._state.diversity_act2
-            d_color = (231, 76, 60) if d2 < 0.35 else ((243, 156, 18) if d2 < 0.65 else (46, 204, 113))
+            d_color = (
+                (231, 76, 60) if d2 < 0.35 else ((243, 156, 18) if d2 < 0.65 else (46, 204, 113))
+            )
             lines = [
-                (f"Po kuracji: roznorodnosc {int(d2*100)}%", d_color),
+                (f"Po kuracji: roznorodnosc {int(d2 * 100)}%", d_color),
                 ("", (0, 0, 0)),
                 ("Teraz jestes ALGORYTMEM.", _C_ALGO),
                 ("Klikaj tresci dla max. engagement.", _DIM),

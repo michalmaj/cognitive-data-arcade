@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pygame
@@ -9,21 +10,21 @@ from cognitive_data_arcade.engine.chart import figure_to_surface
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 
-_BG    = (15, 15, 35)
+_BG = (15, 15, 35)
 _PANEL = (18, 18, 42)
 _WHITE = (240, 240, 240)
-_DIM   = (120, 120, 160)
+_DIM = (120, 120, 160)
 _ORANGE = (243, 156, 18)
 _GREEN = (39, 174, 96)
-_RED   = (231, 76, 60)
-_BLUE  = (52, 152, 219)
+_RED = (231, 76, 60)
+_BLUE = (52, 152, 219)
 _FIG_BG = "#0f0f23"
-_AX_BG  = "#1a1a3e"
+_AX_BG = "#1a1a3e"
 _W, _H = 1024, 720
 
-_MSG_GREEN  = "Świetna intuicja! Cechy z wyraźnym trendem rzeczywiście pomagają modelom."
+_MSG_GREEN = "Świetna intuicja! Cechy z wyraźnym trendem rzeczywiście pomagają modelom."
 _MSG_ORANGE = "Nieźle! Słabe korelacje są trudne do wychwycenia — modele też mają z tym problem."
-_MSG_RED    = "Selekcja cech jest trudna! Sprawdź, które cechy cię zaskoczyły."
+_MSG_RED = "Selekcja cech jest trudna! Sprawdź, które cechy cię zaskoczyły."
 
 
 class PhaseCScene(Scene):
@@ -39,7 +40,7 @@ class PhaseCScene(Scene):
         self._chart_surf = self._render_bar_chart()
 
     def _render_bar_chart(self) -> pygame.Surface:
-        rounds = [f"R{i+1}" for i in range(len(self._round_results))]
+        rounds = [f"R{i + 1}" for i in range(len(self._round_results))]
         scores = [r[2] for r in self._round_results]
         fig, ax = plt.subplots(figsize=(6, 2), dpi=100, facecolor=_FIG_BG)
         ax.set_facecolor(_AX_BG)
@@ -55,6 +56,7 @@ class PhaseCScene(Scene):
             btn = pygame.Rect(_W // 2 - 120, _H - 70, 240, 44)
             if btn.collidepoint(event.pos):
                 from cognitive_data_arcade.games.feature_hunter.phase_a import PhaseAScene
+
                 self._next = PhaseAScene()
                 self._done = True
 
@@ -71,9 +73,14 @@ class PhaseCScene(Scene):
         total_rounds = len(self._round_results)
         mean_acc = (
             sum(r[0] / r[1] for r in self._round_results) / total_rounds
-            if total_rounds > 0 else 0.0
+            if total_rounds > 0
+            else 0.0
         )
-        score_col = _GREEN if self._session_score >= 300 else (_ORANGE if self._session_score >= 150 else _RED)
+        score_col = (
+            _GREEN
+            if self._session_score >= 300
+            else (_ORANGE if self._session_score >= 150 else _RED)
+        )
         score_surf = get_font(36).render(str(self._session_score), True, score_col)
         surface.blit(score_surf, (_W // 2 - score_surf.get_width() // 2, 74))
         pts_surf = get_font(14).render("punktów", True, _DIM)
@@ -86,7 +93,7 @@ class PhaseCScene(Scene):
         for i, (correct, total, score) in enumerate(self._round_results):
             col = _GREEN if correct == total else (_ORANGE if correct >= total - 1 else _RED)
             row = get_font(14).render(
-                f"  {i+1}       {correct}/{total}         {score} pkt", True, col
+                f"  {i + 1}       {correct}/{total}         {score} pkt", True, col
             )
             surface.blit(row, (120, 182 + i * 22))
 

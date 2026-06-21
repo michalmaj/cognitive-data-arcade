@@ -9,19 +9,19 @@ from cognitive_data_arcade.games.correlation_trap.phase_a import PhaseAScene
 from cognitive_data_arcade.games.correlation_trap.phase_b import PhaseBScene
 from cognitive_data_arcade.games.correlation_trap.phase_c import PhaseCScene
 
-_BG     = (15, 15, 35)
+_BG = (15, 15, 35)
 _NAV_BG = (18, 18, 45)
-_WHITE  = (240, 240, 240)
-_DIM    = (120, 120, 160)
+_WHITE = (240, 240, 240)
+_DIM = (120, 120, 160)
 _ACTIVE = (243, 156, 18)
-_NAV_H  = 48
+_NAV_H = 48
 
 _PHASE_NAMES = ["Eksploracja", "Detekcja", "Sandbox"]
 
 
 class CorrelationTrapScene(Scene):
     def __init__(self) -> None:
-        self._done  = False
+        self._done = False
         self._next: Scene | None = None
         self._phase = 1
         self._phases: list[Scene] = [PhaseAScene(), PhaseBScene(), PhaseCScene()]
@@ -70,14 +70,13 @@ class CorrelationTrapScene(Scene):
         font_sub = get_font(14)
 
         lbl = f"Faza {self._phase} / 3  -  {_PHASE_NAMES[self._phase - 1]}"
-        tw  = font_nav.size(lbl)[0]
+        tw = font_nav.size(lbl)[0]
         surface.blit(font_nav.render(lbl, True, _ACTIVE), ((1024 - tw) // 2, 8))
 
         surface.blit(font_nav.render("<", True, _WHITE), (20, 10))
         surface.blit(font_nav.render(">", True, _WHITE), (1024 - 36, 10))
 
-        surface.blit(font_sub.render("LEWO / PRAWO = zmień fazę", True, _DIM),
-                     (20, _NAV_H - 16))
+        surface.blit(font_sub.render("LEWO / PRAWO = zmień fazę", True, _DIM), (20, _NAV_H - 16))
 
 
 def _offset_mouse_event(event: pygame.event.Event, dy: int) -> pygame.event.Event:

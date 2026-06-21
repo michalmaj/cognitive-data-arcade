@@ -1,29 +1,33 @@
 # src/cognitive_data_arcade/games/bias_blind_spot/phase_result.py
 """Result screen: 3-column summary, stars, AHA text, replay/menu buttons."""
+
 from __future__ import annotations
 import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.bias_blind_spot.game_state import (
-    GameState, CONSEQUENCE_TABLE, STARTING_BIAS, stars_from_score,
+    GameState,
+    CONSEQUENCE_TABLE,
+    STARTING_BIAS,
+    stars_from_score,
 )
 
 _W, _H = 1024, 720
-_BG    = (8, 12, 20)
+_BG = (8, 12, 20)
 _PANEL = (16, 20, 36)
 _WHITE = (240, 240, 240)
-_DIM   = (130, 130, 150)
+_DIM = (130, 130, 150)
 _GREEN = (39, 174, 96)
-_RED   = (231, 76, 60)
-_GOLD  = (243, 156, 18)
-_GREY  = (60, 60, 80)
+_RED = (231, 76, 60)
+_GOLD = (243, 156, 18)
+_GREY = (60, 60, 80)
 
 _C_APP = (155, 89, 182)
 _C_ENG = (39, 174, 96)
 _C_REG = (230, 126, 34)
 
 _BTN_REPLAY = pygame.Rect(_W // 2 - 210, _H - 70, 190, 44)
-_BTN_MENU   = pygame.Rect(_W // 2 + 20,  _H - 70, 190, 44)
+_BTN_MENU = pygame.Rect(_W // 2 + 20, _H - 70, 190, 44)
 
 _AHA_LINES = [
     "Bias w AI nie pochodzi ze zlej woli. Pochodzi z historii.",
@@ -34,7 +38,7 @@ _AHA_LINES = [
 ]
 
 _METRICS_LABELS = [
-    ("parity",      "Parytet dem."),
+    ("parity", "Parytet dem."),
     ("opportunity", "Rowne szanse"),
     ("calibration", "Kalibracja"),
 ]
@@ -68,6 +72,7 @@ class PhaseResultScene(Scene):
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             if _BTN_REPLAY.collidepoint(event.pos):
                 from cognitive_data_arcade.games.bias_blind_spot.game import BiasBlindSpotScene
+
                 self._next = BiasBlindSpotScene()
                 self._done = True
             elif _BTN_MENU.collidepoint(event.pos):
@@ -142,7 +147,7 @@ class PhaseResultScene(Scene):
                 ls = f11.render(f"{label}: {status}", True, col)
                 surface.blit(ls, (x, y))
                 y += 18
-            acc_s = f11.render(f"Dokladnosc: {row['accuracy']*100:.0f}%", True, _WHITE)
+            acc_s = f11.render(f"Dokladnosc: {row['accuracy'] * 100:.0f}%", True, _WHITE)
             surface.blit(acc_s, (x, y))
 
     def draw(self, surface: pygame.Surface) -> None:
@@ -180,14 +185,24 @@ class PhaseResultScene(Scene):
         pygame.draw.rect(surface, _PANEL, _BTN_REPLAY, border_radius=6)
         pygame.draw.rect(surface, _GREY, _BTN_REPLAY, 1, border_radius=6)
         rl = get_font(16).render("Zagraj ponownie", True, (180, 180, 200))
-        surface.blit(rl, (_BTN_REPLAY.x + (_BTN_REPLAY.w - rl.get_width()) // 2,
-                          _BTN_REPLAY.y + (_BTN_REPLAY.h - rl.get_height()) // 2))
+        surface.blit(
+            rl,
+            (
+                _BTN_REPLAY.x + (_BTN_REPLAY.w - rl.get_width()) // 2,
+                _BTN_REPLAY.y + (_BTN_REPLAY.h - rl.get_height()) // 2,
+            ),
+        )
 
         pygame.draw.rect(surface, _PANEL, _BTN_MENU, border_radius=6)
         pygame.draw.rect(surface, _C_APP, _BTN_MENU, 1, border_radius=6)
         ml = get_font(16).render("Menu", True, _C_APP)
-        surface.blit(ml, (_BTN_MENU.x + (_BTN_MENU.w - ml.get_width()) // 2,
-                          _BTN_MENU.y + (_BTN_MENU.h - ml.get_height()) // 2))
+        surface.blit(
+            ml,
+            (
+                _BTN_MENU.x + (_BTN_MENU.w - ml.get_width()) // 2,
+                _BTN_MENU.y + (_BTN_MENU.h - ml.get_height()) // 2,
+            ),
+        )
 
     def is_done(self) -> bool:
         return self._done

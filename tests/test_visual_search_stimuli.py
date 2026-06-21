@@ -93,7 +93,7 @@ def test_shapes_conjunction_distractors_mixed() -> None:
 def test_no_item_overlap() -> None:
     items = generate_items("letters", "feature", True, 24, _rng())
     for i, a in enumerate(items):
-        for b in items[i + 1:]:
+        for b in items[i + 1 :]:
             dist = ((a.x - b.x) ** 2 + (a.y - b.y) ** 2) ** 0.5
             assert dist > 30, f"Items overlap: {a} vs {b}"
 

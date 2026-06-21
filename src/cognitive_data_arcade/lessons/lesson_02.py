@@ -1,4 +1,5 @@
 """Lesson 02 — Reaction Time (RT Lab)."""
+
 from __future__ import annotations
 
 CONTENT: dict[str, dict[str, list[str]]] = {

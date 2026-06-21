@@ -7,10 +7,10 @@ from dataclasses import dataclass
 @dataclass(frozen=True)
 class Scenario:
     name_pl: str
-    chart_type: str   # timeseries | barchart | scatter | histogram | boxplot | heatmap
+    chart_type: str  # timeseries | barchart | scatter | histogram | boxplot | heatmap
     n_anomalies: int
-    hint_pl: str      # right-click popup text
-    insight_pl: str   # post-round explanation
+    hint_pl: str  # right-click popup text
+    insight_pl: str  # post-round explanation
 
 
 SCENARIOS: list[Scenario] = [

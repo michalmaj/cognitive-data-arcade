@@ -8,27 +8,27 @@ from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.prediction_slider.simulator import fit_line
 
-_BG     = (15,  15,  35)
-_PANEL  = (18,  18,  42)
-_WHITE  = (240, 240, 240)
-_DIM    = (120, 120, 160)
-_ORANGE = (243, 156,  18)
-_GREEN  = ( 39, 174,  96)
-_RED    = (231,  76,  60)
-_GRAY   = ( 80,  80, 100)
-_BLUE   = ( 52, 152, 219)
+_BG = (15, 15, 35)
+_PANEL = (18, 18, 42)
+_WHITE = (240, 240, 240)
+_DIM = (120, 120, 160)
+_ORANGE = (243, 156, 18)
+_GREEN = (39, 174, 96)
+_RED = (231, 76, 60)
+_GRAY = (80, 80, 100)
+_BLUE = (52, 152, 219)
 
-_LEFT_W   = 300
-_AREA_H   = 672
-_AREA_W   = 1024
-_CANVAS_X = _LEFT_W          # 300
+_LEFT_W = 300
+_AREA_H = 672
+_AREA_W = 1024
+_CANVAS_X = _LEFT_W  # 300
 _CANVAS_W = _AREA_W - _LEFT_W  # 724
-_PAD      = 50
+_PAD = 50
 
-_PLOT_LEFT  = _CANVAS_X + _PAD    # 350
-_PLOT_RIGHT = _AREA_W - _PAD      # 974
-_PLOT_TOP   = _PAD                # 50
-_PLOT_BOT   = _AREA_H - _PAD     # 622
+_PLOT_LEFT = _CANVAS_X + _PAD  # 350
+_PLOT_RIGHT = _AREA_W - _PAD  # 974
+_PLOT_TOP = _PAD  # 50
+_PLOT_BOT = _AREA_H - _PAD  # 622
 
 _X_MIN, _X_MAX = -0.5, 11.0
 _Y_MIN, _Y_MAX = -1.0, 13.0
@@ -38,20 +38,20 @@ def _d2p(xd: float, yd: float) -> tuple[int, int]:
     rx = (xd - _X_MIN) / (_X_MAX - _X_MIN)
     ry = (yd - _Y_MIN) / (_Y_MAX - _Y_MIN)
     px = _PLOT_LEFT + int(rx * (_PLOT_RIGHT - _PLOT_LEFT))
-    py = _PLOT_BOT  - int(ry * (_PLOT_BOT  - _PLOT_TOP))
+    py = _PLOT_BOT - int(ry * (_PLOT_BOT - _PLOT_TOP))
     return px, py
 
 
 def _p2d(px: int, py: int) -> tuple[float, float]:
     rx = (px - _PLOT_LEFT) / max(1, _PLOT_RIGHT - _PLOT_LEFT)
-    ry = (_PLOT_BOT - py)  / max(1, _PLOT_BOT  - _PLOT_TOP)
+    ry = (_PLOT_BOT - py) / max(1, _PLOT_BOT - _PLOT_TOP)
     return _X_MIN + rx * (_X_MAX - _X_MIN), _Y_MIN + ry * (_Y_MAX - _Y_MIN)
 
 
 def _draw_dashed_line(surface, color, p0, p1, width=1, dash=10, gap=6):
     dx = p1[0] - p0[0]
     dy = p1[1] - p0[1]
-    length = max(1.0, (dx ** 2 + dy ** 2) ** 0.5)
+    length = max(1.0, (dx**2 + dy**2) ** 0.5)
     nx, ny = dx / length, dy / length
     d, drawing = 0.0, True
     while d < length:
@@ -102,7 +102,7 @@ class PhaseCScene(Scene):
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             ox, oy = _d2p(self._out_x, self._out_y)
             px, py = event.pos
-            if (px - ox) ** 2 + (py - oy) ** 2 <= 14 ** 2:
+            if (px - ox) ** 2 + (py - oy) ** 2 <= 14**2:
                 self._dragging = True
         elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
             self._dragging = False
@@ -174,8 +174,9 @@ class PhaseCScene(Scene):
             pygame.draw.line(surface, (30, 30, 60), p, _d2p(_X_MAX, yv), 1)
         # baseline line
         if self._show_baseline:
-            _draw_regression_line(surface, self._base_slope, self._base_intercept,
-                                   _GRAY, 2, dashed=True)
+            _draw_regression_line(
+                surface, self._base_slope, self._base_intercept, _GRAY, 2, dashed=True
+            )
         # current line
         _draw_regression_line(surface, cur_slope, cur_intercept, _RED, 2)
         # base points

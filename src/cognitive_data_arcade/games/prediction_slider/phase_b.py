@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
@@ -11,40 +12,44 @@ from cognitive_data_arcade.engine.chart import figure_to_surface
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.prediction_slider.simulator import (
-    Scenario, _SCENARIOS, fit_line, predict, simulate_scenario,
+    Scenario,
+    _SCENARIOS,
+    fit_line,
+    predict,
+    simulate_scenario,
 )
 from cognitive_data_arcade.games.prediction_slider.widgets import _VerticalSlider
 
-_BG     = (15,  15,  35)
-_PANEL  = (18,  18,  42)
-_WHITE  = (240, 240, 240)
-_DIM    = (120, 120, 160)
-_ORANGE = (243, 156,  18)
-_BLUE   = ( 52, 152, 219)
-_GREEN  = ( 39, 174,  96)
-_RED    = (231,  76,  60)
+_BG = (15, 15, 35)
+_PANEL = (18, 18, 42)
+_WHITE = (240, 240, 240)
+_DIM = (120, 120, 160)
+_ORANGE = (243, 156, 18)
+_BLUE = (52, 152, 219)
+_GREEN = (39, 174, 96)
+_RED = (231, 76, 60)
 _FIG_BG = "#0f0f23"
-_AX_BG  = "#1a1a3e"
+_AX_BG = "#1a1a3e"
 
 _AREA_W = 1024
 _AREA_H = 672
-_TOP_H  = 80
+_TOP_H = 80
 _CHART_H = _AREA_H - _TOP_H  # 592
-_DPI    = 100
+_DPI = 100
 
 # matplotlib axis fractions — adjust if slider alignment is off after visual check
-_AX_LEFT_FRAC  = 0.09
+_AX_LEFT_FRAC = 0.09
 _AX_RIGHT_FRAC = 0.97
-_AX_TOP_FRAC   = 0.92
-_AX_BOT_FRAC   = 0.12
+_AX_TOP_FRAC = 0.92
+_AX_BOT_FRAC = 0.12
 
-_AX_LEFT    = int(_AX_LEFT_FRAC * _AREA_W)                  # 92
-_AX_RIGHT   = int(_AX_RIGHT_FRAC * _AREA_W)                 # 993
-_AX_TOP_REL = int((1 - _AX_TOP_FRAC) * _CHART_H)            # 47
-_AX_BOT_REL = int((1 - _AX_BOT_FRAC) * _CHART_H)            # 521
+_AX_LEFT = int(_AX_LEFT_FRAC * _AREA_W)  # 92
+_AX_RIGHT = int(_AX_RIGHT_FRAC * _AREA_W)  # 993
+_AX_TOP_REL = int((1 - _AX_TOP_FRAC) * _CHART_H)  # 47
+_AX_BOT_REL = int((1 - _AX_BOT_FRAC) * _CHART_H)  # 521
 
-_AX_TOP_ABS = _TOP_H + _AX_TOP_REL   # 127 (in inner surface coords)
-_AX_BOT_ABS = _TOP_H + _AX_BOT_REL   # 601
+_AX_TOP_ABS = _TOP_H + _AX_TOP_REL  # 127 (in inner surface coords)
+_AX_BOT_ABS = _TOP_H + _AX_BOT_REL  # 601
 
 _N_SLIDERS = 5
 
@@ -63,7 +68,7 @@ class PhaseBScene(Scene):
     def __init__(self) -> None:
         self._done = False
         self._scenario_idx = 0
-        self._state = "waiting"   # "waiting" | "revealed"
+        self._state = "waiting"  # "waiting" | "revealed"
         self._score = 0
         self._round_score = 0
         self._x_data: np.ndarray | None = None
@@ -106,18 +111,23 @@ class PhaseBScene(Scene):
         sc = self._scenario
         fig, ax = plt.subplots(
             figsize=(_AREA_W / _DPI, _CHART_H / _DPI),
-            dpi=_DPI, facecolor=_FIG_BG,
+            dpi=_DPI,
+            facecolor=_FIG_BG,
         )
         fig.subplots_adjust(
-            left=_AX_LEFT_FRAC, right=_AX_RIGHT_FRAC,
-            bottom=_AX_BOT_FRAC, top=_AX_TOP_FRAC,
+            left=_AX_LEFT_FRAC,
+            right=_AX_RIGHT_FRAC,
+            bottom=_AX_BOT_FRAC,
+            top=_AX_TOP_FRAC,
         )
         ax.set_facecolor(_AX_BG)
         ax.scatter(self._x_data, self._y_data, s=18, alpha=0.65, color="#3498db")
-        ax.set_xlim(sc.x_min - 0.05 * (sc.x_max - sc.x_min),
-                    sc.x_max + 0.05 * (sc.x_max - sc.x_min))
-        ax.set_ylim(sc.y_min - 0.05 * (sc.y_max - sc.y_min),
-                    sc.y_max + 0.05 * (sc.y_max - sc.y_min))
+        ax.set_xlim(
+            sc.x_min - 0.05 * (sc.x_max - sc.x_min), sc.x_max + 0.05 * (sc.x_max - sc.x_min)
+        )
+        ax.set_ylim(
+            sc.y_min - 0.05 * (sc.y_max - sc.y_min), sc.y_max + 0.05 * (sc.y_max - sc.y_min)
+        )
 
         for xp in self._x_pts:
             ax.axvline(xp, color="#f39c12", ls="--", lw=1.2, alpha=0.8)
@@ -126,9 +136,17 @@ class PhaseBScene(Scene):
             slope, intercept, r2, _ = fit_line(self._x_data, self._y_data)
             x_line = np.linspace(sc.x_min, sc.x_max, 100)
             ax.plot(x_line, slope * x_line + intercept, color="#e74c3c", lw=2, zorder=4)
-            ax.text(0.97, 0.97, f"R² = {r2:.3f}",
-                    transform=ax.transAxes, ha="right", va="top",
-                    color="#e74c3c", fontsize=10, fontweight="bold")
+            ax.text(
+                0.97,
+                0.97,
+                f"R² = {r2:.3f}",
+                transform=ax.transAxes,
+                ha="right",
+                va="top",
+                color="#e74c3c",
+                fontsize=10,
+                fontweight="bold",
+            )
             if predictions is not None:
                 y_range = sc.y_max - sc.y_min
                 for xp, pred in zip(self._x_pts, predictions):
@@ -178,7 +196,7 @@ class PhaseBScene(Scene):
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             pos = event.pos
             confirm_rect = pygame.Rect(_AREA_W - 180, _AREA_H - 52, 164, 36)
-            next_rect    = pygame.Rect(_AREA_W - 200, _AREA_H - 52, 184, 36)
+            next_rect = pygame.Rect(_AREA_W - 200, _AREA_H - 52, 184, 36)
             if self._state == "waiting" and confirm_rect.collidepoint(pos):
                 self._confirm()
                 return

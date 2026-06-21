@@ -8,12 +8,12 @@ from cognitive_data_arcade.engine import fonts as _fonts_module
 from cognitive_data_arcade.engine.i18n import EN
 from cognitive_data_arcade.games.data_cleaning.difficulty import EASY, MEDIUM, HARD
 from cognitive_data_arcade.games.data_cleaning.scene import DataCleaningScene, Phase
-from cognitive_data_arcade.games.data_cleaning.ui_popup import DecisionPopup
 
 
 class _FakePM:
     def load(self):
         from cognitive_data_arcade.profile.manager import Profile
+
         return Profile()
 
 
@@ -36,6 +36,7 @@ def _make(seed: int = 42) -> DataCleaningScene:
 
 # ── Initial state ───────────────────────────────────────────────────────────────
 
+
 def test_initial_phase_is_intro():
     assert _make()._phase == Phase.INTRO
 
@@ -47,6 +48,7 @@ def test_not_done_initially():
 
 
 # ── INTRO → IDENTIFY ────────────────────────────────────────────────────────────
+
 
 def test_enter_on_intro_goes_to_identify():
     scene = _make()
@@ -67,6 +69,7 @@ def test_other_key_on_intro_does_nothing():
 
 
 # ── IDENTIFY navigation ─────────────────────────────────────────────────────────
+
 
 def test_down_moves_cursor():
     scene = _make()
@@ -99,6 +102,7 @@ def test_space_unflags_already_flagged():
 
 # ── IDENTIFY → FIX ─────────────────────────────────────────────────────────────
 
+
 def test_f_key_with_flags_goes_to_fix():
     scene = _make()
     scene._phase = Phase.IDENTIFY
@@ -124,11 +128,12 @@ def test_f_key_with_no_flags_goes_to_report():
 
 # ── FIX phase ──────────────────────────────────────────────────────────────────
 
+
 def test_fix_enter_records_choice():
     scene = _make()
     scene._phase = Phase.IDENTIFY
     scene.handle_event(_key(pygame.K_SPACE))  # flag row 0
-    scene.handle_event(_key(pygame.K_f))      # enter FIX
+    scene.handle_event(_key(pygame.K_f))  # enter FIX
     assert scene._phase == Phase.FIX
     scene.handle_event(_key(pygame.K_RETURN))  # confirm default choice (delete)
     assert 0 in scene._fixes
@@ -144,6 +149,7 @@ def test_fix_single_item_queue_goes_to_report_after_confirm():
 
 
 # ── REPORT → done ──────────────────────────────────────────────────────────────
+
 
 def test_esc_in_intro_does_nothing():
     scene = _make()
@@ -178,6 +184,7 @@ def test_report_keys_do_nothing():
 
 # ── update ─────────────────────────────────────────────────────────────────────
 
+
 def test_update_decrements_hint_timer():
     scene = _make()
     scene._hint_timer = 1000.0
@@ -193,6 +200,7 @@ def test_update_does_not_go_below_zero():
 
 
 # ── Difficulty defaults ─────────────────────────────────────────────────────────
+
 
 def test_default_difficulty_is_easy():
     scene = _make()
@@ -211,6 +219,7 @@ def test_legend_visible_starts_false():
 
 
 # ── 1/2/3 keys set difficulty in INTRO ─────────────────────────────────────────
+
 
 def test_key_1_sets_easy_in_intro():
     scene = _make()
@@ -231,6 +240,7 @@ def test_key_3_sets_hard_in_intro():
 
 
 # ── Left/Right/Up/Down cycle difficulty in INTRO ───────────────────────────────
+
 
 def test_right_arrow_cycles_to_medium():
     scene = _make()  # starts on EASY (index 0)
@@ -258,6 +268,7 @@ def test_up_arrow_wraps_from_easy_to_hard():
 
 # ── L key toggles legend ────────────────────────────────────────────────────────
 
+
 def test_l_key_shows_legend_in_intro():
     scene = _make()
     scene.handle_event(_key(pygame.K_l))
@@ -279,6 +290,7 @@ def test_l_key_toggles_legend_in_identify():
 
 
 # ── H key behaviour ─────────────────────────────────────────────────────────────
+
 
 def test_h_key_ignored_in_always_mode():
     scene = _make()  # EASY = always
@@ -336,13 +348,13 @@ def test_h_key_ignored_in_none_mode():
 
 # ── ENTER in INTRO regenerates dataset with selected difficulty ─────────────────
 
+
 def test_enter_generates_medium_rows():
     scene = _make()
-    scene.handle_event(_key(pygame.K_2))   # select MEDIUM
+    scene.handle_event(_key(pygame.K_2))  # select MEDIUM
     scene.handle_event(_key(pygame.K_RETURN))
     assert len(scene._session.rows) == 50
     assert scene._phase == Phase.IDENTIFY
-
 
 
 def _mouse(pos: tuple[int, int]) -> pygame.event.Event:
@@ -352,7 +364,7 @@ def _mouse(pos: tuple[int, int]) -> pygame.event.Event:
 def test_mouse_click_on_medium_button_sets_medium():
     scene = _make()
     surface = pygame.Surface((800, 600))
-    scene.draw(surface)                              # populates _diff_rects
+    scene.draw(surface)  # populates _diff_rects
     assert len(scene._diff_rects) == 3
     scene.handle_event(_mouse(scene._diff_rects[1].center))
     assert scene._diff_idx == 1
@@ -371,7 +383,7 @@ def test_mouse_click_outside_buttons_ignored():
     surface = pygame.Surface((800, 600))
     scene.draw(surface)
     scene.handle_event(_mouse((0, 0)))
-    assert scene._diff_idx == 0   # EASY unchanged
+    assert scene._diff_idx == 0  # EASY unchanged
 
 
 def test_mouse_click_on_row_flags_it():
@@ -401,5 +413,5 @@ def test_mouse_click_moves_cursor_to_clicked_row():
 def test_mouse_click_above_table_ignored():
     scene = _make()
     scene._phase = Phase.IDENTIFY
-    scene.handle_event(_mouse((100, 50)))   # above TABLE_Y0=100
+    scene.handle_event(_mouse((100, 50)))  # above TABLE_Y0=100
     assert len(scene._table.flagged) == 0

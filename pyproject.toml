@@ -31,3 +31,17 @@ dev = [
     "pytest>=9.0.3",
     "ruff>=0.15.13",
 ]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F"]
+ignore = [
+    "E402",  # module-level import not at top — used for lazy scene imports
+    "E501",  # line too long — long strings in i18n and pygame draw calls
+    "E701",  # multiple statements on one line (colon)
+    "E702",  # multiple statements on one line (semicolon) — common in pygame draw code
+    "E731",  # lambda assignment — minor style choice
+    "E401",  # multiple imports on one line
+]

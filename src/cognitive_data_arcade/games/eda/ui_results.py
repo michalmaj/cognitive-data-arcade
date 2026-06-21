@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import matplotlib
+
 matplotlib.use("Agg")
 
 import matplotlib.pyplot as plt
@@ -67,16 +68,31 @@ class ChartPanel:
 
     def update(self, result: SimResult) -> None:
         fig, (ax1, ax2) = plt.subplots(
-            1, 2,
+            1,
+            2,
             facecolor=_FIG_BG,
             figsize=(_CHART_W / _DPI, _CHART_H / _DPI),
             dpi=_DPI,
         )
         _data = [
-            (ax1, result.cond1, result.outlier_mask1, _C1, "Warunek 1 (baseline)",
-             result.mean1, result.mean1_no_out),
-            (ax2, result.cond2, result.outlier_mask2, _C2, "Warunek 2 (+efekt)",
-             result.mean2, result.mean2_no_out),
+            (
+                ax1,
+                result.cond1,
+                result.outlier_mask1,
+                _C1,
+                "Warunek 1 (baseline)",
+                result.mean1,
+                result.mean1_no_out,
+            ),
+            (
+                ax2,
+                result.cond2,
+                result.outlier_mask2,
+                _C2,
+                "Warunek 2 (+efekt)",
+                result.mean2,
+                result.mean2_no_out,
+            ),
         ]
         for ax, cond, mask, color, title, mean_all, mean_clean in _data:
             ax.set_facecolor(_AX_BG)

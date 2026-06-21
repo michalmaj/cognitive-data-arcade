@@ -1,4 +1,5 @@
 """Lesson 24 -- Semantic Space Explorer (embeddings & semantic similarity)."""
+
 from __future__ import annotations
 
 CONTENT: dict[str, dict[str, list[str]]] = {

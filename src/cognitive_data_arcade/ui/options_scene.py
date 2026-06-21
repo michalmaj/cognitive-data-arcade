@@ -156,7 +156,7 @@ class OptionsScene(Scene):
 
         rows = [
             (self._strings.options_music, self._music_vol, self._music_enabled),
-            (self._strings.options_sfx,   self._sfx_vol,   self._sfx_enabled),
+            (self._strings.options_sfx, self._sfx_vol, self._sfx_enabled),
         ]
         row_y = 120
         for i, (label, vol, enabled) in enumerate(rows):
@@ -189,7 +189,8 @@ class OptionsScene(Scene):
         lbl = self._font_item.render(f"{prefix} {self._strings.options_fullscreen}", True, color)
         tog = self._font_item.render(
             "[ON ]" if self._fullscreen else "[OFF]",
-            True, _GREEN if self._fullscreen else _DIM,
+            True,
+            _GREEN if self._fullscreen else _DIM,
         )
         surface.blit(lbl, (40, _ROW_Y[2]))
         surface.blit(tog, (_BAR_X + _BAR_W + 72, _ROW_Y[2]))
@@ -201,7 +202,8 @@ class OptionsScene(Scene):
         lbl = self._font_item.render(f"{prefix} {self._strings.options_tutorial}", True, color)
         tog = self._font_item.render(
             "[ON ]" if self._show_tutorial else "[OFF]",
-            True, _GREEN if self._show_tutorial else _DIM,
+            True,
+            _GREEN if self._show_tutorial else _DIM,
         )
         surface.blit(lbl, (40, _ROW_Y[3]))
         surface.blit(tog, (_BAR_X + _BAR_W + 72, _ROW_Y[3]))

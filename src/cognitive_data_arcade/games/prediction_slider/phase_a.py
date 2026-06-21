@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
@@ -13,20 +14,20 @@ from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.prediction_slider.simulator import fit_line, simulate_data
 from cognitive_data_arcade.games.prediction_slider.widgets import _FloatSlider
 
-_BG     = (15,  15,  35)
-_PANEL  = (18,  18,  42)
-_WHITE  = (240, 240, 240)
-_DIM    = (120, 120, 160)
-_ORANGE = (243, 156,  18)
-_GREEN  = ( 39, 174,  96)
-_RED    = (231,  76,  60)
+_BG = (15, 15, 35)
+_PANEL = (18, 18, 42)
+_WHITE = (240, 240, 240)
+_DIM = (120, 120, 160)
+_ORANGE = (243, 156, 18)
+_GREEN = (39, 174, 96)
+_RED = (231, 76, 60)
 _FIG_BG = "#0f0f23"
-_AX_BG  = "#1a1a3e"
+_AX_BG = "#1a1a3e"
 
-_LEFT_W  = 300
-_AREA_H  = 672
+_LEFT_W = 300
+_AREA_H = 672
 _CHART_W = 1024 - _LEFT_W  # 724
-_DPI     = 100
+_DPI = 100
 
 
 def _style_ax(ax) -> None:
@@ -39,7 +40,7 @@ class PhaseAScene(Scene):
     def __init__(self) -> None:
         self._done = False
         x0, w = 16, _LEFT_W - 32
-        self._sl_n     = _FloatSlider("N (rozmiar próby)", 10, 300, 50, 5, x0, 60, w, fmt=".0f")
+        self._sl_n = _FloatSlider("N (rozmiar próby)", 10, 300, 50, 5, x0, 60, w, fmt=".0f")
         self._sl_sigma = _FloatSlider("Szum (sigma)", 0.1, 3.0, 1.0, 0.1, x0, 128, w)
         self._sl_slope = _FloatSlider("Nachylenie (slope)", -2.0, 2.0, 1.0, 0.1, x0, 196, w)
         self._chart_surf: pygame.Surface | None = None
@@ -58,15 +59,14 @@ class PhaseAScene(Scene):
         self._fitted_slope = fs
         self._fitted_intercept = fi
         self._r2 = r2
-        self._rmse = float(np.sqrt(np.mean(residuals ** 2)))
+        self._rmse = float(np.sqrt(np.mean(residuals**2)))
         self._chart_surf = self._render_chart(x, y, fs, fi, r2, residuals)
 
-    def _render_chart(
-        self, x, y, fs, fi, r2, residuals
-    ) -> pygame.Surface:
+    def _render_chart(self, x, y, fs, fi, r2, residuals) -> pygame.Surface:
         fig = plt.figure(
             figsize=(_CHART_W / _DPI, _AREA_H / _DPI),
-            dpi=_DPI, facecolor=_FIG_BG,
+            dpi=_DPI,
+            facecolor=_FIG_BG,
         )
         gs = fig.add_gridspec(2, 1, height_ratios=[0.6, 0.4])
         gs.update(left=0.12, right=0.97, top=0.96, bottom=0.06, hspace=0.45)
@@ -78,8 +78,17 @@ class PhaseAScene(Scene):
         x_line = np.linspace(x.min(), x.max(), 100)
         ax1.plot(x_line, fs * x_line + fi, color="#e74c3c", lw=2)
         r2_col = "#27ae60" if r2 >= 0.7 else ("#f39c12" if r2 >= 0.4 else "#e74c3c")
-        ax1.text(0.97, 0.95, f"R² = {r2:.3f}", transform=ax1.transAxes,
-                 ha="right", va="top", color=r2_col, fontsize=10, fontweight="bold")
+        ax1.text(
+            0.97,
+            0.95,
+            f"R² = {r2:.3f}",
+            transform=ax1.transAxes,
+            ha="right",
+            va="top",
+            color=r2_col,
+            fontsize=10,
+            fontweight="bold",
+        )
         ax1.set_title("Dane i linia regresji", color="white", fontsize=9)
         _style_ax(ax1)
 
@@ -129,10 +138,10 @@ class PhaseAScene(Scene):
         font_md = get_font(17)
         r2_col = _GREEN if self._r2 >= 0.7 else (_ORANGE if self._r2 >= 0.4 else _RED)
         rows = [
-            ("R²",          f"{self._r2:.3f}",              r2_col),
-            ("Slope (fitted)",    f"{self._fitted_slope:.3f}",    _WHITE),
-            ("Intercept",        f"{self._fitted_intercept:.3f}", _WHITE),
-            ("RMSE",             f"{self._rmse:.3f}",            _WHITE),
+            ("R²", f"{self._r2:.3f}", r2_col),
+            ("Slope (fitted)", f"{self._fitted_slope:.3f}", _WHITE),
+            ("Intercept", f"{self._fitted_intercept:.3f}", _WHITE),
+            ("RMSE", f"{self._rmse:.3f}", _WHITE),
         ]
         y = 270
         for label, val, col in rows:

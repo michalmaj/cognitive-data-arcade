@@ -44,6 +44,7 @@ class PhaseIntroScene(Scene):
         if self._done:
             return
         from cognitive_data_arcade.games.bias_blind_spot.phase_applicant import PhaseApplicantScene
+
         self._next = PhaseApplicantScene(self._state)
         self._done = True
 

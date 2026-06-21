@@ -29,15 +29,22 @@ def test_hit_just_outside():
 
 def _make_menu():
     from cognitive_data_arcade.ui.menu import LessonMenuScene
+
     pm = MagicMock()
     pm.load.return_value = MagicMock(
-        alias="Test", device_uuid="x",
-        arcade_points=0, science_points=0,
-        badges=[], completed_lessons=[],
-        music_enabled=True, sfx_enabled=True,
-        music_volume=1.0, sfx_volume=1.0
+        alias="Test",
+        device_uuid="x",
+        arcade_points=0,
+        science_points=0,
+        badges=[],
+        completed_lessons=[],
+        music_enabled=True,
+        sfx_enabled=True,
+        music_volume=1.0,
+        sfx_volume=1.0,
     )
     from cognitive_data_arcade.engine.i18n import get_strings
+
     strings = get_strings("en")
     return LessonMenuScene(pm, strings)
 
@@ -83,7 +90,6 @@ def test_menu_teoria_available_for_lesson_3():
 
 from cognitive_data_arcade.engine.pause import PausableGame, GameInfo
 
-import pytest
 
 @pytest.fixture(autouse=False)
 def _display_1024():
@@ -98,12 +104,13 @@ def _make_pausable():
     info = GameInfo(title="T", description_lines=[], key_bindings=[])
     pm = MagicMock()
     pm.load.return_value = MagicMock(
-        music_enabled=True, sfx_enabled=True,
-        music_volume=1.0, sfx_volume=1.0
+        music_enabled=True, sfx_enabled=True, music_volume=1.0, sfx_volume=1.0
     )
     from cognitive_data_arcade.engine.i18n import get_strings
+
     strings = get_strings("en")
     return PausableGame(inner, info, lambda: inner, strings, pm)
+
 
 def test_pause_mousemotion_sets_selected(_display_1024):
     pg = _make_pausable()
@@ -112,6 +119,7 @@ def test_pause_mousemotion_sets_selected(_display_1024):
     event = pygame.event.Event(pygame.MOUSEMOTION, pos=(512, 350))
     pg.handle_event(event)
     assert pg._selected == 1
+
 
 def test_pause_mousebuttondown_confirms(_display_1024):
     pg = _make_pausable()
@@ -126,8 +134,10 @@ def test_pause_mousebuttondown_confirms(_display_1024):
 def test_session_picker_mousemotion_sets_selected():
     from cognitive_data_arcade.ui.session_picker import SessionPickerScene
     import pathlib, tempfile
+
     pm = MagicMock()
     from cognitive_data_arcade.engine.i18n import get_strings
+
     strings = get_strings("en")
     with tempfile.TemporaryDirectory() as d:
         # Create at least 3 dummy session CSV files so idx 2 is valid
@@ -144,8 +154,10 @@ def test_session_picker_mousemotion_sets_selected():
 
 def test_nback_mousemotion_sets_selected():
     from cognitive_data_arcade.ui.nback_level_scene import NBackLevelScene
+
     pm = MagicMock()
     from cognitive_data_arcade.engine.i18n import get_strings
+
     strings = get_strings("en")
     scene = NBackLevelScene(pm, strings)
     # option 1 at y = 160 + 1*56 = 216
@@ -158,6 +170,7 @@ def test_how_to_play_click_starts_game():
     from cognitive_data_arcade.engine.pause import GameInfo
     from cognitive_data_arcade.engine.i18n import get_strings
     from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
+
     info = GameInfo(title="T", description_lines=[], key_bindings=[])
     back = MagicMock()
     scene = HowToPlayScene(info, get_strings("en"), back_scene=back)
@@ -170,6 +183,7 @@ def test_how_to_play_click_starts_game():
 def test_lesson_reader_right_click_advances():
     from cognitive_data_arcade.ui.lesson_reader import LessonReaderScene
     from cognitive_data_arcade.engine.i18n import get_strings
+
     strings = get_strings("en")
     scene = LessonReaderScene(1, strings, back_scene=None)
     initial = scene._idx
@@ -181,6 +195,7 @@ def test_lesson_reader_right_click_advances():
 def test_lesson_reader_left_click_goes_back():
     from cognitive_data_arcade.ui.lesson_reader import LessonReaderScene
     from cognitive_data_arcade.engine.i18n import get_strings
+
     strings = get_strings("en")
     scene = LessonReaderScene(1, strings, back_scene=None)
     scene._idx = 2
@@ -192,11 +207,14 @@ def test_lesson_reader_left_click_goes_back():
 def test_profile_click_edit_button_enters_edit_mode():
     from cognitive_data_arcade.ui.profile_screen import ProfileScene
     from cognitive_data_arcade.engine.i18n import get_strings
+
     pm = MagicMock()
     pm.load.return_value = MagicMock(
         alias="TestUser",
-        arcade_points=0, science_points=0,
-        badges=[], completed_lessons=[],
+        arcade_points=0,
+        science_points=0,
+        badges=[],
+        completed_lessons=[],
     )
     back = MagicMock()
     scene = ProfileScene(pm, get_strings("en"), back)
@@ -210,11 +228,14 @@ def test_profile_click_edit_button_enters_edit_mode():
 def test_profile_click_outside_edit_does_not_break_keyboard():
     from cognitive_data_arcade.ui.profile_screen import ProfileScene
     from cognitive_data_arcade.engine.i18n import get_strings
+
     pm = MagicMock()
     pm.load.return_value = MagicMock(
         alias="TestUser",
-        arcade_points=0, science_points=0,
-        badges=[], completed_lessons=[],
+        arcade_points=0,
+        science_points=0,
+        badges=[],
+        completed_lessons=[],
     )
     back = MagicMock()
     scene = ProfileScene(pm, get_strings("en"), back)
@@ -231,11 +252,11 @@ def test_profile_click_outside_edit_does_not_break_keyboard():
 def _make_options():
     pm = MagicMock()
     pm.load.return_value = MagicMock(
-        music_enabled=True, sfx_enabled=True,
-        music_volume=0.8, sfx_volume=0.8
+        music_enabled=True, sfx_enabled=True, music_volume=0.8, sfx_volume=0.8
     )
     from cognitive_data_arcade.engine.i18n import get_strings
     from cognitive_data_arcade.ui.options_scene import OptionsScene
+
     return OptionsScene(pm, get_strings("en"), back_scene=None)
 
 
@@ -276,6 +297,7 @@ def _make_bdm():
     pm = MagicMock()
     from cognitive_data_arcade.engine.i18n import get_strings
     from cognitive_data_arcade.games.big_data_map.game import BigDataMapGame
+
     return BigDataMapGame(get_strings("en"), pm)
 
 
@@ -292,8 +314,7 @@ def test_bdm_click_l1_node_enters_l2():
     bdm.draw(surf)
     # click the center of node 0's bounding rect
     rect = bdm._node_rects[0]
-    event = pygame.event.Event(pygame.MOUSEBUTTONDOWN,
-                                pos=(rect.centerx, rect.centery), button=1)
+    event = pygame.event.Event(pygame.MOUSEBUTTONDOWN, pos=(rect.centerx, rect.centery), button=1)
     bdm.handle_event(event)
     assert bdm._in_l2
 
@@ -314,22 +335,25 @@ import pathlib, tempfile
 def _make_stroop():
     pm = MagicMock()
     pm.load.return_value = MagicMock(
-        alias="T", device_uuid="x",
-        arcade_points=0, science_points=0,
-        badges=[], completed_lessons=[]
+        alias="T",
+        device_uuid="x",
+        arcade_points=0,
+        science_points=0,
+        badges=[],
+        completed_lessons=[],
     )
     from cognitive_data_arcade.engine.i18n import get_strings
     from cognitive_data_arcade.games.stroop.game import StroopGame
     from cognitive_data_arcade.games.stroop.config import STANDARD
+
     strings = get_strings("en")
     with tempfile.TemporaryDirectory() as d:
-        return StroopGame(STANDARD, pm, strings, "p1", "s1",
-                          pathlib.Path(d) / "test.csv")
+        return StroopGame(STANDARD, pm, strings, "p1", "s1", pathlib.Path(d) / "test.csv")
 
 
 def test_stroop_has_color_rects():
     sg = _make_stroop()
-    assert hasattr(sg, '_color_rects')
+    assert hasattr(sg, "_color_rects")
 
 
 def test_stroop_preset_mousemotion_sets_idx():
@@ -343,6 +367,7 @@ def test_stroop_preset_mousemotion_sets_idx():
 def test_stroop_preset_mouseclick_confirms():
     sg = _make_stroop()
     from cognitive_data_arcade.games.stroop.game import _Phase
+
     # Draw first to populate preset rects
     surf = pygame.display.get_surface()
     sg.draw(surf)

@@ -1,12 +1,13 @@
 from __future__ import annotations
 
-import pytest
 
 from cognitive_data_arcade.games.cognitive_dashboard.profile import cognitive_profile
 from cognitive_data_arcade.games.cognitive_dashboard.session import DashboardSession, TaskResult
 
 
-def _make_result(rt_ms: list[float], conditions: list[str], correct: list[bool] | None = None) -> TaskResult:
+def _make_result(
+    rt_ms: list[float], conditions: list[str], correct: list[bool] | None = None
+) -> TaskResult:
     if correct is None:
         correct = [True] * len(rt_ms)
     return TaskResult(rt_ms=rt_ms, correct=correct, condition=conditions)

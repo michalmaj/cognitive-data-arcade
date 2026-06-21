@@ -8,8 +8,18 @@ from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.word_weight_factory.corpus import CorpusState
 from cognitive_data_arcade.games.word_weight_factory.engine import WeightMatrix
 from cognitive_data_arcade.games.word_weight_factory.step_bow import (
-    _BG, _WHITE, _DIM, _AMBER, _PURPLE,
-    _STEP_H, _W, _LABEL_W, _COL_W, _ROW_H, _HDR_H, _MAX_COLS,
+    _BG,
+    _WHITE,
+    _DIM,
+    _AMBER,
+    _PURPLE,
+    _STEP_H,
+    _W,
+    _LABEL_W,
+    _COL_W,
+    _ROW_H,
+    _HDR_H,
+    _MAX_COLS,
     _draw_tooltip_box,
 )
 
@@ -103,7 +113,7 @@ class StepTfidfScene(Scene):
                         tok = m.vocab[j]
                         idf_val = m.idf[j]
                         self._tooltip = [
-                            f"Token: \"{tok}\"",
+                            f'Token: "{tok}"',
                             "",
                             f"IDF = {idf_val:.4f}",
                             "",
@@ -126,9 +136,9 @@ class StepTfidfScene(Scene):
                             tfidf = m.tfidf[ri][j]
                             dtitle = m.doc_titles[ri]
                             self._tooltip = [
-                                f"TF-IDF(\"{tok}\", \"{dtitle}\")",
+                                f'TF-IDF("{tok}", "{dtitle}")',
                                 "",
-                                f"= TF x IDF",
+                                "= TF x IDF",
                                 f"= {tf_val:.4f} x {idf_val:.4f}",
                                 f"= {tfidf:.4f}",
                                 "",
@@ -164,9 +174,7 @@ class StepTfidfScene(Scene):
 
         V = len(matrix.vocab)
         N = len(matrix.doc_titles)
-        max_val = max(
-            (matrix.tfidf[i][j] for i in range(N) for j in range(V)), default=1
-        ) or 1
+        max_val = max((matrix.tfidf[i][j] for i in range(N) for j in range(V)), default=1) or 1
 
         t = get_font(12).render("TF-IDF — waga terminu w dokumencie", True, _AMBER)
         surface.blit(t, (8, 6))
@@ -175,8 +183,8 @@ class StepTfidfScene(Scene):
 
         HDR_TOP = 52
         visible_start = self._col_offset
-        visible_end   = min(V, visible_start + _MAX_COLS)
-        visible_cols  = list(range(visible_start, visible_end))
+        visible_end = min(V, visible_start + _MAX_COLS)
+        visible_cols = list(range(visible_start, visible_end))
         font9 = get_font(9)
 
         # Column headers
@@ -186,8 +194,9 @@ class StepTfidfScene(Scene):
             pygame.draw.rect(surface, (20, 20, 38), (x0, HDR_TOP, _COL_W, _HDR_H))
             pygame.draw.line(surface, (40, 40, 70), (x0, HDR_TOP), (x0, HDR_TOP + _HDR_H))
             ls = font9.render(label, True, _DIM)
-            surface.blit(ls, (x0 + (_COL_W - ls.get_width()) // 2,
-                               HDR_TOP + (_HDR_H - ls.get_height()) // 2))
+            surface.blit(
+                ls, (x0 + (_COL_W - ls.get_width()) // 2, HDR_TOP + (_HDR_H - ls.get_height()) // 2)
+            )
 
         # Rows
         for ri in range(N):
@@ -204,13 +213,20 @@ class StepTfidfScene(Scene):
                 pygame.draw.rect(surface, cell_bg, (x0 + 1, y0 + 1, _COL_W - 2, _ROW_H - 2))
                 pygame.draw.line(surface, (30, 30, 55), (x0, y0), (x0, y0 + _ROW_H))
                 vs = font9.render(f"{val:.3f}", True, _WHITE if val > 0 else _DIM)
-                surface.blit(vs, (x0 + (_COL_W - vs.get_width()) // 2,
-                                   y0 + (_ROW_H - vs.get_height()) // 2))
-            pygame.draw.line(surface, (30, 30, 55), (0, y0 + _ROW_H),
-                             (_LABEL_W + len(visible_cols) * _COL_W, y0 + _ROW_H))
+                surface.blit(
+                    vs, (x0 + (_COL_W - vs.get_width()) // 2, y0 + (_ROW_H - vs.get_height()) // 2)
+                )
+            pygame.draw.line(
+                surface,
+                (30, 30, 55),
+                (0, y0 + _ROW_H),
+                (_LABEL_W + len(visible_cols) * _COL_W, y0 + _ROW_H),
+            )
 
         if V > _MAX_COLS:
-            sh = font9.render(f"Kolumny {visible_start+1}-{visible_end}/{V}  (scroll)", True, _DIM)
+            sh = font9.render(
+                f"Kolumny {visible_start + 1}-{visible_end}/{V}  (scroll)", True, _DIM
+            )
             surface.blit(sh, (_W - sh.get_width() - 8, 8))
 
         # Selected cell detail
@@ -218,23 +234,28 @@ class StepTfidfScene(Scene):
         if self._selected_cell is not None:
             ri, j = self._selected_cell
             if ri < N and j < V:
-                tok     = matrix.vocab[j]
-                tf_val  = matrix.tf[ri][j]
+                tok = matrix.vocab[j]
+                tf_val = matrix.tf[ri][j]
                 idf_val = matrix.idf[j]
-                tfidf   = matrix.tfidf[ri][j]
-                dtitle  = matrix.doc_titles[ri]
-                detail  = f'"{tok}" w "{dtitle}": {tf_val:.3f} x {idf_val:.3f} = {tfidf:.3f}'
+                tfidf = matrix.tfidf[ri][j]
+                dtitle = matrix.doc_titles[ri]
+                detail = f'"{tok}" w "{dtitle}": {tf_val:.3f} x {idf_val:.3f} = {tfidf:.3f}'
                 ds = get_font(11).render(detail, True, _AMBER)
                 surface.blit(ds, (8, detail_y))
 
         # Insight
-        flat_tfidf = [(matrix.tfidf[i][j], matrix.vocab[j], matrix.doc_titles[i])
-                      for i in range(N) for j in range(V)]
+        flat_tfidf = [
+            (matrix.tfidf[i][j], matrix.vocab[j], matrix.doc_titles[i])
+            for i in range(N)
+            for j in range(V)
+        ]
         flat_tfidf.sort(reverse=True)
         if flat_tfidf and flat_tfidf[0][0] > 0.2:
             best_val, best_tok, best_doc = flat_tfidf[0]
-            insight = (f"Najwyzszy TF-IDF: '{best_tok}' w '{best_doc}'"
-                       f" ({best_val:.3f}) -- to slowo wyroznia ten dokument.")
+            insight = (
+                f"Najwyzszy TF-IDF: '{best_tok}' w '{best_doc}'"
+                f" ({best_val:.3f}) -- to slowo wyroznia ten dokument."
+            )
         else:
             insight = "TF-IDF laczy czestotliwosc w dokumencie z rzadkoscia w korpusie."
         iy = _STEP_H - 40

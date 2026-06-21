@@ -17,11 +17,11 @@ class SimResult:
     mean2: float
     sd1: float
     sd2: float
-    observed_diff: float       # mean2 - mean1
+    observed_diff: float  # mean2 - mean1
     mean1_no_out: float
     mean2_no_out: float
-    t_stat: float              # positive when cond2 > cond1; computed on raw data (outliers included)
-    p_value: float             # two-tailed Welch t-test
+    t_stat: float  # positive when cond2 > cond1; computed on raw data (outliers included)
+    p_value: float  # two-tailed Welch t-test
 
 
 def _betacf(a: float, b: float, x: float) -> float:
@@ -83,8 +83,8 @@ def _welch_t(a: np.ndarray, b: np.ndarray) -> tuple[float, float]:
     if se2 <= 0.0:
         return 0.0, 1.0
     t = (mb - ma) / math.sqrt(se2)
-    df = se2 ** 2 / ((va / na) ** 2 / (na - 1) + (vb / nb) ** 2 / (nb - 1))
-    x = df / (df + t ** 2)
+    df = se2**2 / ((va / na) ** 2 / (na - 1) + (vb / nb) ** 2 / (nb - 1))
+    x = df / (df + t**2)
     p = float(np.clip(_betainc(x, df / 2.0, 0.5), 0.0, 1.0))
     return t, p
 
@@ -125,10 +125,17 @@ def simulate(
     t_stat, p_value = _welch_t(c1, c2)
 
     return SimResult(
-        cond1=c1, cond2=c2,
-        outlier_mask1=mask1, outlier_mask2=mask2,
-        mean1=mean1, mean2=mean2, sd1=sd1, sd2=sd2,
+        cond1=c1,
+        cond2=c2,
+        outlier_mask1=mask1,
+        outlier_mask2=mask2,
+        mean1=mean1,
+        mean2=mean2,
+        sd1=sd1,
+        sd2=sd2,
         observed_diff=mean2 - mean1,
-        mean1_no_out=mean1_no, mean2_no_out=mean2_no,
-        t_stat=t_stat, p_value=p_value,
+        mean1_no_out=mean1_no,
+        mean2_no_out=mean2_no,
+        t_stat=t_stat,
+        p_value=p_value,
     )

@@ -16,11 +16,11 @@ from cognitive_data_arcade.games.cognitive_dashboard.config import (
 )
 from cognitive_data_arcade.games.cognitive_dashboard.session import DashboardSession, TaskResult
 
-_BG    = (26, 26, 46)
+_BG = (26, 26, 46)
 _WHITE = (240, 240, 240)
-_DIM   = (100, 100, 150)
+_DIM = (100, 100, 150)
 _GREEN = (39, 174, 96)
-_RED   = (231, 76, 60)
+_RED = (231, 76, 60)
 _W, _H = 1024, 768
 
 
@@ -31,6 +31,7 @@ class _Phase(enum.Enum):
 
 
 # ── MiniRTScene ───────────────────────────────────────────────────────────────
+
 
 class MiniRTScene(Scene):
     _CIRCLE_R = 80
@@ -121,31 +122,34 @@ class MiniRTScene(Scene):
 
 _STROOP_WORDS = ["CZERWONY", "ZIELONY", "NIEBIESKI"]
 _STROOP_RGB = {
-    "CZERWONY":  (231, 76, 60),
-    "ZIELONY":   (39, 174, 96),
+    "CZERWONY": (231, 76, 60),
+    "ZIELONY": (39, 174, 96),
     "NIEBIESKI": (52, 152, 219),
 }
 _STROOP_KEY = {
-    "CZERWONY":  pygame.K_r,
-    "ZIELONY":   pygame.K_g,
+    "CZERWONY": pygame.K_r,
+    "ZIELONY": pygame.K_g,
     "NIEBIESKI": pygame.K_b,
 }
 _CONGRUENT_TRIALS = [
-    ("CZERWONY", "CZERWONY"), ("ZIELONY", "ZIELONY"),
-    ("NIEBIESKI", "NIEBIESKI"), ("CZERWONY", "CZERWONY"),
+    ("CZERWONY", "CZERWONY"),
+    ("ZIELONY", "ZIELONY"),
+    ("NIEBIESKI", "NIEBIESKI"),
+    ("CZERWONY", "CZERWONY"),
 ]
 _INCONGRUENT_TRIALS = [
-    ("CZERWONY", "ZIELONY"), ("ZIELONY", "NIEBIESKI"),
-    ("NIEBIESKI", "CZERWONY"), ("ZIELONY", "CZERWONY"),
+    ("CZERWONY", "ZIELONY"),
+    ("ZIELONY", "NIEBIESKI"),
+    ("NIEBIESKI", "CZERWONY"),
+    ("ZIELONY", "CZERWONY"),
 ]
 
 
 def _make_stroop_trials() -> list[dict]:
     assert len(_CONGRUENT_TRIALS) + len(_INCONGRUENT_TRIALS) == MINI_TRIALS
-    trials = (
-        [{"word": w, "ink": i, "condition": "congruent"} for w, i in _CONGRUENT_TRIALS]
-        + [{"word": w, "ink": i, "condition": "incongruent"} for w, i in _INCONGRUENT_TRIALS]
-    )
+    trials = [{"word": w, "ink": i, "condition": "congruent"} for w, i in _CONGRUENT_TRIALS] + [
+        {"word": w, "ink": i, "condition": "incongruent"} for w, i in _INCONGRUENT_TRIALS
+    ]
     random.shuffle(trials)
     return trials
 
@@ -247,13 +251,13 @@ class MiniStroopScene(Scene):
 # ── MiniFlankerScene ──────────────────────────────────────────────────────────
 
 _FLANKER_TRIALS = [
-    {"arrows": "<<<<<", "direction": "left",  "condition": "congruent"},
+    {"arrows": "<<<<<", "direction": "left", "condition": "congruent"},
     {"arrows": ">>>>>", "direction": "right", "condition": "congruent"},
-    {"arrows": "<<<<<", "direction": "left",  "condition": "congruent"},
+    {"arrows": "<<<<<", "direction": "left", "condition": "congruent"},
     {"arrows": ">>>>>", "direction": "right", "condition": "congruent"},
-    {"arrows": ">><>>", "direction": "left",  "condition": "incongruent"},
+    {"arrows": ">><>>", "direction": "left", "condition": "incongruent"},
     {"arrows": "<<><<", "direction": "right", "condition": "incongruent"},
-    {"arrows": ">><>>", "direction": "left",  "condition": "incongruent"},
+    {"arrows": ">><>>", "direction": "left", "condition": "incongruent"},
     {"arrows": "<<><<", "direction": "right", "condition": "incongruent"},
 ]
 
@@ -341,7 +345,9 @@ class MiniFlankerScene(Scene):
         progress = get_font(28).render(f"{self._trial_idx + 1} / {MINI_TRIALS}", True, _DIM)
         surface.blit(progress, (w - progress.get_width() - 20, 20))
 
-        hint = get_font(28).render("strzalka LEWO / PRAWO = kierunek srodkowej strzalki", True, _DIM)
+        hint = get_font(28).render(
+            "strzalka LEWO / PRAWO = kierunek srodkowej strzalki", True, _DIM
+        )
         surface.blit(hint, (cx - hint.get_width() // 2, h - 50))
 
         if self._phase == _Phase.FIXATION:
@@ -360,11 +366,11 @@ class MiniFlankerScene(Scene):
 
 # ── MiniGoNoGoScene ───────────────────────────────────────────────────────────
 
+
 def _make_gonogo_trials() -> list[dict]:
-    trials = (
-        [{"trial_type": "go"} for _ in range(MINI_TRIALS - 2)]
-        + [{"trial_type": "nogo"} for _ in range(2)]
-    )
+    trials = [{"trial_type": "go"} for _ in range(MINI_TRIALS - 2)] + [
+        {"trial_type": "nogo"} for _ in range(2)
+    ]
     random.shuffle(trials)
     return trials
 

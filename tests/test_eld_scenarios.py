@@ -1,5 +1,5 @@
 from cognitive_data_arcade.games.event_log_detective.scenarios import (
-    SCENARIOS, Scenario, Decision, Option,
+    SCENARIOS,
 )
 
 

@@ -8,22 +8,22 @@ from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.word_weight_factory.corpus import CorpusState
 from cognitive_data_arcade.games.word_weight_factory.engine import WeightMatrix
 
-_BG     = (15, 15, 35)
-_WHITE  = (240, 240, 240)
-_DIM    = (120, 120, 160)
-_AMBER  = (243, 156, 18)
-_GREEN  = (46, 204, 113)
+_BG = (15, 15, 35)
+_WHITE = (240, 240, 240)
+_DIM = (120, 120, 160)
+_AMBER = (243, 156, 18)
+_GREEN = (46, 204, 113)
 _PURPLE = (155, 89, 182)
 
-_STEP_H  = 672
-_W       = 804
+_STEP_H = 672
+_W = 804
 _LABEL_W = 100
-_COL_W   = 36
-_ROW_H   = 30
-_HDR_H   = 28
+_COL_W = 36
+_ROW_H = 30
+_HDR_H = 28
 _MAX_COLS = 19
 
-_TOOLTIP_W   = 300
+_TOOLTIP_W = 300
 _TOOLTIP_PAD = 8
 _TOOLTIP_LINE = 18
 
@@ -130,7 +130,7 @@ class StepBowScene(Scene):
                         total = sum(m.bow[i][j] for i in range(N))
                         df = sum(1 for i in range(N) if m.bow[i][j] > 0)
                         self._tooltip = [
-                            f"Token: \"{tok}\"",
+                            f'Token: "{tok}"',
                             "",
                             f"Suma w korpusie: {total}",
                             f"Wystepuje w {df} z {N} dok.",
@@ -147,7 +147,7 @@ class StepBowScene(Scene):
             if 0 <= ri < N:
                 doc_len = sum(m.bow[ri])
                 self._tooltip = [
-                    f"Dokument: \"{m.doc_titles[ri]}\"",
+                    f'Dokument: "{m.doc_titles[ri]}"',
                     "",
                     f"Dlugosc: {doc_len} tokenow",
                     f"Rozne tokeny: {sum(1 for j in range(V) if m.bow[ri][j] > 0)}",
@@ -169,7 +169,7 @@ class StepBowScene(Scene):
                             cnt = m.bow[ri][j]
                             dtitle = m.doc_titles[ri]
                             self._tooltip = [
-                                f"Token \"{tok}\" w \"{dtitle}\"",
+                                f'Token "{tok}" w "{dtitle}"',
                                 "",
                                 f"BoW = {cnt}",
                                 "",
@@ -220,7 +220,7 @@ class StepBowScene(Scene):
         visible_end = min(V, visible_start + _MAX_COLS)
         visible_cols = list(range(visible_start, visible_end))
 
-        font9  = get_font(9)
+        font9 = get_font(9)
         font11 = get_font(11)
 
         # Column headers
@@ -233,8 +233,9 @@ class StepBowScene(Scene):
             pygame.draw.rect(surface, bg, (x0, hdr_y, _COL_W, _HDR_H))
             pygame.draw.line(surface, (40, 40, 70), (x0, hdr_y), (x0, hdr_y + _HDR_H))
             ls = font9.render(label, True, _AMBER if active_col else _DIM)
-            surface.blit(ls, (x0 + (_COL_W - ls.get_width()) // 2,
-                               hdr_y + (_HDR_H - ls.get_height()) // 2))
+            surface.blit(
+                ls, (x0 + (_COL_W - ls.get_width()) // 2, hdr_y + (_HDR_H - ls.get_height()) // 2)
+            )
 
         # Rows
         for ri in range(N):
@@ -251,21 +252,34 @@ class StepBowScene(Scene):
                 val = matrix.bow[ri][j]
                 active_cell = self._selected_cell == (ri, j)
                 active_col_h = j == self._selected_col
-                cell_bg = (50, 40, 5) if active_cell else \
-                          (35, 28, 5) if active_col_h else \
-                          _green_cell(val, max_val)
+                cell_bg = (
+                    (50, 40, 5)
+                    if active_cell
+                    else (35, 28, 5)
+                    if active_col_h
+                    else _green_cell(val, max_val)
+                )
                 pygame.draw.rect(surface, cell_bg, (x0 + 1, y0 + 1, _COL_W - 2, _ROW_H - 2))
                 pygame.draw.line(surface, (30, 30, 55), (x0, y0), (x0, y0 + _ROW_H))
-                pygame.draw.line(surface, (30, 30, 55), (x0, y0), (_LABEL_W + len(visible_cols) * _COL_W, y0))
+                pygame.draw.line(
+                    surface, (30, 30, 55), (x0, y0), (_LABEL_W + len(visible_cols) * _COL_W, y0)
+                )
                 vs = font9.render(str(val), True, _WHITE if val > 0 else _DIM)
-                surface.blit(vs, (x0 + (_COL_W - vs.get_width()) // 2,
-                                   y0 + (_ROW_H - vs.get_height()) // 2))
-            pygame.draw.line(surface, (30, 30, 55), (0, y0 + _ROW_H),
-                             (_LABEL_W + len(visible_cols) * _COL_W, y0 + _ROW_H))
+                surface.blit(
+                    vs, (x0 + (_COL_W - vs.get_width()) // 2, y0 + (_ROW_H - vs.get_height()) // 2)
+                )
+            pygame.draw.line(
+                surface,
+                (30, 30, 55),
+                (0, y0 + _ROW_H),
+                (_LABEL_W + len(visible_cols) * _COL_W, y0 + _ROW_H),
+            )
 
         # Scroll hint
         if V > _MAX_COLS:
-            sh = font9.render(f"Kolumny {visible_start+1}-{visible_end}/{V}  (scroll)", True, _DIM)
+            sh = font9.render(
+                f"Kolumny {visible_start + 1}-{visible_end}/{V}  (scroll)", True, _DIM
+            )
             surface.blit(sh, (_W - sh.get_width() - 8, 8))
 
         # Selected cell detail
@@ -286,8 +300,10 @@ class StepBowScene(Scene):
             surface.blit(ds, (8, detail_y))
 
         # Insight banner
-        insight = ("BoW = surowe zliczenia. Dlugi dokument dostaje duze liczby"
-                   " -- dlatego potrzebujemy normalizacji.")
+        insight = (
+            "BoW = surowe zliczenia. Dlugi dokument dostaje duze liczby"
+            " -- dlatego potrzebujemy normalizacji."
+        )
         iy = _STEP_H - 40
         pygame.draw.rect(surface, (20, 15, 35), (0, iy - 6, _W, 46))
         pygame.draw.line(surface, _PURPLE, (0, iy - 6), (0, iy + 40), 3)

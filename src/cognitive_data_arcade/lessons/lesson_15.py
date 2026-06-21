@@ -1,4 +1,5 @@
 """Lesson 15 -- Hypothesis Arena (p-value, effect size, power)."""
+
 from __future__ import annotations
 
 CONTENT: dict[str, dict[str, list[str]]] = {

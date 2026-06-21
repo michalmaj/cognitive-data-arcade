@@ -193,7 +193,7 @@ class NBackGame(Scene):
             self._phase_timer = 0.0
 
     def _evaluate_block(self) -> None:
-        block_records = self._records[-self._config.trials_per_block:]
+        block_records = self._records[-self._config.trials_per_block :]
         n = len(block_records)
         pos_acc = sum(1 for r in block_records if r.pos_correct) / n
         let_acc = sum(1 for r in block_records if r.let_correct) / n
@@ -233,10 +233,32 @@ class NBackGame(Scene):
         let_targets = [r for r in self._records if r.let_match]
         let_non = [r for r in self._records if not r.let_match]
 
-        pos_hr = max(0.01, min(0.99, sum(r.key_a_pressed for r in pos_targets) / len(pos_targets) if pos_targets else 0.5))
-        pos_far = max(0.01, min(0.99, sum(r.key_a_pressed for r in pos_non) / len(pos_non) if pos_non else 0.5))
-        let_hr = max(0.01, min(0.99, sum(r.key_l_pressed for r in let_targets) / len(let_targets) if let_targets else 0.5))
-        let_far = max(0.01, min(0.99, sum(r.key_l_pressed for r in let_non) / len(let_non) if let_non else 0.5))
+        pos_hr = max(
+            0.01,
+            min(
+                0.99,
+                sum(r.key_a_pressed for r in pos_targets) / len(pos_targets)
+                if pos_targets
+                else 0.5,
+            ),
+        )
+        pos_far = max(
+            0.01,
+            min(0.99, sum(r.key_a_pressed for r in pos_non) / len(pos_non) if pos_non else 0.5),
+        )
+        let_hr = max(
+            0.01,
+            min(
+                0.99,
+                sum(r.key_l_pressed for r in let_targets) / len(let_targets)
+                if let_targets
+                else 0.5,
+            ),
+        )
+        let_far = max(
+            0.01,
+            min(0.99, sum(r.key_l_pressed for r in let_non) / len(let_non) if let_non else 0.5),
+        )
 
         pos_dprime = _probit(pos_hr) - _probit(pos_far)
         let_dprime = _probit(let_hr) - _probit(let_far)
@@ -274,6 +296,7 @@ class NBackGame(Scene):
 
         def _analysis_factory(csv_path: Path, strings: Strings, back_scene: Scene) -> Scene:
             from cognitive_data_arcade.ui.nback_analysis_scene import NBackAnalysisScene
+
             return NBackAnalysisScene(csv_path, strings, back_scene)
 
         return SessionSummaryScene(
@@ -306,7 +329,9 @@ class NBackGame(Scene):
                     trial = self._trials[self._trial_in_block]
                     if cell == trial.position:
                         color = (243, 156, 18)
-                pygame.draw.rect(surface, color, (x, y, self._CELL_PX, self._CELL_PX), border_radius=8)
+                pygame.draw.rect(
+                    surface, color, (x, y, self._CELL_PX, self._CELL_PX), border_radius=8
+                )
 
             if self._phase == _Phase.STIMULUS and self._trial_in_block < len(self._trials):
                 trial = self._trials[self._trial_in_block]

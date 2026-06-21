@@ -5,20 +5,20 @@ import pygame
 
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
-from cognitive_data_arcade.games.word_weight_factory.corpus import CorpusState, _PRESETS
+from cognitive_data_arcade.games.word_weight_factory.corpus import CorpusState
 from cognitive_data_arcade.games.word_weight_factory.engine import WeightMatrix
 from cognitive_data_arcade.games.text_tokenizer.stop_words import STOP_WORDS_EN, STOP_WORDS_PL
 
-_BG     = (15, 15, 35)
-_WHITE  = (240, 240, 240)
-_DIM    = (120, 120, 160)
-_AMBER  = (243, 156, 18)
-_GREEN  = (46, 204, 113)
+_BG = (15, 15, 35)
+_WHITE = (240, 240, 240)
+_DIM = (120, 120, 160)
+_AMBER = (243, 156, 18)
+_GREEN = (46, 204, 113)
 _PURPLE = (155, 89, 182)
 _STEP_H = 672
-_W      = 804
+_W = 804
 
-_TOOLTIP_W   = 300
+_TOOLTIP_W = 300
 _TOOLTIP_PAD = 8
 _TOOLTIP_LINE = 18
 
@@ -65,7 +65,7 @@ class StepCorpusScene(Scene):
             if rect.collidepoint(pos):
                 if is_stop:
                     self._tooltip = [
-                        f"Stop word: \"{tok}\"",
+                        f'Stop word: "{tok}"',
                         "",
                         "To czesto wystepujace slowo",
                         "bez wartosci informacyjnej.",
@@ -73,7 +73,7 @@ class StepCorpusScene(Scene):
                     ]
                 else:
                     self._tooltip = [
-                        f"Token: \"{tok}\"",
+                        f'Token: "{tok}"',
                         "",
                         "Ten token trafi do slownika.",
                         "Bedzie kolumna w macierzy BoW.",
@@ -139,6 +139,7 @@ class StepCorpusScene(Scene):
         # Token chips
         stops = STOP_WORDS_PL if self._state.lang == "pl" else STOP_WORDS_EN
         import string as _str
+
         tokens = text.split()
         if self._state.lowercase:
             tokens = [t.lower() for t in tokens]
@@ -158,10 +159,10 @@ class StepCorpusScene(Scene):
                 chip_x = 8
                 chip_y += 22
             border = (80, 80, 100) if is_stop else _GREEN
-            col    = (80, 80, 100) if is_stop else _GREEN
+            col = (80, 80, 100) if is_stop else _GREEN
             chip_rect = pygame.Rect(chip_x, chip_y, cw, 18)
             pygame.draw.rect(surface, (20, 20, 40), chip_rect, border_radius=3)
-            pygame.draw.rect(surface, border,       chip_rect, 1, border_radius=3)
+            pygame.draw.rect(surface, border, chip_rect, 1, border_radius=3)
             lbl = font10.render(tok, True, col)
             surface.blit(lbl, (chip_x + 5, chip_y + (18 - lbl.get_height()) // 2))
             self._chip_data.append((chip_rect, tok, is_stop))
@@ -169,7 +170,9 @@ class StepCorpusScene(Scene):
 
         # Insight banner
         n_vocab = len(matrix.vocab)
-        insight = (f"Slownik rosnie z kazdym nowym dokumentem. Teraz jest {n_vocab} tokenow wspolnych.")
+        insight = (
+            f"Slownik rosnie z kazdym nowym dokumentem. Teraz jest {n_vocab} tokenow wspolnych."
+        )
         iy = _STEP_H - 40
         pygame.draw.rect(surface, (20, 15, 35), (0, iy - 6, _W, 46))
         pygame.draw.line(surface, _PURPLE, (0, iy - 6), (0, iy + 40), 3)

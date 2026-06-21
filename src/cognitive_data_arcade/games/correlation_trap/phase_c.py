@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
@@ -11,28 +12,32 @@ from cognitive_data_arcade.engine.context_popup import ContextInfo, ContextPopup
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.correlation_trap.simulator import (
-    CorrResult, _SANDBOX_VARS, _sandbox_corr, _sandbox_seed, generate_correlated,
+    CorrResult,
+    _SANDBOX_VARS,
+    _sandbox_corr,
+    _sandbox_seed,
+    generate_correlated,
 )
 
-_BG     = (15, 15, 35)
-_PANEL  = (18, 18, 42)
-_WHITE  = (240, 240, 240)
-_DIM    = (120, 120, 160)
+_BG = (15, 15, 35)
+_PANEL = (18, 18, 42)
+_WHITE = (240, 240, 240)
+_DIM = (120, 120, 160)
 _ORANGE = (243, 156, 18)
 _FIG_BG = "#0f0f23"
-_AX_BG  = "#1a1a3e"
+_AX_BG = "#1a1a3e"
 
-_AREA_H    = 672
-_TOP_H     = 56
-_HINT_H    = 40
+_AREA_H = 672
+_TOP_H = 56
+_HINT_H = 40
 _SCATTER_W = 716
 _SCATTER_H = _AREA_H - _TOP_H - _HINT_H
-_STATS_W   = 1024 - _SCATTER_W
-_CHART_W   = 700
-_CHART_H   = _SCATTER_H - 16
-_DPI       = 100
+_STATS_W = 1024 - _SCATTER_W
+_CHART_W = 700
+_CHART_H = _SCATTER_H - 16
+_DPI = 100
 
-_ROW_H     = 26   # dropdown row height
+_ROW_H = 26  # dropdown row height
 
 _POPUPS_C: dict[str, ContextInfo] = {
     "dropdown_x": ContextInfo(
@@ -77,18 +82,12 @@ _POPUPS_C: dict[str, ContextInfo] = {
     ),
     "swap_btn": ContextInfo(
         title="Zamień osie (<->)",
-        body=(
-            "Zamienia X i Y miejscami. Wykres się obraca,\n"
-            "ale r Pearsona pozostaje identyczne!"
-        ),
+        body=("Zamienia X i Y miejscami. Wykres się obraca,\nale r Pearsona pozostaje identyczne!"),
         impact="Dowód że korelacja Pearsona jest symetryczna: r(X,Y) = r(Y,X).",
     ),
     "strength_label": ContextInfo(
         title="Siła korelacji",
-        body=(
-            "|r| < 0.3 słaba; 0.3-0.5 umiarkowana;\n"
-            "0.5-0.7 silna; > 0.7 bardzo silna."
-        ),
+        body=("|r| < 0.3 słaba; 0.3-0.5 umiarkowana;\n0.5-0.7 silna; > 0.7 bardzo silna."),
         impact="Znalazłeś pary z różną siłą? Zastanów się co je łączy!",
     ),
 }
@@ -165,7 +164,7 @@ class _Dropdown:
 
     def draw(self, surface: pygame.Surface) -> None:
         font = get_font(15)
-        bg   = (18, 18, 46)
+        bg = (18, 18, 46)
         pygame.draw.rect(surface, bg, (self._x, self._y, self._w, self._h))
         pygame.draw.rect(surface, self._border, (self._x, self._y, self._w, self._h), 1)
         label = f"{self.selected_label} >"
@@ -187,8 +186,8 @@ class PhaseCScene(Scene):
         dd_h = 32
         dd_y = (_TOP_H - dd_h) // 2
         dd_w = 180
-        self._dd_x = _Dropdown( 80, dd_y, dd_w, dd_h, _SANDBOX_VARS, (52, 152, 219), 0)
-        self._dd_y = _Dropdown(350, dd_y, dd_w, dd_h, _SANDBOX_VARS, (231, 76, 60),  1)
+        self._dd_x = _Dropdown(80, dd_y, dd_w, dd_h, _SANDBOX_VARS, (52, 152, 219), 0)
+        self._dd_y = _Dropdown(350, dd_y, dd_w, dd_h, _SANDBOX_VARS, (231, 76, 60), 1)
         self._swap_rect = pygame.Rect(350 + dd_w + 8, dd_y, 80, dd_h)
         self._result: CorrResult | None = None
         self._chart_surf: pygame.Surface | None = None
@@ -218,16 +217,16 @@ class PhaseCScene(Scene):
     def _register_popups(self) -> None:
         self._popup.clear()
         scatter_r = pygame.Rect(0, _TOP_H, _SCATTER_W, _SCATTER_H)
-        r_hero_r  = pygame.Rect(_SCATTER_W + 4, _TOP_H + 40, _STATS_W - 8, 60)
-        r2_r      = pygame.Rect(_SCATTER_W + 4, _TOP_H + 140, _STATS_W - 8, 30)
-        str_r     = pygame.Rect(_SCATTER_W + 4, _TOP_H + 110, _STATS_W - 8, 28)
-        self._popup.register(self._dd_x.rect,  _POPUPS_C["dropdown_x"])
-        self._popup.register(self._dd_y.rect,  _POPUPS_C["dropdown_y"])
-        self._popup.register(scatter_r,        _POPUPS_C["scatter"])
-        self._popup.register(r_hero_r,         _POPUPS_C["r_hero"])
-        self._popup.register(r2_r,             _POPUPS_C["r2_display"])
-        self._popup.register(self._swap_rect,  _POPUPS_C["swap_btn"])
-        self._popup.register(str_r,            _POPUPS_C["strength_label"])
+        r_hero_r = pygame.Rect(_SCATTER_W + 4, _TOP_H + 40, _STATS_W - 8, 60)
+        r2_r = pygame.Rect(_SCATTER_W + 4, _TOP_H + 140, _STATS_W - 8, 30)
+        str_r = pygame.Rect(_SCATTER_W + 4, _TOP_H + 110, _STATS_W - 8, 28)
+        self._popup.register(self._dd_x.rect, _POPUPS_C["dropdown_x"])
+        self._popup.register(self._dd_y.rect, _POPUPS_C["dropdown_y"])
+        self._popup.register(scatter_r, _POPUPS_C["scatter"])
+        self._popup.register(r_hero_r, _POPUPS_C["r_hero"])
+        self._popup.register(r2_r, _POPUPS_C["r2_display"])
+        self._popup.register(self._swap_rect, _POPUPS_C["swap_btn"])
+        self._popup.register(str_r, _POPUPS_C["strength_label"])
 
     def handle_event(self, event: pygame.event.Event) -> None:
         if self._popup.handle_event(event):
@@ -271,9 +270,13 @@ class PhaseCScene(Scene):
         pygame.draw.rect(area, (52, 152, 219), self._swap_rect, 1, border_radius=4)
         sw_lbl = "<->"
         sw_tw = f14.size(sw_lbl)[0]
-        area.blit(f14.render(sw_lbl, True, (52, 152, 219)),
-                  (self._swap_rect.x + (self._swap_rect.w - sw_tw) // 2,
-                   self._swap_rect.y + (self._swap_rect.h - f14.get_height()) // 2))
+        area.blit(
+            f14.render(sw_lbl, True, (52, 152, 219)),
+            (
+                self._swap_rect.x + (self._swap_rect.w - sw_tw) // 2,
+                self._swap_rect.y + (self._swap_rect.h - f14.get_height()) // 2,
+            ),
+        )
 
         # scatter
         if self._chart_surf:
@@ -282,7 +285,9 @@ class PhaseCScene(Scene):
         # stats panel
         sx = _SCATTER_W + 4
         pygame.draw.rect(area, (18, 18, 42), (_SCATTER_W, _TOP_H, _STATS_W, _SCATTER_H))
-        pygame.draw.line(area, (46, 46, 96), (_SCATTER_W, _TOP_H), (_SCATTER_W, _TOP_H + _SCATTER_H))
+        pygame.draw.line(
+            area, (46, 46, 96), (_SCATTER_W, _TOP_H), (_SCATTER_W, _TOP_H + _SCATTER_H)
+        )
         if self._result:
             _draw_stats_panel(area, self._result, sx)
 
@@ -290,7 +295,7 @@ class PhaseCScene(Scene):
         pygame.draw.rect(area, (18, 18, 42), (0, _AREA_H - _HINT_H, 1024, _HINT_H))
         hint = "Wypróbuj różne kombinacje — znajdź najsilniejszą i najsłabszą korelację!"
         f13 = get_font(13)
-        tw  = f13.size(hint)[0]
+        tw = f13.size(hint)[0]
         area.blit(f13.render(hint, True, _DIM), ((1024 - tw) // 2, _AREA_H - _HINT_H + 12))
 
         # dropdowns drawn LAST so they overlay the scatter
@@ -302,8 +307,8 @@ class PhaseCScene(Scene):
 
 
 def _draw_stats_panel(surface: pygame.Surface, result: CorrResult, sx: int) -> None:
-    f13   = get_font(13)
-    f_r   = get_font(32)
+    f13 = get_font(13)
+    f_r = get_font(32)
     f_str = get_font(14)
     r_str = f"{result.r:+.3f}"
     surface.blit(f13.render("r Pearson", True, (120, 120, 160)), (sx, _TOP_H + 14))
@@ -325,8 +330,7 @@ def _render_chart(result: CorrResult, x_label: str, y_label: str) -> pygame.Surf
         m = float(result.r * result.y.std() / max(1e-9, result.x.std()))
         b = float(result.y.mean() - m * result.x.mean())
         x_line = [float(result.x.min()), float(result.x.max())]
-        ax.plot(x_line, [m * xv + b for xv in x_line],
-                color="#f39c12", linestyle="--", alpha=0.6)
+        ax.plot(x_line, [m * xv + b for xv in x_line], color="#f39c12", linestyle="--", alpha=0.6)
     ax.set_xlabel(x_label, color="#787890", fontsize=9)
     ax.set_ylabel(y_label, color="#787890", fontsize=9)
     ax.set_xticks([])

@@ -90,9 +90,7 @@ class DecisionPopup:
             surface.blit(surf, (box_x + 20, y))
             y += 44
 
-        hint_surf = self._font_hint.render(
-            "ENTER — confirm   UP/DN or 1/2/3 — select", True, _DIM
-        )
+        hint_surf = self._font_hint.render("ENTER — confirm   UP/DN or 1/2/3 — select", True, _DIM)
         surface.blit(
             hint_surf,
             (box_x + box_w // 2 - hint_surf.get_width() // 2, box_y + box_h - 28),

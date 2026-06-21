@@ -1,5 +1,6 @@
 # src/cognitive_data_arcade/lessons/lesson_12.py
 """Lesson 12 -- Comparing Cognitive Tasks (Cognitive Dashboard)."""
+
 from __future__ import annotations
 
 CONTENT: dict[str, dict[str, list[str]]] = {

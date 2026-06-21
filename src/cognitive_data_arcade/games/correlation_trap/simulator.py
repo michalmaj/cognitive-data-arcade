@@ -7,21 +7,21 @@ import numpy as np
 
 @dataclass
 class CorrResult:
-    x:        np.ndarray
-    y:        np.ndarray
-    r:        float
-    r2:       float
+    x: np.ndarray
+    y: np.ndarray
+    r: float
+    r2: float
     strength: str
 
 
 @dataclass(frozen=True)
 class Scenario:
-    key:            str
-    claim_pl:       str
-    r_display:      float
-    n:              int
-    is_causal:      bool
-    confound_pl:    str
+    key: str
+    claim_pl: str
+    r_display: float
+    n: int
+    is_causal: bool
+    confound_pl: str
     explanation_pl: str
 
 
@@ -62,7 +62,7 @@ def generate_correlated(
         x=x,
         y=y,
         r=actual_r,
-        r2=actual_r ** 2,
+        r2=actual_r**2,
         strength=strength_label(actual_r),
     )
 
@@ -168,33 +168,33 @@ _SCENARIOS: list[Scenario] = [
 
 
 _SANDBOX_VARS: list[dict] = [
-    {"key": "lody",         "label": "Lody"},
-    {"key": "utonecia",     "label": "Utonięcia"},
-    {"key": "cage",         "label": "Cage (filmy)"},
-    {"key": "iphone",       "label": "iPhone (sprzedaż)"},
+    {"key": "lody", "label": "Lody"},
+    {"key": "utonecia", "label": "Utonięcia"},
+    {"key": "cage", "label": "Cage (filmy)"},
+    {"key": "iphone", "label": "iPhone (sprzedaż)"},
     {"key": "czas_reakcji", "label": "Czas reakcji"},
-    {"key": "nback",        "label": "N-back (wynik)"},
-    {"key": "slonce",       "label": "Słońce (dni)"},
-    {"key": "temperatura",  "label": "Temperatura"},
-    {"key": "sen",          "label": "Sen (godz.)"},
-    {"key": "nauka",        "label": "Nauka (godz.)"},
-    {"key": "papierosy",    "label": "Papierosy"},
-    {"key": "wzrost",       "label": "Wzrost (cm)"},
+    {"key": "nback", "label": "N-back (wynik)"},
+    {"key": "slonce", "label": "Słońce (dni)"},
+    {"key": "temperatura", "label": "Temperatura"},
+    {"key": "sen", "label": "Sen (godz.)"},
+    {"key": "nauka", "label": "Nauka (godz.)"},
+    {"key": "papierosy", "label": "Papierosy"},
+    {"key": "wzrost", "label": "Wzrost (cm)"},
 ]
 
 _VAR_CORRELATIONS: dict[tuple[str, str], float] = {
-    ("lody",        "utonecia"):      0.88,
-    ("lody",        "temperatura"):   0.91,
-    ("utonecia",    "temperatura"):   0.85,
-    ("cage",        "utonecia"):      0.67,
-    ("iphone",      "utonecia"):      0.93,
-    ("sen",         "czas_reakcji"):  -0.72,
-    ("sen",         "nback"):         0.52,
-    ("nauka",       "nback"):         0.45,
-    ("slonce",      "temperatura"):   0.88,
-    ("papierosy",   "czas_reakcji"):  0.38,
-    ("wzrost",      "nback"):         0.05,
-    ("wzrost",      "czas_reakcji"):  0.02,
+    ("lody", "utonecia"): 0.88,
+    ("lody", "temperatura"): 0.91,
+    ("utonecia", "temperatura"): 0.85,
+    ("cage", "utonecia"): 0.67,
+    ("iphone", "utonecia"): 0.93,
+    ("sen", "czas_reakcji"): -0.72,
+    ("sen", "nback"): 0.52,
+    ("nauka", "nback"): 0.45,
+    ("slonce", "temperatura"): 0.88,
+    ("papierosy", "czas_reakcji"): 0.38,
+    ("wzrost", "nback"): 0.05,
+    ("wzrost", "czas_reakcji"): 0.02,
 }
 
 

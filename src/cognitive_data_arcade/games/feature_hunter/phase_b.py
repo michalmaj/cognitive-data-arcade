@@ -5,29 +5,31 @@ import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.feature_hunter.config import DifficultyConfig
-from cognitive_data_arcade.games.feature_hunter.features import draw_features, Feature
+from cognitive_data_arcade.games.feature_hunter.features import draw_features
 from cognitive_data_arcade.games.feature_hunter.simulator import compute_accuracy_delta
 from cognitive_data_arcade.games.feature_hunter.widgets import (
-    FeatureCard, render_card, grid_layout,
+    FeatureCard,
+    render_card,
+    grid_layout,
 )
 
-_BG    = (15, 15, 35)
+_BG = (15, 15, 35)
 _PANEL = (18, 18, 42)
 _WHITE = (240, 240, 240)
-_DIM   = (120, 120, 160)
+_DIM = (120, 120, 160)
 _ORANGE = (243, 156, 18)
 _GREEN = (39, 174, 96)
-_RED   = (231, 76, 60)
-_BLUE  = (52, 152, 219)
+_RED = (231, 76, 60)
+_BLUE = (52, 152, 219)
 
-_W, _H    = 1024, 720
-_TOP_H    = 64
-_INSTR_H  = 22
-_BIN_W    = 160
-_CZONE_X  = _BIN_W                          # 160
-_CZONE_W  = _W - 2 * _BIN_W                # 704
-_CZONE_Y  = _TOP_H + _INSTR_H              # 86
-_CZONE_H  = _H - _TOP_H - _INSTR_H - 50   # 584
+_W, _H = 1024, 720
+_TOP_H = 64
+_INSTR_H = 22
+_BIN_W = 160
+_CZONE_X = _BIN_W  # 160
+_CZONE_W = _W - 2 * _BIN_W  # 704
+_CZONE_Y = _TOP_H + _INSTR_H  # 86
+_CZONE_H = _H - _TOP_H - _INSTR_H - 50  # 584
 _CONFIRM_Y = _H - 46
 _TOTAL_ROUNDS = 5
 
@@ -92,13 +94,11 @@ class PhaseBScene(Scene):
         return all(c.assigned is not None for c in self._cards)
 
     def _confirm(self) -> None:
-        correct = sum(
-            1 for c in self._cards
-            if (c.assigned == "useful") == c.feature.is_signal
-        )
+        correct = sum(1 for c in self._cards if (c.assigned == "useful") == c.feature.is_signal)
         total = len(self._cards)
         score = compute_round_score(
-            correct, total,
+            correct,
+            total,
             max(0.0, self._timer_remaining),
             self._difficulty,
         )
@@ -111,6 +111,7 @@ class PhaseBScene(Scene):
         self._round_idx += 1
         if self._round_idx >= _TOTAL_ROUNDS:
             from cognitive_data_arcade.games.feature_hunter.phase_c import PhaseCScene
+
             self._done = True
             self._next = PhaseCScene(self._session_score, self._round_results)
         else:
@@ -192,13 +193,17 @@ class PhaseBScene(Scene):
     def _draw_instruction_banner(self, surface: pygame.Surface) -> None:
         pygame.draw.rect(surface, (12, 12, 28), (0, _TOP_H, _W, _INSTR_H))
         txt = get_font(11).render(_INSTR_TEXT, True, _DIM)
-        surface.blit(txt, (_W // 2 - txt.get_width() // 2, _TOP_H + (_INSTR_H - txt.get_height()) // 2))
+        surface.blit(
+            txt, (_W // 2 - txt.get_width() // 2, _TOP_H + (_INSTR_H - txt.get_height()) // 2)
+        )
 
     def _draw_top_bar(self, surface: pygame.Surface) -> None:
         pygame.draw.rect(surface, _PANEL, (0, 0, _W, _TOP_H))
         font_sm = get_font(13)
         font_lg = get_font(20)
-        surface.blit(font_sm.render(f"Runda {self._round_idx + 1} / {_TOTAL_ROUNDS}", True, _ORANGE), (12, 6))
+        surface.blit(
+            font_sm.render(f"Runda {self._round_idx + 1} / {_TOTAL_ROUNDS}", True, _ORANGE), (12, 6)
+        )
         surface.blit(font_lg.render(self._difficulty.name_pl, True, _WHITE), (12, 24))
         score_txt = f"Wynik: {self._session_score}"
         sw = get_font(16).size(score_txt)[0]
@@ -332,7 +337,10 @@ class PhaseBScene(Scene):
 
             if self._difficulty.hints != "none":
                 r_txt = get_font(10).render(f"r={card.feature.correlation:.2f}", True, _DIM)
-                surface.blit(r_txt, (card.home_rect.right - r_txt.get_width() - 4, card.home_rect.bottom - 18))
+                surface.blit(
+                    r_txt,
+                    (card.home_rect.right - r_txt.get_width() - 4, card.home_rect.bottom - 18),
+                )
 
     def _draw_reveal_summary(self, surface: pygame.Surface) -> None:
         if not self._round_results:

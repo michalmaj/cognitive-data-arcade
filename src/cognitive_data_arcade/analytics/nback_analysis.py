@@ -22,8 +22,12 @@ def _probit(p: float) -> float:
 def load_session(csv_path: Path) -> pd.DataFrame:
     df = pd.read_csv(csv_path)
     for col in (
-        "pos_match", "let_match", "key_a_pressed", "key_l_pressed",
-        "pos_correct", "let_correct",
+        "pos_match",
+        "let_match",
+        "key_a_pressed",
+        "key_l_pressed",
+        "pos_correct",
+        "let_correct",
     ):
         df[col] = df[col].astype(str).str.lower().isin(["true", "1"])
     for col in ("rt_a_ms", "rt_l_ms"):
@@ -99,8 +103,7 @@ def build_chart(df: pd.DataFrame, figsize: tuple[float, float] = (7.0, 4.5)) -> 
     if n_varies:
         ax2 = fig.add_subplot(122)
         ax2.set_facecolor("#0d0d1e")
-        ax2.plot(n_by_block.index.tolist(), n_by_block.values.tolist(),
-                 color="#f39c12", marker="o")
+        ax2.plot(n_by_block.index.tolist(), n_by_block.values.tolist(), color="#f39c12", marker="o")
         ax2.set_xlabel("Block", color="#a0a0c0")
         ax2.set_ylabel("N Level", color="#a0a0c0")
         ax2.set_title("N Progression", color="#f0f0f0")

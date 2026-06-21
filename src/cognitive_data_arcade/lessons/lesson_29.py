@@ -1,5 +1,6 @@
 # src/cognitive_data_arcade/lessons/lesson_29.py
 """Lesson 29 -- Recommendation Bubble (filter bubbles and recommendation algorithms)."""
+
 from __future__ import annotations
 
 CONTENT: dict[str, dict[str, list[str]]] = {

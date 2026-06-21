@@ -14,9 +14,7 @@ class Option:
     label_pl: str
     label_en: str
     is_correct: bool
-    consequence_easy_pl: (
-        str  # shown in Easy popup before confirm (empty string if correct)
-    )
+    consequence_easy_pl: str  # shown in Easy popup before confirm (empty string if correct)
     consequence_easy_en: str
 
 
@@ -63,9 +61,7 @@ _s1_d1 = Decision(
     hint_medium_pl=(
         "Pomyśl o tym, co otwiera każdy psycholog bez instalowania dodatkowych narzędzi."
     ),
-    hint_medium_en=(
-        "Think about what every psychologist can open without installing extra tools."
-    ),
+    hint_medium_en=("Think about what every psychologist can open without installing extra tools."),
     report_pl=(
         "CSV to universalny format tekstowy czytelny przez Excela, Pandas i każdy edytor. "
         "Dla danych tabelarycznych z kilkoma tysiącami wierszy nie potrzebujesz "
@@ -123,9 +119,7 @@ _s1_d2 = Decision(
     hint_medium_pl=(
         "Sprawdź, który separator jest domyślnie rozpoznawany przez Pandas i angielski Excel."
     ),
-    hint_medium_en=(
-        "Check which separator Pandas and English-locale Excel recognise by default."
-    ),
+    hint_medium_en=("Check which separator Pandas and English-locale Excel recognise by default."),
     report_pl=(
         "Przecinek i tabulator są domyślnie rozpoznawane przez Pandas (sep=',' i sep='\\t'). "
         "Średnik bywa domyślny w europejskim Excelu, ale wymaga jawnego podania w bibliotekach."
@@ -251,12 +245,8 @@ _s1_d4 = Decision(
         "Files will be stored in a shared folder on the lab drive. "
         "You need a name that uniquely identifies the session."
     ),
-    hint_medium_pl=(
-        "Dobra nazwa pliku powinna zawierać datę i identyfikator uczestnika."
-    ),
-    hint_medium_en=(
-        "A good file name should include the date and participant identifier."
-    ),
+    hint_medium_pl=("Dobra nazwa pliku powinna zawierać datę i identyfikator uczestnika."),
+    hint_medium_en=("A good file name should include the date and participant identifier."),
     report_pl=(
         "Schemat {data}_{pid}.csv pozwala natychmiast zobaczyć, "
         "kiedy i dla kogo zebrano dane, i łatwiej sortować pliki chronologicznie."
@@ -286,9 +276,7 @@ _s1_d4 = Decision(
             label_pl="exp_{losowy}.csv",
             label_en="exp_{random}.csv",
             is_correct=False,
-            consequence_easy_pl=(
-                "Losowa nazwa — nie wiadomo kto i kiedy, trudno sortować."
-            ),
+            consequence_easy_pl=("Losowa nazwa — nie wiadomo kto i kiedy, trudno sortować."),
             consequence_easy_en=("Random name — unknown who and when, hard to sort."),
         ),
     ),
@@ -329,9 +317,7 @@ _s1_d5 = Decision(
             label_pl="Usuń wiersz",
             label_en="Delete row",
             is_correct=False,
-            consequence_easy_pl=(
-                "Utrata danych bez śladu — nie wiesz ile prób usunięto."
-            ),
+            consequence_easy_pl=("Utrata danych bez śladu — nie wiesz ile prób usunięto."),
             consequence_easy_en=(
                 "Data loss without trace — you don't know how many trials were removed."
             ),
@@ -340,9 +326,7 @@ _s1_d5 = Decision(
             label_pl="Zostaw bez zmian",
             label_en="Keep as-is",
             is_correct=False,
-            consequence_easy_pl=(
-                "Zachowujesz skontaminowane dane — zniekształca średnie RT."
-            ),
+            consequence_easy_pl=("Zachowujesz skontaminowane dane — zniekształca średnie RT."),
             consequence_easy_en=("You keep contaminated data — distorts mean RT."),
         ),
     ),
@@ -361,12 +345,8 @@ _s1_d6 = Decision(
         "The actual_response and reaction_time_ms fields are empty. "
         "You need to decide what value to write in the CSV."
     ),
-    hint_medium_pl=(
-        "Sprawdź, która wartość Pandas interpretuje jako brak liczby (a nie tekst)."
-    ),
-    hint_medium_en=(
-        "Check which value Pandas interprets as a missing number (not as text)."
-    ),
+    hint_medium_pl=("Sprawdź, która wartość Pandas interpretuje jako brak liczby (a nie tekst)."),
+    hint_medium_en=("Check which value Pandas interprets as a missing number (not as text)."),
     report_pl=(
         "NaN jest standardem w Pandas dla brakujących wartości numerycznych. "
         "Pusty string jest czytany jako tekst, NULL nie jest rozpoznawany wszędzie, "
@@ -389,32 +369,22 @@ _s1_d6 = Decision(
             label_pl="Pusty string",
             label_en="Empty string",
             is_correct=False,
-            consequence_easy_pl=(
-                "Pusty string — Pandas czyta go jako tekst, nie liczbę."
-            ),
-            consequence_easy_en=(
-                "Empty string — Pandas reads it as text, not a number."
-            ),
+            consequence_easy_pl=("Pusty string — Pandas czyta go jako tekst, nie liczbę."),
+            consequence_easy_en=("Empty string — Pandas reads it as text, not a number."),
         ),
         Option(
             label_pl="NULL",
             label_en="NULL",
             is_correct=False,
-            consequence_easy_pl=(
-                "NULL nie jest rozpoznawany przez wszystkie biblioteki Pythona."
-            ),
+            consequence_easy_pl=("NULL nie jest rozpoznawany przez wszystkie biblioteki Pythona."),
             consequence_easy_en=("NULL: not recognised by all Python libraries."),
         ),
         Option(
             label_pl="-1",
             label_en="-1",
             is_correct=False,
-            consequence_easy_pl=(
-                "Wartość -1 nieodróżnialna od prawdziwego RT bez dokumentacji."
-            ),
-            consequence_easy_en=(
-                "-1: indistinguishable from real RT without documentation."
-            ),
+            consequence_easy_pl=("Wartość -1 nieodróżnialna od prawdziwego RT bez dokumentacji."),
+            consequence_easy_en=("-1: indistinguishable from real RT without documentation."),
         ),
     ),
 )
@@ -484,9 +454,7 @@ _s2_d1 = Decision(
             label_en="JSON",
             is_correct=False,
             consequence_easy_pl=("JSON to zbędna złożoność dla kilkuset wierszy RT."),
-            consequence_easy_en=(
-                "JSON: unnecessary complexity for a few hundred RT rows."
-            ),
+            consequence_easy_en=("JSON: unnecessary complexity for a few hundred RT rows."),
         ),
         Option(
             label_pl="HDF5",
@@ -518,12 +486,8 @@ _s2_d2 = Decision(
         "You will analyse the data in MNE-Python. "
         "Choose the storage format for the raw signal."
     ),
-    hint_medium_pl=(
-        "Oszacuj rozmiar danych i sprawdź, który format oferuje kompresję."
-    ),
-    hint_medium_en=(
-        "Estimate the data size and check which format offers compression."
-    ),
+    hint_medium_pl=("Oszacuj rozmiar danych i sprawdź, który format oferuje kompresję."),
+    hint_medium_en=("Estimate the data size and check which format offers compression."),
     report_pl=(
         "HDF5 kompresuje dane i umożliwia szybki dostęp do fragmentów sygnału. "
         "MNE-Python czyta i zapisuje HDF5. "
@@ -549,17 +513,13 @@ _s2_d2 = Decision(
             consequence_easy_pl=(
                 "Około 10 GB nieskompresowanego tekstu — parsowanie trwa godzinami."
             ),
-            consequence_easy_en=(
-                "Around 10 GB of uncompressed text — parsing takes hours."
-            ),
+            consequence_easy_en=("Around 10 GB of uncompressed text — parsing takes hours."),
         ),
         Option(
             label_pl="JSON",
             label_en="JSON",
             is_correct=False,
-            consequence_easy_pl=(
-                "JSON jest jeszcze większy niż CSV dla danych szeregowych."
-            ),
+            consequence_easy_pl=("JSON jest jeszcze większy niż CSV dla danych szeregowych."),
             consequence_easy_en=("JSON: even larger than CSV for time-series data."),
         ),
         Option(
@@ -618,9 +578,7 @@ _s2_d3 = Decision(
             consequence_easy_pl=(
                 "Dryfowanie zegarów niszczy wyrównanie ERP — dane będą bezużyteczne."
             ),
-            consequence_easy_en=(
-                "Clock drift destroys ERP alignment — data will be useless."
-            ),
+            consequence_easy_en=("Clock drift destroys ERP alignment — data will be useless."),
         ),
     ),
 )
@@ -661,21 +619,15 @@ _s2_d4 = Decision(
             label_pl="128 Hz",
             label_en="128 Hz",
             is_correct=False,
-            consequence_easy_pl=(
-                "128 Hz jest niedostateczne do rozróżnienia P100 od N200."
-            ),
+            consequence_easy_pl=("128 Hz jest niedostateczne do rozróżnienia P100 od N200."),
             consequence_easy_en=("128 Hz: insufficient to distinguish P100 from N200."),
         ),
         Option(
             label_pl="256 Hz",
             label_en="256 Hz",
             is_correct=False,
-            consequence_easy_pl=(
-                "256 Hz to ryzyko aliasingu dla szybkich komponentów."
-            ),
-            consequence_easy_en=(
-                "256 Hz: borderline — aliasing risk for fast components."
-            ),
+            consequence_easy_pl=("256 Hz to ryzyko aliasingu dla szybkich komponentów."),
+            consequence_easy_en=("256 Hz: borderline — aliasing risk for fast components."),
         ),
         Option(
             label_pl="1000 Hz",
@@ -709,12 +661,8 @@ _s2_d5 = Decision(
         "You have 30 participants. "
         "You must decide what to store from the video recording."
     ),
-    hint_medium_pl=(
-        "Oszacuj łącznie, ile miejsca zajmie pełne wideo dla wszystkich uczestników."
-    ),
-    hint_medium_en=(
-        "Estimate the total storage needed for full video across all participants."
-    ),
+    hint_medium_pl=("Oszacuj łącznie, ile miejsca zajmie pełne wideo dla wszystkich uczestników."),
+    hint_medium_en=("Estimate the total storage needed for full video across all participants."),
     report_pl=(
         "Klatki kluczowe lub tylko metadane (czas mrugniecia, keypoint twarzy) "
         "redukuja rozmiar z ~50 GB do kilku MB per uczestnika. "
@@ -795,9 +743,7 @@ _s2_d6 = Decision(
             label_pl="Osobny CSV",
             label_en="Separate CSV",
             is_correct=False,
-            consequence_easy_pl=(
-                "Jeden plik — jeśli uszkodzony, tracisz wszystkie markery."
-            ),
+            consequence_easy_pl=("Jeden plik — jeśli uszkodzony, tracisz wszystkie markery."),
             consequence_easy_en=("Single file — if corrupted, you lose all markers."),
         ),
         Option(
@@ -811,9 +757,7 @@ _s2_d6 = Decision(
             label_pl="Żadne",
             label_en="None",
             is_correct=False,
-            consequence_easy_pl=(
-                "Bez markerów niemożliwe wyrównanie EEG z bodźcami po fakcie."
-            ),
+            consequence_easy_pl=("Bez markerów niemożliwe wyrównanie EEG z bodźcami po fakcie."),
             consequence_easy_en=(
                 "Without markers it's impossible to align EEG with stimuli after the fact."
             ),
@@ -834,9 +778,7 @@ _s2_d7 = Decision(
         "That's around 100 files in total. "
         "Choose a directory organisation scheme."
     ),
-    hint_medium_pl=(
-        "Pomyśl o tym, jak znaleźć wszystkie pliki konkretnego uczestnika za 2 lata."
-    ),
+    hint_medium_pl=("Pomyśl o tym, jak znaleźć wszystkie pliki konkretnego uczestnika za 2 lata."),
     hint_medium_en=(
         "Think about how to find all files for a specific participant two years from now."
     ),
@@ -921,9 +863,7 @@ _s3_d1 = Decision(
     hint_medium_pl=(
         "Sprawdź, który format EEG jest standardem w oprogramowaniu klinicznym na całym świecie."
     ),
-    hint_medium_en=(
-        "Check which EEG format is the standard in clinical software worldwide."
-    ),
+    hint_medium_en=("Check which EEG format is the standard in clinical software worldwide."),
     report_pl=(
         "EDF/BDF to międzynarodowy standard kliniczny wspierany przez wszystkie systemy EEG. "
         "Zawiera metadane kliniczne i jest czytelny przez każde oprogramowanie do analizy EEG."
@@ -944,18 +884,14 @@ _s3_d1 = Decision(
             label_pl="CSV",
             label_en="CSV",
             is_correct=False,
-            consequence_easy_pl=(
-                "CSV traci metadane kliniczne i rozdzielczość czasowa."
-            ),
+            consequence_easy_pl=("CSV traci metadane kliniczne i rozdzielczość czasowa."),
             consequence_easy_en=("CSV: loses clinical metadata and time resolution."),
         ),
         Option(
             label_pl="HDF5",
             label_en="HDF5",
             is_correct=False,
-            consequence_easy_pl=(
-                "HDF5 nie jest obsługiwany przez kliniczne oprogramowanie EEG."
-            ),
+            consequence_easy_pl=("HDF5 nie jest obsługiwany przez kliniczne oprogramowanie EEG."),
             consequence_easy_en=("HDF5: not supported by clinical EEG software."),
         ),
         Option(
@@ -1008,9 +944,7 @@ _s3_d2 = Decision(
             label_pl="Brak standaryzacji",
             label_en="None",
             is_correct=False,
-            consequence_easy_pl=(
-                "Każdy szpital ma inne nazwy kolumn -> niemożliwa meta-analiza."
-            ),
+            consequence_easy_pl=("Każdy szpital ma inne nazwy kolumn -> niemożliwa meta-analiza."),
             consequence_easy_en=(
                 "Each hospital has its own column names -> impossible meta-analysis."
             ),
@@ -1041,9 +975,7 @@ _s3_d3 = Decision(
     hint_medium_pl=(
         "Dobra nazwa pliku powinna być jednoznaczna między ośrodkami i czytelna po 5 latach."
     ),
-    hint_medium_en=(
-        "A good file name should be unique across sites and readable after 5 years."
-    ),
+    hint_medium_en=("A good file name should be unique across sites and readable after 5 years."),
     report_pl=(
         "Standard BIDS definiuje nazwy w postaci sub-001_task-rest_eeg.edf. "
         "Ten schemat jest jednoznaczny, sortowalny i zrozumialy dla wszystkich użytkowników BIDS."
@@ -1065,18 +997,14 @@ _s3_d3 = Decision(
             label_en="patient_001.edf",
             is_correct=False,
             consequence_easy_pl=("Kolizje między ośrodkami i nieczytelne po 5 latach."),
-            consequence_easy_en=(
-                "Collides between sites and unreadable after 5 years."
-            ),
+            consequence_easy_en=("Collides between sites and unreadable after 5 years."),
         ),
         Option(
             label_pl="{ośrodek}_{sub}_{data}.edf",
             label_en="{site}_{sub}_{date}.edf",
             is_correct=False,
             consequence_easy_pl=("Własna konwencja — inne ośrodki będą miały inne."),
-            consequence_easy_en=(
-                "Own convention — other sites will have different ones."
-            ),
+            consequence_easy_en=("Own convention — other sites will have different ones."),
         ),
     ),
 )
@@ -1094,12 +1022,8 @@ _s3_d4 = Decision(
         "You must decide which metadata to link with EEG data "
         "and how to store it."
     ),
-    hint_medium_pl=(
-        "Pomyśl o RODO: jakie dane mogą być przechowywane razem z sygnałami EEG?"
-    ),
-    hint_medium_en=(
-        "Think about GDPR: which data can be stored together with EEG signals?"
-    ),
+    hint_medium_pl=("Pomyśl o RODO: jakie dane mogą być przechowywane razem z sygnałami EEG?"),
+    hint_medium_en=("Think about GDPR: which data can be stored together with EEG signals?"),
     report_pl=(
         "Sidecar JSON z ID + wiek + płeć jest zgodny z BIDS i RODO. "
         "Pełna dokumentacja kliniczna w pliku EEG naruszałaby RODO — "
@@ -1125,9 +1049,7 @@ _s3_d4 = Decision(
             consequence_easy_pl=(
                 "Brak metadanych demograficznych — niemożliwa analiza wg wieku/płci."
             ),
-            consequence_easy_en=(
-                "No demographic metadata — impossible age/gender analysis."
-            ),
+            consequence_easy_en=("No demographic metadata — impossible age/gender analysis."),
         ),
         Option(
             label_pl="Pełna dokumentacja kliniczna w EDF",
@@ -1153,9 +1075,7 @@ _s3_d5 = Decision(
         "in a multi-site meta-analysis."
     ),
     hint_medium_pl=("Zastanów sie, który format łatwo parsuje skrypt Pythona bez NLP."),
-    hint_medium_en=(
-        "Think about which format a Python script can parse easily without NLP."
-    ),
+    hint_medium_en=("Think about which format a Python script can parse easily without NLP."),
     report_pl=(
         "Ustrukturyzowany JSON lub HL7 FHIR umożliwiają automatyczne przetwarzanie. "
         "Tekst w Wordzie lub PDF wymaga drogiego NLP lub ręcznego parsowania."
@@ -1183,12 +1103,8 @@ _s3_d5 = Decision(
             label_pl="Wolny tekst Word",
             label_en="Free text Word",
             is_correct=False,
-            consequence_easy_pl=(
-                "Niemożliwe automatyczne przetwarzanie bez drogiego NLP."
-            ),
-            consequence_easy_en=(
-                "Impossible automated processing without expensive NLP."
-            ),
+            consequence_easy_pl=("Niemożliwe automatyczne przetwarzanie bez drogiego NLP."),
+            consequence_easy_en=("Impossible automated processing without expensive NLP."),
         ),
         Option(
             label_pl="PDF",
@@ -1213,9 +1129,7 @@ _s3_d6 = Decision(
         "acquisition software updates. "
         "You must decide how to track versions of data files."
     ),
-    hint_medium_pl=(
-        "Pomyśl, jak zachować historię zmian bez nadpisywania oryginalnych plików."
-    ),
+    hint_medium_pl=("Pomyśl, jak zachować historię zmian bez nadpisywania oryginalnych plików."),
     hint_medium_en=(
         "Think about how to keep a history of changes without overwriting original files."
     ),
@@ -1241,9 +1155,7 @@ _s3_d6 = Decision(
             label_pl="Brak wersjonowania",
             label_en="None",
             is_correct=False,
-            consequence_easy_pl=(
-                "Nie wiadomo co się zmieniło i kiedy -> niereprodukowalne."
-            ),
+            consequence_easy_pl=("Nie wiadomo co się zmieniło i kiedy -> niereprodukowalne."),
             consequence_easy_en=("Unknown what changed and when -> irreproducible."),
         ),
         Option(
@@ -1257,9 +1169,7 @@ _s3_d6 = Decision(
             label_pl="Git LFS",
             label_en="Git LFS",
             is_correct=False,
-            consequence_easy_pl=(
-                "Git LFS wymaga wiedzy o gicie — nieodpowiednie dla klinicystów."
-            ),
+            consequence_easy_pl=("Git LFS wymaga wiedzy o gicie — nieodpowiednie dla klinicystów."),
             consequence_easy_en=(
                 "Git LFS: requires git knowledge — not appropriate for clinicians."
             ),

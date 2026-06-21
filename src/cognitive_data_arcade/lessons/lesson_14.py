@@ -1,4 +1,5 @@
 """Lesson 14 -- Correlation & Causation."""
+
 from __future__ import annotations
 
 CONTENT: dict[str, dict[str, list[str]]] = {

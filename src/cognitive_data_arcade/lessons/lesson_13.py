@@ -1,5 +1,6 @@
 # src/cognitive_data_arcade/lessons/lesson_13.py
 """Lesson 13 -- Distributions and Variability."""
+
 from __future__ import annotations
 
 CONTENT: dict[str, dict[str, list[str]]] = {

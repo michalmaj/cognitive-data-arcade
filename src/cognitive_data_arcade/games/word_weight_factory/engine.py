@@ -73,10 +73,7 @@ class WeightEngine:
             df = sum(1 for i in range(N) if bow[i][j] > 0)
             idf.append(math.log((N + 1) / (df + 1)))
 
-        tfidf: list[list[float]] = [
-            [tf[i][j] * idf[j] for j in range(V)]
-            for i in range(N)
-        ]
+        tfidf: list[list[float]] = [[tf[i][j] * idf[j] for j in range(V)] for i in range(N)]
 
         return WeightMatrix(
             vocab=vocab,

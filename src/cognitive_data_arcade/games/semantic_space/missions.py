@@ -2,18 +2,22 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from cognitive_data_arcade.games.semantic_space.word_data import ANALOGIES, BRIDGE_WORDS, SIMILARITIES
+from cognitive_data_arcade.games.semantic_space.word_data import (
+    ANALOGIES,
+    BRIDGE_WORDS,
+    SIMILARITIES,
+)
 
 
 @dataclass
 class Mission:
-    type: str               # "neighbors" | "odd_one_out" | "bridge" | "analogy"
-    target: str             # WORDS key; "" for analogy
-    answers: list[str]      # correct word key(s); display string for analogy
+    type: str  # "neighbors" | "odd_one_out" | "bridge" | "analogy"
+    target: str  # WORDS key; "" for analogy
+    answers: list[str]  # correct word key(s); display string for analogy
     distractors: list[str]  # wrong options: WORDS keys or display strings
     hint_pl: str
     hint_en: str
-    difficulty: int         # 1=easy, 2=medium, 3=hard
+    difficulty: int  # 1=easy, 2=medium, 3=hard
     formula: str = field(default="")  # "A – B + C = ?" for analogy missions only
 
 
@@ -63,7 +67,7 @@ def build_session() -> list[Mission]:
         # 5. bridge medium — wynik (sport + nauka)
         Mission(
             type="bridge",
-            target=BRIDGE_WORDS[0][0],   # "wynik"
+            target=BRIDGE_WORDS[0][0],  # "wynik"
             answers=[BRIDGE_WORDS[0][0]],
             distractors=[],
             hint_pl="Szukaj slowa, ktore pasuje do dwoch roznych klastrow jednoczesnie.",
@@ -73,7 +77,7 @@ def build_session() -> list[Mission]:
         # 6. bridge hard — druzyna (sport + emocje)
         Mission(
             type="bridge",
-            target=BRIDGE_WORDS[3][0],   # "druzyna"
+            target=BRIDGE_WORDS[3][0],  # "druzyna"
             answers=[BRIDGE_WORDS[3][0]],
             distractors=[],
             hint_pl="To slowo laczy dyscypline sportu z dynamika emocji grupowych.",
@@ -84,7 +88,7 @@ def build_session() -> list[Mission]:
         Mission(
             type="analogy",
             target="",
-            answers=[ANALOGIES[1][3]],      # "kotek"
+            answers=[ANALOGIES[1][3]],  # "kotek"
             distractors=list(ANALOGIES[1][4]),
             hint_pl=ANALOGIES[1][5],
             hint_en=ANALOGIES[1][6],
@@ -95,7 +99,7 @@ def build_session() -> list[Mission]:
         Mission(
             type="analogy",
             target="",
-            answers=[ANALOGIES[3][3]],      # "zal"
+            answers=[ANALOGIES[3][3]],  # "zal"
             distractors=list(ANALOGIES[3][4]),
             hint_pl=ANALOGIES[3][5],
             hint_en=ANALOGIES[3][6],

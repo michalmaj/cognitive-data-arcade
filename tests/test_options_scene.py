@@ -5,7 +5,7 @@ import pytest
 
 from cognitive_data_arcade.engine import audio
 from cognitive_data_arcade.engine.i18n import EN
-from cognitive_data_arcade.profile.manager import Profile, ProfileManager
+from cognitive_data_arcade.profile.manager import ProfileManager
 from cognitive_data_arcade.ui.options_scene import OptionsScene
 
 

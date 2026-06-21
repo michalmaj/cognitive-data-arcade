@@ -10,8 +10,8 @@ _PANEL_W = 680
 _PANEL_H = 260
 _BG_PANEL = (18, 18, 42)
 _BORDER = (42, 42, 80)
-_COL_NAME = (139, 233, 253)   # #8be9fd
-_COL_DESC = (170, 170, 170)   # #aaaaaa
+_COL_NAME = (139, 233, 253)  # #8be9fd
+_COL_DESC = (170, 170, 170)  # #aaaaaa
 _TITLE_COLOR = (240, 240, 240)
 _DIM = (100, 100, 140)
 
@@ -33,7 +33,7 @@ def draw_legend_overlay(
     py = (h - _PANEL_H) // 2
 
     pygame.draw.rect(surface, _BG_PANEL, (px, py, _PANEL_W, _PANEL_H), border_radius=8)
-    pygame.draw.rect(surface, _BORDER,   (px, py, _PANEL_W, _PANEL_H), 1, border_radius=8)
+    pygame.draw.rect(surface, _BORDER, (px, py, _PANEL_W, _PANEL_H), 1, border_radius=8)
 
     # Title
     title_font = get_font(30)
@@ -63,6 +63,7 @@ def draw_legend_overlay(
 
     # Footer
     close_font = get_font(20)
-    cs = close_font.render("[L] " + ("zamknij" if strings.language == "pl" else "close"),
-                           True, _DIM)
+    cs = close_font.render(
+        "[L] " + ("zamknij" if strings.language == "pl" else "close"), True, _DIM
+    )
     surface.blit(cs, (px + _PANEL_W // 2 - cs.get_width() // 2, py + _PANEL_H - 28))

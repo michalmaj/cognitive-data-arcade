@@ -7,10 +7,10 @@ from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 
 _W, _H = 1024, 720
-_BG     = (15, 15, 35)
-_PANEL  = (18, 18, 42)
-_WHITE  = (240, 240, 240)
-_DIM    = (120, 120, 160)
+_BG = (15, 15, 35)
+_PANEL = (18, 18, 42)
+_WHITE = (240, 240, 240)
+_DIM = (120, 120, 160)
 _PURPLE = (155, 89, 182)
 
 _LINES = [
@@ -37,10 +37,16 @@ class PhaseIntroScene(Scene):
             self._advance()
 
     def _advance(self) -> None:
-        from cognitive_data_arcade.games.emotion_classifier.sentences import SENTENCE_BANK, draw_session
+        from cognitive_data_arcade.games.emotion_classifier.sentences import (
+            SENTENCE_BANK,
+            draw_session,
+        )
         from cognitive_data_arcade.games.emotion_classifier.phase_round import PhaseRoundScene
+
         sentences = draw_session(SENTENCE_BANK)
-        self._next = PhaseRoundScene(sentences=sentences, round_idx=0, session_score=0, round_results=[])
+        self._next = PhaseRoundScene(
+            sentences=sentences, round_idx=0, session_score=0, round_results=[]
+        )
         self._done = True
 
     def update(self, dt_ms: float = 0.0) -> None:

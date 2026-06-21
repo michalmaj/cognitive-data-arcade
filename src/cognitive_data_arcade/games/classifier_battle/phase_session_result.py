@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pygame
@@ -9,16 +10,16 @@ from cognitive_data_arcade.engine.chart import figure_to_surface
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 
-_BG    = (15, 15, 35)
+_BG = (15, 15, 35)
 _PANEL = (18, 18, 42)
 _WHITE = (240, 240, 240)
-_DIM   = (120, 120, 160)
+_DIM = (120, 120, 160)
 _GREEN = (39, 174, 96)
 _ORANGE = (243, 156, 18)
-_RED   = (231, 76, 60)
-_BLUE  = (52, 152, 219)
+_RED = (231, 76, 60)
+_BLUE = (52, 152, 219)
 _FIG_BG = "#0f0f23"
-_AX_BG  = "#1a1a3e"
+_AX_BG = "#1a1a3e"
 _W, _H = 1024, 720
 
 
@@ -56,7 +57,10 @@ class PhaseSessionResultScene(Scene):
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             btn = pygame.Rect(_W // 2 - 130, _H - 62, 260, 44)
             if btn.collidepoint(event.pos):
-                from cognitive_data_arcade.games.classifier_battle.phase_intro import PhaseIntroScene
+                from cognitive_data_arcade.games.classifier_battle.phase_intro import (
+                    PhaseIntroScene,
+                )
+
                 self._next = PhaseIntroScene()
                 self._done = True
 
@@ -70,7 +74,11 @@ class PhaseSessionResultScene(Scene):
         surface.blit(title, (_W // 2 - title.get_width() // 2, 14))
 
         # Score
-        score_col = _GREEN if self._session_score >= 400 else (_ORANGE if self._session_score >= 200 else _RED)
+        score_col = (
+            _GREEN
+            if self._session_score >= 400
+            else (_ORANGE if self._session_score >= 200 else _RED)
+        )
         score_surf = get_font(36).render(str(self._session_score), True, score_col)
         surface.blit(score_surf, (_W // 2 - score_surf.get_width() // 2, 68))
         pts = get_font(14).render("punktów", True, _DIM)
@@ -85,7 +93,8 @@ class PhaseSessionResultScene(Scene):
         header_font = get_font(13)
         hdr = header_font.render(
             "  Runda   Scenariusz              Twój wynik   Najlepszy alg.   Różnica",
-            True, _DIM,
+            True,
+            _DIM,
         )
         surface.blit(hdr, (40, y))
         y += 20
@@ -99,7 +108,8 @@ class PhaseSessionResultScene(Scene):
             diff_col = _GREEN if diff >= 0 else _RED
             row = row_font.render(
                 f"    {r['round_idx'] + 1}       {r['scenario_name']:<20}   {r['player_acc']:.0%}            {best_name} {best_acc:.0%}",
-                True, _WHITE,
+                True,
+                _WHITE,
             )
             surface.blit(row, (40, y))
             diff_surf = row_font.render(diff_str, True, diff_col)

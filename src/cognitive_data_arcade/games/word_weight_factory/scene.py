@@ -14,30 +14,30 @@ from cognitive_data_arcade.games.word_weight_factory.step_tf import StepTfScene
 from cognitive_data_arcade.games.word_weight_factory.step_idf import StepIdfScene
 from cognitive_data_arcade.games.word_weight_factory.step_tfidf import StepTfidfScene
 
-_W, _H      = 1024, 720
-_PIPE_H     = 48        # pipeline bar height
-_PANEL_W    = 220       # CorpusPanel width
-_STEP_H     = _H - _PIPE_H   # 672
-_STEP_W     = _W - _PANEL_W  # 804
+_W, _H = 1024, 720
+_PIPE_H = 48  # pipeline bar height
+_PANEL_W = 220  # CorpusPanel width
+_STEP_H = _H - _PIPE_H  # 672
+_STEP_W = _W - _PANEL_W  # 804
 
-_BG     = (15, 15, 35)
+_BG = (15, 15, 35)
 _NAV_BG = (12, 12, 28)
-_WHITE  = (240, 240, 240)
-_DIM    = (120, 120, 160)
-_AMBER  = (243, 156, 18)
+_WHITE = (240, 240, 240)
+_DIM = (120, 120, 160)
+_AMBER = (243, 156, 18)
 _PURPLE = (155, 89, 182)
 
 _STEP_NAMES = ["KORPUS", "BoW", "TF", "IDF", "TF-IDF"]
-_N_STEPS    = len(_STEP_NAMES)
+_N_STEPS = len(_STEP_NAMES)
 
 
 class WordWeightFactoryScene(Scene):
     def __init__(self) -> None:
-        self._done  = False
+        self._done = False
         self._next: Scene | None = None
-        self._step  = 0
+        self._step = 0
 
-        self._state  = CorpusState()
+        self._state = CorpusState()
         self._engine = WeightEngine()
         self._matrix = self._recompute()
 
@@ -95,8 +95,12 @@ class WordWeightFactoryScene(Scene):
                 return
 
         # Current step scene (offset: y -= _PIPE_H, x -= _PANEL_W)
-        if event.type in (pygame.MOUSEBUTTONDOWN, pygame.MOUSEBUTTONUP,
-                          pygame.MOUSEMOTION, pygame.MOUSEWHEEL):
+        if event.type in (
+            pygame.MOUSEBUTTONDOWN,
+            pygame.MOUSEBUTTONUP,
+            pygame.MOUSEMOTION,
+            pygame.MOUSEWHEEL,
+        ):
             step_event = _offset_mouse(event, dx=-_PANEL_W, dy=-_PIPE_H)
             self._steps[self._step].handle_event(step_event)
         else:
@@ -131,7 +135,7 @@ class WordWeightFactoryScene(Scene):
             rect = pygame.Rect(tx, 8, tw, _PIPE_H - 16)
             self._step_label_rects.append(rect)
             active = i == self._step
-            bg     = (50, 50, 90) if active else _NAV_BG
+            bg = (50, 50, 90) if active else _NAV_BG
             border = _AMBER if active else (40, 40, 70)
             pygame.draw.rect(pipe_surf, bg, rect, border_radius=4)
             pygame.draw.rect(pipe_surf, border, rect, 1, border_radius=4)
@@ -146,8 +150,7 @@ class WordWeightFactoryScene(Scene):
                 tx += 18
 
         hint = get_font(11).render("LEWO / PRAWO = zmien krok", True, _DIM)
-        pipe_surf.blit(hint, (_W - hint.get_width() - 12,
-                               (_PIPE_H - hint.get_height()) // 2))
+        pipe_surf.blit(hint, (_W - hint.get_width() - 12, (_PIPE_H - hint.get_height()) // 2))
         surface.blit(pipe_surf, (0, 0))
 
         # -- Content area (below pipeline bar) --------------------------------

@@ -2,6 +2,7 @@ from __future__ import annotations
 import pytest
 import pygame
 
+
 @pytest.fixture(autouse=True)
 def pygame_init():
     pygame.init()
@@ -15,7 +16,8 @@ def _make_event(etype: int, **kw) -> pygame.event.Event:
 
 
 def test_no_popup_initially():
-    from cognitive_data_arcade.engine.context_popup import ContextInfo, ContextPopup
+    from cognitive_data_arcade.engine.context_popup import ContextPopup
+
     popup = ContextPopup()
     surf = pygame.display.get_surface()
     assert surf is not None
@@ -24,6 +26,7 @@ def test_no_popup_initially():
 
 def test_right_click_inside_registered_rect_shows_popup():
     from cognitive_data_arcade.engine.context_popup import ContextInfo, ContextPopup
+
     popup = ContextPopup()
     rect = pygame.Rect(100, 100, 200, 50)
     info = ContextInfo(title="Test", body="Body text", impact="Impact text")
@@ -37,6 +40,7 @@ def test_right_click_inside_registered_rect_shows_popup():
 
 def test_right_click_outside_does_not_show_popup():
     from cognitive_data_arcade.engine.context_popup import ContextInfo, ContextPopup
+
     popup = ContextPopup()
     rect = pygame.Rect(100, 100, 200, 50)
     info = ContextInfo(title="Test", body="Body", impact="Impact")
@@ -49,6 +53,7 @@ def test_right_click_outside_does_not_show_popup():
 
 def test_esc_dismisses_popup():
     from cognitive_data_arcade.engine.context_popup import ContextInfo, ContextPopup
+
     popup = ContextPopup()
     rect = pygame.Rect(100, 100, 200, 50)
     popup.register(rect, ContextInfo(title="T", body="B", impact="I"))
@@ -61,6 +66,7 @@ def test_esc_dismisses_popup():
 
 def test_left_click_dismisses_popup():
     from cognitive_data_arcade.engine.context_popup import ContextInfo, ContextPopup
+
     popup = ContextPopup()
     rect = pygame.Rect(100, 100, 200, 50)
     popup.register(rect, ContextInfo(title="T", body="B", impact="I"))
@@ -71,6 +77,7 @@ def test_left_click_dismisses_popup():
 
 def test_clear_removes_all_registrations():
     from cognitive_data_arcade.engine.context_popup import ContextInfo, ContextPopup
+
     popup = ContextPopup()
     rect = pygame.Rect(100, 100, 200, 50)
     popup.register(rect, ContextInfo(title="T", body="B", impact="I"))
@@ -81,6 +88,7 @@ def test_clear_removes_all_registrations():
 
 def test_second_right_click_replaces_popup():
     from cognitive_data_arcade.engine.context_popup import ContextInfo, ContextPopup
+
     popup = ContextPopup()
     r1 = pygame.Rect(10, 10, 100, 40)
     r2 = pygame.Rect(200, 10, 100, 40)

@@ -9,10 +9,10 @@ DATA_DIR = Path(__file__).resolve().parents[4] / "data" / "generated"
 
 REQUIRED_GAMES: dict[str, str] = {
     "reaction_time": "L02 Reaction Time Lab",
-    "stroop":        "L07 Stroop Challenge",
-    "flanker":       "L08 Flanker Arena",
-    "gono":          "L09 Go/No-Go Guard",
-    "nback":         "L10 N-Back Memory Grid",
+    "stroop": "L07 Stroop Challenge",
+    "flanker": "L08 Flanker Arena",
+    "gono": "L09 Go/No-Go Guard",
+    "nback": "L10 N-Back Memory Grid",
 }
 
 # Hard-coded reference RTs (ms) for percentile computation.
@@ -22,10 +22,7 @@ _RT_REFERENCE = [155, 175, 190, 205, 220, 235, 250, 270, 295, 330, 380, 450, 560
 
 def check_prerequisites(data_dir: Path = DATA_DIR) -> dict[str, bool]:
     """Return {task_name: has_data} for each required game."""
-    return {
-        name: any((data_dir / name).glob("*.csv"))
-        for name in REQUIRED_GAMES
-    }
+    return {name: any((data_dir / name).glob("*.csv")) for name in REQUIRED_GAMES}
 
 
 def _latest_csv(task_dir: Path) -> Path:
@@ -47,27 +44,44 @@ def load_profile(data_dir: Path = DATA_DIR) -> ProfileData:
     """Read most recent CSV per game, compute 5 cognitive metrics."""
     # Reaction time baseline
     rt_rows = _read_rows(_latest_csv(data_dir / "reaction_time"))
-    rt_times = [float(r["reaction_time_ms"]) for r in rt_rows
-                if r.get("correct") == "True" and float(r.get("reaction_time_ms", 0)) > 0]
+    rt_times = [
+        float(r["reaction_time_ms"])
+        for r in rt_rows
+        if r.get("correct") == "True" and float(r.get("reaction_time_ms", 0)) > 0
+    ]
     rt_median = statistics.median(rt_times) if rt_times else 250.0
 
     # Stroop effect = median_incongruent - median_congruent
     stroop_rows = _read_rows(_latest_csv(data_dir / "stroop"))
-    s_cong = [float(r["reaction_time_ms"]) for r in stroop_rows
-              if r.get("condition") == "congruent" and r.get("correct") == "True"]
-    s_incong = [float(r["reaction_time_ms"]) for r in stroop_rows
-                if r.get("condition") == "incongruent" and r.get("correct") == "True"]
-    stroop_effect = (statistics.median(s_incong) - statistics.median(s_cong)
-                     ) if s_cong and s_incong else 0.0
+    s_cong = [
+        float(r["reaction_time_ms"])
+        for r in stroop_rows
+        if r.get("condition") == "congruent" and r.get("correct") == "True"
+    ]
+    s_incong = [
+        float(r["reaction_time_ms"])
+        for r in stroop_rows
+        if r.get("condition") == "incongruent" and r.get("correct") == "True"
+    ]
+    stroop_effect = (
+        (statistics.median(s_incong) - statistics.median(s_cong)) if s_cong and s_incong else 0.0
+    )
 
     # Flanker effect = median_incongruent - median_congruent
     flanker_rows = _read_rows(_latest_csv(data_dir / "flanker"))
-    f_cong = [float(r["reaction_time_ms"]) for r in flanker_rows
-              if r.get("condition") == "congruent" and r.get("correct") == "True"]
-    f_incong = [float(r["reaction_time_ms"]) for r in flanker_rows
-                if r.get("condition") == "incongruent" and r.get("correct") == "True"]
-    flanker_effect = (statistics.median(f_incong) - statistics.median(f_cong)
-                      ) if f_cong and f_incong else 0.0
+    f_cong = [
+        float(r["reaction_time_ms"])
+        for r in flanker_rows
+        if r.get("condition") == "congruent" and r.get("correct") == "True"
+    ]
+    f_incong = [
+        float(r["reaction_time_ms"])
+        for r in flanker_rows
+        if r.get("condition") == "incongruent" and r.get("correct") == "True"
+    ]
+    flanker_effect = (
+        (statistics.median(f_incong) - statistics.median(f_cong)) if f_cong and f_incong else 0.0
+    )
 
     # Go/No-Go false alarm rate
     gono_rows = _read_rows(_latest_csv(data_dir / "gono"))

@@ -4,7 +4,8 @@ import string
 from dataclasses import dataclass
 
 from cognitive_data_arcade.games.text_tokenizer.stop_words import (
-    STOP_WORDS_EN, STOP_WORDS_PL,
+    STOP_WORDS_EN,
+    STOP_WORDS_PL,
 )
 
 

@@ -9,12 +9,60 @@ STARTING_BIAS: float = 33.0
 STARTING_ACC: float = 0.79
 
 APPLICANTS: list[dict] = [
-    {"name": "Amina B.",   "income": 4100, "employment": "stable",   "credit": "good", "zip": "Praga Pd.", "debt": 45, "approved": False},
-    {"name": "Fatima N.",  "income": 4500, "employment": "stable",   "credit": "good", "zip": "Praga Pd.", "debt": 42, "approved": False},
-    {"name": "Ibrahim O.", "income": 3900, "employment": "stable",   "credit": "good", "zip": "Praga Pd.", "debt": 48, "approved": False},
-    {"name": "Marek W.",   "income": 2900, "employment": "contract", "credit": "fair", "zip": "Wola",      "debt": 30, "approved": True},
-    {"name": "Piotr M.",   "income": 3200, "employment": "stable",   "credit": "fair", "zip": "Zoliborz",  "debt": 28, "approved": True},
-    {"name": "Jan K.",     "income": 3800, "employment": "stable",   "credit": "good", "zip": "Mokotow",   "debt": 35, "approved": True},
+    {
+        "name": "Amina B.",
+        "income": 4100,
+        "employment": "stable",
+        "credit": "good",
+        "zip": "Praga Pd.",
+        "debt": 45,
+        "approved": False,
+    },
+    {
+        "name": "Fatima N.",
+        "income": 4500,
+        "employment": "stable",
+        "credit": "good",
+        "zip": "Praga Pd.",
+        "debt": 42,
+        "approved": False,
+    },
+    {
+        "name": "Ibrahim O.",
+        "income": 3900,
+        "employment": "stable",
+        "credit": "good",
+        "zip": "Praga Pd.",
+        "debt": 48,
+        "approved": False,
+    },
+    {
+        "name": "Marek W.",
+        "income": 2900,
+        "employment": "contract",
+        "credit": "fair",
+        "zip": "Wola",
+        "debt": 30,
+        "approved": True,
+    },
+    {
+        "name": "Piotr M.",
+        "income": 3200,
+        "employment": "stable",
+        "credit": "fair",
+        "zip": "Zoliborz",
+        "debt": 28,
+        "approved": True,
+    },
+    {
+        "name": "Jan K.",
+        "income": 3800,
+        "employment": "stable",
+        "credit": "good",
+        "zip": "Mokotow",
+        "debt": 35,
+        "approved": True,
+    },
 ]
 
 FEATURE_OUTCOMES: dict[frozenset, tuple[float, float]] = {
@@ -39,13 +87,22 @@ FEATURE_OUTCOMES: dict[frozenset, tuple[float, float]] = {
 
 CONSEQUENCE_TABLE: dict[str, dict] = {
     "parity": {
-        "parity": True, "opportunity": False, "calibration": False, "accuracy": 0.68,
+        "parity": True,
+        "opportunity": False,
+        "calibration": False,
+        "accuracy": 0.68,
     },
     "opportunity": {
-        "parity": False, "opportunity": True, "calibration": False, "accuracy": 0.74,
+        "parity": False,
+        "opportunity": True,
+        "calibration": False,
+        "accuracy": 0.74,
     },
     "calibration": {
-        "parity": False, "opportunity": False, "calibration": True, "accuracy": 0.79,
+        "parity": False,
+        "opportunity": False,
+        "calibration": True,
+        "accuracy": 0.79,
     },
 }
 

@@ -83,18 +83,12 @@ class SessionPickerScene(Scene):
             rows = list(csv.DictReader(f))
         if not rows:
             raise ValueError("empty")
-        rts = [
-            float(r["reaction_time_ms"])
-            for r in rows
-            if float(r["reaction_time_ms"]) > 0
-        ]
+        rts = [float(r["reaction_time_ms"]) for r in rows if float(r["reaction_time_ms"]) > 0]
         n_trials = len(rows)
         n_correct = sum(1 for r in rows if str(r["correct"]).lower() in ("true", "1"))
         avg_rt = sum(rts) / len(rts) if rts else 0.0
         accuracy = n_correct / n_trials if n_trials else 0.0
-        date_str = datetime.datetime.fromtimestamp(path.stat().st_mtime).strftime(
-            "%Y-%m-%d"
-        )
+        date_str = datetime.datetime.fromtimestamp(path.stat().st_mtime).strftime("%Y-%m-%d")
         return _SessionEntry(
             csv_path=path,
             date_str=date_str,
@@ -206,9 +200,7 @@ class SessionPickerScene(Scene):
         for i, entry in enumerate(self._sessions):
             y = _TOP_H + i * _ROW_H
             active = i == self._selected
-            pygame.draw.rect(
-                surface, _ROW_ACTIVE_BG if active else _ROW_BG, (0, y, w, _ROW_H - 1)
-            )
+            pygame.draw.rect(surface, _ROW_ACTIVE_BG if active else _ROW_BG, (0, y, w, _ROW_H - 1))
             if active:
                 pygame.draw.rect(surface, _ORANGE, (0, y, 3, _ROW_H - 1))
 
@@ -223,9 +215,7 @@ class SessionPickerScene(Scene):
             acc_s = self._font_row.render(f"{entry.accuracy:.0%}", True, _WHITE)
             surface.blit(acc_s, (_PAD_X + 230, y + 8))
 
-            trials_s = self._font_row.render(
-                f"{entry.n_correct}/{entry.n_trials}", True, _DIM
-            )
+            trials_s = self._font_row.render(f"{entry.n_correct}/{entry.n_trials}", True, _DIM)
             surface.blit(trials_s, (_PAD_X + 120, y + 34))
 
             # Mini-bars (pygame-native)

@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
@@ -13,28 +14,31 @@ from cognitive_data_arcade.engine.context_popup import ContextInfo, ContextPopup
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.hypothesis_arena.simulator import (
-    TwoGroupResult, compute_power, generate_two_groups, strength_label,
+    TwoGroupResult,
+    compute_power,
+    generate_two_groups,
+    strength_label,
 )
 from cognitive_data_arcade.games.hypothesis_arena.widgets import _AlphaButtons, _FloatSlider
 
-_BG     = (15,  15,  35)
-_PANEL  = (18,  18,  42)
-_WHITE  = (240, 240, 240)
-_DIM    = (120, 120, 160)
-_ORANGE = (243, 156,  18)
-_BLUE   = ( 52, 152, 219)
-_GREEN  = ( 39, 174,  96)
-_RED    = (231,  76,  60)
-_TRACK  = ( 42,  42,  80)
+_BG = (15, 15, 35)
+_PANEL = (18, 18, 42)
+_WHITE = (240, 240, 240)
+_DIM = (120, 120, 160)
+_ORANGE = (243, 156, 18)
+_BLUE = (52, 152, 219)
+_GREEN = (39, 174, 96)
+_RED = (231, 76, 60)
+_TRACK = (42, 42, 80)
 _FIG_BG = "#0f0f23"
-_AX_BG  = "#1a1a3e"
+_AX_BG = "#1a1a3e"
 
-_LEFT_W   = 340
-_AREA_H   = 672
-_CHART_W  = 660
+_LEFT_W = 340
+_AREA_H = 672
+_CHART_W = 660
 _SCROLL_H = 920
-_DPI      = 100
-_N_SIM    = 1000
+_DPI = 100
+_N_SIM = 1000
 
 _POPUPS_A: dict[str, ContextInfo] = {
     "slider_n": ContextInfo(
@@ -136,18 +140,23 @@ class PhaseAScene(Scene):
         ax1 = axs[0]
         ax1.set_facecolor(_AX_BG)
         xs = np.linspace(-4, 4 + d, 400)
-        ax1.fill_between(xs, 0, [_gauss(x, 0, 1) for x in xs],
-                         alpha=0.35, color="#3498db", label="Kontrola")
-        ax1.fill_between(xs, 0, [_gauss(x, d, 1) for x in xs],
-                         alpha=0.35, color="#f39c12", label="Interwencja")
+        ax1.fill_between(
+            xs, 0, [_gauss(x, 0, 1) for x in xs], alpha=0.35, color="#3498db", label="Kontrola"
+        )
+        ax1.fill_between(
+            xs, 0, [_gauss(x, d, 1) for x in xs], alpha=0.35, color="#f39c12", label="Interwencja"
+        )
         ax1.axvline(0, color="#3498db", lw=1, ls="--")
         ax1.axvline(d, color="#f39c12", lw=1, ls="--")
         if abs(d) > 0.01:
             mid_y = _gauss(d / 2, d / 2, 1) * 1.1
-            ax1.annotate("", xy=(d, mid_y), xytext=(0, mid_y),
-                         arrowprops=dict(arrowstyle="<->", color="white", lw=1.2))
-            ax1.text(d / 2, mid_y + 0.02, f"d={d:.2f}",
-                     ha="center", color="white", fontsize=8)
+            ax1.annotate(
+                "",
+                xy=(d, mid_y),
+                xytext=(0, mid_y),
+                arrowprops=dict(arrowstyle="<->", color="white", lw=1.2),
+            )
+            ax1.text(d / 2, mid_y + 0.02, f"d={d:.2f}", ha="center", color="white", fontsize=8)
         ax1.legend(fontsize=8, facecolor=_FIG_BG, labelcolor="white", framealpha=0.5)
         ax1.set_title("Rozkłady populacji", color="white", fontsize=9)
         _style_ax(ax1)
@@ -158,14 +167,15 @@ class PhaseAScene(Scene):
         if self._result is not None:
             rng = np.random.default_rng(7)
             jit = rng.uniform(-0.15, 0.15, n)
-            ax2.scatter(jit,       self._result.x_ctrl,  s=12, alpha=0.6, color="#3498db")
+            ax2.scatter(jit, self._result.x_ctrl, s=12, alpha=0.6, color="#3498db")
             ax2.scatter(jit + 1.0, self._result.x_treat, s=12, alpha=0.6, color="#f39c12")
-            ax2.hlines(self._result.x_ctrl.mean(),  -0.25, 0.25, colors="#3498db", lw=2)
-            ax2.hlines(self._result.x_treat.mean(),  0.75, 1.25, colors="#f39c12", lw=2)
+            ax2.hlines(self._result.x_ctrl.mean(), -0.25, 0.25, colors="#3498db", lw=2)
+            ax2.hlines(self._result.x_treat.mean(), 0.75, 1.25, colors="#f39c12", lw=2)
             ax2.set_xticks([0, 1])
             ax2.set_xticklabels(
                 [f"Kontrola\nN={n}", f"Interwencja\nN={n}"],
-                color="white", fontsize=8,
+                color="white",
+                fontsize=8,
             )
         ax2.set_title("Dane z bieżącej próby", color="white", fontsize=9)
         _style_ax(ax2)
@@ -176,7 +186,7 @@ class PhaseAScene(Scene):
         rng2 = np.random.default_rng(99)
         p_vals = []
         for _ in range(_N_SIM):
-            c  = rng2.standard_normal(n)
+            c = rng2.standard_normal(n)
             t_ = rng2.standard_normal(n) + d
             _, pv = sp_stats.ttest_ind(c, t_)
             p_vals.append(pv)
@@ -184,14 +194,27 @@ class PhaseAScene(Scene):
         bins = np.linspace(0, 1, 11)
         counts, _ = np.histogram(p_arr, bins=bins)
         bar_colors = ["#e74c3c" if b < alpha else "#3a3a70" for b in bins[:-1]]
-        ax3.bar(bins[:-1], counts, width=0.1, align="edge",
-                color=bar_colors, edgecolor="#0f0f23", lw=0.5)
+        ax3.bar(
+            bins[:-1],
+            counts,
+            width=0.1,
+            align="edge",
+            color=bar_colors,
+            edgecolor="#0f0f23",
+            lw=0.5,
+        )
         ax3.axvline(alpha, color="#e74c3c", lw=1.5, ls="--")
-        ax3.text(alpha + 0.01, counts.max() * 0.9, f"alfa={alpha}",
-                 color="#e74c3c", fontsize=8)
+        ax3.text(alpha + 0.01, counts.max() * 0.9, f"alfa={alpha}", color="#e74c3c", fontsize=8)
         pct = 100 * (p_arr < alpha).mean()
-        ax3.text(0.98, 0.92, f"{pct:.0f}% istotnych",
-                 transform=ax3.transAxes, ha="right", color="white", fontsize=8)
+        ax3.text(
+            0.98,
+            0.92,
+            f"{pct:.0f}% istotnych",
+            transform=ax3.transAxes,
+            ha="right",
+            color="white",
+            fontsize=8,
+        )
         ax3.set_xlabel("p-value", color="#787890", fontsize=8)
         ax3.set_title("Histogram p-value (1000 symulacji)", color="white", fontsize=9)
         _style_ax(ax3)
@@ -260,10 +283,10 @@ class PhaseAScene(Scene):
 
         p_color = _RED if r.p_value < alpha else _GREEN
         rows = [
-            ("p-value",    f"{r.p_value:.4f}", p_color),
-            ("Cohen's d",  f"{r.cohens_d:.3f}  ({strength_label(r.cohens_d)})", _WHITE),
-            ("t-stat",     f"{r.t_stat:.3f}", _WHITE),
-            ("Moc testu",  f"{power * 100:.0f}%", _ORANGE if power < 0.8 else _GREEN),
+            ("p-value", f"{r.p_value:.4f}", p_color),
+            ("Cohen's d", f"{r.cohens_d:.3f}  ({strength_label(r.cohens_d)})", _WHITE),
+            ("t-stat", f"{r.t_stat:.3f}", _WHITE),
+            ("Moc testu", f"{power * 100:.0f}%", _ORANGE if power < 0.8 else _GREEN),
         ]
         y = 294
         for label, val, col in rows:

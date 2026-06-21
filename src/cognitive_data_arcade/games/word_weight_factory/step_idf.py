@@ -9,31 +9,31 @@ from cognitive_data_arcade.engine.scrollbar import ScrollBar
 from cognitive_data_arcade.games.word_weight_factory.corpus import CorpusState
 from cognitive_data_arcade.games.word_weight_factory.engine import WeightMatrix
 
-_BG     = (15, 15, 35)
-_PANEL  = (18, 18, 42)
-_WHITE  = (240, 240, 240)
-_DIM    = (120, 120, 160)
-_AMBER  = (243, 156, 18)
-_GREEN  = (46, 204, 113)
+_BG = (15, 15, 35)
+_PANEL = (18, 18, 42)
+_WHITE = (240, 240, 240)
+_DIM = (120, 120, 160)
+_AMBER = (243, 156, 18)
+_GREEN = (46, 204, 113)
 _PURPLE = (155, 89, 182)
-_GREY   = (90, 90, 120)
+_GREY = (90, 90, 120)
 
-_STEP_H    = 672
-_W         = 804
-_TITLE_H   = 28
+_STEP_H = 672
+_W = 804
+_TITLE_H = 28
 _INSIGHT_H = 46
-_CHART_Y   = _TITLE_H
-_CHART_H   = _STEP_H - _TITLE_H - _INSIGHT_H   # 598 px visible
+_CHART_Y = _TITLE_H
+_CHART_H = _STEP_H - _TITLE_H - _INSIGHT_H  # 598 px visible
 
-_BAR_ROW   = 24        # px per token row
-_LABEL_W   = 165       # token label column
-_BAR_MAX   = 560       # max bar pixel width
-_VAL_X     = _LABEL_W + _BAR_MAX + 6   # IDF value text x
-_SB_W      = 8
-_SB_X      = _W - _SB_W - 4
-_SB_MARGIN = 4         # gap between bar area and scrollbar
+_BAR_ROW = 24  # px per token row
+_LABEL_W = 165  # token label column
+_BAR_MAX = 560  # max bar pixel width
+_VAL_X = _LABEL_W + _BAR_MAX + 6  # IDF value text x
+_SB_W = 8
+_SB_X = _W - _SB_W - 4
+_SB_MARGIN = 4  # gap between bar area and scrollbar
 
-_TOOLTIP_W  = 300
+_TOOLTIP_W = 300
 _TOOLTIP_PAD = 8
 _TOOLTIP_LINE = 18
 
@@ -49,13 +49,16 @@ def _bar_color(ratio: float) -> tuple[int, int, int]:
 class StepIdfScene(Scene):
     def __init__(self, state: CorpusState) -> None:
         self._state = state
-        self._done  = False
+        self._done = False
         self._sb = ScrollBar(
-            total=0, visible=_CHART_H,
-            x=_SB_X, y=_CHART_Y, h=_CHART_H,
+            total=0,
+            visible=_CHART_H,
+            x=_SB_X,
+            y=_CHART_Y,
+            h=_CHART_H,
             width=_SB_W,
         )
-        self._pairs: list[tuple[float, str, int]] = []   # (idf, tok, df_count)
+        self._pairs: list[tuple[float, str, int]] = []  # (idf, tok, df_count)
         self._n_docs: int = 0
         self._max_idf: float = 1.0
         self._cached_key: tuple | None = None
@@ -76,8 +79,8 @@ class StepIdfScene(Scene):
             key=lambda x: x[0],
             reverse=True,
         )
-        self._pairs   = list(pairs)
-        self._n_docs  = N
+        self._pairs = list(pairs)
+        self._n_docs = N
         self._max_idf = max((v for v, _, _ in self._pairs), default=1.0) or 1.0
         self._sb.set_total(len(self._pairs) * _BAR_ROW)
         self._tooltip = None
@@ -107,7 +110,7 @@ class StepIdfScene(Scene):
         if not (_CHART_Y <= py < _CHART_Y + _CHART_H):
             return
         rel_y = py - _CHART_Y + self._sb.scroll
-        row   = rel_y // _BAR_ROW
+        row = rel_y // _BAR_ROW
         if not (0 <= row < len(self._pairs)):
             # Right-click on empty space below bars → formula tooltip
             self._tooltip = [
@@ -132,7 +135,7 @@ class StepIdfScene(Scene):
         else:
             uniqueness = f"w {df_val} z {N} dok"
         self._tooltip = [
-            f"Token: \"{tok}\"",
+            f'Token: "{tok}"',
             "",
             f"IDF  = {idf_val:.4f}",
             f"df   = {df_val} ({uniqueness})",
@@ -176,8 +179,7 @@ class StepIdfScene(Scene):
         surface.set_clip(clip)
 
         scroll = self._sb.scroll
-        font9  = get_font(9)
-        font10 = get_font(10)
+        font9 = get_font(9)
 
         for idx, (idf_val, tok, _df) in enumerate(self._pairs):
             row_y = _CHART_Y + idx * _BAR_ROW - scroll
@@ -188,7 +190,7 @@ class StepIdfScene(Scene):
 
             ratio = idf_val / self._max_idf
             bar_px = max(2, round(ratio * _BAR_MAX))
-            color  = _bar_color(ratio)
+            color = _bar_color(ratio)
 
             # Row background (alternating)
             row_bg = (17, 17, 38) if idx % 2 == 0 else _BG
@@ -197,8 +199,9 @@ class StepIdfScene(Scene):
             # Token label (right-aligned in label column)
             label_text = tok if len(tok) <= 18 else tok[:17] + "…"
             lbl = font9.render(label_text, True, _WHITE)
-            surface.blit(lbl, (_LABEL_W - lbl.get_width() - 4,
-                                row_y + (_BAR_ROW - lbl.get_height()) // 2))
+            surface.blit(
+                lbl, (_LABEL_W - lbl.get_width() - 4, row_y + (_BAR_ROW - lbl.get_height()) // 2)
+            )
 
             # Bar
             bar_rect = pygame.Rect(_LABEL_W, row_y + 4, bar_px, _BAR_ROW - 8)
@@ -206,19 +209,22 @@ class StepIdfScene(Scene):
 
             # IDF value text
             val_lbl = font9.render(f"{idf_val:.3f}", True, _DIM)
-            surface.blit(val_lbl, (_LABEL_W + bar_px + 4,
-                                    row_y + (_BAR_ROW - val_lbl.get_height()) // 2))
+            surface.blit(
+                val_lbl, (_LABEL_W + bar_px + 4, row_y + (_BAR_ROW - val_lbl.get_height()) // 2)
+            )
 
             # Row separator
-            pygame.draw.line(surface, (30, 30, 55),
-                             (0, row_y + _BAR_ROW - 1),
-                             (_SB_X - _SB_MARGIN, row_y + _BAR_ROW - 1))
+            pygame.draw.line(
+                surface,
+                (30, 30, 55),
+                (0, row_y + _BAR_ROW - 1),
+                (_SB_X - _SB_MARGIN, row_y + _BAR_ROW - 1),
+            )
 
         # x-axis grid lines (faint verticals at 25% intervals)
         for frac in (0.25, 0.5, 0.75, 1.0):
             gx = _LABEL_W + round(frac * _BAR_MAX)
-            pygame.draw.line(surface, (30, 30, 58),
-                             (gx, _CHART_Y), (gx, _CHART_Y + _CHART_H))
+            pygame.draw.line(surface, (30, 30, 58), (gx, _CHART_Y), (gx, _CHART_Y + _CHART_H))
 
         surface.set_clip(None)
 
@@ -231,9 +237,11 @@ class StepIdfScene(Scene):
             min_idf = self._pairs[-1][0]
             max_tok = self._pairs[0][1]
             max_idf = self._pairs[0][0]
-            insight = (f"'{max_tok}' jest unikalne (IDF={max_idf:.2f})."
-                       f"  '{min_tok}' jest pospolite (IDF={min_idf:.2f})."
-                       f"  PPM na pasku = szczegoly.")
+            insight = (
+                f"'{max_tok}' jest unikalne (IDF={max_idf:.2f})."
+                f"  '{min_tok}' jest pospolite (IDF={min_idf:.2f})."
+                f"  PPM na pasku = szczegoly."
+            )
         else:
             insight = "IDF karze za popularnosc — slowa wspolne maja niski IDF."
         iy = _STEP_H - 40
@@ -252,8 +260,8 @@ class StepIdfScene(Scene):
             return
         font10 = get_font(10)
         n_lines = len(lines)
-        box_h   = n_lines * _TOOLTIP_LINE + _TOOLTIP_PAD * 2
-        tx, ty  = self._tooltip_pos
+        box_h = n_lines * _TOOLTIP_LINE + _TOOLTIP_PAD * 2
+        tx, ty = self._tooltip_pos
         # Keep tooltip inside the surface
         if tx + _TOOLTIP_W > _W:
             tx = _W - _TOOLTIP_W - 4
@@ -269,5 +277,4 @@ class StepIdfScene(Scene):
                 continue
             col = _AMBER if i == 0 else (_DIM if line.startswith("Wzor") or "=" in line else _WHITE)
             s = font10.render(line, True, col)
-            surface.blit(s, (tx + _TOOLTIP_PAD,
-                              ty + _TOOLTIP_PAD + i * _TOOLTIP_LINE))
+            surface.blit(s, (tx + _TOOLTIP_PAD, ty + _TOOLTIP_PAD + i * _TOOLTIP_LINE))

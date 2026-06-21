@@ -1,4 +1,5 @@
 """Generic SPACE-to-advance interlude for Bias Blind Spot."""
+
 from __future__ import annotations
 import pygame
 from cognitive_data_arcade.engine.fonts import get_font
@@ -42,10 +43,16 @@ class PhaseInterludeScene(Scene):
             return
         self._done = True
         if self._next_act == "engineer":
-            from cognitive_data_arcade.games.bias_blind_spot.phase_engineer import PhaseEngineerScene
+            from cognitive_data_arcade.games.bias_blind_spot.phase_engineer import (
+                PhaseEngineerScene,
+            )
+
             self._next = PhaseEngineerScene(self._state)
         else:
-            from cognitive_data_arcade.games.bias_blind_spot.phase_regulator import PhaseRegulatorScene
+            from cognitive_data_arcade.games.bias_blind_spot.phase_regulator import (
+                PhaseRegulatorScene,
+            )
+
             self._next = PhaseRegulatorScene(self._state)
 
     def draw(self, surface: pygame.Surface) -> None:

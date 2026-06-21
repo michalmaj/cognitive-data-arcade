@@ -7,25 +7,25 @@ import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 
-_W, _H   = 1024, 720
-_BG      = (15, 15, 35)
-_PANEL   = (18, 18, 42)
-_WHITE   = (240, 240, 240)
-_DIM     = (100, 100, 130)
-_AMBER   = (240, 165, 0)
-_GREEN   = (39, 174, 96)
-_GREY    = (60, 60, 80)
-_BLUE    = (52, 152, 219)
+_W, _H = 1024, 720
+_BG = (15, 15, 35)
+_PANEL = (18, 18, 42)
+_WHITE = (240, 240, 240)
+_DIM = (100, 100, 130)
+_AMBER = (240, 165, 0)
+_GREEN = (39, 174, 96)
+_GREY = (60, 60, 80)
+_BLUE = (52, 152, 219)
 
 _TYPE_LABELS = {
     "name_topic": "Nazwij temat",
-    "assign_doc":  "Przypisz dok.",
-    "intruder":    "Intruz",
+    "assign_doc": "Przypisz dok.",
+    "intruder": "Intruz",
 }
 _TYPE_COLORS = {
     "name_topic": (240, 165, 0),
-    "assign_doc":  (52, 152, 219),
-    "intruder":    (231, 76, 60),
+    "assign_doc": (52, 152, 219),
+    "intruder": (231, 76, 60),
 }
 
 _AHA_INSIGHTS = [
@@ -72,6 +72,7 @@ class PhaseResultScene(Scene):
 
     def _advance(self) -> None:
         from cognitive_data_arcade.games.topic_detective.phase_intro import PhaseIntroScene
+
         self._next = PhaseIntroScene()
         self._done = True
 
@@ -105,7 +106,7 @@ class PhaseResultScene(Scene):
         stats = _calc_stats(self._round_results)
         types = list(_TYPE_LABELS.keys())
         chart_x = 120
-        chart_w  = _W - 240
+        chart_w = _W - 240
         bar_area_h = 330
         n = len(types)
         bar_w = chart_w // (n * 2 + 1)

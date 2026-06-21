@@ -6,33 +6,36 @@ import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.overfitting_monster.classifier import (
-    compute_gap_stars, compute_round_score, knn_accuracies, split_data,
+    compute_gap_stars,
+    compute_round_score,
+    knn_accuracies,
+    split_data,
 )
 from cognitive_data_arcade.games.overfitting_monster.scenarios import Scenario, generate_data
 from cognitive_data_arcade.games.overfitting_monster.widgets import SliderWidget
 
-_BG     = (15, 15, 35)
-_PANEL  = (18, 18, 42)
-_WHITE  = (240, 240, 240)
-_DIM    = (120, 120, 160)
-_GREEN  = (39, 174, 96)
-_RED    = (231, 76, 60)
-_BLUE   = (52, 152, 219)
+_BG = (15, 15, 35)
+_PANEL = (18, 18, 42)
+_WHITE = (240, 240, 240)
+_DIM = (120, 120, 160)
+_GREEN = (39, 174, 96)
+_RED = (231, 76, 60)
+_BLUE = (52, 152, 219)
 _YELLOW = (243, 156, 18)
 _ORANGE = (230, 126, 34)
 
-_W, _H   = 1024, 720
-_TOP_H   = 56
+_W, _H = 1024, 720
+_TOP_H = 56
 _SCATTER = pygame.Rect(12, _TOP_H + 4, 680, _H - _TOP_H - 8)
 _PANEL_R = pygame.Rect(704, _TOP_H + 4, 308, _H - _TOP_H - 8)
-_DOT_R   = 5
+_DOT_R = 5
 _POPUP_W, _POPUP_H = 290, 160
 _TOTAL_ROUNDS = 5
 
 # Slider rects (within right panel)
 _SPLIT_SLIDER = pygame.Rect(712, 130, 292, 20)
-_K_SLIDER     = pygame.Rect(712, 220, 292, 20)
-_BTN_CONFIRM  = pygame.Rect(754, _H - 68, 220, 44)
+_K_SLIDER = pygame.Rect(712, 220, 292, 20)
+_BTN_CONFIRM = pygame.Rect(754, _H - 68, 220, 44)
 
 
 def _wrap_text(text: str, font: pygame.font.Font, max_w: int) -> list[str]:
@@ -85,9 +88,7 @@ class PhaseDrawScene(Scene):
         self._next: Scene | None = None
 
     def _recompute(self) -> None:
-        X_tr, y_tr, X_te, y_te = split_data(
-            self._X, self._y, self._split_slider.value, self._seed
-        )
+        X_tr, y_tr, X_te, y_te = split_data(self._X, self._y, self._split_slider.value, self._seed)
         accs = knn_accuracies(X_tr, y_tr, X_te, y_te, self._k_slider.value)
         self._train_acc = accs["train"]
         self._test_acc = accs["test"]
@@ -116,9 +117,7 @@ class PhaseDrawScene(Scene):
             self._recompute()
 
     def _confirm(self) -> None:
-        X_tr, y_tr, X_te, y_te = split_data(
-            self._X, self._y, self._split_slider.value, self._seed
-        )
+        X_tr, y_tr, X_te, y_te = split_data(self._X, self._y, self._split_slider.value, self._seed)
         stars = compute_gap_stars(self._train_acc, self._test_acc)
         score = compute_round_score(self._test_acc, stars)
 
@@ -135,8 +134,10 @@ class PhaseDrawScene(Scene):
         }
 
         from cognitive_data_arcade.games.overfitting_monster.phase_round_result import (
-            PhaseRoundResultScene, RoundDisplay,
+            PhaseRoundResultScene,
+            RoundDisplay,
         )
+
         display = RoundDisplay(
             scenario=self._scenario,
             k=self._k_slider.value,
@@ -169,12 +170,14 @@ class PhaseDrawScene(Scene):
         pygame.draw.rect(surface, _PANEL, (0, 0, _W, _TOP_H))
         title = get_font(20).render(
             f"Runda {self._round_idx + 1}/{_TOTAL_ROUNDS}  -  {self._scenario.name_pl}",
-            True, _WHITE,
+            True,
+            _WHITE,
         )
         surface.blit(title, (20, 16))
         instr = get_font(13).render(
             "Ustaw k i podzial  |  PPM = podpowiedz  |  zatwierdz gdy gotowy",
-            True, _DIM,
+            True,
+            _DIM,
         )
         surface.blit(instr, (_W - instr.get_width() - 16, 20))
 
@@ -187,10 +190,13 @@ class PhaseDrawScene(Scene):
         pygame.draw.rect(surface, _PANEL, _BTN_CONFIRM, border_radius=6)
         pygame.draw.rect(surface, _GREEN, _BTN_CONFIRM, 2, border_radius=6)
         lbl = get_font(18).render("Potwierdz", True, _GREEN)
-        surface.blit(lbl, (
-            _BTN_CONFIRM.centerx - lbl.get_width() // 2,
-            _BTN_CONFIRM.centery - lbl.get_height() // 2,
-        ))
+        surface.blit(
+            lbl,
+            (
+                _BTN_CONFIRM.centerx - lbl.get_width() // 2,
+                _BTN_CONFIRM.centery - lbl.get_height() // 2,
+            ),
+        )
         if self._popup_visible:
             self._draw_popup(surface)
 
@@ -207,10 +213,15 @@ class PhaseDrawScene(Scene):
             if tuple(self._X[i].tolist()) in tr_set:
                 pygame.draw.circle(surface, color, (cx, cy), _DOT_R)
             else:
-                pygame.draw.rect(surface, color,
-                                  pygame.Rect(cx - _DOT_R, cy - _DOT_R, _DOT_R * 2, _DOT_R * 2))
-                pygame.draw.rect(surface, _WHITE,
-                                  pygame.Rect(cx - _DOT_R, cy - _DOT_R, _DOT_R * 2, _DOT_R * 2), 1)
+                pygame.draw.rect(
+                    surface, color, pygame.Rect(cx - _DOT_R, cy - _DOT_R, _DOT_R * 2, _DOT_R * 2)
+                )
+                pygame.draw.rect(
+                    surface,
+                    _WHITE,
+                    pygame.Rect(cx - _DOT_R, cy - _DOT_R, _DOT_R * 2, _DOT_R * 2),
+                    1,
+                )
 
         legend_y = _SCATTER.bottom - 24
         pygame.draw.circle(surface, _DIM, (_SCATTER.x + 12, legend_y), 5)
@@ -259,7 +270,9 @@ class PhaseDrawScene(Scene):
             surface.blit(lbl, (rx, ry))
             bw = int(bar_max * acc)
             if bw > 0:
-                pygame.draw.rect(surface, color, pygame.Rect(rx + 64, ry + 2, bw, 14), border_radius=3)
+                pygame.draw.rect(
+                    surface, color, pygame.Rect(rx + 64, ry + 2, bw, 14), border_radius=3
+                )
             pct = get_font(12).render(f"{acc:.0%}", True, color)
             surface.blit(pct, (rx + 66 + bar_max, ry + 1))
             ry += 26
@@ -271,7 +284,7 @@ class PhaseDrawScene(Scene):
 
         # Star preview
         stars = compute_gap_stars(self._train_acc, self._test_acc)
-        star_str = ("xxx" if stars == 3 else "xx." if stars == 2 else "x..")
+        star_str = "xxx" if stars == 3 else "xx." if stars == 2 else "x.."
         bonus = {3: "+20 pkt", 2: "+10 pkt", 1: "+0 pkt"}[stars]
         star_surf = get_font(18).render(star_str, True, _YELLOW)
         bonus_surf = get_font(12).render(bonus, True, _YELLOW)

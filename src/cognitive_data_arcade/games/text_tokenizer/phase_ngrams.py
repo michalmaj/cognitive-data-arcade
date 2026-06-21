@@ -9,11 +9,11 @@ from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.text_tokenizer.engine import TokenizerState
 from cognitive_data_arcade.games.text_tokenizer.widgets import SharedState
 
-_BG     = (15, 15, 35)
-_WHITE  = (240, 240, 240)
-_DIM    = (120, 120, 160)
-_AMBER  = (243, 156, 18)
-_BLUE   = (52, 152, 219)
+_BG = (15, 15, 35)
+_WHITE = (240, 240, 240)
+_DIM = (120, 120, 160)
+_AMBER = (243, 156, 18)
+_BLUE = (52, 152, 219)
 _PURPLE = (155, 89, 182)
 _PHASE_H = 636
 
@@ -76,14 +76,15 @@ class PhaseNgramsScene(Scene):
             badge_w = (font_11.size(f"x{count}")[0] + 8) if count > 1 else 0
             total_w = lw + badge_w
             if cx + total_w > 1012:
-                cx = 12; cy += 26
+                cx = 12
+                cy += 26
             if cy > _PHASE_H - 60:
                 break
 
             is_repeat = count > 1
-            bg     = (15, 25, 45) if is_repeat else (20, 20, 35)
+            bg = (15, 25, 45) if is_repeat else (20, 20, 35)
             border = _BLUE if is_repeat else (50, 50, 80)
-            col    = _BLUE if is_repeat else _DIM
+            col = _BLUE if is_repeat else _DIM
 
             chip_rect = pygame.Rect(cx, cy, lw, 20)
             pygame.draw.rect(surface, bg, chip_rect, border_radius=3)
@@ -110,12 +111,13 @@ class PhaseNgramsScene(Scene):
     def _make_insight(self, result: TokenizerState, counts: Counter) -> str:
         n = self._state.ngram_n
         if n >= 3 and len(result.tokens) < 6:
-            return ("Tekst za krotki na powtarzajace sie trigramy — "
-                    "sprobuj dluzszego.")
+            return "Tekst za krotki na powtarzajace sie trigramy — sprobuj dluzszego."
         repeated = [(g, c) for g, c in counts.items() if c > 1]
         if repeated and n > 1:
             top = max(repeated, key=lambda x: x[1])
             gram_str = " ".join(top[0])
-            return (f'"{gram_str}" pojawia sie {top[1]}x — '
-                    f"n-gramy wykrywaja kolokacje, ktorych unigramy nie widza.")
+            return (
+                f'"{gram_str}" pojawia sie {top[1]}x — '
+                f"n-gramy wykrywaja kolokacje, ktorych unigramy nie widza."
+            )
         return "N-gramy = sekwencje N sasiadujacych tokenow. Niebieskie = powtarzajace sie."

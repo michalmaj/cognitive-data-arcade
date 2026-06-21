@@ -17,12 +17,12 @@ from cognitive_data_arcade.ui.menu import LessonMenuScene
 _BG = (26, 26, 46)
 _TILE_W, _TILE_H = 200, 90
 _TILE_GAP = 24
-_SELECTED_COLOR = (243, 156, 18)   # orange
+_SELECTED_COLOR = (243, 156, 18)  # orange
 _HOVER_COLOR = (60, 60, 100)
 _DIM = (100, 100, 150)
 _WHITE = (240, 240, 240)
-_TILES_X = 188   # x of first tile (centers 3 tiles in 1024px: (1024 - 3*200 - 2*24) / 2 = 188)
-_ROW_Y = 280     # single row y position (single-axis picker)
+_TILES_X = 188  # x of first tile (centers 3 tiles in 1024px: (1024 - 3*200 - 2*24) / 2 = 188)
+_ROW_Y = 280  # single row y position (single-axis picker)
 
 
 def _tile_rect(col: int, row_y: int) -> pygame.Rect:
@@ -79,6 +79,7 @@ class StroopLevelScene(Scene):
         csv_path = Path("data") / "generated" / "stroop" / f"{sid}.csv"
         from cognitive_data_arcade.games.stroop.game import StroopGame
         from cognitive_data_arcade.games.stroop.info import get_game_info
+
         inner = StroopGame(config, self._pm, self._strings, pid, sid, csv_path)
         game_info = get_game_info(self._strings)
         restart_factory = lambda: StroopLevelScene(self._pm, self._strings)
@@ -114,11 +115,15 @@ class StroopLevelScene(Scene):
 
         # Tiles
         names = [self._strings.level_easy, self._strings.level_medium, self._strings.level_hard]
-        descs = [self._strings.stroop_easy_desc, self._strings.stroop_medium_desc, self._strings.stroop_hard_desc]
+        descs = [
+            self._strings.stroop_easy_desc,
+            self._strings.stroop_medium_desc,
+            self._strings.stroop_hard_desc,
+        ]
         for i, (name, desc) in enumerate(zip(names, descs)):
             rect = _tile_rect(i, _ROW_Y)
-            selected = (i == self._diff_idx)
-            hovered = (i == self._hover_diff)
+            selected = i == self._diff_idx
+            hovered = i == self._hover_diff
             if selected:
                 pygame.draw.rect(surface, _SELECTED_COLOR, rect, border_radius=8)
                 text_color = _BG

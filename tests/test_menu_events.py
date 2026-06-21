@@ -15,9 +15,12 @@ def _init():
 def _make(selected=0):
     pm = MagicMock()
     pm.load.return_value = MagicMock(
-        alias="T", device_uuid="x",
-        music_enabled=True, sfx_enabled=True,
-        music_volume=1.0, sfx_volume=1.0,
+        alias="T",
+        device_uuid="x",
+        music_enabled=True,
+        sfx_enabled=True,
+        music_volume=1.0,
+        sfx_volume=1.0,
     )
     return LessonMenuScene(pm, EN, selected)
 
@@ -46,9 +49,10 @@ def test_up_clamps_at_zero():
 
 def test_enter_on_lesson2_launches_rt_lab():
     from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
+
     pygame.init()
     s = _make(selected=0)
-    s.handle_event(_key(pygame.K_DOWN))   # idx 1 = lesson 2
+    s.handle_event(_key(pygame.K_DOWN))  # idx 1 = lesson 2
     s.handle_event(_key(pygame.K_RETURN))
     assert s.is_done()
     assert isinstance(s.next_scene(), HowToPlayScene)
@@ -85,7 +89,7 @@ def test_wheel_scrolls():
 
 
 def test_ensure_visible_on_down_near_bottom():
-    s = _make(selected=29)   # second-to-last lesson
+    s = _make(selected=29)  # second-to-last lesson
     s.handle_event(_key(pygame.K_DOWN))
     # selected is now 30 (last) — scrollbar should have scrolled to show it
     scroll = s._scrollbar.scroll

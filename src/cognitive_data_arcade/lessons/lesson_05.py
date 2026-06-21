@@ -1,4 +1,5 @@
 """Lesson 05 — Missing Values and Outliers."""
+
 from __future__ import annotations
 
 CONTENT: dict[str, dict[str, list[str]]] = {

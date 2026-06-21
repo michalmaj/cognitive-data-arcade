@@ -15,9 +15,7 @@ def load_session(csv_path: Path) -> pd.DataFrame:
     """Load a single-session RT CSV. Normalises correct and reaction_time_ms columns."""
     df = pd.read_csv(csv_path)
     df["correct"] = df["correct"].astype(str).str.lower().isin(["true", "1"])
-    df["reaction_time_ms"] = pd.to_numeric(
-        df["reaction_time_ms"], errors="coerce"
-    ).fillna(-1.0)
+    df["reaction_time_ms"] = pd.to_numeric(df["reaction_time_ms"], errors="coerce").fillna(-1.0)
     return df
 
 

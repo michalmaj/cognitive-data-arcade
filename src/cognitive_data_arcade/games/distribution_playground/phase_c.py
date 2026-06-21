@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
@@ -13,26 +14,31 @@ from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.distribution_playground.phase_a import _param_key
 from cognitive_data_arcade.games.distribution_playground.simulator import (
-    CompareResult, SimResult, compare, simulate,
+    CompareResult,
+    SimResult,
+    compare,
+    simulate,
 )
 from cognitive_data_arcade.games.distribution_playground.widgets import (
-    ShapeTab, Slider, SliderSpec,
+    ShapeTab,
+    Slider,
+    SliderSpec,
 )
 
-_BG      = (15, 15, 35)
-_WHITE   = (240, 240, 240)
-_DIM     = (120, 120, 160)
-_BLUE    = (52, 152, 219)
-_RED     = (231, 76, 60)
-_ORANGE  = (243, 156, 18)
-_FIG_BG  = "#0f0f23"
-_AX_BG   = "#1a1a3e"
-_AREA_H  = 672
-_HALF    = 512
+_BG = (15, 15, 35)
+_WHITE = (240, 240, 240)
+_DIM = (120, 120, 160)
+_BLUE = (52, 152, 219)
+_RED = (231, 76, 60)
+_ORANGE = (243, 156, 18)
+_FIG_BG = "#0f0f23"
+_AX_BG = "#1a1a3e"
+_AREA_H = 672
+_HALF = 512
 _CHART_W = 700
 _CHART_H = 340
 _STATS_W = 280
-_DPI     = 100
+_DPI = 100
 
 _SLIDERS_BY_TYPE: dict[str, list[SliderSpec]] = {
     "normal": [
@@ -54,10 +60,26 @@ _SLIDERS_BY_TYPE: dict[str, list[SliderSpec]] = {
 }
 
 _POPUP_STATS = {
-    "delta":    ContextInfo("Delta średnia", "Różnica średnich: x_sr_B - x_sr_A", "Pokazuje przesunięcie, ale nie uwzględnia zmienności"),
-    "cohens_d": ContextInfo("Cohen's d", "Standaryzowana różnica: (mu_A-mu_B)/sigma_pool. d>0.8=duży efekt", "Pozwala porównać efekt niezależnie od jednostki"),
-    "p_value":  ContextInfo("p-value (test Welcha)", "Prawdop. wyniku przy H0: mu_A=mu_B", "p<0.05 = odrzucamy H0; ale zależy od N!"),
-    "sd_ratio": ContextInfo("sigma_A / sigma_B", "Stosunek odchyleń standardowych obu prób", "Różnica zmienności między grupami"),
+    "delta": ContextInfo(
+        "Delta średnia",
+        "Różnica średnich: x_sr_B - x_sr_A",
+        "Pokazuje przesunięcie, ale nie uwzględnia zmienności",
+    ),
+    "cohens_d": ContextInfo(
+        "Cohen's d",
+        "Standaryzowana różnica: (mu_A-mu_B)/sigma_pool. d>0.8=duży efekt",
+        "Pozwala porównać efekt niezależnie od jednostki",
+    ),
+    "p_value": ContextInfo(
+        "p-value (test Welcha)",
+        "Prawdop. wyniku przy H0: mu_A=mu_B",
+        "p<0.05 = odrzucamy H0; ale zależy od N!",
+    ),
+    "sd_ratio": ContextInfo(
+        "sigma_A / sigma_B",
+        "Stosunek odchyleń standardowych obu prób",
+        "Różnica zmienności między grupami",
+    ),
 }
 
 
@@ -76,8 +98,7 @@ class _ControlPanel:
 
     def get_params(self) -> dict[str, float]:
         specs = _SLIDERS_BY_TYPE[self._tabs.dist_type]
-        return {_param_key(spec.label): float(sl.value)
-                for spec, sl in zip(specs, self._sliders)}
+        return {_param_key(spec.label): float(sl.value) for spec, sl in zip(specs, self._sliders)}
 
     def simulate(self) -> SimResult:
         self._seed += 1
@@ -107,10 +128,10 @@ class _ControlPanel:
         return changed
 
     def draw(self, surface: pygame.Surface) -> None:
-        pygame.draw.rect(surface, (20, 20, 48),
-                         (self._x, self._y, self._w, self._h))
-        pygame.draw.rect(surface, self._color,
-                         (self._x, self._y, self._w, self._h), width=2, border_radius=4)
+        pygame.draw.rect(surface, (20, 20, 48), (self._x, self._y, self._w, self._h))
+        pygame.draw.rect(
+            surface, self._color, (self._x, self._y, self._w, self._h), width=2, border_radius=4
+        )
         self._tabs.draw(surface)
         for sl in self._sliders:
             sl.draw(surface)
@@ -187,7 +208,7 @@ def _draw_compare_stats(
     b: SimResult,
 ) -> None:
     font_h = get_font(16)
-    font   = get_font(15)
+    font = get_font(15)
     x = _CHART_W + 8
     y = 280
     surface.blit(font_h.render("Porównanie", True, _ORANGE), (x, y - 24))
@@ -203,13 +224,26 @@ def _draw_compare_stats(
 
 
 def _render_overlay(a: SimResult, b: SimResult) -> pygame.Surface:
-    fig, ax = plt.subplots(facecolor=_FIG_BG,
-                           figsize=(_CHART_W / _DPI, _CHART_H / _DPI), dpi=_DPI)
+    fig, ax = plt.subplots(facecolor=_FIG_BG, figsize=(_CHART_W / _DPI, _CHART_H / _DPI), dpi=_DPI)
     ax.set_facecolor(_AX_BG)
-    ax.hist(a.samples, bins="auto", density=True,
-            color="#3498db", alpha=0.6, edgecolor="none", label="A")
-    ax.hist(b.samples, bins="auto", density=True,
-            color="#e74c3c", alpha=0.6, edgecolor="none", label="B")
+    ax.hist(
+        a.samples,
+        bins="auto",
+        density=True,
+        color="#3498db",
+        alpha=0.6,
+        edgecolor="none",
+        label="A",
+    )
+    ax.hist(
+        b.samples,
+        bins="auto",
+        density=True,
+        color="#e74c3c",
+        alpha=0.6,
+        edgecolor="none",
+        label="B",
+    )
     ax.legend(facecolor="#1a1a3e", edgecolor="#2a2a50", labelcolor="#c0c0d8", fontsize=8)
     ax.tick_params(colors="#787890")
     for spine in ax.spines.values():

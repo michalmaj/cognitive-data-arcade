@@ -10,37 +10,37 @@ from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.misinformation.networks import NetworkConfig, build_graph
 from cognitive_data_arcade.games.social_network.graph import hub_node_index, sir_step
 
-_W, _H   = 1024, 720
-_TOP_H   = 60
-_BOT_H   = 60
+_W, _H = 1024, 720
+_TOP_H = 60
+_BOT_H = 60
 _ACT_SECS = 60.0
-_SIR_MS  = 1500.0
-_WIN_SPREAD  = 0.60
+_SIR_MS = 1500.0
+_WIN_SPREAD = 0.60
 _WIN_CONTAIN = 0.20
 _EARLY_BONUS = 10
-_NODE_R  = 12
-_HUB_R   = 17
+_NODE_R = 12
+_HUB_R = 17
 
 _S_COLOR = (120, 120, 140)
 _I_COLOR = (231, 76, 60)
 _R_COLOR = (39, 174, 96)
 
-_SPREADER_BG     = (26, 10, 10)
-_SPREADER_TOP    = (40, 10, 10)
+_SPREADER_BG = (26, 10, 10)
+_SPREADER_TOP = (40, 10, 10)
 _SPREADER_ACCENT = (231, 76, 60)
-_SPREADER_EDGE   = (60, 30, 30)
-_CHECKER_BG      = (10, 17, 26)
-_CHECKER_TOP     = (10, 20, 40)
-_CHECKER_ACCENT  = (52, 152, 219)
-_CHECKER_EDGE    = (25, 45, 65)
+_SPREADER_EDGE = (60, 30, 30)
+_CHECKER_BG = (10, 17, 26)
+_CHECKER_TOP = (10, 20, 40)
+_CHECKER_ACCENT = (52, 152, 219)
+_CHECKER_EDGE = (25, 45, 65)
 
 
 class PhaseActScene(Scene):
     def __init__(
         self,
         cfg: NetworkConfig,
-        round_idx: int,          # 0-based index into ROUNDS
-        act: str,                # "spreader" | "factchecker"
+        round_idx: int,  # 0-based index into ROUNDS
+        act: str,  # "spreader" | "factchecker"
         session_scores: list[int],
     ) -> None:
         self._cfg = cfg
@@ -56,10 +56,10 @@ class PhaseActScene(Scene):
             self._graph.nodes[hub].state = "I"
 
         self._hub_idx = hub_node_index(self._graph)
-        self._timer_ms  = 0.0
+        self._timer_ms = 0.0
         self._sir_timer = 0.0
         self._early_win = False
-        self._done  = False
+        self._done = False
         self._next: Scene | None = None
 
     # ------------------------------------------------------------------
@@ -88,6 +88,7 @@ class PhaseActScene(Scene):
         score = self._calc_score()
         updated = self._session_scores + [score]
         from cognitive_data_arcade.games.misinformation.phase_interlude import PhaseInterludeScene
+
         self._next = PhaseInterludeScene(
             round_idx=self._round_idx,
             act=self._act,
@@ -116,7 +117,7 @@ class PhaseActScene(Scene):
     def update(self, dt_ms: float = 0.0) -> None:
         if self._done:
             return
-        self._timer_ms  += dt_ms
+        self._timer_ms += dt_ms
         self._sir_timer += dt_ms
         if self._sir_timer >= _SIR_MS:
             self._sir_timer -= _SIR_MS
@@ -131,10 +132,10 @@ class PhaseActScene(Scene):
 
     def draw(self, surface: pygame.Surface) -> None:
         spreader = self._act == "spreader"
-        bg     = _SPREADER_BG    if spreader else _CHECKER_BG
-        top_c  = _SPREADER_TOP   if spreader else _CHECKER_TOP
+        bg = _SPREADER_BG if spreader else _CHECKER_BG
+        top_c = _SPREADER_TOP if spreader else _CHECKER_TOP
         accent = _SPREADER_ACCENT if spreader else _CHECKER_ACCENT
-        edge_c = _SPREADER_EDGE  if spreader else _CHECKER_EDGE
+        edge_c = _SPREADER_EDGE if spreader else _CHECKER_EDGE
 
         surface.fill(bg)
 
@@ -146,14 +147,19 @@ class PhaseActScene(Scene):
 
         runda_text = f"Runda {self._round_idx + 1}/3  |  {self._cfg.label}"
         runda_surf = get_font(15).render(runda_text, True, (180, 180, 180))
-        surface.blit(runda_surf, (
-            _W // 2 - runda_surf.get_width() // 2,
-            (_TOP_H - runda_surf.get_height()) // 2,
-        ))
+        surface.blit(
+            runda_surf,
+            (
+                _W // 2 - runda_surf.get_width() // 2,
+                (_TOP_H - runda_surf.get_height()) // 2,
+            ),
+        )
 
         secs_left = max(0.0, _ACT_SECS - self._timer_ms / 1000)
         timer_surf = get_font(22).render(f"{secs_left:.0f}s", True, accent)
-        surface.blit(timer_surf, (_W - timer_surf.get_width() - 16, (_TOP_H - timer_surf.get_height()) // 2))
+        surface.blit(
+            timer_surf, (_W - timer_surf.get_width() - 16, (_TOP_H - timer_surf.get_height()) // 2)
+        )
 
         # Edges
         for a, b in self._graph.edges:

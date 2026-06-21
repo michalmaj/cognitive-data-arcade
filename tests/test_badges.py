@@ -69,9 +69,7 @@ def test_badge_engine_returns_new_ids() -> None:
 
 
 def test_badge_engine_skips_already_earned() -> None:
-    session = _make_session(
-        avg_reaction_time_ms=200.0, total_trials=20, correct_trials=20
-    )
+    session = _make_session(avg_reaction_time_ms=200.0, total_trials=20, correct_trials=20)
     profile = _make_profile(arcade_points=0, badges=["quick_reflex"])
     engine = BadgeEngine()
     new_ids = engine.evaluate(session, profile)

@@ -11,6 +11,7 @@ class ArchitectsTrialScene(Scene):
         self._done = False
         self._next: Scene | None = None
         from cognitive_data_arcade.games.architects_trial.phase_intro import PhaseIntroScene
+
         self._current: Scene = PhaseIntroScene(self._state)
 
     def handle_event(self, event: pygame.event.Event) -> None:

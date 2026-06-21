@@ -43,12 +43,15 @@ class AppTutorialScene(Scene):
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             self._exit()
         elif event.type == pygame.KEYDOWN and event.key in (
-            pygame.K_RETURN, pygame.K_SPACE, pygame.K_ESCAPE
+            pygame.K_RETURN,
+            pygame.K_SPACE,
+            pygame.K_ESCAPE,
         ):
             self._exit()
 
     def _exit(self) -> None:
         from cognitive_data_arcade.ui.menu import LessonMenuScene
+
         self._pm.set_seen_intro(True)
         self._next = LessonMenuScene(self._pm, self._strings)
         self._done = True

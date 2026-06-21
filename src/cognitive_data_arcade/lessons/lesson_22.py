@@ -1,5 +1,6 @@
 # src/cognitive_data_arcade/lessons/lesson_22.py
 """Lesson 22 - Word Weight Factory (Bag of Words and TF-IDF)."""
+
 from __future__ import annotations
 
 CONTENT: dict[str, dict[str, list[str]]] = {

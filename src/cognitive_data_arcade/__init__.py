@@ -14,4 +14,5 @@ def main() -> None:
     strings = get_strings(profile.language)
     audio.init(profile)
     from cognitive_data_arcade.ui.intro_scene import TitleScene
+
     GameLoop(TitleScene(pm, strings), pm=pm).run(profile.fullscreen)

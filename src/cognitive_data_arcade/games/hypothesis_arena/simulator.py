@@ -10,22 +10,22 @@ from scipy import stats
 
 @dataclass
 class TwoGroupResult:
-    x_ctrl:   np.ndarray
-    x_treat:  np.ndarray
-    t_stat:   float
-    p_value:  float
+    x_ctrl: np.ndarray
+    x_treat: np.ndarray
+    t_stat: float
+    p_value: float
     cohens_d: float
-    power:    float
+    power: float
 
 
 @dataclass(frozen=True)
 class Scenario:
-    key:        str
-    title_pl:   str
+    key: str
+    title_pl: str
     context_pl: str
-    true_d:     float
-    max_n:      int
-    seed:       int
+    true_d: float
+    max_n: int
+    seed: int
 
 
 def _scenario_seed(key: str) -> int:
@@ -88,7 +88,9 @@ def cohens_d(x1: np.ndarray, x2: np.ndarray) -> float:
     n1, n2 = len(x1), len(x2)
     if n1 < 2 or n2 < 2:
         return 0.0
-    pooled_std = np.sqrt(((n1 - 1) * x1.std(ddof=1) ** 2 + (n2 - 1) * x2.std(ddof=1) ** 2) / (n1 + n2 - 2))
+    pooled_std = np.sqrt(
+        ((n1 - 1) * x1.std(ddof=1) ** 2 + (n2 - 1) * x2.std(ddof=1) ** 2) / (n1 + n2 - 2)
+    )
     if pooled_std < 1e-12:
         # Degenerate case: zero variance — return signed infinity if means differ, else 0
         diff = float(x2.mean() - x1.mean())
@@ -135,7 +137,7 @@ def strength_label(d: float) -> str:
 
 def generate_two_groups(n: int, true_d: float, seed: int) -> TwoGroupResult:
     rng = np.random.default_rng(seed)
-    x_ctrl  = rng.standard_normal(n)
+    x_ctrl = rng.standard_normal(n)
     x_treat = rng.standard_normal(n) + true_d
     t_stat, p_value = stats.ttest_ind(x_ctrl, x_treat)
     d = cohens_d(x_ctrl, x_treat)

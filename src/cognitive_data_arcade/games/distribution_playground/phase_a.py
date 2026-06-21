@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
@@ -12,27 +13,30 @@ from cognitive_data_arcade.engine.context_popup import ContextInfo, ContextPopup
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.distribution_playground.simulator import (
-    SimResult, simulate,
+    SimResult,
+    simulate,
 )
 from cognitive_data_arcade.games.distribution_playground.widgets import (
-    ShapeTab, Slider, SliderSpec,
+    ShapeTab,
+    Slider,
+    SliderSpec,
 )
 
-_BG      = (15, 15, 35)
-_PANEL   = (18, 18, 42)
-_WHITE   = (240, 240, 240)
-_DIM     = (120, 120, 160)
-_ORANGE  = (243, 156, 18)
-_FIG_BG  = "#0f0f23"
-_AX_BG   = "#1a1a3e"
+_BG = (15, 15, 35)
+_PANEL = (18, 18, 42)
+_WHITE = (240, 240, 240)
+_DIM = (120, 120, 160)
+_ORANGE = (243, 156, 18)
+_FIG_BG = "#0f0f23"
+_AX_BG = "#1a1a3e"
 
-_LEFT_W  = 388     # 38% of 1024
-_AREA_H  = 672     # 720 - 48 nav bar
-_TAB_H   = 36
+_LEFT_W = 388  # 38% of 1024
+_AREA_H = 672  # 720 - 48 nav bar
+_TAB_H = 36
 
 _CHART_W = 620
 _CHART_H = 420
-_DPI     = 100
+_DPI = 100
 
 _SLIDERS: dict[str, list[SliderSpec]] = {
     "normal": [
@@ -54,17 +58,45 @@ _SLIDERS: dict[str, list[SliderSpec]] = {
 }
 
 _POPUP_CONTENT: dict[str, ContextInfo] = {
-    "mu":    ContextInfo("Średnia (mu)", "Centrum rozkładu. mu = suma(x) / N", "Przesuwa cały rozkład w lewo/prawo"),
-    "sigma": ContextInfo("Odch. std (sigma)", "Przeciętne odchylenie od średniej.", "Większe sigma -> szerszy, niższy rozkład"),
-    "tau":   ContextInfo("Ogon exp. (tau)", "Średnia składowej wykładniczej w Ex-Gaussian", "Większe tau -> dłuższy ogon prawostronny"),
-    "N":     ContextInfo("Próbka (N)", "Liczba losowanych obserwacji", "Większe N -> bardziej stabilny histogram"),
-    "min":   ContextInfo("Minimum", "Dolna granica rozkładu jednostajnego", "Przesuwa lewy kraniec rozkładu"),
-    "max":   ContextInfo("Maksimum", "Górna granica rozkładu jednostajnego", "Przesuwa prawy kraniec rozkładu"),
-    "mean":  ContextInfo("Średnia próbkowa", "x_sr = suma(x_i) / N", "Czuła na outliery"),
-    "median":ContextInfo("Mediana", "Wartość środkowa po posortowaniu próbki", "Odporna na outliery"),
-    "sd":    ContextInfo("Odchylenie std.", "Przeciętne odchylenie obserwacji od średniej", "Większe SD = szerszy rozkład"),
-    "iqr":   ContextInfo("IQR", "Q3 - Q1: środkowe 50% danych", "Odporny na outliery miernik rozrzutu"),
-    "skew":  ContextInfo("Skośność", "Miara asymetrii. 0=symetryczny, >0=ogon w prawo", "RT-y mają skośność >0 (prawy ogon)"),
+    "mu": ContextInfo(
+        "Średnia (mu)", "Centrum rozkładu. mu = suma(x) / N", "Przesuwa cały rozkład w lewo/prawo"
+    ),
+    "sigma": ContextInfo(
+        "Odch. std (sigma)",
+        "Przeciętne odchylenie od średniej.",
+        "Większe sigma -> szerszy, niższy rozkład",
+    ),
+    "tau": ContextInfo(
+        "Ogon exp. (tau)",
+        "Średnia składowej wykładniczej w Ex-Gaussian",
+        "Większe tau -> dłuższy ogon prawostronny",
+    ),
+    "N": ContextInfo(
+        "Próbka (N)", "Liczba losowanych obserwacji", "Większe N -> bardziej stabilny histogram"
+    ),
+    "min": ContextInfo(
+        "Minimum", "Dolna granica rozkładu jednostajnego", "Przesuwa lewy kraniec rozkładu"
+    ),
+    "max": ContextInfo(
+        "Maksimum", "Górna granica rozkładu jednostajnego", "Przesuwa prawy kraniec rozkładu"
+    ),
+    "mean": ContextInfo("Średnia próbkowa", "x_sr = suma(x_i) / N", "Czuła na outliery"),
+    "median": ContextInfo(
+        "Mediana", "Wartość środkowa po posortowaniu próbki", "Odporna na outliery"
+    ),
+    "sd": ContextInfo(
+        "Odchylenie std.",
+        "Przeciętne odchylenie obserwacji od średniej",
+        "Większe SD = szerszy rozkład",
+    ),
+    "iqr": ContextInfo(
+        "IQR", "Q3 - Q1: środkowe 50% danych", "Odporny na outliery miernik rozrzutu"
+    ),
+    "skew": ContextInfo(
+        "Skośność",
+        "Miara asymetrii. 0=symetryczny, >0=ogon w prawo",
+        "RT-y mają skośność >0 (prawy ogon)",
+    ),
 }
 
 
@@ -99,8 +131,7 @@ class PhaseAScene(Scene):
         dist = self._tabs.dist_type
         specs = _SLIDERS[dist]
         self._sliders = [
-            Slider(spec, x=20, y=80 + i * 58, w=_LEFT_W - 40)
-            for i, spec in enumerate(specs)
+            Slider(spec, x=20, y=80 + i * 58, w=_LEFT_W - 40) for i, spec in enumerate(specs)
         ]
         self._register_slider_popups()
 
@@ -119,8 +150,7 @@ class PhaseAScene(Scene):
     def _get_params(self) -> dict[str, float]:
         dist = self._tabs.dist_type
         specs = _SLIDERS[dist]
-        return {_param_key(spec.label): float(sl.value)
-                for spec, sl in zip(specs, self._sliders)}
+        return {_param_key(spec.label): float(sl.value) for spec, sl in zip(specs, self._sliders)}
 
     def _resimulate(self) -> None:
         self._result = simulate(self._tabs.dist_type, self._get_params(), rng_seed=self._seed)
@@ -183,9 +213,9 @@ def _draw_stats(surface: pygame.Surface, r: SimResult, y: int) -> None:
     stats = [
         ("Średnia", f"{r.mean:.1f} ms"),
         ("Mediana", f"{r.median:.1f} ms"),
-        ("SD",      f"{r.sd:.1f} ms"),
-        ("IQR",     f"{r.iqr:.1f} ms"),
-        ("Skośność",f"{r.skewness:.2f}"),
+        ("SD", f"{r.sd:.1f} ms"),
+        ("IQR", f"{r.iqr:.1f} ms"),
+        ("Skośność", f"{r.skewness:.2f}"),
     ]
     for i, (lbl, val) in enumerate(stats):
         col_x = 12 + (i % 2) * 160
@@ -194,11 +224,9 @@ def _draw_stats(surface: pygame.Surface, r: SimResult, y: int) -> None:
 
 
 def _render_chart(r: SimResult) -> pygame.Surface:
-    fig, ax = plt.subplots(facecolor=_FIG_BG,
-                           figsize=(_CHART_W / _DPI, _CHART_H / _DPI), dpi=_DPI)
+    fig, ax = plt.subplots(facecolor=_FIG_BG, figsize=(_CHART_W / _DPI, _CHART_H / _DPI), dpi=_DPI)
     ax.set_facecolor(_AX_BG)
-    ax.hist(r.samples, bins="auto", density=True,
-            color="#3498db", alpha=0.7, edgecolor="none")
+    ax.hist(r.samples, bins="auto", density=True, color="#3498db", alpha=0.7, edgecolor="none")
     ax.tick_params(colors="#787890")
     for spine in ax.spines.values():
         spine.set_color("#2a2a50")

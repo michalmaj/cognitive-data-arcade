@@ -4,6 +4,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
@@ -14,17 +15,17 @@ from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.overfitting_monster.scenarios import Scenario
 
-_BG     = (15, 15, 35)
-_PANEL  = (18, 18, 42)
-_WHITE  = (240, 240, 240)
-_DIM    = (120, 120, 160)
-_GREEN  = (39, 174, 96)
-_RED    = (231, 76, 60)
-_BLUE   = (52, 152, 219)
+_BG = (15, 15, 35)
+_PANEL = (18, 18, 42)
+_WHITE = (240, 240, 240)
+_DIM = (120, 120, 160)
+_GREEN = (39, 174, 96)
+_RED = (231, 76, 60)
+_BLUE = (52, 152, 219)
 _YELLOW = (243, 156, 18)
 _ORANGE = (230, 126, 34)
 _FIG_BG = "#0f0f23"
-_AX_BG  = "#1a1a3e"
+_AX_BG = "#1a1a3e"
 
 _W, _H = 1024, 720
 _TOP_H = 40
@@ -85,17 +86,39 @@ def _render_boundary(d: RoundDisplay) -> pygame.Surface:
 
     for cls, color in [(0, "#e74c3c"), (1, "#3498db")]:
         mask = d.y_train == cls
-        ax.scatter(d.X_train[mask, 0], d.X_train[mask, 1],
-                   c=color, s=25, edgecolors="white", linewidths=0.4, zorder=3)
+        ax.scatter(
+            d.X_train[mask, 0],
+            d.X_train[mask, 1],
+            c=color,
+            s=25,
+            edgecolors="white",
+            linewidths=0.4,
+            zorder=3,
+        )
         mask_te = d.y_test == cls
-        ax.scatter(d.X_test[mask_te, 0], d.X_test[mask_te, 1],
-                   c=color, marker="D", s=30, edgecolors="white", linewidths=0.4, zorder=3)
+        ax.scatter(
+            d.X_test[mask_te, 0],
+            d.X_test[mask_te, 1],
+            c=color,
+            marker="D",
+            s=30,
+            edgecolors="white",
+            linewidths=0.4,
+            zorder=3,
+        )
 
     pred_test = clf.predict(d.X_test)
     wrong = pred_test != d.y_test
     if wrong.any():
-        ax.scatter(d.X_test[wrong, 0], d.X_test[wrong, 1],
-                   c="white", marker="x", s=55, linewidths=1.5, zorder=5)
+        ax.scatter(
+            d.X_test[wrong, 0],
+            d.X_test[wrong, 1],
+            c="white",
+            marker="x",
+            s=55,
+            linewidths=1.5,
+            zorder=5,
+        )
 
     ax.set_xlim(0, 1)
     ax.set_ylim(0, 1)
@@ -103,7 +126,9 @@ def _render_boundary(d: RoundDisplay) -> pygame.Surface:
     ax.set_yticks([])
     ax.set_title(
         f"k={d.k}  |  trening: krazki  |  test: romby  |  x = blad",
-        color="#787890", fontsize=7, pad=2,
+        color="#787890",
+        fontsize=7,
+        pad=2,
     )
     for spine in ax.spines.values():
         spine.set_edgecolor("#2a2a50")
@@ -145,6 +170,7 @@ class PhaseRoundResultScene(Scene):
             from cognitive_data_arcade.games.overfitting_monster.phase_session_result import (
                 PhaseSessionResultScene,
             )
+
             self._next = PhaseSessionResultScene(
                 session_score=self._session_score,
                 round_results=self._round_results,
@@ -152,6 +178,7 @@ class PhaseRoundResultScene(Scene):
         else:
             from cognitive_data_arcade.games.overfitting_monster.phase_draw import PhaseDrawScene
             from cognitive_data_arcade.games.overfitting_monster.scenarios import SCENARIOS
+
             next_idx = self._round_idx + 1
             self._next = PhaseDrawScene(
                 scenario=SCENARIOS[self._scenario_order[next_idx]],
@@ -174,7 +201,8 @@ class PhaseRoundResultScene(Scene):
         pygame.draw.rect(surface, _PANEL, (0, 0, _W, _TOP_H))
         strip = get_font(18).render(
             f"Runda {self._round_idx + 1}/{_TOTAL_ROUNDS}  -  {d.scenario.name_pl}  -  Wyniki",
-            True, _WHITE,
+            True,
+            _WHITE,
         )
         surface.blit(strip, (_W // 2 - strip.get_width() // 2, 10))
 
@@ -210,8 +238,9 @@ class PhaseRoundResultScene(Scene):
             surface.blit(lbl, (rx, y))
             bw = int(bar_max * acc)
             if bw > 0:
-                pygame.draw.rect(surface, color,
-                                  pygame.Rect(rx + 58, y + 2, bw, 14), border_radius=3)
+                pygame.draw.rect(
+                    surface, color, pygame.Rect(rx + 58, y + 2, bw, 14), border_radius=3
+                )
             pct = get_font(12).render(f"{acc:.0%}", True, color)
             surface.blit(pct, (rx + 60 + bar_max, y + 1))
             y += 26
@@ -223,7 +252,7 @@ class PhaseRoundResultScene(Scene):
         y += 28
 
         # Stars (ASCII)
-        star_str = ("xxx" if d.stars == 3 else "xx." if d.stars == 2 else "x..")
+        star_str = "xxx" if d.stars == 3 else "xx." if d.stars == 2 else "x.."
         bonus_pts = {3: 20, 2: 10, 1: 0}[d.stars]
         star_surf = get_font(20).render(star_str, True, _YELLOW)
         surface.blit(star_surf, (rx, y))
@@ -251,7 +280,8 @@ class PhaseRoundResultScene(Scene):
         # Params recap
         params = get_font(11).render(
             f"k={d.k}  |  podzial: {d.split_pct}% / {100 - d.split_pct}%",
-            True, _DIM,
+            True,
+            _DIM,
         )
         surface.blit(params, (rx, y))
 

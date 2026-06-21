@@ -12,32 +12,32 @@ from cognitive_data_arcade.engine.scrollbar import ScrollBar
 from cognitive_data_arcade.profile.manager import ProfileManager
 
 # ── Layout ──────────────────────────────────────────────────────────────────
-_W, _H        = 1024, 640
-_TOPBAR_H     = 56
-_HINTBAR_H    = 28
-_SIDEBAR_W    = 340
-_SIDEBAR_H    = _H - _TOPBAR_H - _HINTBAR_H    # 556
-_PANEL_X      = _SIDEBAR_W + 1                  # 341
-_PANEL_W      = _W - _PANEL_X                   # 683
-_SB_TRACK_W   = 4
-_SB_X         = _SIDEBAR_W - _SB_TRACK_W - 2   # 334
+_W, _H = 1024, 640
+_TOPBAR_H = 56
+_HINTBAR_H = 28
+_SIDEBAR_W = 340
+_SIDEBAR_H = _H - _TOPBAR_H - _HINTBAR_H  # 556
+_PANEL_X = _SIDEBAR_W + 1  # 341
+_PANEL_W = _W - _PANEL_X  # 683
+_SB_TRACK_W = 4
+_SB_X = _SIDEBAR_W - _SB_TRACK_W - 2  # 334
 
 # ── Palette ─────────────────────────────────────────────────────────────────
-_C_BG          = (13, 15, 26)
-_C_SURFACE     = (22, 24, 40)
-_C_SURFACE2    = (30, 32, 56)
-_C_ACCENT      = (99, 102, 241)
-_C_ACCENT_LIGHT= (129, 140, 248)
-_C_ACCENT_BG   = (20, 22, 52)
-_C_HOVER_BG    = (19, 21, 34)
-_C_TEXT        = (240, 241, 255)
-_C_TEXT_DIM    = (90, 96, 144)
-_C_TEXT_DARK   = (61, 64, 96)
-_C_TEXT_XDARK  = (45, 48, 82)
+_C_BG = (13, 15, 26)
+_C_SURFACE = (22, 24, 40)
+_C_SURFACE2 = (30, 32, 56)
+_C_ACCENT = (99, 102, 241)
+_C_ACCENT_LIGHT = (129, 140, 248)
+_C_ACCENT_BG = (20, 22, 52)
+_C_HOVER_BG = (19, 21, 34)
+_C_TEXT = (240, 241, 255)
+_C_TEXT_DIM = (90, 96, 144)
+_C_TEXT_DARK = (61, 64, 96)
+_C_TEXT_XDARK = (45, 48, 82)
 
 _TYPE_COLORS: dict[str, tuple[int, int, int]] = {
     "arcade": _C_ACCENT,
-    "lab":    (34, 211, 238),
+    "lab": (34, 211, 238),
     "puzzle": (251, 191, 36),
 }
 
@@ -45,7 +45,9 @@ _TYPE_COLORS: dict[str, tuple[int, int, int]] = {
 _LESSON_DATA: list[dict] = [
     # ── Module 1 ──
     {
-        "num": 1, "name": "Big Data in Cognitive Science", "type": "lab",
+        "num": 1,
+        "name": "Big Data in Cognitive Science",
+        "type": "lab",
         "desc_pl": (
             "Skąd pochodzi big data w nauce kognitywnej?\n"
             "Odkryj, jak dane z tysięcy uczestników\n"
@@ -58,7 +60,9 @@ _LESSON_DATA: list[dict] = [
         ),
     },
     {
-        "num": 2, "name": "Reaction Time Lab", "type": "arcade",
+        "num": 2,
+        "name": "Reaction Time Lab",
+        "type": "arcade",
         "desc_pl": (
             "Jak szybko reagujesz na bodziec wizualny?\n"
             "Naciśnij SPACJĘ gdy zaświeci kółko — mierzysz\n"
@@ -71,7 +75,9 @@ _LESSON_DATA: list[dict] = [
         ),
     },
     {
-        "num": 3, "name": "Event Log Detective", "type": "puzzle",
+        "num": 3,
+        "name": "Event Log Detective",
+        "type": "puzzle",
         "desc_pl": (
             "Detektyw danych: zbadaj zdarzenia w logu\n"
             "eksperymentu i wykryj co poszło nie tak.\n"
@@ -84,7 +90,9 @@ _LESSON_DATA: list[dict] = [
         ),
     },
     {
-        "num": 4, "name": "Data Quality Lab", "type": "lab",
+        "num": 4,
+        "name": "Data Quality Lab",
+        "type": "lab",
         "desc_pl": (
             "Czy Twoje dane są gotowe do analizy?\n"
             "Wykryj błędy, wartości odstające i braki\n"
@@ -97,7 +105,9 @@ _LESSON_DATA: list[dict] = [
         ),
     },
     {
-        "num": 6, "name": "EDA Sandbox", "type": "lab",
+        "num": 6,
+        "name": "EDA Sandbox",
+        "type": "lab",
         "desc_pl": (
             "Zanim uruchomisz model — poznaj swoje dane.\n"
             "Eksploruj rozkłady, korelacje i wzorce\n"
@@ -111,7 +121,9 @@ _LESSON_DATA: list[dict] = [
     },
     # ── Module 2 ──
     {
-        "num": 7, "name": "Stroop Challenge", "type": "arcade",
+        "num": 7,
+        "name": "Stroop Challenge",
+        "type": "arcade",
         "desc_pl": (
             "Nazwij kolor tuszu — nie słowo!\n"
             "Efekt Stroopa mierzy konflikt poznawczy\n"
@@ -124,7 +136,9 @@ _LESSON_DATA: list[dict] = [
         ),
     },
     {
-        "num": 8, "name": "Flanker Arena", "type": "arcade",
+        "num": 8,
+        "name": "Flanker Arena",
+        "type": "arcade",
         "desc_pl": (
             "Ignoruj otaczające strzałki, reaguj na środek.\n"
             "Zadanie Eriksena testuje selektywną uwagę\n"
@@ -137,7 +151,9 @@ _LESSON_DATA: list[dict] = [
         ),
     },
     {
-        "num": 9, "name": "Go/No-Go Guard", "type": "arcade",
+        "num": 9,
+        "name": "Go/No-Go Guard",
+        "type": "arcade",
         "desc_pl": (
             "Reaguj na zielony sygnał, hamuj na czerwony.\n"
             "Mierz czas reakcji i kontrolę impulsów —\n"
@@ -150,7 +166,9 @@ _LESSON_DATA: list[dict] = [
         ),
     },
     {
-        "num": 10, "name": "N-Back Memory Grid", "type": "arcade",
+        "num": 10,
+        "name": "N-Back Memory Grid",
+        "type": "arcade",
         "desc_pl": (
             "Czy ta figura pojawiała się N kroków temu?\n"
             "N-Back obciąża pamięć roboczą i testuje\n"
@@ -163,7 +181,9 @@ _LESSON_DATA: list[dict] = [
         ),
     },
     {
-        "num": 11, "name": "Visual Search Lab", "type": "arcade",
+        "num": 11,
+        "name": "Visual Search Lab",
+        "type": "arcade",
         "desc_pl": (
             "Znajdź cel ukryty wśród dystraktorów.\n"
             "Czas przeszukiwania ujawnia strategie uwagi\n"
@@ -176,7 +196,9 @@ _LESSON_DATA: list[dict] = [
         ),
     },
     {
-        "num": 12, "name": "Cognitive Dashboard", "type": "lab",
+        "num": 12,
+        "name": "Cognitive Dashboard",
+        "type": "lab",
         "desc_pl": (
             "Zestawienie Twoich wyników z wszystkich\n"
             "gier kognitywnych. Porównaj swój profil\n"
@@ -190,7 +212,9 @@ _LESSON_DATA: list[dict] = [
     },
     # ── Module 3 ──
     {
-        "num": 13, "name": "Distribution Playground", "type": "lab",
+        "num": 13,
+        "name": "Distribution Playground",
+        "type": "lab",
         "desc_pl": (
             "Zmień parametry, obserwuj jak zmienia się rozkład.\n"
             "Normalne, Poissona, t-Studenta — intuicyjnie\n"
@@ -203,7 +227,9 @@ _LESSON_DATA: list[dict] = [
         ),
     },
     {
-        "num": 14, "name": "Correlation Trap", "type": "lab",
+        "num": 14,
+        "name": "Correlation Trap",
+        "type": "lab",
         "desc_pl": (
             "Korelacja to nie przyczynowość! Odkryj\n"
             "fałszywe zależności w danych i naucz się\n"
@@ -216,7 +242,9 @@ _LESSON_DATA: list[dict] = [
         ),
     },
     {
-        "num": 15, "name": "Hypothesis Arena", "type": "lab",
+        "num": 15,
+        "name": "Hypothesis Arena",
+        "type": "lab",
         "desc_pl": (
             "Testuj hipotezy na symulowanych danych.\n"
             "Poznaj p-value, poziom istotności i moc testu —\n"
@@ -229,7 +257,9 @@ _LESSON_DATA: list[dict] = [
         ),
     },
     {
-        "num": 16, "name": "Prediction Slider", "type": "lab",
+        "num": 16,
+        "name": "Prediction Slider",
+        "type": "lab",
         "desc_pl": (
             "Przesuń suwakiem i przewiduj wyniki.\n"
             "Odkryj, jak model liniowy minimalizuje błąd\n"
@@ -243,7 +273,9 @@ _LESSON_DATA: list[dict] = [
     },
     # ── Module 4 ──
     {
-        "num": 17, "name": "Feature Hunter", "type": "arcade",
+        "num": 17,
+        "name": "Feature Hunter",
+        "type": "arcade",
         "desc_pl": (
             "Które cechy najbardziej wpływają na predykcję?\n"
             "Odkryj ważność zmiennych przez eliminację\n"
@@ -256,7 +288,9 @@ _LESSON_DATA: list[dict] = [
         ),
     },
     {
-        "num": 18, "name": "Classifier Battle", "type": "arcade",
+        "num": 18,
+        "name": "Classifier Battle",
+        "type": "arcade",
         "desc_pl": (
             "Wybierz klasyfikator, dostosuj hiperparametry.\n"
             "Porównaj SVM, las losowy i sieć neuronową\n"
@@ -269,7 +303,9 @@ _LESSON_DATA: list[dict] = [
         ),
     },
     {
-        "num": 19, "name": "Overfitting Monster", "type": "arcade",
+        "num": 19,
+        "name": "Overfitting Monster",
+        "type": "arcade",
         "desc_pl": (
             "Czy Twój model zapamiętał dane treningowe?\n"
             "Odkryj overfitting przez krzywą uczenia\n"
@@ -282,7 +318,9 @@ _LESSON_DATA: list[dict] = [
         ),
     },
     {
-        "num": 20, "name": "Anomaly Alert", "type": "arcade",
+        "num": 20,
+        "name": "Anomaly Alert",
+        "type": "arcade",
         "desc_pl": (
             "Wykryj anomalie w strumieniu danych.\n"
             "Poznaj algorytmy detekcji wartości odstających\n"
@@ -296,7 +334,9 @@ _LESSON_DATA: list[dict] = [
     },
     # ── Module 5 ──
     {
-        "num": 21, "name": "Text Tokenizer Lab", "type": "lab",
+        "num": 21,
+        "name": "Text Tokenizer Lab",
+        "type": "lab",
         "desc_pl": (
             "Jak komputer widzi tekst? Tokenizuj zdania,\n"
             "usuń stop words, stwórz bag-of-words —\n"
@@ -309,7 +349,9 @@ _LESSON_DATA: list[dict] = [
         ),
     },
     {
-        "num": 22, "name": "Word Weight Factory", "type": "lab",
+        "num": 22,
+        "name": "Word Weight Factory",
+        "type": "lab",
         "desc_pl": (
             "TF-IDF waży słowa według ważności.\n"
             "Odkryj, które słowa najlepiej opisują dokument\n"
@@ -322,7 +364,9 @@ _LESSON_DATA: list[dict] = [
         ),
     },
     {
-        "num": 23, "name": "Emotion Classifier", "type": "lab",
+        "num": 23,
+        "name": "Emotion Classifier",
+        "type": "lab",
         "desc_pl": (
             "Czy komputer rozpozna emocje w tekście?\n"
             "Wytrenuj i oceń klasyfikator uczuć\n"
@@ -335,7 +379,9 @@ _LESSON_DATA: list[dict] = [
         ),
     },
     {
-        "num": 24, "name": "Semantic Space Explorer", "type": "lab",
+        "num": 24,
+        "name": "Semantic Space Explorer",
+        "type": "lab",
         "desc_pl": (
             "Zbadaj przestrzeń semantyczną słów.\n"
             "Odkryj jak word embeddings reprezentują\n"
@@ -348,7 +394,9 @@ _LESSON_DATA: list[dict] = [
         ),
     },
     {
-        "num": 25, "name": "Topic Detective", "type": "puzzle",
+        "num": 25,
+        "name": "Topic Detective",
+        "type": "puzzle",
         "desc_pl": (
             "Jakie tematy kryją się w korpusie tekstów?\n"
             "Użyj LDA do odkrycia ukrytych tematów\n"
@@ -361,7 +409,9 @@ _LESSON_DATA: list[dict] = [
         ),
     },
     {
-        "num": 26, "name": "Human vs Model", "type": "arcade",
+        "num": 26,
+        "name": "Human vs Model",
+        "type": "arcade",
         "desc_pl": (
             "Czy model językowy przechytrzy Ciebie?\n"
             "Porównaj swoje klasyfikacje z modelem\n"
@@ -375,7 +425,9 @@ _LESSON_DATA: list[dict] = [
     },
     # ── Module 6 ──
     {
-        "num": 27, "name": "Social Network Simulator", "type": "lab",
+        "num": 27,
+        "name": "Social Network Simulator",
+        "type": "lab",
         "desc_pl": (
             "Jak informacja rozprzestrzenia się w sieci?\n"
             "Symuluj model SIR na grafie społecznym\n"
@@ -388,7 +440,9 @@ _LESSON_DATA: list[dict] = [
         ),
     },
     {
-        "num": 28, "name": "Misinformation Spread", "type": "arcade",
+        "num": 28,
+        "name": "Misinformation Spread",
+        "type": "arcade",
         "desc_pl": (
             "Powstrzymaj fake newsy zanim się rozejdą!\n"
             "Decyduj co moderować w sieci społecznej —\n"
@@ -401,7 +455,9 @@ _LESSON_DATA: list[dict] = [
         ),
     },
     {
-        "num": 29, "name": "Recommendation Bubble", "type": "lab",
+        "num": 29,
+        "name": "Recommendation Bubble",
+        "type": "lab",
         "desc_pl": (
             "Czy algorytmy rekomendacji tworzą bańkę filtrującą?\n"
             "Symuluj personalizację treści i zmierz\n"
@@ -414,7 +470,9 @@ _LESSON_DATA: list[dict] = [
         ),
     },
     {
-        "num": 30, "name": "Bias Blind Spot", "type": "puzzle",
+        "num": 30,
+        "name": "Bias Blind Spot",
+        "type": "puzzle",
         "desc_pl": (
             "Czy rozpoznasz bias w projekcie badania?\n"
             "Zidentyfikuj ukryte założenia i błędy metodologiczne\n"
@@ -427,7 +485,9 @@ _LESSON_DATA: list[dict] = [
         ),
     },
     {
-        "num": 32, "name": "The Architect's Trial", "type": "arcade",
+        "num": 32,
+        "name": "The Architect's Trial",
+        "type": "arcade",
         "desc_pl": (
             "Finalne wyzwanie: zaprojektuj własne badanie.\n"
             "Połącz wiedzę ze wszystkich modułów\n"
@@ -440,7 +500,9 @@ _LESSON_DATA: list[dict] = [
         ),
     },
     {
-        "num": 31, "name": "You Were the Dataset", "type": "lab",
+        "num": 31,
+        "name": "You Were the Dataset",
+        "type": "lab",
         "desc_pl": (
             "Przez cały kurs byłeś częścią datasetu.\n"
             "Przeanalizuj swoje własne dane kognitywne\n"
@@ -457,12 +519,12 @@ _LESSON_DATA: list[dict] = [
 # ── Module structure ──────────────────────────────────────────────────────────
 # (header_pl, header_en, start_idx_in_LESSON_DATA, count)
 _MODULES: list[tuple[str, str, int, int]] = [
-    ("Modul 1 · Dane i Podstawy",         "Module 1 · Data Basics",             0,  5),
-    ("Modul 2 · Eksperymenty Kognitywne", "Module 2 · Cognitive Experiments",   5,  6),
-    ("Modul 3 · Statystyka",              "Module 3 · Statistics",             11,  4),
-    ("Modul 4 · Machine Learning",        "Module 4 · Machine Learning",       15,  4),
-    ("Modul 5 · Jezyk i NLP",             "Module 5 · Language & NLP",         19,  6),
-    ("Modul 6 · Sieci Etyka i Final",     "Module 6 · Networks, Ethics & Finale", 25, 6),
+    ("Modul 1 · Dane i Podstawy", "Module 1 · Data Basics", 0, 5),
+    ("Modul 2 · Eksperymenty Kognitywne", "Module 2 · Cognitive Experiments", 5, 6),
+    ("Modul 3 · Statystyka", "Module 3 · Statistics", 11, 4),
+    ("Modul 4 · Machine Learning", "Module 4 · Machine Learning", 15, 4),
+    ("Modul 5 · Jezyk i NLP", "Module 5 · Language & NLP", 19, 6),
+    ("Modul 6 · Sieci Etyka i Final", "Module 6 · Networks, Ethics & Finale", 25, 6),
 ]
 
 # ── Virtual sidebar row list ───────────────────────────────────────────────────
@@ -470,7 +532,7 @@ _MODULES: list[tuple[str, str, int, int]] = [
 #   kind="header" → param = module index (0-5)
 #   kind="item"   → param = _LESSON_DATA index (0-30)
 _H_MODULE_ROW = 32
-_H_ITEM_ROW   = 36
+_H_ITEM_ROW = 36
 
 _VIRTUAL_ROWS: list[tuple[str, int, int, int]] = []
 _vy = 0
@@ -493,9 +555,10 @@ _ITEM_COLOR = (160, 160, 160)
 _HIGHLIGHT_COLOR = (243, 156, 18)
 
 
-
 class LessonMenuScene(Scene):
-    def __init__(self, profile_manager: ProfileManager, strings: Strings, selected: int = 0) -> None:
+    def __init__(
+        self, profile_manager: ProfileManager, strings: Strings, selected: int = 0
+    ) -> None:
         self._pm = profile_manager
         self._strings = strings
         self._selected = selected
@@ -524,16 +587,16 @@ class LessonMenuScene(Scene):
         audio.play_music("menu")
         pygame.font.init()
         self._font_topbar_title = get_font_medium(28)
-        self._font_topbar_sub   = get_font(16)
-        self._font_mod_header   = get_font(13)
-        self._font_item_num     = get_font(14)
-        self._font_item_name    = get_font(18)
+        self._font_topbar_sub = get_font(16)
+        self._font_mod_header = get_font(13)
+        self._font_item_num = get_font(14)
+        self._font_item_name = get_font(18)
         self._font_panel_module = get_font(14)
-        self._font_panel_badge  = get_font(15)
-        self._font_panel_title  = get_font_medium(38)
-        self._font_panel_desc   = get_font(18)
-        self._font_btn          = get_font_medium(18)
-        self._font_hintbar      = get_font(14)
+        self._font_panel_badge = get_font(15)
+        self._font_panel_title = get_font_medium(38)
+        self._font_panel_desc = get_font(18)
+        self._font_btn = get_font_medium(18)
+        self._font_hintbar = get_font(14)
 
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.KEYDOWN:
@@ -562,14 +625,18 @@ class LessonMenuScene(Scene):
             if self._teoria_available():
                 lesson_num = _LESSON_DATA[self._selected]["num"]
                 from cognitive_data_arcade.ui.lesson_reader import LessonReaderScene
+
                 back = LessonMenuScene(self._pm, self._strings, self._selected)
                 self._next = LessonReaderScene(
-                    lesson_num, self._strings, back,
+                    lesson_num,
+                    self._strings,
+                    back,
                     play_factory=self._game_factory_for(lesson_num),
                 )
                 self._done = True
         elif event.key == pygame.K_p:
             from cognitive_data_arcade.ui.profile_screen import ProfileScene
+
             back = LessonMenuScene(self._pm, self._strings, self._selected)
             self._next = ProfileScene(self._pm, self._strings, back)
             self._done = True
@@ -579,11 +646,13 @@ class LessonMenuScene(Scene):
             self._strings = get_strings(new_lang)
         elif event.key == pygame.K_a:
             from cognitive_data_arcade.ui.session_picker import SessionPickerScene
+
             sessions_dir = Path("data") / "generated" / "reaction_time"
             self._next = SessionPickerScene(sessions_dir, self._strings, self._pm)
             self._done = True
         elif event.key == pygame.K_o:
             from cognitive_data_arcade.ui.options_scene import OptionsScene
+
             back = LessonMenuScene(self._pm, self._strings, self._selected)
             self._next = OptionsScene(self._pm, self._strings, back)
             self._done = True
@@ -617,9 +686,12 @@ class LessonMenuScene(Scene):
         ):
             lesson_num = _LESSON_DATA[self._selected]["num"]
             from cognitive_data_arcade.ui.lesson_reader import LessonReaderScene
+
             back = LessonMenuScene(self._pm, self._strings, self._selected)
             self._next = LessonReaderScene(
-                lesson_num, self._strings, back,
+                lesson_num,
+                self._strings,
+                back,
                 play_factory=self._game_factory_for(lesson_num),
             )
             self._done = True
@@ -709,10 +781,9 @@ class LessonMenuScene(Scene):
 
     def _teoria_available(self) -> bool:
         import importlib.util
+
         lesson_num = _LESSON_DATA[self._selected]["num"]
-        spec = importlib.util.find_spec(
-            f"cognitive_data_arcade.lessons.lesson_{lesson_num:02d}"
-        )
+        spec = importlib.util.find_spec(f"cognitive_data_arcade.lessons.lesson_{lesson_num:02d}")
         return spec is not None
 
     def _game_factory_for(self, lesson_num: int):
@@ -725,6 +796,7 @@ class LessonMenuScene(Scene):
 
             def _make_eld() -> Scene:
                 from cognitive_data_arcade.ui.event_log_level_scene import EventLogLevelScene
+
                 return EventLogLevelScene(pm, strings)
 
             return _make_eld
@@ -734,39 +806,61 @@ class LessonMenuScene(Scene):
             return self._make_eda_game
         if lesson_num == 7:
             pm, strings = self._pm, self._strings
+
             def _make_stroop():
                 from cognitive_data_arcade.ui.stroop_level_scene import StroopLevelScene
+
                 return StroopLevelScene(pm, strings)
+
             return _make_stroop
         if lesson_num == 8:
             pm, strings = self._pm, self._strings
+
             def _make_flanker():
                 from cognitive_data_arcade.ui.flanker_level_scene import FlankerLevelScene
+
                 return FlankerLevelScene(pm, strings)
+
             return _make_flanker
         if lesson_num == 9:
             pm, strings = self._pm, self._strings
+
             def _make_gono():
                 from cognitive_data_arcade.ui.gono_level_scene import GoNoGoLevelScene
+
                 return GoNoGoLevelScene(pm, strings)
+
             return _make_gono
         if lesson_num == 10:
             pm, strings = self._pm, self._strings
+
             def _make_nback():
                 from cognitive_data_arcade.ui.nback_level_scene import NBackLevelScene
+
                 return NBackLevelScene(pm, strings)
+
             return _make_nback
         if lesson_num == 11:
             pm, strings = self._pm, self._strings
+
             def _make_vs() -> Scene:
-                from cognitive_data_arcade.ui.visual_search_level_scene import VisualSearchLevelScene
+                from cognitive_data_arcade.ui.visual_search_level_scene import (
+                    VisualSearchLevelScene,
+                )
+
                 return VisualSearchLevelScene(pm, strings)
+
             return _make_vs
         if lesson_num == 12:
             pm, strings = self._pm, self._strings
+
             def _make_cd() -> Scene:
-                from cognitive_data_arcade.games.cognitive_dashboard.mode_scene import CognitiveDashboardModeScene
+                from cognitive_data_arcade.games.cognitive_dashboard.mode_scene import (
+                    CognitiveDashboardModeScene,
+                )
+
                 return CognitiveDashboardModeScene(pm, strings)
+
             return _make_cd
         if lesson_num == 13:
             return self._make_distribution_playground
@@ -855,13 +949,9 @@ class LessonMenuScene(Scene):
         pid = profile.device_uuid
         sid = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
         csv_path = Path("data") / "generated" / "reaction_time" / f"{sid}.csv"
-        inner = ReactionTimeGame(
-            DEFAULT_CONFIG, self._pm, self._strings, pid, sid, csv_path
-        )
+        inner = ReactionTimeGame(DEFAULT_CONFIG, self._pm, self._strings, pid, sid, csv_path)
         game_info = get_game_info(self._strings)
-        pausable = PausableGame(
-            inner, game_info, self._make_rt_lab_game, self._strings, self._pm
-        )
+        pausable = PausableGame(inner, game_info, self._make_rt_lab_game, self._strings, self._pm)
         return HowToPlayScene(
             game_info,
             self._strings,
@@ -897,9 +987,7 @@ class LessonMenuScene(Scene):
 
         inner = EDAScene()
         game_info = get_game_info(self._strings)
-        pausable = PausableGame(
-            inner, game_info, self._make_eda_game, self._strings, self._pm
-        )
+        pausable = PausableGame(inner, game_info, self._make_eda_game, self._strings, self._pm)
         return HowToPlayScene(
             game_info,
             self._strings,
@@ -946,6 +1034,7 @@ class LessonMenuScene(Scene):
 
     def _make_visual_search_game(self) -> Scene:
         from cognitive_data_arcade.ui.visual_search_level_scene import VisualSearchLevelScene
+
         return VisualSearchLevelScene(self._pm, self._strings)
 
     def _launch_cognitive_dashboard(self) -> None:
@@ -956,6 +1045,7 @@ class LessonMenuScene(Scene):
         from cognitive_data_arcade.games.cognitive_dashboard.mode_scene import (
             CognitiveDashboardModeScene,
         )
+
         return CognitiveDashboardModeScene(self._pm, self._strings)
 
     def _launch_distribution_playground(self) -> None:
@@ -968,10 +1058,12 @@ class LessonMenuScene(Scene):
         from cognitive_data_arcade.games.distribution_playground.scene import (
             DistributionPlaygroundScene,
         )
+
         inner = DistributionPlaygroundScene()
         game_info = get_game_info(self._strings)
-        return PausableGame(inner, game_info, self._make_distribution_playground,
-                            self._strings, self._pm)
+        return PausableGame(
+            inner, game_info, self._make_distribution_playground, self._strings, self._pm
+        )
 
     def _launch_correlation_trap(self) -> None:
         self._next = self._make_correlation_trap()
@@ -983,10 +1075,10 @@ class LessonMenuScene(Scene):
         from cognitive_data_arcade.games.correlation_trap.scene import (
             CorrelationTrapScene,
         )
+
         inner = CorrelationTrapScene()
         game_info = get_game_info(self._strings)
-        return PausableGame(inner, game_info, self._make_correlation_trap,
-                            self._strings, self._pm)
+        return PausableGame(inner, game_info, self._make_correlation_trap, self._strings, self._pm)
 
     def _launch_hypothesis_arena(self) -> None:
         self._next = self._make_hypothesis_arena()
@@ -996,10 +1088,10 @@ class LessonMenuScene(Scene):
         from cognitive_data_arcade.engine.pause import PausableGame
         from cognitive_data_arcade.games.hypothesis_arena.info import get_game_info
         from cognitive_data_arcade.games.hypothesis_arena.scene import HypothesisArenaScene
+
         inner = HypothesisArenaScene()
         game_info = get_game_info(self._strings)
-        return PausableGame(inner, game_info, self._make_hypothesis_arena,
-                            self._strings, self._pm)
+        return PausableGame(inner, game_info, self._make_hypothesis_arena, self._strings, self._pm)
 
     def _launch_prediction_slider(self) -> None:
         self._next = self._make_prediction_slider()
@@ -1009,10 +1101,10 @@ class LessonMenuScene(Scene):
         from cognitive_data_arcade.engine.pause import PausableGame
         from cognitive_data_arcade.games.prediction_slider.info import get_game_info
         from cognitive_data_arcade.games.prediction_slider.scene import PredictionSliderScene
+
         inner = PredictionSliderScene()
         game_info = get_game_info(self._strings)
-        return PausableGame(inner, game_info, self._make_prediction_slider,
-                            self._strings, self._pm)
+        return PausableGame(inner, game_info, self._make_prediction_slider, self._strings, self._pm)
 
     def _launch_feature_hunter(self) -> None:
         self._next = self._make_feature_hunter()
@@ -1022,10 +1114,10 @@ class LessonMenuScene(Scene):
         from cognitive_data_arcade.engine.pause import PausableGame
         from cognitive_data_arcade.games.feature_hunter.game import FeatHunterScene
         from cognitive_data_arcade.games.feature_hunter.info import get_game_info
+
         inner = FeatHunterScene()
         game_info = get_game_info(self._strings)
-        return PausableGame(inner, game_info, self._make_feature_hunter,
-                            self._strings, self._pm)
+        return PausableGame(inner, game_info, self._make_feature_hunter, self._strings, self._pm)
 
     def _launch_classifier_battle(self) -> None:
         self._next = self._make_classifier_battle()
@@ -1035,10 +1127,10 @@ class LessonMenuScene(Scene):
         from cognitive_data_arcade.engine.pause import PausableGame
         from cognitive_data_arcade.games.classifier_battle.game import ClassifierBattleScene
         from cognitive_data_arcade.games.classifier_battle.info import get_game_info
+
         inner = ClassifierBattleScene()
         game_info = get_game_info(self._strings)
-        return PausableGame(inner, game_info, self._make_classifier_battle,
-                            self._strings, self._pm)
+        return PausableGame(inner, game_info, self._make_classifier_battle, self._strings, self._pm)
 
     def _launch_overfitting_monster(self) -> None:
         self._next = self._make_overfitting_monster()
@@ -1048,10 +1140,12 @@ class LessonMenuScene(Scene):
         from cognitive_data_arcade.engine.pause import PausableGame
         from cognitive_data_arcade.games.overfitting_monster.game import OverfittingMonsterScene
         from cognitive_data_arcade.games.overfitting_monster.info import get_game_info
+
         inner = OverfittingMonsterScene()
         game_info = get_game_info(self._strings)
-        return PausableGame(inner, game_info, self._make_overfitting_monster,
-                            self._strings, self._pm)
+        return PausableGame(
+            inner, game_info, self._make_overfitting_monster, self._strings, self._pm
+        )
 
     def _launch_anomaly_alert(self) -> None:
         self._next = self._make_anomaly_alert()
@@ -1061,10 +1155,10 @@ class LessonMenuScene(Scene):
         from cognitive_data_arcade.engine.pause import PausableGame
         from cognitive_data_arcade.games.anomaly_alert.game import AnomalyAlertScene
         from cognitive_data_arcade.games.anomaly_alert.info import get_game_info
+
         inner = AnomalyAlertScene()
         game_info = get_game_info(self._strings)
-        return PausableGame(inner, game_info, self._make_anomaly_alert,
-                            self._strings, self._pm)
+        return PausableGame(inner, game_info, self._make_anomaly_alert, self._strings, self._pm)
 
     def _launch_text_tokenizer(self) -> None:
         self._next = self._make_text_tokenizer()
@@ -1074,10 +1168,10 @@ class LessonMenuScene(Scene):
         from cognitive_data_arcade.engine.pause import PausableGame
         from cognitive_data_arcade.games.text_tokenizer.info import get_game_info
         from cognitive_data_arcade.games.text_tokenizer.scene import TextTokenizerLabScene
+
         inner = TextTokenizerLabScene()
         game_info = get_game_info(self._strings)
-        return PausableGame(inner, game_info, self._make_text_tokenizer,
-                            self._strings, self._pm)
+        return PausableGame(inner, game_info, self._make_text_tokenizer, self._strings, self._pm)
 
     def _launch_word_weight_factory(self) -> None:
         self._next = self._make_word_weight_factory()
@@ -1087,10 +1181,12 @@ class LessonMenuScene(Scene):
         from cognitive_data_arcade.engine.pause import PausableGame
         from cognitive_data_arcade.games.word_weight_factory.info import get_game_info
         from cognitive_data_arcade.games.word_weight_factory.scene import WordWeightFactoryScene
+
         inner = WordWeightFactoryScene()
         game_info = get_game_info(self._strings)
-        return PausableGame(inner, game_info, self._make_word_weight_factory,
-                            self._strings, self._pm)
+        return PausableGame(
+            inner, game_info, self._make_word_weight_factory, self._strings, self._pm
+        )
 
     def _launch_topic_detective(self) -> None:
         self._next = self._make_topic_detective()
@@ -1100,10 +1196,10 @@ class LessonMenuScene(Scene):
         from cognitive_data_arcade.engine.pause import PausableGame
         from cognitive_data_arcade.games.topic_detective.game import TopicDetectiveScene
         from cognitive_data_arcade.games.topic_detective.info import get_game_info
+
         inner = TopicDetectiveScene()
         game_info = get_game_info(self._strings)
-        return PausableGame(inner, game_info, self._make_topic_detective,
-                            self._strings, self._pm)
+        return PausableGame(inner, game_info, self._make_topic_detective, self._strings, self._pm)
 
     def _launch_human_vs_model(self) -> None:
         self._next = self._make_human_vs_model()
@@ -1113,10 +1209,10 @@ class LessonMenuScene(Scene):
         from cognitive_data_arcade.engine.pause import PausableGame
         from cognitive_data_arcade.games.human_vs_model.game import HumanVsModelScene
         from cognitive_data_arcade.games.human_vs_model.info import get_game_info
+
         inner = HumanVsModelScene()
         game_info = get_game_info(self._strings)
-        return PausableGame(inner, game_info, self._make_human_vs_model,
-                            self._strings, self._pm)
+        return PausableGame(inner, game_info, self._make_human_vs_model, self._strings, self._pm)
 
     def _launch_social_network(self) -> None:
         self._next = self._make_social_network()
@@ -1126,10 +1222,10 @@ class LessonMenuScene(Scene):
         from cognitive_data_arcade.engine.pause import PausableGame
         from cognitive_data_arcade.games.social_network.game import SocialNetworkScene
         from cognitive_data_arcade.games.social_network.info import get_game_info
+
         inner = SocialNetworkScene()
         game_info = get_game_info(self._strings)
-        return PausableGame(inner, game_info, self._make_social_network,
-                            self._strings, self._pm)
+        return PausableGame(inner, game_info, self._make_social_network, self._strings, self._pm)
 
     def _launch_misinformation(self) -> None:
         self._next = self._make_misinformation()
@@ -1139,10 +1235,10 @@ class LessonMenuScene(Scene):
         from cognitive_data_arcade.engine.pause import PausableGame
         from cognitive_data_arcade.games.misinformation.game import MisinformationScene
         from cognitive_data_arcade.games.misinformation.info import get_game_info
+
         inner = MisinformationScene()
         game_info = get_game_info(self._strings)
-        return PausableGame(inner, game_info, self._make_misinformation,
-                            self._strings, self._pm)
+        return PausableGame(inner, game_info, self._make_misinformation, self._strings, self._pm)
 
     def _launch_recommendation_bubble(self) -> None:
         self._next = self._make_recommendation_bubble()
@@ -1152,10 +1248,12 @@ class LessonMenuScene(Scene):
         from cognitive_data_arcade.engine.pause import PausableGame
         from cognitive_data_arcade.games.recommendation_bubble.game import RecommendationBubbleScene
         from cognitive_data_arcade.games.recommendation_bubble.info import get_game_info
+
         inner = RecommendationBubbleScene()
         game_info = get_game_info(self._strings)
-        return PausableGame(inner, game_info, self._make_recommendation_bubble,
-                            self._strings, self._pm)
+        return PausableGame(
+            inner, game_info, self._make_recommendation_bubble, self._strings, self._pm
+        )
 
     def _launch_bias_blind_spot(self) -> None:
         self._next = self._make_bias_blind_spot()
@@ -1165,10 +1263,10 @@ class LessonMenuScene(Scene):
         from cognitive_data_arcade.engine.pause import PausableGame
         from cognitive_data_arcade.games.bias_blind_spot.game import BiasBlindSpotScene
         from cognitive_data_arcade.games.bias_blind_spot.info import get_game_info
+
         inner = BiasBlindSpotScene()
         game_info = get_game_info(self._strings)
-        return PausableGame(inner, game_info, self._make_bias_blind_spot,
-                            self._strings, self._pm)
+        return PausableGame(inner, game_info, self._make_bias_blind_spot, self._strings, self._pm)
 
     def _launch_architects_trial(self) -> None:
         self._next = self._make_architects_trial()
@@ -1178,10 +1276,10 @@ class LessonMenuScene(Scene):
         from cognitive_data_arcade.engine.pause import PausableGame
         from cognitive_data_arcade.games.architects_trial.game import ArchitectsTrialScene
         from cognitive_data_arcade.games.architects_trial.info import get_game_info
+
         inner = ArchitectsTrialScene()
         game_info = get_game_info(self._strings)
-        return PausableGame(inner, game_info, self._make_architects_trial,
-                            self._strings, self._pm)
+        return PausableGame(inner, game_info, self._make_architects_trial, self._strings, self._pm)
 
     def _launch_you_were_the_dataset(self) -> None:
         self._next = self._make_you_were_the_dataset()
@@ -1191,10 +1289,12 @@ class LessonMenuScene(Scene):
         from cognitive_data_arcade.engine.pause import PausableGame
         from cognitive_data_arcade.games.you_were_the_dataset.game import YouWereTheDatasetScene
         from cognitive_data_arcade.games.you_were_the_dataset.info import get_game_info
+
         inner = YouWereTheDatasetScene(self._pm, self._strings)
         game_info = get_game_info(self._strings)
-        return PausableGame(inner, game_info, self._make_you_were_the_dataset,
-                            self._strings, self._pm)
+        return PausableGame(
+            inner, game_info, self._make_you_were_the_dataset, self._strings, self._pm
+        )
 
     def _launch_semantic_space(self) -> None:
         self._next = self._make_semantic_space()
@@ -1204,10 +1304,10 @@ class LessonMenuScene(Scene):
         from cognitive_data_arcade.engine.pause import PausableGame
         from cognitive_data_arcade.games.semantic_space.game import SemanticSpaceScene
         from cognitive_data_arcade.games.semantic_space.info import get_game_info
+
         inner = SemanticSpaceScene()
         game_info = get_game_info(self._strings)
-        return PausableGame(inner, game_info, self._make_semantic_space,
-                            self._strings, self._pm)
+        return PausableGame(inner, game_info, self._make_semantic_space, self._strings, self._pm)
 
     def _launch_emotion_classifier(self) -> None:
         self._next = self._make_emotion_classifier()
@@ -1217,10 +1317,12 @@ class LessonMenuScene(Scene):
         from cognitive_data_arcade.engine.pause import PausableGame
         from cognitive_data_arcade.games.emotion_classifier.info import get_game_info
         from cognitive_data_arcade.games.emotion_classifier.game import EmotionClassifierScene
+
         inner = EmotionClassifierScene()
         game_info = get_game_info(self._strings)
-        return PausableGame(inner, game_info, self._make_emotion_classifier,
-                            self._strings, self._pm)
+        return PausableGame(
+            inner, game_info, self._make_emotion_classifier, self._strings, self._pm
+        )
 
     def update(self, dt_ms: float) -> None:
         pass
@@ -1246,14 +1348,10 @@ class LessonMenuScene(Scene):
         ty = (_TOPBAR_H - title.get_height()) // 2
         surface.blit(title, (28, ty))
 
-        sub = self._font_topbar_sub.render(
-            self._strings.menu_topbar_subtitle, True, _C_TEXT_DARK
-        )
+        sub = self._font_topbar_sub.render(self._strings.menu_topbar_subtitle, True, _C_TEXT_DARK)
         surface.blit(sub, (28 + title.get_width() + 14, ty + 2))
 
-        badge_txt = self._font_topbar_sub.render(
-            self._strings.menu_lang_badge, True, _C_TEXT_DARK
-        )
+        badge_txt = self._font_topbar_sub.render(self._strings.menu_lang_badge, True, _C_TEXT_DARK)
         bw = badge_txt.get_width() + 18
         bh = badge_txt.get_height() + 8
         bx = _W - bw - 20
@@ -1265,11 +1363,12 @@ class LessonMenuScene(Scene):
     def _draw_sidebar(self, surface: pygame.Surface) -> None:
         pygame.draw.rect(surface, _C_BG, (0, _TOPBAR_H, _SIDEBAR_W, _SIDEBAR_H))
         pygame.draw.line(
-            surface, _C_SURFACE,
-            (_SIDEBAR_W, _TOPBAR_H), (_SIDEBAR_W, _TOPBAR_H + _SIDEBAR_H - 1),
+            surface,
+            _C_SURFACE,
+            (_SIDEBAR_W, _TOPBAR_H),
+            (_SIDEBAR_W, _TOPBAR_H + _SIDEBAR_H - 1),
         )
 
-        lang = self._strings.language
         scroll_px = self._scrollbar.scroll
 
         for kind, param, vy, vh in _VIRTUAL_ROWS:
@@ -1288,7 +1387,7 @@ class LessonMenuScene(Scene):
                 i = param
                 d = _LESSON_DATA[i]
                 is_active = i == self._selected
-                is_hover  = i == self._hovered
+                is_hover = i == self._hovered
 
                 if is_active:
                     pygame.draw.rect(surface, _C_ACCENT_BG, (0, sy, _SIDEBAR_W, vh))
@@ -1296,10 +1395,12 @@ class LessonMenuScene(Scene):
                 elif is_hover:
                     pygame.draw.rect(surface, _C_HOVER_BG, (0, sy, _SIDEBAR_W, vh))
 
-                num_color  = _C_ACCENT if is_active else _C_TEXT_XDARK
-                name_color = _C_TEXT if is_active else (_C_TEXT_DIM if not is_hover else (110, 120, 160))
+                num_color = _C_ACCENT if is_active else _C_TEXT_XDARK
+                name_color = (
+                    _C_TEXT if is_active else (_C_TEXT_DIM if not is_hover else (110, 120, 160))
+                )
 
-                num_surf  = self._font_item_num.render(f"{i + 1:02d}", True, num_color)
+                num_surf = self._font_item_num.render(f"{i + 1:02d}", True, num_color)
                 name_surf = self._font_item_name.render(d["name"], True, name_color)
                 mid_y = sy + vh // 2
 
@@ -1361,9 +1462,12 @@ class LessonMenuScene(Scene):
         )
         teoria_ok = self._teoria_available()
         self._teoria_btn_rect = self._draw_panel_button(
-            surface, x0 + self._play_btn_rect.width + 10, y,
+            surface,
+            x0 + self._play_btn_rect.width + 10,
+            y,
             self._strings.label_theory_lesson,
-            primary=False, disabled=not teoria_ok,
+            primary=False,
+            disabled=not teoria_ok,
         )
 
     def _draw_panel_button(
@@ -1376,8 +1480,10 @@ class LessonMenuScene(Scene):
         disabled: bool = False,
     ) -> pygame.Rect:
         txt_color = (
-            _C_TEXT if primary and not disabled
-            else _C_ACCENT_LIGHT if not disabled
+            _C_TEXT
+            if primary and not disabled
+            else _C_ACCENT_LIGHT
+            if not disabled
             else _C_TEXT_DARK
         )
         txt = self._font_btn.render(label, True, txt_color)

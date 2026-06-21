@@ -11,26 +11,26 @@ _JITTER = 8
 
 # (cols, rows, spacing_px)
 GRID_PARAMS: dict[int, tuple[int, int, int]] = {
-    8:  (4, 2, 90),
+    8: (4, 2, 90),
     16: (4, 4, 80),
     24: (6, 4, 75),
 }
 
 _COLOR_ORANGE = (230, 126, 34)
-_COLOR_BLUE   = (52, 152, 219)
+_COLOR_BLUE = (52, 152, 219)
 _COLOR_LETTER = (230, 230, 230)
 
 _TARGET_KIND: dict[tuple[str, str], str] = {
-    ("letters", "feature"):     "X",
+    ("letters", "feature"): "X",
     ("letters", "conjunction"): "T",
-    ("shapes",  "feature"):     "circle_orange",
-    ("shapes",  "conjunction"): "circle_orange",
+    ("shapes", "feature"): "circle_orange",
+    ("shapes", "conjunction"): "circle_orange",
 }
 _DISTRACTOR_POOL: dict[tuple[str, str], list[str]] = {
-    ("letters", "feature"):     ["O"],
+    ("letters", "feature"): ["O"],
     ("letters", "conjunction"): ["L"],
-    ("shapes",  "feature"):     ["circle_blue"],
-    ("shapes",  "conjunction"): ["circle_blue", "square_orange"],
+    ("shapes", "feature"): ["circle_blue"],
+    ("shapes", "conjunction"): ["circle_blue", "square_orange"],
 }
 
 

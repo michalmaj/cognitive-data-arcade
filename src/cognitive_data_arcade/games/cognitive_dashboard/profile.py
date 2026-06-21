@@ -23,10 +23,7 @@ def _flanker_effect(session: DashboardSession) -> float:
 
 def _gonogo_fa_count(session: DashboardSession) -> int:
     g = session.gonogo
-    return sum(
-        1 for cond, ok in zip(g.condition, g.correct)
-        if cond == "nogo" and not ok
-    )
+    return sum(1 for cond, ok in zip(g.condition, g.correct) if cond == "nogo" and not ok)
 
 
 def cognitive_profile(session: DashboardSession) -> list[str]:
@@ -46,7 +43,9 @@ def cognitive_profile(session: DashboardSession) -> list[str]:
     elif flanker_eff <= 60:
         lines.append(f"Selektywna uwaga: przeciętna (efekt Flankera {flanker_eff:.0f} ms).")
     else:
-        lines.append(f"Dystraktorzy wyraźnie spowalniają reakcję (efekt Flankera {flanker_eff:.0f} ms).")
+        lines.append(
+            f"Dystraktorzy wyraźnie spowalniają reakcję (efekt Flankera {flanker_eff:.0f} ms)."
+        )
 
     fa = _gonogo_fa_count(session)
     if fa == 0:

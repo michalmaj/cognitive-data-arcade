@@ -7,27 +7,27 @@ import numpy as np
 
 @dataclass
 class SimResult:
-    samples:   np.ndarray
-    mean:      float
-    median:    float
-    sd:        float
-    iqr:       float
-    skewness:  float
-    dist_type: str        # "normal" | "uniform" | "exgaussian"
-    params:    dict[str, float]
+    samples: np.ndarray
+    mean: float
+    median: float
+    sd: float
+    iqr: float
+    skewness: float
+    dist_type: str  # "normal" | "uniform" | "exgaussian"
+    params: dict[str, float]
 
 
 @dataclass
 class CompareResult:
-    delta_mean: float    # mean_b - mean_a
-    cohens_d:   float    # (mean_a - mean_b) / pooled_sd
-    p_value:    float    # Welch t-test
-    sd_ratio:   float    # sd_a / sd_b
+    delta_mean: float  # mean_b - mean_a
+    cohens_d: float  # (mean_a - mean_b) / pooled_sd
+    p_value: float  # Welch t-test
+    sd_ratio: float  # sd_a / sd_b
 
 
 _PARAM_RANGES: dict[str, dict[str, tuple[float, float]]] = {
-    "normal":     {"mu": (200, 800), "sigma": (20, 200), "N": (20, 200)},
-    "uniform":    {"min": (100, 600), "max": (300, 1000), "N": (20, 200)},
+    "normal": {"mu": (200, 800), "sigma": (20, 200), "N": (20, 200)},
+    "uniform": {"min": (100, 600), "max": (300, 1000), "N": (20, 200)},
     "exgaussian": {"mu": (200, 600), "sigma": (20, 150), "tau": (20, 300), "N": (20, 200)},
 }
 
@@ -40,7 +40,7 @@ def _fisher_skewness(x: np.ndarray) -> float:
     s = x.std(ddof=1)
     if s == 0:
         return 0.0
-    return float(((x - m) ** 3).mean() / s ** 3)
+    return float(((x - m) ** 3).mean() / s**3)
 
 
 def simulate(
@@ -76,6 +76,7 @@ def simulate(
 
 
 # ── Welch t-test (pure numpy, no scipy) ─────────────────────────────────────
+
 
 def _betacf(a: float, b: float, x: float) -> float:
     """Lentz continued-fraction expansion for regularised incomplete beta."""
@@ -134,13 +135,14 @@ def _welch_t(a: np.ndarray, b: np.ndarray) -> tuple[float, float]:
     if se2 <= 0.0:
         return 0.0, 1.0
     t = (mb - ma) / math.sqrt(se2)
-    df = se2 ** 2 / ((va / na) ** 2 / (na - 1) + (vb / nb) ** 2 / (nb - 1))
-    x = df / (df + t ** 2)
+    df = se2**2 / ((va / na) ** 2 / (na - 1) + (vb / nb) ** 2 / (nb - 1))
+    x = df / (df + t**2)
     p = float(np.clip(_betainc(x, df / 2.0, 0.5), 0.0, 1.0))
     return t, p
 
 
 # ── Public functions ─────────────────────────────────────────────────────────
+
 
 def compare(a: SimResult, b: SimResult) -> CompareResult:
     pooled_sd = (a.sd + b.sd) / 2.0

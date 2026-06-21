@@ -196,11 +196,7 @@ class GoNoGoGame(Scene):
         hit_rate_c = max(0.01, min(0.99, hit_rate))
         fa_rate_c = max(0.01, min(0.99, fa_rate))
         d_prime = _probit(hit_rate_c) - _probit(fa_rate_c)
-        sp_earned = (
-            self._config.sp_dprime_bonus
-            if d_prime >= self._config.dprime_threshold
-            else 0
-        )
+        sp_earned = self._config.sp_dprime_bonus if d_prime >= self._config.dprime_threshold else 0
 
         correct_count = sum(1 for r in self._records if r.correct)
         hit_rts = [r.reaction_time_ms for r in hits if r.reaction_time_ms > 0.0]
@@ -229,9 +225,7 @@ class GoNoGoGame(Scene):
             self._pm.award_badge(bid)
         profile_after = self._pm.load()
 
-        def _analysis_factory(
-            csv_path: Path, strings: Strings, back_scene: Scene
-        ) -> Scene:
+        def _analysis_factory(csv_path: Path, strings: Strings, back_scene: Scene) -> Scene:
             from cognitive_data_arcade.ui.gono_analysis_scene import GoNoGoAnalysisScene
 
             return GoNoGoAnalysisScene(csv_path, strings, back_scene)

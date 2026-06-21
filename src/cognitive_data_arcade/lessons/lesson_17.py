@@ -1,4 +1,5 @@
 """Lesson 17 -- Feature Hunter (feature selection intuition)."""
+
 from __future__ import annotations
 
 CONTENT: dict[str, dict[str, list[str]]] = {

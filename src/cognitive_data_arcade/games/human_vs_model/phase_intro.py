@@ -5,12 +5,12 @@ import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 
-_W, _H  = 1024, 720
-_BG     = (15, 15, 35)
-_PANEL  = (18, 18, 42)
-_WHITE  = (240, 240, 240)
-_DIM    = (120, 120, 160)
-_GOLD   = (240, 165, 0)
+_W, _H = 1024, 720
+_BG = (15, 15, 35)
+_PANEL = (18, 18, 42)
+_WHITE = (240, 240, 240)
+_DIM = (120, 120, 160)
+_GOLD = (240, 165, 0)
 
 _SLIDES = [
     (
@@ -60,8 +60,11 @@ class PhaseIntroScene(Scene):
         if self._slide < len(_SLIDES) - 1:
             self._slide += 1
         else:
-            from cognitive_data_arcade.games.human_vs_model.challenge_data import CLASSIFY_CHALLENGES
+            from cognitive_data_arcade.games.human_vs_model.challenge_data import (
+                CLASSIFY_CHALLENGES,
+            )
             from cognitive_data_arcade.games.human_vs_model.phase_classify import PhaseClassifyScene
+
             self._next = PhaseClassifyScene(
                 challenges=CLASSIFY_CHALLENGES,
                 round_idx=0,
@@ -92,10 +95,7 @@ class PhaseIntroScene(Scene):
 
         for i in range(len(_SLIDES)):
             col = _GOLD if i == self._slide else (50, 50, 80)
-            pygame.draw.circle(
-                surface, col,
-                (_W // 2 - (len(_SLIDES) - 1) * 14 + i * 28, 540), 6
-            )
+            pygame.draw.circle(surface, col, (_W // 2 - (len(_SLIDES) - 1) * 14 + i * 28, 540), 6)
 
         btn = pygame.Rect(_W // 2 - 140, _H - 90, 280, 50)
         pygame.draw.rect(surface, _PANEL, btn, border_radius=8)

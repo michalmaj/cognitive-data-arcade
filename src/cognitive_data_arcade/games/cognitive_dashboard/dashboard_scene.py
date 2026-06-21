@@ -9,21 +9,21 @@ from cognitive_data_arcade.games.cognitive_dashboard.profile import cognitive_pr
 from cognitive_data_arcade.games.cognitive_dashboard.session import DashboardSession, TaskResult
 from cognitive_data_arcade.profile.manager import ProfileManager
 
-_BG     = (26, 26, 46)
-_PANEL  = (18, 18, 42)
-_WHITE  = (240, 240, 240)
-_DIM    = (100, 100, 150)
+_BG = (26, 26, 46)
+_PANEL = (18, 18, 42)
+_WHITE = (240, 240, 240)
+_DIM = (100, 100, 150)
 _ORANGE = (243, 156, 18)
-_GREEN  = (39, 174, 96)
-_RED    = (231, 76, 60)
-_BLUE   = (52, 152, 219)
-_W, _H  = 1024, 768
+_GREEN = (39, 174, 96)
+_RED = (231, 76, 60)
+_BLUE = (52, 152, 219)
+_W, _H = 1024, 768
 
 _TASK_COLORS = [
-    (52, 152, 219),   # RT — blue
-    (231, 76, 60),    # Stroop — red
-    (230, 126, 34),   # Flanker — orange
-    (39, 174, 96),    # GoNoGo — green
+    (52, 152, 219),  # RT — blue
+    (231, 76, 60),  # Stroop — red
+    (230, 126, 34),  # Flanker — orange
+    (39, 174, 96),  # GoNoGo — green
 ]
 _TASK_NAMES = ["RT Lab", "Stroop", "Flanker", "Go/No-Go"]
 
@@ -34,7 +34,7 @@ _ROW1_Y = 130
 _ROW2_Y = _ROW1_Y + _TILE_H + 24
 
 # What-if slider constants (fixed literary ranges)
-_WI_STROOP_MAX  = 150.0
+_WI_STROOP_MAX = 150.0
 _WI_FLANKER_MAX = 100.0
 
 
@@ -70,22 +70,21 @@ def _dim_overlay(surface: pygame.Surface) -> None:
 
 
 class CognitiveDashboardScene(Scene):
-
     # ── Detail-panel geometry ──────────────────────────────────────
     _DP_W, _DP_H = 680, 400
     _DP_X = (_W - _DP_W) // 2
     _DP_Y = (_H - _DP_H) // 2
 
     # ── What-if-panel geometry ─────────────────────────────────────
-    _WI_W, _WI_H  = 720, 500
+    _WI_W, _WI_H = 720, 500
     _WI_X = (_W - _WI_W) // 2
     _WI_Y = (_H - _WI_H) // 2
-    _WI_TRACK_W   = 360
-    _WI_TRACK_X   = _WI_X + 220      # slider track left edge
-    _WI_STROOP_Y  = _WI_Y + 76
+    _WI_TRACK_W = 360
+    _WI_TRACK_X = _WI_X + 220  # slider track left edge
+    _WI_STROOP_Y = _WI_Y + 76
     _WI_FLANKER_Y = _WI_Y + 160
-    _WI_FA_Y      = _WI_Y + 244      # label row
-    _WI_FA_BTN_Y  = _WI_Y + 278      # buttons row (separate from label)
+    _WI_FA_Y = _WI_Y + 244  # label row
+    _WI_FA_BTN_Y = _WI_Y + 278  # buttons row (separate from label)
 
     def __init__(
         self,
@@ -105,7 +104,7 @@ class CognitiveDashboardScene(Scene):
 
         # C: what-if overlay
         self._show_what_if = False
-        self._wi_stroop:  float = 60.0
+        self._wi_stroop: float = 60.0
         self._wi_flanker: float = 40.0
         self._wi_fa: int = 0
         self._dragging: str | None = None  # "stroop" | "flanker"
@@ -117,27 +116,32 @@ class CognitiveDashboardScene(Scene):
         return s.rt is None and s.stroop is None and s.flanker is None and s.gonogo is None
 
     def _task_result(self, idx: int) -> TaskResult | None:
-        return [self._session.rt, self._session.stroop,
-                self._session.flanker, self._session.gonogo][idx]
+        return [
+            self._session.rt,
+            self._session.stroop,
+            self._session.flanker,
+            self._session.gonogo,
+        ][idx]
 
     def _open_what_if(self) -> None:
         self._show_what_if = True
         s = self._session
         if s.stroop:
-            self._wi_stroop = max(0.0, _effect(
-                s.stroop.rt_ms, s.stroop.condition, "congruent", "incongruent"))
+            self._wi_stroop = max(
+                0.0, _effect(s.stroop.rt_ms, s.stroop.condition, "congruent", "incongruent")
+            )
         if s.flanker:
-            self._wi_flanker = max(0.0, _effect(
-                s.flanker.rt_ms, s.flanker.condition, "congruent", "incongruent"))
+            self._wi_flanker = max(
+                0.0, _effect(s.flanker.rt_ms, s.flanker.condition, "congruent", "incongruent")
+            )
         if s.gonogo:
             self._wi_fa = sum(
-                1 for c, ok in zip(s.gonogo.condition, s.gonogo.correct)
-                if c == "nogo" and not ok
+                1 for c, ok in zip(s.gonogo.condition, s.gonogo.correct) if c == "nogo" and not ok
             )
 
     def _wi_btn_rect(self) -> pygame.Rect:
         profile_y = _ROW2_Y + _TILE_H + 20
-        btn_y = profile_y + 34 + 4 * 26 + 10   # just below the 4 profile lines
+        btn_y = profile_y + 34 + 4 * 26 + 10  # just below the 4 profile lines
         return pygame.Rect(40, btn_y, 320, 28)
 
     def _fa_btn_rect(self, val: int) -> pygame.Rect:
@@ -162,6 +166,7 @@ class CognitiveDashboardScene(Scene):
             def make_dash() -> Scene:
                 inner = CognitiveDashboardScene(s, strings, pm)
                 return PausableGame(inner, get_game_info(strings), make_dash, strings, pm)
+
             return make_dash()
 
         scene_factories = [
@@ -211,7 +216,10 @@ class CognitiveDashboardScene(Scene):
                 else:
                     self._launch_task(self._selected)
             elif event.key == pygame.K_s and self._show_synthetic_button():
-                from cognitive_data_arcade.games.cognitive_dashboard.config import generate_synthetic
+                from cognitive_data_arcade.games.cognitive_dashboard.config import (
+                    generate_synthetic,
+                )
+
                 synth = generate_synthetic()
                 self._session.rt = synth.rt
                 self._session.stroop = synth.stroop
@@ -335,8 +343,9 @@ class CognitiveDashboardScene(Scene):
         else:
             self._draw_tile_metrics(surface, rect, idx, result)
 
-    def _draw_tile_metrics(self, surface: pygame.Surface, rect: pygame.Rect,
-                           idx: int, result: TaskResult) -> None:
+    def _draw_tile_metrics(
+        self, surface: pygame.Surface, rect: pygame.Rect, idx: int, result: TaskResult
+    ) -> None:
         font = get_font(24)
         tc = _BG
         y = rect.y + 48
@@ -355,8 +364,7 @@ class CognitiveDashboardScene(Scene):
             eff = _effect(result.rt_ms, result.condition, "congruent", "incongruent")
             surface.blit(font.render(f"efekt Flankera: {eff:+.0f} ms", True, tc), (rect.x + 16, y))
         elif idx == 3:
-            fa = sum(1 for c, ok in zip(result.condition, result.correct)
-                     if c == "nogo" and not ok)
+            fa = sum(1 for c, ok in zip(result.condition, result.correct) if c == "nogo" and not ok)
             surface.blit(font.render(f"false alarms: {fa}", True, tc), (rect.x + 16, y))
 
     def _draw_profile(self, surface: pygame.Surface) -> None:
@@ -379,8 +387,9 @@ class CognitiveDashboardScene(Scene):
         btn_rect = pygame.Rect(w // 2 - 200, h - 110, 400, 44)
         pygame.draw.rect(surface, _DIM, btn_rect, border_radius=6)
         lbl = get_font(24).render("S = wygeneruj dane losowe", True, _WHITE)
-        surface.blit(lbl, (btn_rect.centerx - lbl.get_width() // 2,
-                           btn_rect.centery - lbl.get_height() // 2))
+        surface.blit(
+            lbl, (btn_rect.centerx - lbl.get_width() // 2, btn_rect.centery - lbl.get_height() // 2)
+        )
 
     # ── Detail panel (A) ───────────────────────────────────────────
 
@@ -406,34 +415,29 @@ class CognitiveDashboardScene(Scene):
 
         valid_rts = [r for r in result.rt_ms if r > 0]
         max_rt = max(valid_rts, default=800.0)
-        max_rt = max(max_rt * 1.1, 200.0)   # 10% headroom above tallest bar
+        max_rt = max(max_rt * 1.1, 200.0)  # 10% headroom above tallest bar
 
         n = len(result.rt_ms)
         slot_w = chart_w // n
         bar_w = max(8, slot_w - 6)
 
         # Axes
-        pygame.draw.line(surface, _DIM,
-                         (chart_x, chart_y + chart_h),
-                         (chart_x + chart_w, chart_y + chart_h), 1)
-        pygame.draw.line(surface, _DIM,
-                         (chart_x, chart_y),
-                         (chart_x, chart_y + chart_h), 1)
+        pygame.draw.line(
+            surface, _DIM, (chart_x, chart_y + chart_h), (chart_x + chart_w, chart_y + chart_h), 1
+        )
+        pygame.draw.line(surface, _DIM, (chart_x, chart_y), (chart_x, chart_y + chart_h), 1)
 
         # Average RT line
         if valid_rts:
             avg = sum(valid_rts) / len(valid_rts)
             avg_y = chart_y + chart_h - int(avg / max_rt * chart_h)
-            pygame.draw.line(surface, _ORANGE,
-                             (chart_x, avg_y), (chart_x + chart_w, avg_y), 1)
+            pygame.draw.line(surface, _ORANGE, (chart_x, avg_y), (chart_x + chart_w, avg_y), 1)
             avg_lbl = get_font(17).render(f"avg {avg:.0f}", True, _ORANGE)
             surface.blit(avg_lbl, (chart_x + chart_w + 4, avg_y - 9))
 
         color_fn = self._bar_color_fn(idx)
 
-        for i, (rt, cond, ok) in enumerate(
-            zip(result.rt_ms, result.condition, result.correct)
-        ):
+        for i, (rt, cond, ok) in enumerate(zip(result.rt_ms, result.condition, result.correct)):
             bx = chart_x + i * slot_w + (slot_w - bar_w) // 2
             color = color_fn(cond, rt, ok)
 
@@ -451,32 +455,31 @@ class CognitiveDashboardScene(Scene):
                 pygame.draw.rect(surface, color, (bx, by, bar_w, bar_h), border_radius=2)
                 if bar_h > 28:
                     val_surf = get_font(13).render(f"{rt:.0f}", True, _PANEL)
-                    surface.blit(val_surf,
-                                 (bx + bar_w // 2 - val_surf.get_width() // 2, by + 3))
+                    surface.blit(val_surf, (bx + bar_w // 2 - val_surf.get_width() // 2, by + 3))
 
             num = get_font(15).render(str(i + 1), True, _DIM)
-            surface.blit(num, (bx + bar_w // 2 - num.get_width() // 2,
-                               chart_y + chart_h + 4))
+            surface.blit(num, (bx + bar_w // 2 - num.get_width() // 2, chart_y + chart_h + 4))
 
         self._draw_detail_legend(surface, idx, px + 18, py + ph - 44)
 
     def _bar_color_fn(self, idx: int):
         """Return a callable (cond, rt, ok) -> RGB for bar colouring."""
-        if idx == 0:   # RT: correct=blue, timeout=dim
+        if idx == 0:  # RT: correct=blue, timeout=dim
             return lambda cond, rt, ok: _BLUE if ok else _DIM
-        elif idx == 1: # Stroop: congruent=blue, incongruent=red
+        elif idx == 1:  # Stroop: congruent=blue, incongruent=red
             return lambda cond, rt, ok: _BLUE if cond == "congruent" else _RED
-        elif idx == 2: # Flanker: congruent=blue, incongruent=orange
+        elif idx == 2:  # Flanker: congruent=blue, incongruent=orange
             return lambda cond, rt, ok: _BLUE if cond == "congruent" else (230, 126, 34)
-        else:          # GoNoGo: go-hit=green, go-miss=dim, nogo-CR=dim, nogo-FA=red
+        else:  # GoNoGo: go-hit=green, go-miss=dim, nogo-CR=dim, nogo-FA=red
+
             def gng(cond, rt, ok):
                 if cond == "go":
                     return _GREEN if ok else _DIM
-                return _DIM if ok else _RED   # nogo: ok=CR (grey), not ok=FA (red)
+                return _DIM if ok else _RED  # nogo: ok=CR (grey), not ok=FA (red)
+
             return gng
 
-    def _draw_detail_legend(self, surface: pygame.Surface, idx: int,
-                            x: int, y: int) -> None:
+    def _draw_detail_legend(self, surface: pygame.Surface, idx: int, x: int, y: int) -> None:
         legend: list[tuple[tuple[int, int, int], str]] = []
         if idx == 0:
             legend = [(_BLUE, "trafiony"), (_DIM, "timeout")]
@@ -485,9 +488,11 @@ class CognitiveDashboardScene(Scene):
         elif idx == 2:
             legend = [(_BLUE, "zgodny"), ((230, 126, 34), "niezgodny")]
         else:
-            legend = [(_GREEN, "go: trafiony"),
-                      (_DIM, "go: timeout / nogo: ok (CR)"),
-                      (_RED, "nogo: fałszywy alarm")]
+            legend = [
+                (_GREEN, "go: trafiony"),
+                (_DIM, "go: timeout / nogo: ok (CR)"),
+                (_RED, "nogo: fałszywy alarm"),
+            ]
         for i, (color, label) in enumerate(legend):
             lx = x + i * 210
             pygame.draw.rect(surface, color, (lx, y + 5, 12, 12), border_radius=2)
@@ -508,21 +513,41 @@ class CognitiveDashboardScene(Scene):
 
         # Real session values for markers
         s = self._session
-        real_stroop = (max(0.0, _effect(
-            s.stroop.rt_ms, s.stroop.condition, "congruent", "incongruent"))
-            if s.stroop else None)
-        real_flanker = (max(0.0, _effect(
-            s.flanker.rt_ms, s.flanker.condition, "congruent", "incongruent"))
-            if s.flanker else None)
-        real_fa = (sum(1 for c, ok in zip(s.gonogo.condition, s.gonogo.correct)
-                       if c == "nogo" and not ok)
-                   if s.gonogo else None)
+        real_stroop = (
+            max(0.0, _effect(s.stroop.rt_ms, s.stroop.condition, "congruent", "incongruent"))
+            if s.stroop
+            else None
+        )
+        real_flanker = (
+            max(0.0, _effect(s.flanker.rt_ms, s.flanker.condition, "congruent", "incongruent"))
+            if s.flanker
+            else None
+        )
+        real_fa = (
+            sum(1 for c, ok in zip(s.gonogo.condition, s.gonogo.correct) if c == "nogo" and not ok)
+            if s.gonogo
+            else None
+        )
 
         # Sliders
-        self._draw_slider(surface, "stroop", "Efekt Stroopa:",
-                          self._WI_STROOP_Y, self._wi_stroop, _WI_STROOP_MAX, real_stroop)
-        self._draw_slider(surface, "flanker", "Efekt Flankera:",
-                          self._WI_FLANKER_Y, self._wi_flanker, _WI_FLANKER_MAX, real_flanker)
+        self._draw_slider(
+            surface,
+            "stroop",
+            "Efekt Stroopa:",
+            self._WI_STROOP_Y,
+            self._wi_stroop,
+            _WI_STROOP_MAX,
+            real_stroop,
+        )
+        self._draw_slider(
+            surface,
+            "flanker",
+            "Efekt Flankera:",
+            self._WI_FLANKER_Y,
+            self._wi_flanker,
+            _WI_FLANKER_MAX,
+            real_flanker,
+        )
 
         # GoNoGo FA — label on its own line, buttons on the row below
         fa_lbl = get_font(22).render("Fałszywe alarmy GoNoGo:", True, _WHITE)
@@ -530,16 +555,16 @@ class CognitiveDashboardScene(Scene):
         for val in range(3):
             btn = self._fa_btn_rect(val)
             selected = val == self._wi_fa
-            pygame.draw.rect(surface, _ORANGE if selected else _DIM, btn,
-                             0 if selected else 1, border_radius=4)
-            num = get_font(22).render(str(val), True,
-                                      _PANEL if selected else _WHITE)
-            surface.blit(num, (btn.centerx - num.get_width() // 2,
-                               btn.centery - num.get_height() // 2))
+            pygame.draw.rect(
+                surface, _ORANGE if selected else _DIM, btn, 0 if selected else 1, border_radius=4
+            )
+            num = get_font(22).render(str(val), True, _PANEL if selected else _WHITE)
+            surface.blit(
+                num, (btn.centerx - num.get_width() // 2, btn.centery - num.get_height() // 2)
+            )
         if real_fa is not None:
             real_fa_lbl = get_font(17).render(f"Twój wynik: {real_fa}", True, _ORANGE)
-            surface.blit(real_fa_lbl,
-                         (self._WI_TRACK_X + 3 * 52 + 10, self._WI_FA_BTN_Y + 8))
+            surface.blit(real_fa_lbl, (self._WI_TRACK_X + 3 * 52 + 10, self._WI_FA_BTN_Y + 8))
 
         # Separator
         sep_y = self._WI_FA_BTN_Y + 42
@@ -556,8 +581,14 @@ class CognitiveDashboardScene(Scene):
             surface.blit(txt, (px + 18, prof_y + 28 + i * 24))
 
     def _draw_slider(
-        self, surface: pygame.Surface, name: str, label: str,
-        y: int, value: float, max_val: float, real_val: float | None,
+        self,
+        surface: pygame.Surface,
+        name: str,
+        label: str,
+        y: int,
+        value: float,
+        max_val: float,
+        real_val: float | None,
     ) -> None:
         lbl = get_font(22).render(label, True, _WHITE)
         surface.blit(lbl, (self._WI_X + 18, y + 4))

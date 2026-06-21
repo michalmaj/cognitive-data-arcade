@@ -4,6 +4,7 @@ from __future__ import annotations
 from typing import Callable
 
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
@@ -15,12 +16,12 @@ from cognitive_data_arcade.games.anomaly_alert.scenarios import Scenario
 
 _FIG_W, _FIG_H, _DPI = 680, 624, 96
 
-_AX_BG   = "#0f0f1a"
-_FIG_BG  = "#111130"
-_SPINE   = "#333355"
-_TICK    = "#888899"
-_NORMAL  = "#3498db"
-_ANOM    = "#e74c3c"
+_AX_BG = "#0f0f1a"
+_FIG_BG = "#111130"
+_SPINE = "#333355"
+_TICK = "#888899"
+_NORMAL = "#3498db"
+_ANOM = "#e74c3c"
 
 
 def _ax_style(fig, ax) -> None:
@@ -114,7 +115,7 @@ def render_barchart(scenario: Scenario, seed: int) -> tuple[pygame.Surface, list
         left = patch.get_x()
         right = left + patch.get_width()
         xp, yp, wp, hp = _rect_px(ax, left, 0.0, right, val)
-        elements.append(Element(xp, yp, wp, hp, i in anom_set, f"P{i+1}={val:.0f}"))
+        elements.append(Element(xp, yp, wp, hp, i in anom_set, f"P{i + 1}={val:.0f}"))
 
     surf = figure_to_surface(fig, (_FIG_W, _FIG_H))
     return surf, elements
@@ -126,10 +127,12 @@ def render_scatter(scenario: Scenario, seed: int) -> tuple[pygame.Surface, list[
     cx, cy = 400.0, 70.0
     cluster = rng.normal([cx, cy], [35, 7], (n, 2))
 
-    anom_pts = np.array([
-        [cx + 200.0, cy + 22.0],
-        [cx - 195.0, cy - 20.0],
-    ])
+    anom_pts = np.array(
+        [
+            [cx + 200.0, cy + 22.0],
+            [cx - 195.0, cy - 20.0],
+        ]
+    )
     all_pts = np.vstack([cluster, anom_pts])
     is_anom = [False] * n + [True, True]
 
@@ -268,9 +271,9 @@ def render_heatmap(scenario: Scenario, seed: int) -> tuple[pygame.Surface, list[
 
 CHART_RENDERER: dict[str, Callable[[Scenario, int], tuple[pygame.Surface, list[Element]]]] = {
     "timeseries": render_timeseries,
-    "barchart":   render_barchart,
-    "scatter":    render_scatter,
-    "histogram":  render_histogram,
-    "boxplot":    render_boxplot,
-    "heatmap":    render_heatmap,
+    "barchart": render_barchart,
+    "scatter": render_scatter,
+    "histogram": render_histogram,
+    "boxplot": render_boxplot,
+    "heatmap": render_heatmap,
 }

@@ -64,9 +64,7 @@ def _check_first_game(session: SessionResult, profile: Profile) -> bool:
 BADGE_REGISTRY: list[Badge] = [
     Badge("quick_reflex", "⚡", "Quick Reflex", "Błyskawiczny", _check_quick_reflex),
     Badge("sharpshooter", "🎯", "Sharpshooter", "Snajper", _check_sharpshooter),
-    Badge(
-        "high_accuracy", "🎯", "High Accuracy", "Wysoka Celność", _check_high_accuracy
-    ),
+    Badge("high_accuracy", "🎯", "High Accuracy", "Wysoka Celność", _check_high_accuracy),
     Badge("clean_data", "🧹", "Clean Data", "Czyste Dane", _check_clean_data),
     Badge("first_game", "🎮", "First Game", "Pierwsza Gra", _check_first_game),
 ]

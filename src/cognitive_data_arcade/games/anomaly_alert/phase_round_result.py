@@ -11,13 +11,13 @@ _CHART_X, _CHART_Y = 0, 56
 _CHART_W, _CHART_H = 680, 624
 _PANEL_X = 680
 _TOP_H = 56
-_BG    = (15, 15, 35)
+_BG = (15, 15, 35)
 _PANEL = (18, 18, 42)
 _WHITE = (240, 240, 240)
-_DIM   = (120, 120, 160)
-_BLUE  = (52, 152, 219)
+_DIM = (120, 120, 160)
+_BLUE = (52, 152, 219)
 _GREEN = (46, 204, 113)
-_RED   = (231, 76, 60)
+_RED = (231, 76, 60)
 _AMBER = (243, 156, 18)
 
 _NEXT_RECT = pygame.Rect(690, 650, 324, 44)
@@ -51,6 +51,7 @@ class PhaseRoundResultScene(Scene):
         next_idx = self._round_idx + 1
         if next_idx < len(SCENARIOS):
             from cognitive_data_arcade.games.anomaly_alert.phase_round import PhaseRoundScene
+
             self._next = PhaseRoundScene(
                 scenario=SCENARIOS[next_idx],
                 round_idx=next_idx,
@@ -58,7 +59,10 @@ class PhaseRoundResultScene(Scene):
                 session_seed=self._session_seed,
             )
         else:
-            from cognitive_data_arcade.games.anomaly_alert.phase_session_result import PhaseSessionResultScene
+            from cognitive_data_arcade.games.anomaly_alert.phase_session_result import (
+                PhaseSessionResultScene,
+            )
+
             self._next = PhaseSessionResultScene(round_results=self._round_results)
         self._done = True
 
@@ -81,6 +85,7 @@ class PhaseRoundResultScene(Scene):
 
         # Insight text in footer area
         from cognitive_data_arcade.games.anomaly_alert.scenarios import SCENARIOS
+
         scenario = SCENARIOS[self._round_idx]
         ins_surf = get_font(11).render(scenario.insight_pl[:95], True, (155, 89, 182))
         surface.blit(ins_surf, (4, _CHART_Y + _CHART_H + 4))
@@ -96,10 +101,13 @@ class PhaseRoundResultScene(Scene):
         pygame.draw.rect(surface, (10, 10, 25), _NEXT_RECT, border_radius=6)
         pygame.draw.rect(surface, btn_col, _NEXT_RECT, 2, border_radius=6)
         lbl = get_font(18).render(btn_label, True, btn_col)
-        surface.blit(lbl, (
-            _NEXT_RECT.centerx - lbl.get_width() // 2,
-            _NEXT_RECT.centery - lbl.get_height() // 2,
-        ))
+        surface.blit(
+            lbl,
+            (
+                _NEXT_RECT.centerx - lbl.get_width() // 2,
+                _NEXT_RECT.centery - lbl.get_height() // 2,
+            ),
+        )
 
     def _draw_overlays(self, surface: pygame.Surface) -> None:
         r = self._result
@@ -130,7 +138,8 @@ class PhaseRoundResultScene(Scene):
         y = _TOP_H + 14
 
         hdr = get_font(14).render("WYNIK RUNDY", True, (155, 89, 182))
-        surface.blit(hdr, (x, y)); y += 32
+        surface.blit(hdr, (x, y))
+        y += 32
 
         rows = [
             (f"Trafione: {r['found']}/{r['total_anomalies']}", f"+{r['found'] * 20}", _GREEN),

@@ -114,9 +114,7 @@ class FlankerGame(Scene):
         ):
             rt_ms = float(pygame.time.get_ticks() - self._rt_start)
             t = self._trials[self._trial_idx]
-            expected = (
-                pygame.K_LEFT if t["target_direction"] == "left" else pygame.K_RIGHT
-            )
+            expected = pygame.K_LEFT if t["target_direction"] == "left" else pygame.K_RIGHT
             self._complete_trial(event.key == expected, rt_ms)
         elif self._phase == _Phase.BETWEEN_BLOCKS and event.key == pygame.K_SPACE:
             self._enter_iti()
@@ -159,9 +157,7 @@ class FlankerGame(Scene):
     def _enter_iti(self) -> None:
         self._phase = _Phase.ITI
         self._phase_timer = 0.0
-        self._iti_duration = float(
-            random.randint(self._config.iti_min_ms, self._config.iti_max_ms)
-        )
+        self._iti_duration = float(random.randint(self._config.iti_min_ms, self._config.iti_max_ms))
 
     def _complete_trial(self, correct: bool, rt_ms: float) -> None:
         t = self._trials[self._trial_idx]
@@ -196,9 +192,7 @@ class FlankerGame(Scene):
 
     def _stimulus_text(self) -> str:
         t = self._trials[self._trial_idx]
-        target = (
-            self._ARROW_LEFT if t["target_direction"] == "left" else self._ARROW_RIGHT
-        )
+        target = self._ARROW_LEFT if t["target_direction"] == "left" else self._ARROW_RIGHT
         flanker = self._ARROW_RIGHT if target == self._ARROW_LEFT else self._ARROW_LEFT
         if t["condition"] == "congruent":
             flanker = target
@@ -261,9 +255,7 @@ class FlankerGame(Scene):
             self._pm.award_badge(bid)
         profile_after = self._pm.load()
 
-        def _analysis_factory(
-            csv_path: Path, strings: Strings, back_scene: Scene
-        ) -> Scene:
+        def _analysis_factory(csv_path: Path, strings: Strings, back_scene: Scene) -> Scene:
             from cognitive_data_arcade.ui.flanker_analysis_scene import (
                 FlankerAnalysisScene,
             )

@@ -15,9 +15,12 @@ def _init():
 def _make(lang="pl", selected=0):
     pm = MagicMock()
     pm.load.return_value = MagicMock(
-        alias="Test", device_uuid="x",
-        music_enabled=True, sfx_enabled=True,
-        music_volume=1.0, sfx_volume=1.0,
+        alias="Test",
+        device_uuid="x",
+        music_enabled=True,
+        sfx_enabled=True,
+        music_volume=1.0,
+        sfx_volume=1.0,
     )
     strings = PL if lang == "pl" else EN
     return LessonMenuScene(pm, strings, selected)

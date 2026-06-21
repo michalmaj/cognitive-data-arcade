@@ -3,13 +3,13 @@ from __future__ import annotations
 import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 
-_WHITE      = (240, 240, 240)
-_DIM        = (120, 120, 160)
-_ORANGE     = (243, 156, 18)
-_BLUE       = ( 52, 152, 219)
-_BLUE_DARK  = ( 26,  58,  90)
-_TRACK      = ( 42,  42,  80)
-_PANEL      = ( 18,  18,  42)
+_WHITE = (240, 240, 240)
+_DIM = (120, 120, 160)
+_ORANGE = (243, 156, 18)
+_BLUE = (52, 152, 219)
+_BLUE_DARK = (26, 58, 90)
+_TRACK = (42, 42, 80)
+_PANEL = (18, 18, 42)
 
 
 class _FloatSlider:
@@ -77,16 +77,13 @@ class _FloatSlider:
         surface.blit(font_lbl.render(self._label, True, _DIM), (self._x, self._y))
         val_str = format(self._value, self._fmt)
         vw = font_val.size(val_str)[0]
-        surface.blit(font_val.render(val_str, True, _WHITE),
-                     (self._x + self._w - vw, self._y))
+        surface.blit(font_val.render(val_str, True, _WHITE), (self._x + self._w - vw, self._y))
         ty = self._track_y()
-        pygame.draw.rect(surface, _TRACK,
-                         (self._x, ty - 2, self._w, 4), border_radius=2)
+        pygame.draw.rect(surface, _TRACK, (self._x, ty - 2, self._w, 4), border_radius=2)
         tx = self._thumb_x()
         filled = max(0, tx - self._x)
         if filled > 0:
-            pygame.draw.rect(surface, _ORANGE,
-                             (self._x, ty - 2, filled, 4), border_radius=2)
+            pygame.draw.rect(surface, _ORANGE, (self._x, ty - 2, filled, 4), border_radius=2)
         pygame.draw.circle(surface, _ORANGE, (tx, ty), 8)
 
 
@@ -126,9 +123,9 @@ class _AlphaButtons:
             bx = self._x + i * (self._w + gap)
             btn = pygame.Rect(bx, self._y, self._w, self._h)
             selected = i == self._selected
-            bg    = _BLUE_DARK   if selected else _PANEL
-            border = _BLUE       if selected else _TRACK
-            bw     = 2           if selected else 1
+            bg = _BLUE_DARK if selected else _PANEL
+            border = _BLUE if selected else _TRACK
+            bw = 2 if selected else 1
             pygame.draw.rect(surface, bg, btn, border_radius=3)
             pygame.draw.rect(surface, border, btn, bw, border_radius=3)
             color = _BLUE if selected else _DIM

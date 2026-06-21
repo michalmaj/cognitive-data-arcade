@@ -11,9 +11,7 @@ def load_session(csv_path: Path) -> pd.DataFrame:
     """Load and normalise a Stroop CSV."""
     df = pd.read_csv(csv_path)
     df["correct"] = df["correct"].astype(str).str.lower().isin(["true", "1"])
-    df["reaction_time_ms"] = pd.to_numeric(
-        df["reaction_time_ms"], errors="coerce"
-    ).fillna(-1.0)
+    df["reaction_time_ms"] = pd.to_numeric(df["reaction_time_ms"], errors="coerce").fillna(-1.0)
     return df
 
 
@@ -48,9 +46,7 @@ def session_stats(df: pd.DataFrame) -> dict:
     }
 
 
-def build_stroop_chart(
-    df: pd.DataFrame, figsize: tuple[float, float] = (7.0, 4.5)
-) -> Figure:
+def build_stroop_chart(df: pd.DataFrame, figsize: tuple[float, float] = (7.0, 4.5)) -> Figure:
     """Horizontal bar chart with 3 conditions. Background #0d0d1e (matches game UI)."""
     stats = session_stats(df)
     labels = ["Incongruent", "Neutral", "Congruent"]

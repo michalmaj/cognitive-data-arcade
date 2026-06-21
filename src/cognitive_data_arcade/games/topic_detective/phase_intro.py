@@ -5,12 +5,12 @@ import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 
-_W, _H  = 1024, 720
-_BG     = (15, 15, 35)
-_PANEL  = (18, 18, 42)
-_WHITE  = (240, 240, 240)
-_DIM    = (120, 120, 160)
-_GOLD   = (240, 165, 0)
+_W, _H = 1024, 720
+_BG = (15, 15, 35)
+_PANEL = (18, 18, 42)
+_WHITE = (240, 240, 240)
+_DIM = (120, 120, 160)
+_GOLD = (240, 165, 0)
 
 _SLIDES = [
     (
@@ -64,6 +64,7 @@ class PhaseIntroScene(Scene):
         else:
             from cognitive_data_arcade.games.topic_detective.missions import build_session
             from cognitive_data_arcade.games.topic_detective.phase_mission import PhaseMissionScene
+
             self._next = PhaseMissionScene(
                 missions=build_session(),
                 round_idx=0,

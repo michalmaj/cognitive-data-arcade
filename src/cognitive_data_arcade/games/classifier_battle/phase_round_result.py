@@ -9,12 +9,12 @@ from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.classifier_battle.scenarios import Scenario
 
-_BG    = (15, 15, 35)
+_BG = (15, 15, 35)
 _PANEL = (18, 18, 42)
 _WHITE = (240, 240, 240)
-_DIM   = (120, 120, 160)
-_RED   = (231, 76, 60)
-_BLUE  = (52, 152, 219)
+_DIM = (120, 120, 160)
+_RED = (231, 76, 60)
+_BLUE = (52, 152, 219)
 _GREEN = (39, 174, 96)
 _YELLOW = (243, 156, 18)
 _PURPLE = (155, 89, 182)
@@ -94,7 +94,10 @@ class PhaseRoundResultScene(Scene):
     def _advance(self) -> None:
         is_last = self._round_idx >= _TOTAL_ROUNDS - 1
         if is_last:
-            from cognitive_data_arcade.games.classifier_battle.phase_session_result import PhaseSessionResultScene
+            from cognitive_data_arcade.games.classifier_battle.phase_session_result import (
+                PhaseSessionResultScene,
+            )
+
             self._next = PhaseSessionResultScene(
                 session_score=self._session_score,
                 round_results=self._round_results,
@@ -102,6 +105,7 @@ class PhaseRoundResultScene(Scene):
         else:
             from cognitive_data_arcade.games.classifier_battle.phase_draw import PhaseDrawScene
             from cognitive_data_arcade.games.classifier_battle.scenarios import SCENARIOS
+
             next_idx = self._round_idx + 1
             self._next = PhaseDrawScene(
                 scenario=SCENARIOS[next_idx],
@@ -123,7 +127,8 @@ class PhaseRoundResultScene(Scene):
         pygame.draw.rect(surface, _PANEL, (0, 0, _W, _TOP_H))
         strip = get_font(18).render(
             f"Runda {self._round_idx + 1}/{_TOTAL_ROUNDS}  —  {d.scenario.name_pl}  —  Wyniki",
-            True, _WHITE,
+            True,
+            _WHITE,
         )
         surface.blit(strip, (_W // 2 - strip.get_width() // 2, 10))
 
@@ -145,11 +150,11 @@ class PhaseRoundResultScene(Scene):
         lbl = get_font(18).render(btn_label, True, _BLUE)
         surface.blit(lbl, (btn.centerx - lbl.get_width() // 2, btn.centery - lbl.get_height() // 2))
 
-    def _draw_scatter(self, surface: pygame.Surface, rect: pygame.Rect,
-                      d: RoundDisplay) -> None:
+    def _draw_scatter(self, surface: pygame.Surface, rect: pygame.Rect, d: RoundDisplay) -> None:
         # Compute misclassified mask
         if d.polyline_norm:
             from cognitive_data_arcade.games.classifier_battle.classifier import predict_labels
+
             pred = predict_labels(d.polyline_norm, d.X, d.y)
             misclassified = pred != d.y
         else:
@@ -168,12 +173,12 @@ class PhaseRoundResultScene(Scene):
 
         # Draw boundary polyline
         if len(d.polyline_norm) >= 2:
-            pts = [(int(rect.x + nx * rect.w), int(rect.y + ny * rect.h))
-                   for nx, ny in d.polyline_norm]
+            pts = [
+                (int(rect.x + nx * rect.w), int(rect.y + ny * rect.h)) for nx, ny in d.polyline_norm
+            ]
             pygame.draw.lines(surface, _YELLOW, False, pts, 2)
 
-    def _draw_right(self, surface: pygame.Surface, rx: int, rw: int,
-                    d: RoundDisplay) -> None:
+    def _draw_right(self, surface: pygame.Surface, rx: int, rw: int, d: RoundDisplay) -> None:
         y = _TOP_H + 12
         acc_label = get_font(14).render("Dokładność klasyfikacji:", True, _DIM)
         surface.blit(acc_label, (rx, y))
@@ -181,8 +186,7 @@ class PhaseRoundResultScene(Scene):
 
         bar_max_w = rw - 80
         rows = [("Ty", d.player_acc, _YELLOW)] + [
-            (_CLF_NAMES[k], v, _CLF_COLORS[k])
-            for k, v in d.clf_accs.items()
+            (_CLF_NAMES[k], v, _CLF_COLORS[k]) for k, v in d.clf_accs.items()
         ]
         for name, acc, color in rows:
             name_lbl = get_font(13).render(name, True, color)

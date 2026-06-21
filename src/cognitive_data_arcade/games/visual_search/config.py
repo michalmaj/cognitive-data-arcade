@@ -23,7 +23,9 @@ class VSConfig:
 
     def __post_init__(self) -> None:
         if self.difficulty not in SET_SIZES:
-            raise ValueError(f"difficulty must be one of {list(SET_SIZES)}, got {self.difficulty!r}")
+            raise ValueError(
+                f"difficulty must be one of {list(SET_SIZES)}, got {self.difficulty!r}"
+            )
         if self.mode not in {"letters", "shapes"}:
             raise ValueError(f"mode must be 'letters' or 'shapes', got {self.mode!r}")
         object.__setattr__(self, "set_size", SET_SIZES[self.difficulty])
