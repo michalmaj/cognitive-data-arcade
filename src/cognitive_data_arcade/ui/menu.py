@@ -65,7 +65,7 @@ _LESSON_DATA: list[dict] = [
         "type": "arcade",
         "desc_pl": (
             "Jak szybko reagujesz na bodziec wizualny?\n"
-            "Naciśnij SPACJĘ gdy zaświeci kółko — mierzysz\n"
+            "Naciśnij SPACJĘ gdy zaświeci kółko - mierzysz\n"
             "czas reakcji, kluczową zmienną w badaniach."
         ),
         "desc_en": (
@@ -109,12 +109,12 @@ _LESSON_DATA: list[dict] = [
         "name": "EDA Sandbox",
         "type": "lab",
         "desc_pl": (
-            "Zanim uruchomisz model — poznaj swoje dane.\n"
+            "Zanim uruchomisz model - poznaj swoje dane.\n"
             "Eksploruj rozkłady, korelacje i wzorce\n"
             "w interaktywnej piaskownicy EDA."
         ),
         "desc_en": (
-            "Before running a model — understand your data.\n"
+            "Before running a model - understand your data.\n"
             "Explore distributions, correlations and patterns\n"
             "in an interactive EDA sandbox."
         ),
@@ -125,12 +125,12 @@ _LESSON_DATA: list[dict] = [
         "name": "Stroop Challenge",
         "type": "arcade",
         "desc_pl": (
-            "Nazwij kolor tuszu — nie słowo!\n"
+            "Nazwij kolor tuszu - nie słowo!\n"
             "Efekt Stroopa mierzy konflikt poznawczy\n"
             "między automatycznym czytaniem a uwagą."
         ),
         "desc_en": (
-            "Name the ink colour — not the word!\n"
+            "Name the ink colour - not the word!\n"
             "The Stroop effect measures cognitive conflict\n"
             "between automatic reading and attention."
         ),
@@ -156,12 +156,12 @@ _LESSON_DATA: list[dict] = [
         "type": "arcade",
         "desc_pl": (
             "Reaguj na zielony sygnał, hamuj na czerwony.\n"
-            "Mierz czas reakcji i kontrolę impulsów —\n"
+            "Mierz czas reakcji i kontrolę impulsów -\n"
             "kluczowe zmienne w badaniach nad uwagą."
         ),
         "desc_en": (
             "React to green signals, stop for red ones.\n"
-            "Measure reaction time and impulse control —\n"
+            "Measure reaction time and impulse control -\n"
             "key variables in attention and inhibition research."
         ),
     },
@@ -217,12 +217,12 @@ _LESSON_DATA: list[dict] = [
         "type": "lab",
         "desc_pl": (
             "Zmień parametry, obserwuj jak zmienia się rozkład.\n"
-            "Normalne, Poissona, t-Studenta — intuicyjnie\n"
+            "Normalne, Poissona, t-Studenta - intuicyjnie\n"
             "zrozum kształty danych w psychologii."
         ),
         "desc_en": (
             "Change parameters, watch the distribution shift.\n"
-            "Normal, Poisson, t-Student — build intuition\n"
+            "Normal, Poisson, t-Student - build intuition\n"
             "for data shapes in psychology research."
         ),
     },
@@ -247,12 +247,12 @@ _LESSON_DATA: list[dict] = [
         "type": "lab",
         "desc_pl": (
             "Testuj hipotezy na symulowanych danych.\n"
-            "Poznaj p-value, poziom istotności i moc testu —\n"
+            "Poznaj p-value, poziom istotności i moc testu -\n"
             "filary wnioskowania statystycznego."
         ),
         "desc_en": (
             "Test hypotheses on simulated data.\n"
-            "Learn p-values, significance levels and power —\n"
+            "Learn p-values, significance levels and power -\n"
             "the pillars of statistical inference."
         ),
     },
@@ -339,12 +339,12 @@ _LESSON_DATA: list[dict] = [
         "type": "lab",
         "desc_pl": (
             "Jak komputer widzi tekst? Tokenizuj zdania,\n"
-            "usuń stop words, stwórz bag-of-words —\n"
+            "usuń stop words, stwórz bag-of-words -\n"
             "pierwsze kroki w NLP."
         ),
         "desc_en": (
             "How does a computer see text? Tokenise sentences,\n"
-            "remove stop words, build a bag-of-words —\n"
+            "remove stop words, build a bag-of-words -\n"
             "first steps in NLP."
         ),
     },
@@ -445,12 +445,12 @@ _LESSON_DATA: list[dict] = [
         "type": "arcade",
         "desc_pl": (
             "Powstrzymaj fake newsy zanim się rozejdą!\n"
-            "Decyduj co moderować w sieci społecznej —\n"
+            "Decyduj co moderować w sieci społecznej -\n"
             "uczysz się o wirusowości dezinformacji."
         ),
         "desc_en": (
             "Stop fake news before they spread!\n"
-            "Decide what to moderate in a social network —\n"
+            "Decide what to moderate in a social network -\n"
             "learn about the virality of misinformation."
         ),
     },

@@ -1,4 +1,4 @@
-"""Lesson 18 — Classifier Battle (decision boundaries and classifier intuition)."""
+"""Lesson 18 - Classifier Battle (decision boundaries and classifier intuition)."""
 
 from __future__ import annotations
 
@@ -10,7 +10,7 @@ CONTENT: dict[str, dict[str, list[str]]] = {
             "Klasyfikator liniowy (np. regresja logistyczna) zakłada, że klasy można rozdzielić prostą linią. "
             "Działa świetnie, gdy dane są liniowo separowalne, ale zawodzi na kształtach takich jak półksiężyce czy koncentryczne kółka.",
             "KNN (K najbliższych sąsiadów) klasyfikuje punkt na podstawie klas jego k najbliższych sąsiadów. "
-            "Może tworzyć bardzo giętkie, nieliniowe granice — jest mocniejszy od regresji logistycznej na skomplikowanych danych.",
+            "Może tworzyć bardzo giętkie, nieliniowe granice - jest mocniejszy od regresji logistycznej na skomplikowanych danych.",
             "Drzewo decyzyjne dzieli przestrzeń seriami prostopadłych cięć. "
             "Łatwo interpretować jego decyzje, ale przy dużej głębokości skłonne do overfittingu.",
         ],
@@ -21,7 +21,7 @@ CONTENT: dict[str, dict[str, list[str]]] = {
             "dając bardziej wiarygodny obraz rzeczywistej dokładności niż jednorazowy podział na trening/test.",
         ],
         "tasks": [
-            "Zagraj w Classifier Battle — w której rundzie najtrudniej było Ci narysować granicę? Dlaczego?",
+            "Zagraj w Classifier Battle - w której rundzie najtrudniej było Ci narysować granicę? Dlaczego?",
             "Porównaj swoje wyniki z KNN: kiedy Ty wygrywasz, a kiedy KNN był lepszy?",
             "Wyjaśnij własnymi słowami, dlaczego klasyfikator liniowy nie radzi sobie z danymi w kształcie kółek.",
         ],
@@ -44,7 +44,7 @@ CONTENT: dict[str, dict[str, list[str]]] = {
             "giving a more reliable accuracy estimate than a single train/test split.",
         ],
         "tasks": [
-            "Play Classifier Battle — in which round was it hardest to draw a boundary, and why?",
+            "Play Classifier Battle - in which round was it hardest to draw a boundary, and why?",
             "Compare your results to KNN: when did you win, and when was KNN better?",
             "Explain in your own words why a linear classifier fails on circle-shaped data.",
         ],

@@ -1,5 +1,5 @@
 # src/cognitive_data_arcade/lessons/lesson_31.py
-"""Lesson 31 -- You Were the Dataset (behavioural data, observer effect, privacy)."""
+"""Lesson 31 - You Were the Dataset (behavioural data, observer effect, privacy)."""
 
 from __future__ import annotations
 
@@ -8,9 +8,9 @@ CONTENT: dict[str, dict[str, list[str]]] = {
         "theory": [
             "Dane behawioralne to dane zbierane przez rejestrowanie zachowania, "
             "nie deklaracji. Każde naciśnięcie klawisza, każdy czas reakcji, każda "
-            "odpowiedź w eksperymencie — to dane behawioralne. W tradycyjnej "
+            "odpowiedź w eksperymencie - to dane behawioralne. W tradycyjnej "
             "kognitywistyce badacz celowo zbiera te dane od uczestnika. "
-            "W świecie big data zbierają je aplikacje, platformy i urządzenia — "
+            "W świecie big data zbierają je aplikacje, platformy i urządzenia - "
             "często bez świadomości użytkownika.",
             "Efekt obserwatora (Efekt Hawthorne'a): zachowanie zmienia się, "
             "gdy wiemy że jesteśmy obserwowani. W tym kursie nie informowaliśmy "
@@ -21,7 +21,7 @@ CONTENT: dict[str, dict[str, list[str]]] = {
             "czas reakcji i wzorzec błędów razem tworzą unikalny 'odcisk poznawczy'. "
             "Badania pokazują, że styl pisania na klawiaturze, wzorce kliknięć myszy "
             "czy czas spędzony na każdym elemencie strony mogą identyfikować osobę "
-            "z dokładnością przekraczającą 95% — nawet bez żadnych danych osobowych.",
+            "z dokładnością przekraczającą 95% - nawet bez żadnych danych osobowych.",
             "Prywatność danych behawioralnych jest regulowana przez RODO od 2018 roku. "
             "Dane o zachowaniu użytkownika (czas reakcji, wzorce kliknięć, historia "
             "przeglądania) są danymi osobowymi i wymagają podstawy prawnej do przetwarzania. "
@@ -45,14 +45,14 @@ CONTENT: dict[str, dict[str, list[str]]] = {
             "w zakresie transparentności i audytowalności.",
         ],
         "tasks": [
-            "Patrząc na swój kognitywny profil — co Cię najbardziej zaskoczyło? "
+            "Patrząc na swój kognitywny profil - co Cię najbardziej zaskoczyło? "
             "Czy wyniki zgadzają się z Twoim subiektywnym poczuciem własnych zdolności? "
             "Co mówi efekt Stroopa o tym jak Twój mózg przetwarza sprzeczne informacje?",
             "Wyobraź sobie, że firma reklamowa ma dostęp do 1000 naciśnięć klawiszy "
             "dziennie podczas pracy. Jakie cechy osobowości lub zachowania mogłaby "
             "z nich wywnioskować? Czy zgodziłbyś się na takie zbieranie danych "
             "w zamian za bezpłatną aplikację?",
-            "W tym kursie zbieraliśmy Twoje dane lokalnie — tylko na Twoim komputerze. "
+            "W tym kursie zbieraliśmy Twoje dane lokalnie - tylko na Twoim komputerze. "
             "Jak zmieniłoby się Twoje uczestnictwo, gdybyś od początku wiedział "
             "że dane idą na serwer? A gdyby były anonimowe? A gdyby były publiczne? "
             "Narysuj granicę między akceptowalnym a nieakceptowalnym zbieraniem danych.",
@@ -61,10 +61,10 @@ CONTENT: dict[str, dict[str, list[str]]] = {
     "en": {
         "theory": [
             "Behavioural data is collected by recording behaviour, not declarations. "
-            "Every keypress, every reaction time, every response in an experiment — "
+            "Every keypress, every reaction time, every response in an experiment - "
             "that is behavioural data. In traditional cognitive science a researcher "
             "deliberately collects this data from a participant. In the big-data world "
-            "apps, platforms, and devices collect it — often without the user's awareness.",
+            "apps, platforms, and devices collect it - often without the user's awareness.",
             "The observer effect (Hawthorne effect): behaviour changes when we know "
             "we are being observed. In this course we did not explicitly inform you "
             "that every game writes your data to a CSV file. Now you know. "
@@ -73,7 +73,7 @@ CONTENT: dict[str, dict[str, list[str]]] = {
             "Behavioural data is unexpectedly identifying. Your Stroop effect, "
             "reaction time, and error pattern together form a unique 'cognitive fingerprint'. "
             "Research shows that typing patterns, mouse-click sequences, or dwell time "
-            "per page element can identify a person with over 95% accuracy — "
+            "per page element can identify a person with over 95% accuracy - "
             "even with no personal data whatsoever.",
             "Privacy of behavioural data has been regulated by GDPR since 2018. "
             "Data about user behaviour (reaction time, click patterns, browsing history) "
@@ -97,13 +97,13 @@ CONTENT: dict[str, dict[str, list[str]]] = {
             "on high-risk AI systems regarding transparency and auditability.",
         ],
         "tasks": [
-            "Looking at your cognitive profile — what surprised you most? "
+            "Looking at your cognitive profile - what surprised you most? "
             "Do the results match your subjective sense of your own abilities? "
             "What does the Stroop effect say about how your brain processes conflicting information?",
             "Imagine an advertising company has access to 1000 of your keypresses "
             "per day while you work. What personality traits or behaviours could they infer? "
             "Would you agree to such data collection in exchange for a free app?",
-            "In this course we collected your data locally — only on your computer. "
+            "In this course we collected your data locally - only on your computer. "
             "How would your participation have changed if you had known from the start "
             "that data goes to a server? What if it were anonymous? What if it were public? "
             "Draw the line between acceptable and unacceptable data collection.",

@@ -1,4 +1,4 @@
-"""Lesson 32 -- The Architect's Trial (AI ethics and algorithmic decision-making)."""
+"""Lesson 32 - The Architect's Trial (AI ethics and algorithmic decision-making)."""
 
 from __future__ import annotations
 
@@ -41,11 +41,11 @@ CONTENT: dict[str, dict[str, list[str]]] = {
             "algorytm błędnie klasyfikuje czarnych oskarżonych jako 'wysokie ryzyko' "
             "dwukrotnie częściej niż białych (45% vs 24% false positives). "
             "Northpointe (producent) odpowiedział: accuracy jest równa między grupami. "
-            "Oba twierdzenia są matematycznie prawdziwe -- to jest właśnie impossibility theorem.",
+            "Oba twierdzenia są matematycznie prawdziwe - to jest właśnie impossibility theorem.",
         ],
         "tasks": [
             "Który z Twoich wyborów projektowych najbardziej zaskoczył Cię konsekwencjami? "
-            "Dlaczego go podjąłeś -- co wydawało się wtedy oczywiste lub bezpieczne?",
+            "Dlaczego go podjąłeś - co wydawało się wtedy oczywiste lub bezpieczne?",
             "Wyobraź sobie że jesteś w grupie demograficznej, która 'przegrała' na Twoim "
             "systemie. Jak czujesz się wiedząc że algorytm oceniał Cię bez Twojej wiedzy, "
             "na podstawie danych, których istnienia możesz nie być świadomy?",
@@ -90,12 +90,12 @@ CONTENT: dict[str, dict[str, list[str]]] = {
             "ProPublica (2016) showed: the algorithm incorrectly classifies Black defendants "
             "as 'high risk' twice as often as white defendants (45% vs 24% false positives). "
             "Northpointe (the developer) responded: accuracy is equal across groups. "
-            "Both claims are mathematically true -- this is precisely the impossibility "
+            "Both claims are mathematically true - this is precisely the impossibility "
             "theorem in action.",
         ],
         "tasks": [
             "Which of your design choices surprised you most with its consequences? "
-            "Why did you make it -- what seemed obvious or safe at the time?",
+            "Why did you make it - what seemed obvious or safe at the time?",
             "Imagine you belong to the demographic group that 'lost' under your system. "
             "How do you feel knowing that an algorithm evaluated you without your knowledge, "
             "based on data whose existence you may not have been aware of?",
