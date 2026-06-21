@@ -8,11 +8,13 @@ from cognitive_data_arcade.engine.i18n import Strings, level_progress, level_tit
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.profile.manager import Profile, ProfileManager
 
-from cognitive_data_arcade.engine.colors import BG as _BG
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _TITLE_COLOR,
+    ORANGE as _HIGHLIGHT_COLOR,
+)
 
-_TITLE_COLOR = (240, 240, 240)
 _ITEM_COLOR = (160, 160, 160)
-_HIGHLIGHT_COLOR = (243, 156, 18)
 _SP_COLOR = (39, 174, 96)
 _DIM_COLOR = (70, 70, 112)
 _PANEL_BG = (18, 18, 42)

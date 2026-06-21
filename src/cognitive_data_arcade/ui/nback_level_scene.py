@@ -21,11 +21,13 @@ from cognitive_data_arcade.profile.manager import ProfileManager
 from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
 from cognitive_data_arcade.ui.menu import LessonMenuScene
 
-from cognitive_data_arcade.engine.colors import BG as _BG
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _TITLE_COLOR,
+    ORANGE as _HIGHLIGHT_COLOR,
+)
 
-_TITLE_COLOR = (240, 240, 240)
 _ITEM_COLOR = (160, 160, 160)
-_HIGHLIGHT_COLOR = (243, 156, 18)
 _NUM_OPTIONS = 4
 
 

@@ -16,7 +16,7 @@ from cognitive_data_arcade.engine.colors import (
     BG as _BG,
     WHITE as _WHITE,
     DIM as _DIM,
-    ORANGE as _YELLOW,
+    ORANGE as _ORANGE,
     GREEN as _GREEN,
     RED as _RED,
 )
@@ -201,9 +201,9 @@ class PhaseDrawScene(Scene):
         bg = pygame.Surface((_POPUP_W, _POPUP_H), pygame.SRCALPHA)
         bg.fill((20, 20, 50, 230))
         surface.blit(bg, popup.topleft)
-        pygame.draw.rect(surface, _YELLOW, popup, 1, border_radius=4)
+        pygame.draw.rect(surface, _ORANGE, popup, 1, border_radius=4)
 
-        title = get_font(15).render(self._scenario.name_pl, True, _YELLOW)
+        title = get_font(15).render(self._scenario.name_pl, True, _ORANGE)
         surface.blit(title, (px + 8, py + 8))
         pygame.draw.line(surface, _DIM, (px + 8, py + 30), (px + _POPUP_W - 8, py + 30))
 
