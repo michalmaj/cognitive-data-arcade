@@ -9,12 +9,15 @@ from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.text_tokenizer.engine import TokenizerState
 from cognitive_data_arcade.games.text_tokenizer.widgets import SharedState
 
-_BG = (15, 15, 35)
-_WHITE = (240, 240, 240)
-_DIM = (120, 120, 160)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    BLUE as _BLUE,
+    PURPLE as _PURPLE,
+)
+
 _AMBER = (243, 156, 18)
-_BLUE = (52, 152, 219)
-_PURPLE = (155, 89, 182)
 _PHASE_H = 636
 
 _SIZES = [(1, "Unigramy (1)"), (2, "Bigramy (2)"), (3, "Trigramy (3)")]

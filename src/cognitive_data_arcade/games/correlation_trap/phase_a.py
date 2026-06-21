@@ -16,11 +16,14 @@ from cognitive_data_arcade.games.correlation_trap.simulator import (
     generate_correlated,
 )
 
-_BG = (15, 15, 35)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    ORANGE as _ORANGE,
+)
+
 _PANEL = (18, 18, 42)
-_WHITE = (240, 240, 240)
-_DIM = (120, 120, 160)
-_ORANGE = (243, 156, 18)
 _TRACK = (42, 42, 80)
 _FIG_BG = "#0f0f23"
 _AX_BG = "#1a1a3e"
@@ -255,6 +258,8 @@ class PhaseAScene(Scene):
             area.blit(self._chart_surf, (_LEFT_W + 4, 28))
 
         self._popup.draw(area)
+        hint = get_font(14).render("kliknij i przeciągnij suwak", True, _DIM)
+        area.blit(hint, (14, _AREA_H - 24))
         surface.blit(area, (0, offset_y))
 
 

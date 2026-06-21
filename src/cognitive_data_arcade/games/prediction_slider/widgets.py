@@ -3,10 +3,12 @@ from __future__ import annotations
 import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 
-_WHITE = (240, 240, 240)
-_DIM = (120, 120, 160)
-_ORANGE = (243, 156, 18)
-_BLUE = (52, 152, 219)
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
+    DIM as _DIM,
+    ORANGE as _ORANGE,
+)
+
 _TRACK = (42, 42, 80)
 _PANEL = (18, 18, 42)
 _BLUE_DARK = (26, 58, 90)

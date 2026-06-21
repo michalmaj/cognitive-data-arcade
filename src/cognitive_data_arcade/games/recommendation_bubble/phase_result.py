@@ -9,11 +9,14 @@ from cognitive_data_arcade.games.recommendation_bubble.game_state import (
     profile_from_clicks,
 )
 
-_W, _H = 1024, 720
-_BG = (10, 10, 20)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+)
+
+_W, _H = 1024, 768
 _PANEL = (20, 14, 30)
-_WHITE = (240, 240, 240)
-_DIM = (140, 140, 160)
 _GOLD = (243, 156, 18)
 _GREY = (60, 60, 80)
 _C_USER = (155, 89, 182)

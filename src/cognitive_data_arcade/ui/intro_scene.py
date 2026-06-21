@@ -7,9 +7,11 @@ from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.profile.manager import ProfileManager
 
-_BG = (26, 26, 46)
-_WHITE = (240, 240, 240)
-_DIM = (100, 100, 150)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+)
 
 _TITLE_TEXT = "COGNITIVE DATA ARCADE"
 

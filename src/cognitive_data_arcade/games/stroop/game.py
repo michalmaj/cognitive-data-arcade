@@ -17,12 +17,14 @@ from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.stroop.config import COLORS, EASY, HARD, MEDIUM, StroopConfig
 from cognitive_data_arcade.profile.manager import ProfileManager
 
-_BG = (10, 10, 20)
-_WHITE = (240, 240, 240)
-_DIM = (70, 70, 112)
-_ORANGE = (243, 156, 18)
-_RED = (231, 76, 60)
-_HIGHLIGHT = (243, 156, 18)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    ORANGE as _ORANGE,
+    RED as _RED,
+)
+
 _W, _H = 1024, 768
 _PROGRESS_H = 4
 _FOOTER_H = 40
@@ -373,7 +375,7 @@ class StroopGame(Scene):
         ]
         self._preset_rects = []
         for i, label in enumerate(labels):
-            color = _HIGHLIGHT if i == self._preset_idx else _DIM
+            color = _ORANGE if i == self._preset_idx else _DIM
             surf = self._font_med.render(label, True, color)
             x = w // 2 - surf.get_width() // 2
             y = 280 + i * 56
@@ -392,6 +394,8 @@ class StroopGame(Scene):
                 surf = self._font_med.render(line, True, _WHITE)
                 surface.blit(surf, (w // 2 - surf.get_width() // 2, y))
             y += 44
+        hint = self._font_hint.render(self._strings.hint_space, True, _DIM)
+        surface.blit(hint, (w // 2 - hint.get_width() // 2, h - 28))
 
     def _draw_countdown(self, surface: pygame.Surface, w: int, h: int) -> None:
         surf = self._font_lg.render(str(self._countdown_val), True, _ORANGE)

@@ -9,10 +9,13 @@ from cognitive_data_arcade.games.correlation_trap.phase_a import PhaseAScene
 from cognitive_data_arcade.games.correlation_trap.phase_b import PhaseBScene
 from cognitive_data_arcade.games.correlation_trap.phase_c import PhaseCScene
 
-_BG = (15, 15, 35)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+)
+
 _NAV_BG = (18, 18, 45)
-_WHITE = (240, 240, 240)
-_DIM = (120, 120, 160)
 _ACTIVE = (243, 156, 18)
 _NAV_H = 48
 
@@ -58,7 +61,7 @@ class CorrelationTrapScene(Scene):
     def draw(self, surface: pygame.Surface) -> None:
         surface.fill(_BG)
         self._draw_nav(surface)
-        inner = pygame.Surface((1024, 720 - _NAV_H))
+        inner = pygame.Surface((1024, 768 - _NAV_H))
         inner.fill(_BG)
         phase_scene = self._active()
         phase_scene.draw(inner, offset_y=0)

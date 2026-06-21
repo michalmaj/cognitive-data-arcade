@@ -4,10 +4,12 @@ import pygame
 
 from cognitive_data_arcade.engine.fonts import get_font
 
-_BG = (15, 15, 35)
+from cognitive_data_arcade.engine.colors import (
+    DIM as _DIM,
+)
+
 _TRACK = (40, 40, 80)
 _THUMB = (240, 240, 240)
-_DIM = (120, 120, 160)
 
 
 class SliderWidget:

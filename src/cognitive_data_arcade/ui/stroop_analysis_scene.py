@@ -3,6 +3,14 @@ from __future__ import annotations
 import math
 
 import pygame
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    ORANGE as _ORANGE,
+    DIM as _DIM,
+    GREEN as _GREEN,
+    RED as _RED,
+)
 from cognitive_data_arcade.engine.fonts import get_font
 
 from cognitive_data_arcade.engine.i18n import Strings
@@ -13,12 +21,6 @@ def _fmt_rt(value: float) -> str:
     return "— ms" if math.isnan(value) else f"{value:.0f} ms"
 
 
-_BG = (10, 10, 20)
-_WHITE = (240, 240, 240)
-_ORANGE = (243, 156, 18)
-_DIM = (100, 100, 150)
-_GREEN = (39, 174, 96)
-_RED = (231, 76, 60)
 _BORDER = (42, 42, 80)
 _CHART_X = 10
 _CHART_Y = 45

@@ -7,8 +7,9 @@ from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.misinformation.networks import ROUNDS
 
-_W, _H = 1024, 720
-_BG = (12, 12, 20)
+from cognitive_data_arcade.engine.colors import BG as _BG
+
+_W, _H = 1024, 768
 
 
 class PhaseInterludeScene(Scene):

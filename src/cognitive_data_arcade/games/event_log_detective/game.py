@@ -20,12 +20,15 @@ from cognitive_data_arcade.profile.manager import ProfileManager
 # Colours
 # ---------------------------------------------------------------------------
 
-_BG = (26, 26, 46)
-_WHITE = (240, 240, 240)
-_DIM = (120, 120, 160)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    GREEN as _GREEN,
+    RED as _RED,
+)
+
 _ACCENT = (243, 156, 18)
-_GREEN = (39, 174, 96)
-_RED = (231, 76, 60)
 _PANEL_BG = (18, 18, 40)
 
 

@@ -25,12 +25,15 @@ _PRESETS: list[tuple[str, str, str]] = [
 _MAX_TEXT_LEN = 180
 _BAR_H = 48
 _W = 1024
-_BG = (12, 12, 28)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    BLUE as _BLUE,
+)
+
 _PANEL = (18, 18, 42)
-_WHITE = (240, 240, 240)
-_DIM = (120, 120, 160)
 _AMBER = (243, 156, 18)
-_BLUE = (52, 152, 219)
 
 
 @dataclass

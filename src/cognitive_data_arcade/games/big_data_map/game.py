@@ -11,9 +11,12 @@ from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.profile.manager import ProfileManager
 
-_BG = (13, 13, 30)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    ORANGE as _ORANGE,
+)
+
 _LINE_COLOR = (42, 42, 80)
-_ORANGE = (243, 156, 18)
 _GOLD = _ORANGE  # same hue — is_game nodes use gold border, currently matches orange
 _TEXT_LIGHT = (240, 240, 240)
 _TEXT_DIM = (112, 112, 160)

@@ -7,13 +7,16 @@ from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.bias_blind_spot.game_state import GameState, CONSEQUENCE_TABLE
 
-_W, _H = 1024, 720
-_BG = (8, 12, 20)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    GREEN as _GREEN,
+    RED as _RED,
+)
+
+_W, _H = 1024, 768
 _PANEL = (16, 20, 36)
-_WHITE = (240, 240, 240)
-_DIM = (130, 130, 150)
-_GREEN = (39, 174, 96)
-_RED = (231, 76, 60)
 _GOLD = (243, 156, 18)
 
 _PANELS = [

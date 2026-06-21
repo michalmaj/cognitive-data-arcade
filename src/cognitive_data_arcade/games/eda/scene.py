@@ -9,10 +9,13 @@ from cognitive_data_arcade.games.eda.simulator import simulate
 from cognitive_data_arcade.games.eda.ui_controls import ControlPanel
 from cognitive_data_arcade.games.eda.ui_results import ChartPanel, ResultsPanel
 
-_BG = (15, 15, 35)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+)
+
 _ACTIVE = (243, 156, 18)
-_WHITE = (240, 240, 240)
-_DIM = (120, 120, 160)
 
 _PANEL_X, _PANEL_Y = 60, 30
 _PANEL_W, _PANEL_H = 680, 530

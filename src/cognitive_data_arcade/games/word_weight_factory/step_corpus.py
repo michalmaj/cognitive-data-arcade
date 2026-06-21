@@ -9,12 +9,14 @@ from cognitive_data_arcade.games.word_weight_factory.corpus import CorpusState
 from cognitive_data_arcade.games.word_weight_factory.engine import WeightMatrix
 from cognitive_data_arcade.games.text_tokenizer.stop_words import STOP_WORDS_EN, STOP_WORDS_PL
 
-_BG = (15, 15, 35)
-_WHITE = (240, 240, 240)
-_DIM = (120, 120, 160)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    GREEN as _GREEN,
+    PURPLE as _PURPLE,
+)
+
 _AMBER = (243, 156, 18)
-_GREEN = (46, 204, 113)
-_PURPLE = (155, 89, 182)
 _STEP_H = 672
 _W = 804
 

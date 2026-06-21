@@ -9,13 +9,16 @@ from cognitive_data_arcade.games.event_log_detective.scenarios import SCENARIOS
 from cognitive_data_arcade.profile.manager import ProfileManager
 from cognitive_data_arcade.ui.menu import LessonMenuScene
 
-_BG = (26, 26, 46)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    DIM as _DIM,
+    WHITE as _WHITE,
+)
+
 _TILE_W, _TILE_H = 200, 90
 _TILE_GAP = 24
 _SELECTED_COLOR = (243, 156, 18)
 _HOVER_COLOR = (60, 60, 100)
-_DIM = (100, 100, 150)
-_WHITE = (240, 240, 240)
 _TILES_X = 188
 _ROW1_Y = 180
 _ROW2_Y = 360

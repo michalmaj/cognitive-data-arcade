@@ -17,7 +17,7 @@ from cognitive_data_arcade.games.social_network.graph import (
     sir_step,
 )
 
-_W, _H = 1024, 720
+_W, _H = 1024, 768
 _TOP_H = 50
 _BOT_H = 150
 _MID_X = 512
@@ -30,7 +30,11 @@ _P_RECOVER = 0.25
 _SIR_TICK_MS = 300.0
 _RNG_P = 0.3
 
-_BG = (13, 17, 23)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    BLUE as _BLUE,
+)
+
 _PANEL_BG = (13, 17, 23)
 _DIVIDER = (44, 62, 80)
 _TOP_BG = (26, 26, 46)
@@ -44,7 +48,6 @@ _BTN_ACTIVE = (44, 62, 80)
 _BTN_INACT = (26, 26, 46)
 _BTN_TEXT = (200, 200, 200)
 _AMBER = (230, 126, 34)
-_BLUE = (52, 152, 219)
 _GREEN_BTN = (39, 174, 96)
 _GREY_TEXT = (100, 100, 100)
 

@@ -13,18 +13,21 @@ from cognitive_data_arcade.games.emotion_classifier.lexicon import (
 )
 from cognitive_data_arcade.games.emotion_classifier.sentences import Sentence
 
-_W, _H = 1024, 720
+_W, _H = 1024, 768
 _PANEL_X = 744
 _PANEL_W = 280
 _TOP_H = 50
-_BG = (15, 15, 35)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    GREEN as _GREEN,
+    RED as _RED,
+    PURPLE as _PURPLE,
+)
+
 _TOP_BG = (12, 12, 30)
 _PANEL_BG = (12, 12, 30)
-_WHITE = (240, 240, 240)
-_DIM = (100, 100, 130)
-_GREEN = (39, 174, 96)
-_RED = (231, 76, 60)
-_PURPLE = (155, 89, 182)
 _AMBER = (240, 165, 0)
 _GREY = (80, 80, 100)
 _LEFT_PAD = 20

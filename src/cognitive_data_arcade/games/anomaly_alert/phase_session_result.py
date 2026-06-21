@@ -11,14 +11,17 @@ from cognitive_data_arcade.engine.chart import figure_to_surface
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 
-_W, _H = 1024, 720
-_BG = (15, 15, 35)
+_W, _H = 1024, 768
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    BLUE as _BLUE,
+    GREEN as _GREEN,
+    RED as _RED,
+)
+
 _PANEL = (18, 18, 42)
-_WHITE = (240, 240, 240)
-_DIM = (120, 120, 160)
-_BLUE = (52, 152, 219)
-_GREEN = (46, 204, 113)
-_RED = (231, 76, 60)
 _AMBER = (243, 156, 18)
 _GOLD = (255, 215, 0)
 
@@ -127,11 +130,6 @@ class PhaseSessionResultScene(Scene):
         ty += 20
         pygame.draw.line(surface, (60, 60, 90), (16, ty), (_W - 16, ty), 1)
         ty += 6
-
-        _GREEN = (46, 204, 113)
-        _RED = (231, 76, 60)
-        _AMBER = (243, 156, 18)
-        _DIM = (120, 120, 160)
 
         for r in self._results:
             score_col = _GREEN if r["score"] >= 40 else (_AMBER if r["score"] >= 20 else _RED)

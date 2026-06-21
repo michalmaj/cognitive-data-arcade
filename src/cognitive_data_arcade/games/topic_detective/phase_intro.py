@@ -5,11 +5,14 @@ import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 
-_W, _H = 1024, 720
-_BG = (15, 15, 35)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+)
+
+_W, _H = 1024, 768
 _PANEL = (18, 18, 42)
-_WHITE = (240, 240, 240)
-_DIM = (120, 120, 160)
 _GOLD = (240, 165, 0)
 
 _SLIDES = [
@@ -103,6 +106,8 @@ class PhaseIntroScene(Scene):
         label = "Dalej" if self._slide < len(_SLIDES) - 1 else "Zacznij gre"
         lbl = get_font(20).render(label, True, _GOLD)
         surface.blit(lbl, (_W // 2 - lbl.get_width() // 2, _H - 74))
+        hint = get_font(14).render("SPACJA lub klik — dalej", True, _DIM)
+        surface.blit(hint, (_W // 2 - hint.get_width() // 2, _H - 28))
 
     def is_done(self) -> bool:
         return self._done

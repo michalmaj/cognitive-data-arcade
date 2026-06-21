@@ -13,15 +13,18 @@ from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.profile.manager import ProfileManager
 
-_BG = (10, 10, 20)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    ORANGE as _ORANGE,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    GREEN as _GREEN,
+    RED as _RED,
+)
+
 _ROW_BG = (14, 14, 32)
 _ROW_ACTIVE_BG = (20, 20, 50)
 _BORDER = (42, 42, 80)
-_ORANGE = (243, 156, 18)
-_WHITE = (240, 240, 240)
-_DIM = (100, 100, 150)
-_GREEN = (39, 174, 96)
-_RED = (231, 76, 60)
 
 _TOP_H = 44
 _FOOTER_H = 30

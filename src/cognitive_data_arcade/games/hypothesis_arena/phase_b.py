@@ -21,14 +21,17 @@ from cognitive_data_arcade.games.hypothesis_arena.simulator import (
 )
 from cognitive_data_arcade.games.hypothesis_arena.widgets import _AlphaButtons, _FloatSlider
 
-_BG = (15, 15, 35)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    ORANGE as _ORANGE,
+    BLUE as _BLUE,
+    GREEN as _GREEN,
+    RED as _RED,
+)
+
 _PANEL = (18, 18, 42)
-_WHITE = (240, 240, 240)
-_DIM = (120, 120, 160)
-_ORANGE = (243, 156, 18)
-_BLUE = (52, 152, 219)
-_GREEN = (39, 174, 96)
-_RED = (231, 76, 60)
 _FIG_BG = "#0f0f23"
 
 _TOP_H = 80
@@ -188,6 +191,9 @@ class PhaseBScene(Scene):
         self._draw_controls(surface)
         if self._state == "revealed" and self._result is not None:
             self._draw_verdict(surface)
+        if self._state == "waiting":
+            hint = get_font(14).render("ustaw parametry, kliknij Uruchom eksperyment", True, _DIM)
+            surface.blit(hint, (14, _AREA_H - 24))
 
     def _draw_top_bar(self, surface: pygame.Surface) -> None:
         pygame.draw.rect(surface, _PANEL, (0, 0, _AREA_W, _TOP_H))

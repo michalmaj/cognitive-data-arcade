@@ -18,12 +18,15 @@ from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.flanker.config import FlankerConfig
 from cognitive_data_arcade.profile.manager import ProfileManager
 
-_BG = (10, 10, 20)
-_WHITE = (240, 240, 240)
-_DIM = (70, 70, 112)
-_ORANGE = (243, 156, 18)
-_RED = (231, 76, 60)
-_GREEN = (39, 174, 96)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    ORANGE as _ORANGE,
+    RED as _RED,
+    GREEN as _GREEN,
+)
+
 _W, _H = 1024, 768
 
 
@@ -298,6 +301,9 @@ class FlankerGame(Scene):
             surface.blit(msg, (cx - msg.get_width() // 2, cy - 40))
             hint = self._font_info.render("SPACE aby kontynuowac", True, _DIM)
             surface.blit(hint, (cx - hint.get_width() // 2, cy + 40))
+        if self._phase in (_Phase.FIXATION, _Phase.STIMULUS, _Phase.FEEDBACK):
+            kh = self._font_info.render(self._strings.flanker_hint_keys, True, _DIM)
+            surface.blit(kh, (cx - kh.get_width() // 2, _H - 36))
         prog = self._trial_idx / max(len(self._trials), 1)
         pygame.draw.rect(surface, _DIM, (0, _H - 4, _W, 4))
         pygame.draw.rect(surface, _ORANGE, (0, _H - 4, int(_W * prog), 4))

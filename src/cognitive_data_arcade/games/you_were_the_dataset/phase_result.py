@@ -7,13 +7,15 @@ from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.you_were_the_dataset.game_state import GameState
 
-_W, _H = 1024, 720
-_BG = (8, 12, 20)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+)
+
+_W, _H = 1024, 768
 _PANEL = (16, 20, 36)
-_WHITE = (240, 240, 240)
-_DIM = (130, 130, 150)
 _GOLD = (243, 156, 18)
-_GREEN = (34, 197, 94)
 
 _AHA = [
     "Byłeś jednocześnie naukowcem i uczestnikiem.",

@@ -11,10 +11,13 @@ import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 
 from cognitive_data_arcade.engine import audio
+from cognitive_data_arcade.engine.colors import DIM as _DIM
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.gono.config import GoNoGoConfig
 from cognitive_data_arcade.profile.manager import ProfileManager
+
+_W, _H = 1024, 768
 
 
 class _Phase(enum.Enum):
@@ -278,6 +281,10 @@ class GoNoGoGame(Scene):
 
         elif self._phase == _Phase.DONE:
             pass
+
+        if self._phase in (_Phase.FIXATION, _Phase.STIMULUS, _Phase.FEEDBACK):
+            kh = self._font_hint.render(self._strings.gono_hint_keys, True, _DIM)
+            surface.blit(kh, (cx - kh.get_width() // 2, _H - 36))
 
     def is_done(self) -> bool:
         return self._phase == _Phase.DONE

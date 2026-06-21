@@ -10,17 +10,20 @@ from cognitive_data_arcade.engine.chart import figure_to_surface
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 
-_BG = (15, 15, 35)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    GREEN as _GREEN,
+    ORANGE as _ORANGE,
+    RED as _RED,
+    BLUE as _BLUE,
+)
+
 _PANEL = (18, 18, 42)
-_WHITE = (240, 240, 240)
-_DIM = (120, 120, 160)
-_GREEN = (39, 174, 96)
-_ORANGE = (243, 156, 18)
-_RED = (231, 76, 60)
-_BLUE = (52, 152, 219)
 _FIG_BG = "#0f0f23"
 _AX_BG = "#1a1a3e"
-_W, _H = 1024, 720
+_W, _H = 1024, 768
 
 
 class PhaseSessionResultScene(Scene):

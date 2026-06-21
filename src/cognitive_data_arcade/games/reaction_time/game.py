@@ -17,14 +17,17 @@ from cognitive_data_arcade.games.reaction_time.config import ReactionTimeConfig
 from cognitive_data_arcade.profile.manager import ProfileManager
 
 # ── colours ──────────────────────────────────────────────────────────────────
-_BG = (10, 10, 20)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    RED as _RED,
+)
+
 _TARGET_OFF = (30, 30, 60)
 _TARGET_ON = (243, 156, 18)
 _DIM_BORDER = (42, 42, 80)
 _BRIGHT_BORDER = (243, 156, 18)
-_WHITE = (240, 240, 240)
-_DIM = (70, 70, 112)
-_RED = (231, 76, 60)
 
 # ── layout ────────────────────────────────────────────────────────────────────
 _W, _H = 1024, 768
@@ -287,6 +290,8 @@ class ReactionTimeGame(Scene):
                 surf = self._font_med.render(line, True, _WHITE)
                 surface.blit(surf, (w // 2 - surf.get_width() // 2, y))
             y += 44
+        hint = self._font_hint.render(self._strings.hint_space, True, _DIM)
+        surface.blit(hint, (w // 2 - hint.get_width() // 2, h - 28))
 
     def _draw_countdown(self, surface: pygame.Surface, w: int, h: int) -> None:
         surf = self._font_lg.render(str(self._countdown_val), True, _TARGET_ON)

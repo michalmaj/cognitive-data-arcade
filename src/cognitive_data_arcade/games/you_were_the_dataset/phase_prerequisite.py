@@ -14,13 +14,16 @@ from cognitive_data_arcade.games.you_were_the_dataset.profile_loader import (
     check_prerequisites,
 )
 
-_W, _H = 1024, 720
-_BG = (10, 14, 20)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    GREEN as _GREEN,
+    RED as _RED,
+)
+
+_W, _H = 1024, 768
 _PANEL = (18, 22, 38)
-_WHITE = (240, 240, 240)
-_DIM = (130, 130, 150)
-_GREEN = (34, 197, 94)
-_RED = (239, 68, 68)
 _BTN_W, _BTN_H = 160, 34
 
 

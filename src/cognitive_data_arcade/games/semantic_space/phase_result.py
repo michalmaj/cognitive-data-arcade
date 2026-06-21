@@ -7,17 +7,20 @@ import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 
-_W, _H = 1024, 720
-_BG = (15, 15, 35)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    GREEN as _GREEN,
+    RED as _RED,
+    BLUE as _BLUE,
+    PURPLE as _PURPLE,
+)
+
+_W, _H = 1024, 768
 _PANEL = (18, 18, 42)
-_WHITE = (240, 240, 240)
-_DIM = (100, 100, 130)
 _AMBER = (240, 165, 0)
-_GREEN = (39, 174, 96)
-_RED = (231, 76, 60)
 _GREY = (60, 60, 80)
-_BLUE = (52, 152, 219)
-_PURPLE = (155, 89, 182)
 
 _TYPE_LABELS = {
     "neighbors": "Sasiedzi",

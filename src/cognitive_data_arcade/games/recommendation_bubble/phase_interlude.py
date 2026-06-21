@@ -4,12 +4,15 @@ from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState
 
-_W, _H = 1024, 720
-_BG = (12, 12, 20)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    DIM as _DIM,
+)
+
+_W, _H = 1024, 768
 _C_USER = (155, 89, 182)
 _C_CURATOR = (39, 174, 96)
 _C_ALGO = (230, 126, 34)
-_DIM = (140, 140, 160)
 
 
 class PhaseInterludeScene(Scene):

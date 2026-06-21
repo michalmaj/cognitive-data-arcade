@@ -78,6 +78,8 @@ class Strings:
     stroop_difficulty_medium: str
     stroop_difficulty_hard: str
     stroop_hint_ink: str
+    flanker_hint_keys: str
+    gono_hint_keys: str
     stroop_too_slow: str
     stroop_analysis_title: str
     label_facilitation: str
@@ -247,6 +249,8 @@ EN = Strings(
     stroop_difficulty_medium="3 colors",
     stroop_difficulty_hard="4 colors",
     stroop_hint_ink="Name the INK colour - ignore the word",
+    flanker_hint_keys="LEFT / RIGHT — respond",
+    gono_hint_keys="SPACE — GO  /  no key — NO-GO",
     stroop_too_slow="Too slow",
     stroop_analysis_title="Stroop Effect Analysis",
     label_facilitation="Facilitation",
@@ -419,6 +423,8 @@ PL = Strings(
     stroop_difficulty_medium="3 kolory",
     stroop_difficulty_hard="4 kolory",
     stroop_hint_ink="Nazwij kolor TUSZU - ignoruj słowo",
+    flanker_hint_keys="LEWO / PRAWO — odpowiedź",
+    gono_hint_keys="SPACJA — GO  /  brak reakcji — NO-GO",
     stroop_too_slow="Za wolno",
     stroop_analysis_title="Analiza Efektu Stroopa",
     label_facilitation="Facylitacja",

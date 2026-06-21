@@ -6,10 +6,13 @@ import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.games.data_cleaning.generator import DataRow
 
-_BG = (18, 18, 40)
-_WHITE = (240, 240, 240)
-_ORANGE = (243, 156, 18)
-_DIM = (120, 120, 160)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    ORANGE as _ORANGE,
+    DIM as _DIM,
+)
+
 _BORDER = (60, 60, 100)
 
 

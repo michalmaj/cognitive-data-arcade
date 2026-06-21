@@ -10,17 +10,20 @@ from cognitive_data_arcade.engine.chart import figure_to_surface
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 
-_BG = (15, 15, 35)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    ORANGE as _ORANGE,
+    GREEN as _GREEN,
+    RED as _RED,
+    BLUE as _BLUE,
+)
+
 _PANEL = (18, 18, 42)
-_WHITE = (240, 240, 240)
-_DIM = (120, 120, 160)
-_ORANGE = (243, 156, 18)
-_GREEN = (39, 174, 96)
-_RED = (231, 76, 60)
-_BLUE = (52, 152, 219)
 _FIG_BG = "#0f0f23"
 _AX_BG = "#1a1a3e"
-_W, _H = 1024, 720
+_W, _H = 1024, 768
 
 _MSG_GREEN = "Świetna intuicja! Cechy z wyraźnym trendem rzeczywiście pomagają modelom."
 _MSG_ORANGE = "Nieźle! Słabe korelacje są trudne do wychwycenia — modele też mają z tym problem."

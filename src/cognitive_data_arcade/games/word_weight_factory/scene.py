@@ -14,18 +14,19 @@ from cognitive_data_arcade.games.word_weight_factory.step_tf import StepTfScene
 from cognitive_data_arcade.games.word_weight_factory.step_idf import StepIdfScene
 from cognitive_data_arcade.games.word_weight_factory.step_tfidf import StepTfidfScene
 
-_W, _H = 1024, 720
+_W, _H = 1024, 768
 _PIPE_H = 48  # pipeline bar height
 _PANEL_W = 220  # CorpusPanel width
-_STEP_H = _H - _PIPE_H  # 672
+_STEP_H = _H - _PIPE_H  # 720
 _STEP_W = _W - _PANEL_W  # 804
 
-_BG = (15, 15, 35)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    DIM as _DIM,
+)
+
 _NAV_BG = (12, 12, 28)
-_WHITE = (240, 240, 240)
-_DIM = (120, 120, 160)
 _AMBER = (243, 156, 18)
-_PURPLE = (155, 89, 182)
 
 _STEP_NAMES = ["KORPUS", "BoW", "TF", "IDF", "TF-IDF"]
 _N_STEPS = len(_STEP_NAMES)

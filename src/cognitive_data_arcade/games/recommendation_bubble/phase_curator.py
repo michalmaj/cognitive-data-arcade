@@ -11,11 +11,13 @@ from cognitive_data_arcade.games.recommendation_bubble.game_state import (
     generate_slots,
 )
 
-_W, _H = 1024, 720
-_BG = (10, 10, 20)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    DIM as _DIM,
+)
+
+_W, _H = 1024, 768
 _PANEL = (20, 14, 30)
-_WHITE = (240, 240, 240)
-_DIM = (140, 140, 160)
 _C_CURATOR = (39, 174, 96)
 _C_SEL = (243, 156, 18)
 
@@ -137,6 +139,8 @@ class PhaseCuratorScene(Scene):
             get_font(14).render(f"ROZNORODNOSC: {int(d * 100)}%", True, d_color),
             (_W // 2 - 80, _H - 60),
         )
+        hint = get_font(14).render("kliknij slot aby zamienic kategorie", True, _DIM)
+        surface.blit(hint, (14, _H - 28))
 
     def is_done(self) -> bool:
         return self._done

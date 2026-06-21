@@ -9,18 +9,20 @@ from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.classifier_battle.scenarios import Scenario
 
-_BG = (15, 15, 35)
-_PANEL = (18, 18, 42)
-_WHITE = (240, 240, 240)
-_DIM = (120, 120, 160)
-_RED = (231, 76, 60)
-_BLUE = (52, 152, 219)
-_GREEN = (39, 174, 96)
-_YELLOW = (243, 156, 18)
-_PURPLE = (155, 89, 182)
-_ORANGE = (230, 126, 34)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    RED as _RED,
+    BLUE as _BLUE,
+    GREEN as _GREEN,
+    ORANGE as _ORANGE,
+    PURPLE as _PURPLE,
+)
 
-_W, _H = 1024, 720
+_PANEL = (18, 18, 42)
+
+_W, _H = 1024, 768
 _TOP_H = 40
 _LEFT_W = 520
 _DOT_R = 5
@@ -176,7 +178,7 @@ class PhaseRoundResultScene(Scene):
             pts = [
                 (int(rect.x + nx * rect.w), int(rect.y + ny * rect.h)) for nx, ny in d.polyline_norm
             ]
-            pygame.draw.lines(surface, _YELLOW, False, pts, 2)
+            pygame.draw.lines(surface, _ORANGE, False, pts, 2)
 
     def _draw_right(self, surface: pygame.Surface, rx: int, rw: int, d: RoundDisplay) -> None:
         y = _TOP_H + 12
@@ -185,7 +187,7 @@ class PhaseRoundResultScene(Scene):
         y += 24
 
         bar_max_w = rw - 80
-        rows = [("Ty", d.player_acc, _YELLOW)] + [
+        rows = [("Ty", d.player_acc, _ORANGE)] + [
             (_CLF_NAMES[k], v, _CLF_COLORS[k]) for k, v in d.clf_accs.items()
         ]
         for name, acc, color in rows:
@@ -208,7 +210,7 @@ class PhaseRoundResultScene(Scene):
             y += 20
 
         y += 16
-        score_col = _GREEN if d.score >= 100 else (_YELLOW if d.score >= 70 else _RED)
+        score_col = _GREEN if d.score >= 100 else (_ORANGE if d.score >= 70 else _RED)
         score_surf = get_font(32).render(f"+{d.score} pkt", True, score_col)
         surface.blit(score_surf, (rx + rw // 2 - score_surf.get_width() // 2, y))
 

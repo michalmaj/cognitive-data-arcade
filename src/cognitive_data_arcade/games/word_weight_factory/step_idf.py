@@ -9,13 +9,16 @@ from cognitive_data_arcade.engine.scrollbar import ScrollBar
 from cognitive_data_arcade.games.word_weight_factory.corpus import CorpusState
 from cognitive_data_arcade.games.word_weight_factory.engine import WeightMatrix
 
-_BG = (15, 15, 35)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    GREEN as _GREEN,
+    PURPLE as _PURPLE,
+)
+
 _PANEL = (18, 18, 42)
-_WHITE = (240, 240, 240)
-_DIM = (120, 120, 160)
 _AMBER = (243, 156, 18)
-_GREEN = (46, 204, 113)
-_PURPLE = (155, 89, 182)
 _GREY = (90, 90, 120)
 
 _STEP_H = 672

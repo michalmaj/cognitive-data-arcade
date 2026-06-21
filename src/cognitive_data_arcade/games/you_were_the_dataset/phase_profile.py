@@ -7,11 +7,14 @@ from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.you_were_the_dataset.game_state import GameState, ProfileData
 
-_W, _H = 1024, 720
-_BG = (8, 12, 20)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+)
+
+_W, _H = 1024, 768
 _PANEL = (16, 24, 40)
-_WHITE = (240, 240, 240)
-_DIM = (148, 163, 184)
 
 # Card colors
 _C_RT = (34, 197, 94)  # green

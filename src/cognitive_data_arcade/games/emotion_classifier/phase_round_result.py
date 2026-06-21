@@ -11,16 +11,19 @@ from cognitive_data_arcade.games.emotion_classifier.lexicon import (
 )
 from cognitive_data_arcade.games.emotion_classifier.sentences import Sentence
 
-_W, _H = 1024, 720
-_BG = (15, 15, 35)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    GREEN as _GREEN,
+    RED as _RED,
+    PURPLE as _PURPLE,
+    ORANGE as _ORANGE,
+)
+
+_W, _H = 1024, 768
 _PANEL = (18, 18, 42)
-_WHITE = (240, 240, 240)
-_DIM = (100, 100, 130)
-_GREEN = (39, 174, 96)
-_RED = (231, 76, 60)
-_PURPLE = (155, 89, 182)
 _AMBER = (240, 165, 0)
-_ORANGE = (230, 126, 34)
 _GREY = (80, 80, 100)
 
 _VERDICT_COLORS = {"positive": _GREEN, "negative": _RED, "neutral": _DIM, "mixed": _PURPLE}

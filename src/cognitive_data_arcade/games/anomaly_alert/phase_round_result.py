@@ -6,18 +6,21 @@ import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 
-_W, _H = 1024, 720
+_W, _H = 1024, 768
 _CHART_X, _CHART_Y = 0, 56
 _CHART_W, _CHART_H = 680, 624
 _PANEL_X = 680
 _TOP_H = 56
-_BG = (15, 15, 35)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    BLUE as _BLUE,
+    GREEN as _GREEN,
+    RED as _RED,
+)
+
 _PANEL = (18, 18, 42)
-_WHITE = (240, 240, 240)
-_DIM = (120, 120, 160)
-_BLUE = (52, 152, 219)
-_GREEN = (46, 204, 113)
-_RED = (231, 76, 60)
 _AMBER = (243, 156, 18)
 
 _NEXT_RECT = pygame.Rect(690, 650, 324, 44)

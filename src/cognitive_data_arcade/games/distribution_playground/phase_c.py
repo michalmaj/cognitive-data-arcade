@@ -25,12 +25,14 @@ from cognitive_data_arcade.games.distribution_playground.widgets import (
     SliderSpec,
 )
 
-_BG = (15, 15, 35)
-_WHITE = (240, 240, 240)
-_DIM = (120, 120, 160)
-_BLUE = (52, 152, 219)
-_RED = (231, 76, 60)
-_ORANGE = (243, 156, 18)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    BLUE as _BLUE,
+    RED as _RED,
+    ORANGE as _ORANGE,
+)
+
 _FIG_BG = "#0f0f23"
 _AX_BG = "#1a1a3e"
 _AREA_H = 672

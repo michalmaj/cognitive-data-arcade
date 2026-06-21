@@ -17,11 +17,14 @@ _DPI = 100
 _C1 = "#3498db"
 _C2 = "#e74c3c"
 _OUT = "#f39c12"
-_WHITE = (240, 240, 240)
-_DIM = (120, 120, 160)
-_GREEN = (39, 174, 96)
-_RED = (231, 76, 60)
-_ORANGE = (243, 156, 18)
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
+    DIM as _DIM,
+    GREEN as _GREEN,
+    RED as _RED,
+    ORANGE as _ORANGE,
+)
+
 _FIG_BG = "#0f0f23"
 _AX_BG = "#1a1a3e"
 _SPINE = "#2a2a50"

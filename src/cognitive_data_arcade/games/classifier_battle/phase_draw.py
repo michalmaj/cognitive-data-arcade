@@ -12,16 +12,18 @@ from cognitive_data_arcade.games.classifier_battle.classifier import (
 from cognitive_data_arcade.games.classifier_battle.scenarios import Scenario, generate_data
 from cognitive_data_arcade.games.classifier_battle.widgets import DrawCanvas
 
-_BG = (15, 15, 35)
-_PANEL = (18, 18, 42)
-_WHITE = (240, 240, 240)
-_DIM = (120, 120, 160)
-_YELLOW = (243, 156, 18)
-_GREEN = (39, 174, 96)
-_RED = (231, 76, 60)
-_BLUE = (52, 152, 219)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    ORANGE as _ORANGE,
+    GREEN as _GREEN,
+    RED as _RED,
+)
 
-_W, _H = 1024, 720
+_PANEL = (18, 18, 42)
+
+_W, _H = 1024, 768
 _TOP_H = 56
 _CANVAS_RECT = pygame.Rect(12, _TOP_H + 4, 750, _H - _TOP_H - 4 - 60)
 _BTN_CLEAR = pygame.Rect(778, 650, 110, 40)
@@ -199,9 +201,9 @@ class PhaseDrawScene(Scene):
         bg = pygame.Surface((_POPUP_W, _POPUP_H), pygame.SRCALPHA)
         bg.fill((20, 20, 50, 230))
         surface.blit(bg, popup.topleft)
-        pygame.draw.rect(surface, _YELLOW, popup, 1, border_radius=4)
+        pygame.draw.rect(surface, _ORANGE, popup, 1, border_radius=4)
 
-        title = get_font(15).render(self._scenario.name_pl, True, _YELLOW)
+        title = get_font(15).render(self._scenario.name_pl, True, _ORANGE)
         surface.blit(title, (px + 8, py + 8))
         pygame.draw.line(surface, _DIM, (px + 8, py + 30), (px + _POPUP_W - 8, py + 30))
 

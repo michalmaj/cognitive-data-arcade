@@ -6,15 +6,16 @@ import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.games.word_weight_factory.corpus import CorpusState, _PRESETS
 
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
+    DIM as _DIM,
+    BLUE as _BLUE,
+    PURPLE as _PURPLE,
+)
+
 _PANEL_W = 220
-_BG = (15, 15, 35)
 _PANEL = (18, 18, 42)
-_WHITE = (240, 240, 240)
-_DIM = (120, 120, 160)
 _AMBER = (243, 156, 18)
-_GREEN = (46, 204, 113)
-_BLUE = (52, 152, 219)
-_PURPLE = (155, 89, 182)
 
 _MAX_CUSTOM_LEN = 160
 _DOC_ROW_H = 28

@@ -14,13 +14,16 @@ from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.prediction_slider.simulator import fit_line, simulate_data
 from cognitive_data_arcade.games.prediction_slider.widgets import _FloatSlider
 
-_BG = (15, 15, 35)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    ORANGE as _ORANGE,
+    GREEN as _GREEN,
+    RED as _RED,
+)
+
 _PANEL = (18, 18, 42)
-_WHITE = (240, 240, 240)
-_DIM = (120, 120, 160)
-_ORANGE = (243, 156, 18)
-_GREEN = (39, 174, 96)
-_RED = (231, 76, 60)
 _FIG_BG = "#0f0f23"
 _AX_BG = "#1a1a3e"
 
@@ -132,6 +135,8 @@ class PhaseAScene(Scene):
         self._draw_stats(surface)
         if self._chart_surf is not None:
             surface.blit(self._chart_surf, (_LEFT_W, 0))
+        hint = get_font(14).render("kliknij i przeciągnij suwak", True, _DIM)
+        surface.blit(hint, (14, _AREA_H - 24))
 
     def _draw_stats(self, surface: pygame.Surface) -> None:
         font_sm = get_font(14)
