@@ -52,8 +52,8 @@ Requires Python 3.12+, a display, and no other setup.
 | 27 | Misinformation Spread | Information virality | ✅ | ⚪ | ⚪ | ✅ | ✅ | |
 | 28 | Recommendation Bubble | Filter bubbles | ✅ | ⚪ | ⚪ | ✅ | ✅ | |
 | 29 | Bias Blind Spot | Algorithmic bias | ✅ | ⚪ | ⚪ | ✅ | ✅ | |
-| 30 | You Were the Dataset | Personal data reflection | ✅ | ⚪ | ✅ | ✅ | ✅ | Reads all prior sessions |
-| 31 | The Architect's Trial | Research design, ethics | ✅ | ⚪ | ⚪ | ✅ | ✅ | Final narrative challenge |
+| 30 | The Architect's Trial | Research design, ethics | ✅ | ⚪ | ⚪ | ✅ | ✅ | Final narrative challenge |
+| 31 | You Were the Dataset | Personal data reflection | ✅ | ⚪ | ✅ | ✅ | ✅ | Reads all prior sessions |
 
 **Legend:** ✅ Ready · 🟡 Partial · ❌ Missing · ⚪ N/A (not applicable by design)
 
