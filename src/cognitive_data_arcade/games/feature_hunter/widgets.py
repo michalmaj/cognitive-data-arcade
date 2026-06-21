@@ -19,7 +19,7 @@ from cognitive_data_arcade.engine.colors import (
 
 _FIG_BG = "#0d1b2a"
 _AX_BG = "#060f1a"
-_BLUE = "#3498db"
+_SCATTER_BLUE = "#3498db"
 _CARD_BG = (13, 27, 42)
 
 
@@ -53,7 +53,7 @@ def render_card(feature: Feature, card_w: int, card_h: int, seed: int) -> pygame
     fig, ax = plt.subplots(figsize=(fig_w_in, fig_h_in), dpi=dpi, facecolor=_FIG_BG)
     fig.subplots_adjust(left=0.08, right=0.98, bottom=0.10, top=0.96)
     ax.set_facecolor(_AX_BG)
-    ax.scatter(x, y, s=10, alpha=0.70, color=_BLUE)
+    ax.scatter(x, y, s=10, alpha=0.70, color=_SCATTER_BLUE)
     ax.set_xlim(-0.02, 1.02)
     ax.set_ylim(-0.02, 1.02)
     ax.set_xlabel(feature.x_label_pl, color="#506070", fontsize=6)
