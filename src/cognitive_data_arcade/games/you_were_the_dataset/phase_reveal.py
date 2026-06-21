@@ -15,9 +15,9 @@ _PURPLE = (167, 139, 250)
 
 # (text, color, t_start_ms)
 _LINES = [
-    ("Przez caly ten kurs...", _DIM, 1000),
-    ("tworzyles dane.", _WHITE, 2500),
-    ("Oto Twoj kognitywny profil.", _PURPLE, 3500),
+    ("Przez cały ten kurs...", _DIM, 1000),
+    ("tworzyłeś dane.", _WHITE, 2500),
+    ("Oto Twój kognitywny profil.", _PURPLE, 3500),
 ]
 _HINT_T = 4000
 
