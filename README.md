@@ -32,27 +32,27 @@ Requires Python 3.12+, a display, and no other setup.
 | 7 | Flanker Arena | Attention control | ✅ | ✅ | ✅ | ✅ | ✅ | CSV + analysis scene |
 | 8 | Go/No-Go Guard | Response inhibition | ✅ | ✅ | ✅ | ✅ | ✅ | CSV + analysis scene |
 | 9 | N-Back Memory Grid | Working memory | ✅ | ✅ | ✅ | ✅ | ✅ | CSV + analysis scene |
-| 10 | Visual Search Lab | Visual attention | ✅ | ✅ | ❌ | ✅ | ✅ | CSV logged, no analysis yet |
-| 11 | Cognitive Dashboard | Performance aggregation | ✅ | ⚪ | 🟡 | ✅ | ❌ | Reads prior sessions |
+| 10 | Visual Search Lab | Visual attention | ✅ | ✅ | ✅ | ✅ | ✅ | CSV + analysis scene |
+| 11 | Cognitive Dashboard | Performance aggregation | ✅ | ⚪ | ✅ | ✅ | ✅ | Reads prior sessions |
 | 12 | Distribution Playground | Probability distributions | ✅ | ⚪ | ⚪ | ✅ | ✅ | 3-phase sandbox |
 | 13 | Correlation Trap | Correlation vs. causation | ✅ | ⚪ | ⚪ | ✅ | ✅ | 3-phase explorer |
 | 14 | Hypothesis Arena | Statistical testing | ✅ | ⚪ | ⚪ | ✅ | ✅ | 3-phase sandbox |
-| 15 | Prediction Slider | Regression, forecasting | ✅ | ⚪ | ⚪ | ✅ | ❌ | Missing tests |
+| 15 | Prediction Slider | Regression, forecasting | ✅ | ⚪ | ⚪ | ✅ | ✅ | |
 | 16 | Feature Hunter | Feature selection | ✅ | ⚪ | ⚪ | ✅ | ✅ | |
 | 17 | Classifier Battle | Classification | ✅ | ⚪ | ⚪ | ✅ | ✅ | |
 | 18 | Overfitting Monster | Overfitting, validation | ✅ | ⚪ | ⚪ | ✅ | ✅ | |
 | 19 | Anomaly Alert | Anomaly detection | ✅ | ⚪ | ⚪ | ✅ | ✅ | |
-| 20 | Text Tokenizer | NLP tokenisation | ✅ | ⚪ | ⚪ | ✅ | ❌ | Missing tests |
+| 20 | Text Tokenizer | NLP tokenisation | ✅ | ⚪ | ⚪ | ✅ | ✅ | |
 | 21 | Word Weight Factory | TF-IDF | ✅ | ⚪ | ⚪ | ✅ | ✅ | |
 | 22 | Emotion Classifier | Sentiment analysis | ✅ | ⚪ | ⚪ | ✅ | ✅ | |
-| 23 | Semantic Space Explorer | Word embeddings | ✅ | ⚪ | ⚪ | ✅ | ❌ | Missing tests |
+| 23 | Semantic Space Explorer | Word embeddings | ✅ | ⚪ | ⚪ | ✅ | ✅ | |
 | 24 | Topic Detective | Topic modelling (LDA) | ✅ | ⚪ | ⚪ | ✅ | ✅ | |
 | 25 | Human vs Model | Human–AI comparison | ✅ | ⚪ | ⚪ | ✅ | ✅ | |
 | 26 | Social Network Simulator | Network dynamics, SIR | ✅ | ⚪ | ⚪ | ✅ | ✅ | |
 | 27 | Misinformation Spread | Information virality | ✅ | ⚪ | ⚪ | ✅ | ✅ | |
 | 28 | Recommendation Bubble | Filter bubbles | ✅ | ⚪ | ⚪ | ✅ | ✅ | |
 | 29 | Bias Blind Spot | Algorithmic bias | ✅ | ⚪ | ⚪ | ✅ | ✅ | |
-| 30 | You Were the Dataset | Personal data reflection | ✅ | 🟡 | 🟡 | ✅ | ✅ | Reads all prior sessions |
+| 30 | You Were the Dataset | Personal data reflection | ✅ | ⚪ | ✅ | ✅ | ✅ | Reads all prior sessions |
 | 31 | The Architect's Trial | Research design, ethics | ✅ | ⚪ | ⚪ | ✅ | ✅ | Final narrative challenge |
 
 **Legend:** ✅ Ready · 🟡 Partial · ❌ Missing · ⚪ N/A (not applicable by design)
