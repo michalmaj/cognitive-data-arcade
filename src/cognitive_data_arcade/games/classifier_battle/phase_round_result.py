@@ -16,7 +16,7 @@ from cognitive_data_arcade.engine.colors import (
     RED as _RED,
     BLUE as _BLUE,
     GREEN as _GREEN,
-    YELLOW as _YELLOW,
+    ORANGE as _YELLOW,
     PURPLE as _PURPLE,
     ORANGE as _ORANGE,
 )

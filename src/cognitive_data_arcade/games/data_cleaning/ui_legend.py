@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import pygame
 
+from cognitive_data_arcade.engine.colors import DIM as _DIM
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.i18n import Strings
 
@@ -13,7 +14,6 @@ _BORDER = (42, 42, 80)
 _COL_NAME = (139, 233, 253)  # #8be9fd
 _COL_DESC = (170, 170, 170)  # #aaaaaa
 _TITLE_COLOR = (240, 240, 240)
-from cognitive_data_arcade.engine.colors import DIM as _DIM
 
 
 def draw_legend_overlay(

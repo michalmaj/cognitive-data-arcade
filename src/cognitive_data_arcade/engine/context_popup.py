@@ -4,11 +4,11 @@ from dataclasses import dataclass
 
 import pygame
 
+from cognitive_data_arcade.engine.colors import ORANGE as _TITLE
 from cognitive_data_arcade.engine.fonts import get_font
 
 _POPUP_BG = (20, 20, 50, 230)
 _BORDER = (100, 100, 200)
-_TITLE = (243, 156, 18)
 _BODY = (200, 200, 220)
 _IMPACT = (100, 220, 140)
 _W = 300

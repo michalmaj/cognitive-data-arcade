@@ -14,11 +14,11 @@ from cognitive_data_arcade.profile.manager import ProfileManager
 from cognitive_data_arcade.engine.colors import (
     WHITE as _WHITE,
     DIM as _DIM,
+    ORANGE as _HIGHLIGHT,
 )
 
 _BG_PANEL = (18, 18, 42)
 _BORDER = (42, 42, 80)
-_HIGHLIGHT = (243, 156, 18)
 _KEY_COLOR = (39, 174, 96)
 
 _MENU_ITEMS = 5

@@ -9,7 +9,7 @@ from cognitive_data_arcade.engine.colors import (
     BG as _BG,
     RED as _RED,
     BLUE as _BLUE,
-    YELLOW as _YELLOW,
+    ORANGE as _YELLOW,
 )
 
 _BORDER = (40, 40, 80)

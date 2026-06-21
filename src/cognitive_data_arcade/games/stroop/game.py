@@ -25,7 +25,6 @@ from cognitive_data_arcade.engine.colors import (
     RED as _RED,
 )
 
-_HIGHLIGHT = (243, 156, 18)
 _W, _H = 1024, 768
 _PROGRESS_H = 4
 _FOOTER_H = 40
@@ -376,7 +375,7 @@ class StroopGame(Scene):
         ]
         self._preset_rects = []
         for i, label in enumerate(labels):
-            color = _HIGHLIGHT if i == self._preset_idx else _DIM
+            color = _ORANGE if i == self._preset_idx else _DIM
             surf = self._font_med.render(label, True, color)
             x = w // 2 - surf.get_width() // 2
             y = 280 + i * 56
