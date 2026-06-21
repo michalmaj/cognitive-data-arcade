@@ -233,7 +233,7 @@ class PhaseBScene(Scene):
         if self._state == "revealed":
             self._draw_verdict(surface)
         if self._state == "waiting":
-            hint = get_font(14).render("przeciagnij suwak, kliknij Zatwierdz", True, _DIM)
+            hint = get_font(14).render("przeciągnij suwak, kliknij Zatwierdź", True, _DIM)
             surface.blit(hint, (14, _AREA_H - 24))
 
     def _draw_top_bar(self, surface: pygame.Surface) -> None:

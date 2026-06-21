@@ -258,7 +258,7 @@ class PhaseAScene(Scene):
             area.blit(self._chart_surf, (_LEFT_W + 4, 28))
 
         self._popup.draw(area)
-        hint = get_font(14).render("kliknij i przeciagnij suwak", True, _DIM)
+        hint = get_font(14).render("kliknij i przeciągnij suwak", True, _DIM)
         area.blit(hint, (14, _AREA_H - 24))
         surface.blit(area, (0, offset_y))
 

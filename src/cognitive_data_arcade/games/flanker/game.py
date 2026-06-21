@@ -302,7 +302,7 @@ class FlankerGame(Scene):
             surface.blit(hint, (cx - hint.get_width() // 2, cy + 40))
         if self._phase in (_Phase.FIXATION, _Phase.STIMULUS, _Phase.FEEDBACK):
             kh = self._font_info.render(self._strings.flanker_hint_keys, True, _DIM)
-            surface.blit(kh, (cx - kh.get_width() // 2, _H - 28))
+            surface.blit(kh, (cx - kh.get_width() // 2, _H - 36))
         prog = self._trial_idx / max(len(self._trials), 1)
         pygame.draw.rect(surface, _DIM, (0, _H - 4, _W, 4))
         pygame.draw.rect(surface, _ORANGE, (0, _H - 4, int(_W * prog), 4))
