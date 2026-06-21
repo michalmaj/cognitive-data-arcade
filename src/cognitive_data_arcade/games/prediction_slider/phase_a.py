@@ -135,6 +135,8 @@ class PhaseAScene(Scene):
         self._draw_stats(surface)
         if self._chart_surf is not None:
             surface.blit(self._chart_surf, (_LEFT_W, 0))
+        hint = get_font(14).render("kliknij i przeciagnij suwak", True, _DIM)
+        surface.blit(hint, (14, _AREA_H - 24))
 
     def _draw_stats(self, surface: pygame.Surface) -> None:
         font_sm = get_font(14)

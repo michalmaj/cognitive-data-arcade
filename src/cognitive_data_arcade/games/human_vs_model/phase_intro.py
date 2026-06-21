@@ -106,6 +106,8 @@ class PhaseIntroScene(Scene):
         label = "Dalej" if self._slide < len(_SLIDES) - 1 else "Zacznij gre"
         lbl = get_font(20).render(label, True, _GOLD)
         surface.blit(lbl, (_W // 2 - lbl.get_width() // 2, _H - 74))
+        hint = get_font(14).render("SPACJA lub klik — dalej", True, _DIM)
+        surface.blit(hint, (_W // 2 - hint.get_width() // 2, _H - 28))
 
     def is_done(self) -> bool:
         return self._done

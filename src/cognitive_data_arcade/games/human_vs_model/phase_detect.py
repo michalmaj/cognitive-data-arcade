@@ -245,7 +245,10 @@ class PhaseDetectScene(Scene):
                 (rect.centerx - btn_lbl.get_width() // 2, rect.centery - btn_lbl.get_height() // 2),
             )
 
-        if self._state == "reveal":
+        if self._state == "task":
+            hint = get_font(11).render("kliknij odpowiedz", True, _GREY)
+            surface.blit(hint, (16, _H - 28))
+        elif self._state == "reveal":
             if self._round_score > 0:
                 delta = get_font(20).render(f"+{self._round_score} pkt", True, _GREEN)
                 surface.blit(delta, (16, _TOP_H + 380))

@@ -139,6 +139,8 @@ class PhaseCuratorScene(Scene):
             get_font(14).render(f"ROZNORODNOSC: {int(d * 100)}%", True, d_color),
             (_W // 2 - 80, _H - 60),
         )
+        hint = get_font(14).render("kliknij slot aby zamienic kategorie", True, _DIM)
+        surface.blit(hint, (14, _H - 28))
 
     def is_done(self) -> bool:
         return self._done

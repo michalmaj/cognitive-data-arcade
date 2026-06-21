@@ -175,6 +175,9 @@ class PhaseBScene(Scene):
             self._draw_quiz(area)
 
         self._popup.draw(area)
+        if self._state == "waiting":
+            hint = get_font(14).render("kliknij TAK / NIE, potem Dalej", True, _DIM)
+            area.blit(hint, (14, _AREA_H - 24))
         surface.blit(area, (0, offset_y))
 
     def _draw_quiz(self, area: pygame.Surface) -> None:
