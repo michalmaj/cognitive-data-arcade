@@ -1,5 +1,7 @@
 # Cognitive Data Arcade
 
+[![CI](https://github.com/michalmaj/cognitive-data-arcade/actions/workflows/ci.yml/badge.svg)](https://github.com/michalmaj/cognitive-data-arcade/actions/workflows/ci.yml)
+
 Interactive mini-games that teach **Big Data, Data Science, and Machine Learning through Cognitive Science**. Students don't just analyse data — they generate it by playing behavioural tasks, then inspect, clean, model, and interpret their own results.
 
 ```
