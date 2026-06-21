@@ -6,13 +6,16 @@ import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    RED as _RED,
+    BLUE as _BLUE,
+)
+
 _W, _H = 1024, 720
-_BG = (15, 10, 20)
 _PANEL = (22, 12, 28)
-_WHITE = (240, 240, 240)
-_DIM = (140, 120, 160)
-_RED = (231, 76, 60)
-_BLUE = (52, 152, 219)
 
 _LINES = [
     ("Dezinformacja rozchodzi sie w sieciach spolecznych jak epidemia.", _DIM),

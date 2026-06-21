@@ -6,11 +6,14 @@ from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.bias_blind_spot.game_state import GameState
 
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+)
+
 _W, _H = 1024, 720
-_BG = (8, 12, 20)
 _PANEL = (16, 20, 36)
-_WHITE = (240, 240, 240)
-_DIM = (140, 140, 160)
 _C_APP = (155, 89, 182)
 _C_ENG = (39, 174, 96)
 _C_REG = (230, 126, 34)

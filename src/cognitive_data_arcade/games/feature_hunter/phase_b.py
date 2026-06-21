@@ -13,14 +13,17 @@ from cognitive_data_arcade.games.feature_hunter.widgets import (
     grid_layout,
 )
 
-_BG = (15, 15, 35)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    ORANGE as _ORANGE,
+    GREEN as _GREEN,
+    RED as _RED,
+    BLUE as _BLUE,
+)
+
 _PANEL = (18, 18, 42)
-_WHITE = (240, 240, 240)
-_DIM = (120, 120, 160)
-_ORANGE = (243, 156, 18)
-_GREEN = (39, 174, 96)
-_RED = (231, 76, 60)
-_BLUE = (52, 152, 219)
 
 _W, _H = 1024, 720
 _TOP_H = 64

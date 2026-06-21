@@ -16,12 +16,13 @@ _INPUT_BAR_H = 48
 _NAV_H = 36
 _PHASE_H = _H - _INPUT_BAR_H - _NAV_H  # 636
 
-_BG = (15, 15, 35)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    DIM as _DIM,
+)
+
 _NAV_BG = (12, 12, 28)
-_WHITE = (240, 240, 240)
-_DIM = (120, 120, 160)
 _AMBER = (243, 156, 18)
-_PURPLE = (155, 89, 182)
 
 _TAB_NAMES = ["1 - Tokenizer", "2 - N-gramy", "3 - Czestotliwosc"]
 _N_TABS = len(_TAB_NAMES)

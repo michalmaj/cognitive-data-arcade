@@ -17,14 +17,16 @@ _MAP_Y = _TOP_H + 6
 _MAP_W = _W - _MAP_X - 8
 _MAP_H = _H - _MAP_Y - 8
 _NODE_R = 18
-_BG = (15, 15, 35)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    GREEN as _GREEN,
+)
+
 _TOP_BG = (10, 10, 28)
 _LEFT_BG = (12, 12, 32)
-_WHITE = (240, 240, 240)
-_DIM = (100, 100, 140)
 _AMBER = (240, 165, 0)
-_GREEN = (39, 174, 96)
-_RED = (231, 76, 60)
 _GREY = (60, 60, 80)
 
 _TYPE_COLORS = {

@@ -6,8 +6,9 @@ from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.bias_blind_spot.game_state import GameState
 
+from cognitive_data_arcade.engine.colors import BG as _BG
+
 _W, _H = 1024, 720
-_BG = (8, 12, 20)
 
 
 class PhaseInterludeScene(Scene):

@@ -16,11 +16,13 @@ from cognitive_data_arcade.games.cognitive_dashboard.config import (
 )
 from cognitive_data_arcade.games.cognitive_dashboard.session import DashboardSession, TaskResult
 
-_BG = (26, 26, 46)
-_WHITE = (240, 240, 240)
-_DIM = (100, 100, 150)
-_GREEN = (39, 174, 96)
-_RED = (231, 76, 60)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    GREEN as _GREEN,
+    RED as _RED,
+)
 _W, _H = 1024, 768
 
 

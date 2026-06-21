@@ -9,10 +9,13 @@ from cognitive_data_arcade.games.correlation_trap.phase_a import PhaseAScene
 from cognitive_data_arcade.games.correlation_trap.phase_b import PhaseBScene
 from cognitive_data_arcade.games.correlation_trap.phase_c import PhaseCScene
 
-_BG = (15, 15, 35)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+)
+
 _NAV_BG = (18, 18, 45)
-_WHITE = (240, 240, 240)
-_DIM = (120, 120, 160)
 _ACTIVE = (243, 156, 18)
 _NAV_H = 48
 

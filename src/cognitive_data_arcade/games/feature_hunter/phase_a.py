@@ -6,13 +6,16 @@ from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.feature_hunter.config import EASY, MEDIUM, HARD
 
-_BG = (15, 15, 35)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    GREEN as _GREEN,
+    ORANGE as _ORANGE,
+    RED as _RED,
+)
+
 _PANEL = (18, 18, 42)
-_WHITE = (240, 240, 240)
-_DIM = (120, 120, 160)
-_GREEN = (39, 174, 96)
-_ORANGE = (243, 156, 18)
-_RED = (231, 76, 60)
 _W, _H = 1024, 720
 
 _DIFFICULTIES = [

@@ -7,16 +7,19 @@ from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.misinformation.networks import ROUNDS
 
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    RED as _RED,
+    GREEN as _GREEN,
+    BLUE as _BLUE,
+)
+
 _W, _H = 1024, 720
-_BG = (12, 12, 20)
 _PANEL = (18, 18, 32)
-_WHITE = (240, 240, 240)
-_DIM = (140, 140, 160)
 _GOLD = (243, 156, 18)
 _GREY = (60, 60, 80)
-_RED = (231, 76, 60)
-_GREEN = (39, 174, 96)
-_BLUE = (52, 152, 219)
 
 _BTN_REPLAY = pygame.Rect(_W // 2 - 210, _H - 76, 190, 44)
 _BTN_MENU = pygame.Rect(_W // 2 + 20, _H - 76, 190, 44)

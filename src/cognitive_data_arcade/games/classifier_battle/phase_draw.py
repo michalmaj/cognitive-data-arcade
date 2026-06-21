@@ -12,14 +12,16 @@ from cognitive_data_arcade.games.classifier_battle.classifier import (
 from cognitive_data_arcade.games.classifier_battle.scenarios import Scenario, generate_data
 from cognitive_data_arcade.games.classifier_battle.widgets import DrawCanvas
 
-_BG = (15, 15, 35)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    YELLOW as _YELLOW,
+    GREEN as _GREEN,
+    RED as _RED,
+)
+
 _PANEL = (18, 18, 42)
-_WHITE = (240, 240, 240)
-_DIM = (120, 120, 160)
-_YELLOW = (243, 156, 18)
-_GREEN = (39, 174, 96)
-_RED = (231, 76, 60)
-_BLUE = (52, 152, 219)
 
 _W, _H = 1024, 720
 _TOP_H = 56

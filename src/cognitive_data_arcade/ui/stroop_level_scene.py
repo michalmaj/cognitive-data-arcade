@@ -14,13 +14,16 @@ from cognitive_data_arcade.profile.manager import ProfileManager
 from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
 from cognitive_data_arcade.ui.menu import LessonMenuScene
 
-_BG = (26, 26, 46)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    DIM as _DIM,
+    WHITE as _WHITE,
+)
+
 _TILE_W, _TILE_H = 200, 90
 _TILE_GAP = 24
 _SELECTED_COLOR = (243, 156, 18)  # orange
 _HOVER_COLOR = (60, 60, 100)
-_DIM = (100, 100, 150)
-_WHITE = (240, 240, 240)
 _TILES_X = 188  # x of first tile (centers 3 tiles in 1024px: (1024 - 3*200 - 2*24) / 2 = 188)
 _ROW_Y = 280  # single row y position (single-axis picker)
 

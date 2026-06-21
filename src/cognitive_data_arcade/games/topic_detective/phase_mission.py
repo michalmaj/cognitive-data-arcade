@@ -12,15 +12,18 @@ from cognitive_data_arcade.games.topic_detective.topic_data import TOPICS
 _W, _H = 1024, 720
 _TOP_H = 44
 _LEFT_W = 320
-_BG = (15, 15, 35)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    GREEN as _GREEN,
+    RED as _RED,
+)
+
 _TOP_BG = (10, 10, 28)
 _LEFT_BG = (12, 12, 32)
 _RIGHT_BG = (12, 12, 30)
-_WHITE = (240, 240, 240)
-_DIM = (100, 100, 140)
 _AMBER = (240, 165, 0)
-_GREEN = (39, 174, 96)
-_RED = (231, 76, 60)
 _GREY = (60, 60, 80)
 
 _TYPE_LABELS = {

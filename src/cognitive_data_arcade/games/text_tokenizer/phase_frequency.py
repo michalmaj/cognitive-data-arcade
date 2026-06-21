@@ -15,15 +15,17 @@ from cognitive_data_arcade.games.text_tokenizer.engine import TokenizerState
 from cognitive_data_arcade.games.text_tokenizer.stop_words import STOP_WORDS_EN, STOP_WORDS_PL
 from cognitive_data_arcade.games.text_tokenizer.widgets import SharedState
 
-_BG = (15, 15, 35)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    PURPLE as _PURPLE,
+)
+
 _FIG_BG = "#0f0f23"
 _AX_BG = "#1a1a3e"
 _PANEL = (18, 18, 42)
-_WHITE = (240, 240, 240)
-_DIM = (120, 120, 160)
 _AMBER = (243, 156, 18)
-_GREEN = (46, 204, 113)
-_PURPLE = (155, 89, 182)
 _LEFT_W = 220
 _PHASE_H = 636
 _CHART_W = 1024 - _LEFT_W - 8

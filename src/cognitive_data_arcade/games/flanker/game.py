@@ -18,12 +18,14 @@ from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.flanker.config import FlankerConfig
 from cognitive_data_arcade.profile.manager import ProfileManager
 
-_BG = (10, 10, 20)
-_WHITE = (240, 240, 240)
-_DIM = (70, 70, 112)
-_ORANGE = (243, 156, 18)
-_RED = (231, 76, 60)
-_GREEN = (39, 174, 96)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    ORANGE as _ORANGE,
+    RED as _RED,
+    GREEN as _GREEN,
+)
 _W, _H = 1024, 768
 
 

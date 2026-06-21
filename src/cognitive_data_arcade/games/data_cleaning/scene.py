@@ -33,12 +33,14 @@ from cognitive_data_arcade.games.data_cleaning.ui_table import ROW_H, TableWidge
 if TYPE_CHECKING:
     from cognitive_data_arcade.profile.manager import ProfileManager
 
-_BG = (26, 26, 46)
-_WHITE = (240, 240, 240)
-_DIM = (120, 120, 160)
-_ORANGE = (243, 156, 18)
-_GREEN = (39, 174, 96)
-_RED = (231, 76, 60)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    ORANGE as _ORANGE,
+    GREEN as _GREEN,
+    RED as _RED,
+)
 
 # Difficulty button colours: Easy=green, Medium=orange, Hard=red
 _DIFF_COLORS = [(39, 174, 96), (230, 126, 34), (231, 76, 60)]

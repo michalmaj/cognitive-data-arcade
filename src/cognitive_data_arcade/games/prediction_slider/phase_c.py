@@ -8,15 +8,17 @@ from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.prediction_slider.simulator import fit_line
 
-_BG = (15, 15, 35)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    ORANGE as _ORANGE,
+    RED as _RED,
+    BLUE as _BLUE,
+)
+
 _PANEL = (18, 18, 42)
-_WHITE = (240, 240, 240)
-_DIM = (120, 120, 160)
-_ORANGE = (243, 156, 18)
-_GREEN = (39, 174, 96)
-_RED = (231, 76, 60)
 _GRAY = (80, 80, 100)
-_BLUE = (52, 152, 219)
 
 _LEFT_W = 300
 _AREA_H = 672

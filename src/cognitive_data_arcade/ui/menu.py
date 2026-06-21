@@ -549,7 +549,7 @@ _VIRTUAL_H = _vy  # 1308
 # Compatibility shim: keep _LESSONS for any remaining references
 _LESSONS = [(d["num"], d["name"]) for d in _LESSON_DATA]
 
-_BG = (26, 26, 46)
+
 _TITLE_COLOR = (240, 240, 240)
 _ITEM_COLOR = (160, 160, 160)
 _HIGHLIGHT_COLOR = (243, 156, 18)

@@ -7,10 +7,13 @@ import pygame
 
 from cognitive_data_arcade.engine.fonts import get_font
 
+from cognitive_data_arcade.engine.colors import (
+    DIM as _DIM,
+    WHITE as _WHITE,
+)
+
 _TRACK = (42, 42, 80)
-_DIM = (120, 120, 160)
 _ACTIVE = (243, 156, 18)
-_WHITE = (240, 240, 240)
 _BG_INPUT = (26, 26, 46)
 
 _THUMB_R = 8

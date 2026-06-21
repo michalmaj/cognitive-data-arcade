@@ -9,10 +9,12 @@ from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.cognitive_dashboard.session import DashboardSession
 from cognitive_data_arcade.profile.manager import ProfileManager
 
-_BG = (26, 26, 46)
-_WHITE = (240, 240, 240)
-_DIM = (100, 100, 150)
-_ORANGE = (243, 156, 18)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    ORANGE as _ORANGE,
+)
 _W, _H = 1024, 768
 
 _BTN_W, _BTN_H = 440, 100

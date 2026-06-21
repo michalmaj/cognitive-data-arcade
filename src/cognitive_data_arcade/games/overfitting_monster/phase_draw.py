@@ -14,15 +14,18 @@ from cognitive_data_arcade.games.overfitting_monster.classifier import (
 from cognitive_data_arcade.games.overfitting_monster.scenarios import Scenario, generate_data
 from cognitive_data_arcade.games.overfitting_monster.widgets import SliderWidget
 
-_BG = (15, 15, 35)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    GREEN as _GREEN,
+    RED as _RED,
+    BLUE as _BLUE,
+    YELLOW as _YELLOW,
+    ORANGE as _ORANGE,
+)
+
 _PANEL = (18, 18, 42)
-_WHITE = (240, 240, 240)
-_DIM = (120, 120, 160)
-_GREEN = (39, 174, 96)
-_RED = (231, 76, 60)
-_BLUE = (52, 152, 219)
-_YELLOW = (243, 156, 18)
-_ORANGE = (230, 126, 34)
 
 _W, _H = 1024, 720
 _TOP_H = 56

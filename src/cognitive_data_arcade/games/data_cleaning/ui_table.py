@@ -7,10 +7,12 @@ from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scrollbar import ScrollBar
 from cognitive_data_arcade.games.data_cleaning.generator import DataRow
 
-_ORANGE = (243, 156, 18)
-_GREEN = (39, 174, 96)
-_WHITE = (240, 240, 240)
-_DIM = (120, 120, 160)
+from cognitive_data_arcade.engine.colors import (
+    ORANGE as _ORANGE,
+    GREEN as _GREEN,
+    WHITE as _WHITE,
+    DIM as _DIM,
+)
 
 VISIBLE_ROWS = 15
 ROW_H = 28

@@ -9,17 +9,20 @@ from cognitive_data_arcade.games.human_vs_model.challenge_data import CompleteCh
 _W, _H = 1024, 720
 _TOP_H = 44
 _MID = 512
-_BG = (15, 15, 35)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    BLUE as _BLUE,
+    PURPLE as _PURPLE,
+    GREEN as _GREEN,
+    RED as _RED,
+)
+
 _TOP_BG = (10, 10, 28)
 _LEFT_BG = (12, 18, 32)
 _RIGHT_BG = (12, 8, 28)
-_WHITE = (240, 240, 240)
-_DIM = (100, 100, 140)
-_BLUE = (52, 152, 219)
-_PURPLE = (155, 89, 182)
 _AMBER = (240, 165, 0)
-_GREEN = (39, 174, 96)
-_RED = (231, 76, 60)
 _GREY = (60, 60, 80)
 
 _BASE_SCORE = 30

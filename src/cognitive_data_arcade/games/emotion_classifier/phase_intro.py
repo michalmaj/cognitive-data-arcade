@@ -6,12 +6,15 @@ import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    DIM as _DIM,
+    PURPLE as _PURPLE,
+)
+
 _W, _H = 1024, 720
-_BG = (15, 15, 35)
 _PANEL = (18, 18, 42)
-_WHITE = (240, 240, 240)
-_DIM = (120, 120, 160)
-_PURPLE = (155, 89, 182)
 
 _LINES = [
     "Twoim zadaniem jest oznaczyć słowa o wyraźnym sentymencie.",

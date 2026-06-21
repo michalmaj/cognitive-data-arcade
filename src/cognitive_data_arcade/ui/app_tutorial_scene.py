@@ -7,11 +7,13 @@ from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.profile.manager import ProfileManager
 
-_BG = (26, 26, 46)
-_WHITE = (240, 240, 240)
-_ORANGE = (243, 156, 18)
-_GREEN = (39, 174, 96)
-_DIM = (100, 100, 150)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    WHITE as _WHITE,
+    ORANGE as _ORANGE,
+    GREEN as _GREEN,
+    DIM as _DIM,
+)
 
 _LEFT = 80
 _TITLE_Y = 60

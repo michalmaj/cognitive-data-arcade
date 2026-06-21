@@ -5,10 +5,13 @@ import pygame
 
 from cognitive_data_arcade.engine.fonts import get_font
 
-_RED = (231, 76, 60)
-_BLUE = (52, 152, 219)
-_YELLOW = (243, 156, 18)
-_BG = (15, 15, 35)
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+    RED as _RED,
+    BLUE as _BLUE,
+    YELLOW as _YELLOW,
+)
+
 _BORDER = (40, 40, 80)
 _DOT_RADIUS = 6
 

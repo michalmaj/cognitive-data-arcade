@@ -11,9 +11,11 @@ from cognitive_data_arcade.games.data_cleaning.generator import (
     compute_stats,
 )
 
-_WHITE = (240, 240, 240)
-_DIM = (120, 120, 160)
-_ORANGE = (243, 156, 18)
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
+    DIM as _DIM,
+    ORANGE as _ORANGE,
+)
 
 
 def draw_report(
