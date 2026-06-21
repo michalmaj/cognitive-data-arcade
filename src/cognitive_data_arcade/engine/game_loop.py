@@ -11,7 +11,10 @@ class GameLoop:
     FPS = 60
 
     def __init__(
-        self, initial_scene: Scene, width: int = 1024, height: int = 768,
+        self,
+        initial_scene: Scene,
+        width: int = 1024,
+        height: int = 768,
         pm: ProfileManager | None = None,
     ) -> None:
         self._scene: Scene | None = initial_scene

@@ -49,6 +49,7 @@ class ProfileScene(Scene):
             h = surf.get_size()[1] if surf else 768
             footer_y = h - _FOOTER_H
             from cognitive_data_arcade.engine.mouse import hit
+
             edit_rect = pygame.Rect(220, footer_y + 15, 200, 24)
             if hit(edit_rect, event.pos):
                 self._editing_alias = True
@@ -105,13 +106,9 @@ class ProfileScene(Scene):
         pygame.draw.circle(surface, _BORDER_COLOR, (48, 48), 36)
         pygame.draw.circle(surface, _PANEL_BG, (48, 48), 34)
         av_surf = self._font_large.render(avatar_emoji, True, _HIGHLIGHT_COLOR)
-        surface.blit(
-            av_surf, (48 - av_surf.get_width() // 2, 48 - av_surf.get_height() // 2)
-        )
+        surface.blit(av_surf, (48 - av_surf.get_width() // 2, 48 - av_surf.get_height() // 2))
 
-        alias_text = (
-            (self._alias_buffer + "|") if self._editing_alias else self._profile.alias
-        )
+        alias_text = (self._alias_buffer + "|") if self._editing_alias else self._profile.alias
         alias_surf = self._font_med.render(alias_text, True, _TITLE_COLOR)
         surface.blit(alias_surf, (94, 12))
 
@@ -120,9 +117,7 @@ class ProfileScene(Scene):
 
         cur, rng = level_progress(total_points)
         bar_x, bar_y, bar_w, bar_h = 94, 64, 280, 8
-        pygame.draw.rect(
-            surface, _BORDER_COLOR, (bar_x, bar_y, bar_w, bar_h), border_radius=4
-        )
+        pygame.draw.rect(surface, _BORDER_COLOR, (bar_x, bar_y, bar_w, bar_h), border_radius=4)
         fill = int(bar_w * cur / rng) if rng > 0 else bar_w
         fill = min(fill, bar_w)
         if fill > 0:
@@ -134,39 +129,27 @@ class ProfileScene(Scene):
         surface.blit(pts_surf, (bar_x + bar_w + 10, bar_y - 3))
 
         # ---- LEFT COLUMN ----
-        pygame.draw.line(
-            surface, _BORDER_COLOR, (_LEFT_W, _TOPBAR_H), (_LEFT_W, h - _FOOTER_H)
-        )
+        pygame.draw.line(surface, _BORDER_COLOR, (_LEFT_W, _TOPBAR_H), (_LEFT_W, h - _FOOTER_H))
         y = _TOPBAR_H + 18
 
-        ap_lbl = self._font_sm.render(
-            self._strings.label_arcade_points, True, _DIM_COLOR
-        )
+        ap_lbl = self._font_sm.render(self._strings.label_arcade_points, True, _DIM_COLOR)
         surface.blit(ap_lbl, (15, y))
         y += 20
-        ap_val = self._font_large.render(
-            str(self._profile.arcade_points), True, _HIGHLIGHT_COLOR
-        )
+        ap_val = self._font_large.render(str(self._profile.arcade_points), True, _HIGHLIGHT_COLOR)
         surface.blit(ap_val, (15, y))
         y += 46
 
-        sp_lbl = self._font_sm.render(
-            self._strings.label_science_points, True, _DIM_COLOR
-        )
+        sp_lbl = self._font_sm.render(self._strings.label_science_points, True, _DIM_COLOR)
         surface.blit(sp_lbl, (15, y))
         y += 20
-        sp_val = self._font_large.render(
-            str(self._profile.science_points), True, _SP_COLOR
-        )
+        sp_val = self._font_large.render(str(self._profile.science_points), True, _SP_COLOR)
         surface.blit(sp_val, (15, y))
         y += 52
 
         pygame.draw.line(surface, _BORDER_COLOR, (15, y), (_LEFT_W - 15, y))
         y += 16
 
-        lessons_lbl = self._font_sm.render(
-            self._strings.label_lessons, True, _DIM_COLOR
-        )
+        lessons_lbl = self._font_sm.render(self._strings.label_lessons, True, _DIM_COLOR)
         surface.blit(lessons_lbl, (15, y))
         y += 22
 
@@ -180,9 +163,7 @@ class ProfileScene(Scene):
             dx = 15 + col * dot_cell
             dy = y + row * dot_cell
             color = _SP_COLOR if (i + 1) in completed else _BORDER_COLOR
-            pygame.draw.rect(
-                surface, color, (dx, dy, dot_size, dot_size), border_radius=3
-            )
+            pygame.draw.rect(surface, color, (dx, dy, dot_size, dot_size), border_radius=3)
 
         # ---- RIGHT COLUMN ----
         right_x = _LEFT_W + 20
@@ -211,12 +192,8 @@ class ProfileScene(Scene):
             by = ry + row * (card_h + card_gap)
             earned = badge.badge_id in self._profile.badges
             border_col = _HIGHLIGHT_COLOR if earned else _BORDER_COLOR
-            pygame.draw.rect(
-                surface, _PANEL_BG, (bx, by, card_w, card_h), border_radius=6
-            )
-            pygame.draw.rect(
-                surface, border_col, (bx, by, card_w, card_h), 1, border_radius=6
-            )
+            pygame.draw.rect(surface, _PANEL_BG, (bx, by, card_w, card_h), border_radius=6)
+            pygame.draw.rect(surface, border_col, (bx, by, card_w, card_h), 1, border_radius=6)
             if earned:
                 icon_surf = self._font_large.render(badge.icon, True, _HIGHLIGHT_COLOR)
                 name = self._strings.badge_names.get(badge.badge_id, badge.badge_id)
@@ -224,12 +201,8 @@ class ProfileScene(Scene):
             else:
                 icon_surf = self._font_large.render("🔒", True, _BORDER_COLOR)
                 name_surf = self._font_sm.render("???", True, _DIM_COLOR)
-            surface.blit(
-                icon_surf, (bx + card_w // 2 - icon_surf.get_width() // 2, by + 10)
-            )
-            surface.blit(
-                name_surf, (bx + card_w // 2 - name_surf.get_width() // 2, by + 54)
-            )
+            surface.blit(icon_surf, (bx + card_w // 2 - icon_surf.get_width() // 2, by + 10))
+            surface.blit(name_surf, (bx + card_w // 2 - name_surf.get_width() // 2, by + 54))
 
         # ---- FOOTER ----
         footer_y = h - _FOOTER_H
@@ -239,7 +212,5 @@ class ProfileScene(Scene):
         back_surf = self._font_label.render(self._strings.label_back, True, _DIM_COLOR)
         surface.blit(back_surf, (28, footer_y + 15))
 
-        edit_surf = self._font_label.render(
-            self._strings.label_edit_alias, True, _DIM_COLOR
-        )
+        edit_surf = self._font_label.render(self._strings.label_edit_alias, True, _DIM_COLOR)
         surface.blit(edit_surf, (220, footer_y + 15))

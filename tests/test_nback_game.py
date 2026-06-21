@@ -3,7 +3,6 @@ from __future__ import annotations
 from pathlib import Path
 
 import pygame
-import pytest
 
 from cognitive_data_arcade.engine.i18n import EN
 from cognitive_data_arcade.games.nback.config import NBackConfig, Trial
@@ -97,10 +96,13 @@ def test_pos_correct_on_hit(tmp_path: Path) -> None:
         pos_match=True,
         let_match=False,
     )
-    _tick(game, 101); _tick(game, 101); _tick(game, 101)
+    _tick(game, 101)
+    _tick(game, 101)
+    _tick(game, 101)
     _tick(game, 101)
     game.handle_event(_key(pygame.K_a))
-    _tick(game, 101); _tick(game, 101)
+    _tick(game, 101)
+    _tick(game, 101)
     assert game._records[1].pos_correct is True
 
 
@@ -108,7 +110,8 @@ def test_false_alarm_recorded_correctly(tmp_path: Path) -> None:
     game = _make(tmp_path)
     _tick(game, 101)
     game.handle_event(_key(pygame.K_a))
-    _tick(game, 101); _tick(game, 101)
+    _tick(game, 101)
+    _tick(game, 101)
     r = game._records[0]
     assert r.key_a_pressed is True
     assert r.pos_match is False
@@ -117,7 +120,9 @@ def test_false_alarm_recorded_correctly(tmp_path: Path) -> None:
 
 def test_correct_rejection_recorded(tmp_path: Path) -> None:
     game = _make(tmp_path)
-    _tick(game, 101); _tick(game, 101); _tick(game, 101)
+    _tick(game, 101)
+    _tick(game, 101)
+    _tick(game, 101)
     r = game._records[0]
     assert r.key_a_pressed is False
     assert r.pos_match is False
@@ -127,7 +132,9 @@ def test_correct_rejection_recorded(tmp_path: Path) -> None:
 def test_between_blocks_auto_advances(tmp_path: Path) -> None:
     game = _make(tmp_path)
     for _ in range(4):
-        _tick(game, 101); _tick(game, 101); _tick(game, 101)
+        _tick(game, 101)
+        _tick(game, 101)
+        _tick(game, 101)
     assert game._phase == _Phase.BETWEEN_BLOCKS
     _tick(game, 101)
     assert game._phase == _Phase.ITI
@@ -137,7 +144,9 @@ def test_adaptive_n_increases_on_high_accuracy(tmp_path: Path) -> None:
     game = _make(tmp_path, _cfg(n=None, target_rate=0.0))
     assert game._current_n == 1
     for _ in range(4):
-        _tick(game, 101); _tick(game, 101); _tick(game, 101)
+        _tick(game, 101)
+        _tick(game, 101)
+        _tick(game, 101)
     assert game._current_n == 2
 
 
@@ -146,7 +155,9 @@ def test_adaptive_n_decreases_on_low_accuracy(tmp_path: Path) -> None:
     game._current_n = 2
     game._trials = [Trial(0, "B", pos_match=True, let_match=True) for _ in range(4)]
     for _ in range(4):
-        _tick(game, 101); _tick(game, 101); _tick(game, 101)
+        _tick(game, 101)
+        _tick(game, 101)
+        _tick(game, 101)
     assert game._current_n == 1
 
 
@@ -155,7 +166,9 @@ def test_adaptive_n_clamped_at_min(tmp_path: Path) -> None:
     game._current_n = 1
     game._trials = [Trial(0, "B", pos_match=True, let_match=True) for _ in range(4)]
     for _ in range(4):
-        _tick(game, 101); _tick(game, 101); _tick(game, 101)
+        _tick(game, 101)
+        _tick(game, 101)
+        _tick(game, 101)
     assert game._current_n >= 1
 
 
@@ -163,14 +176,18 @@ def test_adaptive_n_clamped_at_max(tmp_path: Path) -> None:
     game = _make(tmp_path, _cfg(n=None, target_rate=0.0))
     game._current_n = 3
     for _ in range(4):
-        _tick(game, 101); _tick(game, 101); _tick(game, 101)
+        _tick(game, 101)
+        _tick(game, 101)
+        _tick(game, 101)
     assert game._current_n <= 3
 
 
 def test_game_done_after_all_blocks(tmp_path: Path) -> None:
     game = _make(tmp_path)
     for _ in range(8):
-        _tick(game, 101); _tick(game, 101); _tick(game, 101)
+        _tick(game, 101)
+        _tick(game, 101)
+        _tick(game, 101)
         if game._phase == _Phase.BETWEEN_BLOCKS:
             _tick(game, 101)
     assert game.is_done()

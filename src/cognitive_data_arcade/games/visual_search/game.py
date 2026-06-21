@@ -29,23 +29,23 @@ from cognitive_data_arcade.games.visual_search.stimuli import (
 from cognitive_data_arcade.profile.manager import ProfileManager
 
 _W, _H = 1024, 768
-_BG    = (15, 15, 35)
-_WHITE  = (240, 240, 240)
-_DIM    = (120, 120, 160)
-_GREEN  = (39, 174, 96)
-_RED    = (231, 76, 60)
+_BG = (15, 15, 35)
+_WHITE = (240, 240, 240)
+_DIM = (120, 120, 160)
+_GREEN = (39, 174, 96)
+_RED = (231, 76, 60)
 _ORANGE = (243, 156, 18)
 _LETTER_SIZE_PT = 38
 
 
 class _Phase(enum.Enum):
-    FIXATION    = "fixation"
-    SEARCH      = "search"
-    FEEDBACK    = "feedback"
-    ITI         = "iti"
+    FIXATION = "fixation"
+    SEARCH = "search"
+    FEEDBACK = "feedback"
+    ITI = "iti"
     BLOCK_BREAK = "block_break"
-    SUMMARY     = "summary"
-    DONE        = "done"
+    SUMMARY = "summary"
+    DONE = "done"
 
 
 @dataclass(frozen=True)
@@ -57,18 +57,17 @@ class _TrialRecord:
     condition: str
     set_size: int
     target_present: bool
-    response: str      # "present" | "absent" | "timeout"
+    response: str  # "present" | "absent" | "timeout"
     correct: bool
-    rt_ms: float       # float("nan") on timeout
+    rt_ms: float  # float("nan") on timeout
     timestamp: str
 
 
 def _generate_block(trials_per_block: int, condition: str) -> list[dict]:
     half = trials_per_block // 2
-    trials: list[dict] = (
-        [{"condition": condition, "target_present": True}]  * half +
-        [{"condition": condition, "target_present": False}] * half
-    )
+    trials: list[dict] = [{"condition": condition, "target_present": True}] * half + [
+        {"condition": condition, "target_present": False}
+    ] * half
     random.shuffle(trials)
     return trials
 
@@ -115,11 +114,11 @@ class VisualSearchGame(Scene):
         self._last_rt: float = 0.0
         self._next_scene_cache: Scene | None = None
 
-        self._font_fix  = get_font(60)
-        self._font_fb   = get_font(48)
+        self._font_fix = get_font(60)
+        self._font_fb = get_font(48)
         self._font_info = get_font(24)
         self._font_stim = get_font(_LETTER_SIZE_PT)
-        self._font_sum  = get_font(28)
+        self._font_sum = get_font(28)
 
         self._load_trial()
 
@@ -176,7 +175,7 @@ class VisualSearchGame(Scene):
         else:
             rt_ms = float(pygame.time.get_ticks() - self._rt_start)
             expected = "present" if t["target_present"] else "absent"
-            correct = (response == expected)
+            correct = response == expected
 
         record = _TrialRecord(
             participant_id=self._pid,
@@ -220,6 +219,7 @@ class VisualSearchGame(Scene):
             return None
         if self._next_scene_cache is None:
             from cognitive_data_arcade.ui.menu import LessonMenuScene
+
             self._next_scene_cache = LessonMenuScene(self._pm, self._strings)
         return self._next_scene_cache
 
@@ -239,18 +239,20 @@ class VisualSearchGame(Scene):
 
         elif self._phase == _Phase.FEEDBACK:
             symbol = "OK" if self._last_correct else "X"
-            color  = _GREEN if self._last_correct else _RED
+            color = _GREEN if self._last_correct else _RED
             rt_text = f"{self._last_rt:.0f} ms" if not math.isnan(self._last_rt) else "limit czasu"
             fb = self._font_fb.render(f"{symbol}  {rt_text}", True, color)
             surface.blit(fb, (cx - fb.get_width() // 2, cy - fb.get_height() // 2))
 
         elif self._phase == _Phase.BLOCK_BREAK:
-            done      = self._trial_idx
-            total     = len(self._trials)
+            done = self._trial_idx
+            total = len(self._trials)
             block_num = self._trial_idx // self._config.trials_per_block
-            msg  = self._font_fb.render(f"Koniec bloku {block_num} — {done}/{total}", True, _WHITE)
-            hint = self._font_info.render("Teraz szukanie złożone. ENTER aby kontynuować.", True, _DIM)
-            surface.blit(msg,  (cx - msg.get_width() // 2, cy - 40))
+            msg = self._font_fb.render(f"Koniec bloku {block_num} — {done}/{total}", True, _WHITE)
+            hint = self._font_info.render(
+                "Teraz szukanie złożone. ENTER aby kontynuować.", True, _DIM
+            )
+            surface.blit(msg, (cx - msg.get_width() // 2, cy - 40))
             surface.blit(hint, (cx - hint.get_width() // 2, cy + 40))
 
         elif self._phase == _Phase.SUMMARY:
@@ -258,40 +260,41 @@ class VisualSearchGame(Scene):
 
         if self._phase not in (_Phase.SUMMARY, _Phase.DONE):
             prog = self._trial_idx / max(len(self._trials), 1)
-            pygame.draw.rect(surface, _DIM,    (0, _H - 4, _W, 4))
+            pygame.draw.rect(surface, _DIM, (0, _H - 4, _W, 4))
             pygame.draw.rect(surface, _ORANGE, (0, _H - 4, int(_W * prog), 4))
 
     def _draw_summary(self, surface: pygame.Surface) -> None:
         cx = _W // 2
-        y  = 100
+        y = 100
         title = self._font_fb.render("Wyniki sesji", True, _WHITE)
         surface.blit(title, (cx - title.get_width() // 2, y))
         y += 70
 
-        col_rt  = cx - 60
+        col_rt = cx - 60
         col_acc = cx + 120
-        surface.blit(self._font_info.render("Warunek", True, _DIM),    (cx - 260, y))
-        surface.blit(self._font_info.render("Średni RT", True, _DIM),  (col_rt,   y))
-        surface.blit(self._font_info.render("Trafność", True, _DIM),   (col_acc,  y))
+        surface.blit(self._font_info.render("Warunek", True, _DIM), (cx - 260, y))
+        surface.blit(self._font_info.render("Średni RT", True, _DIM), (col_rt, y))
+        surface.blit(self._font_info.render("Trafność", True, _DIM), (col_acc, y))
         y += 40
 
         for condition, label in (("feature", "Feature (proste)"), ("conjunction", "Złożone")):
             rts = [
-                r.rt_ms for r in self._records
+                r.rt_ms
+                for r in self._records
                 if r.condition == condition and r.correct and not math.isnan(r.rt_ms)
             ]
             trials_cond = [r for r in self._records if r.condition == condition]
             n_correct = sum(1 for r in trials_cond if r.correct)
-            n_total   = len(trials_cond)
-            mean_rt   = sum(rts) / len(rts) if rts else 0.0
-            acc_pct   = 100.0 * n_correct / n_total if n_total else 0.0
+            n_total = len(trials_cond)
+            mean_rt = sum(rts) / len(rts) if rts else 0.0
+            acc_pct = 100.0 * n_correct / n_total if n_total else 0.0
 
-            lbl   = self._font_sum.render(label, True, _WHITE)
-            rt_s  = self._font_sum.render(f"{mean_rt:.0f} ms", True, _ORANGE)
-            acc_s = self._font_sum.render(f"{acc_pct:.0f} %",  True, _ORANGE)
-            surface.blit(lbl,   (cx - 260, y))
-            surface.blit(rt_s,  (col_rt,   y))
-            surface.blit(acc_s, (col_acc,  y))
+            lbl = self._font_sum.render(label, True, _WHITE)
+            rt_s = self._font_sum.render(f"{mean_rt:.0f} ms", True, _ORANGE)
+            acc_s = self._font_sum.render(f"{acc_pct:.0f} %", True, _ORANGE)
+            surface.blit(lbl, (cx - 260, y))
+            surface.blit(rt_s, (col_rt, y))
+            surface.blit(acc_s, (col_acc, y))
             y += 50
 
         hint = self._font_info.render("ENTER / ESC — wyjdź", True, _DIM)

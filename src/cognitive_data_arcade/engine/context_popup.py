@@ -6,20 +6,20 @@ import pygame
 
 from cognitive_data_arcade.engine.fonts import get_font
 
-_BG      = (20, 20, 50, 230)
-_BORDER  = (100, 100, 200)
-_TITLE   = (243, 156, 18)
-_BODY    = (200, 200, 220)
-_IMPACT  = (100, 220, 140)
-_W       = 300
-_PAD     = 10
-_LINE_H  = 20
+_BG = (20, 20, 50, 230)
+_BORDER = (100, 100, 200)
+_TITLE = (243, 156, 18)
+_BODY = (200, 200, 220)
+_IMPACT = (100, 220, 140)
+_W = 300
+_PAD = 10
+_LINE_H = 20
 
 
 @dataclass(frozen=True)
 class ContextInfo:
-    title:  str
-    body:   str
+    title: str
+    body: str
     impact: str
 
 
@@ -66,14 +66,14 @@ class ContextPopup:
         if not self._active:
             return
         info = self._active
-        font_title  = get_font(17)
-        font_body   = get_font(15)
+        font_title = get_font(17)
+        font_body = get_font(15)
         font_impact = get_font(15)
 
-        title_surf   = font_title.render(info.title, True, _TITLE)
-        body_lines   = _wrap(info.body, font_body, _W - 2 * _PAD)
+        title_surf = font_title.render(info.title, True, _TITLE)
+        body_lines = _wrap(info.body, font_body, _W - 2 * _PAD)
         impact_lines = _wrap(info.impact, font_impact, _W - 2 * _PAD)
-        total_lines  = len(body_lines) + len(impact_lines)
+        total_lines = len(body_lines) + len(impact_lines)
         h = _PAD * 3 + _LINE_H + total_lines * _LINE_H + 4
 
         sw, sh = surface.get_size()

@@ -35,9 +35,7 @@ def test_profile_scene_is_not_done_initially(tmp_path: Path) -> None:
 
 def test_profile_scene_esc_triggers_done(tmp_path: Path) -> None:
     scene = _make_scene(tmp_path)
-    scene.handle_event(
-        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode="")
-    )
+    scene.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode=""))
     assert scene.is_done()
 
 
@@ -45,9 +43,7 @@ def test_profile_scene_esc_returns_back_scene(tmp_path: Path) -> None:
     pm = ProfileManager(tmp_path / "profile.json")
     back = _StubScene()
     scene = ProfileScene(pm, PL, back)
-    scene.handle_event(
-        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode="")
-    )
+    scene.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode=""))
     assert scene.next_scene() is back
 
 
@@ -64,20 +60,14 @@ def test_profile_scene_alias_edit_saves(tmp_path: Path) -> None:
     scene = ProfileScene(pm, PL, _StubScene())
 
     # Press E to start editing (clears buffer)
-    scene.handle_event(
-        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_e, mod=0, unicode="e")
-    )
+    scene.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_e, mod=0, unicode="e"))
 
     # Type "neo"
     for char in "neo":
-        scene.handle_event(
-            pygame.event.Event(pygame.KEYDOWN, key=0, mod=0, unicode=char)
-        )
+        scene.handle_event(pygame.event.Event(pygame.KEYDOWN, key=0, mod=0, unicode=char))
 
     # Confirm with Enter
-    scene.handle_event(
-        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode="\r")
-    )
+    scene.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode="\r"))
 
     assert pm.load().alias == "neo"
 
@@ -87,18 +77,12 @@ def test_profile_scene_alias_edit_cancel_restores(tmp_path: Path) -> None:
     pm.load()
     scene = ProfileScene(pm, PL, _StubScene())
 
-    scene.handle_event(
-        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_e, mod=0, unicode="e")
-    )
+    scene.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_e, mod=0, unicode="e"))
     for char in "neo":
-        scene.handle_event(
-            pygame.event.Event(pygame.KEYDOWN, key=0, mod=0, unicode=char)
-        )
+        scene.handle_event(pygame.event.Event(pygame.KEYDOWN, key=0, mod=0, unicode=char))
 
     # Cancel with Escape — cancels edit AND triggers scene done (returns to back)
-    scene.handle_event(
-        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode="")
-    )
+    scene.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode=""))
 
     # Alias not saved
     assert pm.load().alias == "anonymous"

@@ -7,11 +7,11 @@ import pygame
 
 from cognitive_data_arcade.engine.fonts import get_font
 
-_TRACK  = (42, 42, 80)
-_DIM    = (120, 120, 160)
+_TRACK = (42, 42, 80)
+_DIM = (120, 120, 160)
 _ACTIVE = (243, 156, 18)
-_WHITE  = (240, 240, 240)
-_BG     = (26, 26, 46)
+_WHITE = (240, 240, 240)
+_BG = (26, 26, 46)
 _THUMB_R = 8
 _TRACK_H = 4
 _SLIDER_W = 240
@@ -19,11 +19,11 @@ _SLIDER_W = 240
 
 @dataclass
 class SliderSpec:
-    label:   str
+    label: str
     min_val: int
     max_val: int
     default: int
-    step:    int
+    step: int
 
 
 class Slider:
@@ -83,23 +83,25 @@ class Slider:
         vw = font_val.size(val_str)[0]
         surface.blit(font_val.render(val_str, True, _WHITE), (self._x + self._w - vw, self._y))
         ty = self._track_y()
-        pygame.draw.rect(surface, _TRACK,
-                         (self._x, ty - _TRACK_H // 2, self._w, _TRACK_H), border_radius=2)
+        pygame.draw.rect(
+            surface, _TRACK, (self._x, ty - _TRACK_H // 2, self._w, _TRACK_H), border_radius=2
+        )
         tx = self._thumb_x()
         filled = max(0, tx - self._x)
         if filled > 0:
             fc = _ACTIVE if self.focused else _DIM
-            pygame.draw.rect(surface, fc,
-                             (self._x, ty - _TRACK_H // 2, filled, _TRACK_H), border_radius=2)
+            pygame.draw.rect(
+                surface, fc, (self._x, ty - _TRACK_H // 2, filled, _TRACK_H), border_radius=2
+            )
         pygame.draw.circle(surface, _ACTIVE if self.focused else _DIM, (tx, ty), _THUMB_R)
 
 
 _SHAPES = [
-    ("normal",     "Normalny"),
-    ("uniform",    "Jednostajny"),
+    ("normal", "Normalny"),
+    ("uniform", "Jednostajny"),
     ("exgaussian", "Ex-Gaussian"),
 ]
-_TAB_H   = 28
+_TAB_H = 28
 _TAB_GAP = 4
 
 
@@ -111,10 +113,7 @@ class ShapeTab:
         self._selected = 0
         n = len(_SHAPES)
         tw = (w - _TAB_GAP * (n - 1)) // n
-        self._rects = [
-            pygame.Rect(x + i * (tw + _TAB_GAP), y, tw, _TAB_H)
-            for i in range(n)
-        ]
+        self._rects = [pygame.Rect(x + i * (tw + _TAB_GAP), y, tw, _TAB_H) for i in range(n)]
 
     @property
     def dist_type(self) -> str:
@@ -143,5 +142,7 @@ class ShapeTab:
             pygame.draw.rect(surface, border, rect, width=1, border_radius=4)
             col = _WHITE if active else _DIM
             tw, th = font.size(label)
-            surface.blit(font.render(label, True, col),
-                         (rect.x + (rect.w - tw) // 2, rect.y + (rect.h - th) // 2))
+            surface.blit(
+                font.render(label, True, col),
+                (rect.x + (rect.w - tw) // 2, rect.y + (rect.h - th) // 2),
+            )

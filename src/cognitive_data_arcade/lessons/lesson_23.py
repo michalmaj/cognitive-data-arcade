@@ -1,5 +1,6 @@
 # src/cognitive_data_arcade/lessons/lesson_23.py
 """Lesson 23 -- Emotion Classifier (lexicon-based sentiment analysis)."""
+
 from __future__ import annotations
 
 CONTENT: dict[str, dict[str, list[str]]] = {

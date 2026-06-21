@@ -109,14 +109,16 @@ class ScrollBar:
             return
         r = self._width // 2
         pygame.draw.rect(
-            surface, _TRACK,
+            surface,
+            _TRACK,
             (self._x, self._y, self._width, self._h),
             border_radius=r,
         )
         th = self._thumb_h()
         ty = self._thumb_y()
         pygame.draw.rect(
-            surface, _THUMB,
+            surface,
+            _THUMB,
             (self._x, ty, self._width, th),
             border_radius=r,
         )

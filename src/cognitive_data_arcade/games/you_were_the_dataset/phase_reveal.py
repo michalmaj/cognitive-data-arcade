@@ -8,15 +8,15 @@ from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.you_were_the_dataset.game_state import GameState
 
 _W, _H = 1024, 720
-_BG    = (4, 6, 12)
+_BG = (4, 6, 12)
 _WHITE = (248, 250, 252)
-_DIM   = (148, 163, 184)
+_DIM = (148, 163, 184)
 _PURPLE = (167, 139, 250)
 
 # (text, color, t_start_ms)
 _LINES = [
-    ("Przez caly ten kurs...",  _DIM,    1000),
-    ("tworzyles dane.",         _WHITE,  2500),
+    ("Przez caly ten kurs...", _DIM, 1000),
+    ("tworzyles dane.", _WHITE, 2500),
     ("Oto Twoj kognitywny profil.", _PURPLE, 3500),
 ]
 _HINT_T = 4000
@@ -32,6 +32,7 @@ class PhaseRevealScene(Scene):
         # Load profile now if not already set (real CSV path)
         if self._state.profile is None:
             from cognitive_data_arcade.games.you_were_the_dataset.profile_loader import load_profile
+
             self._state.profile = load_profile()
 
     def handle_event(self, event: pygame.event.Event) -> None:
@@ -44,6 +45,7 @@ class PhaseRevealScene(Scene):
 
     def _advance(self) -> None:
         from cognitive_data_arcade.games.you_were_the_dataset.phase_profile import PhaseProfileScene
+
         self._next = PhaseProfileScene(self._state)
         self._done = True
 
@@ -55,7 +57,7 @@ class PhaseRevealScene(Scene):
         for text, color, t_start in _LINES:
             if self._t >= t_start:
                 surf = get_font(32 if text == "tworzyles dane." else 20).render(text, True, color)
-                idx = [l[0] for l in _LINES].index(text)
+                idx = [ln[0] for ln in _LINES].index(text)
                 y = _H // 2 - 60 + idx * 56
                 surface.blit(surf, (_W // 2 - surf.get_width() // 2, y))
         if self._t >= _HINT_T:

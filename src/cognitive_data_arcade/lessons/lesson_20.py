@@ -1,5 +1,6 @@
 # src/cognitive_data_arcade/lessons/lesson_20.py
 """Lesson 20 - Anomaly Alert (anomaly detection in data visualisations)."""
+
 from __future__ import annotations
 
 CONTENT: dict[str, dict[str, list[str]]] = {

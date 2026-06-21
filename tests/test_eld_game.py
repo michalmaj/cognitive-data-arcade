@@ -23,6 +23,7 @@ def _make_game(difficulty="medium", scenario_idx=0, lang="en"):
 
 # ── Initial state ──────────────────────────────────────────────────────────────
 
+
 def test_initial_state_is_intro():
     assert _make_game()._state == _State.INTRO
 
@@ -34,6 +35,7 @@ def test_not_done_initially():
 
 
 # ── INTRO → CONFIG_MAP ─────────────────────────────────────────────────────────
+
 
 def test_enter_on_intro_advances():
     game = _make_game()
@@ -54,6 +56,7 @@ def test_other_key_on_intro_does_nothing():
 
 
 # ── CONFIG_MAP navigation ──────────────────────────────────────────────────────
+
 
 def test_enter_on_config_map_opens_decision():
     game = _make_game()
@@ -104,6 +107,7 @@ def test_enter_when_all_decided_goes_to_report():
 
 # ── DECISION navigation ────────────────────────────────────────────────────────
 
+
 def test_backspace_in_decision_returns_to_config_map():
     game = _make_game()
     game._state = _State.DECISION
@@ -150,6 +154,7 @@ def test_confirm_decision_saves_and_returns_to_map():
 
 
 # ── Easy difficulty popup ──────────────────────────────────────────────────────
+
 
 def test_easy_popup_shown_for_wrong_answer():
     game = _make_game(difficulty="easy")
@@ -208,6 +213,7 @@ def test_popup_backspace_closes_without_saving():
 
 # ── Score calculation ──────────────────────────────────────────────────────────
 
+
 def test_all_decided_false_initially():
     assert not _make_game()._all_decided()
 
@@ -241,7 +247,9 @@ def test_score_multiplier_easy():
 def test_score_zero_when_all_wrong():
     game = _make_game(difficulty="medium")
     for i in range(len(game._scenario.decisions)):
-        wrong_idx = next((j for j, o in enumerate(game._shuffled_options[i]) if not o.is_correct), None)
+        wrong_idx = next(
+            (j for j, o in enumerate(game._shuffled_options[i]) if not o.is_correct), None
+        )
         if wrong_idx is None:
             wrong_idx = 0
         game._choices[i] = wrong_idx
@@ -252,8 +260,10 @@ def test_score_zero_when_all_wrong():
 
 # ── REPORT navigation ──────────────────────────────────────────────────────────
 
+
 def test_report_backspace_navigates_to_level_scene():
     from cognitive_data_arcade.ui.event_log_level_scene import EventLogLevelScene
+
     game = _make_game()
     game._state = _State.REPORT
     game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_BACKSPACE, mod=0, unicode=""))
@@ -270,6 +280,7 @@ def test_report_enter_replays_same_scenario():
 
 
 # ── Draw smoke tests ──────────────────────────────────────────────────────────
+
 
 def test_draw_intro_does_not_crash():
     pygame.display.set_mode((800, 600), pygame.NOFRAME)
@@ -302,9 +313,11 @@ def test_draw_report_does_not_crash():
 
 # ── Option shuffle ─────────────────────────────────────────────────────────────
 
+
 def test_options_are_shuffled_differently_across_games():
     """Two game instances must not always produce the same option order."""
     import random
+
     orders = set()
     for seed in range(20):
         random.seed(seed)

@@ -13,7 +13,7 @@ _NET_H = 520  # matches game layout: 720 - 50(top) - 150(bottom)
 class Node:
     x: float
     y: float
-    state: str = "S"   # "S" | "I" | "R"
+    state: str = "S"  # "S" | "I" | "R"
     degree: int = 0
 
 

@@ -44,9 +44,7 @@ def test_how_to_play_space_returns_back() -> None:
 
     back = _Dummy()
     scene = HowToPlayScene(_GAME_INFO, PL, back_scene=back)
-    scene.handle_event(
-        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_SPACE, mod=0, unicode=" ")
-    )
+    scene.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_SPACE, mod=0, unicode=" "))
     assert scene.is_done()
     assert scene.next_scene() is back
 
@@ -56,9 +54,7 @@ def test_how_to_play_enter_returns_back() -> None:
 
     back = _Dummy()
     scene = HowToPlayScene(_GAME_INFO, PL, back_scene=back)
-    scene.handle_event(
-        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode="\r")
-    )
+    scene.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode="\r"))
     assert scene.is_done()
     assert scene.next_scene() is back
 
@@ -68,8 +64,6 @@ def test_how_to_play_esc_returns_back() -> None:
 
     back = _Dummy()
     scene = HowToPlayScene(_GAME_INFO, PL, back_scene=back)
-    scene.handle_event(
-        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode="")
-    )
+    scene.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode=""))
     assert scene.is_done()
     assert scene.next_scene() is back

@@ -11,9 +11,7 @@ def load_session(csv_path: Path) -> pd.DataFrame:
     """Load and normalise a Flanker CSV."""
     df = pd.read_csv(csv_path)
     df["correct"] = df["correct"].astype(str).str.lower().isin(["true", "1"])
-    df["reaction_time_ms"] = pd.to_numeric(
-        df["reaction_time_ms"], errors="coerce"
-    ).fillna(-1.0)
+    df["reaction_time_ms"] = pd.to_numeric(df["reaction_time_ms"], errors="coerce").fillna(-1.0)
     return df
 
 
@@ -46,15 +44,11 @@ def session_stats(df: pd.DataFrame) -> dict[str, float]:
         "flanker_effect_ms": incong_rt - cong_rt,
         "congruent_accuracy": _accuracy("congruent"),
         "incongruent_accuracy": _accuracy("incongruent"),
-        "overall_accuracy": float(df["correct"].sum()) / n_trials
-        if n_trials > 0
-        else 0.0,
+        "overall_accuracy": float(df["correct"].sum()) / n_trials if n_trials > 0 else 0.0,
     }
 
 
-def build_comparison_chart(
-    df: pd.DataFrame, figsize: tuple[float, float] = (7.0, 4.5)
-) -> Figure:
+def build_comparison_chart(df: pd.DataFrame, figsize: tuple[float, float] = (7.0, 4.5)) -> Figure:
     """Two-bar chart: congruent vs incongruent mean RT for correct trials."""
     stats = session_stats(df)
     labels = ["Congruent", "Incongruent"]

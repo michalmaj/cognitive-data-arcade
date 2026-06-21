@@ -9,16 +9,18 @@ from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.you_were_the_dataset.game_state import GameState
 from cognitive_data_arcade.games.you_were_the_dataset.profile_loader import (
-    DATA_DIR, REQUIRED_GAMES, check_prerequisites,
+    DATA_DIR,
+    REQUIRED_GAMES,
+    check_prerequisites,
 )
 
 _W, _H = 1024, 720
-_BG    = (10, 14, 20)
+_BG = (10, 14, 20)
 _PANEL = (18, 22, 38)
 _WHITE = (240, 240, 240)
-_DIM   = (130, 130, 150)
+_DIM = (130, 130, 150)
 _GREEN = (34, 197, 94)
-_RED   = (239, 68, 68)
+_RED = (239, 68, 68)
 _BTN_W, _BTN_H = 160, 34
 
 
@@ -98,6 +100,7 @@ class PhasePrerequisiteScene(Scene):
                 from cognitive_data_arcade.games.you_were_the_dataset.phase_reveal import (
                     PhaseRevealScene,
                 )
+
                 self._state.profile = SYNTHETIC_PROFILE
                 self._next = PhaseRevealScene(self._state)
                 self._done = True
@@ -105,7 +108,11 @@ class PhasePrerequisiteScene(Scene):
             if event.key == pygame.K_SPACE and self._all_done:
                 self._advance_to_reveal()
         elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            if self._all_done and self._continue_rect and self._continue_rect.collidepoint(event.pos):
+            if (
+                self._all_done
+                and self._continue_rect
+                and self._continue_rect.collidepoint(event.pos)
+            ):
                 self._advance_to_reveal()
             for name, rect in self._btn_rects.items():
                 if rect.collidepoint(event.pos) and name in self._factories:
@@ -116,6 +123,7 @@ class PhasePrerequisiteScene(Scene):
 
     def _advance_to_reveal(self) -> None:
         from cognitive_data_arcade.games.you_were_the_dataset.phase_reveal import PhaseRevealScene
+
         self._next = PhaseRevealScene(self._state)
         self._done = True
 
@@ -133,7 +141,8 @@ class PhasePrerequisiteScene(Scene):
         # Subtitle
         sub = get_font(16).render(
             "Aby zobaczyc swoj kognitywny profil, potrzebujesz danych z tych gier:",
-            True, _DIM,
+            True,
+            _DIM,
         )
         surface.blit(sub, (_W // 2 - sub.get_width() // 2, 80))
 
@@ -171,16 +180,26 @@ class PhasePrerequisiteScene(Scene):
                 btn_rect = pygame.Rect(list_x + list_w - _BTN_W - 8, row_y + 9, _BTN_W, _BTN_H)
                 pygame.draw.rect(surface, _RED, btn_rect, border_radius=5)
                 btn_txt = get_font(14).render("Zagraj teraz ->", True, _WHITE)
-                surface.blit(btn_txt, (btn_rect.x + (_BTN_W - btn_txt.get_width()) // 2,
-                                       btn_rect.y + (_BTN_H - btn_txt.get_height()) // 2))
+                surface.blit(
+                    btn_txt,
+                    (
+                        btn_rect.x + (_BTN_W - btn_txt.get_width()) // 2,
+                        btn_rect.y + (_BTN_H - btn_txt.get_height()) // 2,
+                    ),
+                )
                 self._btn_rects[name] = btn_rect
 
         # Footer / Continue button
         if self._all_done and self._continue_rect:
             pygame.draw.rect(surface, _GREEN, self._continue_rect, border_radius=8)
             cont = get_font(20).render("Kontynuuj  [SPACJA]", True, (0, 0, 0))
-            surface.blit(cont, (_W // 2 - cont.get_width() // 2,
-                                 self._continue_rect.y + (50 - cont.get_height()) // 2))
+            surface.blit(
+                cont,
+                (
+                    _W // 2 - cont.get_width() // 2,
+                    self._continue_rect.y + (50 - cont.get_height()) // 2,
+                ),
+            )
         else:
             foot = get_font(13).render(
                 "Zagraj w brakujace gry, a lista zaktualizuje sie.", True, _DIM

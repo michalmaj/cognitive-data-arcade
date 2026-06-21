@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import pygame
 
-from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.games.data_cleaning.generator import (
     CleaningSession,
@@ -86,6 +85,8 @@ def draw_report(
         y += 24
 
     # Bottom hint: player uses ESC to open pause menu and Restart from there
-    esc_hint = "Press ESC for menu" if strings.language != "pl" else "Nacisnij ESC, aby otworzyc menu"
+    esc_hint = (
+        "Press ESC for menu" if strings.language != "pl" else "Nacisnij ESC, aby otworzyc menu"
+    )
     esc_surf = font_hint.render(esc_hint, True, _DIM)
     surface.blit(esc_surf, (w // 2 - esc_surf.get_width() // 2, h - 36))

@@ -56,6 +56,7 @@ class PausableGame(Scene):
 
     def _update_pause_selected(self, pos: tuple[int, int]) -> None:
         from cognitive_data_arcade.engine.mouse import hit
+
         surf = pygame.display.get_surface()
         if surf is None:
             return
@@ -121,6 +122,7 @@ class PausableGame(Scene):
             nxt = self._inner.next_scene()
             if nxt is None:
                 from cognitive_data_arcade.ui.menu import LessonMenuScene
+
                 self._next = LessonMenuScene(self._pm, self._strings)
             else:
                 self._next = nxt
@@ -151,9 +153,7 @@ class PausableGame(Scene):
         elif self._selected == 1:
             from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
 
-            self._sub_scene = HowToPlayScene(
-                self._game_info, self._strings, back_scene=None
-            )
+            self._sub_scene = HowToPlayScene(self._game_info, self._strings, back_scene=None)
         elif self._selected == 2:
             self._show_keyref = True
         elif self._selected == 3:
@@ -176,12 +176,8 @@ class PausableGame(Scene):
         panel_w, panel_h = 340, 300
         px = (w - panel_w) // 2
         py = (h - panel_h) // 2
-        pygame.draw.rect(
-            surface, _BG_PANEL, (px, py, panel_w, panel_h), border_radius=8
-        )
-        pygame.draw.rect(
-            surface, _BORDER, (px, py, panel_w, panel_h), 1, border_radius=8
-        )
+        pygame.draw.rect(surface, _BG_PANEL, (px, py, panel_w, panel_h), border_radius=8)
+        pygame.draw.rect(surface, _BORDER, (px, py, panel_w, panel_h), 1, border_radius=8)
         title = self._font_title.render(self._strings.pause_title, True, _WHITE)
         surface.blit(title, (px + panel_w // 2 - title.get_width() // 2, py + 12))
         labels = [
@@ -198,31 +194,21 @@ class PausableGame(Scene):
             surface.blit(surf, (px + panel_w // 2 - surf.get_width() // 2, item_y))
             item_y += 40
         hint = self._font_hint.render(self._strings.pause_hint_resume, True, _DIM)
-        surface.blit(
-            hint, (px + panel_w // 2 - hint.get_width() // 2, py + panel_h - 28)
-        )
+        surface.blit(hint, (px + panel_w // 2 - hint.get_width() // 2, py + panel_h - 28))
 
     def _draw_keyref(self, surface: pygame.Surface) -> None:
         w, h = surface.get_size()
         bindings = self._game_info.key_bindings
         n = len(bindings)
-        max_key_w = max(
-            (self._font_key.size(k)[0] for k, _ in bindings), default=80
-        )
-        max_desc_w = max(
-            (self._font_key.size(d)[0] for _, d in bindings), default=160
-        )
+        max_key_w = max((self._font_key.size(k)[0] for k, _ in bindings), default=80)
+        max_desc_w = max((self._font_key.size(d)[0] for _, d in bindings), default=160)
         key_col_w = max_key_w + 16
         panel_w = max(400, 24 + key_col_w + max_desc_w + 24)
         panel_h = 56 + n * 36 + 40
         px = (w - panel_w) // 2
         py = (h - panel_h) // 2
-        pygame.draw.rect(
-            surface, _BG_PANEL, (px, py, panel_w, panel_h), border_radius=8
-        )
-        pygame.draw.rect(
-            surface, _BORDER, (px, py, panel_w, panel_h), 1, border_radius=8
-        )
+        pygame.draw.rect(surface, _BG_PANEL, (px, py, panel_w, panel_h), border_radius=8)
+        pygame.draw.rect(surface, _BORDER, (px, py, panel_w, panel_h), 1, border_radius=8)
         desc_x = px + 24 + key_col_w
         ky = py + 16
         for key, desc in bindings:
@@ -232,6 +218,4 @@ class PausableGame(Scene):
             surface.blit(desc_surf, (desc_x, ky))
             ky += 36
         hint = self._font_hint.render(self._strings.pause_hint_esc_back, True, _DIM)
-        surface.blit(
-            hint, (px + panel_w // 2 - hint.get_width() // 2, py + panel_h - 28)
-        )
+        surface.blit(hint, (px + panel_w // 2 - hint.get_width() // 2, py + panel_h - 28))

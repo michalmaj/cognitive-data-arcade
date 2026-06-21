@@ -61,20 +61,14 @@ def test_not_paused_initially(tmp_path: Path) -> None:
 
 def test_esc_pauses(tmp_path: Path) -> None:
     pg, _, _ = _make(tmp_path)
-    pg.handle_event(
-        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode="")
-    )
+    pg.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode=""))
     assert pg._paused
 
 
 def test_esc_paused_resumes(tmp_path: Path) -> None:
     pg, _, _ = _make(tmp_path)
-    pg.handle_event(
-        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode="")
-    )
-    pg.handle_event(
-        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode="")
-    )
+    pg.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode=""))
+    pg.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode=""))
     assert not pg._paused
     assert not pg.is_done()
 
@@ -82,9 +76,7 @@ def test_esc_paused_resumes(tmp_path: Path) -> None:
 def test_up_clamps_at_zero(tmp_path: Path) -> None:
     pg, _, _ = _make(tmp_path)
     pg._paused = True
-    pg.handle_event(
-        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_UP, mod=0, unicode="")
-    )
+    pg.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_UP, mod=0, unicode=""))
     assert pg._selected == 0
 
 
@@ -92,9 +84,7 @@ def test_down_navigates_and_clamps(tmp_path: Path) -> None:
     pg, _, _ = _make(tmp_path)
     pg._paused = True
     for _ in range(10):
-        pg.handle_event(
-            pygame.event.Event(pygame.KEYDOWN, key=pygame.K_DOWN, mod=0, unicode="")
-        )
+        pg.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_DOWN, mod=0, unicode=""))
     assert pg._selected == 4  # clamped at max index (_MENU_ITEMS - 1)
 
 
@@ -102,9 +92,7 @@ def test_restart_creates_new_scene(tmp_path: Path) -> None:
     pg, _, _ = _make(tmp_path)
     pg._paused = True
     pg._selected = 0
-    pg.handle_event(
-        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode="\r")
-    )
+    pg.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode="\r"))
     assert pg.is_done()
     assert pg.next_scene() is not None
 
@@ -115,9 +103,7 @@ def test_how_to_play_opens_sub_scene(tmp_path: Path) -> None:
     pg, _, _ = _make(tmp_path)
     pg._paused = True
     pg._selected = 1
-    pg.handle_event(
-        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode="\r")
-    )
+    pg.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode="\r"))
     assert not pg.is_done()
     assert isinstance(pg._sub_scene, HowToPlayScene)
 
@@ -126,12 +112,8 @@ def test_how_to_play_sub_scene_closes_on_space(tmp_path: Path) -> None:
     pg, _, _ = _make(tmp_path)
     pg._paused = True
     pg._selected = 1
-    pg.handle_event(
-        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode="\r")
-    )
-    pg.handle_event(
-        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_SPACE, mod=0, unicode=" ")
-    )
+    pg.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode="\r"))
+    pg.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_SPACE, mod=0, unicode=" "))
     assert pg._sub_scene is None
     assert pg._paused  # returns to pause menu, not unpaused
 
@@ -140,9 +122,7 @@ def test_keyref_opens(tmp_path: Path) -> None:
     pg, _, _ = _make(tmp_path)
     pg._paused = True
     pg._selected = 2
-    pg.handle_event(
-        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode="\r")
-    )
+    pg.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode="\r"))
     assert pg._show_keyref
 
 
@@ -150,9 +130,7 @@ def test_keyref_esc_closes(tmp_path: Path) -> None:
     pg, _, _ = _make(tmp_path)
     pg._paused = True
     pg._show_keyref = True
-    pg.handle_event(
-        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode="")
-    )
+    pg.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode=""))
     assert not pg._show_keyref
     assert pg._paused  # still paused, just closed keyref
 
@@ -163,9 +141,7 @@ def test_quit_returns_lesson_menu(tmp_path: Path) -> None:
     pg, _, _ = _make(tmp_path)
     pg._paused = True
     pg._selected = 4
-    pg.handle_event(
-        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode="\r")
-    )
+    pg.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode="\r"))
     assert pg.is_done()
     assert isinstance(pg.next_scene(), LessonMenuScene)
 

@@ -66,8 +66,7 @@ class EventLogDetectiveGame(Scene):
         self._option_idx = 0
         self._choices: list[int | None] = [None] * len(scenario.decisions)
         self._shuffled_options: list[tuple[Option, ...]] = [
-            tuple(random.sample(dec.options, len(dec.options)))
-            for dec in scenario.decisions
+            tuple(random.sample(dec.options, len(dec.options))) for dec in scenario.decisions
         ]
         self._popup_visible = False
         self._hint_visible = False
@@ -160,8 +159,8 @@ class EventLogDetectiveGame(Scene):
                 self._option_idx = prev if prev is not None else 0
                 self._hint_visible = False
                 self._state = _State.DECISION
+
     def _handle_decision(self, event: pygame.event.Event) -> None:
-        dec = self._scenario.decisions[self._node_idx]
         opts = self._shuffled_options[self._node_idx]
         n_opts = len(opts)
 
@@ -267,6 +266,7 @@ class EventLogDetectiveGame(Scene):
 
     def _go_level_scene(self) -> None:
         from cognitive_data_arcade.ui.event_log_level_scene import EventLogLevelScene
+
         self._next = EventLogLevelScene(self._pm, self._strings)
         self._done = True
 
@@ -425,12 +425,8 @@ class EventLogDetectiveGame(Scene):
 
         # Medium hint toggle
         if self._difficulty == "medium":
-            hint_key_surf = self._font_hint.render(
-                self._strings.eld_hint_key, True, _DIM
-            )
-            surface.blit(
-                hint_key_surf, (w // 2 - hint_key_surf.get_width() // 2, h - 80)
-            )
+            hint_key_surf = self._font_hint.render(self._strings.eld_hint_key, True, _DIM)
+            surface.blit(hint_key_surf, (w // 2 - hint_key_surf.get_width() // 2, h - 80))
 
             if self._hint_visible:
                 hint_text = dec.hint_medium_pl if lang == "pl" else dec.hint_medium_en
@@ -502,9 +498,7 @@ class EventLogDetectiveGame(Scene):
         lang = self._strings.language
         sc = self._scenario
 
-        title_surf = self._font_title.render(
-            self._strings.eld_report_title, True, _ACCENT
-        )
+        title_surf = self._font_title.render(self._strings.eld_report_title, True, _ACCENT)
         surface.blit(title_surf, (w // 2 - title_surf.get_width() // 2, 20))
 
         correct, total, pts = self._score()

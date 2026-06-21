@@ -8,24 +8,24 @@ from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.misinformation.networks import ROUNDS
 
 _W, _H = 1024, 720
-_BG    = (12, 12, 20)
+_BG = (12, 12, 20)
 _PANEL = (18, 18, 32)
 _WHITE = (240, 240, 240)
-_DIM   = (140, 140, 160)
-_GOLD  = (243, 156, 18)
-_GREY  = (60, 60, 80)
-_RED   = (231, 76, 60)
+_DIM = (140, 140, 160)
+_GOLD = (243, 156, 18)
+_GREY = (60, 60, 80)
+_RED = (231, 76, 60)
 _GREEN = (39, 174, 96)
-_BLUE  = (52, 152, 219)
+_BLUE = (52, 152, 219)
 
 _BTN_REPLAY = pygame.Rect(_W // 2 - 210, _H - 76, 190, 44)
-_BTN_MENU   = pygame.Rect(_W // 2 + 20,  _H - 76, 190, 44)
+_BTN_MENU = pygame.Rect(_W // 2 + 20, _H - 76, 190, 44)
 
-_AHA_LOW  = (
+_AHA_LOW = (
     "Siec bezskalowa z super-hubem jest prawie nie do obronienia. "
     "Hub zarazil wszystkich zanim zdazyles zareagowac."
 )
-_AHA_MID  = (
+_AHA_MID = (
     "Widzisz rosnaca asymetrie? W rundzie 3 spreader mial przewage "
     "-- hub jako patient-zero to przewaga nie do nadrobienia."
 )
@@ -56,8 +56,8 @@ class PhaseResultScene(Scene):
     def __init__(self, scores: list[int]) -> None:
         # scores: [r1_spread, r1_fact, r2_spread, r2_fact, r3_spread, r3_fact]
         self._scores = list(scores)
-        self._total  = sum(scores)
-        self._stars  = 3 if self._total >= 480 else (2 if self._total >= 300 else 1)
+        self._total = sum(scores)
+        self._stars = 3 if self._total >= 480 else (2 if self._total >= 300 else 1)
 
         fact3 = scores[5] if len(scores) >= 6 else 0
         if fact3 < 40:
@@ -74,6 +74,7 @@ class PhaseResultScene(Scene):
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             if _BTN_REPLAY.collidepoint(event.pos):
                 from cognitive_data_arcade.games.misinformation.game import MisinformationScene
+
                 self._next = MisinformationScene()
                 self._done = True
             elif _BTN_MENU.collidepoint(event.pos):
@@ -114,9 +115,9 @@ class PhaseResultScene(Scene):
 
         # Per-round rows
         for i, cfg in enumerate(ROUNDS):
-            r_spread = self._scores[i * 2]     if len(self._scores) > i * 2     else 0
-            r_fact   = self._scores[i * 2 + 1] if len(self._scores) > i * 2 + 1 else 0
-            diff     = r_spread - r_fact
+            r_spread = self._scores[i * 2] if len(self._scores) > i * 2 else 0
+            r_fact = self._scores[i * 2 + 1] if len(self._scores) > i * 2 + 1 else 0
+            diff = r_spread - r_fact
             diff_color = _RED if diff > 20 else _GREEN
 
             row = [
@@ -136,7 +137,7 @@ class PhaseResultScene(Scene):
         aha_y = y + 14
         box_h = 70
         pygame.draw.rect(surface, (10, 28, 10), (50, aha_y, _W - 100, box_h), border_radius=6)
-        pygame.draw.rect(surface, _GREEN,        (50, aha_y, _W - 100, box_h), 1, border_radius=6)
+        pygame.draw.rect(surface, _GREEN, (50, aha_y, _W - 100, box_h), 1, border_radius=6)
         lbl = get_font(11).render("SPOSTRZEZENIE", True, _GREEN)
         surface.blit(lbl, (64, aha_y + 6))
         aha_font = get_font(12)
@@ -147,20 +148,26 @@ class PhaseResultScene(Scene):
 
         # Replay / Menu buttons
         pygame.draw.rect(surface, _PANEL, _BTN_REPLAY, border_radius=6)
-        pygame.draw.rect(surface, _GREY,  _BTN_REPLAY, 1, border_radius=6)
+        pygame.draw.rect(surface, _GREY, _BTN_REPLAY, 1, border_radius=6)
         r_lbl = get_font(16).render("Zagraj ponownie", True, (180, 180, 200))
-        surface.blit(r_lbl, (
-            _BTN_REPLAY.x + (_BTN_REPLAY.w - r_lbl.get_width()) // 2,
-            _BTN_REPLAY.y + (_BTN_REPLAY.h - r_lbl.get_height()) // 2,
-        ))
+        surface.blit(
+            r_lbl,
+            (
+                _BTN_REPLAY.x + (_BTN_REPLAY.w - r_lbl.get_width()) // 2,
+                _BTN_REPLAY.y + (_BTN_REPLAY.h - r_lbl.get_height()) // 2,
+            ),
+        )
 
         pygame.draw.rect(surface, _PANEL, _BTN_MENU, border_radius=6)
-        pygame.draw.rect(surface, _BLUE,  _BTN_MENU, 1, border_radius=6)
+        pygame.draw.rect(surface, _BLUE, _BTN_MENU, 1, border_radius=6)
         m_lbl = get_font(16).render("Menu", True, _BLUE)
-        surface.blit(m_lbl, (
-            _BTN_MENU.x + (_BTN_MENU.w - m_lbl.get_width()) // 2,
-            _BTN_MENU.y + (_BTN_MENU.h - m_lbl.get_height()) // 2,
-        ))
+        surface.blit(
+            m_lbl,
+            (
+                _BTN_MENU.x + (_BTN_MENU.w - m_lbl.get_width()) // 2,
+                _BTN_MENU.y + (_BTN_MENU.h - m_lbl.get_height()) // 2,
+            ),
+        )
 
     def is_done(self) -> bool:
         return self._done

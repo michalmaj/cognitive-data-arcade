@@ -1,4 +1,5 @@
 """Lesson 01 — Big Data in Cognitive Science (BigDataMap)."""
+
 from __future__ import annotations
 
 CONTENT: dict[str, dict[str, list[str]]] = {

@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pygame
@@ -11,15 +12,15 @@ from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 
 _W, _H = 1024, 720
-_BG    = (15, 15, 35)
+_BG = (15, 15, 35)
 _PANEL = (18, 18, 42)
 _WHITE = (240, 240, 240)
-_DIM   = (120, 120, 160)
-_BLUE  = (52, 152, 219)
+_DIM = (120, 120, 160)
+_BLUE = (52, 152, 219)
 _GREEN = (46, 204, 113)
-_RED   = (231, 76, 60)
+_RED = (231, 76, 60)
 _AMBER = (243, 156, 18)
-_GOLD  = (255, 215, 0)
+_GOLD = (255, 215, 0)
 
 _CHART_W, _CHART_H = 560, 300
 _CHART_X = (_W - _CHART_W) // 2
@@ -76,6 +77,7 @@ class PhaseSessionResultScene(Scene):
 
     def _replay(self) -> None:
         from cognitive_data_arcade.games.anomaly_alert.phase_intro import PhaseIntroScene
+
         self._next = PhaseIntroScene()
         self._done = True
 
@@ -106,10 +108,13 @@ class PhaseSessionResultScene(Scene):
         pygame.draw.rect(surface, _PANEL, _REPLAY_RECT, border_radius=8)
         pygame.draw.rect(surface, _BLUE, _REPLAY_RECT, 2, border_radius=8)
         btn_lbl = get_font(18).render("Zagraj ponownie", True, _BLUE)
-        surface.blit(btn_lbl, (
-            _REPLAY_RECT.centerx - btn_lbl.get_width() // 2,
-            _REPLAY_RECT.centery - btn_lbl.get_height() // 2,
-        ))
+        surface.blit(
+            btn_lbl,
+            (
+                _REPLAY_RECT.centerx - btn_lbl.get_width() // 2,
+                _REPLAY_RECT.centery - btn_lbl.get_height() // 2,
+            ),
+        )
 
     def _draw_table(self, surface: pygame.Surface) -> None:
         headers = ["Runda", "Typ", "Trafione", "Alarmy", "Bonus", "Pkt"]
@@ -124,16 +129,19 @@ class PhaseSessionResultScene(Scene):
         ty += 6
 
         _GREEN = (46, 204, 113)
-        _RED   = (231, 76, 60)
+        _RED = (231, 76, 60)
         _AMBER = (243, 156, 18)
-        _DIM   = (120, 120, 160)
+        _DIM = (120, 120, 160)
 
         for r in self._results:
             score_col = _GREEN if r["score"] >= 40 else (_AMBER if r["score"] >= 20 else _RED)
             cells = [
-                (f"R{r['round_idx']+1}", _DIM),
+                (f"R{r['round_idx'] + 1}", _DIM),
                 (r["chart_type"], _DIM),
-                (f"{r['found']}/{r['total_anomalies']}", _GREEN if r["found"] == r["total_anomalies"] else _AMBER),
+                (
+                    f"{r['found']}/{r['total_anomalies']}",
+                    _GREEN if r["found"] == r["total_anomalies"] else _AMBER,
+                ),
                 (str(r["false_alarms"]), _RED if r["false_alarms"] > 0 else _GREEN),
                 (f"+{r['time_bonus']}", _AMBER if r["time_bonus"] else _DIM),
                 (str(r["score"]), score_col),

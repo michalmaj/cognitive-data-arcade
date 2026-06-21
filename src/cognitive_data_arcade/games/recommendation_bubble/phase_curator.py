@@ -3,24 +3,28 @@ import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.recommendation_bubble.game_state import (
-    GameState, CATEGORIES, CAT_COLORS, diversity,
-    curated_profile, generate_slots,
+    GameState,
+    CATEGORIES,
+    CAT_COLORS,
+    diversity,
+    curated_profile,
+    generate_slots,
 )
 
 _W, _H = 1024, 720
-_BG        = (10, 10, 20)
-_PANEL     = (20, 14, 30)
-_WHITE     = (240, 240, 240)
-_DIM       = (140, 140, 160)
+_BG = (10, 10, 20)
+_PANEL = (20, 14, 30)
+_WHITE = (240, 240, 240)
+_DIM = (140, 140, 160)
 _C_CURATOR = (39, 174, 96)
-_C_SEL     = (243, 156, 18)
+_C_SEL = (243, 156, 18)
 
-_ACT_SECS  = 45.0
+_ACT_SECS = 45.0
 _MAX_SWAPS = 5
 _SLOT_W, _SLOT_H = 290, 80
 _SLOT_COLS = 2
-_GRID_X    = (_W - _SLOT_COLS * _SLOT_W - 20) // 2
-_GRID_Y    = 160
+_GRID_X = (_W - _SLOT_COLS * _SLOT_W - 20) // 2
+_GRID_Y = 160
 
 
 def _slot_rect(idx: int) -> pygame.Rect:
@@ -29,7 +33,8 @@ def _slot_rect(idx: int) -> pygame.Rect:
     return pygame.Rect(
         _GRID_X + col * (_SLOT_W + 20),
         _GRID_Y + row * (_SLOT_H + 14),
-        _SLOT_W, _SLOT_H,
+        _SLOT_W,
+        _SLOT_H,
     )
 
 
@@ -85,7 +90,10 @@ class PhaseCuratorScene(Scene):
         self._state.diversity_act2 = d2
         self._state.score_curator = int(d2 * 100)
         self._state.curator_slots = list(self._slots)
-        from cognitive_data_arcade.games.recommendation_bubble.phase_interlude import PhaseInterludeScene
+        from cognitive_data_arcade.games.recommendation_bubble.phase_interlude import (
+            PhaseInterludeScene,
+        )
+
         self._next = PhaseInterludeScene(self._state, next_act="algo")
         self._done = True
 
@@ -126,7 +134,7 @@ class PhaseCuratorScene(Scene):
         d = diversity(curated_profile(self._slots))
         d_color = (231, 76, 60) if d < 0.35 else ((243, 156, 18) if d < 0.65 else (46, 204, 113))
         surface.blit(
-            get_font(14).render(f"ROZNORODNOSC: {int(d*100)}%", True, d_color),
+            get_font(14).render(f"ROZNORODNOSC: {int(d * 100)}%", True, d_color),
             (_W // 2 - 80, _H - 60),
         )
 

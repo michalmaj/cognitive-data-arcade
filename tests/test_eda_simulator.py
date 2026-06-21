@@ -2,9 +2,8 @@
 from __future__ import annotations
 
 import numpy as np
-import pytest
 
-from cognitive_data_arcade.games.eda.simulator import SimResult, simulate
+from cognitive_data_arcade.games.eda.simulator import simulate
 
 
 def _run(**kw):

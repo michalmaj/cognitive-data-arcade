@@ -44,13 +44,9 @@ class _Node:
 _L1_NODES: list[_Node] = [
     _Node("fMRI\nEEG", "Neuroobrazowanie i sygnały elektryczne mózgu.", (39, 174, 96)),
     _Node("Czasy\nreakcji", "Pomiar prędkości procesów poznawczych.", (155, 89, 182)),
-    _Node(
-        "Eye\ntracking", "Śledzenie ruchu oczu ujawnia procesy uwagi.", (231, 76, 60)
-    ),
+    _Node("Eye\ntracking", "Śledzenie ruchu oczu ujawnia procesy uwagi.", (231, 76, 60)),
     _Node("Mowa\nNLP", "Języki naturalne jako dane kognitywistyczne.", (26, 188, 156)),
-    _Node(
-        "Big Data\nkliniczna", "Medyczne zbiory danych na dużą skalę.", (230, 126, 34)
-    ),
+    _Node("Big Data\nkliniczna", "Medyczne zbiory danych na dużą skalę.", (230, 126, 34)),
     _Node(
         "Digital\nphenotyp.",
         "Smartfon jako czujnik stanu psychicznego.",
@@ -235,6 +231,7 @@ class BigDataMapGame(Scene):
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.MOUSEMOTION:
             from cognitive_data_arcade.engine.mouse import hit
+
             for i, rect in enumerate(self._node_rects):
                 if hit(rect, event.pos):
                     if self._in_l2:
@@ -245,6 +242,7 @@ class BigDataMapGame(Scene):
             return
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             from cognitive_data_arcade.engine.mouse import hit
+
             for i, rect in enumerate(self._node_rects):
                 if hit(rect, event.pos):
                     if self._in_l2:
@@ -299,8 +297,7 @@ class BigDataMapGame(Scene):
     def _draw_l1_network(self, surface: pygame.Surface) -> None:
         positions = _node_positions(len(_L1_NODES), _R_L1)
         self._node_rects = [
-            pygame.Rect(x - _L1_R, y - _L1_R, _L1_R * 2, _L1_R * 2)
-            for x, y in positions
+            pygame.Rect(x - _L1_R, y - _L1_R, _L1_R * 2, _L1_R * 2) for x, y in positions
         ]
         for pos in positions:
             pygame.draw.line(surface, _LINE_COLOR, (_CX, _CY), pos, 2)
@@ -329,8 +326,7 @@ class BigDataMapGame(Scene):
         l2_nodes = _L2_NODES[l1_node.label]
         positions = _node_positions(len(l2_nodes), _R_L2)
         self._node_rects = [
-            pygame.Rect(x - _L2_R, y - _L2_R, _L2_R * 2, _L2_R * 2)
-            for x, y in positions
+            pygame.Rect(x - _L2_R, y - _L2_R, _L2_R * 2, _L2_R * 2) for x, y in positions
         ]
         for pos in positions:
             pygame.draw.line(surface, _LINE_COLOR, (_CX, _CY), pos, 2)

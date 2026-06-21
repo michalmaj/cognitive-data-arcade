@@ -23,9 +23,7 @@ def load_session(csv_path: Path) -> pd.DataFrame:
     """Load and normalise a Go/No-Go CSV."""
     df = pd.read_csv(csv_path)
     df["correct"] = df["correct"].astype(str).str.lower().isin(["true", "1"])
-    df["reaction_time_ms"] = pd.to_numeric(
-        df["reaction_time_ms"], errors="coerce"
-    ).fillna(0.0)
+    df["reaction_time_ms"] = pd.to_numeric(df["reaction_time_ms"], errors="coerce").fillna(0.0)
     return df
 
 
@@ -69,9 +67,7 @@ def session_stats(df: pd.DataFrame) -> dict[str, float]:
     }
 
 
-def build_stats_chart(
-    df: pd.DataFrame, figsize: tuple[float, float] = (7.0, 4.5)
-) -> Figure:
+def build_stats_chart(df: pd.DataFrame, figsize: tuple[float, float] = (7.0, 4.5)) -> Figure:
     """Four-bar chart: Hit / Miss / False Alarm / Correct Rejection counts."""
     labels = ["Hit", "Miss", "False Alarm", "Correct Rejection"]
     counts = [

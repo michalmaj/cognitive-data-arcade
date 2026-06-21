@@ -9,11 +9,11 @@ import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 
-_BG    = (15, 15, 35)
+_BG = (15, 15, 35)
 _PANEL = (18, 18, 42)
 _WHITE = (240, 240, 240)
-_DIM   = (120, 120, 160)
-_BLUE  = (52, 152, 219)
+_DIM = (120, 120, 160)
+_BLUE = (52, 152, 219)
 _W, _H = 1024, 720
 
 _LINES = [
@@ -30,9 +30,7 @@ _LINES = [
 
 class PhaseIntroScene(Scene):
     def __init__(self, session_seed: int | None = None) -> None:
-        self._session_seed = (
-            session_seed if session_seed is not None else random.randint(0, 10 ** 6)
-        )
+        self._session_seed = session_seed if session_seed is not None else random.randint(0, 10**6)
         rng = np.random.default_rng(self._session_seed)
         self._scenario_order: list[int] = rng.permutation(5).tolist()
         self._done = False
@@ -45,6 +43,7 @@ class PhaseIntroScene(Scene):
     def _advance(self) -> None:
         from cognitive_data_arcade.games.overfitting_monster.phase_draw import PhaseDrawScene
         from cognitive_data_arcade.games.overfitting_monster.scenarios import SCENARIOS
+
         self._next = PhaseDrawScene(
             scenario=SCENARIOS[self._scenario_order[0]],
             round_idx=0,

@@ -1,4 +1,5 @@
 """Lesson 18 — Classifier Battle (decision boundaries and classifier intuition)."""
+
 from __future__ import annotations
 
 CONTENT: dict[str, dict[str, list[str]]] = {

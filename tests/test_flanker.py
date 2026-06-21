@@ -84,9 +84,7 @@ def test_correct_left_response_recorded(tmp_path: Path) -> None:
     game._trials = [{"condition": "congruent", "target_direction": "left"}] * 4
     game._phase = gmod._Phase.STIMULUS
     game._rt_start = pygame.time.get_ticks()
-    game.handle_event(
-        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_LEFT, mod=0, unicode="")
-    )
+    game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_LEFT, mod=0, unicode=""))
     assert game._records[0].correct is True
     assert game._records[0].condition == "congruent"
 
@@ -98,9 +96,7 @@ def test_incorrect_response_recorded(tmp_path: Path) -> None:
     game._trials = [{"condition": "incongruent", "target_direction": "left"}] * 4
     game._phase = gmod._Phase.STIMULUS
     game._rt_start = pygame.time.get_ticks()
-    game.handle_event(
-        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RIGHT, mod=0, unicode="")
-    )
+    game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RIGHT, mod=0, unicode=""))
     assert game._records[0].correct is False
 
 
@@ -112,9 +108,7 @@ def test_next_scene_is_session_summary(tmp_path: Path) -> None:
     for _ in range(4):
         game._phase = gmod._Phase.STIMULUS
         game._rt_start = pygame.time.get_ticks()
-        game.handle_event(
-            pygame.event.Event(pygame.KEYDOWN, key=pygame.K_LEFT, mod=0, unicode="")
-        )
+        game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_LEFT, mod=0, unicode=""))
         game._phase_timer = game._config.feedback_duration_ms + 1
         game.update(0)
     assert game.is_done()

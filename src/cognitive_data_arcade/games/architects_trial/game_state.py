@@ -9,7 +9,7 @@ class DecisionCard:
     label: str
     description: str
     note: str
-    note_color: str          # "green" | "orange" | "red"
+    note_color: str  # "green" | "orange" | "red"
     fairness_delta: int
     compliance_delta: int
     effectiveness_delta: int

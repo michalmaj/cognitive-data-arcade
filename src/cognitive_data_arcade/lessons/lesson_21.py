@@ -1,5 +1,6 @@
 # src/cognitive_data_arcade/lessons/lesson_21.py
 """Lesson 21 - Text Tokenizer Lab (text preprocessing and tokenization)."""
+
 from __future__ import annotations
 
 CONTENT: dict[str, dict[str, list[str]]] = {

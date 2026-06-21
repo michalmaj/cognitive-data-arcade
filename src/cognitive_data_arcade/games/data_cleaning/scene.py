@@ -10,14 +10,21 @@ from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.data_cleaning.difficulty import (
-    ALL_DIFFICULTIES, EASY, DifficultyConfig,
+    ALL_DIFFICULTIES,
+    EASY,
+    DifficultyConfig,
 )
 from cognitive_data_arcade.games.data_cleaning.generator import (
-    FALSE_FLAG_HINT_EN, FALSE_FLAG_HINT_PL,
-    GENERIC_HINT_EN, GENERIC_HINT_PL,
-    IDENTIFY_HINTS_EN, IDENTIFY_HINTS_PL,
-    CleaningSession, apply_fixes, compute_score, compute_stats,
-    generate_dataset, get_fix_feedback, get_fix_feedback_text,
+    FALSE_FLAG_HINT_EN,
+    FALSE_FLAG_HINT_PL,
+    GENERIC_HINT_EN,
+    GENERIC_HINT_PL,
+    IDENTIFY_HINTS_EN,
+    IDENTIFY_HINTS_PL,
+    CleaningSession,
+    generate_dataset,
+    get_fix_feedback,
+    get_fix_feedback_text,
 )
 from cognitive_data_arcade.games.data_cleaning.ui_legend import draw_legend_overlay
 from cognitive_data_arcade.games.data_cleaning.ui_popup import DecisionPopup
@@ -120,7 +127,7 @@ class DataCleaningScene(Scene):
                 self._handle_identify_click(event.pos)
         elif event.type == pygame.MOUSEWHEEL:
             if self._phase == Phase.IDENTIFY:
-                self._table.handle_wheel(-event.y)   # event.y: positive = up in pygame
+                self._table.handle_wheel(-event.y)  # event.y: positive = up in pygame
         elif event.type == pygame.MOUSEMOTION:
             if self._phase == Phase.IDENTIFY:
                 self._table.handle_mousemotion(event.pos, event.buttons)
@@ -314,9 +321,7 @@ class DataCleaningScene(Scene):
         w, h = surface.get_size()
         lang = self._strings.language
 
-        title_surf = self._font_title.render(
-            self._strings.data_cleaning_title, True, _ORANGE
-        )
+        title_surf = self._font_title.render(self._strings.data_cleaning_title, True, _ORANGE)
         surface.blit(title_surf, (w // 2 - title_surf.get_width() // 2, 60))
 
         intro_lines = self._wrap(self._strings.data_cleaning_intro, self._font_body, w - 120)
@@ -347,7 +352,7 @@ class DataCleaningScene(Scene):
         for i, (label, desc, color) in enumerate(zip(diff_labels, diff_descs, _DIFF_COLORS)):
             is_active = i == self._diff_idx
             btn_color = color if is_active else _DIM
-            btn_surf = self._font_body.render(f"[{i+1}] {label}", True, btn_color)
+            btn_surf = self._font_body.render(f"[{i + 1}] {label}", True, btn_color)
             surface.blit(btn_surf, (btn_x, y))
             desc_surf = self._font_hint.render(desc, True, btn_color)
             surface.blit(desc_surf, (btn_x + btn_surf.get_width() + 16, y + 4))
@@ -364,9 +369,7 @@ class DataCleaningScene(Scene):
 
     def _draw_identify(self, surface: pygame.Surface) -> None:
         w, h = surface.get_size()
-        title_surf = self._font_title.render(
-            self._strings.data_cleaning_title, True, _ORANGE
-        )
+        title_surf = self._font_title.render(self._strings.data_cleaning_title, True, _ORANGE)
         surface.blit(title_surf, (40, 12))
         self._table.draw(surface, x0=40, y0=_TABLE_Y0, hints_visible=self._hints_visible)
         if (self._hint_timer > 0 or self._h_hint_active) and self._hint_text:
@@ -388,13 +391,12 @@ class DataCleaningScene(Scene):
         surface.blit(ps, (w - ps.get_width() - 40, 20))
         self._popup.draw(surface)
         if self._fix_hint_timer > 0 and self._fix_hint_text:
-            hs = self._font_hint.render(
-                self._fix_hint_text, True, self._fix_hint_color
-            )
+            hs = self._font_hint.render(self._fix_hint_text, True, self._fix_hint_color)
             surface.blit(hs, (40, h - 48))
 
     def _draw_report(self, surface: pygame.Surface) -> None:
         from cognitive_data_arcade.games.data_cleaning.ui_report import draw_report
+
         draw_report(
             surface,
             self._session,

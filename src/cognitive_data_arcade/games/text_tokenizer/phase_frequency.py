@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
@@ -14,20 +15,20 @@ from cognitive_data_arcade.games.text_tokenizer.engine import TokenizerState
 from cognitive_data_arcade.games.text_tokenizer.stop_words import STOP_WORDS_EN, STOP_WORDS_PL
 from cognitive_data_arcade.games.text_tokenizer.widgets import SharedState
 
-_BG      = (15, 15, 35)
-_FIG_BG  = "#0f0f23"
-_AX_BG   = "#1a1a3e"
-_PANEL   = (18, 18, 42)
-_WHITE   = (240, 240, 240)
-_DIM     = (120, 120, 160)
-_AMBER   = (243, 156, 18)
-_GREEN   = (46, 204, 113)
-_PURPLE  = (155, 89, 182)
-_LEFT_W  = 220
+_BG = (15, 15, 35)
+_FIG_BG = "#0f0f23"
+_AX_BG = "#1a1a3e"
+_PANEL = (18, 18, 42)
+_WHITE = (240, 240, 240)
+_DIM = (120, 120, 160)
+_AMBER = (243, 156, 18)
+_GREEN = (46, 204, 113)
+_PURPLE = (155, 89, 182)
+_LEFT_W = 220
 _PHASE_H = 636
 _CHART_W = 1024 - _LEFT_W - 8
 _CHART_H = _PHASE_H - 60
-_DPI     = 96
+_DPI = 96
 
 
 class PhaseFrequencyScene(Scene):
@@ -42,8 +43,12 @@ class PhaseFrequencyScene(Scene):
         self._checkbox_rect = pygame.Rect(8, 110, 16, 16)
 
     def _chart_key(self, result: TokenizerState) -> tuple:
-        return (tuple(result.freq.items()), self._state.topn,
-                self._state.show_stops_in_chart, self._state.lang)
+        return (
+            tuple(result.freq.items()),
+            self._state.topn,
+            self._state.show_stops_in_chart,
+            self._state.lang,
+        )
 
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
@@ -88,9 +93,12 @@ class PhaseFrequencyScene(Scene):
         ratio = (self._state.topn - 5) / 15.0
         filled_w = int(ratio * self._slider_rect.w)
         if filled_w > 0:
-            pygame.draw.rect(surface, _AMBER,
-                             (self._slider_rect.x, self._slider_rect.y,
-                              filled_w, self._slider_rect.h), border_radius=2)
+            pygame.draw.rect(
+                surface,
+                _AMBER,
+                (self._slider_rect.x, self._slider_rect.y, filled_w, self._slider_rect.h),
+                border_radius=2,
+            )
         thumb_x = self._slider_rect.x + filled_w
         pygame.draw.circle(surface, _AMBER, (thumb_x, self._slider_rect.centery), 7)
 
@@ -98,12 +106,20 @@ class PhaseFrequencyScene(Scene):
         pygame.draw.rect(surface, (30, 30, 55), self._checkbox_rect, border_radius=2)
         pygame.draw.rect(surface, _AMBER, self._checkbox_rect, 1, border_radius=2)
         if self._state.show_stops_in_chart:
-            pygame.draw.line(surface, _AMBER,
-                             (self._checkbox_rect.x + 2, self._checkbox_rect.centery),
-                             (self._checkbox_rect.centerx, self._checkbox_rect.bottom - 2), 2)
-            pygame.draw.line(surface, _AMBER,
-                             (self._checkbox_rect.centerx, self._checkbox_rect.bottom - 2),
-                             (self._checkbox_rect.right - 2, self._checkbox_rect.y + 2), 2)
+            pygame.draw.line(
+                surface,
+                _AMBER,
+                (self._checkbox_rect.x + 2, self._checkbox_rect.centery),
+                (self._checkbox_rect.centerx, self._checkbox_rect.bottom - 2),
+                2,
+            )
+            pygame.draw.line(
+                surface,
+                _AMBER,
+                (self._checkbox_rect.centerx, self._checkbox_rect.bottom - 2),
+                (self._checkbox_rect.right - 2, self._checkbox_rect.y + 2),
+                2,
+            )
         chk_lbl = get_font(11).render("Pokaz stop words", True, _DIM)
         surface.blit(chk_lbl, (self._checkbox_rect.right + 6, self._checkbox_rect.y))
 
@@ -122,8 +138,10 @@ class PhaseFrequencyScene(Scene):
             ]:
                 lbl_s = get_font(11).render(label, True, _DIM)
                 val_s = get_font(11).render(val, True, col)
-                surface.blit(lbl_s, (8, y)); y += 18
-                surface.blit(val_s, (8, y)); y += 22
+                surface.blit(lbl_s, (8, y))
+                y += 18
+                surface.blit(val_s, (8, y))
+                y += 22
         hapax_hint = get_font(10).render("Hapax = token jednorazowy", True, (70, 70, 100))
         surface.blit(hapax_hint, (8, y))
 
@@ -146,10 +164,14 @@ class PhaseFrequencyScene(Scene):
     def _make_insight(self, result: TokenizerState) -> str:
         vals = list(result.freq.values())
         if len(vals) >= 2 and vals[0] >= 2 * vals[1]:
-            return ("Prawo Zipfa: najczestszy token pojawia sie ~2x czesciej "
-                    "niz drugi — nawet w krotkich tekstach.")
-        return ("Prawo Zipfa: czestotliwosc tokenow spada bardzo szybko. "
-                "Kilka tokenow dominuje, reszta to hapax legomena.")
+            return (
+                "Prawo Zipfa: najczestszy token pojawia sie ~2x czesciej "
+                "niz drugi — nawet w krotkich tekstach."
+            )
+        return (
+            "Prawo Zipfa: czestotliwosc tokenow spada bardzo szybko. "
+            "Kilka tokenow dominuje, reszta to hapax legomena."
+        )
 
 
 def _render_chart(result: TokenizerState, state: SharedState) -> pygame.Surface:
@@ -158,7 +180,7 @@ def _render_chart(result: TokenizerState, state: SharedState) -> pygame.Surface:
     items = list(result.freq.items())
     if not state.show_stops_in_chart:
         items = [(t, c) for t, c in items if t.lower() not in stops]
-    items = items[:state.topn]
+    items = items[: state.topn]
 
     if not items:
         items = [("(brak tokenow)", 0)]

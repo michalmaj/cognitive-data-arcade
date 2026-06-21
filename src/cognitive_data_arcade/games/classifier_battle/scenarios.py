@@ -8,10 +8,10 @@ import numpy as np
 @dataclass(frozen=True)
 class Scenario:
     name_pl: str
-    kind: str        # blobs | moons | circles | noisy_blobs | moons_noisy
+    kind: str  # blobs | moons | circles | noisy_blobs | moons_noisy
     n_points: int
     noise: float
-    hint_pl: str     # right-click popup text
+    hint_pl: str  # right-click popup text
     insight_pl: str  # round-result educational blurb
 
 

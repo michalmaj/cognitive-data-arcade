@@ -181,9 +181,7 @@ def test_word_color_semantics_across_conditions(tmp_path: Path) -> None:
             assert record.word_color != record.ink_color, (
                 f"Incongruent trial: word_color '{record.word_color}' should differ from ink_color '{record.ink_color}'"
             )
-            assert record.word_color != "none", (
-                "Incongruent word_color should not be 'none'"
-            )
+            assert record.word_color != "none", "Incongruent word_color should not be 'none'"
 
 
 def test_build_block_uses_only_active_colors(tmp_path: Path) -> None:
@@ -230,7 +228,7 @@ def test_key_to_color_filtered_for_num_colors(tmp_path: Path) -> None:
 
 def test_key_to_color_updates_after_preset_change(tmp_path: Path) -> None:
     """_key_to_color must reflect the confirmed preset, not the initial config."""
-    from cognitive_data_arcade.games.stroop.config import EASY, HARD
+    from cognitive_data_arcade.games.stroop.config import HARD
 
     pm = ProfileManager(tmp_path / "profile.json")
     pm.load()

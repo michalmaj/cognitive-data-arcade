@@ -1,12 +1,13 @@
 """Font loading utility — loads bundled Space Grotesk TTF for crisp, modern text."""
+
 from __future__ import annotations
 
 from pathlib import Path
 
 import pygame
 
-_BUNDLED         = Path("assets") / "fonts" / "SpaceGrotesk-Regular.ttf"
-_BUNDLED_MEDIUM  = Path("assets") / "fonts" / "SpaceGrotesk-Medium.ttf"
+_BUNDLED = Path("assets") / "fonts" / "SpaceGrotesk-Regular.ttf"
+_BUNDLED_MEDIUM = Path("assets") / "fonts" / "SpaceGrotesk-Medium.ttf"
 
 # Space Grotesk renders ~1.87x taller than pygame's bitmap SysFont(None,...) at
 # the same nominal size.  All size constants in the codebase were calibrated for
@@ -24,9 +25,9 @@ _FALLBACK_CANDIDATES = [
     "droidsans",
 ]
 
-_cache:        dict[int, pygame.font.Font] = {}
+_cache: dict[int, pygame.font.Font] = {}
 _cache_medium: dict[int, pygame.font.Font] = {}
-_bundled_ok:   bool | None = None
+_bundled_ok: bool | None = None
 _bundled_med_ok: bool | None = None
 
 

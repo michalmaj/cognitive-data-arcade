@@ -69,7 +69,7 @@ def test_synthetic_button_hidden_when_rt_played(tmp_path) -> None:
 def test_profile_hidden_when_incomplete(tmp_path) -> None:
     r = _make_result()
     s = DashboardSession(rt=r, stroop=r)
-    scene = _make_scene(tmp_path, s)
+    _make_scene(tmp_path, s)
     assert not s.is_complete()
 
 

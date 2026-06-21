@@ -1,5 +1,6 @@
 # src/cognitive_data_arcade/lessons/lesson_31.py
 """Lesson 31 -- You Were the Dataset (behavioural data, observer effect, privacy)."""
+
 from __future__ import annotations
 
 CONTENT: dict[str, dict[str, list[str]]] = {

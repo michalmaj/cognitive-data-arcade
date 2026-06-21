@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pygame
@@ -13,11 +14,11 @@ from cognitive_data_arcade.games.feature_hunter.features import Feature
 from cognitive_data_arcade.games.feature_hunter.simulator import simulate_scatter
 
 _FIG_BG = "#0d1b2a"
-_AX_BG  = "#060f1a"
-_BLUE   = "#3498db"
-_DIM    = (120, 120, 160)
+_AX_BG = "#060f1a"
+_BLUE = "#3498db"
+_DIM = (120, 120, 160)
 _ORANGE = (243, 156, 18)
-_WHITE  = (240, 240, 240)
+_WHITE = (240, 240, 240)
 _CARD_BG = (13, 27, 42)
 
 
@@ -25,8 +26,8 @@ _CARD_BG = (13, 27, 42)
 class FeatureCard:
     feature: Feature
     surface: pygame.Surface
-    home_rect: pygame.Rect       # original grid position (for snap-back)
-    rect: pygame.Rect            # current position (moves during drag)
+    home_rect: pygame.Rect  # original grid position (for snap-back)
+    rect: pygame.Rect  # current position (moves during drag)
     assigned: str | None = None  # None | "useful" | "noise"
     dragging: bool = False
     drag_offset: tuple[int, int] = field(default_factory=lambda: (0, 0))

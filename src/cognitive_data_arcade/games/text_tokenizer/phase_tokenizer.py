@@ -7,10 +7,10 @@ from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.text_tokenizer.engine import TokenizerState
 from cognitive_data_arcade.games.text_tokenizer.widgets import SharedState
 
-_BG    = (15, 15, 35)
+_BG = (15, 15, 35)
 _PANEL = (18, 18, 42)
 _WHITE = (240, 240, 240)
-_DIM   = (120, 120, 160)
+_DIM = (120, 120, 160)
 _AMBER = (243, 156, 18)
 _GREEN = (46, 204, 113)
 _PURPLE = (155, 89, 182)
@@ -35,8 +35,7 @@ class _Toggle:
     def draw(self, surface: pygame.Surface) -> None:
         knob_x = self.x + 36 if self.on else self.x + 2
         track_col = _GREEN if self.on else (60, 60, 80)
-        pygame.draw.rect(surface, track_col,
-                         (self.x, self.y + 12, 32, 14), border_radius=7)
+        pygame.draw.rect(surface, track_col, (self.x, self.y + 12, 32, 14), border_radius=7)
         pygame.draw.circle(surface, _WHITE, (knob_x + 6, self.y + 19), 6)
         font = get_font(12)
         lbl = font.render(self.label, True, _WHITE if self.on else _DIM)
@@ -52,9 +51,9 @@ class PhaseTokenizerScene(Scene):
         self._done = False
 
         self._toggles = [
-            _Toggle("Male litery",       '"CZAS" -> "czas"',        8, 60, default=True),
+            _Toggle("Male litery", '"CZAS" -> "czas"', 8, 60, default=True),
             _Toggle("Usun interpunkcje", '"reakcji," -> "reakcji"', 8, 112, default=True),
-            _Toggle("Usun stop words",   "ze, sie, i, w...",        8, 164, default=False),
+            _Toggle("Usun stop words", "ze, sie, i, w...", 8, 164, default=False),
         ]
         self._chip_rects: list[pygame.Rect] = []
 
@@ -63,8 +62,8 @@ class PhaseTokenizerScene(Scene):
             for tog in self._toggles:
                 if tog.handle_click(event.pos):
                     self._state.lowercase = self._toggles[0].on
-                    self._state.rm_punct  = self._toggles[1].on
-                    self._state.rm_stops  = self._toggles[2].on
+                    self._state.rm_punct = self._toggles[1].on
+                    self._state.rm_stops = self._toggles[2].on
                     self._selected_idx = None
                     return
             for idx, rect in enumerate(self._chip_rects):
@@ -99,7 +98,8 @@ class PhaseTokenizerScene(Scene):
         pygame.draw.line(surface, (40, 40, 70), (8, y), (_LEFT_W - 8, y))
         y += 10
         stats_hdr = get_font(12).render("STATYSTYKI", True, _PURPLE)
-        surface.blit(stats_hdr, (8, y)); y += 22
+        surface.blit(stats_hdr, (8, y))
+        y += 22
         for label, val, col in [
             ("Tokenow (raw):", str(len(result.raw_tokens)), _WHITE),
             ("Tokenow (clean):", str(len(result.tokens)), _GREEN),
@@ -124,18 +124,21 @@ class PhaseTokenizerScene(Scene):
         stops: set[str] = set()
         if not self._state.rm_stops:
             from cognitive_data_arcade.games.text_tokenizer.stop_words import (
-                STOP_WORDS_PL, STOP_WORDS_EN,
+                STOP_WORDS_PL,
+                STOP_WORDS_EN,
             )
+
             stops = STOP_WORDS_PL if self._state.lang == "pl" else STOP_WORDS_EN
 
         chip_rects: list[pygame.Rect] = []
         cx, cy = rx, ry
         for i, tok in enumerate(result.tokens):
             is_stop = tok.lower() in stops
-            is_sel  = i == self._selected_idx
+            is_sel = i == self._selected_idx
             tw = font_chip.size(tok)[0] + 12
             if cx + tw > 1016:
-                cx = rx; cy += 22
+                cx = rx
+                cy += 22
             chip_rect = pygame.Rect(cx, cy, tw, 18)
             chip_rects.append(chip_rect)
 
@@ -174,13 +177,12 @@ class PhaseTokenizerScene(Scene):
     def _make_insight(self, result: TokenizerState, stops: set[str]) -> str:
         if not self._toggles[0].on:
             lowers = [t.lower() for t in result.raw_tokens]
-            has_case_dup = any(
-                t != t.lower() and t.lower() in lowers
-                for t in result.raw_tokens
-            )
+            has_case_dup = any(t != t.lower() and t.lower() in lowers for t in result.raw_tokens)
             if has_case_dup:
-                return ("Bez malych liter te same slowa to rozne tokeny — "
-                        "slownik jest sztucznie wiekszy.")
+                return (
+                    "Bez malych liter te same slowa to rozne tokeny — "
+                    "slownik jest sztucznie wiekszy."
+                )
         if self._toggles[2].on and stops:
             removed = sum(1 for t in result.raw_tokens if t.lower() in stops)
             if removed:

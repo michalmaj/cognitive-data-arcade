@@ -4,7 +4,6 @@ import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.architects_trial.game_state import GameState
-from cognitive_data_arcade.games.architects_trial.domain_data import DOMAIN_DATA
 
 _W, _H = 1024, 720
 _BG = (8, 12, 20)
@@ -16,9 +15,14 @@ _HOVER = (45, 55, 90)
 _CARD_BG = (22, 30, 50)
 
 _DOMAINS = [
-    ("social",  "[S]", "Opieka spoleczna",  "Oceniasz ryzyko dla dzieci na podstawie danych miejskich."),
-    ("hiring",  "[H]", "Rekrutacja AI",     "Selekcjonujesz CV na stanowiska w magistracie."),
-    ("triage",  "[T]", "Triage SOR",        "Priorytyzujesz pacjentow na szpitalnym oddziale ratunkowym."),
+    (
+        "social",
+        "[S]",
+        "Opieka spoleczna",
+        "Oceniasz ryzyko dla dzieci na podstawie danych miejskich.",
+    ),
+    ("hiring", "[H]", "Rekrutacja AI", "Selekcjonujesz CV na stanowiska w magistracie."),
+    ("triage", "[T]", "Triage SOR", "Priorytyzujesz pacjentow na szpitalnym oddziale ratunkowym."),
 ]
 
 _CARD_W, _CARD_H = 270, 220
@@ -29,7 +33,10 @@ _GAP = 30
 def _card_rects() -> list[pygame.Rect]:
     total = len(_DOMAINS) * _CARD_W + (len(_DOMAINS) - 1) * _GAP
     x0 = (_W - total) // 2
-    return [pygame.Rect(x0 + i * (_CARD_W + _GAP), _CARD_Y, _CARD_W, _CARD_H) for i in range(len(_DOMAINS))]
+    return [
+        pygame.Rect(x0 + i * (_CARD_W + _GAP), _CARD_Y, _CARD_W, _CARD_H)
+        for i in range(len(_DOMAINS))
+    ]
 
 
 class PhaseDomainPickerScene(Scene):
@@ -62,6 +69,7 @@ class PhaseDomainPickerScene(Scene):
         domain_key = _DOMAINS[idx][0]
         self._state.domain = domain_key
         from cognitive_data_arcade.games.architects_trial.phase_act import PhaseActScene
+
         self._next = PhaseActScene(self._state, act_num=1)
         self._done = True
 
@@ -76,7 +84,7 @@ class PhaseDomainPickerScene(Scene):
 
         for i, (rect, (_, badge, name, desc)) in enumerate(zip(self._rects, _DOMAINS)):
             hovered = rect.collidepoint(self._mouse_pos)
-            is_sel = (i == self._selected)
+            is_sel = i == self._selected
             bg = _HOVER if (hovered or is_sel) else _CARD_BG
             border = _PURPLE if (hovered or is_sel) else (50, 60, 90)
             pygame.draw.rect(surface, bg, rect, border_radius=10)
@@ -104,7 +112,9 @@ class PhaseDomainPickerScene(Scene):
                 ls = f12.render(line, True, _DIM)
                 surface.blit(ls, (rect.x + 8, y))
 
-        hint = get_font(13).render("Replay: sprobuj innych domen po zakonczeniu", True, (70, 80, 110))
+        hint = get_font(13).render(
+            "Replay: sprobuj innych domen po zakonczeniu", True, (70, 80, 110)
+        )
         surface.blit(hint, (_W // 2 - hint.get_width() // 2, _H - 40))
 
         nav = get_font(13).render("Kliknij lub strzalki + ENTER", True, _DIM)

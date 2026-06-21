@@ -7,8 +7,8 @@ from cognitive_data_arcade.games.topic_detective.topic_data import DOCUMENTS, IN
 
 @dataclass
 class Mission:
-    type: str       # "name_topic" | "assign_doc" | "intruder"
-    answer: str     # correct topic key (name_topic/assign_doc) or intruder word (intruder)
+    type: str  # "name_topic" | "assign_doc" | "intruder"
+    answer: str  # correct topic key (name_topic/assign_doc) or intruder word (intruder)
     payload: dict[str, object]
     hint_pl: str
     hint_en: str

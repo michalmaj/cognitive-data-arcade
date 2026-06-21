@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pygame
@@ -10,16 +11,16 @@ from cognitive_data_arcade.engine.chart import figure_to_surface
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 
-_BG     = (15, 15, 35)
-_PANEL  = (18, 18, 42)
-_WHITE  = (240, 240, 240)
-_DIM    = (120, 120, 160)
-_GREEN  = (39, 174, 96)
+_BG = (15, 15, 35)
+_PANEL = (18, 18, 42)
+_WHITE = (240, 240, 240)
+_DIM = (120, 120, 160)
+_GREEN = (39, 174, 96)
 _ORANGE = (243, 156, 18)
-_RED    = (231, 76, 60)
-_BLUE   = (52, 152, 219)
+_RED = (231, 76, 60)
+_BLUE = (52, 152, 219)
 _FIG_BG = "#0f0f23"
-_AX_BG  = "#1a1a3e"
+_AX_BG = "#1a1a3e"
 
 _W, _H = 1024, 720
 
@@ -53,9 +54,15 @@ class PhaseSessionResultScene(Scene):
         for bar, r in zip(bars, self._round_results):
             # matplotlib renders Unicode stars fine (its own font system)
             star_str = "★" * r["stars"] + "☆" * (3 - r["stars"])
-            ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 1,
-                    star_str, ha="center", va="bottom", fontsize=7,
-                    color=_STAR_COLORS[r["stars"]])
+            ax.text(
+                bar.get_x() + bar.get_width() / 2,
+                bar.get_height() + 1,
+                star_str,
+                ha="center",
+                va="bottom",
+                fontsize=7,
+                color=_STAR_COLORS[r["stars"]],
+            )
         for spine in ax.spines.values():
             spine.set_edgecolor("#2a2a50")
         return figure_to_surface(fig, (672, 240))
@@ -67,6 +74,7 @@ class PhaseSessionResultScene(Scene):
                 from cognitive_data_arcade.games.overfitting_monster.phase_intro import (
                     PhaseIntroScene,
                 )
+
                 self._next = PhaseIntroScene()
                 self._done = True
 
@@ -81,8 +89,13 @@ class PhaseSessionResultScene(Scene):
         surface.blit(title, (_W // 2 - title.get_width() // 2, 14))
 
         # Total score
-        score_col = (_GREEN if self._session_score >= 450
-                     else _ORANGE if self._session_score >= 300 else _RED)
+        score_col = (
+            _GREEN
+            if self._session_score >= 450
+            else _ORANGE
+            if self._session_score >= 300
+            else _RED
+        )
         score_surf = get_font(36).render(str(self._session_score), True, score_col)
         surface.blit(score_surf, (_W // 2 - score_surf.get_width() // 2, 68))
         pts = get_font(14).render("punktow", True, _DIM)
@@ -96,7 +109,8 @@ class PhaseSessionResultScene(Scene):
         y = 396
         hdr = get_font(12).render(
             "  Runda   Scenariusz              k   Split   Test     Gap    Wynik",
-            True, _DIM,
+            True,
+            _DIM,
         )
         surface.blit(hdr, (20, y))
         y += 18
@@ -108,7 +122,8 @@ class PhaseSessionResultScene(Scene):
                 f"    {r['round_idx'] + 1}       {r['scenario_name']:<20}  "
                 f"{r['k']:>2}   {r['split_pct']}%   {r['test_acc']:.0%}   "
                 f"{r['gap']:+.1f}pp   {r['score']}  {star_str}",
-                True, _WHITE,
+                True,
+                _WHITE,
             )
             surface.blit(row, (20, y))
             y += 18

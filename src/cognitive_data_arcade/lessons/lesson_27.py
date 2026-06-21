@@ -1,4 +1,5 @@
 """Lesson 27 -- Social Network Simulator (graphs and social networks)."""
+
 from __future__ import annotations
 
 CONTENT: dict[str, dict[str, list[str]]] = {

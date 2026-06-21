@@ -9,35 +9,35 @@ from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.semantic_space.missions import Mission
 from cognitive_data_arcade.games.semantic_space.word_data import CLUSTERS, SIMILARITIES, WORDS
 
-_W, _H       = 1024, 720
-_TOP_H       = 44
-_LEFT_W      = 320
-_MAP_X       = _LEFT_W + 8
-_MAP_Y       = _TOP_H + 6
-_MAP_W       = _W - _MAP_X - 8
-_MAP_H       = _H - _MAP_Y - 8
-_NODE_R      = 18
-_BG          = (15, 15, 35)
-_TOP_BG      = (10, 10, 28)
-_LEFT_BG     = (12, 12, 32)
-_WHITE       = (240, 240, 240)
-_DIM         = (100, 100, 140)
-_AMBER       = (240, 165, 0)
-_GREEN       = (39, 174, 96)
-_RED         = (231, 76, 60)
-_GREY        = (60, 60, 80)
+_W, _H = 1024, 720
+_TOP_H = 44
+_LEFT_W = 320
+_MAP_X = _LEFT_W + 8
+_MAP_Y = _TOP_H + 6
+_MAP_W = _W - _MAP_X - 8
+_MAP_H = _H - _MAP_Y - 8
+_NODE_R = 18
+_BG = (15, 15, 35)
+_TOP_BG = (10, 10, 28)
+_LEFT_BG = (12, 12, 32)
+_WHITE = (240, 240, 240)
+_DIM = (100, 100, 140)
+_AMBER = (240, 165, 0)
+_GREEN = (39, 174, 96)
+_RED = (231, 76, 60)
+_GREY = (60, 60, 80)
 
 _TYPE_COLORS = {
-    "neighbors":   (52, 152, 219),
+    "neighbors": (52, 152, 219),
     "odd_one_out": (231, 76, 60),
-    "bridge":      (46, 204, 113),
-    "analogy":     (155, 89, 182),
+    "bridge": (46, 204, 113),
+    "analogy": (155, 89, 182),
 }
 _TYPE_LABELS = {
-    "neighbors":   "ZNAJDZ SASIADOW",
+    "neighbors": "ZNAJDZ SASIADOW",
     "odd_one_out": "INTRUZ W KLASTRZE",
-    "bridge":      "MOST SEMANTYCZNY",
-    "analogy":     "ANALOGIA WEKTOROWA",
+    "bridge": "MOST SEMANTYCZNY",
+    "analogy": "ANALOGIA WEKTOROWA",
 }
 
 
@@ -49,13 +49,13 @@ class PhaseMissionScene(Scene):
         session_score: int,
         round_results: list[dict],
     ) -> None:
-        self._missions      = missions
-        self._mission       = missions[round_idx]
-        self._round_idx     = round_idx
+        self._missions = missions
+        self._mission = missions[round_idx]
+        self._round_idx = round_idx
         self._session_score = session_score
         self._round_results = round_results
         self._selected: set[str] = set()
-        self._hover: str | None  = None
+        self._hover: str | None = None
         self._done = False
         self._next: Scene | None = None
 
@@ -90,7 +90,7 @@ class PhaseMissionScene(Scene):
     def _node_at(self, pos: tuple[int, int]) -> str | None:
         mx, my = pos
         for key, (nx, ny) in self._node_pos.items():
-            if (mx - nx) ** 2 + (my - ny) ** 2 <= _NODE_R ** 2:
+            if (mx - nx) ** 2 + (my - ny) ** 2 <= _NODE_R**2:
                 return key
         return None
 
@@ -146,8 +146,8 @@ class PhaseMissionScene(Scene):
         m = self._mission
         if m.type == "neighbors":
             correct = sum(1 for k in self._selected if k in m.answers)
-            wrong   = sum(1 for k in self._selected if k not in m.answers)
-            raw     = correct * 10 + wrong * (-5)
+            wrong = sum(1 for k in self._selected if k not in m.answers)
+            raw = correct * 10 + wrong * (-5)
             is_correct = correct == 3 and wrong == 0
         elif m.type == "odd_one_out":
             chosen = next(iter(self._selected))
@@ -164,13 +164,16 @@ class PhaseMissionScene(Scene):
 
         round_score = max(0, raw)
         result = {"type": m.type, "correct": is_correct, "score": round_score}
-        new_score   = self._session_score + round_score
+        new_score = self._session_score + round_score
         new_results = self._round_results + [result]
 
         if self._round_idx < len(self._missions) - 1:
-            self._next = PhaseMissionScene(self._missions, self._round_idx + 1, new_score, new_results)
+            self._next = PhaseMissionScene(
+                self._missions, self._round_idx + 1, new_score, new_results
+            )
         else:
             from cognitive_data_arcade.games.semantic_space.phase_result import PhaseResultScene
+
             self._next = PhaseResultScene(session_score=new_score, round_results=new_results)
         self._done = True
 
@@ -188,9 +191,13 @@ class PhaseMissionScene(Scene):
     def _draw_top_bar(self, surface: pygame.Surface) -> None:
         pygame.draw.rect(surface, _TOP_BG, (0, 0, _W, _TOP_H))
         pygame.draw.line(surface, _GREY, (0, _TOP_H), (_W, _TOP_H))
-        title = get_font(14).render("SEMANTIC SPACE EXPLORER", True, _TYPE_COLORS[self._mission.type])
+        title = get_font(14).render(
+            "SEMANTIC SPACE EXPLORER", True, _TYPE_COLORS[self._mission.type]
+        )
         surface.blit(title, (16, (_TOP_H - title.get_height()) // 2))
-        rnd = get_font(13).render(f"Misja {self._round_idx + 1} / {len(self._missions)}", True, _DIM)
+        rnd = get_font(13).render(
+            f"Misja {self._round_idx + 1} / {len(self._missions)}", True, _DIM
+        )
         surface.blit(rnd, (_W // 2 - rnd.get_width() // 2, (_TOP_H - rnd.get_height()) // 2))
         score = get_font(13).render(f"Wynik: {self._session_score} pkt", True, _AMBER)
         surface.blit(score, (_W - score.get_width() - 16, (_TOP_H - score.get_height()) // 2))
@@ -204,8 +211,19 @@ class PhaseMissionScene(Scene):
 
         badge = get_font(10).render(_TYPE_LABELS[m.type], True, color)
         bx = 16
-        pygame.draw.rect(surface, _BG, (bx - 4, y - 2, badge.get_width() + 8, badge.get_height() + 4), border_radius=4)
-        pygame.draw.rect(surface, color, (bx - 4, y - 2, badge.get_width() + 8, badge.get_height() + 4), 1, border_radius=4)
+        pygame.draw.rect(
+            surface,
+            _BG,
+            (bx - 4, y - 2, badge.get_width() + 8, badge.get_height() + 4),
+            border_radius=4,
+        )
+        pygame.draw.rect(
+            surface,
+            color,
+            (bx - 4, y - 2, badge.get_width() + 8, badge.get_height() + 4),
+            1,
+            border_radius=4,
+        )
         surface.blit(badge, (bx, y))
         y += badge.get_height() + 14
 
@@ -220,16 +238,20 @@ class PhaseMissionScene(Scene):
 
         if m.type == "neighbors":
             desc = get_font(13).render("Kliknij 3 slowa najblizsze:", True, _DIM)
-            surface.blit(desc, (16, y)); y += 28
+            surface.blit(desc, (16, y))
+            y += 28
             box = pygame.Rect(16, y, _LEFT_W - 32, 44)
             pygame.draw.rect(surface, (20, 15, 40), box, border_radius=6)
             pygame.draw.rect(surface, color, box, 2, border_radius=6)
             target_lbl = WORDS[m.target]["label"] if m.target in WORDS else m.target
             tl = get_font(20).render(target_lbl, True, color)
-            surface.blit(tl, (box.centerx - tl.get_width() // 2, box.centery - tl.get_height() // 2))
+            surface.blit(
+                tl, (box.centerx - tl.get_width() // 2, box.centery - tl.get_height() // 2)
+            )
             y += 54
             prog = get_font(11).render(f"Zaznaczono: {len(self._selected)} / 3", True, _DIM)
-            surface.blit(prog, (16, y)); y += 20
+            surface.blit(prog, (16, y))
+            y += 20
             pw = int((len(self._selected) / 3) * (_LEFT_W - 32))
             pygame.draw.rect(surface, _GREY, (16, y, _LEFT_W - 32, 6), border_radius=3)
             if pw > 0:
@@ -238,22 +260,28 @@ class PhaseMissionScene(Scene):
             for key in self._selected:
                 lbl = WORDS[key]["label"] if key in WORDS else key
                 sl = get_font(12).render(f"OK {lbl}", True, _GREEN)
-                surface.blit(sl, (16, y)); y += 22
+                surface.blit(sl, (16, y))
+                y += 22
         elif m.type == "odd_one_out":
             desc = get_font(13).render("Ktory wezel nie pasuje do grupy?", True, _DIM)
-            surface.blit(desc, (16, y)); y += 28
+            surface.blit(desc, (16, y))
+            y += 28
             note = get_font(11).render("(tylko 4 wezly sa aktywne)", True, _GREY)
-            surface.blit(note, (16, y)); y += 24
+            surface.blit(note, (16, y))
+            y += 24
         elif m.type == "bridge":
             desc = get_font(13).render("Znajdz slowo laczace dwa klastry:", True, _DIM)
-            surface.blit(desc, (16, y)); y += 28
+            surface.blit(desc, (16, y))
+            y += 28
             note = get_font(11).render("Szukaj wezla na granicy kolorow.", True, _GREY)
-            surface.blit(note, (16, y)); y += 24
+            surface.blit(note, (16, y))
+            y += 24
             if self._selected:
                 key = next(iter(self._selected))
                 lbl = WORDS[key]["label"] if key in WORDS else key
                 sl = get_font(13).render(f"Wybrany: {lbl}", True, _GREEN)
-                surface.blit(sl, (16, y)); y += 24
+                surface.blit(sl, (16, y))
+                y += 24
 
         hint_y = _H - 120
         words = self._mission.hint_pl.split()
@@ -264,7 +292,8 @@ class PhaseMissionScene(Scene):
                 line = candidate
             else:
                 surf = get_font(11).render(line, True, _GREY)
-                surface.blit(surf, (16, hy)); hy += 16
+                surface.blit(surf, (16, hy))
+                hy += 16
                 line = word
         if line:
             surf = get_font(11).render(line, True, _GREY)
@@ -275,17 +304,21 @@ class PhaseMissionScene(Scene):
             pygame.draw.rect(surface, (30, 30, 60), btn, border_radius=6)
             pygame.draw.rect(surface, _TYPE_COLORS[self._mission.type], btn, 2, border_radius=6)
             bl = get_font(14).render("ZATWIERDZ (SPACJA)", True, _WHITE)
-            surface.blit(bl, (btn.centerx - bl.get_width() // 2, btn.centery - bl.get_height() // 2))
+            surface.blit(
+                bl, (btn.centerx - bl.get_width() // 2, btn.centery - bl.get_height() // 2)
+            )
 
     def _draw_left_analogy(self, surface: pygame.Surface, y: int) -> None:
         m = self._mission
         color = _TYPE_COLORS["analogy"]
 
         formula = get_font(16).render(m.formula, True, _WHITE)
-        surface.blit(formula, (_LEFT_W // 2 - formula.get_width() // 2, y)); y += 36
+        surface.blit(formula, (_LEFT_W // 2 - formula.get_width() // 2, y))
+        y += 36
 
         note = get_font(11).render("Kliknij poprawna odpowiedz:", True, _DIM)
-        surface.blit(note, (16, y)); y += 24
+        surface.blit(note, (16, y))
+        y += 24
 
         for rect, opt in self._analogy_button_rects():
             is_sel = opt in self._selected
@@ -294,7 +327,9 @@ class PhaseMissionScene(Scene):
             pygame.draw.rect(surface, bg, rect, border_radius=6)
             pygame.draw.rect(surface, border, rect, 1, border_radius=6)
             ol = get_font(14).render(opt, True, _WHITE if is_sel else _DIM)
-            surface.blit(ol, (rect.centerx - ol.get_width() // 2, rect.centery - ol.get_height() // 2))
+            surface.blit(
+                ol, (rect.centerx - ol.get_width() // 2, rect.centery - ol.get_height() // 2)
+            )
 
     def _draw_map(self, surface: pygame.Surface) -> None:
         m = self._mission
@@ -310,10 +345,14 @@ class PhaseMissionScene(Scene):
                     nx_b, ny_b = self._node_pos[nb]
                     alpha = int(40 + sim * 120)
                     thickness = max(1, int(sim * 3))
-                    col = tuple(min(255, int(c * (alpha / 255) + 15 * (1 - alpha / 255))) for c in (80, 80, 110))
+                    col = tuple(
+                        min(255, int(c * (alpha / 255) + 15 * (1 - alpha / 255)))
+                        for c in (80, 80, 110)
+                    )
                     pygame.draw.line(surface, col, (nx_a, ny_a), (nx_b, ny_b), thickness)
 
         from collections import defaultdict
+
         cluster_pts: dict[str, list[tuple[int, int]]] = defaultdict(list)
         for key, (nx, ny) in self._node_pos.items():
             cluster_pts[WORDS[key]["cluster"]].append((nx, ny))
@@ -321,8 +360,9 @@ class PhaseMissionScene(Scene):
             cx = sum(x for x, _ in pts) // len(pts)
             cy = sum(y for _, y in pts) // len(pts)
             cl_color = CLUSTERS[cname]["color"]
-            cl_lbl = get_font(9).render(CLUSTERS[cname]["label"].upper(), True,
-                                        tuple(min(255, c + 40) for c in cl_color))
+            cl_lbl = get_font(9).render(
+                CLUSTERS[cname]["label"].upper(), True, tuple(min(255, c + 40) for c in cl_color)
+            )
             surface.blit(cl_lbl, (cx - cl_lbl.get_width() // 2, cy - cl_lbl.get_height() // 2))
 
         target_key = m.target if m.target in WORDS else None
@@ -330,9 +370,9 @@ class PhaseMissionScene(Scene):
             wd = WORDS[key]
             cl_color = CLUSTERS[wd["cluster"]]["color"]
             is_selected = key in self._selected
-            is_target   = key == target_key and m.type != "bridge"
-            is_hover    = key == self._hover
-            is_active   = key in active
+            is_target = key == target_key and m.type != "bridge"
+            is_hover = key == self._hover
+            is_active = key in active
 
             if not is_active:
                 dim_col = tuple(c // 4 for c in cl_color)

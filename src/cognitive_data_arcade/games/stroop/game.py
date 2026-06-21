@@ -100,7 +100,7 @@ class StroopGame(Scene):
         self._session_id = session_id
         self._csv_path = csv_path
         self._key_to_color: dict[int, str] = {
-            kc: name for _, name, _, kc in COLORS[:self._config.num_colors]
+            kc: name for _, name, _, kc in COLORS[: self._config.num_colors]
         }
 
         self._presets = [EASY, MEDIUM, HARD]
@@ -132,6 +132,7 @@ class StroopGame(Scene):
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.MOUSEMOTION:
             from cognitive_data_arcade.engine.mouse import hit
+
             if self._phase == _Phase.PRESET_SELECT:
                 for i, rect in enumerate(self._preset_rects):
                     if hit(rect, event.pos):
@@ -140,13 +141,14 @@ class StroopGame(Scene):
             return
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             from cognitive_data_arcade.engine.mouse import hit
+
             if self._phase == _Phase.PRESET_SELECT:
                 for i, rect in enumerate(self._preset_rects):
                     if hit(rect, event.pos):
                         self._preset_idx = i
                         self._config = self._presets[self._preset_idx]
                         self._key_to_color = {
-                            kc: name for _, name, _, kc in COLORS[:self._config.num_colors]
+                            kc: name for _, name, _, kc in COLORS[: self._config.num_colors]
                         }
                         self._phase = _Phase.INSTRUCTIONS
                         break
@@ -192,9 +194,7 @@ class StroopGame(Scene):
             self._preset_idx = min(len(self._presets) - 1, self._preset_idx + 1)
         elif key in (pygame.K_SPACE, pygame.K_RETURN):
             self._config = self._presets[self._preset_idx]
-            self._key_to_color = {
-                kc: name for _, name, _, kc in COLORS[:self._config.num_colors]
-            }
+            self._key_to_color = {kc: name for _, name, _, kc in COLORS[: self._config.num_colors]}
             self._phase = _Phase.INSTRUCTIONS
 
     def update(self, dt_ms: float) -> None:
@@ -253,7 +253,7 @@ class StroopGame(Scene):
         return self._stimulus_queue.pop(0)
 
     def _build_block(self) -> list[_Stimulus]:
-        active = COLORS[:self._config.num_colors]
+        active = COLORS[: self._config.num_colors]
         stimuli: list[_Stimulus] = []
         for word, name, rgb, key in active:
             stimuli.append(_Stimulus(word, name, rgb, key, "congruent", name))
@@ -261,9 +261,7 @@ class StroopGame(Scene):
         for word, name, _rgb, _key in active:
             wrong = [(n, r, k) for (w, n, r, k) in active if n != name]
             ink_name, ink_rgb, ink_key = random.choice(wrong)
-            stimuli.append(
-                _Stimulus(word, ink_name, ink_rgb, ink_key, "incongruent", name)
-            )
+            stimuli.append(_Stimulus(word, ink_name, ink_rgb, ink_key, "incongruent", name))
         random.shuffle(stimuli)
         return stimuli
 
@@ -308,9 +306,7 @@ class StroopGame(Scene):
     def _build_next_scene(self) -> Scene:
         from cognitive_data_arcade.ui.session_summary import SessionSummaryScene
 
-        valid_rts = [
-            r.reaction_time_ms for r in self._records if r.reaction_time_ms > 0
-        ]
+        valid_rts = [r.reaction_time_ms for r in self._records if r.reaction_time_ms > 0]
         correct_count = sum(1 for r in self._records if r.correct)
         avg_rt = sum(valid_rts) / len(valid_rts) if valid_rts else 0.0
         min_rt = min(valid_rts) if valid_rts else 0.0
@@ -360,9 +356,7 @@ class StroopGame(Scene):
             self._draw_game_frame(surface, w, h)
             self._draw_countdown(surface, w, h)
         elif self._phase in (_Phase.ITI, _Phase.STIMULUS):
-            self._draw_game_frame(
-                surface, w, h, show_stimulus=(self._phase == _Phase.STIMULUS)
-            )
+            self._draw_game_frame(surface, w, h, show_stimulus=(self._phase == _Phase.STIMULUS))
         elif self._phase == _Phase.FEEDBACK:
             self._draw_game_frame(surface, w, h)
             self._draw_feedback(surface, w, h)
@@ -401,9 +395,7 @@ class StroopGame(Scene):
 
     def _draw_countdown(self, surface: pygame.Surface, w: int, h: int) -> None:
         surf = self._font_lg.render(str(self._countdown_val), True, _ORANGE)
-        surface.blit(
-            surf, (w // 2 - surf.get_width() // 2, h // 2 - surf.get_height() // 2)
-        )
+        surface.blit(surf, (w // 2 - surf.get_width() // 2, h // 2 - surf.get_height() // 2))
 
     def _draw_game_frame(
         self, surface: pygame.Surface, w: int, h: int, show_stimulus: bool = False
@@ -438,7 +430,7 @@ class StroopGame(Scene):
     def _draw_key_bar(self, surface: pygame.Surface, w: int, h: int) -> None:
         bar_y = h - _FOOTER_H
         pygame.draw.line(surface, (42, 42, 80), (0, bar_y), (w, bar_y))
-        active = COLORS[:self._config.num_colors]
+        active = COLORS[: self._config.num_colors]
         col_w = w // self._config.num_colors
         self._color_rects = {}
         for i, (word, name, rgb, key_const) in enumerate(active):
@@ -463,6 +455,4 @@ class StroopGame(Scene):
 
     def _draw_between_blocks(self, surface: pygame.Surface, w: int, h: int) -> None:
         surf = self._font_med.render(self._strings.rt_between_blocks, True, _WHITE)
-        surface.blit(
-            surf, (w // 2 - surf.get_width() // 2, h // 2 - surf.get_height() // 2)
-        )
+        surface.blit(surf, (w // 2 - surf.get_width() // 2, h // 2 - surf.get_height() // 2))

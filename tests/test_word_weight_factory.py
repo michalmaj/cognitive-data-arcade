@@ -34,8 +34,7 @@ def test_active_docs_with_custom_returns_five():
     assert docs[-1][0] == "Wlasny"
 
 
-import math
-from cognitive_data_arcade.games.word_weight_factory.engine import WeightEngine, WeightMatrix
+from cognitive_data_arcade.games.word_weight_factory.engine import WeightEngine
 
 
 def _engine() -> WeightEngine:
@@ -46,7 +45,10 @@ def test_engine_bow_counts():
     m = _engine().process(
         docs=["czas reakcji czas", "czas pamiec"],
         titles=["D1", "D2"],
-        lowercase=True, rm_punct=False, rm_stops=False, lang="pl",
+        lowercase=True,
+        rm_punct=False,
+        rm_stops=False,
+        lang="pl",
     )
     idx_czas = m.vocab.index("czas")
     assert m.bow[0][idx_czas] == 2
@@ -60,7 +62,10 @@ def test_engine_tf_sums():
     m = _engine().process(
         docs=["a b c", "a a b"],
         titles=["D1", "D2"],
-        lowercase=True, rm_punct=False, rm_stops=False, lang="en",
+        lowercase=True,
+        rm_punct=False,
+        rm_stops=False,
+        lang="en",
     )
     # TF values for each doc must sum to <= 1.0
     for row in m.tf:
@@ -72,7 +77,10 @@ def test_engine_idf_ordering():
     m = _engine().process(
         docs=["czas reakcji", "czas pamiec"],
         titles=["D1", "D2"],
-        lowercase=True, rm_punct=False, rm_stops=False, lang="pl",
+        lowercase=True,
+        rm_punct=False,
+        rm_stops=False,
+        lang="pl",
     )
     idx_czas = m.vocab.index("czas")
     idx_r = m.vocab.index("reakcji")
@@ -83,7 +91,10 @@ def test_engine_tfidf_formula():
     m = _engine().process(
         docs=["czas reakcji", "czas pamiec"],
         titles=["D1", "D2"],
-        lowercase=True, rm_punct=False, rm_stops=False, lang="pl",
+        lowercase=True,
+        rm_punct=False,
+        rm_stops=False,
+        lang="pl",
     )
     for i in range(len(m.doc_titles)):
         for j in range(len(m.vocab)):
@@ -93,7 +104,12 @@ def test_engine_tfidf_formula():
 
 def test_engine_empty_corpus():
     m = _engine().process(
-        docs=[], titles=[], lowercase=True, rm_punct=True, rm_stops=False, lang="pl",
+        docs=[],
+        titles=[],
+        lowercase=True,
+        rm_punct=True,
+        rm_stops=False,
+        lang="pl",
     )
     assert m.vocab == []
     assert m.bow == []
@@ -103,8 +119,12 @@ def test_engine_empty_corpus():
 def test_engine_single_doc_idf_zero():
     # With N=1, idf = log((1+1)/(1+1)) = log(1) = 0 for every token
     m = _engine().process(
-        docs=["czas reakcji"], titles=["D1"],
-        lowercase=True, rm_punct=False, rm_stops=False, lang="pl",
+        docs=["czas reakcji"],
+        titles=["D1"],
+        lowercase=True,
+        rm_punct=False,
+        rm_stops=False,
+        lang="pl",
     )
     for v in m.idf:
         assert abs(v) < 1e-9
@@ -117,12 +137,16 @@ def test_engine_vocab_sorted():
     m = _engine().process(
         docs=["zebra alpha mango"],
         titles=["D1"],
-        lowercase=True, rm_punct=False, rm_stops=False, lang="en",
+        lowercase=True,
+        rm_punct=False,
+        rm_stops=False,
+        lang="en",
     )
     assert m.vocab == sorted(m.vocab)
 
 
 import os
+
 os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
 os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
 
@@ -135,13 +159,17 @@ def test_step_idf_scene_renders():
     from cognitive_data_arcade.games.word_weight_factory.corpus import CorpusState
     from cognitive_data_arcade.games.word_weight_factory.engine import WeightEngine
     from cognitive_data_arcade.games.word_weight_factory.step_idf import StepIdfScene
+
     state = CorpusState()
     scene = StepIdfScene(state)
     docs = state.active_docs()
     matrix = WeightEngine().process(
         docs=[t for _, t in docs],
         titles=[ti for ti, _ in docs],
-        lowercase=True, rm_punct=True, rm_stops=False, lang="pl",
+        lowercase=True,
+        rm_punct=True,
+        rm_stops=False,
+        lang="pl",
     )
     surface = pygame.Surface((804, 672))
     scene.draw(surface, matrix)  # must not raise
@@ -150,19 +178,22 @@ def test_step_idf_scene_renders():
 
 def test_word_weight_factory_scene_instantiates():
     import cognitive_data_arcade.engine.fonts as _fonts
+
     _fonts._cache.clear()
     _fonts._found_name = None
     pygame.init()
     pygame.display.set_mode((1024, 720))
     from cognitive_data_arcade.games.word_weight_factory.scene import WordWeightFactoryScene
+
     scene = WordWeightFactoryScene()
     surface = pygame.Surface((1024, 720))
-    scene.draw(surface)   # must not raise
+    scene.draw(surface)  # must not raise
     pygame.quit()
 
 
 def test_lesson_22_content_structure():
     from cognitive_data_arcade.lessons.lesson_22 import CONTENT
+
     for lang in ("pl", "en"):
         assert lang in CONTENT
         for key in ("theory", "notes", "tasks"):
@@ -172,6 +203,7 @@ def test_lesson_22_content_structure():
 
 def test_menu_has_lesson_22():
     from cognitive_data_arcade.ui.menu import _LESSONS
+
     nums = [num for num, _ in _LESSONS]
     assert 22 in nums
     idx = nums.index(22)

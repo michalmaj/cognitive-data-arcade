@@ -8,11 +8,11 @@ from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.you_were_the_dataset.game_state import GameState
 
 _W, _H = 1024, 720
-_BG    = (8, 12, 20)
+_BG = (8, 12, 20)
 _PANEL = (16, 20, 36)
 _WHITE = (240, 240, 240)
-_DIM   = (130, 130, 150)
-_GOLD  = (243, 156, 18)
+_DIM = (130, 130, 150)
+_GOLD = (243, 156, 18)
 _GREEN = (34, 197, 94)
 
 _AHA = [
@@ -28,7 +28,7 @@ class PhaseResultScene(Scene):
         self._done = False
         self._next: Scene | None = None
         self._btn_replay = pygame.Rect(_W // 2 - 210, _H - 70, 190, 44)
-        self._btn_menu   = pygame.Rect(_W // 2 + 20,  _H - 70, 190, 44)
+        self._btn_menu = pygame.Rect(_W // 2 + 20, _H - 70, 190, 44)
 
     def handle_event(self, event: pygame.event.Event) -> None:
         if self._done:
@@ -38,6 +38,7 @@ class PhaseResultScene(Scene):
                 from cognitive_data_arcade.games.you_were_the_dataset.game import (
                     YouWereTheDatasetScene,
                 )
+
                 # Replay: restart with same pm/strings stored in state
                 pm = getattr(self._state, "_pm", None)
                 strings = getattr(self._state, "_strings", None)
@@ -68,10 +69,10 @@ class PhaseResultScene(Scene):
         if p is not None:
             rows = [
                 ("Czas reakcji bazowy", f"{p.rt_median_ms:.0f} ms"),
-                ("Efekt Stroopa",       f"+{p.stroop_effect_ms:.0f} ms"),
-                ("Efekt Flankera",      f"+{p.flanker_effect_ms:.0f} ms"),
+                ("Efekt Stroopa", f"+{p.stroop_effect_ms:.0f} ms"),
+                ("Efekt Flankera", f"+{p.flanker_effect_ms:.0f} ms"),
                 ("Inhibicja (FA rate)", f"{p.gono_false_alarm_rate * 100:.1f}%"),
-                ("Pamiec robocza",      f"N = {p.nback_max_level}"),
+                ("Pamiec robocza", f"N = {p.nback_max_level}"),
             ]
             row_h = 36
             table_top = 130
@@ -86,7 +87,9 @@ class PhaseResultScene(Scene):
 
             if p.is_synthetic:
                 tag = get_font(12).render("[dane syntetyczne]", True, (60, 60, 80))
-                surface.blit(tag, (_W // 2 - tag.get_width() // 2, table_top + len(rows) * row_h + 4))
+                surface.blit(
+                    tag, (_W // 2 - tag.get_width() // 2, table_top + len(rows) * row_h + 4)
+                )
 
         # AHA lines
         aha_y = 330
@@ -99,14 +102,24 @@ class PhaseResultScene(Scene):
         pygame.draw.rect(surface, _PANEL, self._btn_replay, border_radius=8)
         pygame.draw.rect(surface, _WHITE, self._btn_replay, 1, border_radius=8)
         r_txt = get_font(17).render("Zagraj ponownie", True, _WHITE)
-        surface.blit(r_txt, (self._btn_replay.x + (self._btn_replay.w - r_txt.get_width()) // 2,
-                              self._btn_replay.y + (self._btn_replay.h - r_txt.get_height()) // 2))
+        surface.blit(
+            r_txt,
+            (
+                self._btn_replay.x + (self._btn_replay.w - r_txt.get_width()) // 2,
+                self._btn_replay.y + (self._btn_replay.h - r_txt.get_height()) // 2,
+            ),
+        )
 
         pygame.draw.rect(surface, _PANEL, self._btn_menu, border_radius=8)
         pygame.draw.rect(surface, _WHITE, self._btn_menu, 1, border_radius=8)
         m_txt = get_font(17).render("Menu", True, _WHITE)
-        surface.blit(m_txt, (self._btn_menu.x + (self._btn_menu.w - m_txt.get_width()) // 2,
-                              self._btn_menu.y + (self._btn_menu.h - m_txt.get_height()) // 2))
+        surface.blit(
+            m_txt,
+            (
+                self._btn_menu.x + (self._btn_menu.w - m_txt.get_width()) // 2,
+                self._btn_menu.y + (self._btn_menu.h - m_txt.get_height()) // 2,
+            ),
+        )
 
     def is_done(self) -> bool:
         return self._done

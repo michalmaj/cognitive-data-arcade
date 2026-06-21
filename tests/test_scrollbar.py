@@ -79,7 +79,7 @@ def test_mousedown_noop_when_all_visible():
 
 def test_set_total_clamps_scroll():
     sb = ScrollBar(100, 15, 0, 0, 300)
-    sb.handle_wheel(50)   # scroll = 50
+    sb.handle_wheel(50)  # scroll = 50
     sb.set_total(20)
     assert sb.scroll == 5  # max = 20 - 15 = 5
 

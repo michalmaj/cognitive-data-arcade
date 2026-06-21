@@ -82,10 +82,14 @@ class HowToPlayScene(Scene):
         surface.blit(header, (_LEFT_MARGIN, y))
         y += header.get_height() + 10
 
-        col2 = _LEFT_MARGIN + max(
-            (font_key.size(key)[0] for key, _ in self._game_info.key_bindings),
-            default=0,
-        ) + 24
+        col2 = (
+            _LEFT_MARGIN
+            + max(
+                (font_key.size(key)[0] for key, _ in self._game_info.key_bindings),
+                default=0,
+            )
+            + 24
+        )
 
         for key, desc in self._game_info.key_bindings:
             key_surf = font_key.render(key, True, _KEY_COLOR)

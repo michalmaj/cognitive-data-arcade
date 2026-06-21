@@ -21,7 +21,7 @@ _W, _H = 1024, 720
 _TOP_H = 50
 _BOT_H = 150
 _MID_X = 512
-_NET_H = _H - _TOP_H - _BOT_H   # 520
+_NET_H = _H - _TOP_H - _BOT_H  # 520
 _MAX_NODES = 30
 _NODE_RADIUS = 10
 _HUB_RADIUS = 14
@@ -30,25 +30,25 @@ _P_RECOVER = 0.25
 _SIR_TICK_MS = 300.0
 _RNG_P = 0.3
 
-_BG       = (13, 17, 23)
+_BG = (13, 17, 23)
 _PANEL_BG = (13, 17, 23)
-_DIVIDER  = (44, 62, 80)
-_TOP_BG   = (26, 26, 46)
-_BOT_BG   = (17, 24, 39)
+_DIVIDER = (44, 62, 80)
+_TOP_BG = (26, 26, 46)
+_BOT_BG = (17, 24, 39)
 
-_S_COLOR    = (120, 120, 140)
-_I_COLOR    = (231, 76, 60)
-_R_COLOR    = (39, 174, 96)
+_S_COLOR = (120, 120, 140)
+_I_COLOR = (231, 76, 60)
+_R_COLOR = (39, 174, 96)
 _EDGE_COLOR = (44, 62, 80)
 _BTN_ACTIVE = (44, 62, 80)
-_BTN_INACT  = (26, 26, 46)
-_BTN_TEXT   = (200, 200, 200)
-_AMBER      = (230, 126, 34)
-_BLUE       = (52, 152, 219)
-_GREEN_BTN  = (39, 174, 96)
-_GREY_TEXT  = (100, 100, 100)
+_BTN_INACT = (26, 26, 46)
+_BTN_TEXT = (200, 200, 200)
+_AMBER = (230, 126, 34)
+_BLUE = (52, 152, 219)
+_GREEN_BTN = (39, 174, 96)
+_GREY_TEXT = (100, 100, 100)
 
-_BOT_Y = _TOP_H + _NET_H   # 570
+_BOT_Y = _TOP_H + _NET_H  # 570
 
 
 def _node_color(state: str) -> tuple[int, int, int]:
@@ -82,17 +82,17 @@ class SocialNetworkScene(Scene):
         self._font_lg = get_font(36)
 
         _by = _BOT_Y + 15
-        self._btn_add_node    = pygame.Rect(10,  10, 90, 30)
-        self._btn_add_edge    = pygame.Rect(110, 10, 90, 30)
-        self._btn_random      = pygame.Rect(270, 10, 80, 30)
-        self._btn_scale_free  = pygame.Rect(360, 10, 100, 30)
-        self._btn_clear       = pygame.Rect(530, 10, 80, 30)
-        self._btn_hub         = pygame.Rect(10,  _by, 120, 36)
-        self._btn_periphery   = pygame.Rect(140, _by, 150, 36)
-        self._btn_step        = pygame.Rect(310, _by, 80,  36)
-        self._btn_auto        = pygame.Rect(400, _by, 80,  36)
-        self._btn_reset_spread= pygame.Rect(490, _by, 120, 36)
-        self._slider_rect     = pygame.Rect(650, _by, 200, 30)
+        self._btn_add_node = pygame.Rect(10, 10, 90, 30)
+        self._btn_add_edge = pygame.Rect(110, 10, 90, 30)
+        self._btn_random = pygame.Rect(270, 10, 80, 30)
+        self._btn_scale_free = pygame.Rect(360, 10, 100, 30)
+        self._btn_clear = pygame.Rect(530, 10, 80, 30)
+        self._btn_hub = pygame.Rect(10, _by, 120, 36)
+        self._btn_periphery = pygame.Rect(140, _by, 150, 36)
+        self._btn_step = pygame.Rect(310, _by, 80, 36)
+        self._btn_auto = pygame.Rect(400, _by, 80, 36)
+        self._btn_reset_spread = pygame.Rect(490, _by, 120, 36)
+        self._slider_rect = pygame.Rect(650, _by, 200, 30)
 
     # ------------------------------------------------------------------
     # Scene protocol
@@ -296,9 +296,14 @@ class SocialNetworkScene(Scene):
         pygame.draw.line(surface, _DIVIDER, (_MID_X, _TOP_H), (_MID_X, _TOP_H + _NET_H), 2)
         self._draw_bottom_bar(surface)
 
-    def _draw_button(self, surface: pygame.Surface, rect: pygame.Rect,
-                     label: str, active: bool,
-                     color: tuple[int, int, int] = _BTN_TEXT) -> None:
+    def _draw_button(
+        self,
+        surface: pygame.Surface,
+        rect: pygame.Rect,
+        label: str,
+        active: bool,
+        color: tuple[int, int, int] = _BTN_TEXT,
+    ) -> None:
         bg = _BTN_ACTIVE if active else _BTN_INACT
         pygame.draw.rect(surface, bg, rect, border_radius=3)
         border = color if active else _GREY_TEXT
@@ -309,24 +314,27 @@ class SocialNetworkScene(Scene):
     def _draw_top_bar(self, surface: pygame.Surface) -> None:
         pygame.draw.rect(surface, _TOP_BG, (0, 0, _W, _TOP_H))
         in_build = self._state == "build"
-        self._draw_button(surface, self._btn_add_node,   "+ Wezel",
-                          in_build and self._mode == "add_node", _BLUE)
-        self._draw_button(surface, self._btn_add_edge,   "- Krawedz",
-                          in_build and self._mode == "add_edge", _BLUE)
-        self._draw_button(surface, self._btn_random,     "Random",
-                          in_build and bool(self._left.nodes), _AMBER)
-        self._draw_button(surface, self._btn_scale_free, "Scale-free",
-                          in_build and bool(self._left.nodes), _AMBER)
-        self._draw_button(surface, self._btn_clear,      "Wyczysc",
-                          True, (192, 57, 43))
+        self._draw_button(
+            surface, self._btn_add_node, "+ Wezel", in_build and self._mode == "add_node", _BLUE
+        )
+        self._draw_button(
+            surface, self._btn_add_edge, "- Krawedz", in_build and self._mode == "add_edge", _BLUE
+        )
+        self._draw_button(
+            surface, self._btn_random, "Random", in_build and bool(self._left.nodes), _AMBER
+        )
+        self._draw_button(
+            surface, self._btn_scale_free, "Scale-free", in_build and bool(self._left.nodes), _AMBER
+        )
+        self._draw_button(surface, self._btn_clear, "Wyczysc", True, (192, 57, 43))
 
-    def _draw_network(self, surface: pygame.Surface, graph: Graph,
-                      is_left: bool = True) -> None:
+    def _draw_network(self, surface: pygame.Surface, graph: Graph, is_left: bool = True) -> None:
         hub_idx = hub_node_index(graph) if graph.nodes else -1
         for a, b in graph.edges:
             na, nb = graph.nodes[a], graph.nodes[b]
-            pygame.draw.line(surface, _EDGE_COLOR,
-                             (int(na.x), int(na.y)), (int(nb.x), int(nb.y)), 1)
+            pygame.draw.line(
+                surface, _EDGE_COLOR, (int(na.x), int(na.y)), (int(nb.x), int(nb.y)), 1
+            )
         for i, nd in enumerate(graph.nodes):
             r = _HUB_RADIUS if i == hub_idx else _NODE_RADIUS
             color = _node_color(nd.state)
@@ -338,7 +346,10 @@ class SocialNetworkScene(Scene):
         pygame.draw.rect(surface, _PANEL_BG, (0, _TOP_H, _MID_X, _NET_H))
         header = self._font_sm.render(
             f"TWOJA SIEC   wezly: {len(self._left.nodes)}/{_MAX_NODES}   "
-            f"krawedzie: {len(self._left.edges)}", True, _BLUE)
+            f"krawedzie: {len(self._left.edges)}",
+            True,
+            _BLUE,
+        )
         surface.blit(header, (8, _TOP_H + 6))
         self._draw_network(surface, self._left, is_left=True)
 
@@ -346,10 +357,9 @@ class SocialNetworkScene(Scene):
         pygame.draw.rect(surface, _PANEL_BG, (_MID_X, _TOP_H, _MID_X, _NET_H))
         if self._right is None:
             hint = self._font_sm.render(
-                "Kliknij Random lub Scale-free zeby wygenerowac siec",
-                True, _GREY_TEXT)
-            surface.blit(hint, hint.get_rect(
-                center=(_MID_X + _MID_X // 2, _TOP_H + _NET_H // 2)))
+                "Kliknij Random lub Scale-free zeby wygenerowac siec", True, _GREY_TEXT
+            )
+            surface.blit(hint, hint.get_rect(center=(_MID_X + _MID_X // 2, _TOP_H + _NET_H // 2)))
         else:
             label = self._font_md.render(f"SIEC {self._right_type}", True, _AMBER)
             surface.blit(label, (_MID_X + 8, _TOP_H + 6))
@@ -359,41 +369,34 @@ class SocialNetworkScene(Scene):
         pygame.draw.rect(surface, _BOT_BG, (0, _BOT_Y, _W, _BOT_H))
         in_build = self._state == "build"
         in_spread = self._state == "spread"
-        self._draw_button(surface, self._btn_hub,       "Od huba",
-                          in_build, _I_COLOR)
-        self._draw_button(surface, self._btn_periphery, "Od peryferium",
-                          in_build, _S_COLOR)
-        self._draw_button(surface, self._btn_step,      "Krok",
-                          in_spread, _GREEN_BTN)
+        self._draw_button(surface, self._btn_hub, "Od huba", in_build, _I_COLOR)
+        self._draw_button(surface, self._btn_periphery, "Od peryferium", in_build, _S_COLOR)
+        self._draw_button(surface, self._btn_step, "Krok", in_spread, _GREEN_BTN)
         auto_label = "Auto [ON]" if self._auto_play else "Auto"
-        self._draw_button(surface, self._btn_auto,      auto_label,
-                          in_spread, _GREEN_BTN)
-        self._draw_button(surface, self._btn_reset_spread, "Reset spreadu",
-                          in_spread, _AMBER)
+        self._draw_button(surface, self._btn_auto, auto_label, in_spread, _GREEN_BTN)
+        self._draw_button(surface, self._btn_reset_spread, "Reset spreadu", in_spread, _AMBER)
 
         # p_infect slider
         lbl = self._font_sm.render(f"p_infect: {self._p_infect:.1f}", True, _BTN_TEXT)
         surface.blit(lbl, (self._slider_rect.x, self._slider_rect.y - 16))
         pygame.draw.rect(surface, _BTN_ACTIVE, self._slider_rect, border_radius=3)
         fill_w = int(self._slider_rect.width * (self._p_infect - 0.1) / 0.8)
-        fill_rect = pygame.Rect(self._slider_rect.x, self._slider_rect.y,
-                                fill_w, self._slider_rect.height)
+        fill_rect = pygame.Rect(
+            self._slider_rect.x, self._slider_rect.y, fill_w, self._slider_rect.height
+        )
         pygame.draw.rect(surface, _AMBER, fill_rect, border_radius=3)
 
         # Metrics row
         my = _BOT_Y + 70
         n_left = len(self._left.nodes) or 1
         r_left = sum(1 for nd in self._left.nodes if nd.state == "R") / n_left * 100
-        metrics_l = (f"krok: {self._step_count}   "
-                     f"max I: {self._max_i_left:.0f}%   "
-                     f"R: {r_left:.0f}%")
+        metrics_l = f"krok: {self._step_count}   max I: {self._max_i_left:.0f}%   R: {r_left:.0f}%"
         surface.blit(self._font_sm.render(metrics_l, True, _BTN_TEXT), (10, my))
 
         if self._right is not None:
             n_right = len(self._right.nodes) or 1
             r_right = sum(1 for nd in self._right.nodes if nd.state == "R") / n_right * 100
-            metrics_r = (f"krok: {self._step_count}   "
-                         f"max I: {self._max_i_right:.0f}%   "
-                         f"R: {r_right:.0f}%")
-            surface.blit(self._font_sm.render(metrics_r, True, _BTN_TEXT),
-                         (_MID_X + 10, my))
+            metrics_r = (
+                f"krok: {self._step_count}   max I: {self._max_i_right:.0f}%   R: {r_right:.0f}%"
+            )
+            surface.blit(self._font_sm.render(metrics_r, True, _BTN_TEXT), (_MID_X + 10, my))

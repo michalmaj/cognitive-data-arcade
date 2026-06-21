@@ -6,29 +6,29 @@ from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.human_vs_model.challenge_data import ClassifyChallenge
 
-_W, _H    = 1024, 720
-_TOP_H    = 44
-_MID      = 512
-_BG       = (15, 15, 35)
-_TOP_BG   = (10, 10, 28)
-_LEFT_BG  = (12, 18, 32)
+_W, _H = 1024, 720
+_TOP_H = 44
+_MID = 512
+_BG = (15, 15, 35)
+_TOP_BG = (10, 10, 28)
+_LEFT_BG = (12, 18, 32)
 _RIGHT_BG = (12, 8, 28)
-_WHITE    = (240, 240, 240)
-_DIM      = (100, 100, 140)
-_BLUE     = (52, 152, 219)
-_PURPLE   = (155, 89, 182)
-_AMBER    = (240, 165, 0)
-_GREEN    = (39, 174, 96)
-_RED      = (231, 76, 60)
-_GREY     = (60, 60, 80)
+_WHITE = (240, 240, 240)
+_DIM = (100, 100, 140)
+_BLUE = (52, 152, 219)
+_PURPLE = (155, 89, 182)
+_AMBER = (240, 165, 0)
+_GREEN = (39, 174, 96)
+_RED = (231, 76, 60)
+_GREY = (60, 60, 80)
 
-_BASE_SCORE  = 10
-_BEAT_BONUS  = 5
+_BASE_SCORE = 10
+_BEAT_BONUS = 5
 _AI_THINK_MS = 1500.0
 
 _OPT_Y_START = _TOP_H + 200  # = 244
-_OPT_H       = 42
-_OPT_STEP    = 52             # height + gap
+_OPT_H = 42
+_OPT_STEP = 52  # height + gap
 
 
 class PhaseClassifyScene(Scene):
@@ -39,20 +39,20 @@ class PhaseClassifyScene(Scene):
         session_score: int,
         beat_ai_count: int,
     ) -> None:
-        self._challenges    = challenges
-        self._challenge     = challenges[round_idx]
-        self._round_idx     = round_idx
+        self._challenges = challenges
+        self._challenge = challenges[round_idx]
+        self._round_idx = round_idx
         self._session_score = session_score
         self._beat_ai_count = beat_ai_count
         self._selected: str | None = None
-        self._state         = "task"   # "task" | "ai_thinking" | "reveal"
-        self._ai_timer      = 0.0
-        self._anim_tick     = 0.0
-        self._dots          = ""
-        self._correct       = False
-        self._beat_ai       = False
-        self._round_score   = 0
-        self._done          = False
+        self._state = "task"  # "task" | "ai_thinking" | "reveal"
+        self._ai_timer = 0.0
+        self._anim_tick = 0.0
+        self._dots = ""
+        self._correct = False
+        self._beat_ai = False
+        self._round_score = 0
+        self._done = False
         self._next: Scene | None = None
 
     # --- events ---------------------------------------------------------------
@@ -85,22 +85,22 @@ class PhaseClassifyScene(Scene):
     # --- state transitions ----------------------------------------------------
 
     def _submit(self, chosen: str) -> None:
-        self._selected  = chosen
-        self._state     = "ai_thinking"
-        self._ai_timer  = _AI_THINK_MS
+        self._selected = chosen
+        self._state = "ai_thinking"
+        self._ai_timer = _AI_THINK_MS
         self._anim_tick = 0.0
 
     def _calc_score(self) -> None:
-        ch              = self._challenge
-        self._correct   = self._selected == ch.answer
-        self._beat_ai   = self._correct and ch.model_answer != ch.answer
-        base            = _BASE_SCORE if self._correct else 0
-        bonus           = _BEAT_BONUS if self._beat_ai else 0
+        ch = self._challenge
+        self._correct = self._selected == ch.answer
+        self._beat_ai = self._correct and ch.model_answer != ch.answer
+        base = _BASE_SCORE if self._correct else 0
+        bonus = _BEAT_BONUS if self._beat_ai else 0
         self._round_score = base + bonus
 
     def _advance(self) -> None:
         new_score = self._session_score + self._round_score
-        new_beat  = self._beat_ai_count + (1 if self._beat_ai else 0)
+        new_beat = self._beat_ai_count + (1 if self._beat_ai else 0)
         if self._round_idx < len(self._challenges) - 1:
             self._next = PhaseClassifyScene(
                 self._challenges, self._round_idx + 1, new_score, new_beat
@@ -108,6 +108,7 @@ class PhaseClassifyScene(Scene):
         else:
             from cognitive_data_arcade.games.human_vs_model.challenge_data import DETECT_CHALLENGES
             from cognitive_data_arcade.games.human_vs_model.phase_detect import PhaseDetectScene
+
             self._next = PhaseDetectScene(DETECT_CHALLENGES, 0, new_score, new_beat)
         self._done = True
 
@@ -115,9 +116,9 @@ class PhaseClassifyScene(Scene):
 
     def update(self, dt_ms: float = 0.0) -> None:
         if self._state == "ai_thinking":
-            self._ai_timer  -= dt_ms
+            self._ai_timer -= dt_ms
             self._anim_tick += dt_ms
-            self._dots       = "." * (int(self._anim_tick / 400) % 4)
+            self._dots = "." * (int(self._anim_tick / 400) % 4)
             if self._ai_timer <= 0:
                 self._calc_score()
                 self._state = "reveal"
@@ -135,10 +136,14 @@ class PhaseClassifyScene(Scene):
         pygame.draw.line(surface, _GREY, (0, _TOP_H), (_W, _TOP_H))
         phase_lbl = get_font(13).render("EASY (C)", True, _GREEN)
         surface.blit(phase_lbl, (16, (_TOP_H - phase_lbl.get_height()) // 2))
-        rnd = get_font(13).render(f"Runda {self._round_idx + 1}/{len(self._challenges)}", True, _DIM)
+        rnd = get_font(13).render(
+            f"Runda {self._round_idx + 1}/{len(self._challenges)}", True, _DIM
+        )
         surface.blit(rnd, (_W // 2 - rnd.get_width() // 2, (_TOP_H - rnd.get_height()) // 2))
         score_lbl = get_font(13).render(f"{self._session_score} pkt", True, _AMBER)
-        surface.blit(score_lbl, (_W - score_lbl.get_width() - 16, (_TOP_H - score_lbl.get_height()) // 2))
+        surface.blit(
+            score_lbl, (_W - score_lbl.get_width() - 16, (_TOP_H - score_lbl.get_height()) // 2)
+        )
 
     def _draw_left_panel(self, surface: pygame.Surface) -> None:
         pygame.draw.rect(surface, _LEFT_BG, (0, _TOP_H, _MID, _H - _TOP_H))
@@ -170,12 +175,12 @@ class PhaseClassifyScene(Scene):
         for rect, opt in self._option_rects():
             is_sel = opt == self._selected
             if self._state == "task":
-                bg       = (20, 35, 55)
-                color    = _BLUE
+                bg = (20, 35, 55)
+                color = _BLUE
                 text_col = _WHITE
             elif self._state == "ai_thinking":
-                bg       = (25, 40, 60) if is_sel else (15, 15, 25)
-                color    = _BLUE if is_sel else _GREY
+                bg = (25, 40, 60) if is_sel else (15, 15, 25)
+                color = _BLUE if is_sel else _GREY
                 text_col = _WHITE if is_sel else _DIM
             else:  # reveal
                 if is_sel and self._correct:
@@ -188,7 +193,9 @@ class PhaseClassifyScene(Scene):
             pygame.draw.rect(surface, bg, rect, border_radius=6)
             pygame.draw.rect(surface, color, rect, 2 if is_sel else 1, border_radius=6)
             lbl = get_font(14).render(opt, True, text_col)
-            surface.blit(lbl, (rect.centerx - lbl.get_width() // 2, rect.centery - lbl.get_height() // 2))
+            surface.blit(
+                lbl, (rect.centerx - lbl.get_width() // 2, rect.centery - lbl.get_height() // 2)
+            )
 
         if self._state == "reveal":
             if self._round_score > 0:
@@ -218,7 +225,7 @@ class PhaseClassifyScene(Scene):
 
         elif self._state == "reveal":
             ch = self._challenge
-            ai_color   = _GREEN if ch.model_answer == ch.answer else _RED
+            ai_color = _GREEN if ch.model_answer == ch.answer else _RED
             ai_verdict = "poprawnie" if ch.model_answer == ch.answer else "BLAD"
             ai_lbl = get_font(16).render(f"AI: {ch.model_answer}", True, ai_color)
             surface.blit(ai_lbl, (cx - ai_lbl.get_width() // 2, _TOP_H + 60))

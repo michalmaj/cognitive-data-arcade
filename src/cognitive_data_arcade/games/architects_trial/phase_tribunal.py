@@ -15,9 +15,9 @@ _CARD_BG = (22, 30, 50)
 _HOVER_BG = (45, 55, 90)
 
 _JUDGES = [
-    ("fairness",       "Rzecznik Rownosci",        (239, 68, 68)),
-    ("compliance",     "Prawnik EU AI Act",         (96, 165, 250)),
-    ("effectiveness",  "Dyrektor ds. Skutecznosci", (34, 197, 94)),
+    ("fairness", "Rzecznik Rownosci", (239, 68, 68)),
+    ("compliance", "Prawnik EU AI Act", (96, 165, 250)),
+    ("effectiveness", "Dyrektor ds. Skutecznosci", (34, 197, 94)),
 ]
 
 _CHARGES = {
@@ -126,6 +126,7 @@ class PhaseTribunalScene(Scene):
         if self._done:
             return
         from cognitive_data_arcade.games.architects_trial.phase_result import PhaseResultScene
+
         self._next = PhaseResultScene(self._state)
         self._done = True
 
@@ -202,9 +203,11 @@ class PhaseTribunalScene(Scene):
         label_s = get_font(14).render("WERDYKT KOMISJI ETYCZNEJ", True, _DIM)
         surface.blit(label_s, (_W // 2 - label_s.get_width() // 2, 75))
 
-        criteria = [("Fairness", self._state.fairness_score, (239, 68, 68)),
-                    ("Compliance", self._state.compliance_score, (96, 165, 250)),
-                    ("Skutecznosc", self._state.effectiveness_score, (34, 197, 94))]
+        criteria = [
+            ("Fairness", self._state.fairness_score, (239, 68, 68)),
+            ("Compliance", self._state.compliance_score, (96, 165, 250)),
+            ("Skutecznosc", self._state.effectiveness_score, (34, 197, 94)),
+        ]
         bar_w, bar_h = 200, 18
         bx = _W // 2 - (3 * bar_w + 2 * 30) // 2
         by = 120
@@ -216,7 +219,9 @@ class PhaseTribunalScene(Scene):
             pygame.draw.rect(surface, (30, 35, 55), bg_rect, border_radius=4)
             fill_w = int(bar_w * score / 100)
             if fill_w > 0:
-                pygame.draw.rect(surface, color, pygame.Rect(x, by + 20, fill_w, bar_h), border_radius=4)
+                pygame.draw.rect(
+                    surface, color, pygame.Rect(x, by + 20, fill_w, bar_h), border_radius=4
+                )
             score_s = get_font(11).render(str(score), True, _WHITE)
             surface.blit(score_s, (x + bar_w // 2 - score_s.get_width() // 2, by + 44))
 

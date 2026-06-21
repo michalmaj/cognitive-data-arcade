@@ -3,20 +3,29 @@ from __future__ import annotations
 import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 
-_WHITE     = (240, 240, 240)
-_DIM       = (120, 120, 160)
-_ORANGE    = (243, 156,  18)
-_BLUE      = ( 52, 152, 219)
-_TRACK     = ( 42,  42,  80)
-_PANEL     = ( 18,  18,  42)
-_BLUE_DARK = ( 26,  58,  90)
+_WHITE = (240, 240, 240)
+_DIM = (120, 120, 160)
+_ORANGE = (243, 156, 18)
+_BLUE = (52, 152, 219)
+_TRACK = (42, 42, 80)
+_PANEL = (18, 18, 42)
+_BLUE_DARK = (26, 58, 90)
 
 
 class _FloatSlider:
     """Horizontal slider — identical to hypothesis_arena.widgets._FloatSlider."""
+
     def __init__(
-        self, label: str, min_v: float, max_v: float, default: float,
-        step: float, x: int, y: int, w: int, fmt: str = ".2f",
+        self,
+        label: str,
+        min_v: float,
+        max_v: float,
+        default: float,
+        step: float,
+        x: int,
+        y: int,
+        w: int,
+        fmt: str = ".2f",
     ) -> None:
         self._label = label
         self._min = min_v
@@ -86,9 +95,14 @@ class _VerticalSlider:
     y_top_px / y_bot_px: track extent in inner surface coords
     y_min / y_max: data space range
     """
+
     def __init__(
-        self, x_px: int, y_top_px: int, y_bot_px: int,
-        y_min: float, y_max: float,
+        self,
+        x_px: int,
+        y_top_px: int,
+        y_bot_px: int,
+        y_min: float,
+        y_max: float,
     ) -> None:
         self._x = x_px
         self._y_top = y_top_px

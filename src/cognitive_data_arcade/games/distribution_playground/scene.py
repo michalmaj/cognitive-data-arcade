@@ -9,12 +9,12 @@ from cognitive_data_arcade.games.distribution_playground.phase_a import PhaseASc
 from cognitive_data_arcade.games.distribution_playground.phase_b import PhaseBScene
 from cognitive_data_arcade.games.distribution_playground.phase_c import PhaseCScene
 
-_BG     = (15, 15, 35)
+_BG = (15, 15, 35)
 _NAV_BG = (18, 18, 45)
-_WHITE  = (240, 240, 240)
-_DIM    = (120, 120, 160)
+_WHITE = (240, 240, 240)
+_DIM = (120, 120, 160)
 _ACTIVE = (243, 156, 18)
-_NAV_H  = 48
+_NAV_H = 48
 _PHASE_NAMES = ["Eksploracja", "Zgadywanie", "Porównanie"]
 
 
@@ -69,7 +69,7 @@ class DistributionPlaygroundScene(Scene):
         font_sub = get_font(14)
 
         lbl = f"Faza {self._phase} / 3  -  {_PHASE_NAMES[self._phase - 1]}"
-        tw  = font_nav.size(lbl)[0]
+        tw = font_nav.size(lbl)[0]
         surface.blit(font_nav.render(lbl, True, _ACTIVE), ((1024 - tw) // 2, 8))
 
         surface.blit(font_nav.render("<", True, _WHITE), (20, 10))

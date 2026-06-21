@@ -48,11 +48,13 @@ def test_timing_constants_positive() -> None:
 
 def test_vsconfig_invalid_difficulty() -> None:
     import pytest
+
     with pytest.raises(ValueError, match="difficulty"):
         VSConfig(mode="letters", difficulty="impossible")
 
 
 def test_vsconfig_invalid_mode() -> None:
     import pytest
+
     with pytest.raises(ValueError, match="mode"):
         VSConfig(mode="video", difficulty="easy")

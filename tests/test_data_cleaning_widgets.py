@@ -21,6 +21,7 @@ def _rows(n: int = 10) -> list[DataRow]:
 
 # ── cursor navigation ───────────────────────────────────────────────────────────
 
+
 def test_cursor_starts_at_zero():
     t = TableWidget(_rows())
     assert t.cursor == 0
@@ -46,6 +47,7 @@ def test_down_at_last_row_does_not_overflow():
 
 
 # ── flag toggling ────────────────────────────────────────────────────────────────
+
 
 def test_space_flags_current_row_returns_flagged():
     t = TableWidget(_rows(10))
@@ -91,6 +93,7 @@ def _row(accuracy: float = 0.9) -> DataRow:
 
 # ── cursor ──────────────────────────────────────────────────────────────────────
 
+
 def test_popup_cursor_starts_at_zero():
     p = DecisionPopup(_row(), has_format_fix=False)
     assert p.cursor == 0
@@ -116,6 +119,7 @@ def test_popup_cursor_clamps_at_last_choice():
 
 
 # ── choices without format fix ──────────────────────────────────────────────────
+
 
 def test_popup_enter_returns_delete_by_default():
     p = DecisionPopup(_row(), has_format_fix=False)
@@ -143,6 +147,7 @@ def test_popup_key3_selects_keep():
 
 # ── choices with format fix ─────────────────────────────────────────────────────
 
+
 def test_popup_format_fix_replaces_median():
     p = DecisionPopup(_row(accuracy=85.0), has_format_fix=True)
     p.handle_keydown(pygame.K_2)  # index 1 → fix_format
@@ -163,6 +168,7 @@ def test_popup_nav_keys_return_none():
 
 # ── draw with hints_visible parameter ───────────────────────────────────────────
 
+
 def test_draw_with_hints_visible_false_does_not_raise():
     surface = pygame.Surface((800, 600))
     t = TableWidget(_rows(10))
@@ -179,12 +185,14 @@ def test_draw_with_hints_visible_true_does_not_raise():
 
 # ── scroll property ──────────────────────────────────────────────────────────────
 
+
 def test_scroll_property_starts_zero():
     t = TableWidget(_rows(20))
     assert t.scroll == 0
 
 
 # ── set_cursor ───────────────────────────────────────────────────────────────────
+
 
 def test_set_cursor_moves_cursor():
     t = TableWidget(_rows(20))
@@ -202,18 +210,19 @@ def test_set_cursor_adjusts_scroll_down():
 def test_set_cursor_adjusts_scroll_up():
     # Move cursor down to force scroll, then move cursor back up
     t = TableWidget(_rows(20))
-    t.set_cursor(16)   # scroll = 2
-    t.set_cursor(1)    # cursor 1 < scroll 2 → scroll becomes 1
+    t.set_cursor(16)  # scroll = 2
+    t.set_cursor(1)  # cursor 1 < scroll 2 → scroll becomes 1
     assert t.scroll == 1
 
 
 def test_set_cursor_out_of_range_ignored():
     t = TableWidget(_rows(5))
     t.set_cursor(99)
-    assert t.cursor == 0   # unchanged
+    assert t.cursor == 0  # unchanged
 
 
 # ── flag_toggle ──────────────────────────────────────────────────────────────────
+
 
 def test_flag_toggle_flags_row():
     t = TableWidget(_rows(5))
@@ -232,6 +241,7 @@ def test_flag_toggle_unflags_row():
 
 # ── wheel scrolling ──────────────────────────────────────────────────────────────
 
+
 def test_handle_wheel_scrolls_table():
     rows = [DataRow(i + 1, 1, i + 1, 400.0, 0.85) for i in range(50)]
     t = TableWidget(rows)
@@ -243,7 +253,7 @@ def test_handle_wheel_does_not_exceed_max():
     rows = [DataRow(i + 1, 1, i + 1, 400.0, 0.85) for i in range(20)]
     t = TableWidget(rows)
     t.handle_wheel(999)
-    assert t.scroll == 20 - VISIBLE_ROWS   # max = 5
+    assert t.scroll == 20 - VISIBLE_ROWS  # max = 5
 
 
 def test_handle_wheel_noop_when_fewer_rows_than_visible():
@@ -255,17 +265,18 @@ def test_handle_wheel_noop_when_fewer_rows_than_visible():
 
 # ── scrollbar mouse ──────────────────────────────────────────────────────────────
 
+
 def test_handle_mousedown_in_scrollbar_area_returns_true():
     # Scrollbar is at x = 40 + 420 + 8 = 468 (width 6 -> 468..474)
     rows = [DataRow(i + 1, 1, i + 1, 400.0, 0.85) for i in range(100)]
     t = TableWidget(rows)
-    assert t.handle_mousedown((470, 150))   # x inside scrollbar
+    assert t.handle_mousedown((470, 150))  # x inside scrollbar
 
 
 def test_handle_mousedown_outside_scrollbar_area_returns_false():
     rows = [DataRow(i + 1, 1, i + 1, 400.0, 0.85) for i in range(100)]
     t = TableWidget(rows)
-    assert not t.handle_mousedown((200, 150))   # x = 200 not in scrollbar
+    assert not t.handle_mousedown((200, 150))  # x = 200 not in scrollbar
 
 
 def test_handle_mousemotion_during_drag_changes_scroll():
@@ -273,7 +284,7 @@ def test_handle_mousemotion_during_drag_changes_scroll():
     t = TableWidget(rows)
     # Mousedown on thumb (scroll=0, thumb at top of scrollbar at y0=100). Scrollbar x=468.
     # thumb_h = max(20, round(15/100 * 420)) = 63. Thumb at y=100..163.
-    t.handle_mousedown((470, 102))   # y=102 is on the thumb
+    t.handle_mousedown((470, 102))  # y=102 is on the thumb
     # Drag down to y=300
     t.handle_mousemotion((470, 300), (1, 0, 0))
     assert t.scroll > 0

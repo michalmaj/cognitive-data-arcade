@@ -51,6 +51,7 @@ def test_config_constants() -> None:
         MINI_TRIALS,
         TIMEOUT_MS,
     )
+
     assert MINI_TRIALS == 8
     assert FIXATION_MS == 500
     assert FEEDBACK_MS == 400

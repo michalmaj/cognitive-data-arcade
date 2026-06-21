@@ -1,4 +1,5 @@
 """Lesson 26 -- Human vs Model Challenge (language model failure modes)."""
+
 from __future__ import annotations
 
 CONTENT: dict[str, dict[str, list[str]]] = {

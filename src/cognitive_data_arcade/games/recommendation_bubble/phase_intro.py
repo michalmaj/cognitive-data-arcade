@@ -7,13 +7,13 @@ from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState
 
 _W, _H = 1024, 720
-_BG    = (10, 10, 20)
+_BG = (10, 10, 20)
 _PANEL = (20, 14, 30)
 _WHITE = (240, 240, 240)
-_DIM   = (140, 140, 160)
-_C_USER    = (155, 89, 182)
+_DIM = (140, 140, 160)
+_C_USER = (155, 89, 182)
 _C_CURATOR = (39, 174, 96)
-_C_ALGO    = (230, 126, 34)
+_C_ALGO = (230, 126, 34)
 
 _LINES = [
     ("Co robi algorytm rekomendacji z Twoimi preferencjami?", _DIM),
@@ -41,6 +41,7 @@ class PhaseIntroScene(Scene):
 
     def _advance(self) -> None:
         from cognitive_data_arcade.games.recommendation_bubble.phase_user import PhaseUserScene
+
         self._next = PhaseUserScene(self._state)
         self._done = True
 

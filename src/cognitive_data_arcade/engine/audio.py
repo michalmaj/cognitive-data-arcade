@@ -29,10 +29,10 @@ def _build_sfx() -> None:
     global _sfx
     _sfx = {
         "navigate": _make_tone(440, 60),
-        "select":   _make_tone(660, 80),
-        "correct":  _make_tone(880, 120),
-        "wrong":    _make_tone(220, 150),
-        "pause":    _make_tone(550, 90),
+        "select": _make_tone(660, 80),
+        "correct": _make_tone(880, 120),
+        "wrong": _make_tone(220, 150),
+        "pause": _make_tone(550, 90),
     }
     _apply_sfx_volume()
 

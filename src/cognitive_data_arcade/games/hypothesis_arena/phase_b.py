@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
@@ -11,28 +12,32 @@ from cognitive_data_arcade.engine.chart import figure_to_surface
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.hypothesis_arena.simulator import (
-    TwoGroupResult, _SCENARIOS, compute_power, generate_two_groups,
-    min_n_for_power, strength_label,
+    TwoGroupResult,
+    _SCENARIOS,
+    compute_power,
+    generate_two_groups,
+    min_n_for_power,
+    strength_label,
 )
 from cognitive_data_arcade.games.hypothesis_arena.widgets import _AlphaButtons, _FloatSlider
 
-_BG     = (15,  15,  35)
-_PANEL  = (18,  18,  42)
-_WHITE  = (240, 240, 240)
-_DIM    = (120, 120, 160)
-_ORANGE = (243, 156,  18)
-_BLUE   = ( 52, 152, 219)
-_GREEN  = ( 39, 174,  96)
-_RED    = (231,  76,  60)
+_BG = (15, 15, 35)
+_PANEL = (18, 18, 42)
+_WHITE = (240, 240, 240)
+_DIM = (120, 120, 160)
+_ORANGE = (243, 156, 18)
+_BLUE = (52, 152, 219)
+_GREEN = (39, 174, 96)
+_RED = (231, 76, 60)
 _FIG_BG = "#0f0f23"
 
-_TOP_H  = 80
+_TOP_H = 80
 _AREA_H = 672
 _AREA_W = 1024
 _SCAT_W = 570
 _CTRL_W = _AREA_W - _SCAT_W  # 454
-_SCAT_H = _AREA_H - _TOP_H   # 592
-_DPI    = 100
+_SCAT_H = _AREA_H - _TOP_H  # 592
+_DPI = 100
 
 
 def _make_n_slider(x: int, y: int, w: int, max_n: int) -> _FloatSlider:
@@ -74,19 +79,28 @@ class PhaseBScene(Scene):
         if r is not None:
             rng = np.random.default_rng(12)
             jit = rng.uniform(-0.18, 0.18, n)
-            ax.scatter(jit,       r.x_ctrl,  s=14, alpha=0.6, color="#3498db", label="Kontrola")
+            ax.scatter(jit, r.x_ctrl, s=14, alpha=0.6, color="#3498db", label="Kontrola")
             ax.scatter(jit + 1.0, r.x_treat, s=14, alpha=0.6, color="#f39c12", label="Interwencja")
-            ax.hlines(r.x_ctrl.mean(),  -0.28, 0.28, colors="#3498db", lw=2.5)
-            ax.hlines(r.x_treat.mean(),  0.72, 1.28, colors="#f39c12", lw=2.5)
+            ax.hlines(r.x_ctrl.mean(), -0.28, 0.28, colors="#3498db", lw=2.5)
+            ax.hlines(r.x_treat.mean(), 0.72, 1.28, colors="#f39c12", lw=2.5)
             ax.set_xticks([0, 1])
             ax.set_xticklabels(
                 [f"Kontrola\nN={n}", f"Interwencja\nN={n}"],
-                color="white", fontsize=9,
+                color="white",
+                fontsize=9,
             )
             p_color = "#e74c3c" if r.p_value < alpha else "#27ae60"
-            ax.text(0.98, 0.97, f"p = {r.p_value:.4f}",
-                    transform=ax.transAxes, ha="right", va="top",
-                    color=p_color, fontsize=11, fontweight="bold")
+            ax.text(
+                0.98,
+                0.97,
+                f"p = {r.p_value:.4f}",
+                transform=ax.transAxes,
+                ha="right",
+                va="top",
+                color=p_color,
+                fontsize=11,
+                fontweight="bold",
+            )
         ax.legend(fontsize=9, facecolor=_FIG_BG, labelcolor="white", framealpha=0.5)
         ax.tick_params(colors="#787890", labelsize=8)
         for spine in ax.spines.values():
@@ -95,9 +109,7 @@ class PhaseBScene(Scene):
         return surf
 
     def _power(self) -> float:
-        return compute_power(
-            int(self._sl_n.value), self._scenario.true_d, self._alpha_btn.value
-        )
+        return compute_power(int(self._sl_n.value), self._scenario.true_d, self._alpha_btn.value)
 
     def _is_well_designed(self) -> bool:
         r = self._result
@@ -141,7 +153,6 @@ class PhaseBScene(Scene):
         self._sl_n = _make_n_slider(cx, _TOP_H + 56, cw, self._scenario.max_n)
 
     def handle_event(self, event: pygame.event.Event) -> None:
-        changed = False
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             pos = event.pos
             # run button
@@ -156,15 +167,12 @@ class PhaseBScene(Scene):
                     self._advance()
                     return
             # slider
-            if self._sl_n.handle_mousedown(pos):
-                changed = True
+            self._sl_n.handle_mousedown(pos)
         elif event.type == pygame.MOUSEMOTION:
-            if self._sl_n.handle_mousemotion(event.pos, event.buttons):
-                changed = True
+            self._sl_n.handle_mousemotion(event.pos, event.buttons)
         elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
             self._sl_n._dragging = False
-        if self._alpha_btn.handle_event(event):
-            changed = True
+        self._alpha_btn.handle_event(event)
 
     def update(self, dt_ms: float = 0.0) -> None:
         pass
@@ -189,7 +197,11 @@ class PhaseBScene(Scene):
         counter = f"Scenariusz {self._scenario_idx + 1} / {len(_SCENARIOS)}"
         surface.blit(font_sm.render(counter, True, _ORANGE), (12, 6))
         surface.blit(font_lg.render(sc.title_pl, True, _WHITE), (12, 22))
-        ctx = sc.context_pl if len(sc.context_pl) <= 88 else sc.context_pl[:85].rsplit(" ", 1)[0] + "..."
+        ctx = (
+            sc.context_pl
+            if len(sc.context_pl) <= 88
+            else sc.context_pl[:85].rsplit(" ", 1)[0] + "..."
+        )
         surface.blit(font_sm.render(ctx, True, _DIM), (12, 54))
         chip = font_sm.render(f"max N = {sc.max_n}", True, _DIM)
         surface.blit(chip, (_AREA_W - chip.get_width() - 12, 18))
@@ -227,9 +239,9 @@ class PhaseBScene(Scene):
         font_md = get_font(17)
         y = _TOP_H + 238
         rows = [
-            ("p-value",     f"{r.p_value:.4f}", _GREEN if r.p_value >= alpha else _RED),
-            ("Cohen's d",   f"{r.cohens_d:.3f} ({strength_label(r.cohens_d)})", _WHITE),
-            ("Moc testu",   f"{power * 100:.0f}%", _GREEN if power >= 0.80 else _ORANGE),
+            ("p-value", f"{r.p_value:.4f}", _GREEN if r.p_value >= alpha else _RED),
+            ("Cohen's d", f"{r.cohens_d:.3f} ({strength_label(r.cohens_d)})", _WHITE),
+            ("Moc testu", f"{power * 100:.0f}%", _GREEN if power >= 0.80 else _ORANGE),
             ("N do mocy 80%", f"ok. {n_80}", _WHITE),
         ]
         for label, val, col in rows:

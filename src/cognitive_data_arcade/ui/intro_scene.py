@@ -44,6 +44,7 @@ class TitleScene(Scene):
         profile = self._pm.load()
         if not profile.seen_intro:
             from cognitive_data_arcade.ui.app_tutorial_scene import AppTutorialScene
+
             self._next = AppTutorialScene(self._pm, self._strings)
             self._done = True
         else:
@@ -51,6 +52,7 @@ class TitleScene(Scene):
 
     def _go_to_menu(self) -> None:
         from cognitive_data_arcade.ui.menu import LessonMenuScene
+
         self._next = LessonMenuScene(self._pm, self._strings)
         self._done = True
 

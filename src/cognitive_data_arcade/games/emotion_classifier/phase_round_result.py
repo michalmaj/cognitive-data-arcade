@@ -6,28 +6,29 @@ import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.emotion_classifier.lexicon import (
-    LEXICON, TRAP_LABELS, classify,
+    TRAP_LABELS,
+    classify,
 )
 from cognitive_data_arcade.games.emotion_classifier.sentences import Sentence
 
-_W, _H    = 1024, 720
-_BG       = (15, 15, 35)
-_PANEL    = (18, 18, 42)
-_WHITE    = (240, 240, 240)
-_DIM      = (100, 100, 130)
-_GREEN    = (39, 174, 96)
-_RED      = (231, 76, 60)
-_PURPLE   = (155, 89, 182)
-_AMBER    = (240, 165, 0)
-_ORANGE   = (230, 126, 34)
-_GREY     = (80, 80, 100)
+_W, _H = 1024, 720
+_BG = (15, 15, 35)
+_PANEL = (18, 18, 42)
+_WHITE = (240, 240, 240)
+_DIM = (100, 100, 130)
+_GREEN = (39, 174, 96)
+_RED = (231, 76, 60)
+_PURPLE = (155, 89, 182)
+_AMBER = (240, 165, 0)
+_ORANGE = (230, 126, 34)
+_GREY = (80, 80, 100)
 
 _VERDICT_COLORS = {"positive": _GREEN, "negative": _RED, "neutral": _DIM, "mixed": _PURPLE}
-_VERDICT_TEXT   = {
+_VERDICT_TEXT = {
     "positive": "POZYTYWNY",
     "negative": "NEGATYWNY",
-    "neutral":  "NEUTRALNY",
-    "mixed":    "MIESZANY",
+    "neutral": "NEUTRALNY",
+    "mixed": "MIESZANY",
 }
 
 _NEGATION_WORDS = {"nie", "nikt", "żadnych", "żadne", "nigdy"}
@@ -69,6 +70,7 @@ class PhaseRoundResultScene(Scene):
     def _advance(self) -> None:
         if self._round_idx + 1 < len(self._sentences):
             from cognitive_data_arcade.games.emotion_classifier.phase_round import PhaseRoundScene
+
             self._next = PhaseRoundScene(
                 sentences=self._sentences,
                 round_idx=self._round_idx + 1,
@@ -76,7 +78,10 @@ class PhaseRoundResultScene(Scene):
                 round_results=self._round_results,
             )
         else:
-            from cognitive_data_arcade.games.emotion_classifier.phase_session_result import PhaseSessionResultScene
+            from cognitive_data_arcade.games.emotion_classifier.phase_session_result import (
+                PhaseSessionResultScene,
+            )
+
             self._next = PhaseSessionResultScene(
                 session_score=self._session_score,
                 round_results=self._round_results,
@@ -131,7 +136,9 @@ class PhaseRoundResultScene(Scene):
                 s_lbl = font10.render(f"{score_val}", True, _RED)
                 surface.blit(s_lbl, (x + w // 2 - s_lbl.get_width() // 2, y))
             elif is_negation:
-                pygame.draw.rect(surface, _ORANGE, (x, y + score_h + 2, w, chip_h), border_radius=12)
+                pygame.draw.rect(
+                    surface, _ORANGE, (x, y + score_h + 2, w, chip_h), border_radius=12
+                )
                 col = _WHITE
                 neg_lbl = font10.render("NEG!", True, _ORANGE)
                 surface.blit(neg_lbl, (x + w // 2 - neg_lbl.get_width() // 2, y))
@@ -178,10 +185,10 @@ class PhaseRoundResultScene(Scene):
     def _draw_score_row(self, surface: pygame.Surface, y: int) -> None:
         r = self._result
         parts = [
-            (f"Trafione tagi: +{r['correct_pts']}", _GREEN if r['correct_pts'] else _DIM),
-            (f"Błędy: {r['wrong_pts']}", _RED if r['wrong_pts'] else _DIM),
-            (f"Pobiłeś leksykon: +{r['beat_bonus']}", _AMBER if r['beat_bonus'] else _DIM),
-            (f"Szybkość: +{r['speed_bonus']}", _PURPLE if r['speed_bonus'] else _DIM),
+            (f"Trafione tagi: +{r['correct_pts']}", _GREEN if r["correct_pts"] else _DIM),
+            (f"Błędy: {r['wrong_pts']}", _RED if r["wrong_pts"] else _DIM),
+            (f"Pobiłeś leksykon: +{r['beat_bonus']}", _AMBER if r["beat_bonus"] else _DIM),
+            (f"Szybkość: +{r['speed_bonus']}", _PURPLE if r["speed_bonus"] else _DIM),
         ]
         x = 40
         for text, col in parts:
@@ -196,7 +203,9 @@ class PhaseRoundResultScene(Scene):
         pygame.draw.rect(surface, _PANEL, btn, border_radius=6)
         pygame.draw.rect(surface, _GREY, btn, 1, border_radius=6)
         blbl = get_font(13).render("DALEJ (SPACJA)", True, _WHITE)
-        surface.blit(blbl, (btn.centerx - blbl.get_width() // 2, btn.centery - blbl.get_height() // 2))
+        surface.blit(
+            blbl, (btn.centerx - blbl.get_width() // 2, btn.centery - blbl.get_height() // 2)
+        )
 
     def is_done(self) -> bool:
         return self._done

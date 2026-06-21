@@ -1,5 +1,6 @@
 # src/cognitive_data_arcade/lessons/lesson_19.py
 """Lesson 19 - Overfitting Monster (overfitting and model validation)."""
+
 from __future__ import annotations
 
 CONTENT: dict[str, dict[str, list[str]]] = {

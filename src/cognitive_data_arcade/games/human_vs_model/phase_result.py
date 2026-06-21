@@ -7,16 +7,16 @@ import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 
-_W, _H  = 1024, 720
-_BG     = (15, 15, 35)
+_W, _H = 1024, 720
+_BG = (15, 15, 35)
 _TOP_BG = (10, 10, 28)
-_PANEL  = (18, 18, 42)
-_WHITE  = (240, 240, 240)
-_DIM    = (120, 120, 160)
-_GOLD   = (240, 165, 0)
-_GREY   = (60, 60, 80)
-_BLUE   = (52, 152, 219)
-_GREEN  = (39, 174, 96)
+_PANEL = (18, 18, 42)
+_WHITE = (240, 240, 240)
+_DIM = (120, 120, 160)
+_GOLD = (240, 165, 0)
+_GREY = (60, 60, 80)
+_BLUE = (52, 152, 219)
+_GREEN = (39, 174, 96)
 
 _BTN_PLAY = pygame.Rect(_W // 2 - 120, 460, 240, 50)
 _BTN_MENU = pygame.Rect(_W // 2 - 120, 530, 240, 50)
@@ -65,6 +65,7 @@ class PhaseResultScene(Scene):
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             if _BTN_PLAY.collidepoint(event.pos):
                 from cognitive_data_arcade.games.human_vs_model.phase_intro import PhaseIntroScene
+
                 self._next = PhaseIntroScene()
                 self._done = True
             elif _BTN_MENU.collidepoint(event.pos):
@@ -124,7 +125,10 @@ class PhaseResultScene(Scene):
         lbl_play = get_font(20).render("Zagraj ponownie", True, _GREEN)
         surface.blit(
             lbl_play,
-            (_W // 2 - lbl_play.get_width() // 2, _BTN_PLAY.y + (_BTN_PLAY.height - lbl_play.get_height()) // 2),
+            (
+                _W // 2 - lbl_play.get_width() // 2,
+                _BTN_PLAY.y + (_BTN_PLAY.height - lbl_play.get_height()) // 2,
+            ),
         )
 
         # "Menu" button
@@ -133,7 +137,10 @@ class PhaseResultScene(Scene):
         lbl_menu = get_font(20).render("Menu", True, _BLUE)
         surface.blit(
             lbl_menu,
-            (_W // 2 - lbl_menu.get_width() // 2, _BTN_MENU.y + (_BTN_MENU.height - lbl_menu.get_height()) // 2),
+            (
+                _W // 2 - lbl_menu.get_width() // 2,
+                _BTN_MENU.y + (_BTN_MENU.height - lbl_menu.get_height()) // 2,
+            ),
         )
 
     def is_done(self) -> bool:

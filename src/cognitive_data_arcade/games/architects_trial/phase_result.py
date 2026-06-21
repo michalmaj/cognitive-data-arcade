@@ -41,9 +41,11 @@ class PhaseResultScene(Scene):
             state.fairness_score, state.compliance_score, state.effectiveness_score
         )
         worst = min(
-            [("fairness", state.fairness_score),
-             ("compliance", state.compliance_score),
-             ("effectiveness", state.effectiveness_score)],
+            [
+                ("fairness", state.fairness_score),
+                ("compliance", state.compliance_score),
+                ("effectiveness", state.effectiveness_score),
+            ],
             key=lambda x: x[1],
         )
         self._comment = _WORST_COMMENTS[worst[0]]
@@ -56,6 +58,7 @@ class PhaseResultScene(Scene):
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             if self._btn_replay.collidepoint(event.pos):
                 from cognitive_data_arcade.games.architects_trial.game import ArchitectsTrialScene
+
                 self._next = ArchitectsTrialScene()
                 self._done = True
             elif self._btn_menu.collidepoint(event.pos):
@@ -94,10 +97,14 @@ class PhaseResultScene(Scene):
             x = bx + i * (bar_w + 24)
             name_s = get_font(12).render(name, True, _DIM)
             surface.blit(name_s, (x + bar_w // 2 - name_s.get_width() // 2, by))
-            pygame.draw.rect(surface, (30, 35, 55), pygame.Rect(x, by + 18, bar_w, bar_h), border_radius=4)
+            pygame.draw.rect(
+                surface, (30, 35, 55), pygame.Rect(x, by + 18, bar_w, bar_h), border_radius=4
+            )
             fill_w = int(bar_w * score / 100)
             if fill_w > 0:
-                pygame.draw.rect(surface, color, pygame.Rect(x, by + 18, fill_w, bar_h), border_radius=4)
+                pygame.draw.rect(
+                    surface, color, pygame.Rect(x, by + 18, fill_w, bar_h), border_radius=4
+                )
             sc_s = get_font(11).render(str(score), True, _WHITE)
             surface.blit(sc_s, (x + bar_w // 2 - sc_s.get_width() // 2, by + 42))
 
@@ -107,14 +114,24 @@ class PhaseResultScene(Scene):
         pygame.draw.rect(surface, _PANEL, self._btn_replay, border_radius=6)
         pygame.draw.rect(surface, _GREY, self._btn_replay, 1, border_radius=6)
         rl = get_font(14).render("Zagraj -- inna domena", True, (180, 180, 200))
-        surface.blit(rl, (self._btn_replay.x + (self._btn_replay.w - rl.get_width()) // 2,
-                          self._btn_replay.y + (self._btn_replay.h - rl.get_height()) // 2))
+        surface.blit(
+            rl,
+            (
+                self._btn_replay.x + (self._btn_replay.w - rl.get_width()) // 2,
+                self._btn_replay.y + (self._btn_replay.h - rl.get_height()) // 2,
+            ),
+        )
 
         pygame.draw.rect(surface, _PANEL, self._btn_menu, border_radius=6)
         pygame.draw.rect(surface, _PURPLE, self._btn_menu, 1, border_radius=6)
         ml = get_font(14).render("Menu", True, _PURPLE)
-        surface.blit(ml, (self._btn_menu.x + (self._btn_menu.w - ml.get_width()) // 2,
-                          self._btn_menu.y + (self._btn_menu.h - ml.get_height()) // 2))
+        surface.blit(
+            ml,
+            (
+                self._btn_menu.x + (self._btn_menu.w - ml.get_width()) // 2,
+                self._btn_menu.y + (self._btn_menu.h - ml.get_height()) // 2,
+            ),
+        )
 
     def is_done(self) -> bool:
         return self._done

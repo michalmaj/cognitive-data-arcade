@@ -1,33 +1,38 @@
 # src/cognitive_data_arcade/games/bias_blind_spot/phase_engineer.py
 """Act 2 -- Engineer: 3 mandatory rounds of feature removal."""
+
 from __future__ import annotations
 import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.bias_blind_spot.game_state import (
-    GameState, FEATURES, STARTING_BIAS, STARTING_ACC,
-    compute_round_result, compute_score_engineer,
+    GameState,
+    FEATURES,
+    STARTING_BIAS,
+    STARTING_ACC,
+    compute_round_result,
+    compute_score_engineer,
 )
 
 _W, _H = 1024, 720
-_BG    = (8, 12, 20)
+_BG = (8, 12, 20)
 _PANEL = (16, 20, 36)
 _WHITE = (240, 240, 240)
-_DIM   = (130, 130, 150)
+_DIM = (130, 130, 150)
 _GREEN = (39, 174, 96)
-_RED   = (231, 76, 60)
+_RED = (231, 76, 60)
 _ORANGE = (243, 156, 18)
 _C_ENG = (39, 174, 96)
 
 _FEAT_LEFT = 60
-_FEAT_TOP  = 100
-_FEAT_W    = 320
-_FEAT_H    = 44
-_FEAT_GAP  = 12
+_FEAT_TOP = 100
+_FEAT_W = 320
+_FEAT_H = 44
+_FEAT_GAP = 12
 
 _TRAIN_BTN = pygame.Rect(420, 560, 200, 50)
 
-_HINT_ZIP  = "Wskazowka: zip_code r=0.71 -- sprobuj go usunac"
+_HINT_ZIP = "Wskazowka: zip_code r=0.71 -- sprobuj go usunac"
 _HINT_DEBT = "Wskazowka: debt_ratio r=0.41 -- kolejne proxy"
 
 _REVEAL = [
@@ -92,11 +97,17 @@ class PhaseEngineerScene(Scene):
             self._state.score_engineer = compute_score_engineer(bias_reduction, self._accuracy)
             lines = [
                 ("Runda 3 zakonczona.", _C_ENG),
-                (f"Finalny bias: {self._bias:.0f}pp -- Dokladnosc: {self._accuracy*100:.0f}%", _DIM),
+                (
+                    f"Finalny bias: {self._bias:.0f}pp -- Dokladnosc: {self._accuracy * 100:.0f}%",
+                    _DIM,
+                ),
                 ("", (0, 0, 0)),
                 ("SPACJA aby kontynuowac", (60, 60, 80)),
             ]
-            from cognitive_data_arcade.games.bias_blind_spot.phase_interlude import PhaseInterludeScene
+            from cognitive_data_arcade.games.bias_blind_spot.phase_interlude import (
+                PhaseInterludeScene,
+            )
+
             self._next = PhaseInterludeScene(self._state, lines, "regulator")
             self._done = True
 
@@ -113,9 +124,7 @@ class PhaseEngineerScene(Scene):
     def draw(self, surface: pygame.Surface) -> None:
         surface.fill(_BG)
         pygame.draw.rect(surface, _PANEL, (0, 0, _W, 56))
-        title = get_font(20).render(
-            f"Akt 2: Inzynier -- Runda {self._round}/3", True, _WHITE
-        )
+        title = get_font(20).render(f"Akt 2: Inzynier -- Runda {self._round}/3", True, _WHITE)
         surface.blit(title, (_W // 2 - title.get_width() // 2, 14))
 
         f13 = get_font(13)
@@ -170,7 +179,7 @@ class PhaseEngineerScene(Scene):
             pygame.draw.rect(surface, bias_col, (sx, sy, bar_w, 18), border_radius=3)
         sy += 30
 
-        acc_s = f13.render(f"Dokladnosc: {self._accuracy*100:.0f}%", True, _WHITE)
+        acc_s = f13.render(f"Dokladnosc: {self._accuracy * 100:.0f}%", True, _WHITE)
         surface.blit(acc_s, (sx, sy))
         sy += 40
 
@@ -191,8 +200,13 @@ class PhaseEngineerScene(Scene):
         if not self._trained:
             pygame.draw.rect(surface, _C_ENG, _TRAIN_BTN, border_radius=8)
             tl = get_font(18).render("TRENUJ", True, (0, 0, 0))
-            surface.blit(tl, (_TRAIN_BTN.x + _TRAIN_BTN.w // 2 - tl.get_width() // 2,
-                               _TRAIN_BTN.y + _TRAIN_BTN.h // 2 - tl.get_height() // 2))
+            surface.blit(
+                tl,
+                (
+                    _TRAIN_BTN.x + _TRAIN_BTN.w // 2 - tl.get_width() // 2,
+                    _TRAIN_BTN.y + _TRAIN_BTN.h // 2 - tl.get_height() // 2,
+                ),
+            )
 
         if self._show_advance:
             sp = f11.render("SPACJA -- nastepna runda", True, (80, 80, 100))

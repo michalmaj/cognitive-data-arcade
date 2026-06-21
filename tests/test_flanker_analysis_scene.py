@@ -56,9 +56,7 @@ def test_flanker_analysis_scene_space_returns_to_back(tmp_path: Path) -> None:
     scene = FlankerAnalysisScene(csv_path, EN, back_scene=back_scene)
     assert not scene.is_done()
 
-    scene.handle_event(
-        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_SPACE, mod=0, unicode=" ")
-    )
+    scene.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_SPACE, mod=0, unicode=" "))
     assert scene.is_done()
     assert scene.next_scene() is back_scene
 

@@ -35,9 +35,7 @@ def _make_profile(ap: int = 0) -> Profile:
     )
 
 
-def _make_scene(
-    tmp_path: Path, new_badge_ids: list[str] | None = None
-) -> SessionSummaryScene:
+def _make_scene(tmp_path: Path, new_badge_ids: list[str] | None = None) -> SessionSummaryScene:
     pygame.init()
     pm = ProfileManager(tmp_path / "profile.json")
     profile_before = _make_profile(ap=200)
@@ -59,17 +57,13 @@ def test_session_summary_is_not_done_initially(tmp_path: Path) -> None:
 
 def test_session_summary_space_key_is_done(tmp_path: Path) -> None:
     scene = _make_scene(tmp_path)
-    scene.handle_event(
-        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_SPACE, mod=0, unicode=" ")
-    )
+    scene.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_SPACE, mod=0, unicode=" "))
     assert scene.is_done()
 
 
 def test_session_summary_esc_key_is_done(tmp_path: Path) -> None:
     scene = _make_scene(tmp_path)
-    scene.handle_event(
-        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode="")
-    )
+    scene.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode=""))
     assert scene.is_done()
 
 
@@ -107,9 +101,7 @@ def test_session_summary_next_scene_after_space_is_menu(tmp_path: Path) -> None:
     from cognitive_data_arcade.ui.menu import LessonMenuScene
 
     scene = _make_scene(tmp_path)
-    scene.handle_event(
-        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_SPACE, mod=0, unicode=" ")
-    )
+    scene.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_SPACE, mod=0, unicode=" "))
     assert isinstance(scene.next_scene(), LessonMenuScene)
 
 
@@ -117,8 +109,6 @@ def test_session_summary_p_key_transitions_to_profile(tmp_path: Path) -> None:
     from cognitive_data_arcade.ui.profile_screen import ProfileScene
 
     scene = _make_scene(tmp_path)
-    scene.handle_event(
-        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_p, mod=0, unicode="p")
-    )
+    scene.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_p, mod=0, unicode="p"))
     assert scene.is_done()
     assert isinstance(scene.next_scene(), ProfileScene)

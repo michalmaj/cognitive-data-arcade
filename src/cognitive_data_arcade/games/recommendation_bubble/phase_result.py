@@ -3,22 +3,25 @@ import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.recommendation_bubble.game_state import (
-    GameState, CATEGORIES, CAT_COLORS, diversity, profile_from_clicks,
+    GameState,
+    CATEGORIES,
+    CAT_COLORS,
+    profile_from_clicks,
 )
 
 _W, _H = 1024, 720
-_BG     = (10, 10, 20)
-_PANEL  = (20, 14, 30)
-_WHITE  = (240, 240, 240)
-_DIM    = (140, 140, 160)
-_GOLD   = (243, 156, 18)
-_GREY   = (60, 60, 80)
-_C_USER    = (155, 89, 182)
+_BG = (10, 10, 20)
+_PANEL = (20, 14, 30)
+_WHITE = (240, 240, 240)
+_DIM = (140, 140, 160)
+_GOLD = (243, 156, 18)
+_GREY = (60, 60, 80)
+_C_USER = (155, 89, 182)
 _C_CURATOR = (39, 174, 96)
-_C_ALGO    = (230, 126, 34)
+_C_ALGO = (230, 126, 34)
 
 _BTN_REPLAY = pygame.Rect(_W // 2 - 210, _H - 76, 190, 44)
-_BTN_MENU   = pygame.Rect(_W // 2 + 20,  _H - 76, 190, 44)
+_BTN_MENU = pygame.Rect(_W // 2 + 20, _H - 76, 190, 44)
 
 _AHA_STRONG = (
     "Algorytm nie jest zly. Po prostu optymalizuje to, o co go prosisz. "
@@ -68,7 +71,10 @@ class PhaseResultScene(Scene):
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             if _BTN_REPLAY.collidepoint(event.pos):
-                from cognitive_data_arcade.games.recommendation_bubble.game import RecommendationBubbleScene
+                from cognitive_data_arcade.games.recommendation_bubble.game import (
+                    RecommendationBubbleScene,
+                )
+
                 self._next = RecommendationBubbleScene()
                 self._done = True
             elif _BTN_MENU.collidepoint(event.pos):
@@ -80,8 +86,10 @@ class PhaseResultScene(Scene):
 
     def _curated_profile(self) -> dict[str, float]:
         from cognitive_data_arcade.games.recommendation_bubble.game_state import (
-            generate_slots, curated_profile,
+            generate_slots,
+            curated_profile,
         )
+
         slots = self._state.curator_slots or generate_slots(self._state.bubble, n=6, seed=1)
         return curated_profile(slots)
 
@@ -89,8 +97,12 @@ class PhaseResultScene(Scene):
         self,
         surface: pygame.Surface,
         profile: dict[str, float],
-        x: int, y: int, w: int, h: int,
-        label: str, label_color: tuple[int, int, int],
+        x: int,
+        y: int,
+        w: int,
+        h: int,
+        label: str,
+        label_color: tuple[int, int, int],
         div_value: float,
     ) -> None:
         lbl = get_font(11).render(label, True, label_color)
@@ -102,9 +114,15 @@ class PhaseResultScene(Scene):
             bh = int(profile[cat] * max_bar_h)
             color = CAT_COLORS[cat]
             if bh > 0:
-                pygame.draw.rect(surface, color, pygame.Rect(bx, y + 18 + (max_bar_h - bh), bar_w, bh))
-        d_color = (231, 76, 60) if div_value < 0.35 else ((243, 156, 18) if div_value < 0.65 else (46, 204, 113))
-        d_s = get_font(11).render(f"D={int(div_value*100)}%", True, d_color)
+                pygame.draw.rect(
+                    surface, color, pygame.Rect(bx, y + 18 + (max_bar_h - bh), bar_w, bh)
+                )
+        d_color = (
+            (231, 76, 60)
+            if div_value < 0.35
+            else ((243, 156, 18) if div_value < 0.65 else (46, 204, 113))
+        )
+        d_s = get_font(11).render(f"D={int(div_value * 100)}%", True, d_color)
         surface.blit(d_s, (x + w // 2 - d_s.get_width() // 2, y + h - 18))
 
     def draw(self, surface: pygame.Surface) -> None:
@@ -122,9 +140,14 @@ class PhaseResultScene(Scene):
         chart_w = 280
         chart_h = 200
         charts = [
-            (self._state.bubble,                    "AKT 1 UZYTKOWNIK",  _C_USER,    self._state.diversity_act1),
-            (self._curated_profile(),               "AKT 2 KURATOR",     _C_CURATOR, self._state.diversity_act2),
-            (_profile_from_algo_clicks(self._state), "AKT 3 ALGORYTM",   _C_ALGO,    self._state.diversity_act3),
+            (self._state.bubble, "AKT 1 UZYTKOWNIK", _C_USER, self._state.diversity_act1),
+            (self._curated_profile(), "AKT 2 KURATOR", _C_CURATOR, self._state.diversity_act2),
+            (
+                _profile_from_algo_clicks(self._state),
+                "AKT 3 ALGORYTM",
+                _C_ALGO,
+                self._state.diversity_act3,
+            ),
         ]
         gap = (_W - 3 * chart_w) // 4
         for i, (profile, label, color, d) in enumerate(charts):
@@ -147,24 +170,31 @@ class PhaseResultScene(Scene):
         pygame.draw.rect(surface, _PANEL, (50, score_y, _W - 100, 60), border_radius=4)
         score_text = get_font(16).render(
             f"Kurator: {self._state.score_curator} pkt  |  Algo engagement: {self._state.score_algo}",
-            True, _DIM,
+            True,
+            _DIM,
         )
         surface.blit(score_text, (_W // 2 - score_text.get_width() // 2, score_y + 20))
 
         pygame.draw.rect(surface, _PANEL, _BTN_REPLAY, border_radius=6)
         pygame.draw.rect(surface, _GREY, _BTN_REPLAY, 1, border_radius=6)
         r_lbl = get_font(16).render("Zagraj ponownie", True, (180, 180, 200))
-        surface.blit(r_lbl, (
-            _BTN_REPLAY.x + (_BTN_REPLAY.w - r_lbl.get_width()) // 2,
-            _BTN_REPLAY.y + (_BTN_REPLAY.h - r_lbl.get_height()) // 2,
-        ))
+        surface.blit(
+            r_lbl,
+            (
+                _BTN_REPLAY.x + (_BTN_REPLAY.w - r_lbl.get_width()) // 2,
+                _BTN_REPLAY.y + (_BTN_REPLAY.h - r_lbl.get_height()) // 2,
+            ),
+        )
         pygame.draw.rect(surface, _PANEL, _BTN_MENU, border_radius=6)
         pygame.draw.rect(surface, _C_USER, _BTN_MENU, 1, border_radius=6)
         m_lbl = get_font(16).render("Menu", True, _C_USER)
-        surface.blit(m_lbl, (
-            _BTN_MENU.x + (_BTN_MENU.w - m_lbl.get_width()) // 2,
-            _BTN_MENU.y + (_BTN_MENU.h - m_lbl.get_height()) // 2,
-        ))
+        surface.blit(
+            m_lbl,
+            (
+                _BTN_MENU.x + (_BTN_MENU.w - m_lbl.get_width()) // 2,
+                _BTN_MENU.y + (_BTN_MENU.h - m_lbl.get_height()) // 2,
+            ),
+        )
 
     def is_done(self) -> bool:
         return self._done

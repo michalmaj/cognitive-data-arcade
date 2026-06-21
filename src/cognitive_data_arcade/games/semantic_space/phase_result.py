@@ -7,29 +7,29 @@ import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 
-_W, _H   = 1024, 720
-_BG      = (15, 15, 35)
-_PANEL   = (18, 18, 42)
-_WHITE   = (240, 240, 240)
-_DIM     = (100, 100, 130)
-_AMBER   = (240, 165, 0)
-_GREEN   = (39, 174, 96)
-_RED     = (231, 76, 60)
-_GREY    = (60, 60, 80)
-_BLUE    = (52, 152, 219)
-_PURPLE  = (155, 89, 182)
+_W, _H = 1024, 720
+_BG = (15, 15, 35)
+_PANEL = (18, 18, 42)
+_WHITE = (240, 240, 240)
+_DIM = (100, 100, 130)
+_AMBER = (240, 165, 0)
+_GREEN = (39, 174, 96)
+_RED = (231, 76, 60)
+_GREY = (60, 60, 80)
+_BLUE = (52, 152, 219)
+_PURPLE = (155, 89, 182)
 
 _TYPE_LABELS = {
-    "neighbors":   "Sasiedzi",
+    "neighbors": "Sasiedzi",
     "odd_one_out": "Intruz",
-    "bridge":      "Most",
-    "analogy":     "Analogia",
+    "bridge": "Most",
+    "analogy": "Analogia",
 }
 _TYPE_COLORS = {
-    "neighbors":   _BLUE,
+    "neighbors": _BLUE,
     "odd_one_out": _RED,
-    "bridge":      _GREEN,
-    "analogy":     _PURPLE,
+    "bridge": _GREEN,
+    "analogy": _PURPLE,
 }
 _AHA_INSIGHTS = [
     "Embeddingi to nie slownik -- to geometria kontekstu.",
@@ -67,6 +67,7 @@ class PhaseResultScene(Scene):
 
     def _advance(self) -> None:
         from cognitive_data_arcade.games.semantic_space.phase_intro import PhaseIntroScene
+
         self._next = PhaseIntroScene()
         self._done = True
 
@@ -102,7 +103,7 @@ class PhaseResultScene(Scene):
         stats = _calc_stats(self._round_results)
         types = list(_TYPE_LABELS.keys())
         chart_x = 80
-        chart_w  = _W - 160
+        chart_w = _W - 160
         bar_area_h = 300
         n = len(types)
         bar_w = chart_w // (n * 2 + 1)

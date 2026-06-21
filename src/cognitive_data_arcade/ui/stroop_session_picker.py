@@ -111,9 +111,7 @@ class StroopSessionPickerScene(Scene):
         cong_avg = sum(cong) / len(cong) if cong else float("nan")
         incong_avg = sum(incong) / len(incong) if incong else float("nan")
         stroop_effect = incong_avg - cong_avg  # propagates nan correctly
-        date_str = datetime.datetime.fromtimestamp(path.stat().st_mtime).strftime(
-            "%Y-%m-%d"
-        )
+        date_str = datetime.datetime.fromtimestamp(path.stat().st_mtime).strftime("%Y-%m-%d")
         return _SessionEntry(
             csv_path=path,
             date_str=date_str,
@@ -209,9 +207,7 @@ class StroopSessionPickerScene(Scene):
         surface.blit(title, (14, 10))
         pygame.draw.line(surface, _BORDER, (0, _TOP_H), (w, _TOP_H))
         if not self._sessions:
-            msg = self._font_row.render(
-                self._strings.stroop_picker_no_sessions, True, _DIM
-            )
+            msg = self._font_row.render(self._strings.stroop_picker_no_sessions, True, _DIM)
             surface.blit(msg, (w // 2 - msg.get_width() // 2, h // 2))
         else:
             self._draw_rows(surface, w)
@@ -256,6 +252,4 @@ class StroopSessionPickerScene(Scene):
             for j, height in enumerate(entry.bins):
                 bx = mini_x0 + j * (_BAR_W + _BAR_GAP)
                 bh = max(2, int(bar_area_h * height))
-                pygame.draw.rect(
-                    surface, _ORANGE, (bx, y + 8 + bar_area_h - bh, _BAR_W, bh)
-                )
+                pygame.draw.rect(surface, _ORANGE, (bx, y + 8 + bar_area_h - bh, _BAR_W, bh))

@@ -9,9 +9,9 @@ from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.cognitive_dashboard.session import DashboardSession
 from cognitive_data_arcade.profile.manager import ProfileManager
 
-_BG    = (26, 26, 46)
+_BG = (26, 26, 46)
 _WHITE = (240, 240, 240)
-_DIM   = (100, 100, 150)
+_DIM = (100, 100, 150)
 _ORANGE = (243, 156, 18)
 _W, _H = 1024, 768
 
@@ -49,6 +49,7 @@ class CognitiveDashboardModeScene(Scene):
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 from cognitive_data_arcade.ui.menu import LessonMenuScene
+
                 self._next = LessonMenuScene(self._pm, self._strings)
                 self._done = True
             elif event.key in (pygame.K_LEFT, pygame.K_RIGHT, pygame.K_TAB):
@@ -59,7 +60,9 @@ class CognitiveDashboardModeScene(Scene):
     def _launch(self, idx: int) -> None:
         from cognitive_data_arcade.engine.pause import PausableGame
         from cognitive_data_arcade.games.cognitive_dashboard.config import generate_synthetic
-        from cognitive_data_arcade.games.cognitive_dashboard.dashboard_scene import CognitiveDashboardScene
+        from cognitive_data_arcade.games.cognitive_dashboard.dashboard_scene import (
+            CognitiveDashboardScene,
+        )
         from cognitive_data_arcade.games.cognitive_dashboard.info import get_game_info
 
         if idx == 0:
@@ -96,11 +99,11 @@ class CognitiveDashboardModeScene(Scene):
         surface.blit(subtitle, (w // 2 - subtitle.get_width() // 2, 170))
 
         labels = ["Zagraj -- zbierz dane", "Dane syntetyczne"]
-        descs  = ["8 prob z kazdego zadania", "Losowe, typowe wyniki"]
+        descs = ["8 prob z kazdego zadania", "Losowe, typowe wyniki"]
         for i in range(2):
             rect = _btn_rect(i)
             selected = i == self._selected
-            hovered  = i == self._hover
+            hovered = i == self._hover
             if selected or hovered:
                 pygame.draw.rect(surface, _ORANGE, rect, border_radius=8)
                 tc = _BG

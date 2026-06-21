@@ -64,9 +64,7 @@ class StroopAnalysisScene(Scene):
         surface.fill(_BG)
         w, h = surface.get_size()
 
-        title = self._font_title.render(
-            self._strings.stroop_analysis_title, True, _WHITE
-        )
+        title = self._font_title.render(self._strings.stroop_analysis_title, True, _WHITE)
         surface.blit(title, (14, 10))
         surface.blit(self._chart, (_CHART_X, _CHART_Y))
 
@@ -111,12 +109,8 @@ class StroopAnalysisScene(Scene):
         bw = badge_surf.get_width() + 24
         bh = badge_surf.get_height() + 16
         badge_y = panel_y + 12
-        pygame.draw.rect(
-            surface, (26, 26, 46), (_STATS_X - 4, badge_y, bw, bh), border_radius=6
-        )
-        pygame.draw.rect(
-            surface, _ORANGE, (_STATS_X - 4, badge_y, bw, bh), 1, border_radius=6
-        )
+        pygame.draw.rect(surface, (26, 26, 46), (_STATS_X - 4, badge_y, bw, bh), border_radius=6)
+        pygame.draw.rect(surface, _ORANGE, (_STATS_X - 4, badge_y, bw, bh), 1, border_radius=6)
         surface.blit(badge_surf, (_STATS_X + 8, badge_y + 8))
 
         hint = self._font_label.render("ESC  back", True, _DIM)

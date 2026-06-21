@@ -1,4 +1,5 @@
 """Lesson 25 -- Topic Detective (LDA & topic modeling)."""
+
 from __future__ import annotations
 
 CONTENT: dict[str, dict[str, list[str]]] = {

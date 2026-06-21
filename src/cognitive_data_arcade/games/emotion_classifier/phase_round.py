@@ -6,30 +6,33 @@ import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.emotion_classifier.lexicon import (
-    LEXICON, TRAP_HINTS, classify, compute_round_score,
+    LEXICON,
+    TRAP_HINTS,
+    classify,
+    compute_round_score,
 )
 from cognitive_data_arcade.games.emotion_classifier.sentences import Sentence
 
-_W, _H       = 1024, 720
-_PANEL_X     = 744
-_PANEL_W     = 280
-_TOP_H       = 50
-_BG          = (15, 15, 35)
-_TOP_BG      = (12, 12, 30)
-_PANEL_BG    = (12, 12, 30)
-_WHITE       = (240, 240, 240)
-_DIM         = (100, 100, 130)
-_GREEN       = (39, 174, 96)
-_RED         = (231, 76, 60)
-_PURPLE      = (155, 89, 182)
-_AMBER       = (240, 165, 0)
-_GREY        = (80, 80, 100)
-_LEFT_PAD    = 20
-_CHIP_H      = 26
-_CHIP_PAD_X  = 10
-_CHIP_GAP    = 8
-_CHIP_ROW_H  = 38
-_CHIP_Y      = 120
+_W, _H = 1024, 720
+_PANEL_X = 744
+_PANEL_W = 280
+_TOP_H = 50
+_BG = (15, 15, 35)
+_TOP_BG = (12, 12, 30)
+_PANEL_BG = (12, 12, 30)
+_WHITE = (240, 240, 240)
+_DIM = (100, 100, 130)
+_GREEN = (39, 174, 96)
+_RED = (231, 76, 60)
+_PURPLE = (155, 89, 182)
+_AMBER = (240, 165, 0)
+_GREY = (80, 80, 100)
+_LEFT_PAD = 20
+_CHIP_H = 26
+_CHIP_PAD_X = 10
+_CHIP_GAP = 8
+_CHIP_ROW_H = 38
+_CHIP_Y = 120
 
 _SUBMIT_RECT = pygame.Rect(_PANEL_X // 2 - 120, _H - 80, 240, 48)
 
@@ -47,7 +50,7 @@ class PhaseRoundScene(Scene):
         self._round_idx = round_idx
         self._session_score = session_score
         self._round_results = round_results
-        self._tagged: dict[str, str] = {}   # word → "positive" | "negative"
+        self._tagged: dict[str, str] = {}  # word → "positive" | "negative"
         self._start_ticks: int = pygame.time.get_ticks()
         self._hint_visible: bool = False
         self._chip_rects: list[tuple[pygame.Rect, str]] = []
@@ -74,7 +77,7 @@ class PhaseRoundScene(Scene):
         # Check word chips
         for rect, word in self._chip_rects:
             if rect.collidepoint(event.pos):
-                key = word.rstrip('.,;:!?').lower()
+                key = word.rstrip(".,;:!?").lower()
                 if event.button == 1:
                     if self._tagged.get(key) == "positive":
                         del self._tagged[key]
@@ -106,7 +109,10 @@ class PhaseRoundScene(Scene):
             "speed_bonus": speed_bonus,
             "round_score": round_score,
         }
-        from cognitive_data_arcade.games.emotion_classifier.phase_round_result import PhaseRoundResultScene
+        from cognitive_data_arcade.games.emotion_classifier.phase_round_result import (
+            PhaseRoundResultScene,
+        )
+
         self._next = PhaseRoundResultScene(
             sentences=self._sentences,
             sentence=self._sentence,
@@ -150,7 +156,7 @@ class PhaseRoundScene(Scene):
 
         font = get_font(13)
         for rect, word in self._chip_rects:
-            tag = self._tagged.get(word.rstrip('.,;:!?').lower())
+            tag = self._tagged.get(word.rstrip(".,;:!?").lower())
             if tag == "positive":
                 pygame.draw.rect(surface, _GREEN, rect, border_radius=13)
                 col = _WHITE
@@ -160,10 +166,14 @@ class PhaseRoundScene(Scene):
             else:
                 col = _DIM
             lbl = font.render(word, True, col)
-            surface.blit(lbl, (rect.x + _CHIP_PAD_X, rect.y + (rect.height - lbl.get_height()) // 2))
+            surface.blit(
+                lbl, (rect.x + _CHIP_PAD_X, rect.y + (rect.height - lbl.get_height()) // 2)
+            )
 
         # Legend
-        legend_y = max(r.bottom for r, _ in self._chip_rects) + 16 if self._chip_rects else _CHIP_Y + 40
+        legend_y = (
+            max(r.bottom for r, _ in self._chip_rects) + 16 if self._chip_rects else _CHIP_Y + 40
+        )
         lp = get_font(11).render("LPM = pozytywne", True, _GREEN)
         rp = get_font(11).render("PPM = negatywne", True, _RED)
         dk = get_font(11).render("klik ponownie = odznacz", True, _DIM)
@@ -179,10 +189,13 @@ class PhaseRoundScene(Scene):
         # SUBMIT button
         pygame.draw.rect(surface, _PURPLE, _SUBMIT_RECT, border_radius=8)
         btn_lbl = get_font(15).render("ZATWIERDŹ (SPACJA)", True, _WHITE)
-        surface.blit(btn_lbl, (
-            _SUBMIT_RECT.centerx - btn_lbl.get_width() // 2,
-            _SUBMIT_RECT.centery - btn_lbl.get_height() // 2,
-        ))
+        surface.blit(
+            btn_lbl,
+            (
+                _SUBMIT_RECT.centerx - btn_lbl.get_width() // 2,
+                _SUBMIT_RECT.centery - btn_lbl.get_height() // 2,
+            ),
+        )
 
     def _build_chips(self) -> None:
         font = get_font(13)
@@ -233,7 +246,10 @@ class PhaseRoundScene(Scene):
                 slbl = font11.render(f"{lex_score:+d}", True, _GREEN if lex_score > 0 else _RED)
             else:
                 slbl = font11.render("nie w słowniku", True, _GREY)
-            surface.blit(slbl, (_PANEL_X + _PANEL_W - slbl.get_width() - 16, y + (26 - slbl.get_height()) // 2))
+            surface.blit(
+                slbl,
+                (_PANEL_X + _PANEL_W - slbl.get_width() - 16, y + (26 - slbl.get_height()) // 2),
+            )
             y += 30
 
         pygame.draw.line(surface, _GREY, (_PANEL_X + 8, y + 4), (_PANEL_X + _PANEL_W - 8, y + 4))

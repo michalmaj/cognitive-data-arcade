@@ -1,7 +1,6 @@
 # tests/test_data_cleaning_generator.py
 from __future__ import annotations
 
-import pytest
 
 from cognitive_data_arcade.games.data_cleaning.difficulty import EASY, MEDIUM, HARD
 from cognitive_data_arcade.games.data_cleaning.generator import (
@@ -167,13 +166,15 @@ def test_compute_stats_std_uses_bessel_correction():
     ]
     stats = compute_stats(rows)
     import math
-    expected_std = math.sqrt(((300-400)**2 + (400-400)**2 + (500-400)**2) / 2)
+
+    expected_std = math.sqrt(((300 - 400) ** 2 + (400 - 400) ** 2 + (500 - 400) ** 2) / 2)
     assert abs(stats["std_rt"] - expected_std) < 0.01
 
 
 def test_apply_fixes_fix_format_divides_accuracy():
     rows = [DataRow(1, 1, 1, 300.0, 85.0)]
-    from cognitive_data_arcade.games.data_cleaning.generator import CleaningSession, ErrorType
+    from cognitive_data_arcade.games.data_cleaning.generator import ErrorType
+
     session = CleaningSession(rows=rows, ground_truth={0: ErrorType.WRONG_FORMAT_ACCURACY})
     result = apply_fixes(session, {0}, {0: "fix_format"})
     assert abs(result[0].accuracy - 0.85) < 0.001

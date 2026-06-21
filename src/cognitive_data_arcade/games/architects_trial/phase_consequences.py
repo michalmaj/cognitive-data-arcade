@@ -35,6 +35,7 @@ class PhaseConsequencesScene(Scene):
         if self._done:
             return
         from cognitive_data_arcade.games.architects_trial.phase_tribunal import PhaseTribunalScene
+
         self._next = PhaseTribunalScene(self._state)
         self._done = True
 
@@ -57,9 +58,15 @@ class PhaseConsequencesScene(Scene):
             block_h = 70
             block = pygame.Rect(80, y, _W - 160, block_h)
             pygame.draw.rect(surface, (18, 22, 38), block, border_radius=6)
-            pygame.draw.rect(surface, border_colors[i % len(border_colors)], block, 2, border_radius=6)
-            pygame.draw.rect(surface, border_colors[i % len(border_colors)],
-                             pygame.Rect(80, y, 4, block_h), border_radius=6)
+            pygame.draw.rect(
+                surface, border_colors[i % len(border_colors)], block, 2, border_radius=6
+            )
+            pygame.draw.rect(
+                surface,
+                border_colors[i % len(border_colors)],
+                pygame.Rect(80, y, 4, block_h),
+                border_radius=6,
+            )
             words = text.split()
             line, ty = "", y + 12
             for w in words:

@@ -8,9 +8,20 @@ from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.word_weight_factory.corpus import CorpusState
 from cognitive_data_arcade.games.word_weight_factory.engine import WeightMatrix
 from cognitive_data_arcade.games.word_weight_factory.step_bow import (
-    _BG, _WHITE, _DIM, _AMBER, _GREEN, _PURPLE,
-    _STEP_H, _W, _LABEL_W, _COL_W, _ROW_H, _HDR_H, _MAX_COLS,
-    _green_cell, _draw_tooltip_box,
+    _BG,
+    _WHITE,
+    _DIM,
+    _AMBER,
+    _PURPLE,
+    _STEP_H,
+    _W,
+    _LABEL_W,
+    _COL_W,
+    _ROW_H,
+    _HDR_H,
+    _MAX_COLS,
+    _green_cell,
+    _draw_tooltip_box,
 )
 
 
@@ -89,7 +100,7 @@ class StepTfScene(Scene):
                     if j < V:
                         tok = m.vocab[j]
                         self._tooltip = [
-                            f"Token: \"{tok}\"",
+                            f'Token: "{tok}"',
                             "",
                             "TF mierzy jak czesto token",
                             "pojawia sie w dokumencie",
@@ -112,7 +123,7 @@ class StepTfScene(Scene):
                             tf_val = m.tf[ri][j]
                             dtitle = m.doc_titles[ri]
                             self._tooltip = [
-                                f"TF(\"{tok}\", \"{dtitle}\")",
+                                f'TF("{tok}", "{dtitle}")',
                                 "",
                                 f"= {cnt} / {doc_len} = {tf_val:.4f}",
                                 "",
@@ -157,8 +168,8 @@ class StepTfScene(Scene):
         surface.blit(formula, (8, 26))
 
         visible_start = self._col_offset
-        visible_end   = min(V, visible_start + _MAX_COLS)
-        visible_cols  = list(range(visible_start, visible_end))
+        visible_end = min(V, visible_start + _MAX_COLS)
+        visible_cols = list(range(visible_start, visible_end))
 
         font9 = get_font(9)
         HDR_TOP = 52  # shifted down because of formula line
@@ -170,8 +181,9 @@ class StepTfScene(Scene):
             pygame.draw.rect(surface, (20, 20, 38), (x0, HDR_TOP, _COL_W, _HDR_H))
             pygame.draw.line(surface, (40, 40, 70), (x0, HDR_TOP), (x0, HDR_TOP + _HDR_H))
             ls = font9.render(label, True, _DIM)
-            surface.blit(ls, (x0 + (_COL_W - ls.get_width()) // 2,
-                               HDR_TOP + (_HDR_H - ls.get_height()) // 2))
+            surface.blit(
+                ls, (x0 + (_COL_W - ls.get_width()) // 2, HDR_TOP + (_HDR_H - ls.get_height()) // 2)
+            )
 
         # Rows
         for ri in range(N):
@@ -188,13 +200,20 @@ class StepTfScene(Scene):
                 pygame.draw.rect(surface, cell_bg, (x0 + 1, y0 + 1, _COL_W - 2, _ROW_H - 2))
                 pygame.draw.line(surface, (30, 30, 55), (x0, y0), (x0, y0 + _ROW_H))
                 vs = font9.render(f"{val:.2f}", True, _WHITE if val > 0 else _DIM)
-                surface.blit(vs, (x0 + (_COL_W - vs.get_width()) // 2,
-                                   y0 + (_ROW_H - vs.get_height()) // 2))
-            pygame.draw.line(surface, (30, 30, 55), (0, y0 + _ROW_H),
-                             (_LABEL_W + len(visible_cols) * _COL_W, y0 + _ROW_H))
+                surface.blit(
+                    vs, (x0 + (_COL_W - vs.get_width()) // 2, y0 + (_ROW_H - vs.get_height()) // 2)
+                )
+            pygame.draw.line(
+                surface,
+                (30, 30, 55),
+                (0, y0 + _ROW_H),
+                (_LABEL_W + len(visible_cols) * _COL_W, y0 + _ROW_H),
+            )
 
         if V > _MAX_COLS:
-            sh = font9.render(f"Kolumny {visible_start+1}-{visible_end}/{V}  (scroll)", True, _DIM)
+            sh = font9.render(
+                f"Kolumny {visible_start + 1}-{visible_end}/{V}  (scroll)", True, _DIM
+            )
             surface.blit(sh, (_W - sh.get_width() - 8, 8))
 
         # Selected cell detail
@@ -205,9 +224,9 @@ class StepTfScene(Scene):
                 tok = matrix.vocab[j]
                 cnt = matrix.bow[ri][j]
                 doc_len = max(1, sum(matrix.bow[ri]))
-                tf_val  = matrix.tf[ri][j]
-                dtitle  = matrix.doc_titles[ri]
-                detail  = f'"{tok}" w "{dtitle}": TF = {cnt}/{doc_len} = {tf_val:.3f}'
+                tf_val = matrix.tf[ri][j]
+                dtitle = matrix.doc_titles[ri]
+                detail = f'"{tok}" w "{dtitle}": TF = {cnt}/{doc_len} = {tf_val:.3f}'
                 ds = get_font(11).render(detail, True, _AMBER)
                 surface.blit(ds, (8, detail_y))
 

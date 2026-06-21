@@ -1,12 +1,12 @@
 """Tests for L31 You Were the Dataset."""
+
 from __future__ import annotations
-import csv
 from pathlib import Path
-import pytest
 
 
 def test_game_state_defaults():
     from cognitive_data_arcade.games.you_were_the_dataset.game_state import GameState
+
     s = GameState()
     assert s.profile is None
     assert s.current_card == 0
@@ -14,8 +14,10 @@ def test_game_state_defaults():
 
 def test_prerequisites_all_present(tmp_path):
     from cognitive_data_arcade.games.you_were_the_dataset.profile_loader import (
-        check_prerequisites, REQUIRED_GAMES,
+        check_prerequisites,
+        REQUIRED_GAMES,
     )
+
     for name in REQUIRED_GAMES:
         d = tmp_path / name
         d.mkdir()
@@ -28,6 +30,7 @@ def test_prerequisites_some_missing(tmp_path):
     from cognitive_data_arcade.games.you_were_the_dataset.profile_loader import (
         check_prerequisites,
     )
+
     (tmp_path / "stroop").mkdir()
     (tmp_path / "stroop" / "s.csv").write_text("col\nval\n")
     result = check_prerequisites(tmp_path)
@@ -37,16 +40,19 @@ def test_prerequisites_some_missing(tmp_path):
 
 def test_rt_percentile_fast():
     from cognitive_data_arcade.games.you_were_the_dataset.profile_loader import _rt_percentile
+
     assert _rt_percentile(155) >= 90
 
 
 def test_rt_percentile_slow():
     from cognitive_data_arcade.games.you_were_the_dataset.profile_loader import _rt_percentile
+
     assert _rt_percentile(560) <= 10
 
 
 def test_synthetic_profile_is_synthetic():
     from cognitive_data_arcade.games.you_were_the_dataset.synthetic_data import SYNTHETIC_PROFILE
+
     assert SYNTHETIC_PROFILE.is_synthetic is True
     assert SYNTHETIC_PROFILE.rt_median_ms > 0
     assert 0 <= SYNTHETIC_PROFILE.gono_false_alarm_rate <= 1.0
@@ -55,11 +61,14 @@ def test_synthetic_profile_is_synthetic():
 
 def test_phase_prerequisite_renders():
     import pygame
+
     pygame.init()
     surface = pygame.Surface((1024, 720))
     from cognitive_data_arcade.games.you_were_the_dataset.game_state import GameState
-    from cognitive_data_arcade.games.you_were_the_dataset.phase_prerequisite import PhasePrerequisiteScene
-    from pathlib import Path
+    from cognitive_data_arcade.games.you_were_the_dataset.phase_prerequisite import (
+        PhasePrerequisiteScene,
+    )
+
     state = GameState()
     # Pass empty tmp-like path so all games show as missing (no crash expected)
     scene = PhasePrerequisiteScene(state, game_factories={}, _data_dir=Path("/nonexistent"))
@@ -71,11 +80,13 @@ def test_phase_prerequisite_renders():
 
 def test_phase_reveal_renders():
     import pygame
+
     pygame.init()
     surface = pygame.Surface((1024, 720))
     from cognitive_data_arcade.games.you_were_the_dataset.game_state import GameState
     from cognitive_data_arcade.games.you_were_the_dataset.phase_reveal import PhaseRevealScene
     from cognitive_data_arcade.games.you_were_the_dataset.synthetic_data import SYNTHETIC_PROFILE
+
     state = GameState()
     state.profile = SYNTHETIC_PROFILE  # pre-load so no CSV read during test
     scene = PhaseRevealScene(state)
@@ -87,11 +98,13 @@ def test_phase_reveal_renders():
 
 def test_phase_profile_renders():
     import pygame
+
     pygame.init()
     surface = pygame.Surface((1024, 720))
     from cognitive_data_arcade.games.you_were_the_dataset.game_state import GameState
     from cognitive_data_arcade.games.you_were_the_dataset.phase_profile import PhaseProfileScene
     from cognitive_data_arcade.games.you_were_the_dataset.synthetic_data import SYNTHETIC_PROFILE
+
     state = GameState()
     state.profile = SYNTHETIC_PROFILE
     state.current_card = 0
@@ -104,11 +117,15 @@ def test_phase_profile_renders():
 
 def test_phase_connection_renders():
     import pygame
+
     pygame.init()
     surface = pygame.Surface((1024, 720))
     from cognitive_data_arcade.games.you_were_the_dataset.game_state import GameState
-    from cognitive_data_arcade.games.you_were_the_dataset.phase_connection import PhaseConnectionScene
+    from cognitive_data_arcade.games.you_were_the_dataset.phase_connection import (
+        PhaseConnectionScene,
+    )
     from cognitive_data_arcade.games.you_were_the_dataset.synthetic_data import SYNTHETIC_PROFILE
+
     state = GameState()
     state.profile = SYNTHETIC_PROFILE
     scene = PhaseConnectionScene(state)
@@ -120,11 +137,13 @@ def test_phase_connection_renders():
 
 def test_phase_result_renders():
     import pygame
+
     pygame.init()
     surface = pygame.Surface((1024, 720))
     from cognitive_data_arcade.games.you_were_the_dataset.game_state import GameState
     from cognitive_data_arcade.games.you_were_the_dataset.phase_result import PhaseResultScene
     from cognitive_data_arcade.games.you_were_the_dataset.synthetic_data import SYNTHETIC_PROFILE
+
     state = GameState()
     state.profile = SYNTHETIC_PROFILE
     scene = PhaseResultScene(state)
@@ -135,12 +154,14 @@ def test_phase_result_renders():
 
 def test_menu_has_lesson_31():
     from cognitive_data_arcade.ui.menu import _LESSONS
+
     nums = [n for n, _ in _LESSONS]
     assert 31 in nums
 
 
 def test_lesson_31_structure():
     from cognitive_data_arcade.lessons.lesson_31 import CONTENT
+
     for lang in ("pl", "en"):
         assert len(CONTENT[lang]["theory"]) == 4
         assert len(CONTENT[lang]["notes"]) == 2
@@ -150,13 +171,20 @@ def test_lesson_31_structure():
 def test_game_renders_3_frames():
     import pygame
     from unittest.mock import patch
+
     pygame.init()
     surface = pygame.Surface((1024, 720))
     from cognitive_data_arcade.games.you_were_the_dataset.game import YouWereTheDatasetScene
+
     # Patch check_prerequisites so the game starts at PhasePrerequisiteScene
     # (no real CSV read during test — avoids dependency on data/generated/ files)
-    _all_missing = {"reaction_time": False, "stroop": False, "flanker": False,
-                    "gono": False, "nback": False}
+    _all_missing = {
+        "reaction_time": False,
+        "stroop": False,
+        "flanker": False,
+        "gono": False,
+        "nback": False,
+    }
     with patch(
         "cognitive_data_arcade.games.you_were_the_dataset.game.check_prerequisites",
         return_value=_all_missing,

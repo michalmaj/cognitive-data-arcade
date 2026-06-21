@@ -21,8 +21,7 @@ def mixer():
 
 
 def test_init_applies_profile_settings():
-    profile = Profile(music_volume=0.3, sfx_volume=0.5,
-                      music_enabled=False, sfx_enabled=True)
+    profile = Profile(music_volume=0.3, sfx_volume=0.5, music_enabled=False, sfx_enabled=True)
     audio.init(profile)
     s = audio.get_settings()
     assert s["music_volume"] == pytest.approx(0.3)
@@ -39,12 +38,12 @@ def test_init_generates_all_sfx():
 def test_play_sfx_skips_when_disabled():
     audio.init(Profile())
     audio.set_sfx_enabled(False)
-    audio.play_sfx("navigate")   # must not raise
+    audio.play_sfx("navigate")  # must not raise
 
 
 def test_play_music_skips_missing_file():
     audio.init(Profile())
-    audio.play_music("menu")     # no OGG present; must not raise
+    audio.play_music("menu")  # no OGG present; must not raise
     assert audio._current_track == "menu"
 
 

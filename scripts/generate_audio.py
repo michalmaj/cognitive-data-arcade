@@ -9,6 +9,7 @@ Usage (run once after cloning, from the project root):
 To use real music instead: drop OGG or MP3 files named menu.ogg / game.ogg
 into assets/audio/music/ — they take priority over the generated WAVs.
 """
+
 from __future__ import annotations
 
 import wave

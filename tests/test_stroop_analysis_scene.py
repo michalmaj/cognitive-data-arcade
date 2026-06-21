@@ -62,9 +62,7 @@ def test_draws_without_crash() -> None:
 def test_esc_sets_done() -> None:
     scene = _make_scene()
     assert not scene.is_done()
-    scene.handle_event(
-        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode="")
-    )
+    scene.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode=""))
     assert scene.is_done()
 
 
@@ -86,9 +84,7 @@ def test_next_scene_returns_back() -> None:
     pygame.init()
     chart = pygame.Surface((680, 520))
     scene = StroopAnalysisScene(chart, _STATS, EN, back)
-    scene.handle_event(
-        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode="")
-    )
+    scene.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode=""))
     assert scene.next_scene() is back
 
 

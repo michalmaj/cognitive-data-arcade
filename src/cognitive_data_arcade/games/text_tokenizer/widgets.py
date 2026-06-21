@@ -8,33 +8,29 @@ import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 
 PRESET_TWEET_PL = (
-    "Badanie wykazalo, ze czas reakcji wzrosl o 120 ms! "
-    "CZAS REAKCJI jest kluczowy w Stroopie."
+    "Badanie wykazalo, ze czas reakcji wzrosl o 120 ms! CZAS REAKCJI jest kluczowy w Stroopie."
 )
 PRESET_ABSTRACT_EN = (
     "Reaction time increased in the congruent condition. "
     "The effect was observed across all participants."
 )
-PRESET_SMS_PL = (
-    "hej, jutro mamy kognitywistyke? "
-    "bo nie pamietam czy sa zajecia czy nie ma :)"
-)
+PRESET_SMS_PL = "hej, jutro mamy kognitywistyke? bo nie pamietam czy sa zajecia czy nie ma :)"
 
 _PRESETS: list[tuple[str, str, str]] = [
-    ("Tweet PL",     PRESET_TWEET_PL,    "pl"),
-    ("Abstract EN",  PRESET_ABSTRACT_EN, "en"),
-    ("SMS PL",       PRESET_SMS_PL,      "pl"),
-    ("Wlasny",       "",                 ""),
+    ("Tweet PL", PRESET_TWEET_PL, "pl"),
+    ("Abstract EN", PRESET_ABSTRACT_EN, "en"),
+    ("SMS PL", PRESET_SMS_PL, "pl"),
+    ("Wlasny", "", ""),
 ]
 _MAX_TEXT_LEN = 180
 _BAR_H = 48
 _W = 1024
-_BG    = (12, 12, 28)
+_BG = (12, 12, 28)
 _PANEL = (18, 18, 42)
 _WHITE = (240, 240, 240)
-_DIM   = (120, 120, 160)
+_DIM = (120, 120, 160)
 _AMBER = (243, 156, 18)
-_BLUE  = (52, 152, 219)
+_BLUE = (52, 152, 219)
 
 
 @dataclass
@@ -114,10 +110,16 @@ class SharedInputBar:
         pygame.draw.rect(surface, border_col, self._field_rect, 1, border_radius=3)
         text_surf = get_font(10).render(
             self._state.text[:100] + ("..." if len(self._state.text) > 100 else ""),
-            True, _WHITE,
+            True,
+            _WHITE,
         )
-        surface.blit(text_surf, (self._field_rect.x + 4,
-                                  self._field_rect.y + (self._field_rect.h - text_surf.get_height()) // 2))
+        surface.blit(
+            text_surf,
+            (
+                self._field_rect.x + 4,
+                self._field_rect.y + (self._field_rect.h - text_surf.get_height()) // 2,
+            ),
+        )
 
         # Preset buttons
         for i, (label, _, _lang) in enumerate(_PRESETS):
@@ -129,8 +131,13 @@ class SharedInputBar:
             pygame.draw.rect(surface, border, rect, 1, border_radius=3)
             col = _AMBER if active else _DIM
             lbl_s = get_font(10).render(label, True, col)
-            surface.blit(lbl_s, (rect.x + (rect.w - lbl_s.get_width()) // 2,
-                                  rect.y + (rect.h - lbl_s.get_height()) // 2))
+            surface.blit(
+                lbl_s,
+                (
+                    rect.x + (rect.w - lbl_s.get_width()) // 2,
+                    rect.y + (rect.h - lbl_s.get_height()) // 2,
+                ),
+            )
 
         # Lang toggle (only visible in custom mode)
         if self._custom_active:
@@ -138,5 +145,10 @@ class SharedInputBar:
             pygame.draw.rect(surface, (25, 25, 50), rect, border_radius=3)
             pygame.draw.rect(surface, _BLUE, rect, 1, border_radius=3)
             lang_lbl = get_font(10).render(self._state.lang.upper(), True, _BLUE)
-            surface.blit(lang_lbl, (rect.x + (rect.w - lang_lbl.get_width()) // 2,
-                                     rect.y + (rect.h - lang_lbl.get_height()) // 2))
+            surface.blit(
+                lang_lbl,
+                (
+                    rect.x + (rect.w - lang_lbl.get_width()) // 2,
+                    rect.y + (rect.h - lang_lbl.get_height()) // 2,
+                ),
+            )

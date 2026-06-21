@@ -4,21 +4,21 @@ import pygame
 
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
-from cognitive_data_arcade.games.feature_hunter.config import EASY, MEDIUM, HARD, DifficultyConfig
+from cognitive_data_arcade.games.feature_hunter.config import EASY, MEDIUM, HARD
 
-_BG    = (15, 15, 35)
+_BG = (15, 15, 35)
 _PANEL = (18, 18, 42)
 _WHITE = (240, 240, 240)
-_DIM   = (120, 120, 160)
+_DIM = (120, 120, 160)
 _GREEN = (39, 174, 96)
 _ORANGE = (243, 156, 18)
-_RED   = (231, 76, 60)
+_RED = (231, 76, 60)
 _W, _H = 1024, 720
 
 _DIFFICULTIES = [
-    (EASY,   _GREEN,  "4 cechy  |  bez limitu czasu  |  podpowiedzi z r"),
+    (EASY, _GREEN, "4 cechy  |  bez limitu czasu  |  podpowiedzi z r"),
     (MEDIUM, _ORANGE, "6 cech   |  45 sekund          |  tylko wykres"),
-    (HARD,   _RED,    "8 cech   |  20 sekund          |  brak podpowiedzi"),
+    (HARD, _RED, "8 cech   |  20 sekund          |  brak podpowiedzi"),
 ]
 
 
@@ -33,6 +33,7 @@ class PhaseAScene(Scene):
                 btn_rect = self._btn_rect(i)
                 if btn_rect.collidepoint(event.pos):
                     from cognitive_data_arcade.games.feature_hunter.phase_b import PhaseBScene
+
                     self._next = PhaseBScene(diff)
                     self._done = True
                     return

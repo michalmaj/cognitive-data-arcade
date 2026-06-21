@@ -1,4 +1,5 @@
 """Lesson 08 — Flanker Effect (Flanker Arena)."""
+
 from __future__ import annotations
 
 CONTENT: dict[str, dict[str, list[str]]] = {

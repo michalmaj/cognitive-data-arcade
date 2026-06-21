@@ -9,15 +9,15 @@ from cognitive_data_arcade.games.hypothesis_arena.phase_a import PhaseAScene
 from cognitive_data_arcade.games.hypothesis_arena.phase_b import PhaseBScene
 from cognitive_data_arcade.games.hypothesis_arena.phase_c import PhaseCScene
 
-_BG      = (15,  15,  35)
-_PANEL   = (18,  18,  42)
-_WHITE   = (240, 240, 240)
-_DIM     = (120, 120, 160)
-_ORANGE  = (243, 156,  18)
-_BLUE    = ( 52, 152, 219)
+_BG = (15, 15, 35)
+_PANEL = (18, 18, 42)
+_WHITE = (240, 240, 240)
+_DIM = (120, 120, 160)
+_ORANGE = (243, 156, 18)
+_BLUE = (52, 152, 219)
 
-_NAV_H   = 48
-_W       = 1024
+_NAV_H = 48
+_W = 1024
 _INNER_H = 720 - _NAV_H  # 672
 
 _PHASE_NAMES = ["Eksploracja", "Eksperyment", "Sandbox"]
@@ -70,11 +70,13 @@ class HypothesisArenaScene(Scene):
             tx = tab_x0 + i * tab_w
             active = i == self._phase_idx
             col = _ORANGE if active else _DIM
-            lbl = f"{i+1}. {name}"
+            lbl = f"{i + 1}. {name}"
             tw = font.size(lbl)[0]
             surface.blit(font.render(lbl, True, col), (tx + (tab_w - tw) // 2, (_NAV_H - 20) // 2))
             if active:
-                pygame.draw.line(surface, _ORANGE, (tx + 4, _NAV_H - 3), (tx + tab_w - 4, _NAV_H - 3), 2)
+                pygame.draw.line(
+                    surface, _ORANGE, (tx + 4, _NAV_H - 3), (tx + tab_w - 4, _NAV_H - 3), 2
+                )
         # hint
         hint = font_sm.render("LEWO / PRAWO = zmień fazę", True, _DIM)
         surface.blit(hint, (20, _NAV_H - 16))

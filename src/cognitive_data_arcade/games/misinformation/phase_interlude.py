@@ -8,14 +8,14 @@ from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.misinformation.networks import ROUNDS
 
 _W, _H = 1024, 720
-_BG    = (12, 12, 20)
+_BG = (12, 12, 20)
 
 
 class PhaseInterludeScene(Scene):
     def __init__(
         self,
-        round_idx: int,          # 0-based index into ROUNDS
-        act: str,                # "spreader" | "factchecker" (the act that just ended)
+        round_idx: int,  # 0-based index into ROUNDS
+        act: str,  # "spreader" | "factchecker" (the act that just ended)
         act_score: int,
         session_scores: list[int],  # already includes act_score as last element
     ) -> None:

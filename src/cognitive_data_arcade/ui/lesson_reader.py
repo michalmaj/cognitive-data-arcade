@@ -25,9 +25,7 @@ _HINT_Y_OFFSET = 36
 
 def _load_content(lesson_num: int, lang: str) -> list[tuple[str, str]]:
     try:
-        mod = importlib.import_module(
-            f"cognitive_data_arcade.lessons.lesson_{lesson_num:02d}"
-        )
+        mod = importlib.import_module(f"cognitive_data_arcade.lessons.lesson_{lesson_num:02d}")
     except ImportError:
         return []
     data = getattr(mod, "CONTENT", {})
@@ -82,8 +80,8 @@ class LessonReaderScene(Scene):
     def _section_label(self, section: str) -> str:
         return {
             "theory": self._strings.lesson_theory,
-            "notes":  self._strings.lesson_notes,
-            "tasks":  self._strings.lesson_tasks,
+            "notes": self._strings.lesson_notes,
+            "tasks": self._strings.lesson_tasks,
         }.get(section, section)
 
     def handle_event(self, event: pygame.event.Event) -> None:
@@ -152,7 +150,8 @@ class LessonReaderScene(Scene):
             if s == section:
                 underline_y = _TAB_Y + surf.get_height() + 2
                 pygame.draw.line(
-                    surface, _ORANGE,
+                    surface,
+                    _ORANGE,
                     (tab_x, underline_y),
                     (tab_x + surf.get_width(), underline_y),
                     2,
@@ -182,7 +181,5 @@ class LessonReaderScene(Scene):
         hint = self._font_hint.render(self._strings.lesson_reader_hint, True, _DIM)
         surface.blit(hint, (_LEFT, h - _HINT_Y_OFFSET))
         if self._play_factory is not None:
-            play_hint = self._font_hint.render(
-                self._strings.lesson_reader_play_hint, True, _ORANGE
-            )
+            play_hint = self._font_hint.render(self._strings.lesson_reader_play_hint, True, _ORANGE)
             surface.blit(play_hint, (_LEFT, h - _HINT_Y_OFFSET - play_hint.get_height() - 4))

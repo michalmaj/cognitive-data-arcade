@@ -3,27 +3,28 @@ import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.recommendation_bubble.game_state import (
-    GameState, CATEGORIES, CAT_COLORS, diversity, profile_from_clicks,
+    GameState,
+    CATEGORIES,
+    CAT_COLORS,
+    diversity,
+    profile_from_clicks,
 )
 
 _W, _H = 1024, 720
-_BG    = (10, 10, 20)
+_BG = (10, 10, 20)
 _PANEL = (20, 14, 30)
 _WHITE = (240, 240, 240)
-_DIM   = (140, 140, 160)
+_DIM = (140, 140, 160)
 _C_USER = (155, 89, 182)
 
-_ACT_SECS   = 30.0
-_EXT_SECS   = 10.0
+_ACT_SECS = 30.0
+_EXT_SECS = 10.0
 _MIN_CLICKS = 5
 
 _BAR_X = 80
 _BAR_W = 864
 _BAR_H = 70
-_BAR_ROWS = [
-    pygame.Rect(_BAR_X, 120 + i * 90, _BAR_W, _BAR_H)
-    for i in range(len(CATEGORIES))
-]
+_BAR_ROWS = [pygame.Rect(_BAR_X, 120 + i * 90, _BAR_W, _BAR_H) for i in range(len(CATEGORIES))]
 
 
 class PhaseUserScene(Scene):
@@ -60,6 +61,7 @@ class PhaseUserScene(Scene):
         from cognitive_data_arcade.games.recommendation_bubble.phase_interlude import (
             PhaseInterludeScene,
         )
+
         self._next = PhaseInterludeScene(self._state, next_act="curator")
         self._done = True
 
@@ -82,19 +84,20 @@ class PhaseUserScene(Scene):
             fill_w = int(rect.w * frac)
             if fill_w > 0:
                 pygame.draw.rect(
-                    surface, color,
+                    surface,
+                    color,
                     pygame.Rect(rect.x, rect.y, fill_w, rect.h),
                     border_radius=4,
                 )
             pygame.draw.rect(surface, color, rect, 1, border_radius=4)
             label = get_font(18).render(cat, True, color)
             surface.blit(label, (rect.x + 8, rect.y + rect.h // 2 - 9))
-            pct = get_font(16).render(f"{int(frac*100)}%", True, _WHITE)
+            pct = get_font(16).render(f"{int(frac * 100)}%", True, _WHITE)
             surface.blit(pct, (rect.right - pct.get_width() - 10, rect.y + rect.h // 2 - 8))
 
         d = diversity(profile_from_clicks(self._clicks))
         d_color = (231, 76, 60) if d < 0.35 else ((243, 156, 18) if d < 0.65 else (46, 204, 113))
-        d_lbl = get_font(14).render(f"ROZNORODNOSC: {int(d*100)}%", True, d_color)
+        d_lbl = get_font(14).render(f"ROZNORODNOSC: {int(d * 100)}%", True, d_color)
         surface.blit(d_lbl, (_W // 2 - d_lbl.get_width() // 2, _H - 80))
 
         if self._show_hint:

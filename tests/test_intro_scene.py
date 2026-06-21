@@ -15,6 +15,7 @@ class _FakePM:
 
     def load(self):
         from cognitive_data_arcade.profile.manager import Profile
+
         return Profile(seen_intro=self._seen_intro)
 
     def set_seen_intro(self, seen: bool) -> None:

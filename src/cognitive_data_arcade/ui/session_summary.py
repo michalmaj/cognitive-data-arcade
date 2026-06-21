@@ -118,9 +118,7 @@ class SessionSummaryScene(Scene):
         surface.blit(tag, (w // 2 - tag.get_width() // 2, 28))
 
         # Title
-        title = self._font_title.render(
-            self._strings.session_complete, True, _TITLE_COLOR
-        )
+        title = self._font_title.render(self._strings.session_complete, True, _TITLE_COLOR)
         surface.blit(title, (w // 2 - title.get_width() // 2, 52))
 
         # Subtitle
@@ -156,12 +154,8 @@ class SessionSummaryScene(Scene):
 
         for i, (label, value, color) in enumerate(stats):
             bx = box_x0 + i * (box_w + gap)
-            pygame.draw.rect(
-                surface, _PANEL_BG, (bx, box_y, box_w, box_h), border_radius=6
-            )
-            pygame.draw.rect(
-                surface, _BORDER_COLOR, (bx, box_y, box_w, box_h), 1, border_radius=6
-            )
+            pygame.draw.rect(surface, _PANEL_BG, (bx, box_y, box_w, box_h), border_radius=6)
+            pygame.draw.rect(surface, _BORDER_COLOR, (bx, box_y, box_w, box_h), 1, border_radius=6)
             lbl = self._font_sm.render(label, True, _DIM_COLOR)
             surface.blit(lbl, (bx + box_w // 2 - lbl.get_width() // 2, box_y + 10))
             val = self._font_stat.render(value, True, color)
@@ -196,18 +190,12 @@ class SessionSummaryScene(Scene):
                 surface.blit(pill_surf, (pill_x + 10, section_y + 5))
                 pill_x += pill_w + 10
         else:
-            no_badge = self._font_sm.render(
-                self._strings.label_no_new_badges, True, _DIM_COLOR
-            )
+            no_badge = self._font_sm.render(self._strings.label_no_new_badges, True, _DIM_COLOR)
             surface.blit(no_badge, (box_x0, section_y))
 
         # Level-up banner (conditional)
-        before_total = (
-            self._profile_before.arcade_points + self._profile_before.science_points
-        )
-        after_total = (
-            self._profile_after.arcade_points + self._profile_after.science_points
-        )
+        before_total = self._profile_before.arcade_points + self._profile_before.science_points
+        after_total = self._profile_after.arcade_points + self._profile_after.science_points
         before_lvl = level_title(before_total, self._strings)
         after_lvl = level_title(after_total, self._strings)
 
@@ -216,9 +204,7 @@ class SessionSummaryScene(Scene):
             banner_rect = pygame.Rect(100, banner_y, w - 200, 44)
             pygame.draw.rect(surface, _BANNER_BG, banner_rect, border_radius=6)
             pygame.draw.rect(surface, _LEVEL_COLOR, banner_rect, 1, border_radius=6)
-            lvl_text = (
-                f">>  {self._strings.label_level_up}  {before_lvl}  ->  {after_lvl}"
-            )
+            lvl_text = f">>  {self._strings.label_level_up}  {before_lvl}  ->  {after_lvl}"
             lvl_surf = self._font_sm.render(lvl_text, True, _LEVEL_COLOR)
             surface.blit(lvl_surf, (w // 2 - lvl_surf.get_width() // 2, banner_y + 13))
 

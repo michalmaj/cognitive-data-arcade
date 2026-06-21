@@ -84,9 +84,7 @@ def test_space_on_go_trial_is_hit(tmp_path: Path) -> None:
     game._trials[0] = {"trial_type": "go"}
     game._phase = _Phase.STIMULUS
     game._phase_timer = 250.0
-    game.handle_event(
-        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_SPACE, mod=0, unicode=" ")
-    )
+    game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_SPACE, mod=0, unicode=" "))
     assert game._records[-1].response == "hit"
     assert game._records[-1].correct is True
 
@@ -106,9 +104,7 @@ def test_space_on_nogo_trial_is_false_alarm(tmp_path: Path) -> None:
     game._trials[0] = {"trial_type": "nogo"}
     game._phase = _Phase.STIMULUS
     game._phase_timer = 250.0
-    game.handle_event(
-        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_SPACE, mod=0, unicode=" ")
-    )
+    game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_SPACE, mod=0, unicode=" "))
     assert game._records[-1].response == "false_alarm"
     assert game._records[-1].correct is False
 

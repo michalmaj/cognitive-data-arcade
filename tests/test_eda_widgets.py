@@ -5,7 +5,10 @@ import pygame
 import pytest
 
 from cognitive_data_arcade.games.eda.ui_controls import (
-    ControlPanel, Slider, SliderGroup, SliderSpec,
+    ControlPanel,
+    Slider,
+    SliderGroup,
+    SliderSpec,
 )
 
 
@@ -21,6 +24,7 @@ def _spec(default=50, step=10, min_val=0, max_val=100):
 
 
 # -- Slider ------------------------------------------------------------------
+
 
 def test_slider_starts_at_default():
     s = Slider(_spec(default=42), x=0, y=0)
@@ -70,6 +74,7 @@ def test_slider_draw_does_not_raise():
 
 # -- SliderGroup -------------------------------------------------------------
 
+
 def test_slider_group_params_has_all_keys():
     sg = SliderGroup()
     assert set(sg.params.keys()) == {"n", "baseline_ms", "effect_ms", "noise_sd", "outlier_pct"}
@@ -89,6 +94,7 @@ def test_slider_group_n_within_range():
 
 # -- ControlPanel ------------------------------------------------------------
 
+
 def test_control_panel_empty_hypothesis_returns_none():
     cp = ControlPanel()
     assert cp.get_hypothesis_threshold() is None
@@ -104,7 +110,10 @@ def test_control_panel_enter_returns_generate():
     cp = ControlPanel()
     ev = pygame.event.Event(
         pygame.KEYDOWN,
-        key=pygame.K_RETURN, unicode="\r", mod=0, scancode=0,
+        key=pygame.K_RETURN,
+        unicode="\r",
+        mod=0,
+        scancode=0,
     )
     assert cp.handle_event(ev) == "generate"
 
@@ -118,7 +127,13 @@ def test_control_panel_button_click_returns_generate():
 
 def test_control_panel_get_params_keys():
     cp = ControlPanel()
-    assert set(cp.get_params().keys()) == {"n", "baseline_ms", "effect_ms", "noise_sd", "outlier_pct"}
+    assert set(cp.get_params().keys()) == {
+        "n",
+        "baseline_ms",
+        "effect_ms",
+        "noise_sd",
+        "outlier_pct",
+    }
 
 
 def test_control_panel_draw_does_not_raise():
@@ -133,8 +148,7 @@ from cognitive_data_arcade.games.eda.ui_results import ChartPanel, ResultsPanel
 
 
 def _sim():
-    return simulate(n=20, baseline_ms=400, effect_ms=50, noise_sd=80,
-                    outlier_pct=0.05, rng_seed=42)
+    return simulate(n=20, baseline_ms=400, effect_ms=50, noise_sd=80, outlier_pct=0.05, rng_seed=42)
 
 
 def test_chart_panel_draw_empty_does_not_raise():
@@ -197,15 +211,23 @@ def test_eda_scene_next_scene_is_none():
 def test_eda_scene_generate_via_enter_does_not_raise():
     scene = EDAScene()
     ev = pygame.event.Event(
-        pygame.KEYDOWN, key=pygame.K_RETURN, unicode="\r", mod=0, scancode=0,
+        pygame.KEYDOWN,
+        key=pygame.K_RETURN,
+        unicode="\r",
+        mod=0,
+        scancode=0,
     )
-    scene.handle_event(ev)   # triggers simulate() + updates panels
+    scene.handle_event(ev)  # triggers simulate() + updates panels
 
 
 def test_eda_scene_draw_after_generate_does_not_raise():
     scene = EDAScene()
     ev = pygame.event.Event(
-        pygame.KEYDOWN, key=pygame.K_RETURN, unicode="\r", mod=0, scancode=0,
+        pygame.KEYDOWN,
+        key=pygame.K_RETURN,
+        unicode="\r",
+        mod=0,
+        scancode=0,
     )
     scene.handle_event(ev)
     surface = pygame.Surface((800, 600))

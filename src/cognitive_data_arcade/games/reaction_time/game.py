@@ -221,9 +221,7 @@ class ReactionTimeGame(Scene):
     def _build_next_scene(self) -> Scene:
         from cognitive_data_arcade.ui.session_summary import SessionSummaryScene
 
-        valid_rts = [
-            r.reaction_time_ms for r in self._records if r.reaction_time_ms > 0
-        ]
+        valid_rts = [r.reaction_time_ms for r in self._records if r.reaction_time_ms > 0]
         correct_count = sum(1 for r in self._records if r.correct)
         avg_rt = sum(valid_rts) / len(valid_rts) if valid_rts else 0.0
         min_rt = min(valid_rts) if valid_rts else 0.0
@@ -292,9 +290,7 @@ class ReactionTimeGame(Scene):
 
     def _draw_countdown(self, surface: pygame.Surface, w: int, h: int) -> None:
         surf = self._font_lg.render(str(self._countdown_val), True, _TARGET_ON)
-        surface.blit(
-            surf, (w // 2 - surf.get_width() // 2, h // 2 - surf.get_height() // 2)
-        )
+        surface.blit(surf, (w // 2 - surf.get_width() // 2, h // 2 - surf.get_height() // 2))
 
     def _draw_game_frame(
         self, surface: pygame.Surface, w: int, h: int, stimulus_on: bool = False
@@ -308,9 +304,7 @@ class ReactionTimeGame(Scene):
             pygame.draw.rect(surface, _TARGET_ON, (0, 0, fill, _PROGRESS_H))
 
         # Trial counter
-        label = self._font_sm.render(
-            f"trial {self._trial_index + 1} / {total}", True, _DIM
-        )
+        label = self._font_sm.render(f"trial {self._trial_index + 1} / {total}", True, _DIM)
         surface.blit(label, (14, _PROGRESS_H + 6))
 
         # Fixation cross (hidden during stimulus)
@@ -328,23 +322,13 @@ class ReactionTimeGame(Scene):
 
         # Target circle
         if stimulus_on:
-            pygame.draw.circle(
-                surface, (80, 40, 0), (_TARGET_CX, _TARGET_CY), _TARGET_R + 14
-            )
-            pygame.draw.circle(
-                surface, (160, 80, 0), (_TARGET_CX, _TARGET_CY), _TARGET_R + 7
-            )
+            pygame.draw.circle(surface, (80, 40, 0), (_TARGET_CX, _TARGET_CY), _TARGET_R + 14)
+            pygame.draw.circle(surface, (160, 80, 0), (_TARGET_CX, _TARGET_CY), _TARGET_R + 7)
             pygame.draw.circle(surface, _TARGET_ON, (_TARGET_CX, _TARGET_CY), _TARGET_R)
-            pygame.draw.circle(
-                surface, _BRIGHT_BORDER, (_TARGET_CX, _TARGET_CY), _TARGET_R, 2
-            )
+            pygame.draw.circle(surface, _BRIGHT_BORDER, (_TARGET_CX, _TARGET_CY), _TARGET_R, 2)
         else:
-            pygame.draw.circle(
-                surface, _TARGET_OFF, (_TARGET_CX, _TARGET_CY), _TARGET_R
-            )
-            pygame.draw.circle(
-                surface, _DIM_BORDER, (_TARGET_CX, _TARGET_CY), _TARGET_R, 1
-            )
+            pygame.draw.circle(surface, _TARGET_OFF, (_TARGET_CX, _TARGET_CY), _TARGET_R)
+            pygame.draw.circle(surface, _DIM_BORDER, (_TARGET_CX, _TARGET_CY), _TARGET_R, 1)
 
         # Early press warning
         if self._early_press:
@@ -365,6 +349,4 @@ class ReactionTimeGame(Scene):
 
     def _draw_between_blocks(self, surface: pygame.Surface, w: int, h: int) -> None:
         surf = self._font_med.render(self._strings.rt_between_blocks, True, _WHITE)
-        surface.blit(
-            surf, (w // 2 - surf.get_width() // 2, h // 2 - surf.get_height() // 2)
-        )
+        surface.blit(surf, (w // 2 - surf.get_width() // 2, h // 2 - surf.get_height() // 2))

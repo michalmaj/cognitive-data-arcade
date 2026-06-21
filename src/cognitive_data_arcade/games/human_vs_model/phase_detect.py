@@ -6,27 +6,27 @@ from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.human_vs_model.challenge_data import DetectChallenge
 
-_W, _H    = 1024, 720
-_TOP_H    = 44
-_MID      = 512
-_BG       = (15, 15, 35)
-_TOP_BG   = (10, 10, 28)
-_LEFT_BG  = (12, 18, 32)
+_W, _H = 1024, 720
+_TOP_H = 44
+_MID = 512
+_BG = (15, 15, 35)
+_TOP_BG = (10, 10, 28)
+_LEFT_BG = (12, 18, 32)
 _RIGHT_BG = (12, 8, 28)
-_WHITE    = (240, 240, 240)
-_DIM      = (100, 100, 140)
-_BLUE     = (52, 152, 219)
-_PURPLE   = (155, 89, 182)
-_AMBER    = (240, 165, 0)
-_GREEN    = (39, 174, 96)
-_RED      = (231, 76, 60)
-_GREY     = (60, 60, 80)
+_WHITE = (240, 240, 240)
+_DIM = (100, 100, 140)
+_BLUE = (52, 152, 219)
+_PURPLE = (155, 89, 182)
+_AMBER = (240, 165, 0)
+_GREEN = (39, 174, 96)
+_RED = (231, 76, 60)
+_GREY = (60, 60, 80)
 
-_BASE_SCORE  = 20
-_BEAT_BONUS  = 10
+_BASE_SCORE = 20
+_BEAT_BONUS = 10
 _AI_THINK_MS = 1500.0
 
-_BTN_LEWY  = pygame.Rect(16, 384, 234, 44)   # center = (133, 406)
+_BTN_LEWY = pygame.Rect(16, 384, 234, 44)  # center = (133, 406)
 _BTN_PRAWY = pygame.Rect(262, 384, 234, 44)  # center = (379, 406)
 
 
@@ -65,20 +65,20 @@ class PhaseDetectScene(Scene):
         session_score: int,
         beat_ai_count: int,
     ) -> None:
-        self._challenges    = challenges
-        self._challenge     = challenges[round_idx]
-        self._round_idx     = round_idx
+        self._challenges = challenges
+        self._challenge = challenges[round_idx]
+        self._round_idx = round_idx
         self._session_score = session_score
         self._beat_ai_count = beat_ai_count
-        self._selected: str | None = None   # "Lewy" | "Prawy"
-        self._state         = "task"         # "task" | "ai_thinking" | "reveal"
-        self._ai_timer      = 0.0
-        self._anim_tick     = 0.0
-        self._dots          = ""
-        self._correct       = False
-        self._beat_ai       = False
-        self._round_score   = 0
-        self._done          = False
+        self._selected: str | None = None  # "Lewy" | "Prawy"
+        self._state = "task"  # "task" | "ai_thinking" | "reveal"
+        self._ai_timer = 0.0
+        self._anim_tick = 0.0
+        self._dots = ""
+        self._correct = False
+        self._beat_ai = False
+        self._round_score = 0
+        self._done = False
         self._next: Scene | None = None
 
     # --- events ---------------------------------------------------------------
@@ -103,29 +103,32 @@ class PhaseDetectScene(Scene):
     # --- state transitions ----------------------------------------------------
 
     def _submit(self, chosen: str) -> None:
-        self._selected  = chosen
-        self._state     = "ai_thinking"
-        self._ai_timer  = _AI_THINK_MS
+        self._selected = chosen
+        self._state = "ai_thinking"
+        self._ai_timer = _AI_THINK_MS
         self._anim_tick = 0.0
 
     def _calc_score(self) -> None:
         # Correct answer is always "Lewy" (human_text always shown on the left)
-        self._correct     = self._selected == "Lewy"
-        self._beat_ai     = self._correct   # AI always fails detect
-        base              = _BASE_SCORE if self._correct else 0
-        bonus             = _BEAT_BONUS if self._beat_ai else 0
+        self._correct = self._selected == "Lewy"
+        self._beat_ai = self._correct  # AI always fails detect
+        base = _BASE_SCORE if self._correct else 0
+        bonus = _BEAT_BONUS if self._beat_ai else 0
         self._round_score = base + bonus
 
     def _advance(self) -> None:
         new_score = self._session_score + self._round_score
-        new_beat  = self._beat_ai_count + (1 if self._beat_ai else 0)
+        new_beat = self._beat_ai_count + (1 if self._beat_ai else 0)
         if self._round_idx < len(self._challenges) - 1:
             self._next = PhaseDetectScene(
                 self._challenges, self._round_idx + 1, new_score, new_beat
             )
         else:
-            from cognitive_data_arcade.games.human_vs_model.challenge_data import COMPLETE_CHALLENGES
+            from cognitive_data_arcade.games.human_vs_model.challenge_data import (
+                COMPLETE_CHALLENGES,
+            )
             from cognitive_data_arcade.games.human_vs_model.phase_complete import PhaseCompleteScene
+
             self._next = PhaseCompleteScene(COMPLETE_CHALLENGES, 0, new_score, new_beat)
         self._done = True
 
@@ -133,9 +136,9 @@ class PhaseDetectScene(Scene):
 
     def update(self, dt_ms: float = 0.0) -> None:
         if self._state == "ai_thinking":
-            self._ai_timer  -= dt_ms
+            self._ai_timer -= dt_ms
             self._anim_tick += dt_ms
-            self._dots       = "." * (int(self._anim_tick / 400) % 4)
+            self._dots = "." * (int(self._anim_tick / 400) % 4)
             if self._ai_timer <= 0:
                 self._calc_score()
                 self._state = "reveal"
@@ -216,12 +219,12 @@ class PhaseDetectScene(Scene):
         for rect, label in [(_BTN_LEWY, "Lewy"), (_BTN_PRAWY, "Prawy")]:
             is_sel = label == self._selected
             if self._state == "task":
-                bg       = (20, 35, 55)
-                color    = _BLUE
+                bg = (20, 35, 55)
+                color = _BLUE
                 text_col = _WHITE
             elif self._state == "ai_thinking":
-                bg       = (25, 40, 60) if is_sel else (15, 15, 25)
-                color    = _BLUE if is_sel else _GREY
+                bg = (25, 40, 60) if is_sel else (15, 15, 25)
+                color = _BLUE if is_sel else _GREY
                 text_col = _WHITE if is_sel else _DIM
             else:  # reveal
                 if is_sel and self._correct:

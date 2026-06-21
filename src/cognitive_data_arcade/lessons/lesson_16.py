@@ -1,4 +1,5 @@
 """Lesson 16 -- Prediction Slider (linear regression, R², residuals, outlier influence)."""
+
 from __future__ import annotations
 
 CONTENT: dict[str, dict[str, list[str]]] = {

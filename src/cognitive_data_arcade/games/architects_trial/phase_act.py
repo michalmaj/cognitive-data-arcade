@@ -38,7 +38,9 @@ class PhaseActScene(Scene):
         n = len(self._cards)
         total = n * _CARD_W + (n - 1) * _GAP
         x0 = (_W - total) // 2
-        self._rects = [pygame.Rect(x0 + i * (_CARD_W + _GAP), _CARD_Y, _CARD_W, _CARD_H) for i in range(n)]
+        self._rects = [
+            pygame.Rect(x0 + i * (_CARD_W + _GAP), _CARD_Y, _CARD_W, _CARD_H) for i in range(n)
+        ]
         self._selected = 0
         self._mouse_pos = (0, 0)
         self._flash_t = 0.0
@@ -68,9 +70,15 @@ class PhaseActScene(Scene):
         self._chosen = card
         self._flash_t = 0.0
         self._state.decisions.append(card.key)
-        self._state.fairness_score = min(100, max(0, self._state.fairness_score + card.fairness_delta))
-        self._state.compliance_score = min(100, max(0, self._state.compliance_score + card.compliance_delta))
-        self._state.effectiveness_score = min(100, max(0, self._state.effectiveness_score + card.effectiveness_delta))
+        self._state.fairness_score = min(
+            100, max(0, self._state.fairness_score + card.fairness_delta)
+        )
+        self._state.compliance_score = min(
+            100, max(0, self._state.compliance_score + card.compliance_delta)
+        )
+        self._state.effectiveness_score = min(
+            100, max(0, self._state.effectiveness_score + card.effectiveness_delta)
+        )
 
     def update(self, dt_ms: float = 0.0) -> None:
         if self._chosen:
@@ -79,16 +87,22 @@ class PhaseActScene(Scene):
                 self._done = True
                 if self._act_num < 3:
                     from cognitive_data_arcade.games.architects_trial.phase_act import PhaseActScene
+
                     self._next = PhaseActScene(self._state, self._act_num + 1)
                 else:
-                    from cognitive_data_arcade.games.architects_trial.phase_consequences import PhaseConsequencesScene
+                    from cognitive_data_arcade.games.architects_trial.phase_consequences import (
+                        PhaseConsequencesScene,
+                    )
+
                     self._next = PhaseConsequencesScene(self._state)
 
     def _draw_progress(self, surface: pygame.Surface) -> None:
         cx = _W // 2 - 60
         for i in range(1, 5):
             color = _PURPLE if i <= self._act_num else (50, 60, 90)
-            pygame.draw.circle(surface, color, (cx + (i - 1) * 40, 70), 8, 0 if i <= self._act_num else 2)
+            pygame.draw.circle(
+                surface, color, (cx + (i - 1) * 40, 70), 8, 0 if i <= self._act_num else 2
+            )
             label = get_font(10).render(str(i), True, (8, 12, 20) if i <= self._act_num else _DIM)
             surface.blit(label, (cx + (i - 1) * 40 - label.get_width() // 2, 65))
 
@@ -139,7 +153,10 @@ class PhaseActScene(Scene):
             note_s = get_font(10).render(card.note, True, note_color)
             note_bg = pygame.Rect(rect.x + 8, rect.bottom - 28, rect.w - 16, 20)
             pygame.draw.rect(surface, (20, 25, 40), note_bg, border_radius=4)
-            surface.blit(note_s, (rect.x + 8 + (rect.w - 16) // 2 - note_s.get_width() // 2, rect.bottom - 26))
+            surface.blit(
+                note_s,
+                (rect.x + 8 + (rect.w - 16) // 2 - note_s.get_width() // 2, rect.bottom - 26),
+            )
 
         if not self._chosen:
             hint = get_font(12).render("Kliknij karte lub strzalki + ENTER", True, _DIM)

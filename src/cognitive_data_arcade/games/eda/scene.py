@@ -195,14 +195,15 @@ class EDAScene(Scene):
         panel = pygame.Surface((_PANEL_W, _PANEL_H), pygame.SRCALPHA)
         panel.fill((15, 15, 35, 245))
         surface.blit(panel, (_PANEL_X, _PANEL_Y))
-        pygame.draw.rect(surface, _ACTIVE,
-                         (_PANEL_X, _PANEL_Y, _PANEL_W, _PANEL_H), 2, border_radius=8)
+        pygame.draw.rect(
+            surface, _ACTIVE, (_PANEL_X, _PANEL_Y, _PANEL_W, _PANEL_H), 2, border_radius=8
+        )
 
         font_hdr = get_font(20)
         font_body = get_font(18)
         y = _PANEL_Y + 18
         surface.set_clip(pygame.Rect(_PANEL_X + 2, _PANEL_Y + 2, _PANEL_W - 14, _PANEL_H - 4))
-        for text, is_header in lines[scroll:scroll + _VISIBLE_LINES]:
+        for text, is_header in lines[scroll : scroll + _VISIBLE_LINES]:
             if not text:
                 y += 8
                 continue

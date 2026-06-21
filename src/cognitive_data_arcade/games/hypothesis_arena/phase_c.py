@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
@@ -14,27 +15,27 @@ from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.hypothesis_arena.simulator import compute_power, min_n_for_power
 from cognitive_data_arcade.games.hypothesis_arena.widgets import _AlphaButtons, _FloatSlider
 
-_BG     = (15,  15,  35)
-_PANEL  = (18,  18,  42)
-_WHITE  = (240, 240, 240)
-_DIM    = (120, 120, 160)
-_ORANGE = (243, 156,  18)
-_BLUE   = ( 52, 152, 219)
-_GREEN  = ( 39, 174,  96)
-_RED    = (231,  76,  60)
-_FIG_BG         = "#0f0f23"
-_AX_BG          = "#1a1a3e"
+_BG = (15, 15, 35)
+_PANEL = (18, 18, 42)
+_WHITE = (240, 240, 240)
+_DIM = (120, 120, 160)
+_ORANGE = (243, 156, 18)
+_BLUE = (52, 152, 219)
+_GREEN = (39, 174, 96)
+_RED = (231, 76, 60)
+_FIG_BG = "#0f0f23"
+_AX_BG = "#1a1a3e"
 _DARK_ORANGE_BG = (58, 42, 16)
-_MUTED          = (80, 80, 100)
+_MUTED = (80, 80, 100)
 
-_LEFT_W   = 300
-_AREA_H   = 672
-_AREA_W   = 1024
-_RIGHT_W  = _AREA_W - _LEFT_W  # 724
+_LEFT_W = 300
+_AREA_H = 672
+_AREA_W = 1024
+_RIGHT_W = _AREA_W - _LEFT_W  # 724
 _SCROLL_H = 820
 _MATRIX_H = 360
-_CURVE_H  = 360
-_DPI      = 100
+_CURVE_H = 360
+_DPI = 100
 
 _POPUPS_C: dict[str, ContextInfo] = {
     "cell_type1": ContextInfo(
@@ -89,21 +90,30 @@ class PhaseCScene(Scene):
 
     def _register_popups(self) -> None:
         self._popup.clear()
-        self._popup.register(self._sl_n.rect, ContextInfo(
-            title="N na grupę",
-            body="Zwiększaj N aby przesunąć punkt mocy wzdłuż krzywej w górę.",
-            impact="Dla d=0.20 i alfa=0.05 potrzebujesz N ok. 394 żeby osiągnąć 80% mocy.",
-        ))
-        self._popup.register(self._sl_d.rect, ContextInfo(
-            title="Rozmiar efektu (d)",
-            body="Mniejsze d wymaga dużo więcej uczestników. d=0.50 wymaga ok. 4x mniej niż d=0.20.",
-            impact="Zdefiniuj minimalny klinicznie ważny efekt zanim planujesz badanie.",
-        ))
-        self._popup.register(self._alpha_btn.rect, ContextInfo(
-            title="Alpha",
-            body="Zmiana alfa przesuwa całą krzywą mocy. Mniejsze alfa = mniej mocy przy tym samym N.",
-            impact="alfa=0.01 wymaga większego N niż alfa=0.05 by osiągnąć tę samą moc.",
-        ))
+        self._popup.register(
+            self._sl_n.rect,
+            ContextInfo(
+                title="N na grupę",
+                body="Zwiększaj N aby przesunąć punkt mocy wzdłuż krzywej w górę.",
+                impact="Dla d=0.20 i alfa=0.05 potrzebujesz N ok. 394 żeby osiągnąć 80% mocy.",
+            ),
+        )
+        self._popup.register(
+            self._sl_d.rect,
+            ContextInfo(
+                title="Rozmiar efektu (d)",
+                body="Mniejsze d wymaga dużo więcej uczestników. d=0.50 wymaga ok. 4x mniej niż d=0.20.",
+                impact="Zdefiniuj minimalny klinicznie ważny efekt zanim planujesz badanie.",
+            ),
+        )
+        self._popup.register(
+            self._alpha_btn.rect,
+            ContextInfo(
+                title="Alpha",
+                body="Zmiana alfa przesuwa całą krzywą mocy. Mniejsze alfa = mniej mocy przy tym samym N.",
+                impact="alfa=0.01 wymaga większego N niż alfa=0.05 by osiągnąć tę samą moc.",
+            ),
+        )
         sy = self._scroll_y
         cell_w = (_RIGHT_W - 120 - 8) // 2
         cell_h = 120
@@ -142,13 +152,25 @@ class PhaseCScene(Scene):
         ax.axvline(n_cur, color="#f39c12", lw=1.5, ls="--")
         ax.plot(n_cur, p_cur, "o", color="#f39c12", ms=7)
         label_y = min(p_cur + 0.06, 0.95)
-        ax.text(n_cur, label_y, f"N={n_cur}\n{p_cur*100:.0f}%",
-                ha="center", color="#f39c12", fontsize=8)
+        ax.text(
+            n_cur,
+            label_y,
+            f"N={n_cur}\n{p_cur * 100:.0f}%",
+            ha="center",
+            color="#f39c12",
+            fontsize=8,
+        )
         if n_80 < 500:
             p80 = compute_power(n_80, d, alpha)
             ax.plot(n_80, p80, "o", color="#27ae60", ms=5, alpha=0.7)
-            ax.text(n_80, max(p80 - 0.06, 0.05), f"N ok.{n_80}",
-                    ha="center", color="#27ae60", fontsize=8)
+            ax.text(
+                n_80,
+                max(p80 - 0.06, 0.05),
+                f"N ok.{n_80}",
+                ha="center",
+                color="#27ae60",
+                fontsize=8,
+            )
         ax.set_xlim(10, 500)
         ax.set_ylim(0, 1.05)
         ax.set_xlabel("N na grupę", color="#787890", fontsize=9)
@@ -209,16 +231,16 @@ class PhaseCScene(Scene):
         self._sl_d.draw(surface)
         self._alpha_btn.draw(surface)
         power = self._power()
-        beta  = 1.0 - power
-        n_80  = self._min_n()
+        beta = 1.0 - power
+        n_80 = self._min_n()
         font_sm = get_font(14)
         font_md = get_font(17)
         y = 280
         rows = [
-            ("Moc (1-beta)",   f"{power * 100:.0f}%", _GREEN if power >= 0.80 else _ORANGE),
-            ("beta (błąd II)", f"{beta  * 100:.0f}%", _ORANGE if beta > 0.20 else _DIM),
-            ("alfa (błąd I)",  f"{self._alpha_btn.value * 100:.0f}%", _RED),
-            ("N do mocy 80%",  f"ok. {n_80}", _WHITE),
+            ("Moc (1-beta)", f"{power * 100:.0f}%", _GREEN if power >= 0.80 else _ORANGE),
+            ("beta (błąd II)", f"{beta * 100:.0f}%", _ORANGE if beta > 0.20 else _DIM),
+            ("alfa (błąd I)", f"{self._alpha_btn.value * 100:.0f}%", _RED),
+            ("N do mocy 80%", f"ok. {n_80}", _WHITE),
         ]
         for label, val, col in rows:
             surface.blit(font_sm.render(label, True, _DIM), (12, y))
@@ -242,22 +264,20 @@ class PhaseCScene(Scene):
 
     def _draw_matrix(self, right_surf: pygame.Surface) -> None:
         power = self._power()
-        beta  = 1.0 - power
+        beta = 1.0 - power
         alpha = self._alpha_btn.value
         font_hdr = get_font(15)
         font_big = get_font(28)
-        font_sm  = get_font(13)
+        font_sm = get_font(13)
         font_row = get_font(14)
 
-        title = font_hdr.render(
-            "Macierz błędów — konsekwencje Twoich parametrów", True, _DIM
-        )
+        title = font_hdr.render("Macierz błędów — konsekwencje Twoich parametrów", True, _DIM)
         right_surf.blit(title, (8, 10))
 
         cell_w = (_RIGHT_W - 120 - 8) // 2
         cell_h = 120
-        col_x  = [120, 120 + cell_w + 4]
-        row_y  = [50, 50 + cell_h + 4]
+        col_x = [120, 120 + cell_w + 4]
+        row_y = [50, 50 + cell_h + 4]
 
         # column headers
         h1 = font_hdr.render("H0 PRAWDZIWE", True, _BLUE)
@@ -273,10 +293,46 @@ class PhaseCScene(Scene):
 
         cells = [
             # (col_i, row_i, bg, border, big_val, main_lbl, sub_lbl, eq_lbl)
-            (0, 0, (58, 26, 26), _RED,    f"{alpha*100:.0f}%",       "Błąd I rodzaju",   "Fałszywy alarm",   "= alfa"),
-            (1, 0, (26, 58, 26), _GREEN,  f"{power*100:.0f}%",       "MOC testu",        "Trafne wykrycie",  "= 1-beta"),
-            (0, 1, (20, 20, 50), _PANEL,  f"{(1-alpha)*100:.0f}%",   "Poprawna decyzja", "Brak efektu OK",   "= 1-alfa"),
-            (1, 1, _DARK_ORANGE_BG, _ORANGE, f"{beta*100:.0f}%",      "Błąd II rodzaju",  "Przeoczony efekt", "= beta"),
+            (
+                0,
+                0,
+                (58, 26, 26),
+                _RED,
+                f"{alpha * 100:.0f}%",
+                "Błąd I rodzaju",
+                "Fałszywy alarm",
+                "= alfa",
+            ),
+            (
+                1,
+                0,
+                (26, 58, 26),
+                _GREEN,
+                f"{power * 100:.0f}%",
+                "MOC testu",
+                "Trafne wykrycie",
+                "= 1-beta",
+            ),
+            (
+                0,
+                1,
+                (20, 20, 50),
+                _PANEL,
+                f"{(1 - alpha) * 100:.0f}%",
+                "Poprawna decyzja",
+                "Brak efektu OK",
+                "= 1-alfa",
+            ),
+            (
+                1,
+                1,
+                _DARK_ORANGE_BG,
+                _ORANGE,
+                f"{beta * 100:.0f}%",
+                "Błąd II rodzaju",
+                "Przeoczony efekt",
+                "= beta",
+            ),
         ]
         for ci, ri, bg, border, big_val, main_lbl, sub_lbl, eq_lbl in cells:
             x = col_x[ci]
@@ -289,8 +345,8 @@ class PhaseCScene(Scene):
             big = font_big.render(big_val, True, text_col)
             right_surf.blit(big, (x + 8, y + 8))
             right_surf.blit(font_sm.render(main_lbl, True, text_col), (x + 8, y + 44))
-            right_surf.blit(font_sm.render(sub_lbl,  True, _MUTED), (x + 8, y + 60))
-            right_surf.blit(font_sm.render(eq_lbl,   True, _MUTED), (x + 8, y + 76))
+            right_surf.blit(font_sm.render(sub_lbl, True, _MUTED), (x + 8, y + 60))
+            right_surf.blit(font_sm.render(eq_lbl, True, _MUTED), (x + 8, y + 76))
 
     def is_done(self) -> bool:
         return self._done

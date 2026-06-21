@@ -34,7 +34,7 @@ def _make_game(tmp_path: Path, mode: str = "letters", difficulty: str = "easy") 
 def test_generate_block_even_split() -> None:
     trials = _generate_block(8, condition="feature")
     present = [t for t in trials if t["target_present"]]
-    absent  = [t for t in trials if not t["target_present"]]
+    absent = [t for t in trials if not t["target_present"]]
     assert len(present) == 4
     assert len(absent) == 4
 
@@ -96,12 +96,12 @@ def test_timeout_records_trial(tmp_path: Path) -> None:
     pm = ProfileManager(tmp_path / "profile.json")
     cfg = VSConfig(mode="letters", difficulty="easy")
     game = VisualSearchGame(cfg, pm, PL, "pid", "sid", csv_path)
-    game.update(600.0)                          # advance through fixation to SEARCH
-    game.update(float(TIMEOUT_MS + 100))        # advance past timeout
-    game.draw(pygame.Surface((1024, 768)))      # must not crash in FEEDBACK
+    game.update(600.0)  # advance through fixation to SEARCH
+    game.update(float(TIMEOUT_MS + 100))  # advance past timeout
+    game.draw(pygame.Surface((1024, 768)))  # must not crash in FEEDBACK
     assert csv_path.exists(), "CSV not written after timeout"
     lines = csv_path.read_text().splitlines()
-    assert len(lines) == 2                      # header + 1 trial
+    assert len(lines) == 2  # header + 1 trial
     assert "timeout" in lines[1], "timeout not recorded in CSV"
 
 
@@ -110,11 +110,11 @@ def test_block_break_loads_new_trial(tmp_path: Path) -> None:
     n = game._config.trials_per_block
     # Advance through all trials in block 1
     for _ in range(n):
-        game.update(600.0)    # FIXATION -> SEARCH
+        game.update(600.0)  # FIXATION -> SEARCH
         event = pygame.event.Event(pygame.KEYDOWN, {"key": pygame.K_f, "mod": 0, "unicode": "f"})
-        game.handle_event(event)   # respond
-        game.update(500.0)    # FEEDBACK -> ITI
-        game.update(400.0)    # ITI -> FIXATION (ready for next)
+        game.handle_event(event)  # respond
+        game.update(500.0)  # FEEDBACK -> ITI
+        game.update(400.0)  # ITI -> FIXATION (ready for next)
     # Should now be in BLOCK_BREAK
     assert game._phase.value == "block_break"
     # Press ENTER to continue to block 2

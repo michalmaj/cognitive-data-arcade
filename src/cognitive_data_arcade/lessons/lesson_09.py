@@ -1,4 +1,5 @@
 """Lesson 09 — Response Inhibition (Go/No-Go Guard)."""
+
 from __future__ import annotations
 
 CONTENT: dict[str, dict[str, list[str]]] = {

@@ -6,19 +6,19 @@ from dataclasses import dataclass, field
 CATEGORIES: list[str] = ["SPORT", "POLITYKA", "NAUKA", "MUZYKA", "MODA"]
 
 ENGAGEMENT: dict[str, int] = {
-    "SPORT":    120,
-    "POLITYKA":  40,
-    "NAUKA":     25,
-    "MUZYKA":    20,
-    "MODA":      15,
+    "SPORT": 120,
+    "POLITYKA": 40,
+    "NAUKA": 25,
+    "MUZYKA": 20,
+    "MODA": 15,
 }
 
 CAT_COLORS: dict[str, tuple[int, int, int]] = {
-    "SPORT":    (231, 76, 60),
+    "SPORT": (231, 76, 60),
     "POLITYKA": (52, 152, 219),
-    "NAUKA":    (46, 204, 113),
-    "MUZYKA":   (243, 156, 18),
-    "MODA":     (233, 30, 140),
+    "NAUKA": (46, 204, 113),
+    "MUZYKA": (243, 156, 18),
+    "MODA": (233, 30, 140),
 }
 
 BubbleProfile = dict[str, float]
@@ -46,9 +46,7 @@ def curated_profile(slots: list[str]) -> BubbleProfile:
     return {cat: counts[cat] / total for cat in CATEGORIES}
 
 
-def generate_slots(
-    profile: BubbleProfile, n: int = 6, seed: int | None = None
-) -> list[str]:
+def generate_slots(profile: BubbleProfile, n: int = 6, seed: int | None = None) -> list[str]:
     rng = random.Random(seed)
     return rng.choices(list(profile.keys()), weights=list(profile.values()), k=n)
 
