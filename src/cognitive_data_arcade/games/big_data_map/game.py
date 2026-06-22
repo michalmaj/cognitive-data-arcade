@@ -17,18 +17,18 @@ _W, _H = 1024, 768
 _TITLE_H = 40
 _INFO_H = 60
 _CX = _W // 2
-_CY = _TITLE_H + (_H - _TITLE_H - _INFO_H) // 2   # = 374
+_CY = _TITLE_H + (_H - _TITLE_H - _INFO_H) // 2  # = 374
 
-_R_MODULE = 190    # radius for module name labels
-_R_NODE = 270      # radius for lesson nodes
-_NODE_R = 22       # node circle radius
-_MODULE_ARC = 60   # degrees per module (6 x 60 = 360)
-_ARC_MARGIN = 5    # degrees gap at each end of module arc
+_R_MODULE = 190  # radius for module name labels
+_R_NODE = 270  # radius for lesson nodes
+_NODE_R = 22  # node circle radius
+_MODULE_ARC = 60  # degrees per module (6 x 60 = 360)
+_ARC_MARGIN = 5  # degrees gap at each end of module arc
 
 _ZOOM_MIN = 0.5
 _ZOOM_MAX = 2.5
 _ZOOM_STEP = 1.12
-_LABEL_ZOOM_THRESHOLD = 1.3   # show name labels for all nodes at this zoom
+_LABEL_ZOOM_THRESHOLD = 1.3  # show name labels for all nodes at this zoom
 
 _TEXT_LIGHT = (240, 240, 240)
 _TEXT_DIM = (100, 100, 140)
@@ -102,8 +102,8 @@ class BigDataMapGame(Scene):
         self._view_cy: float = float(_CY)
 
         self._font_title = get_font(28)
-        self._font_num = get_font(12)      # lesson number inside circle
-        self._font_node = get_font(13)     # name label outside circle
+        self._font_num = get_font(12)  # lesson number inside circle
+        self._font_node = get_font(13)  # name label outside circle
         self._font_module = get_font(16)
         self._font_info = get_font(20)
 
@@ -262,8 +262,9 @@ class BigDataMapGame(Scene):
             pa = self._spos(a)
             pb = self._spos(b)
             is_active = (a, b) in selected_edges
-            pygame.draw.line(surface, _LINE_ACTIVE if is_active else _LINE_COLOR,
-                             pa, pb, 2 if is_active else 1)
+            pygame.draw.line(
+                surface, _LINE_ACTIVE if is_active else _LINE_COLOR, pa, pb, 2 if is_active else 1
+            )
 
     def _draw_nodes(self, surface: pygame.Surface) -> None:
         sr = self._sr()
@@ -273,8 +274,8 @@ class BigDataMapGame(Scene):
         for _rect, node in self._node_by_pos:
             sx, sy = self._spos(node.lesson_num)
             color = MODULE_COLORS[node.module]
-            is_selected = (node.lesson_num == self._selected)
-            is_hovered = (node.lesson_num == self._hovered)
+            is_selected = node.lesson_num == self._selected
+            is_hovered = node.lesson_num == self._hovered
 
             # Draw circle
             if is_selected:
@@ -291,7 +292,9 @@ class BigDataMapGame(Scene):
             # Lesson number inside circle
             num_str = str(node.lesson_num)
             num_surf = self._font_num.render(num_str, True, _TEXT_LIGHT)
-            surface.blit(num_surf, (sx - num_surf.get_width() // 2, sy - num_surf.get_height() // 2))
+            surface.blit(
+                num_surf, (sx - num_surf.get_width() // 2, sy - num_surf.get_height() // 2)
+            )
 
             # Name label outside circle (selected/hovered always; all at high zoom)
             if is_selected or is_hovered or show_all_labels:
@@ -311,8 +314,13 @@ class BigDataMapGame(Scene):
                 text_color = _TEXT_LIGHT if (is_selected or is_hovered) else _TEXT_DIM
                 for line in lines:
                     rendered = self._font_node.render(line, True, text_color)
-                    surface.blit(rendered, (int(lx - rendered.get_width() // 2 + ux * rendered.get_width() // 2),
-                                            int(ly)))
+                    surface.blit(
+                        rendered,
+                        (
+                            int(lx - rendered.get_width() // 2 + ux * rendered.get_width() // 2),
+                            int(ly),
+                        ),
+                    )
                     ly += line_h
 
     def _draw_info_bar(self, surface: pygame.Surface) -> None:
