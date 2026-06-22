@@ -79,6 +79,15 @@ class LessonReaderScene(Scene):
         self._font_text = get_font(28)
         self._font_hint = get_font(24)
 
+        # Pre-compute tab hit rects for mouse click detection
+        self._tab_rects: dict[str, pygame.Rect] = {}
+        tab_x = _LEFT
+        for s in _SECTIONS:
+            label = self._section_label(s)
+            lw, lh = self._font_section.size(label)
+            self._tab_rects[s] = pygame.Rect(tab_x, _TAB_Y, lw, _DIVIDER_Y - _TAB_Y)
+            tab_x += lw + 48
+
     def _section_label(self, section: str) -> str:
         return {
             "theory": self._strings.lesson_theory,
@@ -86,11 +95,25 @@ class LessonReaderScene(Scene):
             "tasks": self._strings.lesson_tasks,
         }.get(section, section)
 
+    def _jump_to_section(self, section: str) -> None:
+        for i, (s, _) in enumerate(self._slides):
+            if s == section:
+                if self._slides[self._idx][0] != section:
+                    audio.play_sfx("navigate")
+                self._idx = i
+                return
+
     def handle_event(self, event: pygame.event.Event) -> None:
         if not self._slides:
             self._done = True
             return
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            # Tab bar click — jump to first slide of that section
+            for s, rect in self._tab_rects.items():
+                if rect.collidepoint(event.pos):
+                    self._jump_to_section(s)
+                    return
+            # Left/right half click — navigate pages
             surf = pygame.display.get_surface()
             w = surf.get_size()[0] if surf else 1024
             if event.pos[0] >= w // 2:

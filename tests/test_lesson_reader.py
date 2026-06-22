@@ -140,3 +140,43 @@ def test_pl_content_loads():
     scene = LessonReaderScene(1, PL, None)
     assert len(scene._slides) > 0
     assert scene._slides[0][0] == "theory"
+
+
+def _click(x: int, y: int) -> pygame.event.Event:
+    return pygame.event.Event(pygame.MOUSEBUTTONDOWN, button=1, pos=(x, y))
+
+
+def test_tab_rects_cover_all_sections():
+    scene = LessonReaderScene(1, EN, None)
+    assert set(scene._tab_rects.keys()) == {"theory", "notes", "tasks"}
+
+
+def test_click_notes_tab_jumps_to_notes():
+    scene = LessonReaderScene(1, EN, None)
+    assert scene._slides[0][0] == "theory"
+    notes_rect = scene._tab_rects["notes"]
+    scene.handle_event(_click(notes_rect.centerx, notes_rect.centery))
+    assert scene._slides[scene._idx][0] == "notes"
+
+
+def test_click_tasks_tab_jumps_to_tasks():
+    scene = LessonReaderScene(1, EN, None)
+    tasks_rect = scene._tab_rects["tasks"]
+    scene.handle_event(_click(tasks_rect.centerx, tasks_rect.centery))
+    assert scene._slides[scene._idx][0] == "tasks"
+
+
+def test_click_theory_tab_stays_on_first_theory_slide():
+    scene = LessonReaderScene(1, EN, None)
+    scene._idx = 1
+    theory_rect = scene._tab_rects["theory"]
+    scene.handle_event(_click(theory_rect.centerx, theory_rect.centery))
+    assert scene._slides[scene._idx][0] == "theory"
+    assert scene._idx == 0
+
+
+def test_tab_click_does_not_close_scene():
+    scene = LessonReaderScene(1, EN, None)
+    notes_rect = scene._tab_rects["notes"]
+    scene.handle_event(_click(notes_rect.centerx, notes_rect.centery))
+    assert not scene.is_done()
