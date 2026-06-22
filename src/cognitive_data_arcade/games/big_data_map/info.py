@@ -7,30 +7,28 @@ from cognitive_data_arcade.engine.pause import GameInfo
 def get_game_info(strings: Strings) -> GameInfo:
     if strings.language == "pl":
         return GameInfo(
-            title="Big Data w Kognitywistyce",
+            title="Siec Pojec",
             description_lines=[
-                "Interaktywna sieć pojęć łącząca metody Big Data z kognitywistyką.",
-                "Eksploruj sześć gałęzi: od neuroobrazowania i śledzenia wzroku po cyfrową fenotypizację.",
-                "Węzły ze złotą obwódką to gry dostępne w menu lekcji — możesz je wypróbować.",
+                "Interaktywna siec pojec laczaca wszystkie 31 lekcji kursu.",
+                "Nawiguj strzalkami lub mysza. ENTER otwiera wybrana lekcje.",
+                "Krawedzie lacza lekcje dzielace wspolne pojecia.",
             ],
             key_bindings=[
-                ("GORA / DOL", "nawigacja między węzłami"),
-                ("ENTER", "rozwiń gałąź / wróć do L1"),
-                ("BACKSPACE", "wróć do L1"),
+                ("LEWO / PRAWO", "poprzednia / nastepna lekcja"),
+                ("ENTER", "otworz lekcje w czytniku"),
                 ("ESC", "pauza"),
             ],
         )
     return GameInfo(
-        title="Big Data in Cognitive Science",
+        title="Concept Network",
         description_lines=[
-            "An interactive concept network linking Big Data methods to cognitive science.",
-            "Explore six branches: from neuroimaging and eye tracking to digital phenotyping.",
-            "Nodes with a gold border are games available in the lesson menu — try them out.",
+            "An interactive concept network linking all 31 course lessons.",
+            "Navigate with arrow keys or mouse. ENTER opens the selected lesson.",
+            "Edges connect lessons that share common concepts.",
         ],
         key_bindings=[
-            ("UP / DOWN", "navigate between nodes"),
-            ("ENTER", "expand branch / back to L1"),
-            ("BACKSPACE", "back to L1"),
+            ("LEFT / RIGHT", "previous / next lesson"),
+            ("ENTER", "open lesson in reader"),
             ("ESC", "pause"),
         ],
     )
