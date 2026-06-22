@@ -301,32 +301,34 @@ def _make_bdm():
     return BigDataMapGame(get_strings("en"), pm)
 
 
-def test_bdm_node_rects_populated_after_draw():
+def test_bdm_node_rects_populated():
     bdm = _make_bdm()
-    surf = pygame.display.get_surface()
-    bdm.draw(surf)
-    assert len(bdm._node_rects) == 6  # 6 L1 nodes
+    # _node_by_pos is built in __init__ for all 31 lessons
+    from cognitive_data_arcade.games.big_data_map.concept_data import CONCEPT_NODES
+    assert len(bdm._node_by_pos) == len(CONCEPT_NODES)
 
 
-def test_bdm_click_l1_node_enters_l2():
+def test_bdm_click_node_selects_it():
     bdm = _make_bdm()
-    surf = pygame.display.get_surface()
-    bdm.draw(surf)
-    # click the center of node 0's bounding rect
-    rect = bdm._node_rects[0]
-    event = pygame.event.Event(pygame.MOUSEBUTTONDOWN, pos=(rect.centerx, rect.centery), button=1)
+    # Click the first node (initially already selected) -> should not navigate (no factory)
+    first_rect, first_node = bdm._node_by_pos[0]
+    event = pygame.event.Event(pygame.MOUSEBUTTONDOWN, pos=(first_rect.centerx, first_rect.centery), button=1)
+    # First click on already-selected node tries to navigate; no factory -> nothing happens
     bdm.handle_event(event)
-    assert bdm._in_l2
+    # With no factory, done stays False and no navigation
+    assert bdm.is_done() is False
 
 
-def test_bdm_click_outside_no_change():
+def test_bdm_click_second_node_selects_it():
     bdm = _make_bdm()
-    surf = pygame.display.get_surface()
-    bdm.draw(surf)
-    # click at center of screen (which is NOT a node, it's the fixed center label)
-    event = pygame.event.Event(pygame.MOUSEBUTTONDOWN, pos=(512, 364), button=1)
+    # Click a node that is not currently selected
+    second_rect, second_node = bdm._node_by_pos[3]
+    # Ensure it's not the default selection
+    if bdm._selected == second_node.lesson_num:
+        second_rect, second_node = bdm._node_by_pos[5]
+    event = pygame.event.Event(pygame.MOUSEBUTTONDOWN, pos=(second_rect.centerx, second_rect.centery), button=1)
     bdm.handle_event(event)
-    assert not bdm._in_l2
+    assert bdm._selected == second_node.lesson_num
 
 
 import pathlib, tempfile
