@@ -189,7 +189,10 @@ class BigDataMapGame(Scene):
                 hit = self._hit_node(event.pos)
                 if hit is not None:
                     now = pygame.time.get_ticks()
-                    if hit == self._last_click_num and now - self._last_click_time <= _DOUBLE_CLICK_MS:
+                    if (
+                        hit == self._last_click_num
+                        and now - self._last_click_time <= _DOUBLE_CLICK_MS
+                    ):
                         self._navigate_to(hit)
                     else:
                         self._selected = hit
@@ -375,9 +378,7 @@ class BigDataMapGame(Scene):
             desc = f"{name} — {body}"
 
         if lang == "pl":
-            hint = (
-                "ENTER / 2x klik - szczegoly  |  kolko myszy - zoom  |  R - reset widoku  |  ESC - pauza"
-            )
+            hint = "ENTER / 2x klik - szczegoly  |  kolko myszy - zoom  |  R - reset widoku  |  ESC - pauza"
         else:
             hint = "ENTER / double-click - details  |  scroll - zoom  |  R - reset view  |  ESC - pause"
 
