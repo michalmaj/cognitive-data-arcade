@@ -314,7 +314,6 @@ def test_bdm_click_node_selects_it():
     first_rect, first_node = bdm._node_by_pos[0]
     event = pygame.event.Event(pygame.MOUSEBUTTONDOWN, pos=(first_rect.centerx, first_rect.centery), button=1)
     # First click on already-selected node tries to navigate; no factory -> nothing happens
-    initial_selected = bdm._selected
     bdm.handle_event(event)
     # With no factory, done stays False and no navigation
     assert bdm.is_done() is False
