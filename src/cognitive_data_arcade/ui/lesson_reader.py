@@ -28,12 +28,12 @@ _TOC_PANEL_W = 330
 _TOC_SECTION_H = 40
 _TOC_ITEM_H = 32
 _TOC_PAD = 14
-_TOC_PREVIEW_CHARS = 48
 _TOC_BTN_W = 44
 _TOC_BTN_H = 34
 _TOC_PANEL_BG = (14, 14, 38, 235)
 _TOC_HOVER_BG = (40, 40, 80)
 _TOC_ACTIVE_BG = (55, 40, 100)
+_TOC_TEXT_INDENT = 22  # space for "  · " prefix in pixels
 
 
 def _load_content(lesson_num: int, lang: str) -> list[tuple[str, str]]:
@@ -71,11 +71,14 @@ def _wrap(text: str, font: pygame.font.Font, max_w: int) -> list[str]:
     return lines
 
 
-def _preview(text: str) -> str:
+def _fit_text(font: pygame.font.Font, text: str, max_px: int) -> str:
+    """Truncate *text* so that font.size(result)[0] <= max_px, adding '…' if needed."""
     text = text.replace("\n", " ")
-    if len(text) <= _TOC_PREVIEW_CHARS:
+    if font.size(text)[0] <= max_px:
         return text
-    return text[:_TOC_PREVIEW_CHARS].rstrip() + "…"
+    while text and font.size(text + "…")[0] > max_px:
+        text = text[:-1]
+    return text.rstrip() + "…"
 
 
 class LessonReaderScene(Scene):
@@ -309,6 +312,10 @@ class LessonReaderScene(Scene):
         pygame.draw.rect(surface, _DIM, panel_rect, 1, border_radius=6)
 
         self._toc_item_rects = []
+        mouse_pos = pygame.mouse.get_pos()
+
+        # Max pixel width available for preview text (panel minus bullet indent and right pad)
+        max_text_px = _TOC_PANEL_W - _TOC_TEXT_INDENT - _TOC_PAD
 
         for s in _SECTIONS:
             items = [(i, txt) for i, (sec, txt) in enumerate(self._slides) if sec == s]
@@ -326,12 +333,17 @@ class LessonReaderScene(Scene):
                     panel_x - _TOC_PAD, item_y, _TOC_PANEL_W + _TOC_PAD, _TOC_ITEM_H
                 )
 
-                # Highlight current or hovered
-                if slide_idx == self._idx:
-                    pygame.draw.rect(surface, _TOC_ACTIVE_BG, item_rect)
+                is_active = slide_idx == self._idx
+                is_hovered = item_rect.collidepoint(mouse_pos)
 
-                color = _ORANGE if slide_idx == self._idx else _WHITE
-                preview_surf = self._font_toc.render(f"  · {_preview(txt)}", True, color)
+                if is_active:
+                    pygame.draw.rect(surface, _TOC_ACTIVE_BG, item_rect)
+                elif is_hovered:
+                    pygame.draw.rect(surface, _TOC_HOVER_BG, item_rect)
+
+                color = _ORANGE if is_active else _WHITE
+                preview = _fit_text(self._font_toc, txt, max_text_px)
+                preview_surf = self._font_toc.render(f"  · {preview}", True, color)
                 surface.blit(preview_surf, (panel_x, item_y + 6))
                 self._toc_item_rects.append((slide_idx, item_rect))
                 item_y += _TOC_ITEM_H
