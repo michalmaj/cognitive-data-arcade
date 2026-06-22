@@ -5,103 +5,38 @@ from __future__ import annotations
 CONTENT: dict[str, dict[str, list[str]]] = {
     "pl": {
         "theory": [
-            "Algorytmiczne podejmowanie decyzji (ADM) pojawia się w sytuacjach, "
-            "gdy system AI zastępuje lub wspiera człowieka w decyzjach o wysokich "
-            "stawkach: kto dostanie kredyt, kto trafi do więzienia, kto zostanie "
-            "zatrudniony. EU AI Act (2024) definiuje 'systemy wysokiego ryzyka' "
-            "i nakłada na nie obowiązek dokumentacji, audytu i nadzoru ludzkiego.",
-            "Matematyczna niemożliwość: nie można jednocześnie spełnić trzech "
-            "najpopularniejszych definicji sprawiedliwości algorytmicznej. "
-            "Parytet demograficzny (równe wskaźniki aprobaty między grupami), "
-            "równe szanse (równe TPR między grupami) i kalibracja (równe prawdopodobieństwa "
-            "predykcyjne) są wzajemnie sprzeczne gdy grupy mają różne rozkłady bazowe. "
-            "Wybór kryterium to decyzja polityczna, nie techniczna.",
-            "EU AI Act klasyfikuje systemy AI według ryzyka. Systemy 'wysokiego ryzyka' "
-            "(rekrutacja, edukacja, opieka społeczna, wymiar sprawiedliwości) muszą mieć: "
-            "dokumentację techniczną, rejestr zdarzeń, mechanizm nadzoru ludzkiego, "
-            "przejrzyste informowanie osób, których dotyczą decyzje. "
-            "Brak compliance może skutkować karą do 30 mln EUR lub 6% obrotu.",
-            "Efekt Goodharta: 'Kiedy miara staje się celem, przestaje być dobra miara' "
-            "(Charles Goodhart, 1975). Klasyczne przykłady w AI: system rekrutacyjny "
-            "optymalizowany pod retencję zaczyna odrzucać kandydatów ze złożonymi "
-            "życiorysami; system medyczny optymalizowany pod śmiertelność wybiera "
-            "pacjentów o najlepszych rokowaniach; algorytm rekomendacji optymalizowany "
-            "pod engagement maksymalizuje outrage bo outrage trzyma użytkowników dłużej.",
+            "Algorytmiczne podejmowanie decyzji (ADM) pojawia sie w sytuacjach, gdy system AI zastepuje lub wspiera czlowieka w decyzjach o wysokich stawkach: kto dostanie kredyt, kto trafi do wiezienia, kto zostanie zatrudniony. EU AI Act (uchwalony kwiecien 2024, wdrozenie fazowe 2024-2027) definiuje 'systemy wysokiego ryzyka' i naklada na nie obowiazek dokumentacji, audytu i nadzoru ludzkiego.",
+            "Matematyczna niemozliwosc: nie mozna jednoczesnie spelnic trzech najpopularniejszych definicji sprawiedliwosci algorytmicznej. Parytet demograficzny (rowne wskazniki aprobaty miedzy grupami), rowne szanse (rowne TPR miedzy grupami) i kalibracja (rowne prawdopodobienstwa predykcyjne) sa wzajemnie sprzeczne gdy grupy maja rozne rozklady bazowe. Chouldechova (2017) i Kleinberg i in. (2016) udowodnili te niemozliwosc niezaleznie - klasyczny przyklad rownoczesnego odkrycia. Wybor kryterium to decyzja polityczna, nie techniczna.",
+            "EU AI Act klasyfikuje systemy AI wedlug ryzyka. Systemy 'wysokiego ryzyka' (rekrutacja, edukacja, opieka spoleczna, wymiar sprawiedliwosci) musza miec: dokumentacje techniczna, rejestr zdarzen, mechanizm nadzoru ludzkiego, przejrzyste informowanie osob, ktorych dotycza decyzje. Brak compliance moze skutkowac kara do 30 mln EUR lub 6% obrotu. W USA analog to NIST AI Risk Management Framework (2023) - dobrowolny, ale referowany w umowach rzadowych.",
+            "Efekt Goodharta: 'Kiedy miara staje sie celem, przestaje byc dobra miara' (Charles Goodhart, Bank of Anglii, 1975, oryginalnie o polityce monetarnej). Marilyn Strathern uogolnila w 1997: 'Kazda obserwowana regularnosc statystyczna, na ktora sie polega, ulega rozpadowi, gdy sie na niej wywiera naciski regulacyjne'. Klasyczne przyklady w AI: system rekrutacyjny optymalizowany pod retencje zaczyna odrzucac kandydatow ze zlozonym zyciorysem; algorytm rekomendacji optymalizowany pod engagement maksymalizuje outrage bo outrage trzyma uzytkownikow dluzej.",
+            "Cathy O'Neil 'Weapons of Math Destruction' (2016): autorka, matematyczka i byla analityczka hedge-fund, opisuje jak pozornie neutralne modele matematyczne wzmacniaja nierownosci spoleczne. Trzy cechy 'broni': nieprzejrzystosc (black box), skala (miliony decyzji), destrukcyjnosc (dotykaja najbardziej wrazliwe grupy). Przykladem jest Value-Added Model (VAM) do oceny nauczycieli: uzyty w USA w 2011, prowadzil do zwolnien na podstawie wynikow, ktore zmienily sie o 20-30 pp z roku na rok - przy tych samych nauczycielach. Sad w Nowym Jorku orzekl w 2015, ze wyniki nie moga byc uzywane jako podstawa zwolnien.",
         ],
         "notes": [
-            "Cathy O'Neil 'Weapons of Math Destruction' (2016): autorka, matematyczka "
-            "i była analityczka hedge-fund, opisuje jak pozornie neutralne modele "
-            "matematyczne wzmacniają nierówności społeczne. Trzy cechy 'broni': "
-            "nieprzejrzystość (black box), skala (miliony decyzji), destrukcyjność "
-            "(dotykają najbardziej wrażliwe grupy). Przykłady: scoring kredytowy, "
-            "ocena nauczycieli, rekrutacja w korporacjach.",
-            "COMPAS (Correctional Offender Management Profiling for Alternative "
-            "Sanctions): algorytm używany w USA do oceny ryzyka recydywy przy "
-            "decyzjach o zwolnieniu warunkowym. ProPublica (2016) wykazała: "
-            "algorytm błędnie klasyfikuje czarnych oskarżonych jako 'wysokie ryzyko' "
-            "dwukrotnie częściej niż białych (45% vs 24% false positives). "
-            "Northpointe (producent) odpowiedział: accuracy jest równa między grupami. "
-            "Oba twierdzenia są matematycznie prawdziwe - to jest właśnie impossibility theorem.",
+            "COMPAS (Correctional Offender Management Profiling for Alternative Sanctions) - algorytm uzywany w ponad 400 sadach w USA do oceny ryzyka recydywizmu. ProPublica (Angwin i in., 2016) wykazala: algorytm falszywie klasyfikuje czarnych oskarzonych jako 'wysokie ryzyko' dwukrotnie czesciej niz bialych (45% vs 24% false positives). Northpointe odpowiedzial: accuracy jest rowna miedzy grupami. Obaj mieli racje matematyczna - to wlasnie twierdzenie niemozliwosci w praktyce.",
+            "Zasada ELSI (Ethical, Legal, Social Implications) - sformalizowana przy projekcie genomu ludzkiego (NIH, 1990). 3-5% budzetu projektu przeznaczono na badania ELSI - pierwsza instytucjonalizacja etyki technologicznej w nauce. Dzieki ELSI zidentyfikowano zagrozenia prywatnosci danych genetycznych, patentowania genow i kwestie rownosci dostepu do terapii genowych jeszcze przed opublikowaniem genomu w 2003.",
         ],
         "tasks": [
-            "Który z Twoich wyborów projektowych najbardziej zaskoczył Cię konsekwencjami? "
-            "Dlaczego go podjąłeś - co wydawało się wtedy oczywiste lub bezpieczne?",
-            "Wyobraź sobie że jesteś w grupie demograficznej, która 'przegrała' na Twoim "
-            "systemie. Jak czujesz się wiedząc że algorytm oceniał Cię bez Twojej wiedzy, "
-            "na podstawie danych, których istnienia możesz nie być świadomy?",
-            "Czy istnieje kombinacja decyzji projektowych, która zadowala wszystkich trzech "
-            "sędziów komisji jednocześnie? Sprawdź to grając jeszcze raz. "
-            "Co mówi wynik o naturze kompromisów w projektowaniu systemów AI?",
+            "Ktory wybor projektowy z gry najbardziej zaskakuje konsekwencjami? Na jakich przeslankach - co wydawalo sie oczywiste lub bezpieczne przy podejmowaniu tej decyzji?",
+            "W scenariuszu z systemem ADM: osoba z grupy demograficznej, ktora 'przegrala' na ocenianym systemie, nie zna ani cech modelu, ani kryteriow decyzji. Co to oznacza dla prawa do odwolania? Czy wymog 'prawa do wyjasnienia' z EU AI Act wystarczyloby do naprawienia tej asymetrii?",
+            "Czy istnieje kombinacja decyzji projektowych, ktora zaspokaja jednoczesnie wszystkich trzech sedziow komisji? Co wynika z dodatkowej rozgrywki o naturze kompromisow w projektowaniu systemow AI?",
         ],
     },
     "en": {
         "theory": [
-            "Algorithmic Decision Making (ADM) arises when an AI system replaces or "
-            "assists humans in high-stakes decisions: who gets credit, who goes to prison, "
-            "who gets hired. The EU AI Act (2024) defines 'high-risk systems' and imposes "
-            "documentation, auditing, and human oversight requirements on them.",
-            "Mathematical impossibility: you cannot simultaneously satisfy the three most "
-            "popular definitions of algorithmic fairness. Demographic parity (equal approval "
-            "rates across groups), equal opportunity (equal TPR across groups), and "
-            "calibration (equal predictive probabilities) are mutually exclusive when groups "
-            "have different base rates. Choosing a criterion is a political, not technical, "
-            "decision.",
-            "The EU AI Act classifies AI systems by risk level. 'High-risk' systems "
-            "(recruitment, education, social services, justice) must have: technical "
-            "documentation, event logs, human oversight mechanisms, and transparent "
-            "notification of affected individuals. Non-compliance can result in fines up to "
-            "EUR 30 million or 6% of turnover.",
-            "Goodhart's Law: 'When a measure becomes a target, it ceases to be a good "
-            "measure' (Charles Goodhart, 1975). Classic AI examples: a recruitment system "
-            "optimized for retention starts rejecting candidates with complex CVs; a medical "
-            "system optimized for mortality selects patients with the best prognoses; a "
-            "recommendation algorithm optimized for engagement maximizes outrage because "
-            "outrage keeps users on the platform longer.",
+            "Algorithmic Decision Making (ADM) arises when an AI system replaces or assists humans in high-stakes decisions: who gets credit, who goes to prison, who gets hired. The EU AI Act (passed April 2024, phased implementation 2024-2027) defines 'high-risk systems' and imposes documentation, auditing, and human oversight requirements on them.",
+            "Mathematical impossibility: it is impossible to simultaneously satisfy the three most popular definitions of algorithmic fairness. Demographic parity (equal approval rates across groups), equal opportunity (equal TPR across groups), and calibration (equal predictive probabilities) are mutually exclusive when groups have different base rates. Chouldechova (2017) and Kleinberg et al. (2016) proved this impossibility independently - a classic simultaneous discovery. Choosing a criterion is a political, not technical, decision.",
+            "The EU AI Act classifies AI systems by risk. 'High-risk' systems (recruitment, education, social services, justice) must have: technical documentation, event logs, human oversight, and transparent notification of affected individuals. Non-compliance can result in fines up to EUR 30 million or 6% of turnover. In the US, the analog is the NIST AI Risk Management Framework (2023) - voluntary, but referenced in government contracts.",
+            "Goodhart's Law: 'When a measure becomes a target, it ceases to be a good measure' (Charles Goodhart, Bank of England, 1975, originally about monetary policy). Marilyn Strathern generalized in 1997: 'Any observed statistical regularity will tend to collapse once pressure is placed upon it for control purposes'. Classic AI examples: a recruitment system optimized for retention starts rejecting candidates with complex CVs; a recommendation algorithm optimized for engagement maximizes outrage because outrage keeps users on the platform longer.",
+            "Cathy O'Neil 'Weapons of Math Destruction' (2016): the author, a mathematician and former hedge-fund analyst, describes how seemingly neutral mathematical models amplify social inequalities. Three features of 'weapons': opacity (black box), scale (millions of decisions), destructiveness (disproportionately affecting vulnerable groups). The Value-Added Model (VAM) for teacher evaluation used in the US in 2011 led to dismissals based on scores that shifted 20-30 pp year-on-year for the same teachers. A New York court ruled in 2015 that scores could not be used as the basis for dismissal.",
         ],
         "notes": [
-            "Cathy O'Neil 'Weapons of Math Destruction' (2016): the author, a mathematician "
-            "and former hedge-fund analyst, describes how seemingly neutral mathematical "
-            "models amplify social inequalities. Three features of 'weapons': opacity "
-            "(black box), scale (millions of decisions), destructiveness (disproportionately "
-            "affecting vulnerable groups). Examples: credit scoring, teacher evaluation, "
-            "corporate recruitment.",
-            "COMPAS (Correctional Offender Management Profiling for Alternative Sanctions): "
-            "an algorithm used in the US to assess recidivism risk for parole decisions. "
-            "ProPublica (2016) showed: the algorithm incorrectly classifies Black defendants "
-            "as 'high risk' twice as often as white defendants (45% vs 24% false positives). "
-            "Northpointe (the developer) responded: accuracy is equal across groups. "
-            "Both claims are mathematically true - this is precisely the impossibility "
-            "theorem in action.",
+            "COMPAS (Correctional Offender Management Profiling for Alternative Sanctions) - used in over 400 US courts for recidivism risk assessment. ProPublica (Angwin et al., 2016) showed: the algorithm misclassifies Black defendants as 'high risk' twice as often as white defendants (45% vs 24% false positives). Northpointe responded: accuracy is equal across groups. Both claims are mathematically true - this is precisely the impossibility theorem in practice.",
+            "The ELSI principle (Ethical, Legal, Social Implications) was formalized during the Human Genome Project (NIH, 1990). 3-5% of the project budget was allocated to ELSI research - the first institutionalization of technology ethics in science. ELSI identified genetic privacy risks, gene patenting, and equitable access concerns before the genome was published in 2003.",
         ],
         "tasks": [
-            "Which of your design choices surprised you most with its consequences? "
-            "Why did you make it - what seemed obvious or safe at the time?",
-            "Imagine you belong to the demographic group that 'lost' under your system. "
-            "How do you feel knowing that an algorithm evaluated you without your knowledge, "
-            "based on data whose existence you may not have been aware of?",
-            "Is there a combination of design decisions that satisfies all three committee "
-            "judges simultaneously? Try playing again to find out. "
-            "What does the result say about the nature of tradeoffs in AI system design?",
+            "Which design choice in the game is most surprising in its consequences? On what reasoning did that choice seem obvious or safe at the time it was made?",
+            "In an ADM scenario: a person from the demographic group that 'lost' under the evaluated system does not know the model's features or decision criteria. What does this mean for the right to appeal? Would the 'right to explanation' requirement in the EU AI Act be sufficient to correct this asymmetry?",
+            "Is there a combination of design decisions that satisfies all three committee judges simultaneously? What does an additional playthrough reveal about the nature of tradeoffs in AI system design?",
         ],
     },
 }
