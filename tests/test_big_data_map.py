@@ -196,3 +196,133 @@ def test_draw_with_selected_node(game) -> None:
     surface = pygame.Surface((1024, 768))
     game._selected = game._nav_order[5]
     game.draw(surface)
+
+
+# --- DISPLAY_NUM tests ---
+
+
+def test_display_num_covers_all_nodes() -> None:
+    from cognitive_data_arcade.games.big_data_map.concept_data import CONCEPT_NODES, DISPLAY_NUM
+
+    for node in CONCEPT_NODES:
+        assert node.lesson_num in DISPLAY_NUM
+
+
+def test_display_num_sequential_1_to_31() -> None:
+    from cognitive_data_arcade.games.big_data_map.concept_data import DISPLAY_NUM
+
+    values = sorted(DISPLAY_NUM.values())
+    assert values == list(range(1, 32))
+
+
+# --- get_connected tests ---
+
+
+def test_get_connected_returns_at_most_5() -> None:
+    from cognitive_data_arcade.games.big_data_map.concept_data import CONCEPT_NODES, get_connected
+
+    for node in CONCEPT_NODES:
+        result = get_connected(node.lesson_num)
+        assert len(result) <= 5
+
+
+def test_get_connected_cross_module_first() -> None:
+    from cognitive_data_arcade.games.big_data_map.concept_data import get_connected, _node_map
+
+    # Lesson 2 (RT Lab, module 1) has both intra- and cross-module connections
+    result = get_connected(2, max_count=5)
+    assert len(result) > 0
+    src_module = _node_map[2].module
+    # If any cross-module connection exists, it must come before all intra-module ones
+    modules = [n.module for n, _, _ in result]
+    cross_indices = [i for i, m in enumerate(modules) if m != src_module]
+    intra_indices = [i for i, m in enumerate(modules) if m == src_module]
+    if cross_indices and intra_indices:
+        assert max(cross_indices) < min(intra_indices)
+
+
+def test_get_connected_unknown_node_returns_empty() -> None:
+    from cognitive_data_arcade.games.big_data_map.concept_data import get_connected
+
+    assert get_connected(9999) == []
+
+
+def test_get_connected_returns_tuples_of_three() -> None:
+    from cognitive_data_arcade.games.big_data_map.concept_data import get_connected, LessonNode
+
+    result = get_connected(1)
+    for item in result:
+        node, reason_pl, reason_en = item
+        assert isinstance(node, LessonNode)
+        assert isinstance(reason_pl, str) and len(reason_pl) > 0
+        assert isinstance(reason_en, str) and len(reason_en) > 0
+
+
+# --- ConceptDetailScene tests ---
+
+
+def test_detail_scene_is_done_on_backspace() -> None:
+    pygame.init()
+    from cognitive_data_arcade.games.big_data_map.detail import ConceptDetailScene
+    from cognitive_data_arcade.engine.i18n import get_strings
+
+    scene = ConceptDetailScene(1, get_strings("en"), back_scene=None)
+    assert not scene.is_done()
+    scene.handle_event(
+        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_BACKSPACE, mod=0, unicode="")
+    )
+    assert scene.is_done()
+
+
+def test_detail_scene_is_done_on_esc() -> None:
+    pygame.init()
+    from cognitive_data_arcade.games.big_data_map.detail import ConceptDetailScene
+    from cognitive_data_arcade.engine.i18n import get_strings
+
+    scene = ConceptDetailScene(1, get_strings("en"), back_scene=None)
+    scene.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode=""))
+    assert scene.is_done()
+
+
+def test_detail_scene_next_scene_returns_back() -> None:
+    pygame.init()
+    from cognitive_data_arcade.games.big_data_map.detail import ConceptDetailScene
+    from cognitive_data_arcade.engine.i18n import get_strings
+    from unittest.mock import MagicMock
+
+    back = MagicMock()
+    scene = ConceptDetailScene(1, get_strings("en"), back_scene=back)
+    scene.handle_event(
+        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_BACKSPACE, mod=0, unicode="")
+    )
+    assert scene.next_scene() is back
+
+
+def test_detail_scene_click_closes() -> None:
+    pygame.init()
+    from cognitive_data_arcade.games.big_data_map.detail import ConceptDetailScene
+    from cognitive_data_arcade.engine.i18n import get_strings
+
+    scene = ConceptDetailScene(1, get_strings("en"), back_scene=None)
+    scene.handle_event(pygame.event.Event(pygame.MOUSEBUTTONDOWN, pos=(512, 400), button=1))
+    assert scene.is_done()
+
+
+def test_detail_scene_draw_without_crash() -> None:
+    pygame.init()
+    from cognitive_data_arcade.games.big_data_map.detail import ConceptDetailScene
+    from cognitive_data_arcade.engine.i18n import get_strings
+
+    scene = ConceptDetailScene(1, get_strings("en"), back_scene=None)
+    surface = pygame.Surface((1024, 768))
+    scene.draw(surface)
+
+
+def test_detail_scene_shows_connections() -> None:
+    pygame.init()
+    from cognitive_data_arcade.games.big_data_map.detail import ConceptDetailScene
+    from cognitive_data_arcade.engine.i18n import get_strings
+
+    scene = ConceptDetailScene(2, get_strings("en"), back_scene=None)  # RT Lab has many connections
+    assert len(scene._connections) > 0
+    assert len(scene._connections) <= 5
