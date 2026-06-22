@@ -45,7 +45,7 @@ def game_with_factory(tmp_path):
         navigated_to.append(lesson_num)
         return _FakeScene()
 
-    g = BigDataMapGame(PL, pm, lesson_reader_factory=factory)
+    g = BigDataMapGame(PL, pm, concept_detail_factory=factory)
     return g, navigated_to
 
 
@@ -142,15 +142,14 @@ def test_enter_with_factory_navigates(game_with_factory) -> None:
     assert navigated_to == [selected]
 
 
-def test_second_click_on_selected_node_navigates(game_with_factory) -> None:
+def test_double_click_on_node_navigates(game_with_factory) -> None:
     game, navigated_to = game_with_factory
-    # Select first node
     first_node = game._nav_order[0]
-    game._selected = first_node
-    # Get position of that node
     x, y = game._positions[first_node]
-    # First click: already selected -> should navigate
-    game.handle_event(pygame.event.Event(pygame.MOUSEBUTTONDOWN, button=1, pos=(x, y)))
+    event = pygame.event.Event(pygame.MOUSEBUTTONDOWN, button=1, pos=(x, y))
+    # First click selects; second click (within window) is the double-click
+    game.handle_event(event)
+    game.handle_event(event)
     assert navigated_to == [first_node]
     assert game.is_done() is True
 

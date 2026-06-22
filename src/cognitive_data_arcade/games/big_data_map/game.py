@@ -11,7 +11,15 @@ from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.profile.manager import ProfileManager
 from cognitive_data_arcade.engine.colors import BG as _BG, ORANGE as _ORANGE
 
-from .concept_data import CONCEPT_NODES, CONCEPT_EDGES, MODULE_COLORS, MODULE_NAMES, LessonNode
+from .concept_data import (
+    CONCEPT_NODES,
+    CONCEPT_EDGES,
+    MODULE_COLORS,
+    MODULE_NAMES,
+    LessonNode,
+    DISPLAY_NUM,
+    get_connected,
+)
 
 _W, _H = 1024, 768
 _TITLE_H = 40
@@ -35,7 +43,10 @@ _TEXT_DIM = (100, 100, 140)
 _LINE_COLOR = (28, 28, 55)
 _LINE_ACTIVE = (70, 70, 120)
 _SELECTED_RING = (255, 220, 50)
+_CONNECTED_RING = (120, 120, 210)  # ring for nodes connected to selected
 _LABEL_GAP = 8  # px between circle edge and nearest label edge
+
+_DOUBLE_CLICK_MS = 500
 
 
 def _deg2rad(deg: float) -> float:
@@ -83,11 +94,11 @@ class BigDataMapGame(Scene):
         self,
         strings: Strings,
         profile_manager: ProfileManager,
-        lesson_reader_factory: Callable[[int], Scene] | None = None,
+        concept_detail_factory: Callable[[int], Scene] | None = None,
     ) -> None:
         self._strings = strings
         self._pm = profile_manager
-        self._lesson_reader_factory = lesson_reader_factory
+        self._concept_detail_factory = concept_detail_factory
         self._done = False
         self._next: Scene | None = None
 
@@ -96,6 +107,11 @@ class BigDataMapGame(Scene):
 
         self._hovered: int | None = None
         self._selected: int | None = None
+        self._connected_nums: set[int] = set()
+
+        # Double-click tracking
+        self._last_click_num: int | None = None
+        self._last_click_time: int = 0
 
         self._font_title = get_font(28)
         self._font_num = get_font(12)  # lesson number inside circle
@@ -114,8 +130,15 @@ class BigDataMapGame(Scene):
         self._nav_order = [n.lesson_num for n in CONCEPT_NODES]
         self._nav_idx = 0
         self._selected = self._nav_order[0]
+        self._compute_connected()
 
     # --- helpers ---
+
+    def _compute_connected(self) -> None:
+        if self._selected is None:
+            self._connected_nums = set()
+            return
+        self._connected_nums = {n.lesson_num for n, _, _ in get_connected(self._selected)}
 
     def _spos(self, lesson_num: int) -> tuple[int, int]:
         """Screen position at current zoom (always around canvas centre _CX,_CY)."""
@@ -144,9 +167,9 @@ class BigDataMapGame(Scene):
         return None
 
     def _navigate_to(self, lesson_num: int) -> None:
-        if self._lesson_reader_factory is not None:
+        if self._concept_detail_factory is not None:
             audio.play_sfx("navigate")
-            self._next = self._lesson_reader_factory(lesson_num)
+            self._next = self._concept_detail_factory(lesson_num)
             self._done = True
 
     # --- events ---
@@ -165,13 +188,17 @@ class BigDataMapGame(Scene):
             if event.button == 1:
                 hit = self._hit_node(event.pos)
                 if hit is not None:
-                    if self._selected == hit:
+                    now = pygame.time.get_ticks()
+                    if hit == self._last_click_num and now - self._last_click_time <= _DOUBLE_CLICK_MS:
                         self._navigate_to(hit)
                     else:
                         self._selected = hit
                         if hit in self._nav_order:
                             self._nav_idx = self._nav_order.index(hit)
+                        self._compute_connected()
                         audio.play_sfx("navigate")
+                    self._last_click_num = hit
+                    self._last_click_time = now
             return
 
         if event.type != pygame.KEYDOWN:
@@ -182,10 +209,12 @@ class BigDataMapGame(Scene):
         if key in (pygame.K_UP, pygame.K_RIGHT):
             self._nav_idx = (self._nav_idx - 1) % n
             self._selected = self._nav_order[self._nav_idx]
+            self._compute_connected()
             audio.play_sfx("navigate")
         elif key in (pygame.K_DOWN, pygame.K_LEFT):
             self._nav_idx = (self._nav_idx + 1) % n
             self._selected = self._nav_order[self._nav_idx]
+            self._compute_connected()
             audio.play_sfx("navigate")
         elif key in (pygame.K_RETURN, pygame.K_KP_ENTER):
             if self._selected is not None:
@@ -259,6 +288,7 @@ class BigDataMapGame(Scene):
             color = MODULE_COLORS[node.module]
             is_selected = node.lesson_num == self._selected
             is_hovered = node.lesson_num == self._hovered
+            is_connected = node.lesson_num in self._connected_nums
 
             if is_selected:
                 pygame.draw.circle(surface, _SELECTED_RING, (sx, sy), sr + 4)
@@ -267,11 +297,15 @@ class BigDataMapGame(Scene):
             elif is_hovered:
                 pygame.draw.circle(surface, _lighten(color), (sx, sy), sr)
                 pygame.draw.circle(surface, color, (sx, sy), sr, 2)
+            elif is_connected:
+                pygame.draw.circle(surface, _darken(color), (sx, sy), sr)
+                pygame.draw.circle(surface, _CONNECTED_RING, (sx, sy), sr, 2)
             else:
                 pygame.draw.circle(surface, _darken(color), (sx, sy), sr)
                 pygame.draw.circle(surface, color, (sx, sy), sr, 1)
 
-            num_surf = self._font_num.render(str(node.lesson_num), True, _TEXT_LIGHT)
+            display = DISPLAY_NUM.get(node.lesson_num, node.lesson_num)
+            num_surf = self._font_num.render(str(display), True, _TEXT_LIGHT)
             surface.blit(
                 num_surf,
                 (sx - num_surf.get_width() // 2, sy - num_surf.get_height() // 2),
@@ -286,7 +320,8 @@ class BigDataMapGame(Scene):
         for _rect, node in self._node_by_pos:
             is_selected = node.lesson_num == self._selected
             is_hovered = node.lesson_num == self._hovered
-            if not (is_selected or is_hovered or show_all):
+            is_connected = node.lesson_num in self._connected_nums
+            if not (is_selected or is_hovered or is_connected or show_all):
                 continue
 
             sx, sy = self._spos(node.lesson_num)
@@ -341,10 +376,10 @@ class BigDataMapGame(Scene):
 
         if lang == "pl":
             hint = (
-                "ENTER - otworz lekcje  |  kolko myszy - zoom  |  R - reset widoku  |  ESC - pauza"
+                "ENTER / 2x klik - szczegoly  |  kolko myszy - zoom  |  R - reset widoku  |  ESC - pauza"
             )
         else:
-            hint = "ENTER - open lesson  |  scroll - zoom  |  R - reset view  |  ESC - pause"
+            hint = "ENTER / double-click - details  |  scroll - zoom  |  R - reset view  |  ESC - pause"
 
         if desc:
             surface.blit(self._font_info.render(desc, True, _TEXT_LIGHT), (16, bar_y + 6))
