@@ -180,3 +180,93 @@ def test_tab_click_does_not_close_scene():
     notes_rect = scene._tab_rects["notes"]
     scene.handle_event(_click(notes_rect.centerx, notes_rect.centery))
     assert not scene.is_done()
+
+
+# --- TOC dropdown tests ---
+
+
+def test_toc_closed_by_default():
+    scene = LessonReaderScene(1, EN, None)
+    assert not scene._toc_open
+
+
+def test_t_key_opens_toc():
+    scene = LessonReaderScene(1, EN, None)
+    scene.handle_event(_key(pygame.K_t))
+    assert scene._toc_open
+
+
+def test_t_key_toggles_toc_closed():
+    scene = LessonReaderScene(1, EN, None)
+    scene.handle_event(_key(pygame.K_t))
+    scene.handle_event(_key(pygame.K_t))
+    assert not scene._toc_open
+
+
+def test_esc_closes_toc_without_leaving_scene():
+    scene = LessonReaderScene(1, EN, None)
+    scene._toc_open = True
+    scene.handle_event(_key(pygame.K_ESCAPE))
+    assert not scene._toc_open
+    assert not scene.is_done()
+
+
+def test_esc_leaves_scene_when_toc_closed():
+    back = _Back()
+    scene2 = LessonReaderScene(1, EN, back)
+    scene2.handle_event(_key(pygame.K_ESCAPE))
+    assert scene2.is_done()
+
+
+def test_toc_btn_rect_exists():
+    scene = LessonReaderScene(1, EN, None)
+    assert scene._toc_btn_rect is not None
+    assert scene._toc_btn_rect.width > 0
+
+
+def test_click_toc_button_opens_toc():
+    scene = LessonReaderScene(1, EN, None)
+    btn = scene._toc_btn_rect
+    scene.handle_event(_click(btn.centerx, btn.centery))
+    assert scene._toc_open
+
+
+def test_toc_item_rects_populated_after_draw():
+    pygame.display.init()
+    surface = pygame.Surface((1024, 768))
+    scene = LessonReaderScene(1, EN, None)
+    scene._toc_open = True
+    scene.draw(surface)
+    assert len(scene._toc_item_rects) == len(scene._slides)
+
+
+def test_click_toc_item_jumps_to_slide():
+    pygame.display.init()
+    surface = pygame.Surface((1024, 768))
+    scene = LessonReaderScene(1, EN, None)
+    scene._toc_open = True
+    scene.draw(surface)
+    # Click the last item
+    last_idx, last_rect = scene._toc_item_rects[-1]
+    scene.handle_event(_click(last_rect.centerx, last_rect.centery))
+    assert scene._idx == last_idx
+    assert not scene._toc_open
+
+
+def test_click_outside_toc_closes_it():
+    pygame.display.init()
+    surface = pygame.Surface((1024, 768))
+    scene = LessonReaderScene(1, EN, None)
+    scene._toc_open = True
+    scene.draw(surface)
+    # Click far left — outside any TOC item
+    scene.handle_event(_click(50, 400))
+    assert not scene._toc_open
+
+
+def test_space_blocked_when_toc_open():
+    scene = LessonReaderScene(1, EN, None)
+    scene._toc_open = True
+    scene.handle_event(_key(pygame.K_SPACE))
+    assert scene._idx == 0  # did not navigate
+    assert scene._toc_open  # still open
