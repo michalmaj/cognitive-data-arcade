@@ -917,7 +917,9 @@ class LessonMenuScene(Scene):
 
             back = self._make_big_data_map_game()
             play_f = self._game_factory_for(lesson_num)
-            return LessonReaderScene(lesson_num, self._strings, back_scene=back, play_factory=play_f)
+            return LessonReaderScene(
+                lesson_num, self._strings, back_scene=back, play_factory=play_f
+            )
 
         inner = BigDataMapGame(self._strings, self._pm, lesson_reader_factory=_reader_factory)
         game_info = get_game_info(self._strings)

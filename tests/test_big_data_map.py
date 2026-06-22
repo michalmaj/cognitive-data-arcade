@@ -26,11 +26,20 @@ def game_with_factory(tmp_path):
     navigated_to: list[int] = []
 
     class _FakeScene(Scene):
-        def handle_event(self, event): pass
-        def update(self, dt): pass
-        def draw(self, surface): pass
-        def is_done(self): return False
-        def next_scene(self): return None
+        def handle_event(self, event):
+            pass
+
+        def update(self, dt):
+            pass
+
+        def draw(self, surface):
+            pass
+
+        def is_done(self):
+            return False
+
+        def next_scene(self):
+            return None
 
     def factory(lesson_num: int) -> Scene:
         navigated_to.append(lesson_num)
@@ -42,25 +51,30 @@ def game_with_factory(tmp_path):
 
 # --- concept_data tests ---
 
+
 def test_concept_nodes_count() -> None:
     from cognitive_data_arcade.games.big_data_map.concept_data import CONCEPT_NODES
+
     assert len(CONCEPT_NODES) == 31
 
 
 def test_all_modules_present() -> None:
     from cognitive_data_arcade.games.big_data_map.concept_data import CONCEPT_NODES
+
     modules = {n.module for n in CONCEPT_NODES}
     assert modules == {1, 2, 3, 4, 5, 6}
 
 
 def test_lesson_nums_unique() -> None:
     from cognitive_data_arcade.games.big_data_map.concept_data import CONCEPT_NODES
+
     nums = [n.lesson_num for n in CONCEPT_NODES]
     assert len(nums) == len(set(nums))
 
 
 def test_concept_edges_reference_valid_nodes() -> None:
     from cognitive_data_arcade.games.big_data_map.concept_data import CONCEPT_NODES, CONCEPT_EDGES
+
     valid = {n.lesson_num for n in CONCEPT_NODES}
     for a, b in CONCEPT_EDGES:
         assert a in valid, f"Edge ({a},{b}): {a} not in CONCEPT_NODES"
@@ -69,8 +83,10 @@ def test_concept_edges_reference_valid_nodes() -> None:
 
 # --- BigDataMapGame state tests ---
 
+
 def test_initial_selected_is_first_node(game) -> None:
     from cognitive_data_arcade.games.big_data_map.concept_data import CONCEPT_NODES
+
     assert game._selected == CONCEPT_NODES[0].lesson_num
 
 
@@ -109,6 +125,7 @@ def test_arrow_wraps_around(game) -> None:
 
 
 # --- Navigation with factory ---
+
 
 def test_enter_without_factory_does_not_navigate(game) -> None:
     game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode=""))
@@ -152,15 +169,18 @@ def test_first_click_on_unselected_node_selects_it(game_with_factory) -> None:
 
 # --- Positions ---
 
+
 def test_positions_cover_all_nodes() -> None:
     from cognitive_data_arcade.games.big_data_map.concept_data import CONCEPT_NODES
     from cognitive_data_arcade.games.big_data_map.game import _compute_positions
+
     positions = _compute_positions()
     for node in CONCEPT_NODES:
         assert node.lesson_num in positions
 
 
 # --- Draw tests ---
+
 
 def test_draw_without_crash(game) -> None:
     surface = pygame.Surface((1024, 768))
