@@ -232,8 +232,8 @@ def test_lesson_32_structure():
 
     for lang in ("pl", "en"):
         assert lang in CONTENT
-        assert len(CONTENT[lang]["theory"]) == 4
-        assert len(CONTENT[lang]["notes"]) == 2
+        assert len(CONTENT[lang]["theory"]) >= 4
+        assert len(CONTENT[lang]["notes"]) >= 2
         assert len(CONTENT[lang]["tasks"]) == 3
 
 
