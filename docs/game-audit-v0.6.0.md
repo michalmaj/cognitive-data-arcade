@@ -251,16 +251,61 @@ _To be filled after all sections are complete._
 ## Module 4 — Machine Learning
 
 ### L17 — Feature Hunter
-_TODO_
+**Typ:** arcade | **Moduł:** Machine Learning
+
+| Wymiar | Status | Uwagi |
+|---|---|---|
+| Instrukcje (HowToPlay) | ⚠️ | `_make_feature_hunter()` w menu.py zwraca `PausableGame` bez `make_how_to_play` — HowToPlay dostępny tylko przez pause menu; `info.py` ma 3 `description_lines` PL i EN; brak dedykowanego ekranu intro |
+| Opis lekcji | ✅ | desc_pl 125 zn., desc_en 137 zn. |
+| SessionResult | ❌ | `PhaseCScene` wyświetla wewnętrzne "Wyniki sesji" i przyciski "Zagraj ponownie" → `PhaseAScene`; `game.py` `next_scene()` zwraca `None` na końcu; brak `SessionResult`, `complete_lesson` ani `SessionSummaryScene` |
+| Teoria | ✅ | lesson_17.py: 3 sekcje (`theory` 6 pozycji, `notes` 3, `tasks` 3), treść niepusta w PL i EN |
+| Feedback w trakcie | ✅ | Stan "revealed" w `PhaseBScene._draw_reveal_overlays()`: zielona/czerwona ramka + "OK"/"X" + delta accuracy (pp) per karta natychmiast po kliknięciu "Zatwierdź"; `_draw_reveal_summary()`: wynik rundy w kolorze zielonym/pomarańczowym/czerwonym |
+
+**Action items:**
+- [ ] Dodać `make_how_to_play` przed `PausableGame` w `_make_feature_hunter()` (menu.py) lub dodać `PhaseIntroScene` z instrukcjami analogicznie do L18/L19/L20
+- [ ] Podpiąć `SessionResult` + `SessionSummaryScene` w `PhaseCScene` po wyświetleniu wyników sesji; zapisać `session_score` jako AP przez `ProfileManager`
 
 ### L18 — Classifier Battle
-_TODO_
+**Typ:** lab | **Moduł:** Machine Learning
+
+| Wymiar | Status | Uwagi |
+|---|---|---|
+| Instrukcje (HowToPlay) | ✅ | `ClassifierBattleScene` startuje od `PhaseIntroScene` z 6 liniami instrukcji PL; `info.py` ma 3 `description_lines` PL i EN dostępne przez pause menu |
+| Opis lekcji | ✅ | desc_pl 130 zn., desc_en 108 zn. |
+| SessionResult | ❌ | `PhaseSessionResultScene` wyświetla wyniki i przycisk "Zagraj ponownie" → `PhaseIntroScene`; brak `SessionResult`, `complete_lesson` ani `SessionSummaryScene`; `game.py` `next_scene()` zwraca `None` |
+| Teoria | ✅ | lesson_18.py: 3 sekcje (`theory` 6 pozycji, `notes` 3, `tasks` 3), treść niepusta w PL i EN |
+| Feedback w trakcie | ⚠️ | `PhaseRoundResultScene` pokazuje słupki dokładności (Ty vs KNN/liniowy/drzewo) po każdej rundzie; brak per-kroku live feedback podczas rysowania granicy — gra opiera się na decyzji graficznej, nie per-decyzja |
+
+**Action items:**
+- [ ] Podpiąć `SessionResult` + `SessionSummaryScene` w `PhaseSessionResultScene._advance()` po ukończeniu 5 rund; zapisać `session_score` jako AP przez `ProfileManager`
 
 ### L19 — Overfitting Monster
-_TODO_
+**Typ:** lab | **Moduł:** Machine Learning
+
+| Wymiar | Status | Uwagi |
+|---|---|---|
+| Instrukcje (HowToPlay) | ✅ | `OverfittingMonsterScene` startuje od `PhaseIntroScene` z 8 liniami instrukcji PL; `info.py` ma 3 `description_lines` PL i EN dostępne przez pause menu |
+| Opis lekcji | ✅ | desc_pl 114 zn., desc_en 119 zn. |
+| SessionResult | ❌ | `PhaseSessionResultScene` wyświetla wykres + tabelę + "Zagraj ponownie" → `PhaseIntroScene`; brak `SessionResult`, `complete_lesson` ani `SessionSummaryScene`; `game.py` `next_scene()` zwraca `None` |
+| Teoria | ✅ | lesson_19.py: 3 sekcje (`theory` 6 pozycji, `notes` 3, `tasks` 3), treść niepusta w PL i EN |
+| Feedback w trakcie | ⚠️ | `PhaseRoundResultScene` pokazuje train/test accuracy, gap w pp i gwiazdki ASCII (xxx/xx./x..) per runda; brak live per-suwak feedback poprawny/błędny — wynik widoczny dopiero po zatwierdzeniu rundy |
+
+**Action items:**
+- [ ] Podpiąć `SessionResult` + `SessionSummaryScene` w `PhaseSessionResultScene._advance()` po ukończeniu 5 rund; zapisać `session_score` jako AP przez `ProfileManager`
 
 ### L20 — Anomaly Alert
-_TODO_
+**Typ:** lab | **Moduł:** Machine Learning
+
+| Wymiar | Status | Uwagi |
+|---|---|---|
+| Instrukcje (HowToPlay) | ✅ | `AnomalyAlertScene` startuje od `PhaseIntroScene` z 9 liniami instrukcji PL (scoring, PPM hint, limity czasowe); `info.py` ma 3 `description_lines` PL i EN przez pause menu |
+| Opis lekcji | ✅ | desc_pl 130 zn., desc_en 120 zn. |
+| SessionResult | ❌ | `PhaseSessionResultScene` wyświetla wykres słupkowy + tabelę + rangę (Zloto/Srebro/Braz) + "Zagraj ponownie"; brak `SessionResult`, `complete_lesson` ani `SessionSummaryScene`; `game.py` `next_scene()` zwraca `None` |
+| Teoria | ✅ | lesson_20.py: 3 sekcje (`theory` 6 pozycji, `notes` 2, `tasks` 3), treść niepusta w PL i EN |
+| Feedback w trakcie | ✅ | Live panel w `PhaseRoundScene` aktualizuje `+{found_preview * 20} pkt (trafione)` w `_GREEN` i `-{fp_preview * 5} pkt (alarmy)` w `_RED` przy każdym kliknięciu LPM; zaznaczony punkt dostaje pomarańczowy pierścień natychmiast |
+
+**Action items:**
+- [ ] Podpiąć `SessionResult` + `SessionSummaryScene` w `PhaseSessionResultScene._replay()` po zakończeniu 6 rund; zapisać `_total` jako AP przez `ProfileManager`
 
 ---
 
