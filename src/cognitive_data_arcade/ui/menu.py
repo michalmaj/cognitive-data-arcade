@@ -40,6 +40,7 @@ _TYPE_COLORS: dict[str, tuple[int, int, int]] = {
     "lab": (34, 211, 238),
     "puzzle": (251, 191, 36),
 }
+_C_DONE = (74, 222, 128)
 
 # ── Lesson catalogue ──────────────────────────────────────────────────────────
 _LESSON_DATA: list[dict] = [
@@ -1430,8 +1431,12 @@ class LessonMenuScene(Scene):
                 surface.blit(num_surf, (20, mid_y - num_surf.get_height() // 2))
                 surface.blit(name_surf, (48, mid_y - name_surf.get_height() // 2))
 
-                dot_color = _TYPE_COLORS[d["type"]]
-                pygame.draw.circle(surface, dot_color, (_SIDEBAR_W - 16, mid_y), 4)
+                lesson_num = d["num"]
+                if lesson_num in self._completed:
+                    pygame.draw.circle(surface, _C_DONE, (_SIDEBAR_W - 16, mid_y), 5)
+                else:
+                    dot_color = _TYPE_COLORS[d["type"]]
+                    pygame.draw.circle(surface, dot_color, (_SIDEBAR_W - 16, mid_y), 4)
 
         self._scrollbar.draw(surface)
 
@@ -1463,8 +1468,8 @@ class LessonMenuScene(Scene):
         surface.blit(bl_surf, (x0 + 9, y + 4))
 
         tx = x0 + bw + 8
-        dot_color = _TYPE_COLORS[d["type"]]
-        pygame.draw.circle(surface, dot_color, (tx + 5, y + bh // 2), 5)
+        panel_dot_color = _C_DONE if d["num"] in self._completed else _TYPE_COLORS[d["type"]]
+        pygame.draw.circle(surface, panel_dot_color, (tx + 5, y + bh // 2), 5)
         type_surf = self._font_panel_badge.render(d["type"], True, _C_ACCENT_LIGHT)
         surface.blit(type_surf, (tx + 14, y + 4))
         y += bh + 16
