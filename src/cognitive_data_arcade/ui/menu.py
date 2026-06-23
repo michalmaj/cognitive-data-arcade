@@ -1325,11 +1325,13 @@ class LessonMenuScene(Scene):
                 label = self._strings.menu_modules[param]
                 if param > 0 and sy > _TOPBAR_H:
                     pygame.draw.line(surface, _C_SURFACE, (0, sy), (_SIDEBAR_W, sy))
+                # Subtle permanent background to distinguish header from lesson rows
+                pygame.draw.rect(surface, _C_SURFACE2, (0, sy, _SIDEBAR_W, vh))
                 mx, my = pygame.mouse.get_pos()
                 mvy = my - _TOPBAR_H + scroll_px
                 if vy <= mvy < vy + vh:
-                    pygame.draw.rect(surface, _C_HOVER_BG, (0, sy, _SIDEBAR_W, vh))
-                txt = self._font_mod_header.render(label, True, _C_TEXT_DARK)
+                    pygame.draw.rect(surface, _C_ACCENT_BG, (0, sy, _SIDEBAR_W, vh))
+                txt = self._font_mod_header.render(label, True, _C_TEXT_DIM)
                 mid_y_h = sy + (vh - txt.get_height()) // 2
                 surface.blit(txt, (20, mid_y_h))
                 if module_complete(param, self._completed):
@@ -1337,8 +1339,18 @@ class LessonMenuScene(Scene):
                     if icon:
                         ix = 20 + txt.get_width() + 6
                         surface.blit(icon, (ix, sy + (vh - 20) // 2))
-                arrow = self._font_mod_header.render(">", True, _C_TEXT_XDARK)
-                surface.blit(arrow, (_SIDEBAR_W - arrow.get_width() - 12, mid_y_h))
+                # Pill button signalling interactivity
+                pill_lbl = "> Start" if self._strings.language == "pl" else "> Start"
+                pill_surf = self._font_mod_header.render(pill_lbl, True, _C_TEXT)
+                pill_px, pill_py = 10, 4
+                pill_w = pill_surf.get_width() + pill_px * 2
+                pill_h = pill_surf.get_height() + pill_py * 2
+                pill_x = _SIDEBAR_W - pill_w - 12
+                pill_y = sy + (vh - pill_h) // 2
+                pygame.draw.rect(
+                    surface, _C_ACCENT, (pill_x, pill_y, pill_w, pill_h), border_radius=4
+                )
+                surface.blit(pill_surf, (pill_x + pill_px, pill_y + pill_py))
 
             else:
                 i = param
