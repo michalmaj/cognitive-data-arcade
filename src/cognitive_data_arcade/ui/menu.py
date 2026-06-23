@@ -939,11 +939,12 @@ class LessonMenuScene(Scene):
 
     def _make_big_data_map_game(self) -> Scene:
         from cognitive_data_arcade.games.big_data_map.info import get_game_info
-        from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
+        from cognitive_data_arcade.ui.how_to_play_scene import make_how_to_play
 
         game_info = get_game_info(self._strings)
         pausable = self._make_big_data_map_inner()
-        return HowToPlayScene(
+        return make_how_to_play(
+            self._pm,
             game_info,
             self._strings,
             back_scene=pausable,
@@ -967,7 +968,7 @@ class LessonMenuScene(Scene):
         from cognitive_data_arcade.games.reaction_time.config import DEFAULT_CONFIG
         from cognitive_data_arcade.games.reaction_time.game import ReactionTimeGame
         from cognitive_data_arcade.games.reaction_time.info import get_game_info
-        from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
+        from cognitive_data_arcade.ui.how_to_play_scene import make_how_to_play
 
         profile = self._pm.load()
         pid = profile.device_uuid
@@ -976,7 +977,8 @@ class LessonMenuScene(Scene):
         inner = ReactionTimeGame(DEFAULT_CONFIG, self._pm, self._strings, pid, sid, csv_path)
         game_info = get_game_info(self._strings)
         pausable = PausableGame(inner, game_info, self._make_rt_lab_game, self._strings, self._pm)
-        return HowToPlayScene(
+        return make_how_to_play(
+            self._pm,
             game_info,
             self._strings,
             back_scene=pausable,
@@ -1007,12 +1009,13 @@ class LessonMenuScene(Scene):
         from cognitive_data_arcade.engine.pause import PausableGame
         from cognitive_data_arcade.games.eda.info import get_game_info
         from cognitive_data_arcade.games.eda.scene import EDAScene
-        from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
+        from cognitive_data_arcade.ui.how_to_play_scene import make_how_to_play
 
         inner = EDAScene()
         game_info = get_game_info(self._strings)
         pausable = PausableGame(inner, game_info, self._make_eda_game, self._strings, self._pm)
-        return HowToPlayScene(
+        return make_how_to_play(
+            self._pm,
             game_info,
             self._strings,
             back_scene=pausable,

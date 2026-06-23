@@ -10,6 +10,7 @@ class _FakePM:
     class _Profile:
         device_uuid = "test-uuid"
         completed_lessons: list = []
+        seen_intro: bool = False
 
     def load(self):
         return self._Profile()

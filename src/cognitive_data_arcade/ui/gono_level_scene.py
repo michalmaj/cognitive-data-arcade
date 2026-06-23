@@ -19,7 +19,7 @@ from cognitive_data_arcade.games.gono.config import (
     DIFFICULTY_HARD,
 )
 from cognitive_data_arcade.profile.manager import ProfileManager
-from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
+from cognitive_data_arcade.ui.how_to_play_scene import make_how_to_play
 from cognitive_data_arcade.ui.menu import LessonMenuScene
 
 from cognitive_data_arcade.engine.colors import (
@@ -121,7 +121,8 @@ class GoNoGoLevelScene(Scene):
         game_info = get_game_info(self._strings)
         restart_factory = lambda: GoNoGoLevelScene(self._pm, self._strings)
         pausable = PausableGame(inner, game_info, restart_factory, self._strings, self._pm)
-        self._next = HowToPlayScene(
+        self._next = make_how_to_play(
+            self._pm,
             game_info,
             self._strings,
             back_scene=pausable,

@@ -21,6 +21,7 @@ def _make(lang="pl", selected=0):
         sfx_enabled=True,
         music_volume=1.0,
         sfx_volume=1.0,
+        seen_intro=False,
     )
     strings = PL if lang == "pl" else EN
     return LessonMenuScene(pm, strings, selected)
