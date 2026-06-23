@@ -384,7 +384,7 @@ _To be filled after all sections are complete._
 **Action items:**
 - [ ] Podpiąć `SessionResult` + `SessionSummaryScene` w `PhaseResultScene._advance()` po ukończeniu 8 misji; zapisać `session_score` jako AP przez `ProfileManager`
 
-### L26 — Human vs Model
+### L26 — Human vs Model Challenge
 **Typ:** arcade | **Moduł:** NLP
 
 | Wymiar | Status | Uwagi |
