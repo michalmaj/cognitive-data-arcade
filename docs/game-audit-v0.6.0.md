@@ -99,22 +99,87 @@ _To be filled after all sections are complete._
 ## Module 2 — Kognitywistyka
 
 ### L07 — Stroop Challenge
-_TODO_
+**Typ:** arcade | **Moduł:** Kognitywistyka
+
+| Wymiar | Status | Uwagi |
+|---|---|---|
+| Instrukcje (HowToPlay) | ✅ | Wired via `make_how_to_play` w `stroop_level_scene.py`; `info.py` zwraca 3 `description_lines` w PL i EN; dodatkowo `game.py` ma wbudowaną fazę `_Phase.INSTRUCTIONS` |
+| Opis lekcji | ✅ | desc_pl 111 zn., desc_en 122 zn. |
+| SessionResult | ✅ | `_build_next_scene()` tworzy `SessionResult` i przekazuje do `SessionSummaryScene` z AP (`ap_per_correct`), RT min/avg/max i badge evaluation |
+| Teoria | ✅ | lesson_07.py: 3 sekcje (`theory` 7 pozycji, `notes` 3, `tasks` 3), treść niepusta w PL i EN |
+| Feedback w trakcie | ✅ | `_Phase.FEEDBACK`: RT w ms w kolorze pomarańczowym (poprawna) lub czerwonym (błędna); timeout wyświetla `stroop_too_slow` w czerwonym; SFX `correct`/`wrong` po każdej decyzji |
+
+**Action items:** brak
 
 ### L08 — Flanker Task
-_TODO_
+**Typ:** arcade | **Moduł:** Kognitywistyka
+
+| Wymiar | Status | Uwagi |
+|---|---|---|
+| Instrukcje (HowToPlay) | ✅ | Wired via `make_how_to_play` w `flanker_level_scene.py`; `info.py` zwraca 3 `description_lines` w PL i EN |
+| Opis lekcji | ✅ | desc_pl 128 zn., desc_en 134 zn. |
+| SessionResult | ✅ | `_build_next_scene()` tworzy `SessionResult` → `SessionSummaryScene` z AP, SP (flanker effect bonus), RT i badge evaluation; w panelu analizy dostępny `FlankerAnalysisScene` |
+| Teoria | ✅ | lesson_08.py: 3 sekcje (`theory` 7 pozycji, `notes` 3, `tasks` 3), treść niepusta w PL i EN |
+| Feedback w trakcie | ✅ | `_Phase.FEEDBACK`: `"OK  {rt:.0f} ms"` w zielonym lub `"X  {rt:.0f} ms"` w czerwonym; SFX `correct`/`wrong` per decyzja |
+
+**Action items:** brak
 
 ### L09 — Go/No-Go
-_TODO_
+**Typ:** arcade | **Moduł:** Kognitywistyka
+
+| Wymiar | Status | Uwagi |
+|---|---|---|
+| Instrukcje (HowToPlay) | ✅ | Wired via `make_how_to_play` w `gono_level_scene.py`; `info.py` zwraca 4 `description_lines` w PL i EN |
+| Opis lekcji | ✅ | desc_pl 125 zn., desc_en 138 zn. |
+| SessionResult | ✅ | `_build_next_scene()` tworzy `SessionResult` → `SessionSummaryScene` z AP (`ap_per_hit`), SP (d-prime bonus), RT i badge evaluation; dostępny `GoNoGoAnalysisScene` |
+| Teoria | ✅ | lesson_09.py: 3 sekcje (`theory` 7 pozycji, `notes` 3, `tasks` 3), treść niepusta w PL i EN |
+| Feedback w trakcie | ✅ | `_Phase.FEEDBACK`: `"OK"` w zielonym lub `"X"` w czerwonym (`fb_color` = `(39, 174, 96)`/`(231, 76, 60)`) natychmiast po każdej odpowiedzi; SFX `correct`/`wrong` |
+
+**Action items:** brak
 
 ### L10 — N-Back
-_TODO_
+**Typ:** arcade | **Moduł:** Kognitywistyka
+
+| Wymiar | Status | Uwagi |
+|---|---|---|
+| Instrukcje (HowToPlay) | ✅ | `HowToPlayScene` (bez `make_how_to_play`) w `nback_level_scene.py`; `info.py` zwraca 4 `description_lines` w PL i EN |
+| Opis lekcji | ✅ | desc_pl 119 zn., desc_en 99 zn. |
+| SessionResult | ✅ | `_build_next_scene()` tworzy `SessionResult` → `SessionSummaryScene` z AP, SP (d-prime bonus dla pozycji i litery), RT i badge evaluation; dostępny `NBackAnalysisScene` |
+| Teoria | ✅ | lesson_10.py: 3 sekcje (`theory` 6 pozycji, `notes` 3, `tasks` 3), treść niepusta w PL i EN |
+| Feedback w trakcie | ⚠️ | `_commit_trial()` gra SFX `correct`/`wrong` per próbę, ale brak fazy `FEEDBACK` — brak wizualnego symbolu OK/X; gracz słyszy wynik, ale nie widzi go |
+
+**Action items:**
+- [ ] Dodać krótką fazę `FEEDBACK` (np. 300 ms) po `RESPONSE_WINDOW` wyświetlającą "OK" w zielonym / "X" w czerwonym, zanim siatka przejdzie do ITI
 
 ### L11 — Visual Search Lab
-_TODO_
+**Typ:** lab | **Moduł:** Kognitywistyka
+
+| Wymiar | Status | Uwagi |
+|---|---|---|
+| Instrukcje (HowToPlay) | ✅ | `HowToPlayScene` w `visual_search_level_scene.py`; `info.py` zwraca 4 `description_lines` w PL i EN |
+| Opis lekcji | ✅ | desc_pl 119 zn., desc_en 124 zn. |
+| SessionResult | ❌ | `_build_next_scene()` → `VisualSearchAnalysisScene` → `LessonMenuScene`; brak `SessionResult`, brak AP/SP, brak badge evaluation |
+| Teoria | ✅ | lesson_11.py: 3 sekcje (`theory` 6 pozycji, `notes` 3, `tasks` 3), treść niepusta w PL i EN |
+| Feedback w trakcie | ✅ | `_Phase.FEEDBACK`: `"OK  {rt_text}"` w `_GREEN` lub `"X  {rt_text}"` w `_RED` + SFX `correct`/`wrong` po każdej decyzji |
+
+**Action items:**
+- [ ] Dodać `SessionResult` + badge evaluation w `_build_next_scene()` (przed przekazaniem do `VisualSearchAnalysisScene`); rozważyć AP za poprawne odpowiedzi
 
 ### L12 — Cognitive Dashboard
-_TODO_
+**Typ:** lab | **Moduł:** Kognitywistyka
+
+| Wymiar | Status | Uwagi |
+|---|---|---|
+| Instrukcje (HowToPlay) | ❌ | `game_launcher.py` zwraca `CognitiveDashboardModeScene` bezpośrednio — brak wywołania `make_how_to_play`; `mode_scene.py` nie otwiera HowToPlay; `info.py` istnieje, ale nie jest używany przy starcie |
+| Opis lekcji | ✅ | desc_pl 114 zn., desc_en 108 zn. |
+| SessionResult | ❌ | Brak `SessionResult` w całym `cognitive_dashboard/`; minizadania zapisują wyniki do `DashboardSession`, ale nie do `ProfileManager` — brak AP, SP, badge evaluation |
+| Teoria | ✅ | lesson_12.py: 3 sekcje (`theory` 7 pozycji, `notes` 3, `tasks` 3), treść niepusta w PL i EN |
+| Feedback w trakcie | ✅ | Minizadania w `mini_tasks.py` mają fazę `_Phase.FEEDBACK`: kolorowy napis "OK"/"ZA WOLNO"/"BLAD" + kolor `_GREEN`/`_RED` per próbę; dashboard wyświetla kafelki z avg RT i trafnością po zakończeniu każdego zadania |
+
+**Action items:**
+- [ ] Dodać `make_how_to_play` przy starcie (`game_launcher.py` L12) z wykorzystaniem istniejącego `info.py`
+- [ ] Dodać `SessionResult` i zapis AP/SP przez `ProfileManager` po ukończeniu wszystkich 4 zadań (gdy `session.is_complete()`)
+- [ ] Powiązać badge evaluation z `BadgeEngine` (podobnie jak inne gry M2)
 
 ---
 
