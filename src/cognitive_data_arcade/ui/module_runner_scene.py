@@ -79,13 +79,14 @@ class ModuleRunnerScene(Scene):
         return self._lessons[self._current_step]
 
     def _launch_game(self) -> None:
-        from cognitive_data_arcade.ui.game_launcher import game_factory_for
+        from cognitive_data_arcade.ui.game_launcher import game_factory_for_with_back
 
         lesson_num = self._current_lesson()["num"]
-        factory = game_factory_for(lesson_num, self._pm, self._strings)
-        if factory is None:
+        back = ModuleRunnerScene(self._module_idx, self._pm, self._strings)
+        scene = game_factory_for_with_back(lesson_num, self._pm, self._strings, back_scene=back)
+        if scene is None:
             return
-        self._next = factory()
+        self._next = scene
         self._done = True
 
     def _launch_teoria(self) -> None:

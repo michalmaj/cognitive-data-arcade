@@ -418,3 +418,197 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
         return _make
 
     return None
+
+
+def game_factory_for_with_back(
+    lesson_num: int,
+    pm: ProfileManager,
+    strings: Strings,
+    back_scene: "Scene",
+) -> "Scene | None":
+    """Like game_factory_for but uses back_scene as the ESC/back destination.
+
+    For simple level scenes (no HowToPlay wrapper), returns the scene directly.
+    For pausable games with HowToPlay, injects back_scene as esc_scene.
+    Falls back to game_factory_for() for complex special cases (RT Lab, BigDataMap).
+    """
+    from cognitive_data_arcade.engine.pause import PausableGame
+    from cognitive_data_arcade.ui.how_to_play_scene import make_how_to_play
+
+    # Simple level scenes (no HowToPlay, ESC handled internally)
+    if lesson_num == 3:
+        from cognitive_data_arcade.ui.event_log_level_scene import EventLogLevelScene
+
+        return EventLogLevelScene(pm, strings)
+
+    if lesson_num == 7:
+        from cognitive_data_arcade.ui.stroop_level_scene import StroopLevelScene
+
+        return StroopLevelScene(pm, strings)
+
+    if lesson_num == 8:
+        from cognitive_data_arcade.ui.flanker_level_scene import FlankerLevelScene
+
+        return FlankerLevelScene(pm, strings)
+
+    if lesson_num == 9:
+        from cognitive_data_arcade.ui.gono_level_scene import GoNoGoLevelScene
+
+        return GoNoGoLevelScene(pm, strings)
+
+    if lesson_num == 10:
+        from cognitive_data_arcade.ui.nback_level_scene import NBackLevelScene
+
+        return NBackLevelScene(pm, strings)
+
+    if lesson_num == 11:
+        from cognitive_data_arcade.ui.visual_search_level_scene import VisualSearchLevelScene
+
+        return VisualSearchLevelScene(pm, strings)
+
+    if lesson_num == 12:
+        from cognitive_data_arcade.games.cognitive_dashboard.mode_scene import (
+            CognitiveDashboardModeScene,
+        )
+
+        return CognitiveDashboardModeScene(pm, strings)
+
+    # Standard pausable games: wrap with make_how_to_play injecting back_scene as esc_scene
+    def _make_pausable_with_back(inner: "Scene", game_info: object) -> "Scene":
+        def _restart() -> "Scene":
+            return PausableGame(inner, game_info, _restart, strings, pm)  # type: ignore[arg-type]
+
+        pausable = _restart()
+        return make_how_to_play(pm, game_info, strings, back_scene=pausable, esc_scene=back_scene)  # type: ignore[arg-type]
+
+    if lesson_num == 13:
+        from cognitive_data_arcade.games.distribution_playground.info import (
+            get_game_info,
+        )
+        from cognitive_data_arcade.games.distribution_playground.scene import (
+            DistributionPlaygroundScene,
+        )
+
+        return _make_pausable_with_back(DistributionPlaygroundScene(), get_game_info(strings))
+
+    if lesson_num == 14:
+        from cognitive_data_arcade.games.correlation_trap.info import get_game_info
+        from cognitive_data_arcade.games.correlation_trap.scene import CorrelationTrapScene
+
+        return _make_pausable_with_back(CorrelationTrapScene(), get_game_info(strings))
+
+    if lesson_num == 15:
+        from cognitive_data_arcade.games.hypothesis_arena.info import get_game_info
+        from cognitive_data_arcade.games.hypothesis_arena.scene import HypothesisArenaScene
+
+        return _make_pausable_with_back(HypothesisArenaScene(), get_game_info(strings))
+
+    if lesson_num == 16:
+        from cognitive_data_arcade.games.prediction_slider.info import get_game_info
+        from cognitive_data_arcade.games.prediction_slider.scene import PredictionSliderScene
+
+        return _make_pausable_with_back(PredictionSliderScene(), get_game_info(strings))
+
+    if lesson_num == 17:
+        from cognitive_data_arcade.games.feature_hunter.game import FeatHunterScene
+        from cognitive_data_arcade.games.feature_hunter.info import get_game_info
+
+        return _make_pausable_with_back(FeatHunterScene(), get_game_info(strings))
+
+    if lesson_num == 18:
+        from cognitive_data_arcade.games.classifier_battle.game import ClassifierBattleScene
+        from cognitive_data_arcade.games.classifier_battle.info import get_game_info
+
+        return _make_pausable_with_back(ClassifierBattleScene(), get_game_info(strings))
+
+    if lesson_num == 19:
+        from cognitive_data_arcade.games.overfitting_monster.game import OverfittingMonsterScene
+        from cognitive_data_arcade.games.overfitting_monster.info import get_game_info
+
+        return _make_pausable_with_back(OverfittingMonsterScene(), get_game_info(strings))
+
+    if lesson_num == 20:
+        from cognitive_data_arcade.games.anomaly_alert.game import AnomalyAlertScene
+        from cognitive_data_arcade.games.anomaly_alert.info import get_game_info
+
+        return _make_pausable_with_back(AnomalyAlertScene(), get_game_info(strings))
+
+    if lesson_num == 21:
+        from cognitive_data_arcade.games.text_tokenizer.info import get_game_info
+        from cognitive_data_arcade.games.text_tokenizer.scene import TextTokenizerLabScene
+
+        return _make_pausable_with_back(TextTokenizerLabScene(), get_game_info(strings))
+
+    if lesson_num == 22:
+        from cognitive_data_arcade.games.word_weight_factory.info import get_game_info
+        from cognitive_data_arcade.games.word_weight_factory.scene import WordWeightFactoryScene
+
+        return _make_pausable_with_back(WordWeightFactoryScene(), get_game_info(strings))
+
+    if lesson_num == 23:
+        from cognitive_data_arcade.games.emotion_classifier.game import EmotionClassifierScene
+        from cognitive_data_arcade.games.emotion_classifier.info import get_game_info
+
+        return _make_pausable_with_back(EmotionClassifierScene(), get_game_info(strings))
+
+    if lesson_num == 24:
+        from cognitive_data_arcade.games.semantic_space.game import SemanticSpaceScene
+        from cognitive_data_arcade.games.semantic_space.info import get_game_info
+
+        return _make_pausable_with_back(SemanticSpaceScene(), get_game_info(strings))
+
+    if lesson_num == 25:
+        from cognitive_data_arcade.games.topic_detective.game import TopicDetectiveScene
+        from cognitive_data_arcade.games.topic_detective.info import get_game_info
+
+        return _make_pausable_with_back(TopicDetectiveScene(), get_game_info(strings))
+
+    if lesson_num == 26:
+        from cognitive_data_arcade.games.human_vs_model.game import HumanVsModelScene
+        from cognitive_data_arcade.games.human_vs_model.info import get_game_info
+
+        return _make_pausable_with_back(HumanVsModelScene(), get_game_info(strings))
+
+    if lesson_num == 27:
+        from cognitive_data_arcade.games.social_network.game import SocialNetworkScene
+        from cognitive_data_arcade.games.social_network.info import get_game_info
+
+        return _make_pausable_with_back(SocialNetworkScene(), get_game_info(strings))
+
+    if lesson_num == 28:
+        from cognitive_data_arcade.games.misinformation.game import MisinformationScene
+        from cognitive_data_arcade.games.misinformation.info import get_game_info
+
+        return _make_pausable_with_back(MisinformationScene(), get_game_info(strings))
+
+    if lesson_num == 29:
+        from cognitive_data_arcade.games.recommendation_bubble.game import (
+            RecommendationBubbleScene,
+        )
+        from cognitive_data_arcade.games.recommendation_bubble.info import get_game_info
+
+        return _make_pausable_with_back(RecommendationBubbleScene(), get_game_info(strings))
+
+    if lesson_num == 30:
+        from cognitive_data_arcade.games.bias_blind_spot.game import BiasBlindSpotScene
+        from cognitive_data_arcade.games.bias_blind_spot.info import get_game_info
+
+        return _make_pausable_with_back(BiasBlindSpotScene(), get_game_info(strings))
+
+    if lesson_num == 31:
+        from cognitive_data_arcade.games.you_were_the_dataset.game import YouWereTheDatasetScene
+        from cognitive_data_arcade.games.you_were_the_dataset.info import get_game_info
+
+        return _make_pausable_with_back(YouWereTheDatasetScene(pm, strings), get_game_info(strings))
+
+    if lesson_num == 32:
+        from cognitive_data_arcade.games.architects_trial.game import ArchitectsTrialScene
+        from cognitive_data_arcade.games.architects_trial.info import get_game_info
+
+        return _make_pausable_with_back(ArchitectsTrialScene(), get_game_info(strings))
+
+    # Special cases (RT Lab, BigDataMap, DataCleaning, EDA): fall back to game_factory_for
+    factory = game_factory_for(lesson_num, pm, strings)
+    if factory is None:
+        return None
+    return factory()
