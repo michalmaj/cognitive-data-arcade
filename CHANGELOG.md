@@ -2,14 +2,30 @@
 
 All notable changes to Cognitive Data Arcade are documented here.
 
-## [Unreleased] — v0.4.0
+## [Unreleased] — v0.5.0
 
 ### Planned
 
-- **Progress tracking** — per-lesson completed flag stored in profile; progress visible in lesson menu
-- **PL/EN language toggle** — switch language in-app without restart, persists to profile
-- **Settings (OptionsScene)** — music toggle and skip-intro (HowToPlay) toggle; now that audio and intros are real features, settings make sense
-- **Event Log Detective — Scenario 4** — new experiment scenario (engine already supports it; pure data addition)
+- **Cognitive Dashboard wiring** — L12 reads real CSV data from RT Lab, Stroop, Flanker, GoNoGo, N-Back; closes the "play → see results → understand yourself" loop
+- **Odznaki (badges)** — per-module completion badges; displayed in sidebar and profile screen
+- **Tryb sekwencyjny** — "przejedź przez moduł w kolejności" with visible current step; complements free-choice mode
+
+---
+
+## [v0.4.0] — 2026-06-23
+
+Progress & Settings — progress tracking, OptionsScene wiring, ELD Scenario 4.
+
+### Added
+
+- **Progress tracking** — `complete_lesson()` called on game launch; `_completed` cache in `LessonMenuScene`; green dot in sidebar (5px), type-colored dot when not done (4px); `X / 31` counter in topbar (green when at least one done)
+- **Skip-intro wiring** — `make_how_to_play()` helper reads `profile.seen_intro`; Options → Tutorial OFF skips `HowToPlayScene` in all 6 wired games (BigDataMap, RT Lab, EDA, Stroop, Flanker, GoNoGo)
+- **ELD Scenario 4** — A/B Test: Online Experiment; 6 decisions covering sample size calculation, test duration (weekly seasonality), primary metric, traffic split, multiple comparisons, and pre-registration
+
+### Already present (confirmed in v0.4.0 review)
+
+- **PL/EN language toggle** — K_l in menu, persists to profile, restores on startup
+- **OptionsScene** — music + SFX volume sliders and toggles, fullscreen toggle, Tutorial toggle (now wired)
 
 ---
 
@@ -121,5 +137,6 @@ First complete release: 31 playable games, full CI, analysis scenes.
 | Version | Theme | Key deliverables |
 |---------|-------|-----------------|
 | **v0.3.0** | Content & Discovery | Diacritics fix (L29-32) · Concept network map |
-| **v0.4.0** | Progress & Settings | Per-lesson progress tracking · Badges · PL/EN toggle in UI · Music/intro settings |
-| **v0.5.0+** | Game quality | UX audit of individual games — to be scoped after v0.4.0 |
+| **v0.4.0** | Progress & Settings | Progress tracking · Skip-intro wiring · ELD Scenario 4 |
+| **v0.5.0** | Data & Gamification | Cognitive Dashboard wiring (real CSV) · Badges · Sequential learning mode |
+| **v0.6.0** | Game quality | UX audit of all 31 games — feedback, difficulty, pedagogical fit |
