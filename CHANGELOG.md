@@ -2,12 +2,34 @@
 
 All notable changes to Cognitive Data Arcade are documented here.
 
-## [Unreleased] — v0.3.0
+## [Unreleased] — v0.4.0
 
 ### Planned
 
-- **Polish diacritics fix** — lessons 29-32 rewritten with correct ą/ę/ś/ź/ż/ó/ń/ł/ć
-- **Concept network** — Big Data Map redesigned as an interactive concept graph linking all 31 lessons
+- **Per-lesson progress tracking** — mark lessons as completed, track scores
+- **Badges** — achievement system based on game performance
+- **PL/EN language toggle** — switch language in-app without restart
+- **Music/intro settings** — persistent audio preferences, skip-intro option
+
+---
+
+## [v0.3.0] — 2026-06-23
+
+Content & Discovery — diacritics fix and interactive concept network.
+
+### Added
+
+- **Concept network** (`L01 Big Data Map`) — redesigned as an interactive graph linking all 31 lessons across 6 modules; ~77 cross-module edges with PL/EN rationale per connection; sequential display numbers 1-31; connected-node highlighting; zoom (scroll wheel) + reset (R)
+- **ConceptDetailScene** — full-screen detail panel opened on double-click or ENTER; shows description, up to 5 logical connections with reasons; BACKSPACE returns to network, ESC shows pause menu
+- **DISPLAY_NUM** mapping — circles show sequential 1-31 (lesson file numbers skip 5, end at 32)
+- **EDGE_REASONS** dict — ~77 canonical edges with PL+EN explanation driving both graph rendering and the detail panel
+
+### Fixed
+
+- **Polish diacritics** — lessons 29-32 (Recommendation Bubble, Bias Blind Spot, You Were the Dataset, Architect's Trial) rewritten with correct ą/ę/ś/ź/ż/ó/ń/ł/ć in Polish content
+- Concept network node labels no longer overlap circles (two-pass drawing)
+- Zoom centres on canvas centre for predictable behaviour; R key resets zoom
+- BACKSPACE from detail panel goes to network directly (not HowToPlay screen)
 
 ---
 
