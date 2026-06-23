@@ -7,6 +7,7 @@ from cognitive_data_arcade.ui.event_log_level_scene import EventLogLevelScene
 class _FakePM:
     class _Profile:
         device_uuid = "test-uuid"
+        completed_lessons: list = []
         language = "en"
 
     def load(self):

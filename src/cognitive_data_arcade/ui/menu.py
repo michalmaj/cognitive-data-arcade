@@ -582,6 +582,9 @@ class LessonMenuScene(Scene):
                 self._scrollbar.scroll_to(max(0, min(max_s, center)))
                 break
 
+        profile = self._pm.load()
+        self._completed: set[int] = set(profile.completed_lessons)
+
         audio.play_music("menu")
         pygame.font.init()
         self._font_topbar_title = get_font_medium(28)
@@ -714,6 +717,7 @@ class LessonMenuScene(Scene):
     def _launch_selected_game(self) -> None:
         audio.play_sfx("select")
         lesson_num = _LESSON_DATA[self._selected]["num"]
+        self._pm.complete_lesson(lesson_num)
         if lesson_num == 1:
             self._launch_big_data_map()
         elif lesson_num == 2:
