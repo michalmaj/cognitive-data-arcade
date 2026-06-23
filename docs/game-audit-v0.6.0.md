@@ -6,15 +6,15 @@ _Generated: 2026-06-23. Legend: ✅ OK · ⚠️ partial/unclear · ❌ missing.
 
 ## Summary
 
-_To be filled after all sections are complete._
+_Completed: 2026-06-23. All 31 games audited._
 
 | Wymiar | ✅ | ⚠️ | ❌ |
 |---|---|---|---|
-| Instrukcje | — | — | — |
-| Opis lekcji | — | — | — |
-| SessionResult | — | — | — |
-| Teoria | — | — | — |
-| Feedback w trakcie | — | — | — |
+| Instrukcje | 20 | 10 | 1 |
+| Opis lekcji | 31 | 0 | 0 |
+| SessionResult | 5 | 1 | 25 |
+| Teoria | 31 | 0 | 0 |
+| Feedback w trakcie | 19 | 12 | 0 |
 
 ---
 
