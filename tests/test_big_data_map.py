@@ -274,14 +274,15 @@ def test_detail_scene_is_done_on_backspace() -> None:
     assert scene.is_done()
 
 
-def test_detail_scene_is_done_on_esc() -> None:
+def test_detail_scene_esc_not_handled_by_scene() -> None:
+    """ESC is handled by the wrapping PausableGame, not by ConceptDetailScene itself."""
     pygame.init()
     from cognitive_data_arcade.games.big_data_map.detail import ConceptDetailScene
     from cognitive_data_arcade.engine.i18n import get_strings
 
     scene = ConceptDetailScene(1, get_strings("en"), back_scene=None)
     scene.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode=""))
-    assert scene.is_done()
+    assert not scene.is_done()  # ESC passes through to PausableGame
 
 
 def test_detail_scene_next_scene_returns_back() -> None:
