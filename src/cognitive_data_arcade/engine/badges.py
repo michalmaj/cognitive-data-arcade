@@ -76,6 +76,15 @@ BADGE_REGISTRY: list[Badge] = [
 ]
 
 
+BADGE_ICONS: dict[str, str] = {
+    "quick_reflex": "badge_quick_reflex.png",
+    "sharpshooter": "badge_sharpshooter.png",
+    "high_accuracy": "badge_high_accuracy.png",
+    "clean_data": "badge_clean_data.png",
+    "first_game": "badge_first_game.png",
+}
+
+
 class BadgeEngine:
     def __init__(self, registry: list[Badge] | None = None) -> None:
         self._registry: tuple[Badge, ...] = tuple(
@@ -159,11 +168,14 @@ def module_complete(module_idx: int, completed: set[int]) -> bool:
 _icon_cache: dict[str, pygame.Surface] = {}
 
 
-def load_badge_icon(badge: ModuleBadge, size: int = 32) -> pygame.Surface | None:
-    key = f"{badge.icon_file}:{size}"
+def load_icon(icon_file: str, size: int = 32) -> pygame.Surface | None:
+    """Load any PNG from assets/badges/ by filename, with LRU-style cache."""
+    if not icon_file:
+        return None
+    key = f"{icon_file}:{size}"
     if key in _icon_cache:
         return _icon_cache[key]
-    path = _ASSET_DIR / badge.icon_file
+    path = _ASSET_DIR / icon_file
     if not path.exists():
         return None
     try:
@@ -173,6 +185,10 @@ def load_badge_icon(badge: ModuleBadge, size: int = 32) -> pygame.Surface | None
         return scaled
     except pygame.error:
         return None
+
+
+def load_badge_icon(badge: ModuleBadge, size: int = 32) -> pygame.Surface | None:
+    return load_icon(badge.icon_file, size)
 
 
 def tint_surface(surf: pygame.Surface, color: tuple[int, int, int]) -> pygame.Surface:
