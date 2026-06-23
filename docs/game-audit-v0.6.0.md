@@ -186,16 +186,65 @@ _To be filled after all sections are complete._
 ## Module 3 — Statystyka
 
 ### L13 — Distribution Playground
-_TODO_
+**Typ:** lab | **Moduł:** Statystyka
+
+| Wymiar | Status | Uwagi |
+|---|---|---|
+| Instrukcje (HowToPlay) | ⚠️ | `_make_distribution_playground()` zwraca `PausableGame` bez `make_how_to_play` — HowToPlay dostępny tylko przez pause menu; `info.py` ma 4 `description_lines` PL i EN |
+| Opis lekcji | ✅ | desc_pl 133 zn., desc_en 133 zn. |
+| SessionResult | ❌ | `DistributionPlaygroundScene._done` zawsze `False`, `next_scene()` zwraca `None`; brak `SessionResult`, `complete_lesson` ani `SessionSummaryScene` |
+| Teoria | ✅ | lesson_13.py: 3 sekcje (`theory` 6 pozycji, `notes` 3, `tasks` 3), treść niepusta w PL i EN |
+| Feedback w trakcie | ⚠️ | Faza A: brak per-akcji feedback (open-ended sandbox); Faza B: `match_score` wyświetla dopasowanie w % w kolorze zielonym/pomarańczowym przy każdej zmianie suwaka — implicite; Faza C: brak per-akcji informacji correct/incorrect |
+
+**Action items:**
+- [ ] Dodać `make_how_to_play` przed `PausableGame` w `_make_distribution_playground()` (menu.py)
+- [ ] Dodać end-state (np. po ukończeniu Fazy B z wynikiem >= 85%) z `SessionResult` i `SessionSummaryScene`
+- [ ] Dodać wyraźny komunikat sukcesu w Fazie B po osiągnięciu progu dopasowania (aktualnie tylko "Świetnie! Dalej >>") — brak SFX
 
 ### L14 — Correlation Trap
-_TODO_
+**Typ:** lab | **Moduł:** Statystyka
+
+| Wymiar | Status | Uwagi |
+|---|---|---|
+| Instrukcje (HowToPlay) | ⚠️ | `_make_correlation_trap()` zwraca `PausableGame` bez `make_how_to_play` — HowToPlay dostępny tylko przez pause menu; `info.py` ma 4 `description_lines` PL i EN |
+| Opis lekcji | ✅ | desc_pl 128 zn., desc_en 125 zn. |
+| SessionResult | ❌ | `CorrelationTrapScene._done` zawsze `False`, `next_scene()` zwraca `None`; Faza B ma wewnętrzny licznik `_correct` i ekran "summary", ale wynik nie jest zapisywany do `ProfileManager` ani `SessionResult` |
+| Teoria | ✅ | lesson_14.py: 3 sekcje (`theory` 6 pozycji, `notes` 3, `tasks` 3), treść niepusta w PL i EN |
+| Feedback w trakcie | ✅ | Faza B (`phase_b.py`): po każdym wyborze TAK/NIE ujawnia verdyktsPanel z `_GREEN`/`_RED` etykietą ("Tak! Przyczynowość" / "Pułapka!"), wyjaśnieniem i "+10 pkt" jeśli poprawnie; Faza A/C: open-ended sandbox bez oceniania |
+
+**Action items:**
+- [ ] Dodać `make_how_to_play` przed `PausableGame` w `_make_correlation_trap()` (menu.py)
+- [ ] Podpiąć `SessionResult` + `SessionSummaryScene` gdy Faza B osiąga "summary" (po przejściu wszystkich 8 scenariuszy); zapisać wynik `_correct / total` jako AP przez `ProfileManager`
 
 ### L15 — Hypothesis Arena
-_TODO_
+**Typ:** lab | **Moduł:** Statystyka
+
+| Wymiar | Status | Uwagi |
+|---|---|---|
+| Instrukcje (HowToPlay) | ⚠️ | `_make_hypothesis_arena()` zwraca `PausableGame` bez `make_how_to_play` — HowToPlay dostępny tylko przez pause menu; `info.py` ma 4 `description_lines` PL i EN |
+| Opis lekcji | ✅ | desc_pl 123 zn., desc_en 120 zn. |
+| SessionResult | ❌ | `HypothesisArenaScene._done` zawsze `False`, `next_scene()` zwraca `None`; Faza B (`phase_b.py`) ma `_score` i per-scenariuszowy feedback, ale wynik nie jest przekazywany do `ProfileManager` ani `SessionResult` |
+| Teoria | ✅ | lesson_15.py: 3 sekcje (`theory` 6 pozycji, `notes` 3, `tasks` 3), treść niepusta w PL i EN |
+| Feedback w trakcie | ✅ | Faza B (`phase_b.py`): po kliknięciu "Uruchom eksperyment" ujawnia verdykt (`_GREEN`/`_ORANGE`/`_RED` ramka) z komunikatem moc/p-value; `_feedback()` zwraca specyficzną wiadomość per wynik scenariusza natychmiast po kliknięciu |
+
+**Action items:**
+- [ ] Dodać `make_how_to_play` przed `PausableGame` w `_make_hypothesis_arena()` (menu.py)
+- [ ] Podpiąć `SessionResult` + `SessionSummaryScene` po ukończeniu wszystkich 6 scenariuszy Fazy B; zapisać `_score` jako AP przez `ProfileManager`
 
 ### L16 — Prediction Slider
-_TODO_
+**Typ:** lab | **Moduł:** Statystyka
+
+| Wymiar | Status | Uwagi |
+|---|---|---|
+| Instrukcje (HowToPlay) | ⚠️ | `_make_prediction_slider()` zwraca `PausableGame` bez `make_how_to_play` — HowToPlay dostępny tylko przez pause menu; `info.py` ma 4 `description_lines` PL i EN |
+| Opis lekcji | ✅ | desc_pl 106 zn., desc_en 109 zn. |
+| SessionResult | ❌ | `PredictionSliderScene._done` zawsze `False`, `next_scene()` zwraca `None`; Faza B (`phase_b.py`) ma `_score` (suma per-runda), ale wynik nigdy nie jest zapisywany do `ProfileManager` ani `SessionResult` |
+| Teoria | ✅ | lesson_16.py: 3 sekcje (`theory` 6 pozycji, `notes` 3, `tasks` 3), treść niepusta w PL i EN |
+| Feedback w trakcie | ✅ | Faza B (`phase_b.py`): po kliknięciu "Zatwierdź predykcję" `_draw_verdict()` wyświetla "Wynik rundy: N / 100" w `_GREEN`/`_ORANGE`/`_RED` natychmiast; linia błędu na wykresie (zielona <= 15% błąd, czerwona > 15%) per suwak |
+
+**Action items:**
+- [ ] Dodać `make_how_to_play` przed `PausableGame` w `_make_prediction_slider()` (menu.py)
+- [ ] Podpiąć `SessionResult` + `SessionSummaryScene` po ukończeniu wszystkich 5 scenariuszy Fazy B; zapisać `_score` (maks. 500) jako AP przez `ProfileManager`
 
 ---
 
