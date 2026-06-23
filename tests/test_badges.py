@@ -1,12 +1,21 @@
-import pytest
+from __future__ import annotations
 
+import pytest
 from cognitive_data_arcade.engine.badges import (
+    ALL_MODULE_BADGES,
     Badge,
     BadgeEngine,
     BADGE_REGISTRY,
     SessionResult,
+    _ALL_LESSONS,
+    _MODULE_LESSONS,
+    earned_badges,
+    module_complete,
 )
 from cognitive_data_arcade.profile.manager import Profile
+
+
+# ── Session achievement badge tests ──────────────────────────────────────────
 
 
 def _make_session(**kwargs) -> SessionResult:
@@ -55,11 +64,7 @@ def test_session_result_accuracy_zero_trials() -> None:
 
 
 def test_badge_engine_returns_new_ids() -> None:
-    session = _make_session(
-        avg_reaction_time_ms=200.0,
-        total_trials=20,
-        correct_trials=20,
-    )
+    session = _make_session(avg_reaction_time_ms=200.0, total_trials=20, correct_trials=20)
     profile = _make_profile(arcade_points=0)
     engine = BadgeEngine()
     new_ids = engine.evaluate(session, profile)
@@ -92,7 +97,7 @@ def test_badge_engine_no_badges_for_slow_session() -> None:
 def test_badge_engine_custom_registry() -> None:
     always_true = Badge(
         badge_id="test_badge",
-        icon="🧪",
+        icon="T",
         name_en="Test",
         name_pl="Test",
         check=lambda s, p: True,
@@ -105,13 +110,7 @@ def test_badge_engine_custom_registry() -> None:
 
 def test_badge_registry_has_five_entries() -> None:
     ids = {b.badge_id for b in BADGE_REGISTRY}
-    assert ids == {
-        "quick_reflex",
-        "sharpshooter",
-        "high_accuracy",
-        "clean_data",
-        "first_game",
-    }
+    assert ids == {"quick_reflex", "sharpshooter", "high_accuracy", "clean_data", "first_game"}
 
 
 def test_first_game_badge_requires_zero_ap_before() -> None:
@@ -133,8 +132,8 @@ def test_clean_data_badge_requires_sp() -> None:
 
 
 def test_high_accuracy_badge_condition() -> None:
-    good = _make_session(total_trials=20, correct_trials=18)  # 90% accuracy, 18 >= 3
-    bad = _make_session(total_trials=20, correct_trials=10)  # 50% accuracy
+    good = _make_session(total_trials=20, correct_trials=18)
+    bad = _make_session(total_trials=20, correct_trials=10)
     profile = _make_profile(arcade_points=100)
     engine = BadgeEngine()
     assert "high_accuracy" in engine.evaluate(good, profile)
@@ -144,3 +143,71 @@ def test_high_accuracy_badge_condition() -> None:
 def test_session_result_rejects_more_correct_than_total() -> None:
     with pytest.raises(ValueError, match="correct_trials"):
         _make_session(total_trials=10, correct_trials=11)
+
+
+# ── Module completion badge tests ─────────────────────────────────────────────
+
+
+def test_all_badges_count():
+    assert len(ALL_MODULE_BADGES) == 8  # 6 module + 2 special
+
+
+def test_module_lessons_cover_all_31():
+    assert len(_ALL_LESSONS) == 31
+
+
+def test_earned_badges_empty_when_no_progress():
+    badges = earned_badges(set())
+    assert badges == []
+
+
+def test_first_lesson_badge_any_completion():
+    badges = earned_badges({1})
+    ids = [b.id for b in badges]
+    assert "first" in ids
+
+
+def test_module_badge_earned_when_all_lessons_done():
+    completed = set(_MODULE_LESSONS[0])
+    badges = earned_badges(completed)
+    ids = [b.id for b in badges]
+    assert "mod_1" in ids
+
+
+def test_module_badge_not_earned_when_partial():
+    completed = set(_MODULE_LESSONS[0][:-1])  # all but last
+    badges = earned_badges(completed)
+    ids = [b.id for b in badges]
+    assert "mod_1" not in ids
+
+
+def test_all_done_badge_requires_all_lessons():
+    badges = earned_badges(set(_ALL_LESSONS))
+    ids = [b.id for b in badges]
+    assert "all_done" in ids
+    assert "first" in ids
+    # all 6 module badges earned
+    assert sum(1 for b in badges if b.id.startswith("mod_")) == 6
+
+
+def test_all_done_badge_not_earned_when_partial():
+    badges = earned_badges(set(_ALL_LESSONS[:-1]))
+    ids = [b.id for b in badges]
+    assert "all_done" not in ids
+
+
+def test_module_complete_true():
+    assert module_complete(0, set(_MODULE_LESSONS[0]))
+
+
+def test_module_complete_false():
+    partial = set(_MODULE_LESSONS[0][:-1])
+    assert not module_complete(0, partial)
+
+
+def test_badge_fields_non_empty():
+    for b in ALL_MODULE_BADGES:
+        assert b.id
+        assert b.icon_file.endswith(".png")
+        assert b.name_pl
+        assert b.name_en

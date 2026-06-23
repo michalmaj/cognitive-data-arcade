@@ -3,7 +3,14 @@ from __future__ import annotations
 import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 
-from cognitive_data_arcade.engine.badges import BADGE_REGISTRY, Badge
+from cognitive_data_arcade.engine.badges import (
+    BADGE_REGISTRY,
+    Badge,
+    _MODULE_BADGES,
+    _SPECIAL_BADGES,
+    earned_badges,
+    load_badge_icon,
+)
 from cognitive_data_arcade.engine.i18n import Strings, level_progress, level_title
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.profile.manager import Profile, ProfileManager
@@ -206,6 +213,48 @@ class ProfileScene(Scene):
                 name_surf = self._font_sm.render("???", True, _DIM_COLOR)
             surface.blit(icon_surf, (bx + card_w // 2 - icon_surf.get_width() // 2, by + 10))
             surface.blit(name_surf, (bx + card_w // 2 - name_surf.get_width() // 2, by + 54))
+
+        # ---- Module completion badges ----
+        ry += (1 + len(self._badge_registry) // cols) * (card_h + card_gap) + 14
+        mod_lbl = self._font_sm.render(
+            "Odznaki modulow" if self._strings.language == "pl" else "Module badges",
+            True,
+            _DIM_COLOR,
+        )
+        surface.blit(mod_lbl, (right_x, ry))
+        ry += 26
+
+        completed_set = set(self._profile.completed_lessons)
+        mod_earned = {b.id for b in earned_badges(completed_set)}
+        mod_icon_size = 36
+        mod_card_w = 90
+        mod_card_h = 60
+        mod_gap = 6
+        all_mod_badges = _MODULE_BADGES + _SPECIAL_BADGES
+        for i, mb in enumerate(all_mod_badges):
+            bx = right_x + i * (mod_card_w + mod_gap)
+            by = ry
+            is_earned = mb.id in mod_earned
+            border_col = _HIGHLIGHT_COLOR if is_earned else _BORDER_COLOR
+            pygame.draw.rect(surface, _PANEL_BG, (bx, by, mod_card_w, mod_card_h), border_radius=5)
+            pygame.draw.rect(
+                surface, border_col, (bx, by, mod_card_w, mod_card_h), 1, border_radius=5
+            )
+            icon = load_badge_icon(mb, size=mod_icon_size)
+            if icon:
+                if not is_earned:
+                    dark = pygame.Surface((mod_icon_size, mod_icon_size), pygame.SRCALPHA)
+                    dark.blit(icon, (0, 0))
+                    dark.fill((0, 0, 0, 160), special_flags=pygame.BLEND_RGBA_MULT)
+                    icon = dark
+                surface.blit(icon, (bx + (mod_card_w - mod_icon_size) // 2, by + 4))
+            name = mb.name_pl if self._strings.language == "pl" else mb.name_en
+            name_surf = get_font(13).render(
+                name[:10], True, _HIGHLIGHT_COLOR if is_earned else _DIM_COLOR
+            )
+            surface.blit(
+                name_surf, (bx + mod_card_w // 2 - name_surf.get_width() // 2, by + mod_card_h - 18)
+            )
 
         # ---- FOOTER ----
         footer_y = h - _FOOTER_H

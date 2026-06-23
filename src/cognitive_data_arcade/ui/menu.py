@@ -6,6 +6,11 @@ import pygame
 from cognitive_data_arcade.engine.fonts import get_font, get_font_medium
 
 from cognitive_data_arcade.engine import audio
+from cognitive_data_arcade.engine.badges import (
+    _MODULE_BADGES,
+    load_badge_icon,
+    module_complete,
+)
 from cognitive_data_arcade.engine.i18n import Strings, get_strings
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.engine.scrollbar import ScrollBar
@@ -1416,7 +1421,13 @@ class LessonMenuScene(Scene):
                 if param > 0 and sy > _TOPBAR_H:
                     pygame.draw.line(surface, _C_SURFACE, (0, sy), (_SIDEBAR_W, sy))
                 txt = self._font_mod_header.render(label, True, _C_TEXT_DARK)
-                surface.blit(txt, (20, sy + (vh - txt.get_height()) // 2))
+                mid_y_h = sy + (vh - txt.get_height()) // 2
+                surface.blit(txt, (20, mid_y_h))
+                if module_complete(param, self._completed):
+                    icon = load_badge_icon(_MODULE_BADGES[param], size=20)
+                    if icon:
+                        ix = 20 + txt.get_width() + 6
+                        surface.blit(icon, (ix, sy + (vh - 20) // 2))
 
             else:
                 i = param
