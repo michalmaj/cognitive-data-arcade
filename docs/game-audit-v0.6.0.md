@@ -403,19 +403,87 @@ _To be filled after all sections are complete._
 ## Module 6 — Sieci i Etyka
 
 ### L27 — Social Network Simulator
-_TODO_
+**Typ:** lab | **Moduł:** Sieci i Etyka
+
+| Wymiar | Status | Uwagi |
+|---|---|---|
+| Instrukcje (HowToPlay) | ⚠️ | `game_factory_for` zwraca `PausableGame` bez `make_how_to_play` — HowToPlay dostępny tylko przez pause menu lub tryb sekwencyjny; `info.py` ma 3 `description_lines` PL i EN; brak wbudowanej fazy intro |
+| Opis lekcji | ✅ | desc_pl 124 zn., desc_en 123 zn. |
+| SessionResult | ❌ | `SocialNetworkScene._done` zawsze `False`, `next_scene()` zwraca `None`; otwarta piaskownica SIR bez end-state, brak `SessionResult`/`SessionSummaryScene` |
+| Teoria | ✅ | lesson_27.py: 3 sekcje (theory 5 pozycji, notes 2, tasks 3), treść niepusta w PL i EN |
+| Feedback w trakcie | ⚠️ | Metryki (krok, max I%, R%) aktualizują się live na dolnym pasku per krok SIR; brak wskaźnika correct/incorrect — eksplorator bez oceniania |
+
+**Action items:**
+- [ ] Dodać `make_how_to_play` przed `PausableGame` w `game_factory_for` (L27) z wykorzystaniem istniejącego `info.py`
+- [ ] Dodać end-state (np. po N krokach SIR lub po wygaśnięciu epidemii) z `SessionResult` i `SessionSummaryScene`; zapisać `max_i_left` i `step_count` jako AP przez `ProfileManager`
 
 ### L28 — Misinformation Spread
-_TODO_
+**Typ:** arcade | **Moduł:** Sieci i Etyka
+
+| Wymiar | Status | Uwagi |
+|---|---|---|
+| Instrukcje (HowToPlay) | ✅ | `PhaseIntroScene` wyświetla 11 linii instrukcji PL (role Spreader/Fact-Checker, cele, zasady SIR) przy starcie; `info.py` ma 3 `description_lines` PL i EN przez pause menu |
+| Opis lekcji | ✅ | desc_pl 123 zn., desc_en 124 zn. |
+| SessionResult | ❌ | `PhaseResultScene` wyświetla tabelę wyników per runda + gwiazdki + AHA, przyciski "Zagraj ponownie"/"Menu"; brak `SessionResult`, `complete_lesson` ani `SessionSummaryScene`; `game.py` `next_scene()` zwraca `None` |
+| Teoria | ✅ | lesson_28.py: 3 sekcje (theory 6 pozycji, notes 2, tasks 3), treść niepusta w PL i EN |
+| Feedback w trakcie | ✅ | `PhaseActScene` aktualizuje pasek procentowy "% zarazone" w `_I_COLOR` i odliczanie czasu przy każdym kliknięciu; natychmiastowa zmiana stanu węzła (szary→czerwony lub czerwony→zielony) per akcja |
+
+**Action items:**
+- [ ] Podpiąć `SessionResult` + `SessionSummaryScene` w `PhaseResultScene.handle_event` po kliknięciu "Menu"; zapisać `_total` (maks. 660) jako AP przez `ProfileManager`
 
 ### L29 — Recommendation Bubble
-_TODO_
+**Typ:** lab | **Moduł:** Sieci i Etyka
+
+| Wymiar | Status | Uwagi |
+|---|---|---|
+| Instrukcje (HowToPlay) | ✅ | `PhaseIntroScene` wyświetla 10 linii instrukcji PL (AKT 1/2/3, cel, mechanika) przy starcie; `info.py` ma 3 `description_lines` PL i EN przez pause menu |
+| Opis lekcji | ✅ | desc_pl 135 zn., desc_en 137 zn. |
+| SessionResult | ❌ | `PhaseResultScene` wyświetla wykresy słupkowe diversity (3 akty) + AHA + score_curator/score_algo; brak `SessionResult`, `complete_lesson` ani `SessionSummaryScene`; `game.py` `next_scene()` zwraca `None` |
+| Teoria | ✅ | lesson_29.py: 3 sekcje (theory 6 pozycji, notes 2, tasks 3), treść niepusta w PL i EN |
+| Feedback w trakcie | ⚠️ | Akt 1/3: wskaźnik "ROZNORODNOSC: N%" / "ENGAGEMENT: N" aktualizuje się per kliknięcie (implicitny feedback), ale brak correct/incorrect — open-ended; Akt 2: D=N% per zamiana slotu |
+
+**Action items:**
+- [ ] Podpiąć `SessionResult` + `SessionSummaryScene` w `PhaseResultScene.handle_event` po kliknięciu "Menu"; zapisać `score_curator` (maks. 100) jako AP przez `ProfileManager`
 
 ### L30 — Bias Blind Spot
-_TODO_
+**Typ:** puzzle | **Moduł:** Sieci i Etyka
+
+| Wymiar | Status | Uwagi |
+|---|---|---|
+| Instrukcje (HowToPlay) | ✅ | `PhaseIntroScene` wyświetla 11 linii instrukcji PL (AKT 1/2/3, cel każdego aktu) przy starcie; `info.py` ma 3 `description_lines` PL i EN przez pause menu |
+| Opis lekcji | ✅ | desc_pl 128 zn., desc_en 131 zn. |
+| SessionResult | ❌ | `PhaseResultScene` wyświetla 3-kolumnowe podsumowanie (Aplikant/Inzynier/Regulator) + AHA + gwiazdki, przyciski; brak `SessionResult`, `complete_lesson` ani `SessionSummaryScene`; `game.py` `next_scene()` zwraca `None` |
+| Teoria | ✅ | lesson_30.py: 3 sekcje (theory 6 pozycji, notes 2, tasks 3), treść niepusta w PL i EN |
+| Feedback w trakcie | ✅ | Akt 1: po wyborze `_revealed=True` natychmiast pokazuje "Poprawnie! Kod pocztowy" w `_GREEN` lub wybraną odpowiedź w `_RED`; Akt 2: "Bias gap: N pp" w kolorze (`_bias_color`) + "Dokladnosc: N%" zaktualizowane po kliknięciu "TRENUJ" |
+
+**Action items:**
+- [ ] Podpiąć `SessionResult` + `SessionSummaryScene` w `PhaseResultScene.handle_event` po kliknięciu "Menu"; zapisać `score_engineer` (maks. 100) jako AP przez `ProfileManager`
 
 ### L31 — You Were the Dataset
-_TODO_
+**Typ:** lab | **Moduł:** Sieci i Etyka
+
+| Wymiar | Status | Uwagi |
+|---|---|---|
+| Instrukcje (HowToPlay) | ⚠️ | `game_factory_for` wraps z `PausableGame` (bez `make_how_to_play`); `info.py` ma 3 `description_lines` PL i EN przez pause menu lub tryb sekwencyjny; gra startuje od `PhaseRevealScene`/`PhasePrerequisiteScene` bez ekranu instrukcji |
+| Opis lekcji | ✅ | desc_pl 115 zn., desc_en 134 zn. |
+| SessionResult | ❌ | `PhaseResultScene` wyświetla tabelę kognitywnego profilu + AHA; `game.py` kończy z `_done=True` i `_next=LessonMenuScene`; brak `SessionResult`, `complete_lesson` ani `SessionSummaryScene` |
+| Teoria | ✅ | lesson_31.py: 3 sekcje (theory 5 pozycji, notes 2, tasks 3), treść niepusta w PL i EN |
+| Feedback w trakcie | ⚠️ | Gra to retrospektywny reveal zebranych danych — `PhaseRevealScene` i `PhaseProfileScene` prezentują metryki RT/Stroop/Flanker/GoNo-Go/NBack; brak per-decyzji correct/incorrect z definicji (narracja, nie quiz) |
+
+**Action items:**
+- [ ] Dodać `make_how_to_play` przy starcie w `game_factory_for` (L31) z wykorzystaniem istniejącego `info.py`
+- [ ] Dodać `SessionResult` + `complete_lesson` przez `ProfileManager` po zakończeniu (`PhaseResultScene` kliknięcie "Menu"); rozważyć AP na podstawie liczby ukończonych prerequisite gier
 
 ### L32 — The Architect's Trial
-_TODO_
+**Typ:** arcade | **Moduł:** Sieci i Etyka
+
+| Wymiar | Status | Uwagi |
+|---|---|---|
+| Instrukcje (HowToPlay) | ✅ | `PhaseIntroScene` wyświetla animowany tekst narracyjny (3 komunikaty: "Rok 2027", "Ty jestes architektem", "Komisja etyczna czeka") + `PhaseDomainPickerScene` jako wstęp fabularny; `info.py` ma 3 `description_lines` PL i EN przez pause menu |
+| Opis lekcji | ✅ | desc_pl 120 zn., desc_en 111 zn. |
+| SessionResult | ❌ | `PhaseResultScene` wyświetla werdykt komisji + paski Fairness/Compliance/Skutecznosc + komentarz, przyciski "Zagraj -- inna domena"/"Menu"; `game.py` kończy z `_done=True` i `_next=None`; brak `SessionResult`, `complete_lesson` ani `SessionSummaryScene` |
+| Teoria | ✅ | lesson_32.py: 3 sekcje (theory 5 pozycji, notes 2, tasks 3), treść niepusta w PL i EN |
+| Feedback w trakcie | ✅ | `PhaseActScene._pick()` flash-pulsuje wybrany kafelek w `_PURPLE` przez `_SELECT_FLASH_MS=300ms` po wyborze; `PhaseTribunalScene` ujawnia score sędziego (N/100) per odpowiedź; wszystkie trzy skory (Fairness/Compliance/Skutecznosc) dostępne na ekranie werdyktu komisji |
+
+**Action items:**
+- [ ] Podpiąć `SessionResult` + `SessionSummaryScene` w `PhaseResultScene.handle_event` po kliknięciu "Menu"; zapisać np. `min(fairness, compliance, effectiveness)` lub sumę skórów jako AP przez `ProfileManager`
