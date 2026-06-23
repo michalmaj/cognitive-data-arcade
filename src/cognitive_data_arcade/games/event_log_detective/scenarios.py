@@ -1203,7 +1203,448 @@ scenario3 = Scenario(
 
 
 # ---------------------------------------------------------------------------
+# Scenario 4 — A/B Test (online experiment design, 6 decisions)
+# ---------------------------------------------------------------------------
+
+_s4_d1 = Decision(
+    title_pl="Obliczenie liczebności próby",
+    title_en="Sample size calculation",
+    context_pl=(
+        "Prowadzisz A/B test nowej strony docelowej dla aplikacji mobilnej. "
+        "Chcesz wykryć wzrost konwersji z 5% do 6% (efekt absolutny: 1 pp). "
+        "Musisz zdecydować, jak wyznaczyć wymaganą liczebność próby."
+    ),
+    context_en=(
+        "You are running an A/B test for a new landing page of a mobile app. "
+        "You want to detect an increase in conversion from 5% to 6% (absolute effect: 1 pp). "
+        "You must decide how to determine the required sample size."
+    ),
+    hint_medium_pl=(
+        "Zastanow sie, czy mozna oszacowac liczebnosc probki na podstawie danych historycznych "
+        "i wymaganej mocy testu."
+    ),
+    hint_medium_en=(
+        "Consider whether sample size can be estimated from historical data "
+        "and the desired statistical power."
+    ),
+    report_pl=(
+        "Kalkulator mocy (power calculator) z alpha=0.05 i moc=0.80 dla efektu 1 pp "
+        "przy bazowej konwersji 5% daje ~3800 uzytkownikow na grupe. "
+        "Szacowanie 'na oko' prowadzi do niedoszacowania (za krotki test) lub "
+        "przeszacowania (marnowanie uzytkownikow)."
+    ),
+    report_en=(
+        "A power calculator with alpha=0.05 and power=0.80 for a 1 pp effect "
+        "at a 5% baseline conversion gives ~3800 users per group. "
+        "Eyeballing leads to underestimation (test too short) or "
+        "overestimation (wasting users)."
+    ),
+    options=(
+        Option(
+            label_pl="Kalkulator mocy (alpha=0.05, moc=0.80)",
+            label_en="Power calculator (alpha=0.05, power=0.80)",
+            is_correct=True,
+            consequence_easy_pl="",
+            consequence_easy_en="",
+        ),
+        Option(
+            label_pl="Ocena ekspercka ('chyba ze 1000 wystarczy')",
+            label_en="Expert gut feeling ('1000 should be enough')",
+            is_correct=False,
+            consequence_easy_pl=(
+                "Bez obliczen mocy testujesz za krotko: efekt 1 pp bedzie niezauwalny. "
+                "Test daje brak roznic, bo byl zbyt malo moc."
+            ),
+            consequence_easy_en=(
+                "Without power calculations you test too briefly: a 1 pp effect stays invisible. "
+                "The test shows no difference because it was underpowered."
+            ),
+        ),
+        Option(
+            label_pl="Zatrzymaj test jak p < 0.05",
+            label_en="Stop the test when p < 0.05",
+            is_correct=False,
+            consequence_easy_pl=(
+                "Ciage monitorowanie i zatrzymywanie przy p<0.05 drastycznie zwieksza "
+                "odsetek falszywie pozytywnych wynikow (problem peek-and-stop)."
+            ),
+            consequence_easy_en=(
+                "Continuous monitoring and stopping at p<0.05 dramatically inflates "
+                "false-positive rates (peek-and-stop problem)."
+            ),
+        ),
+    ),
+)
+
+_s4_d2 = Decision(
+    title_pl="Czas trwania testu",
+    title_en="Test duration",
+    context_pl=(
+        "Twoj kalkulator mocy wskazuje 3800 uzytkownikow na grupe. "
+        "Dzienny ruch to ok. 500 uzytkownikow. "
+        "Kiedy zakonczyc test?"
+    ),
+    context_en=(
+        "Your power calculator indicates 3800 users per group. "
+        "Daily traffic is around 500 users. "
+        "When should you stop the test?"
+    ),
+    hint_medium_pl=(
+        "Pomysl o efektach tygodniowych (dzien tygodnia moze wplywac na zachowanie)."
+    ),
+    hint_medium_en=(
+        "Think about weekly seasonality (day of week may affect behaviour)."
+    ),
+    report_pl=(
+        "3800 uzytkownikow na grupe przy 500/dzien = ok. 7.6 dnia na grupe = 15 dni lacznie. "
+        "Zaokraglenie do 2 pelnych tygodni (14 dni) zapewnia rowne pokrycie dni tygodnia, "
+        "eliminujac sezonowosc tygodniowa. Wczesniejsze zatrzymanie grozi znieksztalceniem."
+    ),
+    report_en=(
+        "3800 users per group at 500/day = ~7.6 days per group = 15 days total. "
+        "Rounding up to 2 full weeks (14 days) ensures equal weekday coverage, "
+        "eliminating weekly seasonality. Stopping earlier risks distortion."
+    ),
+    options=(
+        Option(
+            label_pl="2 pelne tygodnie (14 dni)",
+            label_en="2 full weeks (14 days)",
+            is_correct=True,
+            consequence_easy_pl="",
+            consequence_easy_en="",
+        ),
+        Option(
+            label_pl="Jak tylko osiagniemy liczebnosc (ok. 8 dni)",
+            label_en="As soon as sample size is reached (~8 days)",
+            is_correct=False,
+            consequence_easy_pl=(
+                "8 dni to niecaly tydzien — poniedzialek-piatek ma inne wzorce "
+                "zachowan niz weekend. Wyniki beda znieksztalcone sezonowoscia."
+            ),
+            consequence_easy_en=(
+                "8 days is under a week — weekdays have different behaviour patterns "
+                "than weekends. Results will be distorted by seasonality."
+            ),
+        ),
+        Option(
+            label_pl="Jak zobaczymy p < 0.05, niezaleznie od czasu",
+            label_en="Once we see p < 0.05, regardless of time",
+            is_correct=False,
+            consequence_easy_pl=(
+                "Peek-and-stop: zatrzymanie przy pierwszym p<0.05 "
+                "zawyza czestotliwosc bledow I rodzaju nawet 3-krotnie."
+            ),
+            consequence_easy_en=(
+                "Peek-and-stop: halting at first p<0.05 "
+                "inflates type I error rate up to 3-fold."
+            ),
+        ),
+    ),
+)
+
+_s4_d3 = Decision(
+    title_pl="Metryka pierwotna",
+    title_en="Primary metric",
+    context_pl=(
+        "Testujesz nowa strone docelowa. Masz dostep do: "
+        "konwersja (instalacja aplikacji), CTR (klikniecia w reklame), "
+        "czas sesji, liczba odwiedzin, NPS (ankieta). "
+        "Ktora metryka powinna byc Twoja metryka pierwotna?"
+    ),
+    context_en=(
+        "You are testing a new landing page. You have access to: "
+        "conversion (app install), CTR (ad clicks), "
+        "session time, number of visits, NPS (survey). "
+        "Which metric should be your primary metric?"
+    ),
+    hint_medium_pl=(
+        "Metryka pierwotna powinna byc bezposrednio powiazana z celem biznesowym testu."
+    ),
+    hint_medium_en=(
+        "The primary metric should be directly tied to the business goal of the test."
+    ),
+    report_pl=(
+        "Konwersja (instalacja aplikacji) to jedyna metryka, ktora bezposrednio odpowiada "
+        "na pytanie 'czy nowa strona zwieksza liczbe instalacji'. "
+        "Inne metryki moga byc pomocnicze (secondary metrics), ale nie powinny decydowac "
+        "o wyniku — inacej ryzykujesz wielokrotne porownania."
+    ),
+    report_en=(
+        "Conversion (app install) is the only metric that directly answers "
+        "'does the new page increase installs'. "
+        "Other metrics can be secondary, but should not decide the outcome — "
+        "otherwise you risk multiple comparisons inflation."
+    ),
+    options=(
+        Option(
+            label_pl="Konwersja (instalacja aplikacji)",
+            label_en="Conversion (app install)",
+            is_correct=True,
+            consequence_easy_pl="",
+            consequence_easy_en="",
+        ),
+        Option(
+            label_pl="CTR (klikniecia)",
+            label_en="CTR (clicks)",
+            is_correct=False,
+            consequence_easy_pl=(
+                "CTR mierzy zainteresowanie reklama, nie finalna konwersje. "
+                "Wyzszy CTR przy tej samej konwersji nie sluzy celowi biznesowemu."
+            ),
+            consequence_easy_en=(
+                "CTR measures ad interest, not final conversion. "
+                "Higher CTR with the same conversion does not serve the business goal."
+            ),
+        ),
+        Option(
+            label_pl="Wszystkie dostepne metryki",
+            label_en="All available metrics",
+            is_correct=False,
+            consequence_easy_pl=(
+                "Testowanie 5 metryk bez korekcji alfa zwieksza ryzyko falszywie "
+                "pozytywnego wyniku na ktorkols z nich do ~23%."
+            ),
+            consequence_easy_en=(
+                "Testing 5 metrics without alpha correction raises the chance "
+                "of at least one false positive to ~23%."
+            ),
+        ),
+    ),
+)
+
+_s4_d4 = Decision(
+    title_pl="Podzial ruchu",
+    title_en="Traffic split",
+    context_pl=(
+        "Jak rozdzielic ruch miedzy wariant kontrolny (A) i eksperymentalny (B)? "
+        "Masz obawy, ze nowa strona moze byc gorsza."
+    ),
+    context_en=(
+        "How should you split traffic between control (A) and experimental (B) variant? "
+        "You are worried the new page might perform worse."
+    ),
+    hint_medium_pl=(
+        "Zastanow sie nad kompromisem miedzy szybkoscia eksperymentu a ryzykiem."
+    ),
+    hint_medium_en=(
+        "Consider the trade-off between experiment speed and risk exposure."
+    ),
+    report_pl=(
+        "Podzia 50/50 maksymalizuje moc statystyczna i minimalizuje czas testu. "
+        "Asymetryczny podzial (np. 90/10) zmniejsza ryzyko, ale wymaga znacznie "
+        "wiecej czasu — moc spada, bo mniejsza grupa ogranicza precyzje. "
+        "Przy dobrze zaprojektowanym tescie 50/50 to standardowy wybor."
+    ),
+    report_en=(
+        "A 50/50 split maximises statistical power and minimises test duration. "
+        "Asymmetric split (e.g. 90/10) reduces risk but requires much more time — "
+        "power drops because the smaller group limits precision. "
+        "For a well-designed test, 50/50 is the standard choice."
+    ),
+    options=(
+        Option(
+            label_pl="50/50",
+            label_en="50/50",
+            is_correct=True,
+            consequence_easy_pl="",
+            consequence_easy_en="",
+        ),
+        Option(
+            label_pl="90/10 (wiekszosc do kontrolnej)",
+            label_en="90/10 (majority to control)",
+            is_correct=False,
+            consequence_easy_pl=(
+                "Przy 10% ruchu w grupie B musisz zbierac dane ~9x dluzej, "
+                "zeby osiagnac te sama moc co przy 50/50."
+            ),
+            consequence_easy_en=(
+                "With 10% traffic in group B you need ~9x more time "
+                "to achieve the same power as 50/50."
+            ),
+        ),
+        Option(
+            label_pl="80/20 (wiekszosc do eksperymentalnej)",
+            label_en="80/20 (majority to experimental)",
+            is_correct=False,
+            consequence_easy_pl=(
+                "Wikesza ekspozycja na wariant eksperymentalny zwiekasza ryzyko "
+                "i zmniejsza moc — obie grupy powinny byc rowne."
+            ),
+            consequence_easy_en=(
+                "More exposure to the experimental variant increases risk "
+                "and reduces power — both groups should be equal."
+            ),
+        ),
+    ),
+)
+
+_s4_d5 = Decision(
+    title_pl="Analiza wynikow — wielokrotne porownania",
+    title_en="Results analysis — multiple comparisons",
+    context_pl=(
+        "Po zakonczeniu testu widzisz: konwersja +1.1 pp (p=0.04), "
+        "CTR +2% (p=0.08), czas sesji -3s (p=0.31). "
+        "Jak zinterpretujesz wyniki?"
+    ),
+    context_en=(
+        "After the test ends you see: conversion +1.1 pp (p=0.04), "
+        "CTR +2% (p=0.08), session time -3s (p=0.31). "
+        "How will you interpret the results?"
+    ),
+    hint_medium_pl=(
+        "Jaka byla Twoja metryka pierwotna i czy testowalas wiele hipotez jednoczesnie?"
+    ),
+    hint_medium_en=(
+        "What was your primary metric and did you test multiple hypotheses at once?"
+    ),
+    report_pl=(
+        "Decydujesz na podstawie metryki pierwotnej: konwersja p=0.04 < 0.05, wiec "
+        "wynik jest istotny. CTR i czas sesji to metryki pomocnicze — ich wyniki "
+        "nie zmieniaja decyzji, ale pomagaja zrozumiec mechanizm efektu. "
+        "Gdybys wybral wynik ze wszystkich trzech metryk post-hoc, "
+        "zryzowalybys falszywy pozytyw."
+    ),
+    report_en=(
+        "You decide based on the primary metric: conversion p=0.04 < 0.05, so "
+        "the result is significant. CTR and session time are secondary — their results "
+        "do not change the decision, but help understand the effect mechanism. "
+        "If you cherry-picked results across all three metrics post-hoc, "
+        "you would risk a false positive."
+    ),
+    options=(
+        Option(
+            label_pl="Wdrozenie — metryka pierwotna (konwersja) istotna",
+            label_en="Deploy — primary metric (conversion) is significant",
+            is_correct=True,
+            consequence_easy_pl="",
+            consequence_easy_en="",
+        ),
+        Option(
+            label_pl="Brak wdrozenia — CTR nie jest istotny",
+            label_en="No deploy — CTR is not significant",
+            is_correct=False,
+            consequence_easy_pl=(
+                "CTR nie byl metryka pierwotna. Decydowanie na jej podstawie "
+                "ignoruje cel eksperymentu i sprawdzony wynik konwersji."
+            ),
+            consequence_easy_en=(
+                "CTR was not the primary metric. Deciding based on it "
+                "ignores the experiment goal and the proven conversion result."
+            ),
+        ),
+        Option(
+            label_pl="Wdrozenie — bo przynajmniej jedna metryka jest istotna",
+            label_en="Deploy — because at least one metric is significant",
+            is_correct=False,
+            consequence_easy_pl=(
+                "Przy testowaniu 3 niezaleznych hipotez szansa na przynajmniej "
+                "jeden falszywy pozytyw (przy alpha=0.05) wynosi ~14%. "
+                "Nalezy trzymac sie metryki pierwotnej."
+            ),
+            consequence_easy_en=(
+                "Testing 3 independent hypotheses gives a ~14% chance of at least "
+                "one false positive (at alpha=0.05). "
+                "Stick to the primary metric."
+            ),
+        ),
+    ),
+)
+
+_s4_d6 = Decision(
+    title_pl="Dokumentacja i powtarzalnosc",
+    title_en="Documentation and reproducibility",
+    context_pl=(
+        "Test zakonczony sukcesem. Jak udokumentowac eksperyment, "
+        "by za 12 miesiecy nowy czlonek zespolu mogl go zrozumiec i powtorzyc?"
+    ),
+    context_en=(
+        "The test ended successfully. How do you document the experiment "
+        "so a new team member can understand and replicate it 12 months from now?"
+    ),
+    hint_medium_pl=(
+        "Pomysl o wszystkich decyzjach podjetych przed i w trakcie eksperymentu."
+    ),
+    hint_medium_en=(
+        "Think about all decisions made before and during the experiment."
+    ),
+    report_pl=(
+        "Pre-rejestracja (lub rownowaznie: plik README z hipoteza, metryka pierwotna, "
+        "liczebnoscia probki i kryterium zatrzymania zapisanymi PRZED startem) "
+        "jest zlotym standardem. Pozwala odroznic potwierdzenie hipotezy od "
+        "post-hoc data dredging, i chroni przed p-hacking."
+    ),
+    report_en=(
+        "Pre-registration (or equivalently: a README with hypothesis, primary metric, "
+        "sample size, and stopping rule written BEFORE launch) "
+        "is the gold standard. It separates hypothesis confirmation from "
+        "post-hoc data dredging, and guards against p-hacking."
+    ),
+    options=(
+        Option(
+            label_pl="Pre-rejestracja: hipoteza, metryka, liczebnosc, kryterium zatrzymania",
+            label_en="Pre-registration: hypothesis, metric, sample size, stopping rule",
+            is_correct=True,
+            consequence_easy_pl="",
+            consequence_easy_en="",
+        ),
+        Option(
+            label_pl="Zrzut ekranu wynikow w Slacku",
+            label_en="Screenshot of results in Slack",
+            is_correct=False,
+            consequence_easy_pl=(
+                "Zrzut ekranu nie zawiera kontekstu: jakie byly hipotezy, "
+                "jak obliczono liczebnosc, kiedy zdecydowano o zatrzymaniu. "
+                "Za rok nikt nie bedzie w stanie odtworzyc eksperymentu."
+            ),
+            consequence_easy_en=(
+                "A screenshot lacks context: what were the hypotheses, "
+                "how was sample size calculated, when was stopping decided. "
+                "In a year, no one will be able to reproduce the experiment."
+            ),
+        ),
+        Option(
+            label_pl="Notatka w Confluence po fakcie",
+            label_en="Confluence note written after the fact",
+            is_correct=False,
+            consequence_easy_pl=(
+                "Dokumentacja pisana po zakonczeniu testu nie chroni przed p-hackingiem "
+                "— nie wiadomo, czy hipoteza byla sformuowana przed czy po zobaczeniu danych."
+            ),
+            consequence_easy_en=(
+                "Documentation written after the test does not guard against p-hacking "
+                "— it is unknown whether the hypothesis was formed before or after seeing data."
+            ),
+        ),
+    ),
+)
+
+scenario4 = Scenario(
+    id=4,
+    title_pl="A/B Test: Eksperyment Online",
+    title_en="A/B Test: Online Experiment",
+    intro_pl=(
+        "Jestes analitykiem danych w firmie produktowej. "
+        "Twoj zespol projektuje A/B test nowej strony docelowej dla aplikacji mobilnej. "
+        "Podejmij kluczowe decyzje o projekcie eksperymentu i analizie wynikow."
+    ),
+    intro_en=(
+        "You are a data analyst at a product company. "
+        "Your team is designing an A/B test for a new landing page of a mobile app. "
+        "Make key decisions about experiment design and results analysis."
+    ),
+    decisions=(
+        _s4_d1,
+        _s4_d2,
+        _s4_d3,
+        _s4_d4,
+        _s4_d5,
+        _s4_d6,
+    ),
+)
+
+
+# ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------
 
-SCENARIOS: tuple[Scenario, ...] = (scenario1, scenario2, scenario3)
+SCENARIOS: tuple[Scenario, ...] = (scenario1, scenario2, scenario3, scenario4)

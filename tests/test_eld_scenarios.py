@@ -3,12 +3,12 @@ from cognitive_data_arcade.games.event_log_detective.scenarios import (
 )
 
 
-def test_three_scenarios():
-    assert len(SCENARIOS) == 3
+def test_four_scenarios():
+    assert len(SCENARIOS) == 4
 
 
 def test_scenario_ids():
-    assert [s.id for s in SCENARIOS] == [1, 2, 3]
+    assert [s.id for s in SCENARIOS] == [1, 2, 3, 4]
 
 
 def test_scenario1_has_six_decisions():
@@ -21,6 +21,10 @@ def test_scenario2_has_seven_decisions():
 
 def test_scenario3_has_six_decisions():
     assert len(SCENARIOS[2].decisions) == 6
+
+
+def test_scenario4_has_six_decisions():
+    assert len(SCENARIOS[3].decisions) == 6
 
 
 def test_each_decision_has_at_least_one_correct_option():
