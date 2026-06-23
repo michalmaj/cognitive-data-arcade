@@ -906,23 +906,38 @@ class LessonMenuScene(Scene):
         self._next = self._make_big_data_map_game()
         self._done = True
 
-    def _make_big_data_map_game(self) -> Scene:
+    def _make_big_data_map_inner(self) -> Scene:
+        """PausableGame(BigDataMapGame) without the HowToPlay screen.
+
+        Used as back_scene from ConceptDetailScene so BACKSPACE returns
+        directly to the network rather than replaying the how-to-play intro.
+        """
         from cognitive_data_arcade.engine.pause import PausableGame
         from cognitive_data_arcade.games.big_data_map.game import BigDataMapGame
         from cognitive_data_arcade.games.big_data_map.info import get_game_info
-        from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
+
+        game_info = get_game_info(self._strings)
 
         def _detail_factory(lesson_num: int) -> Scene:
             from cognitive_data_arcade.games.big_data_map.detail import ConceptDetailScene
 
-            back = self._make_big_data_map_game()
-            return ConceptDetailScene(lesson_num, self._strings, back_scene=back)
+            back = self._make_big_data_map_inner()
+            detail = ConceptDetailScene(lesson_num, self._strings, back_scene=back)
+            return PausableGame(
+                detail, game_info, lambda: _detail_factory(lesson_num), self._strings, self._pm
+            )
 
         inner = BigDataMapGame(self._strings, self._pm, concept_detail_factory=_detail_factory)
-        game_info = get_game_info(self._strings)
-        pausable = PausableGame(
-            inner, game_info, self._make_big_data_map_game, self._strings, self._pm
+        return PausableGame(
+            inner, game_info, self._make_big_data_map_inner, self._strings, self._pm
         )
+
+    def _make_big_data_map_game(self) -> Scene:
+        from cognitive_data_arcade.games.big_data_map.info import get_game_info
+        from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
+
+        game_info = get_game_info(self._strings)
+        pausable = self._make_big_data_map_inner()
         return HowToPlayScene(
             game_info,
             self._strings,
