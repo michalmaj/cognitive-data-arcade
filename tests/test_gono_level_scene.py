@@ -9,6 +9,7 @@ from cognitive_data_arcade.ui.menu import LessonMenuScene
 class _FakePM:
     class _Profile:
         device_uuid = "test-uuid"
+        completed_lessons: list = []
 
     def load(self):
         return self._Profile()
