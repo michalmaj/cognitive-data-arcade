@@ -215,7 +215,11 @@ class ProfileScene(Scene):
                     dark.fill((0, 0, 0, 160), special_flags=pygame.BLEND_RGBA_MULT)
                     icon_png = dark
                 surface.blit(icon_png, (bx + (card_w - _ICON_SIZE) // 2, by + 10))
-            name = self._strings.badge_names.get(badge.badge_id, badge.badge_id) if is_earned else "???"
+            name = (
+                self._strings.badge_names.get(badge.badge_id, badge.badge_id)
+                if is_earned
+                else "???"
+            )
             name_color = _HIGHLIGHT_COLOR if is_earned else _DIM_COLOR
             name_surf = self._font_sm.render(name, True, name_color)
             surface.blit(name_surf, (bx + card_w // 2 - name_surf.get_width() // 2, by + 54))
