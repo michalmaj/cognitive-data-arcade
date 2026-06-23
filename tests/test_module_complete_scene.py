@@ -32,6 +32,7 @@ def _key(k: int) -> pygame.event.Event:
 def test_escape_returns_to_menu():
     from cognitive_data_arcade.ui.module_complete_scene import ModuleCompleteScene
     from cognitive_data_arcade.ui.menu import LessonMenuScene
+
     scene = ModuleCompleteScene(0, _make_pm(), EN)
     scene.handle_event(_key(pygame.K_ESCAPE))
     assert scene.is_done()
@@ -41,6 +42,7 @@ def test_escape_returns_to_menu():
 def test_enter_goes_to_next_module():
     from cognitive_data_arcade.ui.module_complete_scene import ModuleCompleteScene
     from cognitive_data_arcade.ui.module_runner_scene import ModuleRunnerScene
+
     scene = ModuleCompleteScene(0, _make_pm(), EN)
     scene.handle_event(_key(pygame.K_RETURN))
     assert scene.is_done()
@@ -50,6 +52,7 @@ def test_enter_goes_to_next_module():
 def test_last_module_enter_goes_to_menu():
     from cognitive_data_arcade.ui.module_complete_scene import ModuleCompleteScene
     from cognitive_data_arcade.ui.menu import LessonMenuScene
+
     scene = ModuleCompleteScene(5, _make_pm(), EN)  # module index 5 = last
     scene.handle_event(_key(pygame.K_RETURN))
     assert scene.is_done()
@@ -58,6 +61,7 @@ def test_last_module_enter_goes_to_menu():
 
 def test_clear_current_module_called_on_init():
     from cognitive_data_arcade.ui.module_complete_scene import ModuleCompleteScene
+
     pm = _make_pm()
     ModuleCompleteScene(0, pm, EN)
     pm.clear_current_module.assert_called_once()

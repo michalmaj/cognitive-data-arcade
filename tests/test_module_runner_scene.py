@@ -66,6 +66,7 @@ def test_keyboard_left_clamps_at_zero():
 
 def test_escape_sets_done_and_next_is_menu():
     from cognitive_data_arcade.ui.menu import LessonMenuScene
+
     scene = ModuleRunnerScene(0, _make_pm(), EN)
     scene.handle_event(_key(pygame.K_ESCAPE))
     assert scene.is_done()
