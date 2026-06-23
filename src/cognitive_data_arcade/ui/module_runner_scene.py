@@ -42,6 +42,8 @@ class ModuleRunnerScene(Scene):
         self._next: Scene | None = None
         self._zagraj_rect: pygame.Rect | None = None
         self._teoria_rect: pygame.Rect | None = None
+        self._step_rects: list[pygame.Rect] = []
+        self._mini_bar_rects: list[pygame.Rect] = []
 
     def _find_current_step(self, completed: set[int]) -> int:
         for i, lesson in enumerate(self._lessons):
@@ -70,6 +72,14 @@ class ModuleRunnerScene(Scene):
             self._launch_teoria()
 
     def _handle_click(self, pos: tuple[int, int]) -> None:
+        for i, rect in enumerate(self._step_rects):
+            if rect.collidepoint(pos):
+                self._current_step = i
+                return
+        for i, rect in enumerate(self._mini_bar_rects):
+            if rect.collidepoint(pos):
+                self._current_step = i
+                return
         if self._zagraj_rect and self._zagraj_rect.collidepoint(pos):
             self._launch_game()
         elif self._teoria_rect and self._teoria_rect.collidepoint(pos):
@@ -167,9 +177,12 @@ class ModuleRunnerScene(Scene):
         total_w = _W - 120
         step_w = total_w // (n - 1) if n > 1 else 0
         x_start = 60
+        self._step_rects = []
 
         for i in range(n):
             cx = x_start + i * step_w
+            hit = circle_r + 6
+            self._step_rects.append(pygame.Rect(cx - hit, y_center - hit, hit * 2, hit * 2))
             lesson_num = self._lessons[i]["num"]
             is_done = lesson_num in self._completed
             is_current = i == self._current_step
@@ -265,9 +278,11 @@ class ModuleRunnerScene(Scene):
         cell_w = min(80, (_W - 80) // n)
         total_w = n * cell_w + (n - 1) * 4
         bar_x = (_W - total_w) // 2
+        self._mini_bar_rects = []
 
         for i, lesson in enumerate(self._lessons):
             bx = bar_x + i * (cell_w + 4)
+            self._mini_bar_rects.append(pygame.Rect(bx, bar_y, cell_w, 24))
             is_done = lesson["num"] in self._completed
             is_current = i == self._current_step
             if is_done:
