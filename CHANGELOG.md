@@ -2,13 +2,31 @@
 
 All notable changes to Cognitive Data Arcade are documented here.
 
-## [Unreleased] — v0.5.0
+## [Unreleased] — v0.6.0
 
 ### Planned
 
-- **Cognitive Dashboard wiring** — L12 reads real CSV data from RT Lab, Stroop, Flanker, GoNoGo, N-Back; closes the "play → see results → understand yourself" loop
-- **Odznaki (badges)** — per-module completion badges; displayed in sidebar and profile screen
-- **Tryb sekwencyjny** — "przejedź przez moduł w kolejności" with visible current step; complements free-choice mode
+- **Game quality audit** — UX review of all 31 games: feedback clarity, difficulty calibration, pedagogical fit
+
+---
+
+## [v0.5.0] — 2026-06-23
+
+Data & Gamification — Cognitive Dashboard wired to real data, module completion badges, sequential learning mode.
+
+### Added
+
+- **Cognitive Dashboard wiring** — L12 (`CognitiveDashboardModeScene`) reads real CSV files logged by RT Lab, Stroop, Flanker, GoNoGo, N-Back; cross-task profile with per-game mean RT, accuracy, and what-if sliders now show actual student data instead of placeholders
+- **Module completion badges** — 6 PNG badge icons (one per module) + 2 special badges (first lesson, all 31 done); `ModuleBadge` dataclass and `_MODULE_BADGES` registry in `engine/badges.py`; `earned_badges()` and `module_complete()` helpers; badge icon shown in sidebar header when module is done
+- **Session achievement badges with PNG icons** — existing 5 `Badge` types (quick reflex, sharpshooter, high accuracy, clean data, first game) now display MIT-licensed Tabler Icons PNG in `ProfileScene` instead of emoji
+- **Profile gallery** — `ProfileScene` shows two rows: session achievement cards and an 8-slot module badge strip; earned badges bright, unearned dimmed with `BLEND_RGBA_MULT`
+- **Sequential learning mode** — clicking a module header opens `ModuleRunnerScene`: horizontal stepper (circles + connecting lines), lesson card with equal **Teoria** / **Zagraj** buttons, step auto-advances after completing a lesson, soft recommendation (no hard locks)
+- **ModuleCompleteScene** — badge glow reveal, lesson count stats, next-module routing (`Moduł N+1 →`) or back to menu for the last module; calls `clear_current_module()` on init
+- **`current_module_idx`** field on `Profile` — persists which module the student is running through; `set_current_module()` / `clear_current_module()` on `ProfileManager`
+- **Topbar continuation hint** — when `current_module_idx` is set, `LessonMenuScene` topbar shows `"Kontynuuj: <ModuleName>"` in indigo
+- **Module header affordance** — headers have subtle background, brighter label, stronger hover, and an indigo `> Start` pill button to signal interactivity
+- **Mouse click in runner** — stepper circles and mini-bar cells are clickable (in addition to arrow keys)
+- **`game_launcher.py`** — `game_factory_for()` and `game_factory_for_with_back()` extracted from `LessonMenuScene` to a standalone module; runner reuses it without circular imports
 
 ---
 
@@ -138,5 +156,5 @@ First complete release: 31 playable games, full CI, analysis scenes.
 |---------|-------|-----------------|
 | **v0.3.0** | Content & Discovery | Diacritics fix (L29-32) · Concept network map |
 | **v0.4.0** | Progress & Settings | Progress tracking · Skip-intro wiring · ELD Scenario 4 |
-| **v0.5.0** | Data & Gamification | Cognitive Dashboard wiring (real CSV) · Badges · Sequential learning mode |
+| **v0.5.0** ✅ | Data & Gamification | Cognitive Dashboard wiring (real CSV) · Badges · Sequential learning mode |
 | **v0.6.0** | Game quality | UX audit of all 31 games — feedback, difficulty, pedagogical fit |
