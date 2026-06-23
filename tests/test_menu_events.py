@@ -96,3 +96,16 @@ def test_ensure_visible_on_down_near_bottom():
     scroll = s._scrollbar.scroll
     max_s = max(0, _VIRTUAL_H - _SIDEBAR_H)
     assert 0 <= scroll <= max_s
+
+
+def test_click_module_header_opens_runner():
+    from cognitive_data_arcade.ui.module_runner_scene import ModuleRunnerScene
+
+    pygame.init()
+    s = _make()
+    # Module 0 header: vy=0, vh=32, screen_y = _TOPBAR_H + 0 - scroll(0) = 56
+    # Click at vertical centre of header row (56 + 16 = 72) within sidebar x range
+    click = pygame.event.Event(pygame.MOUSEBUTTONDOWN, button=1, pos=(100, 72))
+    s.handle_event(click)
+    assert s.is_done()
+    assert isinstance(s.next_scene(), ModuleRunnerScene)

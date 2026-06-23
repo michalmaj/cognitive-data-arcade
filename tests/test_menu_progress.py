@@ -16,6 +16,7 @@ class _FakePM:
         sfx_enabled = True
         music_volume = 1.0
         sfx_volume = 1.0
+        current_module_idx = None
 
     def __init__(self):
         self._completed: list[int] = []

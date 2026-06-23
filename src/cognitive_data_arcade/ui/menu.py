@@ -679,6 +679,15 @@ class LessonMenuScene(Scene):
         if 0 <= x < _SIDEBAR_W and _TOPBAR_H <= y < _TOPBAR_H + _SIDEBAR_H:
             if self._scrollbar.handle_mousedown(event.pos):
                 return
+            vy = y - _TOPBAR_H + self._scrollbar.scroll
+            for kind, param, row_vy, row_vh in _VIRTUAL_ROWS:
+                if kind == "header" and row_vy <= vy < row_vy + row_vh:
+                    from cognitive_data_arcade.ui.module_runner_scene import ModuleRunnerScene
+
+                    self._pm.set_current_module(param)
+                    self._next = ModuleRunnerScene(param, self._pm, self._strings)
+                    self._done = True
+                    return
             idx = self._lesson_idx_at(y)
             if idx is not None:
                 self._selected = idx
@@ -795,122 +804,9 @@ class LessonMenuScene(Scene):
         return spec is not None
 
     def _game_factory_for(self, lesson_num: int):
-        if lesson_num == 1:
-            return self._make_big_data_map_game
-        if lesson_num == 2:
-            return self._make_rt_lab_game
-        if lesson_num == 3:
-            pm, strings = self._pm, self._strings
+        from cognitive_data_arcade.ui.game_launcher import game_factory_for
 
-            def _make_eld() -> Scene:
-                from cognitive_data_arcade.ui.event_log_level_scene import EventLogLevelScene
-
-                return EventLogLevelScene(pm, strings)
-
-            return _make_eld
-        if lesson_num == 4:
-            return self._make_data_cleaning_game
-        if lesson_num == 6:
-            return self._make_eda_game
-        if lesson_num == 7:
-            pm, strings = self._pm, self._strings
-
-            def _make_stroop():
-                from cognitive_data_arcade.ui.stroop_level_scene import StroopLevelScene
-
-                return StroopLevelScene(pm, strings)
-
-            return _make_stroop
-        if lesson_num == 8:
-            pm, strings = self._pm, self._strings
-
-            def _make_flanker():
-                from cognitive_data_arcade.ui.flanker_level_scene import FlankerLevelScene
-
-                return FlankerLevelScene(pm, strings)
-
-            return _make_flanker
-        if lesson_num == 9:
-            pm, strings = self._pm, self._strings
-
-            def _make_gono():
-                from cognitive_data_arcade.ui.gono_level_scene import GoNoGoLevelScene
-
-                return GoNoGoLevelScene(pm, strings)
-
-            return _make_gono
-        if lesson_num == 10:
-            pm, strings = self._pm, self._strings
-
-            def _make_nback():
-                from cognitive_data_arcade.ui.nback_level_scene import NBackLevelScene
-
-                return NBackLevelScene(pm, strings)
-
-            return _make_nback
-        if lesson_num == 11:
-            pm, strings = self._pm, self._strings
-
-            def _make_vs() -> Scene:
-                from cognitive_data_arcade.ui.visual_search_level_scene import (
-                    VisualSearchLevelScene,
-                )
-
-                return VisualSearchLevelScene(pm, strings)
-
-            return _make_vs
-        if lesson_num == 12:
-            pm, strings = self._pm, self._strings
-
-            def _make_cd() -> Scene:
-                from cognitive_data_arcade.games.cognitive_dashboard.mode_scene import (
-                    CognitiveDashboardModeScene,
-                )
-
-                return CognitiveDashboardModeScene(pm, strings)
-
-            return _make_cd
-        if lesson_num == 13:
-            return self._make_distribution_playground
-        if lesson_num == 14:
-            return self._make_correlation_trap
-        if lesson_num == 15:
-            return self._make_hypothesis_arena
-        if lesson_num == 16:
-            return self._make_prediction_slider
-        if lesson_num == 17:
-            return self._make_feature_hunter
-        if lesson_num == 18:
-            return self._make_classifier_battle
-        if lesson_num == 19:
-            return self._make_overfitting_monster
-        if lesson_num == 20:
-            return self._make_anomaly_alert
-        if lesson_num == 21:
-            return self._make_text_tokenizer
-        if lesson_num == 22:
-            return self._make_word_weight_factory
-        if lesson_num == 23:
-            return self._make_emotion_classifier
-        if lesson_num == 24:
-            return self._make_semantic_space
-        if lesson_num == 25:
-            return self._make_topic_detective
-        if lesson_num == 26:
-            return self._make_human_vs_model
-        if lesson_num == 27:
-            return self._make_social_network
-        if lesson_num == 28:
-            return self._make_misinformation
-        if lesson_num == 29:
-            return self._make_recommendation_bubble
-        if lesson_num == 30:
-            return self._make_bias_blind_spot
-        if lesson_num == 32:
-            return self._make_architects_trial
-        if lesson_num == 31:
-            return self._make_you_were_the_dataset
-        return None
+        return game_factory_for(lesson_num, self._pm, self._strings)
 
     def _launch_big_data_map(self) -> None:
         self._next = self._make_big_data_map_game()
@@ -1400,6 +1296,15 @@ class LessonMenuScene(Scene):
         py = (_TOPBAR_H - prog_txt.get_height()) // 2
         surface.blit(prog_txt, (px, py))
 
+        profile = self._pm.load()
+        if profile.current_module_idx is not None:
+            midx = profile.current_module_idx
+            lang = self._strings.language
+            mname = _MODULES[midx][0] if lang == "pl" else _MODULES[midx][1]
+            hint_txt = f"Kontynuuj: {mname}" if lang == "pl" else f"Continue: {mname}"
+            hint_surf = self._font_topbar_sub.render(hint_txt, True, _C_ACCENT)
+            surface.blit(hint_surf, (px - hint_surf.get_width() - 24, py))
+
     def _draw_sidebar(self, surface: pygame.Surface) -> None:
         pygame.draw.rect(surface, _C_BG, (0, _TOPBAR_H, _SIDEBAR_W, _SIDEBAR_H))
         pygame.draw.line(
@@ -1420,6 +1325,10 @@ class LessonMenuScene(Scene):
                 label = self._strings.menu_modules[param]
                 if param > 0 and sy > _TOPBAR_H:
                     pygame.draw.line(surface, _C_SURFACE, (0, sy), (_SIDEBAR_W, sy))
+                mx, my = pygame.mouse.get_pos()
+                mvy = my - _TOPBAR_H + scroll_px
+                if vy <= mvy < vy + vh:
+                    pygame.draw.rect(surface, _C_HOVER_BG, (0, sy, _SIDEBAR_W, vh))
                 txt = self._font_mod_header.render(label, True, _C_TEXT_DARK)
                 mid_y_h = sy + (vh - txt.get_height()) // 2
                 surface.blit(txt, (20, mid_y_h))
@@ -1428,6 +1337,8 @@ class LessonMenuScene(Scene):
                     if icon:
                         ix = 20 + txt.get_width() + 6
                         surface.blit(icon, (ix, sy + (vh - 20) // 2))
+                arrow = self._font_mod_header.render(">", True, _C_TEXT_XDARK)
+                surface.blit(arrow, (_SIDEBAR_W - arrow.get_width() - 12, mid_y_h))
 
             else:
                 i = param
