@@ -1289,12 +1289,8 @@ _s4_d2 = Decision(
         "Daily traffic is around 500 users. "
         "When should you stop the test?"
     ),
-    hint_medium_pl=(
-        "Pomysl o efektach tygodniowych (dzien tygodnia moze wplywac na zachowanie)."
-    ),
-    hint_medium_en=(
-        "Think about weekly seasonality (day of week may affect behaviour)."
-    ),
+    hint_medium_pl=("Pomysl o efektach tygodniowych (dzien tygodnia moze wplywac na zachowanie)."),
+    hint_medium_en=("Think about weekly seasonality (day of week may affect behaviour)."),
     report_pl=(
         "3800 uzytkownikow na grupe przy 500/dzien = ok. 7.6 dnia na grupe = 15 dni lacznie. "
         "Zaokraglenie do 2 pelnych tygodni (14 dni) zapewnia rowne pokrycie dni tygodnia, "
@@ -1335,8 +1331,7 @@ _s4_d2 = Decision(
                 "zawyza czestotliwosc bledow I rodzaju nawet 3-krotnie."
             ),
             consequence_easy_en=(
-                "Peek-and-stop: halting at first p<0.05 "
-                "inflates type I error rate up to 3-fold."
+                "Peek-and-stop: halting at first p<0.05 inflates type I error rate up to 3-fold."
             ),
         ),
     ),
@@ -1360,9 +1355,7 @@ _s4_d3 = Decision(
     hint_medium_pl=(
         "Metryka pierwotna powinna byc bezposrednio powiazana z celem biznesowym testu."
     ),
-    hint_medium_en=(
-        "The primary metric should be directly tied to the business goal of the test."
-    ),
+    hint_medium_en=("The primary metric should be directly tied to the business goal of the test."),
     report_pl=(
         "Konwersja (instalacja aplikacji) to jedyna metryka, ktora bezposrednio odpowiada "
         "na pytanie 'czy nowa strona zwieksza liczbe instalacji'. "
@@ -1423,12 +1416,8 @@ _s4_d4 = Decision(
         "How should you split traffic between control (A) and experimental (B) variant? "
         "You are worried the new page might perform worse."
     ),
-    hint_medium_pl=(
-        "Zastanow sie nad kompromisem miedzy szybkoscia eksperymentu a ryzykiem."
-    ),
-    hint_medium_en=(
-        "Consider the trade-off between experiment speed and risk exposure."
-    ),
+    hint_medium_pl=("Zastanow sie nad kompromisem miedzy szybkoscia eksperymentu a ryzykiem."),
+    hint_medium_en=("Consider the trade-off between experiment speed and risk exposure."),
     report_pl=(
         "Podzia 50/50 maksymalizuje moc statystyczna i minimalizuje czas testu. "
         "Asymetryczny podzial (np. 90/10) zmniejsza ryzyko, ale wymaga znacznie "
@@ -1494,9 +1483,7 @@ _s4_d5 = Decision(
     hint_medium_pl=(
         "Jaka byla Twoja metryka pierwotna i czy testowalas wiele hipotez jednoczesnie?"
     ),
-    hint_medium_en=(
-        "What was your primary metric and did you test multiple hypotheses at once?"
-    ),
+    hint_medium_en=("What was your primary metric and did you test multiple hypotheses at once?"),
     report_pl=(
         "Decydujesz na podstawie metryki pierwotnej: konwersja p=0.04 < 0.05, wiec "
         "wynik jest istotny. CTR i czas sesji to metryki pomocnicze — ich wyniki "
@@ -1561,12 +1548,8 @@ _s4_d6 = Decision(
         "The test ended successfully. How do you document the experiment "
         "so a new team member can understand and replicate it 12 months from now?"
     ),
-    hint_medium_pl=(
-        "Pomysl o wszystkich decyzjach podjetych przed i w trakcie eksperymentu."
-    ),
-    hint_medium_en=(
-        "Think about all decisions made before and during the experiment."
-    ),
+    hint_medium_pl=("Pomysl o wszystkich decyzjach podjetych przed i w trakcie eksperymentu."),
+    hint_medium_en=("Think about all decisions made before and during the experiment."),
     report_pl=(
         "Pre-rejestracja (lub rownowaznie: plik README z hipoteza, metryka pierwotna, "
         "liczebnoscia probki i kryterium zatrzymania zapisanymi PRZED startem) "
