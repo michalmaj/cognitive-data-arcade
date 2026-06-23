@@ -6,10 +6,10 @@ All notable changes to Cognitive Data Arcade are documented here.
 
 ### Planned
 
-- **Per-lesson progress tracking** — mark lessons as completed, track scores
-- **Badges** — achievement system based on game performance
-- **PL/EN language toggle** — switch language in-app without restart
-- **Music/intro settings** — persistent audio preferences, skip-intro option
+- **Progress tracking** — per-lesson completed flag stored in profile; progress visible in lesson menu
+- **PL/EN language toggle** — switch language in-app without restart, persists to profile
+- **Settings (OptionsScene)** — music toggle and skip-intro (HowToPlay) toggle; now that audio and intros are real features, settings make sense
+- **Event Log Detective — Scenario 4** — new experiment scenario (engine already supports it; pure data addition)
 
 ---
 
