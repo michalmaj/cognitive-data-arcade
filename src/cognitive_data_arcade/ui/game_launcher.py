@@ -1,0 +1,420 @@
+from __future__ import annotations
+
+from pathlib import Path
+
+from cognitive_data_arcade.engine.i18n import Strings
+from cognitive_data_arcade.engine.scene import Scene
+from cognitive_data_arcade.profile.manager import ProfileManager
+
+
+def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
+    """Return a zero-arg factory that creates the game scene for lesson_num, or None."""
+    if lesson_num == 1:
+
+        def _make_inner() -> Scene:
+            from cognitive_data_arcade.engine.pause import PausableGame
+            from cognitive_data_arcade.games.big_data_map.game import BigDataMapGame
+            from cognitive_data_arcade.games.big_data_map.info import get_game_info
+
+            game_info = get_game_info(strings)
+
+            def _detail_factory(ln: int) -> Scene:
+                from cognitive_data_arcade.games.big_data_map.detail import ConceptDetailScene
+
+                back = _make_inner()
+                detail = ConceptDetailScene(ln, strings, back_scene=back)
+                return PausableGame(detail, game_info, lambda: _detail_factory(ln), strings, pm)
+
+            inner = BigDataMapGame(strings, pm, concept_detail_factory=_detail_factory)
+            return PausableGame(inner, game_info, _make_inner, strings, pm)
+
+        def _make() -> Scene:
+            from cognitive_data_arcade.games.big_data_map.info import get_game_info
+            from cognitive_data_arcade.ui.how_to_play_scene import make_how_to_play
+
+            game_info = get_game_info(strings)
+            pausable = _make_inner()
+            return make_how_to_play(pm, game_info, strings, back_scene=pausable)
+
+        return _make
+
+    if lesson_num == 2:
+
+        def _make() -> Scene:
+            import datetime
+
+            from cognitive_data_arcade.engine.pause import PausableGame
+            from cognitive_data_arcade.games.reaction_time.config import DEFAULT_CONFIG
+            from cognitive_data_arcade.games.reaction_time.game import ReactionTimeGame
+            from cognitive_data_arcade.games.reaction_time.info import get_game_info
+            from cognitive_data_arcade.ui.how_to_play_scene import make_how_to_play
+
+            profile = pm.load()
+            pid = profile.device_uuid
+            sid = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+            csv_path = Path("data") / "generated" / "reaction_time" / f"{sid}.csv"
+            inner = ReactionTimeGame(DEFAULT_CONFIG, pm, strings, pid, sid, csv_path)
+            game_info = get_game_info(strings)
+            pausable = PausableGame(inner, game_info, lambda: _make(), strings, pm)
+            return make_how_to_play(pm, game_info, strings, back_scene=pausable)
+
+        return _make
+
+    if lesson_num == 3:
+
+        def _make() -> Scene:
+            from cognitive_data_arcade.ui.event_log_level_scene import EventLogLevelScene
+
+            return EventLogLevelScene(pm, strings)
+
+        return _make
+
+    if lesson_num == 4:
+
+        def _make() -> Scene:
+            from cognitive_data_arcade.engine.pause import PausableGame
+            from cognitive_data_arcade.games.data_cleaning.info import get_game_info
+            from cognitive_data_arcade.games.data_cleaning.scene import DataCleaningScene
+
+            inner = DataCleaningScene(strings, pm)
+            game_info = get_game_info(strings)
+            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+
+        return _make
+
+    if lesson_num == 6:
+
+        def _make() -> Scene:
+            from cognitive_data_arcade.engine.pause import PausableGame
+            from cognitive_data_arcade.games.eda.info import get_game_info
+            from cognitive_data_arcade.games.eda.scene import EDAScene
+            from cognitive_data_arcade.ui.how_to_play_scene import make_how_to_play
+
+            inner = EDAScene()
+            game_info = get_game_info(strings)
+            pausable = PausableGame(inner, game_info, lambda: _make(), strings, pm)
+            return make_how_to_play(pm, game_info, strings, back_scene=pausable)
+
+        return _make
+
+    if lesson_num == 7:
+
+        def _make() -> Scene:
+            from cognitive_data_arcade.ui.stroop_level_scene import StroopLevelScene
+
+            return StroopLevelScene(pm, strings)
+
+        return _make
+
+    if lesson_num == 8:
+
+        def _make() -> Scene:
+            from cognitive_data_arcade.ui.flanker_level_scene import FlankerLevelScene
+
+            return FlankerLevelScene(pm, strings)
+
+        return _make
+
+    if lesson_num == 9:
+
+        def _make() -> Scene:
+            from cognitive_data_arcade.ui.gono_level_scene import GoNoGoLevelScene
+
+            return GoNoGoLevelScene(pm, strings)
+
+        return _make
+
+    if lesson_num == 10:
+
+        def _make() -> Scene:
+            from cognitive_data_arcade.ui.nback_level_scene import NBackLevelScene
+
+            return NBackLevelScene(pm, strings)
+
+        return _make
+
+    if lesson_num == 11:
+
+        def _make() -> Scene:
+            from cognitive_data_arcade.ui.visual_search_level_scene import VisualSearchLevelScene
+
+            return VisualSearchLevelScene(pm, strings)
+
+        return _make
+
+    if lesson_num == 12:
+
+        def _make() -> Scene:
+            from cognitive_data_arcade.games.cognitive_dashboard.mode_scene import (
+                CognitiveDashboardModeScene,
+            )
+
+            return CognitiveDashboardModeScene(pm, strings)
+
+        return _make
+
+    if lesson_num == 13:
+
+        def _make() -> Scene:
+            from cognitive_data_arcade.engine.pause import PausableGame
+            from cognitive_data_arcade.games.distribution_playground.info import get_game_info
+            from cognitive_data_arcade.games.distribution_playground.scene import (
+                DistributionPlaygroundScene,
+            )
+
+            inner = DistributionPlaygroundScene()
+            game_info = get_game_info(strings)
+            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+
+        return _make
+
+    if lesson_num == 14:
+
+        def _make() -> Scene:
+            from cognitive_data_arcade.engine.pause import PausableGame
+            from cognitive_data_arcade.games.correlation_trap.info import get_game_info
+            from cognitive_data_arcade.games.correlation_trap.scene import CorrelationTrapScene
+
+            inner = CorrelationTrapScene()
+            game_info = get_game_info(strings)
+            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+
+        return _make
+
+    if lesson_num == 15:
+
+        def _make() -> Scene:
+            from cognitive_data_arcade.engine.pause import PausableGame
+            from cognitive_data_arcade.games.hypothesis_arena.info import get_game_info
+            from cognitive_data_arcade.games.hypothesis_arena.scene import HypothesisArenaScene
+
+            inner = HypothesisArenaScene()
+            game_info = get_game_info(strings)
+            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+
+        return _make
+
+    if lesson_num == 16:
+
+        def _make() -> Scene:
+            from cognitive_data_arcade.engine.pause import PausableGame
+            from cognitive_data_arcade.games.prediction_slider.info import get_game_info
+            from cognitive_data_arcade.games.prediction_slider.scene import PredictionSliderScene
+
+            inner = PredictionSliderScene()
+            game_info = get_game_info(strings)
+            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+
+        return _make
+
+    if lesson_num == 17:
+
+        def _make() -> Scene:
+            from cognitive_data_arcade.engine.pause import PausableGame
+            from cognitive_data_arcade.games.feature_hunter.game import FeatHunterScene
+            from cognitive_data_arcade.games.feature_hunter.info import get_game_info
+
+            inner = FeatHunterScene()
+            game_info = get_game_info(strings)
+            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+
+        return _make
+
+    if lesson_num == 18:
+
+        def _make() -> Scene:
+            from cognitive_data_arcade.engine.pause import PausableGame
+            from cognitive_data_arcade.games.classifier_battle.game import ClassifierBattleScene
+            from cognitive_data_arcade.games.classifier_battle.info import get_game_info
+
+            inner = ClassifierBattleScene()
+            game_info = get_game_info(strings)
+            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+
+        return _make
+
+    if lesson_num == 19:
+
+        def _make() -> Scene:
+            from cognitive_data_arcade.engine.pause import PausableGame
+            from cognitive_data_arcade.games.overfitting_monster.game import OverfittingMonsterScene
+            from cognitive_data_arcade.games.overfitting_monster.info import get_game_info
+
+            inner = OverfittingMonsterScene()
+            game_info = get_game_info(strings)
+            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+
+        return _make
+
+    if lesson_num == 20:
+
+        def _make() -> Scene:
+            from cognitive_data_arcade.engine.pause import PausableGame
+            from cognitive_data_arcade.games.anomaly_alert.game import AnomalyAlertScene
+            from cognitive_data_arcade.games.anomaly_alert.info import get_game_info
+
+            inner = AnomalyAlertScene()
+            game_info = get_game_info(strings)
+            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+
+        return _make
+
+    if lesson_num == 21:
+
+        def _make() -> Scene:
+            from cognitive_data_arcade.engine.pause import PausableGame
+            from cognitive_data_arcade.games.text_tokenizer.info import get_game_info
+            from cognitive_data_arcade.games.text_tokenizer.scene import TextTokenizerLabScene
+
+            inner = TextTokenizerLabScene()
+            game_info = get_game_info(strings)
+            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+
+        return _make
+
+    if lesson_num == 22:
+
+        def _make() -> Scene:
+            from cognitive_data_arcade.engine.pause import PausableGame
+            from cognitive_data_arcade.games.word_weight_factory.info import get_game_info
+            from cognitive_data_arcade.games.word_weight_factory.scene import WordWeightFactoryScene
+
+            inner = WordWeightFactoryScene()
+            game_info = get_game_info(strings)
+            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+
+        return _make
+
+    if lesson_num == 23:
+
+        def _make() -> Scene:
+            from cognitive_data_arcade.engine.pause import PausableGame
+            from cognitive_data_arcade.games.emotion_classifier.game import EmotionClassifierScene
+            from cognitive_data_arcade.games.emotion_classifier.info import get_game_info
+
+            inner = EmotionClassifierScene()
+            game_info = get_game_info(strings)
+            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+
+        return _make
+
+    if lesson_num == 24:
+
+        def _make() -> Scene:
+            from cognitive_data_arcade.engine.pause import PausableGame
+            from cognitive_data_arcade.games.semantic_space.game import SemanticSpaceScene
+            from cognitive_data_arcade.games.semantic_space.info import get_game_info
+
+            inner = SemanticSpaceScene()
+            game_info = get_game_info(strings)
+            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+
+        return _make
+
+    if lesson_num == 25:
+
+        def _make() -> Scene:
+            from cognitive_data_arcade.engine.pause import PausableGame
+            from cognitive_data_arcade.games.topic_detective.game import TopicDetectiveScene
+            from cognitive_data_arcade.games.topic_detective.info import get_game_info
+
+            inner = TopicDetectiveScene()
+            game_info = get_game_info(strings)
+            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+
+        return _make
+
+    if lesson_num == 26:
+
+        def _make() -> Scene:
+            from cognitive_data_arcade.engine.pause import PausableGame
+            from cognitive_data_arcade.games.human_vs_model.game import HumanVsModelScene
+            from cognitive_data_arcade.games.human_vs_model.info import get_game_info
+
+            inner = HumanVsModelScene()
+            game_info = get_game_info(strings)
+            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+
+        return _make
+
+    if lesson_num == 27:
+
+        def _make() -> Scene:
+            from cognitive_data_arcade.engine.pause import PausableGame
+            from cognitive_data_arcade.games.social_network.game import SocialNetworkScene
+            from cognitive_data_arcade.games.social_network.info import get_game_info
+
+            inner = SocialNetworkScene()
+            game_info = get_game_info(strings)
+            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+
+        return _make
+
+    if lesson_num == 28:
+
+        def _make() -> Scene:
+            from cognitive_data_arcade.engine.pause import PausableGame
+            from cognitive_data_arcade.games.misinformation.game import MisinformationScene
+            from cognitive_data_arcade.games.misinformation.info import get_game_info
+
+            inner = MisinformationScene()
+            game_info = get_game_info(strings)
+            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+
+        return _make
+
+    if lesson_num == 29:
+
+        def _make() -> Scene:
+            from cognitive_data_arcade.engine.pause import PausableGame
+            from cognitive_data_arcade.games.recommendation_bubble.game import (
+                RecommendationBubbleScene,
+            )
+            from cognitive_data_arcade.games.recommendation_bubble.info import get_game_info
+
+            inner = RecommendationBubbleScene()
+            game_info = get_game_info(strings)
+            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+
+        return _make
+
+    if lesson_num == 30:
+
+        def _make() -> Scene:
+            from cognitive_data_arcade.engine.pause import PausableGame
+            from cognitive_data_arcade.games.bias_blind_spot.game import BiasBlindSpotScene
+            from cognitive_data_arcade.games.bias_blind_spot.info import get_game_info
+
+            inner = BiasBlindSpotScene()
+            game_info = get_game_info(strings)
+            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+
+        return _make
+
+    if lesson_num == 31:
+
+        def _make() -> Scene:
+            from cognitive_data_arcade.engine.pause import PausableGame
+            from cognitive_data_arcade.games.you_were_the_dataset.game import YouWereTheDatasetScene
+            from cognitive_data_arcade.games.you_were_the_dataset.info import get_game_info
+
+            inner = YouWereTheDatasetScene(pm, strings)
+            game_info = get_game_info(strings)
+            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+
+        return _make
+
+    if lesson_num == 32:
+
+        def _make() -> Scene:
+            from cognitive_data_arcade.engine.pause import PausableGame
+            from cognitive_data_arcade.games.architects_trial.game import ArchitectsTrialScene
+            from cognitive_data_arcade.games.architects_trial.info import get_game_info
+
+            inner = ArchitectsTrialScene()
+            game_info = get_game_info(strings)
+            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+
+        return _make
+
+    return None
