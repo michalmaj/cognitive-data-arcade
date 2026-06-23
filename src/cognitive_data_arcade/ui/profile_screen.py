@@ -4,12 +4,14 @@ import pygame
 from cognitive_data_arcade.engine.fonts import get_font
 
 from cognitive_data_arcade.engine.badges import (
+    BADGE_ICONS,
     BADGE_REGISTRY,
     Badge,
     _MODULE_BADGES,
     _SPECIAL_BADGES,
     earned_badges,
     load_badge_icon,
+    load_icon,
 )
 from cognitive_data_arcade.engine.i18n import Strings, level_progress, level_title
 from cognitive_data_arcade.engine.scene import Scene
@@ -195,23 +197,27 @@ class ProfileScene(Scene):
         card_w = (right_w - (cols - 1) * card_gap) // cols
         card_h = 82
 
+        _ICON_SIZE = 36
         for i, badge in enumerate(self._badge_registry):
             col = i % cols
             row = i // cols
             bx = right_x + col * (card_w + card_gap)
             by = ry + row * (card_h + card_gap)
-            earned = badge.badge_id in self._profile.badges
-            border_col = _HIGHLIGHT_COLOR if earned else _BORDER_COLOR
+            is_earned = badge.badge_id in self._profile.badges
+            border_col = _HIGHLIGHT_COLOR if is_earned else _BORDER_COLOR
             pygame.draw.rect(surface, _PANEL_BG, (bx, by, card_w, card_h), border_radius=6)
             pygame.draw.rect(surface, border_col, (bx, by, card_w, card_h), 1, border_radius=6)
-            if earned:
-                icon_surf = self._font_large.render(badge.icon, True, _HIGHLIGHT_COLOR)
-                name = self._strings.badge_names.get(badge.badge_id, badge.badge_id)
-                name_surf = self._font_sm.render(name, True, _HIGHLIGHT_COLOR)
-            else:
-                icon_surf = self._font_large.render("🔒", True, _BORDER_COLOR)
-                name_surf = self._font_sm.render("???", True, _DIM_COLOR)
-            surface.blit(icon_surf, (bx + card_w // 2 - icon_surf.get_width() // 2, by + 10))
+            icon_png = load_icon(BADGE_ICONS.get(badge.badge_id, ""), size=_ICON_SIZE)
+            if icon_png:
+                if not is_earned:
+                    dark = pygame.Surface((_ICON_SIZE, _ICON_SIZE), pygame.SRCALPHA)
+                    dark.blit(icon_png, (0, 0))
+                    dark.fill((0, 0, 0, 160), special_flags=pygame.BLEND_RGBA_MULT)
+                    icon_png = dark
+                surface.blit(icon_png, (bx + (card_w - _ICON_SIZE) // 2, by + 10))
+            name = self._strings.badge_names.get(badge.badge_id, badge.badge_id) if is_earned else "???"
+            name_color = _HIGHLIGHT_COLOR if is_earned else _DIM_COLOR
+            name_surf = self._font_sm.render(name, True, name_color)
             surface.blit(name_surf, (bx + card_w // 2 - name_surf.get_width() // 2, by + 54))
 
         # ---- Module completion badges ----
