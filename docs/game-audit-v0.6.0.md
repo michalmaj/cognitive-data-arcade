@@ -480,7 +480,7 @@ _To be filled after all sections are complete._
 | Wymiar | Status | Uwagi |
 |---|---|---|
 | Instrukcje (HowToPlay) | ✅ | `PhaseIntroScene` wyświetla animowany tekst narracyjny (3 komunikaty: "Rok 2027", "Ty jestes architektem", "Komisja etyczna czeka") + `PhaseDomainPickerScene` jako wstęp fabularny; `info.py` ma 3 `description_lines` PL i EN przez pause menu |
-| Opis lekcji | ✅ | desc_pl 120 zn., desc_en 111 zn. |
+| Opis lekcji | ✅ | desc_pl 119 zn., desc_en 111 zn. |
 | SessionResult | ❌ | `PhaseResultScene` wyświetla werdykt komisji + paski Fairness/Compliance/Skutecznosc + komentarz, przyciski "Zagraj -- inna domena"/"Menu"; `game.py` kończy z `_done=True` i `_next=None`; brak `SessionResult`, `complete_lesson` ani `SessionSummaryScene` |
 | Teoria | ✅ | lesson_32.py: 3 sekcje (theory 5 pozycji, notes 2, tasks 3), treść niepusta w PL i EN |
 | Feedback w trakcie | ✅ | `PhaseActScene._pick()` flash-pulsuje wybrany kafelek w `_PURPLE` przez `_SELECT_FLASH_MS=300ms` po wyborze; `PhaseTribunalScene` ujawnia score sędziego (N/100) per odpowiedź; wszystkie trzy skory (Fairness/Compliance/Skutecznosc) dostępne na ekranie werdyktu komisji |
