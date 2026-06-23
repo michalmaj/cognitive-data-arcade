@@ -1384,6 +1384,14 @@ class LessonMenuScene(Scene):
         pygame.draw.rect(surface, _C_SURFACE2, (bx, by, bw, bh), 1, border_radius=4)
         surface.blit(badge_txt, (bx + 9, by + 4))
 
+        done_count = len(self._completed)
+        prog_txt = self._font_topbar_sub.render(
+            f"{done_count} / {len(_LESSON_DATA)}", True, _C_DONE if done_count > 0 else _C_TEXT_DARK
+        )
+        px = bx - prog_txt.get_width() - 20
+        py = (_TOPBAR_H - prog_txt.get_height()) // 2
+        surface.blit(prog_txt, (px, py))
+
     def _draw_sidebar(self, surface: pygame.Surface) -> None:
         pygame.draw.rect(surface, _C_BG, (0, _TOPBAR_H, _SIDEBAR_W, _SIDEBAR_H))
         pygame.draw.line(
