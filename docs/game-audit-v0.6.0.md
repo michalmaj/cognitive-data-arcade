@@ -312,22 +312,91 @@ _To be filled after all sections are complete._
 ## Module 5 — NLP
 
 ### L21 — Text Tokenizer Lab
-_TODO_
+**Typ:** lab | **Moduł:** NLP
+
+| Wymiar | Status | Uwagi |
+|---|---|---|
+| Instrukcje (HowToPlay) | ⚠️ | `_make_text_tokenizer()` zwraca `PausableGame` bez `make_how_to_play` — HowToPlay dostępny tylko przez pause menu; `info.py` ma 3 `description_lines` PL i EN |
+| Opis lekcji | ✅ | desc_pl 104 zn., desc_en 111 zn. |
+| SessionResult | ❌ | `TextTokenizerLabScene._done` zawsze `False`, `next_scene()` zwraca `None`; brak `SessionResult`, `complete_lesson` ani `SessionSummaryScene` — otwarta piaskownica bez end-state |
+| Teoria | ✅ | lesson_21.py: 3 sekcje (`theory` 7 pozycji, `notes` 2, `tasks` 4), treść niepusta w PL i EN |
+| Feedback w trakcie | ⚠️ | Open-ended sandbox bez decyzji do oceniania — zmiany parametrów aktualizują tabelę tokenów i wykres częstości natychmiast (implicitny feedback), ale brak wskaźnika correct/incorrect |
+
+**Action items:**
+- [ ] Dodać `make_how_to_play` przed `PausableGame` w `_make_text_tokenizer()` (menu.py) z wykorzystaniem istniejącego `info.py`
+- [ ] Dodać opcjonalne podsumowanie sesji (liczba tokenów, rozmiar słownika po preprocessing, top n-gram) z `SessionResult` i `SessionSummaryScene`
 
 ### L22 — Word Weight Factory
-_TODO_
+**Typ:** lab | **Moduł:** NLP
+
+| Wymiar | Status | Uwagi |
+|---|---|---|
+| Instrukcje (HowToPlay) | ⚠️ | `_make_word_weight_factory()` zwraca `PausableGame` bez `make_how_to_play` — HowToPlay dostępny tylko przez pause menu; `info.py` ma 3 `description_lines` PL i EN |
+| Opis lekcji | ✅ | desc_pl 117 zn., desc_en 114 zn. |
+| SessionResult | ❌ | `WordWeightFactoryScene._done` zawsze `False`, `next_scene()` zwraca `None`; brak `SessionResult`, `complete_lesson` ani `SessionSummaryScene` — otwarta piaskownica bez end-state |
+| Teoria | ✅ | lesson_22.py: 3 sekcje (`theory` 5 pozycji, `notes` 2, `tasks` 4), treść niepusta w PL i EN |
+| Feedback w trakcie | ⚠️ | Open-ended sandbox bez decyzji do oceniania — zmiana korpusu i preprocessing aktualizuje macierz BoW/TF-IDF natychmiast (implicitny feedback), ale brak wskaźnika correct/incorrect |
+
+**Action items:**
+- [ ] Dodać `make_how_to_play` przed `PausableGame` w `_make_word_weight_factory()` (menu.py) z wykorzystaniem istniejącego `info.py`
+- [ ] Dodać opcjonalne podsumowanie sesji (top-5 tokenów TF-IDF, rozmiar słownika) z `SessionResult` i `SessionSummaryScene`
 
 ### L23 — Emotion Classifier
-_TODO_
+**Typ:** lab | **Moduł:** NLP
+
+| Wymiar | Status | Uwagi |
+|---|---|---|
+| Instrukcje (HowToPlay) | ✅ | `EmotionClassifierScene` startuje od `PhaseIntroScene` z 10 liniami instrukcji PL (LPM/PPM, panel leksykonu, wskazówka PPM, liczba rund) |
+| Opis lekcji | ✅ | desc_pl 108 zn., desc_en 121 zn. |
+| SessionResult | ❌ | `PhaseSessionResultScene._advance()` → `PhaseIntroScene()`; `game.py` `next_scene()` zwraca zawsze `None`; brak `SessionResult`, `complete_lesson` ani `SessionSummaryScene` |
+| Teoria | ✅ | lesson_23.py: 3 sekcje (`theory` 6 pozycji, `notes` 2, `tasks` 3), treść niepusta w PL i EN |
+| Feedback w trakcie | ✅ | `PhaseRoundResultScene` wyświetla 3 pola werdyktu (Leksykon / Prawdziwy / Ty) w `_GREEN`/`_RED`/`_PURPLE` + punkty (correct_pts, wrong_pts, beat_bonus, speed_bonus) natychmiast po kliknięciu ZATWIERDŹ |
+
+**Action items:**
+- [ ] Podpiąć `SessionResult` + `SessionSummaryScene` w `PhaseSessionResultScene._advance()` po ukończeniu 8 rund; zapisać `session_score` jako AP przez `ProfileManager`
 
 ### L24 — Semantic Space Explorer
-_TODO_
+**Typ:** lab | **Moduł:** NLP
+
+| Wymiar | Status | Uwagi |
+|---|---|---|
+| Instrukcje (HowToPlay) | ✅ | `SemanticSpaceScene` startuje od `PhaseIntroScene` z 3 slajdami (co to embedding, klastry, zadania) w PL |
+| Opis lekcji | ✅ | desc_pl 105 zn., desc_en 106 zn. |
+| SessionResult | ❌ | `PhaseResultScene._advance()` → `PhaseIntroScene()`; `game.py` `next_scene()` zwraca zawsze `None`; brak `SessionResult`, `complete_lesson` ani `SessionSummaryScene` |
+| Teoria | ✅ | lesson_24.py: 3 sekcje (`theory` 6 pozycji, `notes` 2, `tasks` 3), treść niepusta w PL i EN |
+| Feedback w trakcie | ⚠️ | `PhaseMissionScene._submit()` przechodzi natychmiast do następnej misji bez fazy feedback — brak wizualnego reveal correct/incorrect; wybrany węzeł zielenieje podczas wyboru, ale nie ma podsumowania tury (wynik +N pkt) przed przejściem do kolejnej misji |
+
+**Action items:**
+- [ ] Podpiąć `SessionResult` + `SessionSummaryScene` w `PhaseResultScene._advance()` po ukończeniu 8 misji; zapisać `session_score` jako AP przez `ProfileManager`
+- [ ] Dodać krótką fazę `PhaseMissionResultScene` (np. 1 s) po `_submit()` pokazującą "Poprawnie! +N pkt" / "Blad! 0 pkt" w GREEN/RED przed przejściem do kolejnej misji
 
 ### L25 — Topic Detective
-_TODO_
+**Typ:** lab | **Moduł:** NLP
+
+| Wymiar | Status | Uwagi |
+|---|---|---|
+| Instrukcje (HowToPlay) | ✅ | `TopicDetectiveScene` startuje od `PhaseIntroScene` z 3 slajdami (LDA, odcisk palca, mieszanina) w PL |
+| Opis lekcji | ✅ | desc_pl 113 zn., desc_en 102 zn. |
+| SessionResult | ❌ | `PhaseResultScene._advance()` → `PhaseIntroScene()`; `game.py` `next_scene()` zwraca zawsze `None`; brak `SessionResult`, `complete_lesson` ani `SessionSummaryScene` |
+| Teoria | ✅ | lesson_25.py: 3 sekcje (`theory` 6 pozycji, `notes` 2, `tasks` 3), treść niepusta w PL i EN |
+| Feedback w trakcie | ✅ | `PhaseMissionScene._draw_left_assign_doc()` wyświetla "Poprawnie!" w `_GREEN` lub "Blad -- dominuje: X" w `_RED` natychmiast po wyborze; misje intruder i name_topic kończą się natychmiast z wynikiem |
+
+**Action items:**
+- [ ] Podpiąć `SessionResult` + `SessionSummaryScene` w `PhaseResultScene._advance()` po ukończeniu 8 misji; zapisać `session_score` jako AP przez `ProfileManager`
 
 ### L26 — Human vs Model
-_TODO_
+**Typ:** arcade | **Moduł:** NLP
+
+| Wymiar | Status | Uwagi |
+|---|---|---|
+| Instrukcje (HowToPlay) | ✅ | `HumanVsModelScene` startuje od `PhaseIntroScene` z 3 slajdami (co robi model, kiedy AI zawodzi, misja) w PL |
+| Opis lekcji | ✅ | desc_pl 122 zn., desc_en 123 zn. |
+| SessionResult | ❌ | `PhaseResultScene` ("Menu" klawisz) ustawia `_next = None` i `_done = True` — gra kończy sie czysto, ale brak `SessionResult`, `complete_lesson` ani `SessionSummaryScene`; `game.py` `next_scene()` zwraca zawsze `None` |
+| Teoria | ✅ | lesson_26.py: 3 sekcje (`theory` 6 pozycji, `notes` 2, `tasks` 3), treść niepusta w PL i EN |
+| Feedback w trakcie | ✅ | Wszystkie 3 fazy (classify, detect, complete) mają stan `"reveal"` po wyborze: wybrany przycisk zielony (`_GREEN`) gdy poprawny lub czerwony (`_RED`) gdy błędny + `+N pkt` w zielonym natychmiast po odpowiedzi |
+
+**Action items:**
+- [ ] Podpiąć `SessionResult` + `SessionSummaryScene` w `PhaseResultScene` po kliknięciu "Menu"; zapisać `session_score` jako AP przez `ProfileManager` (już jest zliczane: `session_score` i `beat_ai_count`)
 
 ---
 
