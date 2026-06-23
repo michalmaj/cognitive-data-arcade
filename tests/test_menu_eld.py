@@ -8,6 +8,7 @@ class _FakePM:
     class _Profile:
         device_uuid = "test-uuid"
         completed_lessons: list = []
+        seen_intro: bool = False
         language = "en"
 
     def load(self):

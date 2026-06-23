@@ -6,6 +6,7 @@ from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.pause import GameInfo
 from cognitive_data_arcade.engine.scene import Scene
+from cognitive_data_arcade.profile.manager import ProfileManager
 
 from cognitive_data_arcade.engine.colors import (
     BG as _BG,
@@ -103,3 +104,16 @@ class HowToPlayScene(Scene):
 
         hint = font_hint.render(self._strings.howtoplay_hint_skip, True, _DIM)
         surface.blit(hint, (w // 2 - hint.get_width() // 2, h - 40))
+
+
+def make_how_to_play(
+    pm: ProfileManager,
+    game_info: GameInfo,
+    strings: Strings,
+    back_scene: Scene,
+    esc_scene: Scene | None = None,
+) -> Scene:
+    """Return HowToPlayScene unless the player has disabled intros in Options."""
+    if pm.load().seen_intro:
+        return back_scene
+    return HowToPlayScene(game_info, strings, back_scene=back_scene, esc_scene=esc_scene)
