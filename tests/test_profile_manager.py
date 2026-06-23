@@ -130,3 +130,21 @@ def test_load_old_profile_without_fullscreen_uses_default(tmp_path: Path) -> Non
     path.write_text(json.dumps(old_data))
     profile = ProfileManager(path).load()
     assert profile.fullscreen is False
+
+
+def test_current_module_idx_default_is_none(tmp_path: Path) -> None:
+    manager = ProfileManager(tmp_path / "profile.json")
+    assert manager.load().current_module_idx is None
+
+
+def test_set_current_module_persists(tmp_path: Path) -> None:
+    manager = ProfileManager(tmp_path / "profile.json")
+    manager.set_current_module(2)
+    assert manager.load().current_module_idx == 2
+
+
+def test_clear_current_module_sets_none(tmp_path: Path) -> None:
+    manager = ProfileManager(tmp_path / "profile.json")
+    manager.set_current_module(3)
+    manager.clear_current_module()
+    assert manager.load().current_module_idx is None

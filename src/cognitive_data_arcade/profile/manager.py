@@ -33,6 +33,7 @@ class Profile:
     sfx_volume: float = 0.8
     fullscreen: bool = False
     seen_intro: bool = False
+    current_module_idx: int | None = None
 
 
 class ProfileManager:
@@ -94,5 +95,17 @@ class ProfileManager:
     def set_seen_intro(self, seen: bool) -> Profile:
         profile = self.load()
         profile.seen_intro = seen
+        self.save(profile)
+        return profile
+
+    def set_current_module(self, idx: int) -> Profile:
+        profile = self.load()
+        profile.current_module_idx = idx
+        self.save(profile)
+        return profile
+
+    def clear_current_module(self) -> Profile:
+        profile = self.load()
+        profile.current_module_idx = None
         self.save(profile)
         return profile
