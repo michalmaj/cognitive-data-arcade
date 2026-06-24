@@ -164,7 +164,7 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
                 DistributionPlaygroundScene,
             )
 
-            inner = DistributionPlaygroundScene()
+            inner = DistributionPlaygroundScene(pm, strings)
             game_info = get_game_info(strings)
             return PausableGame(inner, game_info, lambda: _make(), strings, pm)
 
@@ -177,7 +177,7 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
             from cognitive_data_arcade.games.correlation_trap.info import get_game_info
             from cognitive_data_arcade.games.correlation_trap.scene import CorrelationTrapScene
 
-            inner = CorrelationTrapScene()
+            inner = CorrelationTrapScene(pm, strings)
             game_info = get_game_info(strings)
             return PausableGame(inner, game_info, lambda: _make(), strings, pm)
 
@@ -190,7 +190,7 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
             from cognitive_data_arcade.games.hypothesis_arena.info import get_game_info
             from cognitive_data_arcade.games.hypothesis_arena.scene import HypothesisArenaScene
 
-            inner = HypothesisArenaScene()
+            inner = HypothesisArenaScene(pm, strings)
             game_info = get_game_info(strings)
             return PausableGame(inner, game_info, lambda: _make(), strings, pm)
 
@@ -203,7 +203,7 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
             from cognitive_data_arcade.games.prediction_slider.info import get_game_info
             from cognitive_data_arcade.games.prediction_slider.scene import PredictionSliderScene
 
-            inner = PredictionSliderScene()
+            inner = PredictionSliderScene(pm, strings)
             game_info = get_game_info(strings)
             return PausableGame(inner, game_info, lambda: _make(), strings, pm)
 
@@ -491,25 +491,27 @@ def game_factory_for_with_back(
             DistributionPlaygroundScene,
         )
 
-        return _make_pausable_with_back(DistributionPlaygroundScene(), get_game_info(strings))
+        return _make_pausable_with_back(
+            DistributionPlaygroundScene(pm, strings), get_game_info(strings)
+        )
 
     if lesson_num == 14:
         from cognitive_data_arcade.games.correlation_trap.info import get_game_info
         from cognitive_data_arcade.games.correlation_trap.scene import CorrelationTrapScene
 
-        return _make_pausable_with_back(CorrelationTrapScene(), get_game_info(strings))
+        return _make_pausable_with_back(CorrelationTrapScene(pm, strings), get_game_info(strings))
 
     if lesson_num == 15:
         from cognitive_data_arcade.games.hypothesis_arena.info import get_game_info
         from cognitive_data_arcade.games.hypothesis_arena.scene import HypothesisArenaScene
 
-        return _make_pausable_with_back(HypothesisArenaScene(), get_game_info(strings))
+        return _make_pausable_with_back(HypothesisArenaScene(pm, strings), get_game_info(strings))
 
     if lesson_num == 16:
         from cognitive_data_arcade.games.prediction_slider.info import get_game_info
         from cognitive_data_arcade.games.prediction_slider.scene import PredictionSliderScene
 
-        return _make_pausable_with_back(PredictionSliderScene(), get_game_info(strings))
+        return _make_pausable_with_back(PredictionSliderScene(pm, strings), get_game_info(strings))
 
     if lesson_num == 17:
         from cognitive_data_arcade.games.feature_hunter.game import FeatHunterScene

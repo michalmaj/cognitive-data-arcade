@@ -23,8 +23,11 @@ _PHASE_NAMES = ["Eksploracja", "Detekcja", "Sandbox"]
 
 
 class CorrelationTrapScene(Scene):
-    def __init__(self) -> None:
-        self._done = False
+    def __init__(self, pm, strings) -> None:
+        self._pm = pm
+        self._strings = strings
+        self._phase_switches: int = 0
+        self._done: bool = False
         self._next: Scene | None = None
         self._phase = 1
         self._phases: list[Scene] = [PhaseAScene(), PhaseBScene(), PhaseCScene()]
@@ -39,9 +42,14 @@ class CorrelationTrapScene(Scene):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RIGHT:
                 self._phase = (self._phase % 3) + 1
+                self._phase_switches += 1
                 return
             if event.key == pygame.K_LEFT:
                 self._phase = ((self._phase - 2) % 3) + 1
+                self._phase_switches += 1
+                return
+            if event.key == pygame.K_q:
+                self._done = True
                 return
         if event.type in (pygame.MOUSEBUTTONDOWN, pygame.MOUSEBUTTONUP, pygame.MOUSEMOTION):
             adjusted = _offset_mouse_event(event, dy=-_NAV_H)
@@ -56,7 +64,42 @@ class CorrelationTrapScene(Scene):
         return self._done
 
     def next_scene(self) -> Scene | None:
+        if self._done and self._next is None:
+            self._next = self._build_next_scene()
         return self._next
+
+    def _build_next_scene(self) -> Scene:
+        from cognitive_data_arcade.engine.badges import BadgeEngine, SessionResult
+        from cognitive_data_arcade.ui.session_summary import SessionSummaryScene
+
+        ap = min(100, 30 + self._phase_switches * 5)
+        session = SessionResult(
+            task_name="correlation_trap",
+            participant_id=self._pm.load().device_uuid,
+            session_id="sandbox_session",
+            total_trials=3,
+            correct_trials=min(3, self._phase_switches),
+            avg_reaction_time_ms=0.0,
+            min_reaction_time_ms=0.0,
+            max_reaction_time_ms=0.0,
+            arcade_points_earned=ap,
+            science_points_earned=0,
+        )
+        profile_before = self._pm.load()
+        badge_engine = BadgeEngine()
+        new_badge_ids = badge_engine.evaluate(session, profile_before)
+        self._pm.add_ap(ap)
+        for bid in new_badge_ids:
+            self._pm.award_badge(bid)
+        profile_after = self._pm.load()
+        return SessionSummaryScene(
+            session=session,
+            new_badge_ids=new_badge_ids,
+            profile_before=profile_before,
+            profile_after=profile_after,
+            strings=self._strings,
+            profile_manager=self._pm,
+        )
 
     def draw(self, surface: pygame.Surface) -> None:
         surface.fill(_BG)
@@ -79,7 +122,7 @@ class CorrelationTrapScene(Scene):
         surface.blit(font_nav.render("<", True, _WHITE), (20, 10))
         surface.blit(font_nav.render(">", True, _WHITE), (1024 - 36, 10))
 
-        surface.blit(font_sub.render("LEWO / PRAWO = zmień fazę", True, _DIM), (20, _NAV_H - 16))
+        surface.blit(font_sub.render("LEWO / PRAWO = zmien faze", True, _DIM), (20, _NAV_H - 16))
 
 
 def _offset_mouse_event(event: pygame.event.Event, dy: int) -> pygame.event.Event:
