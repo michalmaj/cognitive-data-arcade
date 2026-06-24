@@ -16,6 +16,12 @@ class _FakePM:
 
         return Profile()
 
+    def add_ap(self, points: int):
+        pass
+
+    def award_badge(self, badge_id: str):
+        pass
+
 
 def _key(k: int) -> pygame.event.Event:
     return pygame.event.Event(pygame.KEYDOWN, key=k, mod=0, unicode="")
@@ -427,3 +433,30 @@ def test_mouse_click_above_table_ignored():
     scene._phase = Phase.IDENTIFY
     scene.handle_event(_mouse((100, 50)))  # above TABLE_Y0=100
     assert len(scene._table.flagged) == 0
+
+
+def test_next_scene_after_report_is_session_summary(tmp_path):
+    from cognitive_data_arcade.profile.manager import ProfileManager
+    from cognitive_data_arcade.ui.session_summary import SessionSummaryScene
+
+    pm = ProfileManager(tmp_path / "profile.json")
+    scene = DataCleaningScene(EN, pm, seed=42)
+    scene._phase = Phase.REPORT
+    scene.handle_event(_key(pygame.K_RETURN))
+    assert scene.is_done()
+    assert isinstance(scene.next_scene(), SessionSummaryScene)
+
+
+def test_session_result_ap_matches_compute_score(tmp_path):
+    from cognitive_data_arcade.games.data_cleaning.generator import compute_score
+    from cognitive_data_arcade.profile.manager import ProfileManager
+
+    pm = ProfileManager(tmp_path / "profile.json")
+    scene = DataCleaningScene(EN, pm, seed=42)
+    scene._phase = Phase.REPORT
+    scene.handle_event(_key(pygame.K_RETURN))
+    next_s = scene.next_scene()
+    _d, _f, expected_total = compute_score(
+        scene._session, scene._table.flagged, scene._fixes
+    )
+    assert next_s._session.arcade_points_earned == expected_total

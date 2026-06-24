@@ -257,7 +257,50 @@ class DataCleaningScene(Scene):
             self._next = self._build_next_scene()
 
     def _build_next_scene(self) -> "Scene | None":
-        return None
+        import datetime
+
+        from cognitive_data_arcade.engine.badges import BadgeEngine, SessionResult
+        from cognitive_data_arcade.games.data_cleaning.generator import compute_score
+        from cognitive_data_arcade.ui.session_summary import SessionSummaryScene
+
+        _d, _f, total = compute_score(self._session, self._table.flagged, self._fixes)
+
+        profile_before = self._pm.load()
+        participant_id = profile_before.device_uuid or "anon"
+        session_id = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+
+        session = SessionResult(
+            task_name="data_quality_lab",
+            participant_id=participant_id,
+            session_id=session_id,
+            total_trials=len(self._session.ground_truth),
+            correct_trials=len(
+                set(self._table.flagged) & set(self._session.ground_truth.keys())
+            ),
+            avg_reaction_time_ms=0.0,
+            min_reaction_time_ms=0.0,
+            max_reaction_time_ms=0.0,
+            arcade_points_earned=total,
+            science_points_earned=0,
+        )
+
+        badge_engine = BadgeEngine()
+        new_badge_ids = badge_engine.evaluate(session, profile_before)
+
+        self._pm.add_ap(session.arcade_points_earned)
+        for bid in new_badge_ids:
+            self._pm.award_badge(bid)
+        profile_after = self._pm.load()
+
+        return SessionSummaryScene(
+            session=session,
+            new_badge_ids=new_badge_ids,
+            profile_before=profile_before,
+            profile_after=profile_after,
+            strings=self._strings,
+            profile_manager=self._pm,
+            csv_path=None,
+        )
 
     # ── Helpers ─────────────────────────────────────────────────────────────────
 
