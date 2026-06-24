@@ -36,6 +36,11 @@ class TextTokenizerLabScene(Scene):
         self._next: Scene | None = None
         self._tab = 0
         self._tab_switches: int = 0
+        self._show_summary: bool = False
+        self._summary_timer: float = 0.0
+        self._session_start_ms: int = pygame.time.get_ticks()
+        self._tabs_visited: set = {self._tab}
+        self._compute_count: int = 0
 
         self._state = SharedState()
         self._engine = TokenizerEngine()
@@ -63,19 +68,26 @@ class TextTokenizerLabScene(Scene):
         )
 
     def handle_event(self, event: pygame.event.Event) -> None:
+        if self._show_summary:
+            if event.type in (pygame.MOUSEBUTTONDOWN, pygame.KEYDOWN):
+                self._summary_timer = 10_001
+                self._done = True
+            return
+
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_q:
-                if not self._done and self._pm is not None:
-                    self._next = self._build_next_scene()
-                self._done = True
+                self._show_summary = True
+                self._summary_timer = 0.0
                 return
             if event.key == pygame.K_RIGHT:
                 self._tab = (self._tab + 1) % _N_TABS
                 self._tab_switches += 1
+                self._tabs_visited.add(self._tab)
                 return
             if event.key == pygame.K_LEFT:
                 self._tab = (self._tab - 1) % _N_TABS
                 self._tab_switches += 1
+                self._tabs_visited.add(self._tab)
                 return
 
         # Tab bar click (coords in input-bar space, tab rects are within nav area)
@@ -98,15 +110,24 @@ class TextTokenizerLabScene(Scene):
         elif not changed:
             self._phases[self._tab].handle_event(event)
 
+        if changed:
+            self._compute_count += 1
         self._result = self._recompute()
 
     def update(self, dt_ms: float = 0.0) -> None:
+        if self._show_summary:
+            self._summary_timer += dt_ms
+            if self._summary_timer >= 10_000:
+                self._done = True
+            return
         self._phases[self._tab].update(dt_ms)
 
     def is_done(self) -> bool:
         return self._done
 
     def next_scene(self) -> Scene | None:
+        if self._done and self._next is None and self._pm is not None:
+            self._next = self._build_next_scene()
         return self._next
 
     def draw(self, surface: pygame.Surface) -> None:
@@ -146,6 +167,45 @@ class TextTokenizerLabScene(Scene):
         phase_surf.fill(_BG)
         self._phases[self._tab].draw(phase_surf, self._result)
         surface.blit(phase_surf, (0, _INPUT_BAR_H + _NAV_H))
+
+        if self._show_summary:
+            self._draw_summary(surface)
+
+    def _draw_summary(self, surface: pygame.Surface) -> None:
+        w, h = surface.get_width(), surface.get_height()
+        overlay = pygame.Surface((w, h), pygame.SRCALPHA)
+        overlay.fill((0, 0, 0, 200))
+        surface.blit(overlay, (0, 0))
+
+        panel_w, panel_h = 560, 260
+        px = (w - panel_w) // 2
+        py = (h - panel_h) // 2
+        pygame.draw.rect(surface, (14, 14, 36), (px, py, panel_w, panel_h), border_radius=10)
+        pygame.draw.rect(surface, (70, 70, 130), (px, py, panel_w, panel_h), 2, border_radius=10)
+
+        elapsed_s = (pygame.time.get_ticks() - self._session_start_ms) // 1000
+        mins, secs = divmod(elapsed_s, 60)
+        visited = len(self._tabs_visited)
+
+        font_h = get_font(24)
+        font_b = get_font(20)
+        font_hint = get_font(14)
+        lines = [
+            ("Text Tokenizer Lab - Podsumowanie", font_h, (200, 200, 240)),
+            (f"Czas sesji: {mins}m {secs}s", font_b, (160, 160, 200)),
+            (f"Zakladki odwiedzone: {visited} / 3", font_b, (160, 160, 200)),
+            (f"Obliczen: {self._compute_count}", font_b, (160, 160, 200)),
+            ("", font_b, (0, 0, 0)),
+            ("Nacisnij dowolny klawisz lub kliknij", font_hint, (90, 90, 120)),
+        ]
+        y = py + 20
+        for text, font, color in lines:
+            if not text:
+                y += 10
+                continue
+            s = font.render(text, True, color)
+            surface.blit(s, (px + panel_w // 2 - s.get_width() // 2, y))
+            y += font.get_height() + 8
 
     def _build_next_scene(self) -> "Scene":
         from cognitive_data_arcade.engine.badges import BadgeEngine, SessionResult

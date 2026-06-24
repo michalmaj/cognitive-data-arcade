@@ -32,6 +32,20 @@ class PhaseResultScene(Scene):
         self._btn_replay = pygame.Rect(_W // 2 - 210, _H - 70, 190, 44)
         self._btn_menu = pygame.Rect(_W // 2 + 20, _H - 70, 190, 44)
 
+        # Synthesis sentence
+        p = getattr(state, "profile", None)
+        if p is not None:
+            if getattr(p, "rt_median_ms", 999) < 280 and getattr(p, "nback_max_level", 0) >= 2:
+                self._synthesis = "Szybki i skupiony -- profil eksperta uwagi."
+            elif getattr(p, "gono_false_alarm_rate", 0) > 0.25:
+                self._synthesis = "Slaba inhibicja -- impulsywnosc pod presja."
+            elif getattr(p, "stroop_effect_ms", 0) > 100:
+                self._synthesis = "Wysoki efekt Stroopa -- wolna kontrola interferencji."
+            else:
+                self._synthesis = "Zrownowazone zdolnosci poznawcze."
+        else:
+            self._synthesis = "Profil syntetyczny -- graj wlasne sesje dla prawdziwych danych."
+
     def handle_event(self, event: pygame.event.Event) -> None:
         if self._done:
             return
@@ -99,6 +113,10 @@ class PhaseResultScene(Scene):
             surf = get_font(15).render(line, True, _DIM)
             surface.blit(surf, (_W // 2 - surf.get_width() // 2, aha_y))
             aha_y += 26
+
+        # Synthesis sentence
+        syn_surf = get_font(15).render(self._synthesis, True, _GOLD)
+        surface.blit(syn_surf, (_W // 2 - syn_surf.get_width() // 2, aha_y + 8))
 
         # Buttons
         pygame.draw.rect(surface, _PANEL, self._btn_replay, border_radius=8)

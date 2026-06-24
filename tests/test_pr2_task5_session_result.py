@@ -21,6 +21,10 @@ def test_text_tokenizer_q_routes_to_session_summary(tmp_path: Path) -> None:
     pm = _pm(tmp_path)
     game = TextTokenizerLabScene(pm, PL)
     game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_q, mod=0, unicode="q"))
+    # Q now shows summary overlay first; advance timer to dismiss
+    if getattr(game, "_show_summary", False):
+        game._summary_timer = 10_001
+        game.update(0)
     assert game.is_done()
     assert isinstance(game.next_scene(), SessionSummaryScene)
     assert pm.load().arcade_points > 0

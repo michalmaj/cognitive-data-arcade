@@ -327,3 +327,56 @@ def test_detail_scene_shows_connections() -> None:
     scene = ConceptDetailScene(2, get_strings("en"), back_scene=None)  # RT Lab has many connections
     assert len(scene._connections) > 0
     assert len(scene._connections) <= 5
+
+
+# --- Session summary overlay tests ---
+
+
+def test_q_key_triggers_summary(tmp_path) -> None:
+    """Q key should show summary overlay, not immediately set done."""
+    pygame.init()
+    from cognitive_data_arcade.games.big_data_map.game import BigDataMapGame
+
+    pm = ProfileManager(tmp_path / "profile.json")
+    game = BigDataMapGame(PL, pm)
+    game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_q, mod=0, unicode="q"))
+    assert game._show_summary is True
+    assert not game.is_done()  # not done yet - summary is showing
+
+
+def test_summary_auto_exit(tmp_path) -> None:
+    """Summary becomes done after 10s timeout."""
+    pygame.init()
+    from cognitive_data_arcade.games.big_data_map.game import BigDataMapGame
+
+    pm = ProfileManager(tmp_path / "profile.json")
+    game = BigDataMapGame(PL, pm)
+    game._show_summary = True
+    game._summary_timer = 0.0
+    game.update(10001)
+    assert game.is_done()
+
+
+def test_summary_click_fast_forwards(tmp_path) -> None:
+    """Click during summary fast-forwards to done."""
+    pygame.init()
+    from cognitive_data_arcade.games.big_data_map.game import BigDataMapGame
+
+    pm = ProfileManager(tmp_path / "profile.json")
+    game = BigDataMapGame(PL, pm)
+    game._show_summary = True
+    game._summary_timer = 0.0
+    game.handle_event(pygame.event.Event(pygame.MOUSEBUTTONDOWN, button=1, pos=(512, 400)))
+    assert game.is_done()
+
+
+def test_summary_draw_does_not_crash(tmp_path) -> None:
+    """Drawing the summary overlay should not raise."""
+    pygame.init()
+    from cognitive_data_arcade.games.big_data_map.game import BigDataMapGame
+
+    pm = ProfileManager(tmp_path / "profile.json")
+    game = BigDataMapGame(PL, pm)
+    game._show_summary = True
+    surface = pygame.Surface((1024, 768))
+    game.draw(surface)

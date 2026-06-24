@@ -71,19 +71,40 @@ def _wrap_text(text: str, font: pygame.font.Font, max_w: int) -> list[str]:
 class PhaseRoundResultScene(Scene):
     def __init__(
         self,
-        display: RoundDisplay,
-        round_idx: int,
-        session_seed: int,
-        session_score: int,
-        round_results: list[dict],
+        display: RoundDisplay | dict,
+        round_idx: int = 0,
+        session_seed: int = 0,
+        session_score: int = 0,
+        round_results: list[dict] | None = None,
     ) -> None:
+        # Support dict-style display for testing convenience
+        if isinstance(display, dict):
+            d = display
+            player_acc: float = d.get("player_acc", 0.0)
+            clf_accs: dict[str, float] = d.get("clf_accs", {})
+        else:
+            player_acc = display.player_acc
+            clf_accs = display.clf_accs
+
         self._display = display
         self._round_idx = round_idx
         self._session_seed = session_seed
         self._session_score = session_score
-        self._round_results = round_results
+        self._round_results = round_results if round_results is not None else []
         self._done = False
         self._next: Scene | None = None
+
+        # Verdict line
+        best_clf_acc = max(clf_accs.values()) if clf_accs else 0.5
+        if player_acc >= best_clf_acc:
+            self._verdict = "Wygrales!"
+            self._verdict_color = (46, 204, 113)
+        elif player_acc >= best_clf_acc - 0.05:
+            self._verdict = "Prawie!"
+            self._verdict_color = (243, 156, 18)
+        else:
+            self._verdict = "Przegrales."
+            self._verdict_color = (231, 76, 60)
 
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
@@ -210,6 +231,10 @@ class PhaseRoundResultScene(Scene):
             y += 20
 
         y += 16
+        verdict_surf = get_font(22).render(self._verdict, True, self._verdict_color)
+        surface.blit(verdict_surf, (rx + rw // 2 - verdict_surf.get_width() // 2, y))
+        y += 34
+
         score_col = _GREEN if d.score >= 100 else (_ORANGE if d.score >= 70 else _RED)
         score_surf = get_font(32).render(f"+{d.score} pkt", True, score_col)
         surface.blit(score_surf, (rx + rw // 2 - score_surf.get_width() // 2, y))

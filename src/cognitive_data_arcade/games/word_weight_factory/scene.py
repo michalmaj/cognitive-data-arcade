@@ -40,6 +40,10 @@ class WordWeightFactoryScene(Scene):
         self._next: Scene | None = None
         self._step = 0
         self._tab_switches: int = 0
+        self._show_summary: bool = False
+        self._summary_timer: float = 0.0
+        self._session_start_ms: int = pygame.time.get_ticks()
+        self._steps_visited: set = {self._step}
 
         self._state = CorpusState()
         self._engine = WeightEngine()
@@ -69,20 +73,27 @@ class WordWeightFactoryScene(Scene):
 
     # ------------------------------------------------------------------
     def handle_event(self, event: pygame.event.Event) -> None:
+        if self._show_summary:
+            if event.type in (pygame.MOUSEBUTTONDOWN, pygame.KEYDOWN):
+                self._summary_timer = 10_001
+                self._done = True
+            return
+
         # Pipeline step navigation keys (only when not in custom text input)
         if event.type == pygame.KEYDOWN and not self._corpus_panel.is_custom_active():
             if event.key == pygame.K_q:
-                if not self._done and self._pm is not None:
-                    self._next = self._build_next_scene()
-                self._done = True
+                self._show_summary = True
+                self._summary_timer = 0.0
                 return
             if event.key == pygame.K_RIGHT:
                 self._step = (self._step + 1) % _N_STEPS
                 self._tab_switches += 1
+                self._steps_visited.add(self._step)
                 return
             if event.key == pygame.K_LEFT:
                 self._step = (self._step - 1) % _N_STEPS
                 self._tab_switches += 1
+                self._steps_visited.add(self._step)
                 return
 
         # Pipeline bar label click
@@ -123,12 +134,19 @@ class WordWeightFactoryScene(Scene):
 
     # ------------------------------------------------------------------
     def update(self, dt_ms: float = 0.0) -> None:
+        if self._show_summary:
+            self._summary_timer += dt_ms
+            if self._summary_timer >= 10_000:
+                self._done = True
+            return
         self._steps[self._step].update(dt_ms)
 
     def is_done(self) -> bool:
         return self._done
 
     def next_scene(self) -> Scene | None:
+        if self._done and self._next is None and self._pm is not None:
+            self._next = self._build_next_scene()
         return self._next
 
     # ------------------------------------------------------------------
@@ -184,6 +202,44 @@ class WordWeightFactoryScene(Scene):
 
         # Draw CorpusPanel tooltip on top of everything (screen coords)
         self._corpus_panel.draw_tooltip(surface, _PIPE_H)
+
+        if self._show_summary:
+            self._draw_summary(surface)
+
+    def _draw_summary(self, surface: pygame.Surface) -> None:
+        w, h = surface.get_width(), surface.get_height()
+        overlay = pygame.Surface((w, h), pygame.SRCALPHA)
+        overlay.fill((0, 0, 0, 200))
+        surface.blit(overlay, (0, 0))
+
+        panel_w, panel_h = 560, 260
+        px = (w - panel_w) // 2
+        py = (h - panel_h) // 2
+        pygame.draw.rect(surface, (14, 14, 36), (px, py, panel_w, panel_h), border_radius=10)
+        pygame.draw.rect(surface, (70, 70, 130), (px, py, panel_w, panel_h), 2, border_radius=10)
+
+        elapsed_s = (pygame.time.get_ticks() - self._session_start_ms) // 1000
+        mins, secs = divmod(elapsed_s, 60)
+        visited = len(self._steps_visited)
+
+        font_h = get_font(24)
+        font_b = get_font(20)
+        font_hint = get_font(14)
+        lines = [
+            ("Word Weight Factory - Podsumowanie", font_h, (200, 200, 240)),
+            (f"Czas sesji: {mins}m {secs}s", font_b, (160, 160, 200)),
+            (f"Kroki odwiedzone: {visited} / 5", font_b, (160, 160, 200)),
+            ("", font_b, (0, 0, 0)),
+            ("Nacisnij dowolny klawisz lub kliknij", font_hint, (90, 90, 120)),
+        ]
+        y = py + 20
+        for text, font, color in lines:
+            if not text:
+                y += 10
+                continue
+            s = font.render(text, True, color)
+            surface.blit(s, (px + panel_w // 2 - s.get_width() // 2, y))
+            y += font.get_height() + 8
 
     def _build_next_scene(self) -> "Scene":
         from cognitive_data_arcade.engine.badges import BadgeEngine, SessionResult

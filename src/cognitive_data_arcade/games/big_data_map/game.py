@@ -102,6 +102,9 @@ class BigDataMapGame(Scene):
         self._done = False
         self._next: Scene | None = None
         self._nodes_visited: set[int] = set()
+        self._show_summary: bool = False
+        self._summary_timer: float = 0.0
+        self._session_start_ms: int = pygame.time.get_ticks()
 
         self._positions = _compute_positions()  # {lesson_num: (x,y)} at zoom=1
         self._zoom: float = 1.0
@@ -176,6 +179,11 @@ class BigDataMapGame(Scene):
     # --- events ---
 
     def handle_event(self, event: pygame.event.Event) -> None:
+        if self._show_summary:
+            if event.type in (pygame.MOUSEBUTTONDOWN, pygame.KEYDOWN):
+                self._summary_timer = 10_001
+            return
+
         if event.type == pygame.MOUSEWHEEL:
             factor = _ZOOM_STEP if event.y > 0 else 1.0 / _ZOOM_STEP
             self._zoom = max(_ZOOM_MIN, min(_ZOOM_MAX, self._zoom * factor))
@@ -228,14 +236,19 @@ class BigDataMapGame(Scene):
                 self._navigate_to(self._selected)
         elif key == pygame.K_q:
             if self._concept_detail_factory is None:
-                self._done = True
+                self._show_summary = True
+                self._summary_timer = 0.0
         elif key == pygame.K_r:
             self._zoom = 1.0  # reset zoom to default
 
     # --- drawing ---
 
     def update(self, dt: float) -> None:
-        pass
+        if self._show_summary:
+            self._summary_timer += dt
+            if self._summary_timer >= 10_000:
+                self._done = True
+            return
 
     def draw(self, surface: pygame.Surface) -> None:
         surface.fill(_BG)
@@ -245,6 +258,8 @@ class BigDataMapGame(Scene):
         self._draw_node_circles(surface)  # pass 1: circles + numbers
         self._draw_node_labels(surface)  # pass 2: name labels always on top
         self._draw_info_bar(surface)
+        if self._show_summary:
+            self._draw_summary(surface)
 
     def _draw_title(self, surface: pygame.Surface) -> None:
         rendered = self._font_title.render("Siec Pojec - Cognitive Data Arcade", True, _ORANGE)
@@ -396,6 +411,41 @@ class BigDataMapGame(Scene):
             (16, bar_y + 6 + self._font_info.get_height() + 4),
         )
 
+    def _draw_summary(self, surface: pygame.Surface) -> None:
+        w, h = surface.get_width(), surface.get_height()
+        overlay = pygame.Surface((w, h), pygame.SRCALPHA)
+        overlay.fill((0, 0, 0, 200))
+        surface.blit(overlay, (0, 0))
+
+        panel_w, panel_h = 560, 280
+        px = (w - panel_w) // 2
+        py = (h - panel_h) // 2
+        pygame.draw.rect(surface, (14, 14, 36), (px, py, panel_w, panel_h), border_radius=10)
+        pygame.draw.rect(surface, (70, 70, 130), (px, py, panel_w, panel_h), 2, border_radius=10)
+
+        elapsed_s = (pygame.time.get_ticks() - self._session_start_ms) // 1000
+        mins, secs = divmod(elapsed_s, 60)
+        visited = len(self._nodes_visited)
+
+        font_h = get_font(24)
+        font_b = get_font(20)
+        font_hint = get_font(14)
+        lines = [
+            ("Podsumowanie sesji", font_h, (200, 200, 240)),
+            (f"Czas sesji: {mins}m {secs}s", font_b, (160, 160, 200)),
+            (f"Wezlow odwiedzonych: {visited} / 31", font_b, (160, 160, 200)),
+            ("", font_b, (0, 0, 0)),
+            ("Nacisnij dowolny klawisz lub kliknij", font_hint, (90, 90, 120)),
+        ]
+        y = py + 20
+        for text, font, color in lines:
+            if not text:
+                y += 10
+                continue
+            s = font.render(text, True, color)
+            surface.blit(s, (px + panel_w // 2 - s.get_width() // 2, y))
+            y += font.get_height() + 8
+
     def _build_next_scene(self) -> Scene:
         from cognitive_data_arcade.ui.session_summary import SessionSummaryScene
         from cognitive_data_arcade.engine.badges import BadgeEngine, SessionResult
@@ -431,9 +481,10 @@ class BigDataMapGame(Scene):
         )
 
     def is_done(self) -> bool:
-        return self._done
+        return self._done or (self._show_summary and self._summary_timer >= 10_000)
 
     def next_scene(self) -> Scene | None:
-        if self._done and self._next is None and self._concept_detail_factory is None:
+        done = self.is_done()
+        if done and self._next is None and self._concept_detail_factory is None:
             self._next = self._build_next_scene()
-        return self._next if self._done else None
+        return self._next if done else None

@@ -142,22 +142,42 @@ def _render_boundary(d: RoundDisplay) -> pygame.Surface:
 class PhaseRoundResultScene(Scene):
     def __init__(
         self,
-        display: RoundDisplay,
-        round_idx: int,
-        session_seed: int,
-        session_score: int,
-        round_results: list[dict],
-        scenario_order: list[int],
+        display: RoundDisplay | dict,
+        round_idx: int = 0,
+        session_seed: int = 0,
+        session_score: int = 0,
+        round_results: list[dict] | None = None,
+        scenario_order: list[int] | None = None,
     ) -> None:
         self._display = display
         self._round_idx = round_idx
         self._session_seed = session_seed
         self._session_score = session_score
-        self._round_results = round_results
-        self._scenario_order = scenario_order
+        self._round_results = round_results if round_results is not None else []
+        self._scenario_order = scenario_order if scenario_order is not None else []
         self._done = False
         self._next: Scene | None = None
-        self._boundary_surf = _render_boundary(display)
+
+        # Only render boundary for real RoundDisplay objects
+        if isinstance(display, RoundDisplay):
+            self._boundary_surf = _render_boundary(display)
+        else:
+            self._boundary_surf = None
+
+        # Gap verdict
+        if isinstance(display, dict):
+            gap = display.get("gap", 0)
+        else:
+            gap = (display.train_acc - display.test_acc) * 100
+        if gap <= 5:
+            self._gap_verdict = "Idealnie dopasowany model!"
+            self._gap_color = (46, 204, 113)
+        elif gap <= 15:
+            self._gap_verdict = "Lekki overfitting."
+            self._gap_color = (243, 156, 18)
+        else:
+            self._gap_verdict = "Powazny overfitting!"
+            self._gap_color = (231, 76, 60)
 
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
@@ -262,6 +282,11 @@ class PhaseRoundResultScene(Scene):
         bonus_surf = get_font(12).render(f"+{bonus_pts} pkt bonus", True, _YELLOW)
         surface.blit(bonus_surf, (rx + star_surf.get_width() + 6, y + 4))
         y += 36
+
+        # Gap verdict
+        gap_surf = get_font(14).render(self._gap_verdict, True, self._gap_color)
+        surface.blit(gap_surf, (rx, y))
+        y += 22
 
         pygame.draw.line(surface, _DIM, (rx, y), (rx + rw, y))
         y += 8

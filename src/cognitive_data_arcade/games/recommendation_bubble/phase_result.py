@@ -71,6 +71,18 @@ class PhaseResultScene(Scene):
         self._done = False
         self._next: Scene | None = None
 
+        # Bubble verdict based on act3 diversity
+        d3 = getattr(state, "diversity_act3", 0.5)
+        if d3 < 0.35:
+            self._bubble_verdict = "Banka: MOCNA (echo chamber)"
+            self._bubble_color = (231, 76, 60)
+        elif d3 < 0.65:
+            self._bubble_verdict = "Banka: UMIARKOWANA"
+            self._bubble_color = (243, 156, 18)
+        else:
+            self._bubble_verdict = "Banka: SLABA (dobra roznorodnosc!)"
+            self._bubble_color = (46, 204, 113)
+
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             if _BTN_REPLAY.collidepoint(event.pos):
@@ -177,6 +189,9 @@ class PhaseResultScene(Scene):
             _DIM,
         )
         surface.blit(score_text, (_W // 2 - score_text.get_width() // 2, score_y + 20))
+
+        verdict_surf = get_font(16).render(self._bubble_verdict, True, self._bubble_color)
+        surface.blit(verdict_surf, (_W // 2 - verdict_surf.get_width() // 2, score_y + 70))
 
         pygame.draw.rect(surface, _PANEL, _BTN_REPLAY, border_radius=6)
         pygame.draw.rect(surface, _GREY, _BTN_REPLAY, 1, border_radius=6)
