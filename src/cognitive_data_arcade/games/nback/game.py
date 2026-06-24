@@ -21,6 +21,7 @@ class _Phase(enum.Enum):
     ITI = "iti"
     STIMULUS = "stimulus"
     RESPONSE_WINDOW = "response_window"
+    FEEDBACK = "feedback"
     BETWEEN_BLOCKS = "between_blocks"
     DONE = "done"
 
@@ -106,6 +107,10 @@ class NBackGame(Scene):
         self._rt_l = 0.0
         self._records: list[_TrialRecord] = []
         self._next: Scene | None = None
+        self._last_pos_correct: bool = False
+        self._last_let_correct: bool = False
+        self._feedback_pending_block_end: bool = False
+        self._feedback_pending_done: bool = False
         self._profile_before = profile_manager.load()
         pygame.font.init()
         self._font_letter = get_font(100)
@@ -146,6 +151,18 @@ class NBackGame(Scene):
         elif self._phase == _Phase.RESPONSE_WINDOW:
             if self._phase_timer >= self._config.isi_ms:
                 self._commit_trial()
+        elif self._phase == _Phase.FEEDBACK:
+            if self._phase_timer >= self._config.feedback_ms:
+                if self._feedback_pending_done:
+                    self._phase = _Phase.DONE
+                    if self._next is None:
+                        self._next = self._build_next_scene()
+                elif self._feedback_pending_block_end:
+                    self._phase = _Phase.BETWEEN_BLOCKS
+                    self._phase_timer = 0.0
+                else:
+                    self._phase = _Phase.ITI
+                    self._phase_timer = 0.0
         elif self._phase == _Phase.BETWEEN_BLOCKS:
             if self._phase_timer >= self._config.between_blocks_ms:
                 self._start_next_block()
@@ -178,19 +195,23 @@ class NBackGame(Scene):
         self._trial_global += 1
         self._trial_in_block += 1
 
+        # store for rendering during FEEDBACK phase
+        self._last_pos_correct = pos_correct
+        self._last_let_correct = let_correct
+        self._feedback_pending_block_end = False
+        self._feedback_pending_done = False
+
         if self._trial_in_block >= self._config.trials_per_block:
             self._block_idx += 1
             if self._block_idx >= self._config.num_blocks:
-                self._phase = _Phase.DONE
-                self._next = self._build_next_scene()
+                self._feedback_pending_done = True
             else:
                 if self._config.n is None:
                     self._evaluate_block()
-                self._phase = _Phase.BETWEEN_BLOCKS
-                self._phase_timer = 0.0
-        else:
-            self._phase = _Phase.ITI
-            self._phase_timer = 0.0
+                self._feedback_pending_block_end = True
+
+        self._phase = _Phase.FEEDBACK
+        self._phase_timer = 0.0
 
     def _evaluate_block(self) -> None:
         block_records = self._records[-self._config.trials_per_block :]
@@ -319,7 +340,7 @@ class NBackGame(Scene):
         grid_x = cx - grid_total // 2
         grid_y = cy - grid_total // 2 - 40
 
-        if self._phase != _Phase.BETWEEN_BLOCKS:
+        if self._phase not in (_Phase.BETWEEN_BLOCKS,):
             for cell in range(9):
                 row, col = divmod(cell, self._GRID_SIZE)
                 x = grid_x + col * (self._CELL_PX + self._GRID_PAD)
@@ -339,6 +360,19 @@ class NBackGame(Scene):
                 surface.blit(
                     letter_surf,
                     (cx - letter_surf.get_width() // 2, grid_y + grid_total + 20),
+                )
+
+            if self._phase == _Phase.FEEDBACK:
+                both_ok = self._last_pos_correct and self._last_let_correct
+                label = "OK" if both_ok else "X"
+                color = (46, 204, 113) if both_ok else (231, 76, 60)
+                surf = get_font(72).render(label, True, color)
+                surface.blit(
+                    surf,
+                    (
+                        surface.get_width() // 2 - surf.get_width() // 2,
+                        surface.get_height() // 2 - surf.get_height() // 2,
+                    ),
                 )
         else:
             msg = self._font_block.render(

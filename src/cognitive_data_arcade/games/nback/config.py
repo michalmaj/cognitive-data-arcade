@@ -23,6 +23,7 @@ class NBackConfig:
     isi_ms: int = 2000  # response window after stimulus offset
     iti_ms: int = 300  # blank inter-trial interval
     between_blocks_ms: int = 1500  # auto-advance pause between blocks
+    feedback_ms: int = 600  # visual feedback duration after each trial
     target_rate: float = 0.33
     adaptive_up_threshold: float = 0.80
     adaptive_down_threshold: float = 0.50

@@ -170,13 +170,34 @@ class PhaseMissionScene(Scene):
         new_results = self._round_results + [result]
 
         if self._round_idx < len(self._missions) - 1:
-            self._next = PhaseMissionScene(
-                self._missions, self._round_idx + 1, new_score, new_results
-            )
-        else:
-            from cognitive_data_arcade.games.semantic_space.phase_result import PhaseResultScene
 
-            self._next = PhaseResultScene(session_score=new_score, round_results=new_results)
+            def _next_mission_factory(
+                missions=self._missions,
+                idx=self._round_idx + 1,
+                score=new_score,
+                results=new_results,
+            ) -> "Scene":
+                return PhaseMissionScene(missions, idx, score, results)
+
+            next_factory = _next_mission_factory
+        else:
+
+            def _result_factory(score=new_score, results=new_results) -> "Scene":
+                from cognitive_data_arcade.games.semantic_space.phase_result import PhaseResultScene
+
+                return PhaseResultScene(session_score=score, round_results=results)
+
+            next_factory = _result_factory
+
+        from cognitive_data_arcade.games.semantic_space.phase_feedback import PhaseFeedbackScene
+
+        self._next = PhaseFeedbackScene(
+            is_correct=is_correct,
+            score=round_score,
+            answers=list(m.answers) if hasattr(m, "answers") else [],
+            mission_type=m.type if hasattr(m, "type") else "",
+            next_scene_factory=next_factory,
+        )
         self._done = True
 
     # ── update / draw ───────────────────────────────────────────────────────────
