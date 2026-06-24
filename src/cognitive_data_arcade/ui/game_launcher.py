@@ -147,11 +147,17 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
     if lesson_num == 12:
 
         def _make() -> Scene:
+            from cognitive_data_arcade.engine.pause import PausableGame
+            from cognitive_data_arcade.games.cognitive_dashboard.info import get_game_info
             from cognitive_data_arcade.games.cognitive_dashboard.mode_scene import (
                 CognitiveDashboardModeScene,
             )
+            from cognitive_data_arcade.ui.how_to_play_scene import make_how_to_play
 
-            return CognitiveDashboardModeScene(pm, strings)
+            inner = CognitiveDashboardModeScene(pm, strings)
+            game_info = get_game_info(strings)
+            pausable = PausableGame(inner, game_info, lambda: _make(), strings, pm)
+            return make_how_to_play(pm, game_info, strings, back_scene=pausable)
 
         return _make
 
@@ -163,10 +169,12 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
             from cognitive_data_arcade.games.distribution_playground.scene import (
                 DistributionPlaygroundScene,
             )
+            from cognitive_data_arcade.ui.how_to_play_scene import make_how_to_play
 
             inner = DistributionPlaygroundScene(pm, strings)
             game_info = get_game_info(strings)
-            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+            pausable = PausableGame(inner, game_info, lambda: _make(), strings, pm)
+            return make_how_to_play(pm, game_info, strings, back_scene=pausable)
 
         return _make
 
@@ -176,10 +184,12 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
             from cognitive_data_arcade.engine.pause import PausableGame
             from cognitive_data_arcade.games.correlation_trap.info import get_game_info
             from cognitive_data_arcade.games.correlation_trap.scene import CorrelationTrapScene
+            from cognitive_data_arcade.ui.how_to_play_scene import make_how_to_play
 
             inner = CorrelationTrapScene(pm, strings)
             game_info = get_game_info(strings)
-            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+            pausable = PausableGame(inner, game_info, lambda: _make(), strings, pm)
+            return make_how_to_play(pm, game_info, strings, back_scene=pausable)
 
         return _make
 
@@ -189,10 +199,12 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
             from cognitive_data_arcade.engine.pause import PausableGame
             from cognitive_data_arcade.games.hypothesis_arena.info import get_game_info
             from cognitive_data_arcade.games.hypothesis_arena.scene import HypothesisArenaScene
+            from cognitive_data_arcade.ui.how_to_play_scene import make_how_to_play
 
             inner = HypothesisArenaScene(pm, strings)
             game_info = get_game_info(strings)
-            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+            pausable = PausableGame(inner, game_info, lambda: _make(), strings, pm)
+            return make_how_to_play(pm, game_info, strings, back_scene=pausable)
 
         return _make
 
@@ -202,10 +214,12 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
             from cognitive_data_arcade.engine.pause import PausableGame
             from cognitive_data_arcade.games.prediction_slider.info import get_game_info
             from cognitive_data_arcade.games.prediction_slider.scene import PredictionSliderScene
+            from cognitive_data_arcade.ui.how_to_play_scene import make_how_to_play
 
             inner = PredictionSliderScene(pm, strings)
             game_info = get_game_info(strings)
-            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+            pausable = PausableGame(inner, game_info, lambda: _make(), strings, pm)
+            return make_how_to_play(pm, game_info, strings, back_scene=pausable)
 
         return _make
 
@@ -215,10 +229,12 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
             from cognitive_data_arcade.engine.pause import PausableGame
             from cognitive_data_arcade.games.feature_hunter.game import FeatHunterScene
             from cognitive_data_arcade.games.feature_hunter.info import get_game_info
+            from cognitive_data_arcade.ui.how_to_play_scene import make_how_to_play
 
             inner = FeatHunterScene(pm, strings)
             game_info = get_game_info(strings)
-            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+            pausable = PausableGame(inner, game_info, lambda: _make(), strings, pm)
+            return make_how_to_play(pm, game_info, strings, back_scene=pausable)
 
         return _make
 
@@ -267,10 +283,12 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
             from cognitive_data_arcade.engine.pause import PausableGame
             from cognitive_data_arcade.games.text_tokenizer.info import get_game_info
             from cognitive_data_arcade.games.text_tokenizer.scene import TextTokenizerLabScene
+            from cognitive_data_arcade.ui.how_to_play_scene import make_how_to_play
 
             inner = TextTokenizerLabScene(pm, strings)
             game_info = get_game_info(strings)
-            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+            pausable = PausableGame(inner, game_info, lambda: _make(), strings, pm)
+            return make_how_to_play(pm, game_info, strings, back_scene=pausable)
 
         return _make
 
@@ -280,10 +298,12 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
             from cognitive_data_arcade.engine.pause import PausableGame
             from cognitive_data_arcade.games.word_weight_factory.info import get_game_info
             from cognitive_data_arcade.games.word_weight_factory.scene import WordWeightFactoryScene
+            from cognitive_data_arcade.ui.how_to_play_scene import make_how_to_play
 
             inner = WordWeightFactoryScene(pm, strings)
             game_info = get_game_info(strings)
-            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+            pausable = PausableGame(inner, game_info, lambda: _make(), strings, pm)
+            return make_how_to_play(pm, game_info, strings, back_scene=pausable)
 
         return _make
 
@@ -345,10 +365,12 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
             from cognitive_data_arcade.engine.pause import PausableGame
             from cognitive_data_arcade.games.social_network.game import SocialNetworkScene
             from cognitive_data_arcade.games.social_network.info import get_game_info
+            from cognitive_data_arcade.ui.how_to_play_scene import make_how_to_play
 
             inner = SocialNetworkScene(pm, strings)
             game_info = get_game_info(strings)
-            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+            pausable = PausableGame(inner, game_info, lambda: _make(), strings, pm)
+            return make_how_to_play(pm, game_info, strings, back_scene=pausable)
 
         return _make
 
@@ -399,10 +421,12 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
             from cognitive_data_arcade.engine.pause import PausableGame
             from cognitive_data_arcade.games.you_were_the_dataset.game import YouWereTheDatasetScene
             from cognitive_data_arcade.games.you_were_the_dataset.info import get_game_info
+            from cognitive_data_arcade.ui.how_to_play_scene import make_how_to_play
 
             inner = YouWereTheDatasetScene(pm, strings)
             game_info = get_game_info(strings)
-            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+            pausable = PausableGame(inner, game_info, lambda: _make(), strings, pm)
+            return make_how_to_play(pm, game_info, strings, back_scene=pausable)
 
         return _make
 
