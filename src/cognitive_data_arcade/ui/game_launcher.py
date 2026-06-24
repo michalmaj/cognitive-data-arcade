@@ -163,10 +163,12 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
             from cognitive_data_arcade.games.distribution_playground.scene import (
                 DistributionPlaygroundScene,
             )
+            from cognitive_data_arcade.ui.how_to_play_scene import make_how_to_play
 
             inner = DistributionPlaygroundScene(pm, strings)
             game_info = get_game_info(strings)
-            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+            pausable = PausableGame(inner, game_info, lambda: _make(), strings, pm)
+            return make_how_to_play(pm, game_info, strings, back_scene=pausable)
 
         return _make
 
@@ -176,10 +178,12 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
             from cognitive_data_arcade.engine.pause import PausableGame
             from cognitive_data_arcade.games.correlation_trap.info import get_game_info
             from cognitive_data_arcade.games.correlation_trap.scene import CorrelationTrapScene
+            from cognitive_data_arcade.ui.how_to_play_scene import make_how_to_play
 
             inner = CorrelationTrapScene(pm, strings)
             game_info = get_game_info(strings)
-            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+            pausable = PausableGame(inner, game_info, lambda: _make(), strings, pm)
+            return make_how_to_play(pm, game_info, strings, back_scene=pausable)
 
         return _make
 
@@ -189,10 +193,12 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
             from cognitive_data_arcade.engine.pause import PausableGame
             from cognitive_data_arcade.games.hypothesis_arena.info import get_game_info
             from cognitive_data_arcade.games.hypothesis_arena.scene import HypothesisArenaScene
+            from cognitive_data_arcade.ui.how_to_play_scene import make_how_to_play
 
             inner = HypothesisArenaScene(pm, strings)
             game_info = get_game_info(strings)
-            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+            pausable = PausableGame(inner, game_info, lambda: _make(), strings, pm)
+            return make_how_to_play(pm, game_info, strings, back_scene=pausable)
 
         return _make
 
@@ -202,10 +208,12 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
             from cognitive_data_arcade.engine.pause import PausableGame
             from cognitive_data_arcade.games.prediction_slider.info import get_game_info
             from cognitive_data_arcade.games.prediction_slider.scene import PredictionSliderScene
+            from cognitive_data_arcade.ui.how_to_play_scene import make_how_to_play
 
             inner = PredictionSliderScene(pm, strings)
             game_info = get_game_info(strings)
-            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+            pausable = PausableGame(inner, game_info, lambda: _make(), strings, pm)
+            return make_how_to_play(pm, game_info, strings, back_scene=pausable)
 
         return _make
 
@@ -215,10 +223,12 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
             from cognitive_data_arcade.engine.pause import PausableGame
             from cognitive_data_arcade.games.feature_hunter.game import FeatHunterScene
             from cognitive_data_arcade.games.feature_hunter.info import get_game_info
+            from cognitive_data_arcade.ui.how_to_play_scene import make_how_to_play
 
             inner = FeatHunterScene(pm, strings)
             game_info = get_game_info(strings)
-            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+            pausable = PausableGame(inner, game_info, lambda: _make(), strings, pm)
+            return make_how_to_play(pm, game_info, strings, back_scene=pausable)
 
         return _make
 

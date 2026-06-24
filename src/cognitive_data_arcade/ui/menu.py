@@ -986,11 +986,19 @@ class LessonMenuScene(Scene):
         from cognitive_data_arcade.games.distribution_playground.scene import (
             DistributionPlaygroundScene,
         )
+        from cognitive_data_arcade.ui.how_to_play_scene import make_how_to_play
 
         inner = DistributionPlaygroundScene()
         game_info = get_game_info(self._strings)
-        return PausableGame(
+        pausable = PausableGame(
             inner, game_info, self._make_distribution_playground, self._strings, self._pm
+        )
+        return make_how_to_play(
+            self._pm,
+            game_info,
+            self._strings,
+            back_scene=pausable,
+            esc_scene=LessonMenuScene(self._pm, self._strings, self._selected),
         )
 
     def _launch_correlation_trap(self) -> None:
@@ -1003,10 +1011,20 @@ class LessonMenuScene(Scene):
         from cognitive_data_arcade.games.correlation_trap.scene import (
             CorrelationTrapScene,
         )
+        from cognitive_data_arcade.ui.how_to_play_scene import make_how_to_play
 
         inner = CorrelationTrapScene()
         game_info = get_game_info(self._strings)
-        return PausableGame(inner, game_info, self._make_correlation_trap, self._strings, self._pm)
+        pausable = PausableGame(
+            inner, game_info, self._make_correlation_trap, self._strings, self._pm
+        )
+        return make_how_to_play(
+            self._pm,
+            game_info,
+            self._strings,
+            back_scene=pausable,
+            esc_scene=LessonMenuScene(self._pm, self._strings, self._selected),
+        )
 
     def _launch_hypothesis_arena(self) -> None:
         self._next = self._make_hypothesis_arena()
@@ -1016,10 +1034,20 @@ class LessonMenuScene(Scene):
         from cognitive_data_arcade.engine.pause import PausableGame
         from cognitive_data_arcade.games.hypothesis_arena.info import get_game_info
         from cognitive_data_arcade.games.hypothesis_arena.scene import HypothesisArenaScene
+        from cognitive_data_arcade.ui.how_to_play_scene import make_how_to_play
 
         inner = HypothesisArenaScene()
         game_info = get_game_info(self._strings)
-        return PausableGame(inner, game_info, self._make_hypothesis_arena, self._strings, self._pm)
+        pausable = PausableGame(
+            inner, game_info, self._make_hypothesis_arena, self._strings, self._pm
+        )
+        return make_how_to_play(
+            self._pm,
+            game_info,
+            self._strings,
+            back_scene=pausable,
+            esc_scene=LessonMenuScene(self._pm, self._strings, self._selected),
+        )
 
     def _launch_prediction_slider(self) -> None:
         self._next = self._make_prediction_slider()
@@ -1029,10 +1057,20 @@ class LessonMenuScene(Scene):
         from cognitive_data_arcade.engine.pause import PausableGame
         from cognitive_data_arcade.games.prediction_slider.info import get_game_info
         from cognitive_data_arcade.games.prediction_slider.scene import PredictionSliderScene
+        from cognitive_data_arcade.ui.how_to_play_scene import make_how_to_play
 
         inner = PredictionSliderScene()
         game_info = get_game_info(self._strings)
-        return PausableGame(inner, game_info, self._make_prediction_slider, self._strings, self._pm)
+        pausable = PausableGame(
+            inner, game_info, self._make_prediction_slider, self._strings, self._pm
+        )
+        return make_how_to_play(
+            self._pm,
+            game_info,
+            self._strings,
+            back_scene=pausable,
+            esc_scene=LessonMenuScene(self._pm, self._strings, self._selected),
+        )
 
     def _launch_feature_hunter(self) -> None:
         self._next = self._make_feature_hunter()
@@ -1042,10 +1080,20 @@ class LessonMenuScene(Scene):
         from cognitive_data_arcade.engine.pause import PausableGame
         from cognitive_data_arcade.games.feature_hunter.game import FeatHunterScene
         from cognitive_data_arcade.games.feature_hunter.info import get_game_info
+        from cognitive_data_arcade.ui.how_to_play_scene import make_how_to_play
 
         inner = FeatHunterScene()
         game_info = get_game_info(self._strings)
-        return PausableGame(inner, game_info, self._make_feature_hunter, self._strings, self._pm)
+        pausable = PausableGame(
+            inner, game_info, self._make_feature_hunter, self._strings, self._pm
+        )
+        return make_how_to_play(
+            self._pm,
+            game_info,
+            self._strings,
+            back_scene=pausable,
+            esc_scene=LessonMenuScene(self._pm, self._strings, self._selected),
+        )
 
     def _launch_classifier_battle(self) -> None:
         self._next = self._make_classifier_battle()
