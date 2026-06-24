@@ -200,7 +200,8 @@ class EventLogDetectiveGame(Scene):
 
     def _handle_report(self, event: pygame.event.Event) -> None:
         if event.key == pygame.K_RETURN:
-            self._next = self._build_next_scene()
+            if not self._done:
+                self._next = self._build_next_scene()
             self._done = True
         elif event.key == pygame.K_BACKSPACE:
             self._go_level_scene()
@@ -251,7 +252,8 @@ class EventLogDetectiveGame(Scene):
                         self._confirm_decision()
                     return
         elif self._state == _State.REPORT:
-            self._next = self._build_next_scene()
+            if not self._done:
+                self._next = self._build_next_scene()
             self._done = True
 
     # ------------------------------------------------------------------

@@ -47,6 +47,32 @@ def test_eld_report_enter_routes_to_session_summary(tmp_path):
     assert isinstance(game.next_scene(), SessionSummaryScene)
 
 
+def test_eld_double_enter_does_not_double_award(tmp_path):
+    """Two ENTER presses in REPORT must award AP only once."""
+    from cognitive_data_arcade.games.event_log_detective.game import EventLogDetectiveGame, _State
+    from cognitive_data_arcade.games.event_log_detective.scenarios import SCENARIOS
+
+    pm = _pm(tmp_path)
+    game = EventLogDetectiveGame(SCENARIOS[0], "medium", PL, pm)
+    # Set all choices so the game is ready for the report screen
+    for i in range(len(SCENARIOS[0].decisions)):
+        game._choices[i] = 0
+    game._state = _State.REPORT
+
+    enter = pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode="")
+    game.handle_event(enter)
+    assert game.is_done()
+    ap_after_first = pm.load().arcade_points
+
+    # Second ENTER must not call _build_next_scene() again (no double add_ap)
+    game.handle_event(enter)
+    ap_after_second = pm.load().arcade_points
+
+    assert ap_after_first == ap_after_second, (
+        f"AP was awarded twice: {ap_after_first} -> {ap_after_second}"
+    )
+
+
 def test_eda_sandbox_q_routes_to_session_summary(tmp_path):
     from cognitive_data_arcade.games.eda.scene import EDAScene
 
