@@ -2,7 +2,6 @@
 
 from pathlib import Path
 import pygame
-import pytest
 
 from cognitive_data_arcade.engine.i18n import PL
 from cognitive_data_arcade.profile.manager import ProfileManager
