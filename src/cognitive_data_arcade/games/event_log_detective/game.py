@@ -200,10 +200,7 @@ class EventLogDetectiveGame(Scene):
 
     def _handle_report(self, event: pygame.event.Event) -> None:
         if event.key == pygame.K_RETURN:
-            # Replay the same scenario and difficulty
-            self._next = EventLogDetectiveGame(
-                self._scenario, self._difficulty, self._strings, self._pm
-            )
+            self._next = self._build_next_scene()
             self._done = True
         elif event.key == pygame.K_BACKSPACE:
             self._go_level_scene()
@@ -254,9 +251,7 @@ class EventLogDetectiveGame(Scene):
                         self._confirm_decision()
                     return
         elif self._state == _State.REPORT:
-            self._next = EventLogDetectiveGame(
-                self._scenario, self._difficulty, self._strings, self._pm
-            )
+            self._next = self._build_next_scene()
             self._done = True
 
     # ------------------------------------------------------------------
@@ -287,6 +282,40 @@ class EventLogDetectiveGame(Scene):
                 correct += 1
         weighted_score = correct * multiplier
         return correct, total, weighted_score
+
+    def _build_next_scene(self) -> Scene:
+        from cognitive_data_arcade.ui.session_summary import SessionSummaryScene
+        from cognitive_data_arcade.engine.badges import BadgeEngine, SessionResult
+
+        correct, total, weighted = self._score()
+        ap = min(100, weighted * 10)
+        session = SessionResult(
+            task_name="event_log_detective",
+            participant_id=self._pm.load().device_uuid,
+            session_id=f"eld_{self._difficulty}",
+            total_trials=total,
+            correct_trials=correct,
+            avg_reaction_time_ms=0.0,
+            min_reaction_time_ms=0.0,
+            max_reaction_time_ms=0.0,
+            arcade_points_earned=ap,
+            science_points_earned=0,
+        )
+        profile_before = self._pm.load()
+        badge_engine = BadgeEngine()
+        new_badge_ids = badge_engine.evaluate(session, profile_before)
+        self._pm.add_ap(session.arcade_points_earned)
+        for bid in new_badge_ids:
+            self._pm.award_badge(bid)
+        profile_after = self._pm.load()
+        return SessionSummaryScene(
+            session=session,
+            new_badge_ids=new_badge_ids,
+            profile_before=profile_before,
+            profile_after=profile_after,
+            strings=self._strings,
+            profile_manager=self._pm,
+        )
 
     def _wrap(self, text: str, max_width: int) -> list[str]:
         """Word-wrap *text* to fit within *max_width* pixels using _font_body."""

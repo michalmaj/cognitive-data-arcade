@@ -92,7 +92,7 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
             from cognitive_data_arcade.games.eda.scene import EDAScene
             from cognitive_data_arcade.ui.how_to_play_scene import make_how_to_play
 
-            inner = EDAScene()
+            inner = EDAScene(pm, strings)
             game_info = get_game_info(strings)
             pausable = PausableGame(inner, game_info, lambda: _make(), strings, pm)
             return make_how_to_play(pm, game_info, strings, back_scene=pausable)
