@@ -460,3 +460,24 @@ def test_session_result_ap_matches_compute_score(tmp_path):
         scene._session, scene._table.flagged, scene._fixes
     )
     assert next_s._session.arcade_points_earned == expected_total
+
+
+def test_double_key_in_report_does_not_double_award_ap(tmp_path):
+    from cognitive_data_arcade.games.data_cleaning.generator import compute_score
+    from cognitive_data_arcade.profile.manager import ProfileManager
+
+    pm = ProfileManager(tmp_path / "profile.json")
+    scene = DataCleaningScene(EN, pm, seed=42)
+    # Pre-flag all known errors directly in the internal set so compute_score
+    # returns non-zero AP (scene._table.flagged is a read-only property copy)
+    for row_idx in scene._session.ground_truth:
+        scene._table._flagged.add(row_idx)
+    scene._phase = Phase.REPORT
+    scene.handle_event(_key(pygame.K_RETURN))
+    scene.handle_event(_key(pygame.K_RETURN))  # second press — must not double-award
+    _d, _f, expected_ap = compute_score(
+        scene._session, scene._table.flagged, scene._fixes
+    )
+    assert expected_ap > 0, "test precondition: expected_ap must be nonzero"
+    profile = pm.load()
+    assert profile.arcade_points == expected_ap

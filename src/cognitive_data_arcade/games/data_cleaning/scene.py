@@ -1,6 +1,7 @@
 # src/cognitive_data_arcade/games/data_cleaning/scene.py
 from __future__ import annotations
 
+import datetime
 import enum
 from typing import TYPE_CHECKING
 
@@ -253,12 +254,11 @@ class DataCleaningScene(Scene):
 
     def _handle_report(self, key: int) -> None:
         if key in (pygame.K_RETURN, pygame.K_SPACE, pygame.K_ESCAPE):
+            if not self._done:
+                self._next = self._build_next_scene()
             self._done = True
-            self._next = self._build_next_scene()
 
     def _build_next_scene(self) -> "Scene | None":
-        import datetime
-
         from cognitive_data_arcade.engine.badges import BadgeEngine, SessionResult
         from cognitive_data_arcade.games.data_cleaning.generator import compute_score
         from cognitive_data_arcade.ui.session_summary import SessionSummaryScene
