@@ -166,18 +166,30 @@ def test_esc_in_identify_does_nothing():
     assert not scene.is_done()
 
 
-def test_esc_in_report_does_nothing():
-    scene = _make()
-    scene._phase = Phase.REPORT
-    scene.handle_event(_key(pygame.K_ESCAPE))
-    assert not scene.is_done()
-
-
-def test_report_keys_do_nothing():
+def test_enter_in_report_sets_done():
     scene = _make()
     scene._phase = Phase.REPORT
     scene.handle_event(_key(pygame.K_RETURN))
-    assert not scene.is_done()
+    assert scene.is_done()
+
+
+def test_space_in_report_sets_done():
+    scene = _make()
+    scene._phase = Phase.REPORT
+    scene.handle_event(_key(pygame.K_SPACE))
+    assert scene.is_done()
+
+
+def test_esc_in_report_sets_done():
+    scene = _make()
+    scene._phase = Phase.REPORT
+    scene.handle_event(_key(pygame.K_ESCAPE))
+    assert scene.is_done()
+
+
+def test_other_key_in_report_does_not_set_done():
+    scene = _make()
+    scene._phase = Phase.REPORT
     scene.handle_event(_key(pygame.K_r))
     assert not scene.is_done()
 

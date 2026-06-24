@@ -252,7 +252,12 @@ class DataCleaningScene(Scene):
             self._advance_fix()
 
     def _handle_report(self, key: int) -> None:
-        pass
+        if key in (pygame.K_RETURN, pygame.K_SPACE, pygame.K_ESCAPE):
+            self._done = True
+            self._next = self._build_next_scene()
+
+    def _build_next_scene(self) -> "Scene | None":
+        return None
 
     # ── Helpers ─────────────────────────────────────────────────────────────────
 
