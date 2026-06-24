@@ -2,8 +2,6 @@
 
 from pathlib import Path
 import pygame
-import pytest
-
 from cognitive_data_arcade.engine.i18n import PL
 from cognitive_data_arcade.profile.manager import ProfileManager
 from cognitive_data_arcade.ui.session_summary import SessionSummaryScene
@@ -28,9 +26,27 @@ def test_visual_search_done_routes_to_session_summary(tmp_path: Path) -> None:
     # Force DONE phase
     from cognitive_data_arcade.games.visual_search.game import _Phase
 
+    from cognitive_data_arcade.games.visual_search.game import _TrialRecord
+
+    game._records = [
+        _TrialRecord(
+            participant_id="p1",
+            session_id="s1",
+            trial_id=1,
+            mode="letters",
+            condition="feature",
+            set_size=4,
+            target_present=True,
+            response="present",
+            correct=True,
+            rt_ms=350.0,
+            timestamp="2026-01-01T00:00:00+00:00",
+        )
+    ]
     game._phase = _Phase.DONE
     scene = game.next_scene()
     assert isinstance(scene, SessionSummaryScene)
+    assert pm.load().arcade_points > 0
 
 
 def test_cognitive_dashboard_q_routes_to_session_summary(tmp_path: Path) -> None:
@@ -48,3 +64,4 @@ def test_cognitive_dashboard_q_routes_to_session_summary(tmp_path: Path) -> None
     game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_q, mod=0, unicode="q"))
     assert game.is_done()
     assert isinstance(game.next_scene(), SessionSummaryScene)
+    assert pm.load().arcade_points > 0

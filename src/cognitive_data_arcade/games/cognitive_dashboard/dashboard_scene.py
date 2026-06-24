@@ -113,7 +113,7 @@ class CognitiveDashboardScene(Scene):
         self._dragging: str | None = None  # "stroop" | "flanker"
 
         # Session completion routing
-        self._finish_btn = pygame.Rect(40, 680, 160, 36)
+        self._finish_btn = pygame.Rect(380, 702, 160, 28)
         self._session_done: bool = False
         self._next_cache: Scene | None = None
 
