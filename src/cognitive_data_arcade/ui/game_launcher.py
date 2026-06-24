@@ -346,7 +346,7 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
             from cognitive_data_arcade.games.social_network.game import SocialNetworkScene
             from cognitive_data_arcade.games.social_network.info import get_game_info
 
-            inner = SocialNetworkScene()
+            inner = SocialNetworkScene(pm, strings)
             game_info = get_game_info(strings)
             return PausableGame(inner, game_info, lambda: _make(), strings, pm)
 
@@ -359,7 +359,7 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
             from cognitive_data_arcade.games.misinformation.game import MisinformationScene
             from cognitive_data_arcade.games.misinformation.info import get_game_info
 
-            inner = MisinformationScene()
+            inner = MisinformationScene(pm, strings)
             game_info = get_game_info(strings)
             return PausableGame(inner, game_info, lambda: _make(), strings, pm)
 
@@ -374,7 +374,7 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
             )
             from cognitive_data_arcade.games.recommendation_bubble.info import get_game_info
 
-            inner = RecommendationBubbleScene()
+            inner = RecommendationBubbleScene(pm, strings)
             game_info = get_game_info(strings)
             return PausableGame(inner, game_info, lambda: _make(), strings, pm)
 
@@ -387,7 +387,7 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
             from cognitive_data_arcade.games.bias_blind_spot.game import BiasBlindSpotScene
             from cognitive_data_arcade.games.bias_blind_spot.info import get_game_info
 
-            inner = BiasBlindSpotScene()
+            inner = BiasBlindSpotScene(pm, strings)
             game_info = get_game_info(strings)
             return PausableGame(inner, game_info, lambda: _make(), strings, pm)
 
@@ -413,7 +413,7 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
             from cognitive_data_arcade.games.architects_trial.game import ArchitectsTrialScene
             from cognitive_data_arcade.games.architects_trial.info import get_game_info
 
-            inner = ArchitectsTrialScene()
+            inner = ArchitectsTrialScene(pm, strings)
             game_info = get_game_info(strings)
             return PausableGame(inner, game_info, lambda: _make(), strings, pm)
 
@@ -579,13 +579,13 @@ def game_factory_for_with_back(
         from cognitive_data_arcade.games.social_network.game import SocialNetworkScene
         from cognitive_data_arcade.games.social_network.info import get_game_info
 
-        return _make_pausable_with_back(SocialNetworkScene(), get_game_info(strings))
+        return _make_pausable_with_back(SocialNetworkScene(pm, strings), get_game_info(strings))
 
     if lesson_num == 28:
         from cognitive_data_arcade.games.misinformation.game import MisinformationScene
         from cognitive_data_arcade.games.misinformation.info import get_game_info
 
-        return _make_pausable_with_back(MisinformationScene(), get_game_info(strings))
+        return _make_pausable_with_back(MisinformationScene(pm, strings), get_game_info(strings))
 
     if lesson_num == 29:
         from cognitive_data_arcade.games.recommendation_bubble.game import (
@@ -593,13 +593,15 @@ def game_factory_for_with_back(
         )
         from cognitive_data_arcade.games.recommendation_bubble.info import get_game_info
 
-        return _make_pausable_with_back(RecommendationBubbleScene(), get_game_info(strings))
+        return _make_pausable_with_back(
+            RecommendationBubbleScene(pm, strings), get_game_info(strings)
+        )
 
     if lesson_num == 30:
         from cognitive_data_arcade.games.bias_blind_spot.game import BiasBlindSpotScene
         from cognitive_data_arcade.games.bias_blind_spot.info import get_game_info
 
-        return _make_pausable_with_back(BiasBlindSpotScene(), get_game_info(strings))
+        return _make_pausable_with_back(BiasBlindSpotScene(pm, strings), get_game_info(strings))
 
     if lesson_num == 31:
         from cognitive_data_arcade.games.you_were_the_dataset.game import YouWereTheDatasetScene
@@ -611,7 +613,7 @@ def game_factory_for_with_back(
         from cognitive_data_arcade.games.architects_trial.game import ArchitectsTrialScene
         from cognitive_data_arcade.games.architects_trial.info import get_game_info
 
-        return _make_pausable_with_back(ArchitectsTrialScene(), get_game_info(strings))
+        return _make_pausable_with_back(ArchitectsTrialScene(pm, strings), get_game_info(strings))
 
     # Special cases (RT Lab, BigDataMap, DataCleaning, EDA): fall back to game_factory_for
     factory = game_factory_for(lesson_num, pm, strings)

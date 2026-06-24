@@ -63,7 +63,9 @@ def _node_color(state: str) -> tuple[int, int, int]:
 
 
 class SocialNetworkScene(Scene):
-    def __init__(self) -> None:
+    def __init__(self, pm=None, strings=None) -> None:
+        self._pm = pm
+        self._strings = strings
         self._left: Graph = Graph()
         self._right: Graph | None = None
         self._right_type: str = ""
@@ -73,11 +75,14 @@ class SocialNetworkScene(Scene):
         self._auto_play: bool = False
         self._sir_timer: float = 0.0
         self._step_count: int = 0
+        self._sir_steps_run: int = 0
         self._max_i_left: float = 0.0
         self._max_i_right: float = 0.0
         self._p_infect: float = _P_INFECT
         self._done: bool = False
+        self._done_session: bool = False
         self._next: Scene | None = None
+        self._next_cache: Scene | None = None
 
         pygame.font.init()
         self._font_sm = get_font(22)
@@ -101,10 +106,47 @@ class SocialNetworkScene(Scene):
     # Scene protocol
 
     def is_done(self) -> bool:
-        return self._done
+        return self._done or self._done_session
 
     def next_scene(self) -> Scene | None:
+        if self._done_session:
+            if self._next_cache is None:
+                self._next_cache = self._build_next_scene()
+            return self._next_cache
         return self._next
+
+    def _build_next_scene(self) -> Scene:
+        from cognitive_data_arcade.engine.badges import BadgeEngine, SessionResult
+        from cognitive_data_arcade.ui.session_summary import SessionSummaryScene
+
+        ap = min(100, 30 + self._sir_steps_run * 2)
+        session = SessionResult(
+            task_name="social_network_simulator",
+            participant_id=self._pm.load().device_uuid,
+            session_id="social_session",
+            total_trials=max(1, self._sir_steps_run),
+            correct_trials=min(self._sir_steps_run, max(1, self._sir_steps_run)),
+            avg_reaction_time_ms=0.0,
+            min_reaction_time_ms=0.0,
+            max_reaction_time_ms=0.0,
+            arcade_points_earned=ap,
+            science_points_earned=0,
+        )
+        profile_before = self._pm.load()
+        badge_engine = BadgeEngine()
+        new_badge_ids = badge_engine.evaluate(session, profile_before)
+        self._pm.add_ap(ap)
+        for bid in new_badge_ids:
+            self._pm.award_badge(bid)
+        profile_after = self._pm.load()
+        return SessionSummaryScene(
+            session=session,
+            new_badge_ids=new_badge_ids,
+            profile_before=profile_before,
+            profile_after=profile_after,
+            strings=self._strings,
+            profile_manager=self._pm,
+        )
 
     # ------------------------------------------------------------------
     # Event handling
@@ -175,7 +217,9 @@ class SocialNetworkScene(Scene):
                 self._click_edge(mx, my)
 
     def _on_key(self, key: int) -> None:
-        if key == pygame.K_LEFT:
+        if key == pygame.K_q:
+            self._done_session = True
+        elif key == pygame.K_LEFT:
             self._p_infect = max(0.1, round(self._p_infect - 0.1, 1))
         elif key == pygame.K_RIGHT:
             self._p_infect = min(0.9, round(self._p_infect + 0.1, 1))
@@ -254,6 +298,7 @@ class SocialNetworkScene(Scene):
     def _do_sir_step(self) -> None:
         self._left = sir_step(self._left, self._p_infect, _P_RECOVER)
         self._step_count += 1
+        self._sir_steps_run += 1
         n_left = len(self._left.nodes) or 1
         i_frac_left = sum(1 for nd in self._left.nodes if nd.state == "I") / n_left * 100
         if i_frac_left > self._max_i_left:
