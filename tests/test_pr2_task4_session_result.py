@@ -2,7 +2,6 @@
 
 from pathlib import Path
 import pygame
-import pytest
 from unittest.mock import MagicMock
 
 from cognitive_data_arcade.engine.i18n import PL
