@@ -30,6 +30,10 @@ class DistributionPlaygroundScene(Scene):
         self._next: Scene | None = None
         self._phase = 1  # 1-indexed
         self._phases: list[Scene] = [PhaseAScene(), PhaseBScene(), PhaseCScene()]
+        self._show_summary: bool = False
+        self._summary_timer: float = 0.0
+        self._session_start_ms: int = pygame.time.get_ticks()
+        self._phases_visited: set = set()
 
     def current_phase(self) -> int:
         return self._phase
@@ -38,17 +42,26 @@ class DistributionPlaygroundScene(Scene):
         return self._phases[self._phase - 1]
 
     def handle_event(self, event: pygame.event.Event) -> None:
+        if self._show_summary:
+            if event.type in (pygame.MOUSEBUTTONDOWN, pygame.KEYDOWN):
+                self._summary_timer = 10_001
+                self._done = True
+            return
+
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RIGHT:
                 self._phase = (self._phase % 3) + 1
                 self._phase_switches += 1
+                self._phases_visited.add(self._phase)
                 return
             if event.key == pygame.K_LEFT:
                 self._phase = ((self._phase - 2) % 3) + 1
                 self._phase_switches += 1
+                self._phases_visited.add(self._phase)
                 return
             if event.key == pygame.K_q:
-                self._done = True
+                self._show_summary = True
+                self._summary_timer = 0.0
                 return
         if event.type in (pygame.MOUSEBUTTONDOWN, pygame.MOUSEBUTTONUP, pygame.MOUSEMOTION):
             adjusted = _offset_mouse_event(event, dy=-_NAV_H)
@@ -57,6 +70,11 @@ class DistributionPlaygroundScene(Scene):
             self._active().handle_event(event)
 
     def update(self, dt_ms: float) -> None:
+        if self._show_summary:
+            self._summary_timer += dt_ms
+            if self._summary_timer >= 10_000:
+                self._done = True
+            return
         self._active().update(dt_ms)
 
     def is_done(self) -> bool:
@@ -108,6 +126,8 @@ class DistributionPlaygroundScene(Scene):
         phase_scene = self._active()
         phase_scene.draw(inner, offset_y=0)
         surface.blit(inner, (0, _NAV_H))
+        if self._show_summary:
+            self._draw_summary(surface)
 
     def _draw_nav(self, surface: pygame.Surface) -> None:
         pygame.draw.rect(surface, _NAV_BG, (0, 0, 1024, _NAV_H))
@@ -122,6 +142,41 @@ class DistributionPlaygroundScene(Scene):
         surface.blit(font_nav.render(">", True, _WHITE), (1024 - 36, 10))
 
         surface.blit(font_sub.render("LEWO / PRAWO = zmien faze", True, _DIM), (20, _NAV_H - 16))
+
+    def _draw_summary(self, surface: pygame.Surface) -> None:
+        w, h = surface.get_width(), surface.get_height()
+        overlay = pygame.Surface((w, h), pygame.SRCALPHA)
+        overlay.fill((0, 0, 0, 200))
+        surface.blit(overlay, (0, 0))
+
+        panel_w, panel_h = 560, 260
+        px = (w - panel_w) // 2
+        py = (h - panel_h) // 2
+        pygame.draw.rect(surface, (14, 14, 36), (px, py, panel_w, panel_h), border_radius=10)
+        pygame.draw.rect(surface, (70, 70, 130), (px, py, panel_w, panel_h), 2, border_radius=10)
+
+        elapsed_s = (pygame.time.get_ticks() - self._session_start_ms) // 1000
+        mins, secs = divmod(elapsed_s, 60)
+        visited = len(self._phases_visited)
+
+        font_h = get_font(24)
+        font_b = get_font(20)
+        font_hint = get_font(14)
+        lines = [
+            ("Distribution Playground - Podsumowanie", font_h, (200, 200, 240)),
+            (f"Czas sesji: {mins}m {secs}s", font_b, (160, 160, 200)),
+            (f"Fazy odwiedzone: {visited} / 3", font_b, (160, 160, 200)),
+            ("", font_b, (0, 0, 0)),
+            ("Nacisnij dowolny klawisz lub kliknij", font_hint, (90, 90, 120)),
+        ]
+        y = py + 20
+        for text, font, color in lines:
+            if not text:
+                y += 10
+                continue
+            s = font.render(text, True, color)
+            surface.blit(s, (px + panel_w // 2 - s.get_width() // 2, y))
+            y += font.get_height() + 8
 
 
 def _offset_mouse_event(event: pygame.event.Event, dy: int) -> pygame.event.Event:

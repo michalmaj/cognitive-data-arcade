@@ -37,6 +37,10 @@ def test_sandbox_q_routes_to_session_summary(lesson_cls, module_path, tmp_path: 
     pm = _pm(tmp_path)
     game = cls(pm, PL)
     game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_q, mod=0, unicode="q"))
+    # Games with summary overlay require timer to expire before is_done() is True
+    if getattr(game, "_show_summary", False):
+        game._summary_timer = 10_001
+        game.update(0)
     assert game.is_done()
     assert isinstance(game.next_scene(), SessionSummaryScene)
     assert pm.load().arcade_points > 0

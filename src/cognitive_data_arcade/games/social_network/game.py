@@ -83,6 +83,9 @@ class SocialNetworkScene(Scene):
         self._done_session: bool = False
         self._next: Scene | None = None
         self._next_cache: Scene | None = None
+        self._show_summary: bool = False
+        self._summary_timer: float = 0.0
+        self._session_start_ms: int = pygame.time.get_ticks()
 
         pygame.font.init()
         self._font_sm = get_font(22)
@@ -152,6 +155,12 @@ class SocialNetworkScene(Scene):
     # Event handling
 
     def handle_event(self, event: pygame.event.Event) -> None:
+        if self._show_summary:
+            if event.type in (pygame.MOUSEBUTTONDOWN, pygame.KEYDOWN):
+                self._summary_timer = 10_001
+                self._done_session = True
+            return
+
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             self._on_click(event.pos)
         elif event.type == pygame.KEYDOWN:
@@ -218,7 +227,8 @@ class SocialNetworkScene(Scene):
 
     def _on_key(self, key: int) -> None:
         if key == pygame.K_q:
-            self._done_session = True
+            self._show_summary = True
+            self._summary_timer = 0.0
         elif key == pygame.K_LEFT:
             self._p_infect = max(0.1, round(self._p_infect - 0.1, 1))
         elif key == pygame.K_RIGHT:
@@ -327,6 +337,12 @@ class SocialNetworkScene(Scene):
     # Update
 
     def update(self, dt_ms: float = 0.0) -> None:
+        if self._show_summary:
+            self._summary_timer += dt_ms
+            if self._summary_timer >= 10_000:
+                self._done_session = True
+            return
+
         if self._state == "spread" and self._auto_play:
             self._sir_timer += dt_ms
             if self._sir_timer >= _SIR_TICK_MS:
@@ -343,6 +359,43 @@ class SocialNetworkScene(Scene):
         self._draw_right_panel(surface)
         pygame.draw.line(surface, _DIVIDER, (_MID_X, _TOP_H), (_MID_X, _TOP_H + _NET_H), 2)
         self._draw_bottom_bar(surface)
+        if self._show_summary:
+            self._draw_summary(surface)
+
+    def _draw_summary(self, surface: pygame.Surface) -> None:
+        w, h = surface.get_width(), surface.get_height()
+        overlay = pygame.Surface((w, h), pygame.SRCALPHA)
+        overlay.fill((0, 0, 0, 200))
+        surface.blit(overlay, (0, 0))
+
+        panel_w, panel_h = 560, 280
+        px = (w - panel_w) // 2
+        py = (h - panel_h) // 2
+        pygame.draw.rect(surface, (14, 14, 36), (px, py, panel_w, panel_h), border_radius=10)
+        pygame.draw.rect(surface, (70, 70, 130), (px, py, panel_w, panel_h), 2, border_radius=10)
+
+        elapsed_s = (pygame.time.get_ticks() - self._session_start_ms) // 1000
+        mins, secs = divmod(elapsed_s, 60)
+
+        font_h = get_font(24)
+        font_b = get_font(20)
+        font_hint = get_font(14)
+        lines = [
+            ("Social Network Simulator - Podsumowanie", font_h, (200, 200, 240)),
+            (f"Czas sesji: {mins}m {secs}s", font_b, (160, 160, 200)),
+            (f"Krokow SIR: {self._sir_steps_run}", font_b, (160, 160, 200)),
+            (f"Max zarazonych: {self._max_i_left:.0f}%", font_b, (160, 160, 200)),
+            ("", font_b, (0, 0, 0)),
+            ("Nacisnij dowolny klawisz lub kliknij", font_hint, (90, 90, 120)),
+        ]
+        y = py + 20
+        for text, font, color in lines:
+            if not text:
+                y += 10
+                continue
+            s = font.render(text, True, color)
+            surface.blit(s, (px + panel_w // 2 - s.get_width() // 2, y))
+            y += font.get_height() + 8
 
     def _draw_button(
         self,
