@@ -268,7 +268,7 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
             from cognitive_data_arcade.games.text_tokenizer.info import get_game_info
             from cognitive_data_arcade.games.text_tokenizer.scene import TextTokenizerLabScene
 
-            inner = TextTokenizerLabScene()
+            inner = TextTokenizerLabScene(pm, strings)
             game_info = get_game_info(strings)
             return PausableGame(inner, game_info, lambda: _make(), strings, pm)
 
@@ -281,7 +281,7 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
             from cognitive_data_arcade.games.word_weight_factory.info import get_game_info
             from cognitive_data_arcade.games.word_weight_factory.scene import WordWeightFactoryScene
 
-            inner = WordWeightFactoryScene()
+            inner = WordWeightFactoryScene(pm, strings)
             game_info = get_game_info(strings)
             return PausableGame(inner, game_info, lambda: _make(), strings, pm)
 
@@ -294,7 +294,7 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
             from cognitive_data_arcade.games.emotion_classifier.game import EmotionClassifierScene
             from cognitive_data_arcade.games.emotion_classifier.info import get_game_info
 
-            inner = EmotionClassifierScene()
+            inner = EmotionClassifierScene(pm, strings)
             game_info = get_game_info(strings)
             return PausableGame(inner, game_info, lambda: _make(), strings, pm)
 
@@ -307,7 +307,7 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
             from cognitive_data_arcade.games.semantic_space.game import SemanticSpaceScene
             from cognitive_data_arcade.games.semantic_space.info import get_game_info
 
-            inner = SemanticSpaceScene()
+            inner = SemanticSpaceScene(pm, strings)
             game_info = get_game_info(strings)
             return PausableGame(inner, game_info, lambda: _make(), strings, pm)
 
@@ -320,7 +320,7 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
             from cognitive_data_arcade.games.topic_detective.game import TopicDetectiveScene
             from cognitive_data_arcade.games.topic_detective.info import get_game_info
 
-            inner = TopicDetectiveScene()
+            inner = TopicDetectiveScene(pm, strings)
             game_info = get_game_info(strings)
             return PausableGame(inner, game_info, lambda: _make(), strings, pm)
 
@@ -333,7 +333,7 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
             from cognitive_data_arcade.games.human_vs_model.game import HumanVsModelScene
             from cognitive_data_arcade.games.human_vs_model.info import get_game_info
 
-            inner = HumanVsModelScene()
+            inner = HumanVsModelScene(pm, strings)
             game_info = get_game_info(strings)
             return PausableGame(inner, game_info, lambda: _make(), strings, pm)
 
@@ -543,37 +543,37 @@ def game_factory_for_with_back(
         from cognitive_data_arcade.games.text_tokenizer.info import get_game_info
         from cognitive_data_arcade.games.text_tokenizer.scene import TextTokenizerLabScene
 
-        return _make_pausable_with_back(TextTokenizerLabScene(), get_game_info(strings))
+        return _make_pausable_with_back(TextTokenizerLabScene(pm, strings), get_game_info(strings))
 
     if lesson_num == 22:
         from cognitive_data_arcade.games.word_weight_factory.info import get_game_info
         from cognitive_data_arcade.games.word_weight_factory.scene import WordWeightFactoryScene
 
-        return _make_pausable_with_back(WordWeightFactoryScene(), get_game_info(strings))
+        return _make_pausable_with_back(WordWeightFactoryScene(pm, strings), get_game_info(strings))
 
     if lesson_num == 23:
         from cognitive_data_arcade.games.emotion_classifier.game import EmotionClassifierScene
         from cognitive_data_arcade.games.emotion_classifier.info import get_game_info
 
-        return _make_pausable_with_back(EmotionClassifierScene(), get_game_info(strings))
+        return _make_pausable_with_back(EmotionClassifierScene(pm, strings), get_game_info(strings))
 
     if lesson_num == 24:
         from cognitive_data_arcade.games.semantic_space.game import SemanticSpaceScene
         from cognitive_data_arcade.games.semantic_space.info import get_game_info
 
-        return _make_pausable_with_back(SemanticSpaceScene(), get_game_info(strings))
+        return _make_pausable_with_back(SemanticSpaceScene(pm, strings), get_game_info(strings))
 
     if lesson_num == 25:
         from cognitive_data_arcade.games.topic_detective.game import TopicDetectiveScene
         from cognitive_data_arcade.games.topic_detective.info import get_game_info
 
-        return _make_pausable_with_back(TopicDetectiveScene(), get_game_info(strings))
+        return _make_pausable_with_back(TopicDetectiveScene(pm, strings), get_game_info(strings))
 
     if lesson_num == 26:
         from cognitive_data_arcade.games.human_vs_model.game import HumanVsModelScene
         from cognitive_data_arcade.games.human_vs_model.info import get_game_info
 
-        return _make_pausable_with_back(HumanVsModelScene(), get_game_info(strings))
+        return _make_pausable_with_back(HumanVsModelScene(pm, strings), get_game_info(strings))
 
     if lesson_num == 27:
         from cognitive_data_arcade.games.social_network.game import SocialNetworkScene
