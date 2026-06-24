@@ -101,6 +101,7 @@ class BigDataMapGame(Scene):
         self._concept_detail_factory = concept_detail_factory
         self._done = False
         self._next: Scene | None = None
+        self._nodes_visited: set[int] = set()
 
         self._positions = _compute_positions()  # {lesson_num: (x,y)} at zoom=1
         self._zoom: float = 1.0
@@ -196,6 +197,7 @@ class BigDataMapGame(Scene):
                         self._navigate_to(hit)
                     else:
                         self._selected = hit
+                        self._nodes_visited.add(hit)
                         if hit in self._nav_order:
                             self._nav_idx = self._nav_order.index(hit)
                         self._compute_connected()
@@ -212,16 +214,21 @@ class BigDataMapGame(Scene):
         if key in (pygame.K_UP, pygame.K_RIGHT):
             self._nav_idx = (self._nav_idx - 1) % n
             self._selected = self._nav_order[self._nav_idx]
+            self._nodes_visited.add(self._selected)
             self._compute_connected()
             audio.play_sfx("navigate")
         elif key in (pygame.K_DOWN, pygame.K_LEFT):
             self._nav_idx = (self._nav_idx + 1) % n
             self._selected = self._nav_order[self._nav_idx]
+            self._nodes_visited.add(self._selected)
             self._compute_connected()
             audio.play_sfx("navigate")
         elif key in (pygame.K_RETURN, pygame.K_KP_ENTER):
             if self._selected is not None:
                 self._navigate_to(self._selected)
+        elif key == pygame.K_q:
+            if self._concept_detail_factory is None:
+                self._done = True
         elif key == pygame.K_r:
             self._zoom = 1.0  # reset zoom to default
 
@@ -389,8 +396,44 @@ class BigDataMapGame(Scene):
             (16, bar_y + 6 + self._font_info.get_height() + 4),
         )
 
+    def _build_next_scene(self) -> Scene:
+        from cognitive_data_arcade.ui.session_summary import SessionSummaryScene
+        from cognitive_data_arcade.engine.badges import BadgeEngine, SessionResult
+
+        visited = len(self._nodes_visited)
+        ap = min(100, visited * 2)
+        session = SessionResult(
+            task_name="big_data_map",
+            participant_id=self._pm.load().device_uuid,
+            session_id="map_exploration",
+            total_trials=31,
+            correct_trials=min(visited, 31),
+            avg_reaction_time_ms=0.0,
+            min_reaction_time_ms=0.0,
+            max_reaction_time_ms=0.0,
+            arcade_points_earned=ap,
+            science_points_earned=0,
+        )
+        profile_before = self._pm.load()
+        badge_engine = BadgeEngine()
+        new_badge_ids = badge_engine.evaluate(session, profile_before)
+        self._pm.add_ap(session.arcade_points_earned)
+        for bid in new_badge_ids:
+            self._pm.award_badge(bid)
+        profile_after = self._pm.load()
+        return SessionSummaryScene(
+            session=session,
+            new_badge_ids=new_badge_ids,
+            profile_before=profile_before,
+            profile_after=profile_after,
+            strings=self._strings,
+            profile_manager=self._pm,
+        )
+
     def is_done(self) -> bool:
         return self._done
 
     def next_scene(self) -> Scene | None:
+        if self._done and self._next is None and self._concept_detail_factory is None:
+            self._next = self._build_next_scene()
         return self._next if self._done else None

@@ -50,9 +50,11 @@ def _wrap_text(text: str, font: pygame.font.Font, max_width: int) -> list[str]:
 
 
 class PhaseResultScene(Scene):
-    def __init__(self, session_score: int, beat_ai_count: int) -> None:
+    def __init__(self, session_score: int, beat_ai_count: int, pm=None, strings=None) -> None:
         self._session_score = session_score
         self._beat_ai_count = beat_ai_count
+        self._pm = pm
+        self._strings = strings
         self._done = False
         self._next: Scene | None = None
         self._aha = random.choice(_AHA_INSIGHTS)
@@ -65,15 +67,56 @@ class PhaseResultScene(Scene):
             self._stars = 1
 
     def handle_event(self, event: pygame.event.Event) -> None:
-        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                if not self._done and self._pm is not None:
+                    self._next = self._build_next_scene()
+                self._done = True
+        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             if _BTN_PLAY.collidepoint(event.pos):
                 from cognitive_data_arcade.games.human_vs_model.phase_intro import PhaseIntroScene
 
                 self._next = PhaseIntroScene()
                 self._done = True
             elif _BTN_MENU.collidepoint(event.pos):
-                self._next = None
+                if not self._done and self._pm is not None:
+                    self._next = self._build_next_scene()
+                else:
+                    self._next = None
                 self._done = True
+
+    def _build_next_scene(self) -> "Scene":
+        from cognitive_data_arcade.engine.badges import BadgeEngine, SessionResult
+        from cognitive_data_arcade.ui.session_summary import SessionSummaryScene
+
+        ap = min(100, self._session_score // 3)
+        session = SessionResult(
+            task_name="human_vs_model",
+            participant_id=self._pm.load().device_uuid,
+            session_id="hvm_session",
+            total_trials=8,
+            correct_trials=min(8, self._beat_ai_count),
+            avg_reaction_time_ms=0.0,
+            min_reaction_time_ms=0.0,
+            max_reaction_time_ms=0.0,
+            arcade_points_earned=ap,
+            science_points_earned=0,
+        )
+        profile_before = self._pm.load()
+        badge_engine = BadgeEngine()
+        new_badge_ids = badge_engine.evaluate(session, profile_before)
+        self._pm.add_ap(ap)
+        for bid in new_badge_ids:
+            self._pm.award_badge(bid)
+        profile_after = self._pm.load()
+        return SessionSummaryScene(
+            session=session,
+            new_badge_ids=new_badge_ids,
+            profile_before=profile_before,
+            profile_after=profile_after,
+            strings=self._strings,
+            profile_manager=self._pm,
+        )
 
     def update(self, dt_ms: float = 0.0) -> None:
         pass

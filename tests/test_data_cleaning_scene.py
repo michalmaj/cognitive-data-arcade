@@ -456,9 +456,7 @@ def test_session_result_ap_matches_compute_score(tmp_path):
     scene._phase = Phase.REPORT
     scene.handle_event(_key(pygame.K_RETURN))
     next_s = scene.next_scene()
-    _d, _f, expected_total = compute_score(
-        scene._session, scene._table.flagged, scene._fixes
-    )
+    _d, _f, expected_total = compute_score(scene._session, scene._table.flagged, scene._fixes)
     assert next_s._session.arcade_points_earned == expected_total
 
 
@@ -475,9 +473,7 @@ def test_double_key_in_report_does_not_double_award_ap(tmp_path):
     scene._phase = Phase.REPORT
     scene.handle_event(_key(pygame.K_RETURN))
     scene.handle_event(_key(pygame.K_RETURN))  # second press — must not double-award
-    _d, _f, expected_ap = compute_score(
-        scene._session, scene._table.flagged, scene._fixes
-    )
+    _d, _f, expected_ap = compute_score(scene._session, scene._table.flagged, scene._fixes)
     assert expected_ap > 0, "test precondition: expected_ap must be nonzero"
     profile = pm.load()
     assert profile.arcade_points == expected_ap

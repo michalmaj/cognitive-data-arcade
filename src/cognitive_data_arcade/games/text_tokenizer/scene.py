@@ -29,10 +29,13 @@ _N_TABS = len(_TAB_NAMES)
 
 
 class TextTokenizerLabScene(Scene):
-    def __init__(self) -> None:
+    def __init__(self, pm=None, strings=None) -> None:
+        self._pm = pm
+        self._strings = strings
         self._done = False
         self._next: Scene | None = None
         self._tab = 0
+        self._tab_switches: int = 0
 
         self._state = SharedState()
         self._engine = TokenizerEngine()
@@ -61,11 +64,18 @@ class TextTokenizerLabScene(Scene):
 
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_q:
+                if not self._done and self._pm is not None:
+                    self._next = self._build_next_scene()
+                self._done = True
+                return
             if event.key == pygame.K_RIGHT:
                 self._tab = (self._tab + 1) % _N_TABS
+                self._tab_switches += 1
                 return
             if event.key == pygame.K_LEFT:
                 self._tab = (self._tab - 1) % _N_TABS
+                self._tab_switches += 1
                 return
 
         # Tab bar click (coords in input-bar space, tab rects are within nav area)
@@ -73,6 +83,8 @@ class TextTokenizerLabScene(Scene):
             for i, rect in enumerate(self._tab_rects):
                 adjusted_pos = (event.pos[0], event.pos[1] - _INPUT_BAR_H)
                 if rect.collidepoint(adjusted_pos):
+                    if i != self._tab:
+                        self._tab_switches += 1
                     self._tab = i
                     return
 
@@ -134,6 +146,39 @@ class TextTokenizerLabScene(Scene):
         phase_surf.fill(_BG)
         self._phases[self._tab].draw(phase_surf, self._result)
         surface.blit(phase_surf, (0, _INPUT_BAR_H + _NAV_H))
+
+    def _build_next_scene(self) -> "Scene":
+        from cognitive_data_arcade.engine.badges import BadgeEngine, SessionResult
+        from cognitive_data_arcade.ui.session_summary import SessionSummaryScene
+
+        ap = min(100, 30 + self._tab_switches * 5)
+        session = SessionResult(
+            task_name="text_tokenizer_lab",
+            participant_id=self._pm.load().device_uuid,
+            session_id="sandbox_session",
+            total_trials=3,
+            correct_trials=min(3, self._tab_switches),
+            avg_reaction_time_ms=0.0,
+            min_reaction_time_ms=0.0,
+            max_reaction_time_ms=0.0,
+            arcade_points_earned=ap,
+            science_points_earned=0,
+        )
+        profile_before = self._pm.load()
+        badge_engine = BadgeEngine()
+        new_badge_ids = badge_engine.evaluate(session, profile_before)
+        self._pm.add_ap(ap)
+        for bid in new_badge_ids:
+            self._pm.award_badge(bid)
+        profile_after = self._pm.load()
+        return SessionSummaryScene(
+            session=session,
+            new_badge_ids=new_badge_ids,
+            profile_before=profile_before,
+            profile_after=profile_after,
+            strings=self._strings,
+            profile_manager=self._pm,
+        )
 
 
 def _offset_mouse(event: pygame.event.Event, dy: int) -> pygame.event.Event:

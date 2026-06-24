@@ -10,9 +10,17 @@ from cognitive_data_arcade.games.event_log_detective.scenarios import SCENARIOS
 class _FakePM:
     class _Profile:
         device_uuid = "test-uuid"
+        badges: list = []
+        arcade_points: int = 0
 
     def load(self):
         return self._Profile()
+
+    def add_ap(self, ap: int) -> None:
+        pass
+
+    def award_badge(self, bid: str) -> None:
+        pass
 
 
 def _make_game(difficulty="medium", scenario_idx=0, lang="en"):
@@ -271,12 +279,16 @@ def test_report_backspace_navigates_to_level_scene():
     assert isinstance(game.next_scene(), EventLogLevelScene)
 
 
-def test_report_enter_replays_same_scenario():
+def test_report_enter_routes_to_session_summary():
+    from cognitive_data_arcade.ui.session_summary import SessionSummaryScene
+
     game = _make_game()
+    for i in range(len(game._scenario.decisions)):
+        game._choices[i] = 0
     game._state = _State.REPORT
     game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode=""))
     assert game.is_done()
-    assert isinstance(game.next_scene(), EventLogDetectiveGame)
+    assert isinstance(game.next_scene(), SessionSummaryScene)
 
 
 # ── Draw smoke tests ──────────────────────────────────────────────────────────

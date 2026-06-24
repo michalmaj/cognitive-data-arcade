@@ -112,6 +112,11 @@ class CognitiveDashboardScene(Scene):
         self._wi_fa: int = 0
         self._dragging: str | None = None  # "stroop" | "flanker"
 
+        # Session completion routing
+        self._finish_btn = pygame.Rect(380, 702, 160, 28)
+        self._session_done: bool = False
+        self._next_cache: Scene | None = None
+
     # ── helpers ────────────────────────────────────────────────────
 
     def _show_synthetic_button(self) -> bool:
@@ -229,7 +234,12 @@ class CognitiveDashboardScene(Scene):
                 self._session.flanker = synth.flanker
                 self._session.gonogo = synth.gonogo
                 self._session.synthetic = True
+            elif event.key == pygame.K_q and self._session.is_complete():
+                self._session_done = True
         elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            if self._session.is_complete() and self._finish_btn.collidepoint(event.pos):
+                self._session_done = True
+                return
             if self._session.is_complete() and self._wi_btn_rect().collidepoint(event.pos):
                 self._open_what_if()
                 return
@@ -282,10 +292,58 @@ class CognitiveDashboardScene(Scene):
         pass
 
     def is_done(self) -> bool:
-        return self._done
+        return self._done or self._session_done
 
     def next_scene(self) -> Scene | None:
+        if self._session_done:
+            if self._next_cache is None:
+                self._next_cache = self._build_next_scene()
+            return self._next_cache
         return self._next
+
+    def _build_next_scene(self) -> Scene:
+        from cognitive_data_arcade.engine.badges import BadgeEngine, SessionResult
+        from cognitive_data_arcade.ui.session_summary import SessionSummaryScene
+
+        tasks = [
+            self._session.rt,
+            self._session.stroop,
+            self._session.flanker,
+            self._session.gonogo,
+        ]
+        completed = sum(1 for t in tasks if t is not None)
+        ap = completed * 20
+        if not self._session.synthetic:
+            ap += 20  # bonus for real data
+        ap = min(100, ap)
+
+        session = SessionResult(
+            task_name="cognitive_dashboard",
+            participant_id=self._pm.load().device_uuid,
+            session_id="dashboard_session",
+            total_trials=4,
+            correct_trials=min(completed, 4),
+            avg_reaction_time_ms=0.0,
+            min_reaction_time_ms=0.0,
+            max_reaction_time_ms=0.0,
+            arcade_points_earned=ap,
+            science_points_earned=0,
+        )
+        profile_before = self._pm.load()
+        badge_engine = BadgeEngine()
+        new_badge_ids = badge_engine.evaluate(session, profile_before)
+        self._pm.add_ap(ap)
+        for bid in new_badge_ids:
+            self._pm.award_badge(bid)
+        profile_after = self._pm.load()
+        return SessionSummaryScene(
+            session=session,
+            new_badge_ids=new_badge_ids,
+            profile_before=profile_before,
+            profile_after=profile_after,
+            strings=self._strings,
+            profile_manager=self._pm,
+        )
 
     # ── draw ───────────────────────────────────────────────────────
 
@@ -385,6 +443,12 @@ class CognitiveDashboardScene(Scene):
         pygame.draw.rect(surface, _DIM, btn, 1, border_radius=4)
         lbl = get_font(20).render("Co by było gdyby? ->", True, _ORANGE)
         surface.blit(lbl, (btn.x + 8, btn.y + 5))
+
+        # Finish button
+        pygame.draw.rect(surface, (30, 80, 30), self._finish_btn, border_radius=4)
+        pygame.draw.rect(surface, (39, 174, 96), self._finish_btn, 1, border_radius=4)
+        fl = get_font(18).render("Zakoncz [Q]", True, (39, 174, 96))
+        surface.blit(fl, (self._finish_btn.x + 6, self._finish_btn.y + 8))
 
     def _draw_synthetic_button(self, surface: pygame.Surface, w: int, h: int) -> None:
         btn_rect = pygame.Rect(w // 2 - 200, h - 110, 400, 44)

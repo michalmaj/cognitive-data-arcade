@@ -274,9 +274,7 @@ class DataCleaningScene(Scene):
             participant_id=participant_id,
             session_id=session_id,
             total_trials=len(self._session.ground_truth),
-            correct_trials=len(
-                set(self._table.flagged) & set(self._session.ground_truth.keys())
-            ),
+            correct_trials=len(set(self._table.flagged) & set(self._session.ground_truth.keys())),
             avg_reaction_time_ms=0.0,
             min_reaction_time_ms=0.0,
             max_reaction_time_ms=0.0,

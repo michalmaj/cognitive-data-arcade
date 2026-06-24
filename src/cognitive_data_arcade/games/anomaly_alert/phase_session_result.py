@@ -64,16 +64,23 @@ def _build_chart(round_results: list[dict]) -> pygame.Surface:
 
 
 class PhaseSessionResultScene(Scene):
-    def __init__(self, round_results: list[dict]) -> None:
+    def __init__(self, round_results: list[dict], pm=None, strings=None) -> None:
         self._results = round_results
+        self._pm = pm
+        self._strings = strings
         self._total = sum(r["score"] for r in round_results)
         self._chart_surf = _build_chart(round_results)
         self._done = False
         self._next: Scene | None = None
 
     def handle_event(self, event: pygame.event.Event) -> None:
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-            self._replay()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RETURN:
+                self._replay()
+            elif event.key == pygame.K_ESCAPE:
+                if not self._done:
+                    self._next = self._build_next_scene()
+                self._done = True
         elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             if _REPLAY_RECT.collidepoint(event.pos):
                 self._replay()
@@ -83,6 +90,41 @@ class PhaseSessionResultScene(Scene):
 
         self._next = PhaseIntroScene()
         self._done = True
+
+    def _build_next_scene(self) -> "Scene":
+        from cognitive_data_arcade.engine.badges import BadgeEngine, SessionResult
+        from cognitive_data_arcade.ui.session_summary import SessionSummaryScene
+
+        ap = min(100, self._total // 4)
+        total = len(self._results)
+        correct = sum(1 for r in self._results if r.get("score", 0) >= 20)
+        session = SessionResult(
+            task_name="anomaly_alert",
+            participant_id=self._pm.load().device_uuid,
+            session_id="anomaly_session",
+            total_trials=total,
+            correct_trials=min(total, correct),
+            avg_reaction_time_ms=0.0,
+            min_reaction_time_ms=0.0,
+            max_reaction_time_ms=0.0,
+            arcade_points_earned=ap,
+            science_points_earned=0,
+        )
+        profile_before = self._pm.load()
+        badge_engine = BadgeEngine()
+        new_badge_ids = badge_engine.evaluate(session, profile_before)
+        self._pm.add_ap(ap)
+        for bid in new_badge_ids:
+            self._pm.award_badge(bid)
+        profile_after = self._pm.load()
+        return SessionSummaryScene(
+            session=session,
+            new_badge_ids=new_badge_ids,
+            profile_before=profile_before,
+            profile_after=profile_after,
+            strings=self._strings,
+            profile_manager=self._pm,
+        )
 
     def update(self, dt_ms: float = 0.0) -> None:
         pass

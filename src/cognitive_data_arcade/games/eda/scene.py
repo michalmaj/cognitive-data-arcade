@@ -1,6 +1,8 @@
 # src/cognitive_data_arcade/games/eda/scene.py
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 import pygame
 
 from cognitive_data_arcade.engine.fonts import get_font
@@ -14,6 +16,10 @@ from cognitive_data_arcade.engine.colors import (
     WHITE as _WHITE,
     DIM as _DIM,
 )
+
+if TYPE_CHECKING:
+    from cognitive_data_arcade.engine.i18n import Strings
+    from cognitive_data_arcade.profile.manager import ProfileManager
 
 _ACTIVE = (243, 156, 18)
 
@@ -121,7 +127,14 @@ _HELP_LINES: list[tuple[str, bool]] = [
 
 
 class EDAScene(Scene):
-    def __init__(self) -> None:
+    def __init__(
+        self, pm: "ProfileManager | None" = None, strings: "Strings | None" = None
+    ) -> None:
+        self._pm = pm
+        self._strings = strings
+        self._generate_count: int = 0
+        self._done: bool = False
+        self._next: "Scene | None" = None
         self._controls = ControlPanel()
         self._charts = ChartPanel()
         self._results = ResultsPanel()
@@ -131,6 +144,9 @@ class EDAScene(Scene):
 
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_q:
+                self._done = True
+                return
             if event.key == pygame.K_l:
                 self._show_legend = not self._show_legend
                 if self._show_legend:
@@ -153,6 +169,7 @@ class EDAScene(Scene):
 
         action = self._controls.handle_event(event)
         if action == "generate":
+            self._generate_count += 1
             params = self._controls.get_params()
             threshold = self._controls.get_hypothesis_threshold()
             result = simulate(**params)
@@ -227,5 +244,43 @@ class EDAScene(Scene):
             pygame.draw.rect(surface, (42, 42, 80), (bar_x, bar_y, 6, bar_h), border_radius=3)
             pygame.draw.rect(surface, _DIM, (bar_x, thumb_y, 6, thumb_h), border_radius=3)
 
+    def _build_next_scene(self) -> "Scene":
+        from cognitive_data_arcade.ui.session_summary import SessionSummaryScene
+        from cognitive_data_arcade.engine.badges import BadgeEngine, SessionResult
+
+        ap = min(100, 30 + self._generate_count * 5)
+        session = SessionResult(
+            task_name="eda_sandbox",
+            participant_id=self._pm.load().device_uuid,  # type: ignore[union-attr]
+            session_id="eda_session",
+            total_trials=self._generate_count,
+            correct_trials=self._generate_count,
+            avg_reaction_time_ms=0.0,
+            min_reaction_time_ms=0.0,
+            max_reaction_time_ms=0.0,
+            arcade_points_earned=ap,
+            science_points_earned=0,
+        )
+        profile_before = self._pm.load()  # type: ignore[union-attr]
+        badge_engine = BadgeEngine()
+        new_badge_ids = badge_engine.evaluate(session, profile_before)
+        self._pm.add_ap(session.arcade_points_earned)  # type: ignore[union-attr]
+        for bid in new_badge_ids:
+            self._pm.award_badge(bid)  # type: ignore[union-attr]
+        profile_after = self._pm.load()  # type: ignore[union-attr]
+        return SessionSummaryScene(
+            session=session,
+            new_badge_ids=new_badge_ids,
+            profile_before=profile_before,
+            profile_after=profile_after,
+            strings=self._strings,  # type: ignore[arg-type]
+            profile_manager=self._pm,  # type: ignore[arg-type]
+        )
+
     def is_done(self) -> bool:
-        return False
+        return self._done
+
+    def next_scene(self) -> "Scene | None":
+        if self._done and self._next is None and self._pm is not None:
+            self._next = self._build_next_scene()
+        return self._next if self._done else None
