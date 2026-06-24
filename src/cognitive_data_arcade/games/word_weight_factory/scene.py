@@ -43,7 +43,7 @@ class WordWeightFactoryScene(Scene):
         self._show_summary: bool = False
         self._summary_timer: float = 0.0
         self._session_start_ms: int = pygame.time.get_ticks()
-        self._steps_visited: set = set()
+        self._steps_visited: set = {self._step}
 
         self._state = CorpusState()
         self._engine = WeightEngine()

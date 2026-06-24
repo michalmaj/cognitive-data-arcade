@@ -148,7 +148,6 @@ class PhaseRoundResultScene(Scene):
         session_score: int = 0,
         round_results: list[dict] | None = None,
         scenario_order: list[int] | None = None,
-        missions_total: int = 5,
     ) -> None:
         self._display = display
         self._round_idx = round_idx

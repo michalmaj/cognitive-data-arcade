@@ -33,7 +33,7 @@ class DistributionPlaygroundScene(Scene):
         self._show_summary: bool = False
         self._summary_timer: float = 0.0
         self._session_start_ms: int = pygame.time.get_ticks()
-        self._phases_visited: set = set()
+        self._phases_visited: set = {self._phase}
 
     def current_phase(self) -> int:
         return self._phase

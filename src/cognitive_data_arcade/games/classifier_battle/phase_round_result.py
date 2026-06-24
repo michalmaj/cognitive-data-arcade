@@ -76,7 +76,6 @@ class PhaseRoundResultScene(Scene):
         session_seed: int = 0,
         session_score: int = 0,
         round_results: list[dict] | None = None,
-        missions_total: int = 5,
     ) -> None:
         # Support dict-style display for testing convenience
         if isinstance(display, dict):

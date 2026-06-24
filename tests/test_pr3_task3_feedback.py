@@ -1,4 +1,4 @@
-"""Failing tests for PR3 Task 3: session summaries and verdict lines."""
+"""Tests for PR3 Task 3: session summaries and verdict lines."""
 
 from pathlib import Path
 import pygame
@@ -50,9 +50,7 @@ def test_classifier_round_result_has_verdict() -> None:
         "clf_accs": {"knn": 0.80, "dt": 0.75},
         "score": 85,
     }
-    scene = PhaseRoundResultScene(
-        result, session_score=85, round_results=[result], missions_total=3
-    )
+    scene = PhaseRoundResultScene(result, session_score=85, round_results=[result])
     assert hasattr(scene, "_verdict")
     assert scene._verdict in ("Wygrales!", "Prawie!", "Przegrales.")
 
@@ -74,9 +72,7 @@ def test_overfitting_round_result_has_gap_verdict() -> None:
         "score": 120,
         "stars": 2,
     }
-    scene = PhaseRoundResultScene(
-        result, session_score=120, round_results=[result], missions_total=3
-    )
+    scene = PhaseRoundResultScene(result, session_score=120, round_results=[result])
     assert hasattr(scene, "_gap_verdict")
 
 

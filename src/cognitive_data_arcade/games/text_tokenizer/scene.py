@@ -39,7 +39,7 @@ class TextTokenizerLabScene(Scene):
         self._show_summary: bool = False
         self._summary_timer: float = 0.0
         self._session_start_ms: int = pygame.time.get_ticks()
-        self._tabs_visited: set = set()
+        self._tabs_visited: set = {self._tab}
         self._compute_count: int = 0
 
         self._state = SharedState()
