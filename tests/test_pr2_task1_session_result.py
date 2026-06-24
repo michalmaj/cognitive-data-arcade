@@ -27,7 +27,12 @@ def test_big_data_map_q_routes_to_session_summary(tmp_path):
 
     pm = _pm(tmp_path)
     game = BigDataMapGame(PL, pm)
+    # Q shows the summary overlay first (PR3)
     game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_q, mod=0, unicode="q"))
+    assert game._show_summary is True
+    assert not game.is_done()  # not done yet - summary is showing
+    # Dismiss the summary with a click - now done
+    game.handle_event(pygame.event.Event(pygame.MOUSEBUTTONDOWN, button=1, pos=(512, 400)))
     assert game.is_done()
     assert isinstance(game.next_scene(), SessionSummaryScene)
 
@@ -78,6 +83,11 @@ def test_eda_sandbox_q_routes_to_session_summary(tmp_path):
 
     pm = _pm(tmp_path)
     game = EDAScene(pm, PL)
+    # Q shows the summary overlay first (PR3)
     game.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_q, mod=0, unicode="q"))
+    assert game._show_summary is True
+    assert not game.is_done()  # not done yet - summary is showing
+    # Dismiss the summary with a click - now done
+    game.handle_event(pygame.event.Event(pygame.MOUSEBUTTONDOWN, button=1, pos=(512, 400)))
     assert game.is_done()
     assert isinstance(game.next_scene(), SessionSummaryScene)

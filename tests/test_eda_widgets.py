@@ -238,3 +238,52 @@ def test_eda_scene_draw_before_generate_does_not_raise():
     scene = EDAScene()
     surface = pygame.Surface((800, 600))
     scene.draw(surface)
+
+
+# -- EDAScene session summary --------------------------------------------------
+
+
+def test_eda_q_key_shows_summary(tmp_path) -> None:
+    """Q key in EDA shows summary overlay, game not immediately done."""
+    from cognitive_data_arcade.profile.manager import ProfileManager
+
+    pm = ProfileManager(tmp_path / "profile.json")
+    scene = EDAScene(pm=pm)
+    scene.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_q, mod=0, unicode="q"))
+    assert scene._show_summary is True
+    assert not scene.is_done()  # not done yet
+
+
+def test_eda_summary_auto_exit(tmp_path) -> None:
+    """EDA summary becomes done after 10s."""
+    from cognitive_data_arcade.profile.manager import ProfileManager
+
+    pm = ProfileManager(tmp_path / "profile.json")
+    scene = EDAScene(pm=pm)
+    scene._show_summary = True
+    scene._summary_timer = 0.0
+    scene.update(10001)
+    assert scene.is_done()
+
+
+def test_eda_summary_click_fast_forwards(tmp_path) -> None:
+    """Click during EDA summary fast-forwards to done."""
+    from cognitive_data_arcade.profile.manager import ProfileManager
+
+    pm = ProfileManager(tmp_path / "profile.json")
+    scene = EDAScene(pm=pm)
+    scene._show_summary = True
+    scene._summary_timer = 0.0
+    scene.handle_event(pygame.event.Event(pygame.MOUSEBUTTONDOWN, button=1, pos=(512, 400)))
+    assert scene.is_done()
+
+
+def test_eda_summary_draw_does_not_crash(tmp_path) -> None:
+    """Drawing the EDA summary overlay should not raise."""
+    from cognitive_data_arcade.profile.manager import ProfileManager
+
+    pm = ProfileManager(tmp_path / "profile.json")
+    scene = EDAScene(pm=pm)
+    scene._show_summary = True
+    surface = pygame.Surface((800, 600))
+    scene.draw(surface)
