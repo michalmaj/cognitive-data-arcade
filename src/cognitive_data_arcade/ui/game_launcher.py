@@ -75,10 +75,12 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
             from cognitive_data_arcade.engine.pause import PausableGame
             from cognitive_data_arcade.games.data_cleaning.info import get_game_info
             from cognitive_data_arcade.games.data_cleaning.scene import DataCleaningScene
+            from cognitive_data_arcade.ui.how_to_play_scene import make_how_to_play
 
             inner = DataCleaningScene(strings, pm)
             game_info = get_game_info(strings)
-            return PausableGame(inner, game_info, lambda: _make(), strings, pm)
+            pausable = PausableGame(inner, game_info, lambda: _make(), strings, pm)
+            return make_how_to_play(pm, game_info, strings, back_scene=pausable)
 
         return _make
 
