@@ -16,6 +16,12 @@ class _FakePM:
 
         return Profile()
 
+    def add_ap(self, points: int):
+        pass
+
+    def award_badge(self, badge_id: str):
+        pass
+
 
 def _key(k: int) -> pygame.event.Event:
     return pygame.event.Event(pygame.KEYDOWN, key=k, mod=0, unicode="")
@@ -166,18 +172,30 @@ def test_esc_in_identify_does_nothing():
     assert not scene.is_done()
 
 
-def test_esc_in_report_does_nothing():
-    scene = _make()
-    scene._phase = Phase.REPORT
-    scene.handle_event(_key(pygame.K_ESCAPE))
-    assert not scene.is_done()
-
-
-def test_report_keys_do_nothing():
+def test_enter_in_report_sets_done():
     scene = _make()
     scene._phase = Phase.REPORT
     scene.handle_event(_key(pygame.K_RETURN))
-    assert not scene.is_done()
+    assert scene.is_done()
+
+
+def test_space_in_report_sets_done():
+    scene = _make()
+    scene._phase = Phase.REPORT
+    scene.handle_event(_key(pygame.K_SPACE))
+    assert scene.is_done()
+
+
+def test_esc_in_report_sets_done():
+    scene = _make()
+    scene._phase = Phase.REPORT
+    scene.handle_event(_key(pygame.K_ESCAPE))
+    assert scene.is_done()
+
+
+def test_other_key_in_report_does_not_set_done():
+    scene = _make()
+    scene._phase = Phase.REPORT
     scene.handle_event(_key(pygame.K_r))
     assert not scene.is_done()
 
@@ -415,3 +433,51 @@ def test_mouse_click_above_table_ignored():
     scene._phase = Phase.IDENTIFY
     scene.handle_event(_mouse((100, 50)))  # above TABLE_Y0=100
     assert len(scene._table.flagged) == 0
+
+
+def test_next_scene_after_report_is_session_summary(tmp_path):
+    from cognitive_data_arcade.profile.manager import ProfileManager
+    from cognitive_data_arcade.ui.session_summary import SessionSummaryScene
+
+    pm = ProfileManager(tmp_path / "profile.json")
+    scene = DataCleaningScene(EN, pm, seed=42)
+    scene._phase = Phase.REPORT
+    scene.handle_event(_key(pygame.K_RETURN))
+    assert scene.is_done()
+    assert isinstance(scene.next_scene(), SessionSummaryScene)
+
+
+def test_session_result_ap_matches_compute_score(tmp_path):
+    from cognitive_data_arcade.games.data_cleaning.generator import compute_score
+    from cognitive_data_arcade.profile.manager import ProfileManager
+
+    pm = ProfileManager(tmp_path / "profile.json")
+    scene = DataCleaningScene(EN, pm, seed=42)
+    scene._phase = Phase.REPORT
+    scene.handle_event(_key(pygame.K_RETURN))
+    next_s = scene.next_scene()
+    _d, _f, expected_total = compute_score(
+        scene._session, scene._table.flagged, scene._fixes
+    )
+    assert next_s._session.arcade_points_earned == expected_total
+
+
+def test_double_key_in_report_does_not_double_award_ap(tmp_path):
+    from cognitive_data_arcade.games.data_cleaning.generator import compute_score
+    from cognitive_data_arcade.profile.manager import ProfileManager
+
+    pm = ProfileManager(tmp_path / "profile.json")
+    scene = DataCleaningScene(EN, pm, seed=42)
+    # Pre-flag all known errors directly in the internal set so compute_score
+    # returns non-zero AP (scene._table.flagged is a read-only property copy)
+    for row_idx in scene._session.ground_truth:
+        scene._table._flagged.add(row_idx)
+    scene._phase = Phase.REPORT
+    scene.handle_event(_key(pygame.K_RETURN))
+    scene.handle_event(_key(pygame.K_RETURN))  # second press — must not double-award
+    _d, _f, expected_ap = compute_score(
+        scene._session, scene._table.flagged, scene._fixes
+    )
+    assert expected_ap > 0, "test precondition: expected_ap must be nonzero"
+    profile = pm.load()
+    assert profile.arcade_points == expected_ap
