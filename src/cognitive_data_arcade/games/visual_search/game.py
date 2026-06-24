@@ -225,13 +225,64 @@ class VisualSearchGame(Scene):
         return self._next_scene_cache
 
     def _build_next_scene(self) -> Scene:
-        from cognitive_data_arcade.ui.menu import LessonMenuScene
-        from cognitive_data_arcade.ui.visual_search_analysis_scene import (
-            VisualSearchAnalysisScene,
-        )
+        from cognitive_data_arcade.engine.badges import BadgeEngine, SessionResult
+        from cognitive_data_arcade.ui.session_summary import SessionSummaryScene
 
-        menu = LessonMenuScene(self._pm, self._strings)
-        return VisualSearchAnalysisScene(self._csv_path, self._strings, menu)
+        valid_rts = [r.rt_ms for r in self._records if r.correct and not math.isnan(r.rt_ms)]
+        total = len(self._records)
+        correct = sum(1 for r in self._records if r.correct)
+        avg_rt = sum(valid_rts) / len(valid_rts) if valid_rts else 0.0
+        min_rt = min(valid_rts) if valid_rts else 0.0
+        max_rt = max(valid_rts) if valid_rts else 0.0
+
+        feat_rec = [r for r in self._records if r.condition == "feature"]
+        conj_rec = [r for r in self._records if r.condition == "conjunction"]
+        feat_acc = sum(1 for r in feat_rec if r.correct) / len(feat_rec) if feat_rec else 0.0
+        conj_acc = sum(1 for r in conj_rec if r.correct) / len(conj_rec) if conj_rec else 0.0
+
+        ap = int(correct / total * 70) if total > 0 else 0
+        if feat_acc >= 0.9:
+            ap += 15
+        if conj_acc >= 0.8:
+            ap += 15
+
+        session = SessionResult(
+            task_name="visual_search",
+            participant_id=self._pid,
+            session_id=self._sid,
+            total_trials=total,
+            correct_trials=min(correct, total),
+            avg_reaction_time_ms=avg_rt,
+            min_reaction_time_ms=min_rt,
+            max_reaction_time_ms=max_rt,
+            arcade_points_earned=ap,
+            science_points_earned=0,
+        )
+        profile_before = self._pm.load()
+        badge_engine = BadgeEngine()
+        new_badge_ids = badge_engine.evaluate(session, profile_before)
+        self._pm.add_ap(ap)
+        for bid in new_badge_ids:
+            self._pm.award_badge(bid)
+        profile_after = self._pm.load()
+
+        def _analysis_factory(csv_path, strings, back_scene):
+            from cognitive_data_arcade.ui.visual_search_analysis_scene import (
+                VisualSearchAnalysisScene,
+            )
+
+            return VisualSearchAnalysisScene(csv_path, strings, back_scene)
+
+        return SessionSummaryScene(
+            session=session,
+            new_badge_ids=new_badge_ids,
+            profile_before=profile_before,
+            profile_after=profile_after,
+            strings=self._strings,
+            profile_manager=self._pm,
+            csv_path=self._csv_path,
+            analysis_factory=_analysis_factory,
+        )
 
     def draw(self, surface: pygame.Surface) -> None:
         surface.fill(_BG)
