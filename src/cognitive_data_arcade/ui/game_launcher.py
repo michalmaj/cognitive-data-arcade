@@ -216,7 +216,7 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
             from cognitive_data_arcade.games.feature_hunter.game import FeatHunterScene
             from cognitive_data_arcade.games.feature_hunter.info import get_game_info
 
-            inner = FeatHunterScene()
+            inner = FeatHunterScene(pm, strings)
             game_info = get_game_info(strings)
             return PausableGame(inner, game_info, lambda: _make(), strings, pm)
 
@@ -229,7 +229,7 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
             from cognitive_data_arcade.games.classifier_battle.game import ClassifierBattleScene
             from cognitive_data_arcade.games.classifier_battle.info import get_game_info
 
-            inner = ClassifierBattleScene()
+            inner = ClassifierBattleScene(pm, strings)
             game_info = get_game_info(strings)
             return PausableGame(inner, game_info, lambda: _make(), strings, pm)
 
@@ -242,7 +242,7 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
             from cognitive_data_arcade.games.overfitting_monster.game import OverfittingMonsterScene
             from cognitive_data_arcade.games.overfitting_monster.info import get_game_info
 
-            inner = OverfittingMonsterScene()
+            inner = OverfittingMonsterScene(pm, strings)
             game_info = get_game_info(strings)
             return PausableGame(inner, game_info, lambda: _make(), strings, pm)
 
@@ -255,7 +255,7 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
             from cognitive_data_arcade.games.anomaly_alert.game import AnomalyAlertScene
             from cognitive_data_arcade.games.anomaly_alert.info import get_game_info
 
-            inner = AnomalyAlertScene()
+            inner = AnomalyAlertScene(pm, strings)
             game_info = get_game_info(strings)
             return PausableGame(inner, game_info, lambda: _make(), strings, pm)
 
@@ -517,25 +517,27 @@ def game_factory_for_with_back(
         from cognitive_data_arcade.games.feature_hunter.game import FeatHunterScene
         from cognitive_data_arcade.games.feature_hunter.info import get_game_info
 
-        return _make_pausable_with_back(FeatHunterScene(), get_game_info(strings))
+        return _make_pausable_with_back(FeatHunterScene(pm, strings), get_game_info(strings))
 
     if lesson_num == 18:
         from cognitive_data_arcade.games.classifier_battle.game import ClassifierBattleScene
         from cognitive_data_arcade.games.classifier_battle.info import get_game_info
 
-        return _make_pausable_with_back(ClassifierBattleScene(), get_game_info(strings))
+        return _make_pausable_with_back(ClassifierBattleScene(pm, strings), get_game_info(strings))
 
     if lesson_num == 19:
         from cognitive_data_arcade.games.overfitting_monster.game import OverfittingMonsterScene
         from cognitive_data_arcade.games.overfitting_monster.info import get_game_info
 
-        return _make_pausable_with_back(OverfittingMonsterScene(), get_game_info(strings))
+        return _make_pausable_with_back(
+            OverfittingMonsterScene(pm, strings), get_game_info(strings)
+        )
 
     if lesson_num == 20:
         from cognitive_data_arcade.games.anomaly_alert.game import AnomalyAlertScene
         from cognitive_data_arcade.games.anomaly_alert.info import get_game_info
 
-        return _make_pausable_with_back(AnomalyAlertScene(), get_game_info(strings))
+        return _make_pausable_with_back(AnomalyAlertScene(pm, strings), get_game_info(strings))
 
     if lesson_num == 21:
         from cognitive_data_arcade.games.text_tokenizer.info import get_game_info
