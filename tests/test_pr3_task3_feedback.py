@@ -110,6 +110,28 @@ def test_social_network_q_shows_summary(tmp_path) -> None:
     assert not scene.is_done()
 
 
+def test_text_tokenizer_summary_auto_exit(tmp_path) -> None:
+    pygame.init()
+    from cognitive_data_arcade.games.text_tokenizer.scene import TextTokenizerLabScene
+
+    scene = TextTokenizerLabScene(_pm(tmp_path), PL)
+    scene._show_summary = True
+    scene._summary_timer = 0.0
+    scene.update(10001)
+    assert scene.is_done()
+
+
+def test_social_network_summary_auto_exit(tmp_path) -> None:
+    pygame.init()
+    from cognitive_data_arcade.games.social_network.game import SocialNetworkScene
+
+    scene = SocialNetworkScene(_pm(tmp_path), PL)
+    scene._show_summary = True
+    scene._summary_timer = 0.0
+    scene.update(10001)
+    assert scene.is_done()
+
+
 def test_recommendation_bubble_has_verdict() -> None:
     pygame.init()
     from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState

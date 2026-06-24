@@ -110,6 +110,8 @@ class TextTokenizerLabScene(Scene):
         elif not changed:
             self._phases[self._tab].handle_event(event)
 
+        if changed:
+            self._compute_count += 1
         self._result = self._recompute()
 
     def update(self, dt_ms: float = 0.0) -> None:
