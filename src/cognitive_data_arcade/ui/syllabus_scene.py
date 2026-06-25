@@ -16,14 +16,16 @@ _BG = (13, 15, 26)
 _SURFACE = (22, 24, 40)
 _SURFACE2 = (30, 32, 56)
 _ACCENT = (99, 102, 241)
+_ACCENT_LIGHT = (129, 140, 248)
 _TEXT = (240, 241, 255)
 _DIM = (90, 96, 144)
 _DONE = (74, 222, 128)
+_HOVER_BORDER = (160, 163, 255)
 _TOPBAR_H = 52
 
 
 class SyllabusScene(Scene):
-    """Shows 6 acts in a 2x3 grid with title, lesson count and completion status."""
+    """Shows 6 acts in a 2x3 grid with title, description, lesson count and completion."""
 
     def __init__(self, pm: ProfileManager, strings: Strings, back_scene: Scene) -> None:
         self._pm = pm
@@ -31,6 +33,8 @@ class SyllabusScene(Scene):
         self._back = back_scene
         self._done = False
         self._next: Scene | None = None
+        self._card_rects: list[pygame.Rect] = []
+        self._hovered: int | None = None
         profile = pm.load()
         completed = set(profile.completed_lessons)
         self._completed_acts: set[int] = {
@@ -42,11 +46,41 @@ class SyllabusScene(Scene):
         self._done_lessons = len(completed)
 
     def handle_event(self, event: pygame.event.Event) -> None:
+        if event.type == pygame.MOUSEMOTION:
+            self._hovered = self._card_at(event.pos)
+            return
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            idx = self._card_at(event.pos)
+            if idx is not None:
+                self._launch_act(idx)
+            return
         if event.type != pygame.KEYDOWN:
             return
         if event.key == pygame.K_ESCAPE:
             self._next = self._back
             self._done = True
+
+    def _card_at(self, pos: tuple[int, int]) -> int | None:
+        for i, rect in enumerate(self._card_rects):
+            if rect.collidepoint(pos):
+                return i
+        return None
+
+    def _launch_act(self, module_idx: int) -> None:
+        from cognitive_data_arcade.ui.act_intro_scene import ActIntroScene
+        from cognitive_data_arcade.ui.module_runner_scene import ModuleRunnerScene
+
+        runner = ModuleRunnerScene(module_idx, self._pm, self._strings)
+        fresh_syllabus = SyllabusScene(self._pm, self._strings, self._back)
+        intro = ActIntroScene(
+            module_idx=module_idx,
+            pm=self._pm,
+            strings=self._strings,
+            back_scene=fresh_syllabus,
+            confirm_scene=runner,
+        )
+        self._next = intro
+        self._done = True
 
     def update(self, dt_ms: float = 0.0) -> None:
         pass
@@ -83,9 +117,10 @@ class SyllabusScene(Scene):
     def _draw_grid(self, surface: pygame.Surface) -> None:
         is_pl = self._strings.language == "pl"
         cols, rows = 3, 2
-        pad = 20
+        pad = 16
         card_w = (_W - pad * (cols + 1)) // cols
-        card_h = (_H - _TOPBAR_H - 40 - pad * (rows + 1)) // rows
+        card_h = (_H - _TOPBAR_H - 32 - pad * (rows + 1)) // rows
+        self._card_rects = []
 
         for idx in range(6):
             col = idx % cols
@@ -93,42 +128,71 @@ class SyllabusScene(Scene):
             cx = pad + col * (card_w + pad)
             cy = _TOPBAR_H + pad + row * (card_h + pad)
             rect = pygame.Rect(cx, cy, card_w, card_h)
+            self._card_rects.append(rect)
 
             is_done = idx in self._completed_acts
-            border_color = _DONE if is_done else _SURFACE2
+            is_hovered = idx == self._hovered
+
             bg_color = (18, 22, 36) if is_done else _SURFACE
+            if is_hovered:
+                border_color = _HOVER_BORDER
+                border_w = 2
+            elif is_done:
+                border_color = _DONE
+                border_w = 2
+            else:
+                border_color = _SURFACE2
+                border_w = 1
 
             pygame.draw.rect(surface, bg_color, rect, border_radius=8)
-            pygame.draw.rect(surface, border_color, rect, 2, border_radius=8)
+            pygame.draw.rect(surface, border_color, rect, border_w, border_radius=8)
 
-            act_num = get_font(13).render(
-                f"AKT {idx + 1}" if is_pl else f"ACT {idx + 1}", True, _ACCENT
-            )
-            surface.blit(act_num, (cx + 12, cy + 10))
+            # Act chip
+            act_label = f"AKT {idx + 1}" if is_pl else f"ACT {idx + 1}"
+            act_surf = get_font(13).render(act_label, True, _ACCENT)
+            surface.blit(act_surf, (cx + 12, cy + 10))
 
-            content = ACT_INTROS[idx]
-            title_key = "title_pl" if is_pl else "title_en"
-            raw_title = content[title_key]
-            short_title = raw_title.split(":", 1)[-1].strip() if ":" in raw_title else raw_title
-            if len(short_title) > 24:
-                short_title = short_title[:22] + ".."
-            title_surf = get_font(18).render(short_title, True, _TEXT)
-            surface.blit(title_surf, (cx + 12, cy + 28))
-
-            lessons = _MODULE_LESSONS[idx]
-            lesson_count = get_font(15).render(
-                f"{len(lessons)} lekcji" if is_pl else f"{len(lessons)} lessons",
-                True,
-                _DIM,
-            )
-            surface.blit(lesson_count, (cx + 12, cy + card_h - 28))
-
+            # DONE badge (top-right)
             if is_done:
-                done_surf = get_font(15).render("UKONCZONO" if is_pl else "DONE", True, _DONE)
+                done_label = "UKOŃCZONO" if is_pl else "DONE"
+                done_surf = get_font(13).render(done_label, True, _DONE)
                 surface.blit(done_surf, (cx + card_w - done_surf.get_width() - 12, cy + 10))
+
+            # Short title (Unicode OK — Space Grotesk)
+            title_key = "short_title_pl" if is_pl else "short_title_en"
+            title_surf = get_font(18).render(ACT_INTROS[idx][title_key], True, _TEXT)
+            surface.blit(title_surf, (cx + 12, cy + 30))
+
+            # Description (2 lines)
+            desc_key = "desc_pl" if is_pl else "desc_en"
+            desc_font = get_font(14)
+            desc_y = cy + 56
+            for line in ACT_INTROS[idx][desc_key].split("\n"):
+                if not line.strip():
+                    continue
+                ds = desc_font.render(line, True, _DIM)
+                surface.blit(ds, (cx + 12, desc_y))
+                desc_y += desc_font.get_height() + 2
+
+            # Lesson count (bottom)
+            lessons = _MODULE_LESSONS[idx]
+            count_text = f"{len(lessons)} lekcji" if is_pl else f"{len(lessons)} lessons"
+            count_surf = get_font(13).render(count_text, True, _DIM)
+            surface.blit(count_surf, (cx + 12, cy + card_h - 24))
+
+            # Hover arrow hint
+            if is_hovered:
+                arrow = get_font(13).render(
+                    "kliknij aby zacząć >" if is_pl else "click to start >", True, _ACCENT_LIGHT
+                )
+                surface.blit(arrow, (cx + card_w - arrow.get_width() - 12, cy + card_h - 24))
 
     def _draw_footer(self, surface: pygame.Surface) -> None:
         is_pl = self._strings.language == "pl"
-        hint_text = "ESC  powrot" if is_pl else "ESC  back"
-        hint = get_font(16).render(hint_text, True, _DIM)
-        surface.blit(hint, (_W // 2 - hint.get_width() // 2, _H - 28))
+        hint_text = (
+            "ESC  powrót  |  kliknij akt aby przejść do intro"
+            if is_pl
+            else "ESC  back  |  click an act to open its intro"
+        )
+        hint = get_font(15).render(hint_text, True, _DIM)
+        surface.blit(hint, (_W // 2 - hint.get_width() // 2, _H - 26))

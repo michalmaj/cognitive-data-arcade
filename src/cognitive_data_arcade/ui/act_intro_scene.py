@@ -25,11 +25,13 @@ class ActIntroScene(Scene):
         pm: ProfileManager,
         strings: Strings,
         back_scene: Scene,
+        confirm_scene: Scene | None = None,
     ) -> None:
         self._module_idx = module_idx
         self._pm = pm
         self._strings = strings
         self._back = back_scene
+        self._confirm_target = confirm_scene if confirm_scene is not None else back_scene
         self._done = False
         self._next: Scene | None = None
         self._content = ACT_INTROS[module_idx]
@@ -47,7 +49,7 @@ class ActIntroScene(Scene):
 
     def _confirm(self) -> None:
         self._pm.set_seen_act_intro(self._module_idx)
-        self._next = self._back
+        self._next = self._confirm_target
         self._done = True
 
     def update(self, dt_ms: float = 0.0) -> None:
