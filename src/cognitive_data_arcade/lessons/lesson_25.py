@@ -9,17 +9,17 @@ CONTENT: dict[str, dict[str, list[str]]] = {
             "Blei, Ng i Jordan (2003) opublikowali LDA w Journal of Machine Learning Research. Artykuł zyskał ponad 40 000 cytowań i jest jednym z najczęściej cytowanych artykułów w historii uczenia maszynowego. Nazwa pochodzi od rozkładu Dirichleta - Petera Lejeune'a Dirichleta (1805-1859), niemieckiego matematyka, którego rozkład leży u podstaw bayesowskich modeli mieszanin.",
             "Temat w LDA to nie kategoria - to 'rodzina słów'. Top-5 słów tematu to jego 'odcisk palca': Sport: bieg, medal, trening, zawodnik, turniej. Słowa o wysokim prawdopodobieństwie definiują charakter tematu.",
             "Każdy dokument w LDA to mieszanina tematów, nie pojedyncza etykieta. Artykuł o sportowcu na diecie może być w 70% Sport i 25% Zdrowie. Rozkład tematyczny dokumentu to wektor prawdopodobieństw.",
-            "Parametr K (liczba tematów) to hiperparametr - nie ma jednej poprawnej odpowiedzi. Za mało K: tematy są zbyt ogólne. Za dużo K: fragmentacja, tematy sie powtarzają. Ocenia sie K przez interpretację jakościową i metryki jak perplexity.",
-            "BERTopic (Grootendorst, 2022) - nowoczesne podejście łączące osadzenia zdań (sentence-transformers) z klastrowaniem HDBSCAN. Nie wymaga podawania K z góry - liczba tematów wyłania sie z danych. Dostępne jako pakiet Python, dominuje w nowych badaniach analizy tekstów.",
+            "Parametr K (liczba tematów) to hiperparametr - nie ma jednej poprawnej odpowiedzi. Za mało K: tematy są zbyt ogólne. Za dużo K: fragmentacja, tematy się powtarzają. Ocenia się K przez interpretację jakościową i metryki jak perplexity.",
+            "BERTopic (Grootendorst, 2022) - nowoczesne podejście łączące osadzenia zdań (sentence-transformers) z klastrowaniem HDBSCAN. Nie wymaga podawania K z góry - liczba tematów wyłania się z danych. Dostępne jako pakiet Python, dominuje w nowych badaniach analizy tekstów.",
         ],
         "notes": [
             "LDA kontra NMF (Non-negative Matrix Factorization): oba rozkładają macierz dokumentów na tematy, ale NMF daje rzadsze, bardziej interpretowalne rozkłady. LDA jest bardziej probabilistyczne; NMF często szybsze obliczeniowo.",
             "Zastosowania: analiza recenzji (Amazon, Twitter), klasyfikacja dokumentów medycznych, automatyczne tagowanie artykułów, analiza trendów w social media. Popularne biblioteki: Gensim, Scikit-learn (LatentDirichletAllocation).",
         ],
         "tasks": [
-            "Zagraj w Topic Detective - w którym typie misji najczęściej pojawiały sie błędy? Co to mówi o rozumieniu tematów jako rozkładów słów?",
+            "Zagraj w Topic Detective - w którym typie misji najczęściej pojawiały się błędy? Co to mówi o rozumieniu tematów jako rozkładów słów?",
             "Weź dowolny artykuł z internetu i oszacuj jego rozkład tematyczny. Ile procent tekstu należy do każdego tematu? Porównaj z intuicją LDA.",
-            "Wyjaśnij, czym różni sie 'temat LDA' od kategorii w słowniku. Dlaczego LDA może odkryć temat, którego człowiek by nie wymyślił?",
+            "Wyjaśnij, czym różni się 'temat LDA' od kategorii w słowniku. Dlaczego LDA może odkryć temat, którego człowiek by nie wymyślił?",
         ],
     },
     "en": {

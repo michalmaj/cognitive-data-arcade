@@ -12,11 +12,11 @@ CONTENT: dict[str, dict[str, list[str]]] = {
             "Datasaurus Dozen (Matejka i Fitzmaurice, CHI 2017) - 12 zbiorów danych o identycznych statystykach opisowych (średnia, SD, korelacja) ale całkowicie różnych kształtach, w tym dinozaur. Rozszerza pomysł Anscombe'a i ukazuje, że samo describe() pandas może całkowicie ominąć strukturę danych.",
             "Florence Nightingale (1858) stworzyła diagramy biegunowe obszarowe, aby zilustrować przyczyny śmiertelności podczas wojny krymskiej. Wizualizacja przekonała brytyjski parlament do poprawy warunków sanitarnych w szpitalach polowych - jeden z pierwszych historycznych przykładów użycia wizualizacji danych do podjęcia decyzji politycznych.",
             "Przepływ pracy EDA: (1) wczytaj i sprawdź wymiary/typy, (2) policz braki, (3) oblicz describe(), (4) narysuj rozkłady według warunków, (5) porównaj warunki ze słupkami błędów, (6) sprawdź trendy czasowe. Dopiero potem formułuj hipotezę.",
-            "Jeśli podczas EDA rozkłady RT dla warunku niezgodnego i zgodnego prawie sie nie nakładają, efekt Stroopa jest duży i niezawodny. d Cohena wyraża różnicę w jednostkach SD - efekt poniżej d = 0,2 jest trywialny nawet przy p < 0,001.",
+            "Jeśli podczas EDA rozkłady RT dla warunku niezgodnego i zgodnego prawie się nie nakładają, efekt Stroopa jest duży i niezawodny. d Cohena wyraża różnicę w jednostkach SD - efekt poniżej d = 0,2 jest trywialny nawet przy p < 0,001.",
         ],
         "notes": [
             "Różnica dwóch liczb bez kontekstu rozkładu jest niejednoznaczna. Te same wartości średnich RT mogą opisywać całkowicie inną sytuację zależnie od kształtu rozkładu - warto zawsze porównywać histogramy, nie tylko tabele statystyk.",
-            "Wykres Q-Q dla RT prawie zawsze odchyla sie od linii w prawym górnym rogu - to prawy ogon rozkładu RT. Transformacja logarytmiczna lub test nieparametryczny jest naturalną odpowiedzią na to odchylenie.",
+            "Wykres Q-Q dla RT prawie zawsze odchyla się od linii w prawym górnym rogu - to prawy ogon rozkładu RT. Transformacja logarytmiczna lub test nieparametryczny jest naturalną odpowiedzią na to odchylenie.",
             "Wynik EDA, który nie był preregistrowany, jest eksploracyjny, nie konfirmacyjny. HARKing (hypothesizing after results are known) prowadzi do nadmiernej liczby fałszywie pozytywnych wyników.",
         ],
         "tasks": [

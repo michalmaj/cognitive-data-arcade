@@ -7,19 +7,19 @@ CONTENT: dict[str, dict[str, list[str]]] = {
         "theory": [
             "Klasyfikator leksykonowy przypisuje sentyment na podstawie słownika słów z wagami. Każde słowo dostaje wartość liczbową: +2 = bardzo pozytywne, -2 = bardzo negatywne. Suma wag otagowanych słów decyduje o wyniku.",
             "Algorytm jest prosty: suma > 0 = pozytywny, suma < 0 = negatywny, suma = 0 = neutralny. Nie ma tu żadnego rozumienia zdania jako całości - tylko lokalne dopasowanie słów.",
-            "Trzy główne pułapki leksykonu: negacja ('nie dobry' nie równa sie 'dobry'), intensywność ('dobry' nie równa sie 'doskonały'), ironia ('Świetna robota' może być sarkazmem). Prosty leksykon nie radzi sobie z żadną z tych pułapek.",
+            "Trzy główne pułapki leksykonu: negacja ('nie dobry' nie równa się 'dobry'), intensywność ('dobry' nie równa się 'doskonały'), ironia ('Świetna robota' może być sarkazmem). Prosty leksykon nie radzi sobie z żadną z tych pułapek.",
             "VADER (Hutto i Gilbert, 2014) - Valence Aware Dictionary and sEntiment Reasoner. Opracowany specjalnie dla mediów społecznościowych, obsługuje wielkie litery (WIELKIE = intensywność), wykrzykniki i emotikony. Jeden z najczęściej stosowanych leksykonów w badaniach social media.",
             "Pang i in. (2002) i Turney (2002) niezależnie zaproponowali uczenie maszynowe do analizy sentymentu. Pang zebrał 700 pozytywnych i 700 negatywnych recenzji filmowych z IMDb; Turney używał analogii semantycznych. Te dwa artykuły z 2002 roku zapoczątkowały nowoczesne uczenie maszynowe dla sentymentu.",
-            "Modele ML (np. BERT, RoBERTa) uczą sie z kontekstu całego zdania. Potrafią wykrywać negację, intensywność i ironię, których leksykon nigdy nie zrozumie. BERT (Devlin i in., 2018) uzyskał przełomowe wyniki na benchmarkach analizy sentymentu, bijąc dotychczasowe SOTA o ponad 5 punktów procentowych.",
+            "Modele ML (np. BERT, RoBERTa) uczą się z kontekstu całego zdania. Potrafią wykrywać negację, intensywność i ironię, których leksykon nigdy nie zrozumie. BERT (Devlin i in., 2018) uzyskał przełomowe wyniki na benchmarkach analizy sentymentu, bijąc dotychczasowe SOTA o ponad 5 punktów procentowych.",
         ],
         "notes": [
             "Leksykony są nadal stosowane w produkcji, gdy szybkość i interpretowalność są ważniejsze niż dokładność (np. monitoring mediów społecznościowych w czasie rzeczywistym).",
             "Popularne leksykony: VADER (angielski), SentiWordNet (wielojęzyczny), Słownik Nacechowania Emocjonalnego (polski). SentiWordNet (Baccianella i in., 2010) przypisuje wyniki sentymentu do synsetów WordNet z uwzględnieniem części mowy.",
         ],
         "tasks": [
-            "Zagraj w Emotion Classifier - w której kategorii pułapek leksykon mylił sie najczęściej?",
+            "Zagraj w Emotion Classifier - w której kategorii pułapek leksykon mylił się najczęściej?",
             "Sformułuj 3 zdania - po jednym dla każdej pułapki (negacja, ironia, intensywność) - i przewidź, jak leksykon je oceni. Sprawdź wynik.",
-            "Porównaj wynik leksykonu z wynikiem modelu BERT dla zdania z negacją. Czym różni sie klasyfikacja?",
+            "Porównaj wynik leksykonu z wynikiem modelu BERT dla zdania z negacją. Czym różni się klasyfikacja?",
         ],
     },
     "en": {

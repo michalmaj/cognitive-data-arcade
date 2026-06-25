@@ -6,8 +6,8 @@ CONTENT: dict[str, dict[str, list[str]]] = {
     "pl": {
         "theory": [
             "Po co porównywać zadania poznawcze? Każde zadanie mierzy inny aspekt umysłu: prosty czas reakcji to czysty czas motoryczny i sensoryczny; Stroop mierzy kontrolę wykonawczą; Flanker - selektywną uwagę; Go/No-Go - hamowanie impulsów. Zestawiając je razem, można zobaczyć profil poznawczy danej osoby.",
-            "Bateria testów neuropsychologicznych - podejście to wywodzi sie z baterii Halsteada-Reitana (1955), jednego z pierwszych standaryzowanych zestawów testów oceniających funkcje mózgu. Luria w ZSRR rozwijał podobne podejście kliniczne niezależnie. Współczesne baterie komputerowe (np. Cambridge Neuropsychological Test Automated Battery, CANTAB) mogą mierzyć kilkanaście funkcji w ciągu godziny.",
-            "Efekt Stroopa - interferencja słowo vs. kolor. Gdy kolor atramentu nie zgadza sie ze znaczeniem słowa (np. słowo CZERWONY napisane zielonym atramentem), mózg musi aktywnie hamować automatyczne czytanie. Różnica RT między warunkiem niezgodnym a zgodnym mierzy kontrolę wykonawczą. Typowo 50-100 ms.",
+            "Bateria testów neuropsychologicznych - podejście to wywodzi się z baterii Halsteada-Reitana (1955), jednego z pierwszych standaryzowanych zestawów testów oceniających funkcje mózgu. Luria w ZSRR rozwijał podobne podejście kliniczne niezależnie. Współczesne baterie komputerowe (np. Cambridge Neuropsychological Test Automated Battery, CANTAB) mogą mierzyć kilkanaście funkcji w ciągu godziny.",
+            "Efekt Stroopa - interferencja słowo vs. kolor. Gdy kolor atramentu nie zgadza się ze znaczeniem słowa (np. słowo CZERWONY napisane zielonym atramentem), mózg musi aktywnie hamować automatyczne czytanie. Różnica RT między warunkiem niezgodnym a zgodnym mierzy kontrolę wykonawczą. Typowo 50-100 ms.",
             "Efekt Flankera - koszty uwagi selektywnej. Gdy strzałki flankujące wskazują w przeciwnym kierunku niż strzałka centralna, RT rośnie. Efekt Flankera jest zazwyczaj mniejszy niż efekt Stroopa (30-60 ms).",
             "Go/No-Go - hamowanie jako osobny komponent. Fałszywe alarmy - naciśniecia na No-Go - mierzą impulsywność. Hit rate mierzy szybkość i czułość. To inne zdolności niż interferencja.",
             "Jedność i różnorodność funkcji wykonawczych (Friedman i in., 2008) - badanie bliźniąt jednojajowych wykazało, że trzy komponenty EF (hamowanie, monitorowanie, przełączanie) mają wspólny czynnik genetyczny (ok. 99% genów wspólnych), ale każdy ma też unikalny komponent. Wysoki wynik w jednym zadaniu EF nie gwarantuje wysokiego wyniku w innym.",
@@ -21,7 +21,7 @@ CONTENT: dict[str, dict[str, list[str]]] = {
         "tasks": [
             "Porównaj efekt Stroopa i efekt Flankera: który jest większy? Dlaczego słowa mogą być trudniejsze do zignorowania niż kierunki strzałek?",
             "Oblicz koszt uwagi - o ile procent wolniejszy jest czas reakcji w warunkach niezgodnych niż zgodnych? Podziel efekt (ms) przez średni RT w warunku zgodnym i pomnóż przez 100. Jak ten procent wypada na tle typowych wartości z literatury (ok. 10-25%)?",
-            "Zagraj raz w trybie rzeczywistym i raz z danymi syntetycznymi. Porównaj profile - czy syntetyczne dane przypominają wyniki rzeczywiste? Jak różnią sie profile poznawcze?",
+            "Zagraj raz w trybie rzeczywistym i raz z danymi syntetycznymi. Porównaj profile - czy syntetyczne dane przypominają wyniki rzeczywiste? Jak różnią się profile poznawcze?",
         ],
     },
     "en": {

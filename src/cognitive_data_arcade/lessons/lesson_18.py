@@ -6,20 +6,20 @@ CONTENT: dict[str, dict[str, list[str]]] = {
     "pl": {
         "theory": [
             "Klasyfikator to algorytm, który przypisuje każdemu punktowi danych jedną z predefiniowanych klas. Granica decyzyjna to linia (lub hiperpowierzchnia), która dzieli przestrzeń cech na obszary odpowiadające różnym klasom.",
-            "Perceptron (Rosenblatt, 1958) - pierwszy uczący sie klasyfikator. Frank Rosenblatt zbudował go w Cornell University, a New York Times napisał: 'Navy Device Learns By Doing'. Minsky i Papert (1969) wykazali, że perceptron nie może rozwiązać problemu XOR - co wywołało pierwszy 'zimny sezon' w badaniach nad sieciami neuronowymi.",
+            "Perceptron (Rosenblatt, 1958) - pierwszy uczący się klasyfikator. Frank Rosenblatt zbudował go w Cornell University, a New York Times napisał: 'Navy Device Learns By Doing'. Minsky i Papert (1969) wykazali, że perceptron nie może rozwiązać problemu XOR - co wywołało pierwszy 'zimny sezon' w badaniach nad sieciami neuronowymi.",
             "Klasyfikator liniowy (np. regresja logistyczna) zakłada, że klasy można rozdzielić prostą linią. Działa świetnie gdy dane są liniowo separowalne, ale zawodzi na kształtach takich jak półksiężyce czy koncentryczne kółka.",
             "KNN (K najbliższych sąsiadów) klasyfikuje punkt na podstawie klas jego k najbliższych sąsiadów. Może tworzyć bardzo giętkie, nieliniowe granice - jest mocniejszy od regresji logistycznej na skomplikowanych danych.",
-            "SVM (Vapnik i Cortes, 1995) - Support Vector Machine szuka granicy decyzyjnej z maksymalnym marginesem. Formalnie dowodzi sie, że granica o największym marginesie daje najlepszą generalizację. SVM z jądrem (kernel trick) pozwala oddzielać klasy nieliniowo bez obliczania cech w wysokowymiarowej przestrzeni wprost.",
+            "SVM (Vapnik i Cortes, 1995) - Support Vector Machine szuka granicy decyzyjnej z maksymalnym marginesem. Formalnie dowodzi się, że granica o największym marginesie daje najlepszą generalizację. SVM z jądrem (kernel trick) pozwala oddzielać klasy nieliniowo bez obliczania cech w wysokowymiarowej przestrzeni wprost.",
             "Drzewo decyzyjne dzieli przestrzeń seriami prostopadłych cięć. Łatwo interpretować jego decyzje, ale przy dużej głębokości skłonne do overfittingu.",
         ],
         "notes": [
-            "Overfitting to zjawisko, gdy model zbyt dokładnie dopasowuje sie do danych treningowych i źle generalizuje. Zbyt giętka granica decyzyjna może być symptomem overfittingu.",
-            "Twierdzenie No Free Lunch (Wolpert, 1996) - żaden pojedynczy klasyfikator nie przewyższa wszystkich innych we wszystkich możliwych zbiorach danych. Wybór klasyfikatora powinien opierać sie na właściwościach konkretnych danych i zadania.",
+            "Overfitting to zjawisko, gdy model zbyt dokładnie dopasowuje się do danych treningowych i źle generalizuje. Zbyt giętka granica decyzyjna może być symptomem overfittingu.",
+            "Twierdzenie No Free Lunch (Wolpert, 1996) - żaden pojedynczy klasyfikator nie przewyższa wszystkich innych we wszystkich możliwych zbiorach danych. Wybór klasyfikatora powinien opierać się na właściwościach konkretnych danych i zadania.",
             "Walidacja krzyżowa (cross-validation) ocenia model na różnych podzbiorach danych, dając bardziej wiarygodny obraz rzeczywistej dokładności niż jednorazowy podział na trening/test.",
         ],
         "tasks": [
             "Zagraj w Classifier Battle - w której rundzie najtrudniej było narysować granicę? Dlaczego kształt danych wpływa na wybór klasyfikatora?",
-            "Porównaj wyniki człowieka z KNN: kiedy granica ręczna okazała sie lepsza, a kiedy KNN był skuteczniejszy?",
+            "Porównaj wyniki człowieka z KNN: kiedy granica ręczna okazała się lepsza, a kiedy KNN był skuteczniejszy?",
             "Wyjaśnij, dlaczego klasyfikator liniowy nie radzi sobie z danymi w kształcie koncentrycznych kółek.",
         ],
     },

@@ -6,10 +6,10 @@ CONTENT: dict[str, dict[str, list[str]]] = {
     "pl": {
         "theory": [
             "Rozkład statystyczny opisuje, jak często występują różne wartości w zbiorze danych. W badaniach RT najczęściej spotykamy rozkłady zbliżone do normalnego, ale z charakterystycznym prawym ogonem - bo bardzo wolne reakcje są możliwe, a bardzo szybkie (poniżej 150 ms) nie.",
-            "Rozkład normalny (Gaussa) - Gauss opracował go w 1809 roku do modelowania błędów pomiarowych w astronomii. Twierdzenie graniczne Laplace'a (1812) wyjaśnia, dlaczego pojawia sie w przyrodzie: suma wielu niezależnych zmiennych losowych dąży do rozkładu normalnego niezależnie od rozkładu składowych.",
+            "Rozkład normalny (Gaussa) - Gauss opracował go w 1809 roku do modelowania błędów pomiarowych w astronomii. Twierdzenie graniczne Laplace'a (1812) wyjaśnia, dlaczego pojawia się w przyrodzie: suma wielu niezależnych zmiennych losowych dąży do rozkładu normalnego niezależnie od rozkładu składowych.",
             "Rozkład Ex-Gaussian (normalny + wykładniczy) wprowadził do psychologii Ratcliff (1978). Parametr tau opisuje długość prawego ogona - czas potrzebny na dodatkowe procesy (np. przeszukiwanie pamięci, hamowanie odpowiedzi). Większa tau = dłuższy ogon = więcej wolnych prób.",
             "Szum różowy 1/f w RT - Gilden (2001) wykazał, że kolejne czasy reakcji w długich seriach nie są niezależne, lecz wykazują długodystansowe korelacje czasowe (tzw. szum różowy lub 1/f). Oznacza to, że chwilowy stan uwagi ma efekty trwające setki prób, co ma konsekwencje dla modeli procesu poznawczego.",
-            "Rozkład jednostajny oznacza równe prawdopodobieństwo dla każdej wartości w przedziale [min, max]. W RT nie występuje naturalnie, ale używa sie go jako model bazowy do porównania z rozkładami skośnymi.",
+            "Rozkład jednostajny oznacza równe prawdopodobieństwo dla każdej wartości w przedziale [min, max]. W RT nie występuje naturalnie, ale używa się go jako model bazowy do porównania z rozkładami skośnymi.",
             "Rozkład opisują: średnia (czuła na wartości odstające), mediana (odporna), odchylenie std (rozrzut), IQR (odporny rozrzut) i skośność (asymetria). Dla danych RT skośność jest zwykle dodatnia - ogon jest po prawej stronie.",
         ],
         "notes": [
@@ -18,9 +18,9 @@ CONTENT: dict[str, dict[str, list[str]]] = {
             "Cohen's d i p-value mierzą różne rzeczy. p-value zależy od N: duża próba da p<0.05 nawet dla trywialnej różnicy. Cohen's d pokazuje wielkość efektu niezależnie od N. Warto raportować oba.",
         ],
         "tasks": [
-            "W Fazie A: porównaj histogramy normalnego i Ex-Gaussian z tymi samymi mu i sigma. Jak zmienia sie kształt gdy zwiększasz tau? W jakim zakresie tau skośność staje sie wyraźnie widoczna?",
+            "W Fazie A: porównaj histogramy normalnego i Ex-Gaussian z tymi samymi mu i sigma. Jak zmienia się kształt gdy zwiększasz tau? W jakim zakresie tau skośność staje się wyraźnie widoczna?",
             "W Fazie B: zgadnij rozkład bez wskazówek. Ile prób potrzeba? Które parametry są najtrudniejsze do odgadnięcia - mu, sigma czy tau? Dlaczego?",
-            "W Fazie C: ustaw rozkład A jako normalny (mu=400, sigma=60, N=50) i rozkład B jako Ex-Gaussian (mu=400, sigma=60, tau=100, N=50). Obserwuj Cohen's d i p-value. Teraz zwiększaj N w obu do 200. Jak zmienia sie p-value? Jak zmienia sie Cohen's d?",
+            "W Fazie C: ustaw rozkład A jako normalny (mu=400, sigma=60, N=50) i rozkład B jako Ex-Gaussian (mu=400, sigma=60, tau=100, N=50). Obserwuj Cohen's d i p-value. Teraz zwiększaj N w obu do 200. Jak zmienia się p-value? Jak zmienia się Cohen's d?",
         ],
     },
     "en": {

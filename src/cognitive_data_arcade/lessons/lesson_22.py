@@ -5,8 +5,8 @@ from __future__ import annotations
 CONTENT: dict[str, dict[str, list[str]]] = {
     "pl": {
         "theory": [
-            "Bag of Words (BoW) to najprostszy sposób zamiany tekstu na liczby: liczymy, ile razy każdy token pojawia sie w dokumencie. Wynikiem jest wektor o długości równej rozmiarowi słownika. Dwa dokumenty z tym samym słowem dostaną niezerową wartość na tej samej pozycji - to fundament wielu metod klasyfikacji tekstu.",
-            "Term Frequency (TF) normalizuje surowe zliczenia przez długość dokumentu: TF(t, d) = count(t, d) / |d|. Dzięki temu krótki i długi dokument są porównywalne: słowo pojawiające sie 3 razy w zdaniu 10-słowowym (TF=0.3) waży więcej niż 3 razy w eseju 300-słowowym (TF=0.01).",
+            "Bag of Words (BoW) to najprostszy sposób zamiany tekstu na liczby: liczymy, ile razy każdy token pojawia się w dokumencie. Wynikiem jest wektor o długości równej rozmiarowi słownika. Dwa dokumenty z tym samym słowem dostaną niezerową wartość na tej samej pozycji - to fundament wielu metod klasyfikacji tekstu.",
+            "Term Frequency (TF) normalizuje surowe zliczenia przez długość dokumentu: TF(t, d) = count(t, d) / |d|. Dzięki temu krótki i długi dokument są porównywalne: słowo pojawiające się 3 razy w zdaniu 10-słowowym (TF=0.3) waży więcej niż 3 razy w eseju 300-słowowym (TF=0.01).",
             "Inverse Document Frequency (IDF) - Karen Spärck Jones (1972), brytyjska informatyczka, wynalazła miarę IDF i opublikowała ją w Journal of Documentation. Formalnie: IDF(t) = log((N+1) / (df(t)+1)), gdzie N to liczba dokumentów, a df(t) - liczba dokumentów zawierających token t. Słowa pospolite mają niski IDF, słowa specjalistyczne - wysoki. Spärck Jones otrzymała nagrodę ACM Software System Award w 2004 r.",
             "TF-IDF łączy obie miary: TF-IDF(t, d) = TF(t, d) x IDF(t). Token wysoko oceniony przez TF-IDF jest jednocześnie częsty w danym dokumencie i rzadki w korpusie - co czyni go charakterystycznym sygnałem tego dokumentu. To intuicja stojąca za wyszukiwarkami internetowymi i klasyfikacją tekstu.",
             "Word2Vec (Mikolov i in., 2013) - osadzenia słów, które kodują semantykę: wynik operacji 'krol' - 'mezczyzna' + 'kobieta' daje wektor bliski słowu 'krolowa'. TF-IDF liczy słowa niezależnie; Word2Vec koduje ich znaczenie jako miejsce w przestrzeni wektorowej. Oba podejścia łączy współczesne wyszukiwanie semantyczne.",
@@ -18,7 +18,7 @@ CONTENT: dict[str, dict[str, list[str]]] = {
         "tasks": [
             "Uruchom Word Weight Factory i przejdź do kroku BoW. Porównaj wiersz 'Stroop PL' z wierszem 'N-Back EN'. Które tokeny mają wartość 0 w obu dokumentach? Co to znaczy?",
             "Przejdź do kroku IDF. Zidentyfikuj 3 tokeny z najwyższym IDF i 3 z najniższym. Wyjaśnij, dlaczego tokeny o najwyższym IDF są unikalne dla jednego dokumentu.",
-            "Włącz usuwanie stop words i obserwuj, jak zmienia sie macierz BoW i wykres IDF. Czy wartości TF-IDF najważniejszych tokenów rosną czy maleją? Dlaczego?",
+            "Włącz usuwanie stop words i obserwuj, jak zmienia się macierz BoW i wykres IDF. Czy wartości TF-IDF najważniejszych tokenów rosną czy maleją? Dlaczego?",
             "Dodaj własny tekst w slocie 'Wlasny' (np. opis innego eksperymentu). Sprawdź, jakie nowe tokeny trafiają do słownika i jak wpływają na IDF istniejących tokenów.",
         ],
     },

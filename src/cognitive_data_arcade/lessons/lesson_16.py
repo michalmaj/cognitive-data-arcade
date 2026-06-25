@@ -5,7 +5,7 @@ from __future__ import annotations
 CONTENT: dict[str, dict[str, list[str]]] = {
     "pl": {
         "theory": [
-            "Regresja liniowa dopasowuje prostą linię y = a*x + b do danych, minimalizując sumę kwadratów reszt (OLS - Ordinary Least Squares). Slope (a) mówi, jak bardzo zmienia sie y gdy x rośnie o 1. Intercept (b) to wartość y gdy x = 0.",
+            "Regresja liniowa dopasowuje prostą linię y = a*x + b do danych, minimalizując sumę kwadratów reszt (OLS - Ordinary Least Squares). Slope (a) mówi, jak bardzo zmienia się y gdy x rośnie o 1. Intercept (b) to wartość y gdy x = 0.",
             "Francis Galton (1886) - regresję liniową wynalazł Galton przy badaniu dziedziczenia wzrostu. Odkrył, że wzrost synów 'cofa sie' w stronę średniej populacji - stąd nazwa 'regresja'. Karl Pearson sformalizował matematycznie metodę Galton w latach 90. XIX w.",
             "R² - miara dopasowania modelu. R² (R-squared) mierzy jaki procent zmienności y wyjaśnia model. R² = 1.0 to idealne dopasowanie, R² = 0.0 to brak związku. R² = 0.65 oznacza, że model wyjaśnia 65% zmienności y.",
             "Twierdzenie Gaussa-Markowa - pod standardowymi założeniami (liniowość, homoskedastyczność, brak autokorelacji, brak endogeniczności) szacownik OLS jest BLUE: Best Linear Unbiased Estimator - najlepszy liniowy nieobciążony estymator.",
@@ -18,9 +18,9 @@ CONTENT: dict[str, dict[str, list[str]]] = {
             "Regresja OLS minimalizuje sumy kwadratów reszt, więc jest wrażliwa na outliery. Regresja odporna (robust regression, np. metoda Hubera lub Bisquare) jest alternatywą przy podejrzanych punktach.",
         ],
         "tasks": [
-            "Faza A - Eksploracja: ustaw sigma = 2.0 i N = 20. Jak wygląda wykres reszt? Teraz ustaw sigma = 0.1. Jak zmienił sie R²?",
-            "Faza B - Gra: przejdź wszystkie 5 scenariuszy. Staraj sie uzyskać wynik powyżej 350 / 500.",
-            "Faza C - Sandbox: przeciągnij outlier daleko w prawo (poza dane). Jak zmienił sie slope? Dlaczego punkty na krawędzi x mają większy wpływ?",
+            "Faza A - Eksploracja: ustaw sigma = 2.0 i N = 20. Jak wygląda wykres reszt? Teraz ustaw sigma = 0.1. Jak zmienił się R²?",
+            "Faza B - Gra: przejdź wszystkie 5 scenariuszy. Staraj się uzyskać wynik powyżej 350 / 500.",
+            "Faza C - Sandbox: przeciągnij outlier daleko w prawo (poza dane). Jak zmienił się slope? Dlaczego punkty na krawędzi x mają większy wpływ?",
         ],
     },
     "en": {
