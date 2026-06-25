@@ -6,7 +6,6 @@ Lesson nums follow _MODULE_LESSONS in engine/badges.py:
   Module 4: 17-20       | Module 5: 21-26 | Module 6: 27-32
 
 options_pl/en: list of 3 strings. correct: index 0/1/2.
-ASCII only in option text (rendered via pygame font).
 """
 
 from __future__ import annotations
@@ -16,8 +15,8 @@ QUIZ_QUESTIONS: dict[int, dict] = {
         "q_pl": "Co oznacza termin 'big data' w nauce kognitywnej?",
         "q_en": "What does 'big data' mean in cognitive science?",
         "options_pl": [
-            "Dane z bardzo duzych plikow komputerowych",
-            "Dane od wielu uczestnikow pozwalajace wykryc wzorce niemozliwe w malych probach",
+            "Dane z bardzo dużych plików komputerowych",
+            "Dane od wielu uczestników pozwalające wykryć wzorce niemożliwe w małych próbach",
             "Dane zbierane przez wiele lat bez przerwy",
         ],
         "options_en": [
@@ -31,9 +30,9 @@ QUIZ_QUESTIONS: dict[int, dict] = {
         "q_pl": "Co mierzy czas reakcji w eksperymentach psychologicznych?",
         "q_en": "What does reaction time measure in psychological experiments?",
         "options_pl": [
-            "Dokladnosc percepcji wzrokowej",
-            "Pojemnosc pamieci krotkotrwalej",
-            "Czas od pojawienia sie bodzca do odpowiedzi ukladu motorycznego",
+            "Dokładność percepcji wzrokowej",
+            "Pojemność pamięci krótkotrwałej",
+            "Czas od pojawienia się bodźca do odpowiedzi układu motorycznego",
         ],
         "options_en": [
             "Accuracy of visual perception",
@@ -43,12 +42,12 @@ QUIZ_QUESTIONS: dict[int, dict] = {
         "correct": 2,
     },
     3: {
-        "q_pl": "Dlaczego logi zdarzen sa wazne w zbieraniu danych?",
+        "q_pl": "Dlaczego logi zdarzeń są ważne w zbieraniu danych?",
         "q_en": "Why are event logs important in data collection?",
         "options_pl": [
-            "Zastepuja ankiety poeksperymentalne",
-            "Rejestruja kazde dzialanie uczestnika z dokladnym znacznikiem czasu",
-            "Mierza aktywnosc mozgu w czasie rzeczywistym",
+            "Zastępują ankiety poeksperymentalne",
+            "Rejestrują każde działanie uczestnika z dokładnym znacznikiem czasu",
+            "Mierzą aktywność mózgu w czasie rzeczywistym",
         ],
         "options_en": [
             "They replace post-experiment questionnaires",
@@ -58,12 +57,12 @@ QUIZ_QUESTIONS: dict[int, dict] = {
         "correct": 1,
     },
     4: {
-        "q_pl": "Co to jest wartosc odstajaca (outlier)?",
+        "q_pl": "Co to jest wartość odstająca (outlier)?",
         "q_en": "What is an outlier?",
         "options_pl": [
             "Brak danych w rekordzie",
             "Duplikat wiersza w zbiorze danych",
-            "Obserwacja znacznie odbiegajaca od reszty, mogaca wskazywac na blad lub rzadkie zdarzenie",
+            "Obserwacja znacznie odbiegająca od reszty, mogąca wskazywać na błąd lub rzadkie zdarzenie",
         ],
         "options_en": [
             "A missing value in a record",
@@ -73,12 +72,12 @@ QUIZ_QUESTIONS: dict[int, dict] = {
         "correct": 2,
     },
     6: {
-        "q_pl": "Jaki jest glowny cel eksploracyjnej analizy danych (EDA)?",
+        "q_pl": "Jaki jest główny cel eksploracyjnej analizy danych (EDA)?",
         "q_en": "What is the main goal of Exploratory Data Analysis (EDA)?",
         "options_pl": [
             "Budowa finalnego modelu predykcyjnego",
             "Zbieranie nowych danych eksperymentalnych",
-            "Zrozumienie struktury, rozkladow i relacji w danych przed modelowaniem",
+            "Zrozumienie struktury, rozkładów i relacji w danych przed modelowaniem",
         ],
         "options_en": [
             "Building the final predictive model",
@@ -91,9 +90,9 @@ QUIZ_QUESTIONS: dict[int, dict] = {
         "q_pl": "Czego uczy efekt Stroopa?",
         "q_en": "What does the Stroop effect demonstrate?",
         "options_pl": [
-            "Ze kolory sa przetwarzane szybciej niz slowa",
-            "Ze automatyczne procesy (czytanie) moga interferowac z kontrolowanymi (nazywanie koloru)",
-            "Ze pamiec krotkotrwala jest ograniczona do 7 elementow",
+            "Że kolory są przetwarzane szybciej niż słowa",
+            "Że automatyczne procesy (czytanie) mogą interferować z kontrolowanymi (nazywanie koloru)",
+            "Że pamięć krótkotrwała jest ograniczona do 7 elementów",
         ],
         "options_en": [
             "That colours are processed faster than words",
@@ -106,9 +105,9 @@ QUIZ_QUESTIONS: dict[int, dict] = {
         "q_pl": "Co mierzy zadanie Flankera?",
         "q_en": "What does the Flanker task measure?",
         "options_pl": [
-            "Szybkosc percepcji wzrokowej",
-            "Zdolnosc ignorowania irrelewantnych bodzcow otaczajacych cel",
-            "Pojemnosc pamieci roboczej",
+            "Szybkość percepcji wzrokowej",
+            "Zdolność ignorowania irrelewantnych bodźców otaczających cel",
+            "Pojemność pamięci roboczej",
         ],
         "options_en": [
             "Speed of visual perception",
@@ -121,9 +120,9 @@ QUIZ_QUESTIONS: dict[int, dict] = {
         "q_pl": "Co bada zadanie Go/No-Go?",
         "q_en": "What does the Go/No-Go task study?",
         "options_pl": [
-            "Szybkosc uczenia sie sekwencji ruchowych",
-            "Rozroznianie kolorow pod presja czasu",
-            "Hamowanie odpowiedzi - zdolnosc do powstrzymania automatycznej reakcji",
+            "Szybkość uczenia się sekwencji ruchowych",
+            "Rozróżnianie kolorów pod presją czasu",
+            "Hamowanie odpowiedzi - zdolność do powstrzymania automatycznej reakcji",
         ],
         "options_en": [
             "Speed of learning motor sequences",
@@ -136,9 +135,9 @@ QUIZ_QUESTIONS: dict[int, dict] = {
         "q_pl": "Co mierzy zadanie N-back?",
         "q_en": "What does the N-back task measure?",
         "options_pl": [
-            "Pojemnosc i aktualizowanie pamieci roboczej",
-            "Czas reakcji na bodziec sluchowy",
-            "Rozpoznawanie wzorcow wzrokowych",
+            "Pojemność i aktualizowanie pamięci roboczej",
+            "Czas reakcji na bodziec słuchowy",
+            "Rozpoznawanie wzorców wzrokowych",
         ],
         "options_en": [
             "Capacity and updating of working memory",
@@ -151,9 +150,9 @@ QUIZ_QUESTIONS: dict[int, dict] = {
         "q_pl": "Co to jest efekt pop-out w wyszukiwaniu wzrokowym?",
         "q_en": "What is the pop-out effect in visual search?",
         "options_pl": [
-            "Wyszukiwanie trwa krocej gdy jest wiecej obiektow",
-            "Wzrok musi omiatac caly ekran po kolei",
-            "Natychmiastowe wykrycie celu gdy rozni sie jedna wyrazna cecha od dystraktorow",
+            "Wyszukiwanie trwa krócej gdy jest więcej obiektów",
+            "Wzrok musi omiatać cały ekran po kolei",
+            "Natychmiastowe wykrycie celu gdy różni się jedną wyraźną cechą od dystraktorów",
         ],
         "options_en": [
             "Search is shorter when there are more objects",
@@ -163,12 +162,12 @@ QUIZ_QUESTIONS: dict[int, dict] = {
         "correct": 2,
     },
     12: {
-        "q_pl": "Dlaczego agregacja wielu miar kognitywnych jest wartosciowsza niz jedna miara?",
+        "q_pl": "Dlaczego agregacja wielu miar kognitywnych jest wartościowsza niż jedna miara?",
         "q_en": "Why is aggregating multiple cognitive measures more valuable than one?",
         "options_pl": [
-            "Jeden test wystarczy jesli jest odpowiednio dlugi",
-            "Srednia arytmetyczna wszystkich wynikow to najlepsza miara",
-            "Rozne testy mierza rozne aspekty poznania i razem daja pelniejszy profil",
+            "Jeden test wystarczy jeśli jest odpowiednio długi",
+            "Średnia arytmetyczna wszystkich wyników to najlepsza miara",
+            "Różne testy mierzą różne aspekty poznania i razem dają pełniejszy profil",
         ],
         "options_en": [
             "One test is enough if it is long enough",
@@ -178,12 +177,12 @@ QUIZ_QUESTIONS: dict[int, dict] = {
         "correct": 2,
     },
     13: {
-        "q_pl": "Co opisuje rozklad normalny?",
+        "q_pl": "Co opisuje rozkład normalny?",
         "q_en": "What does a normal distribution describe?",
         "options_pl": [
-            "Rozklad w ktorym wszystkie wartosci sa jednakowo prawdopodobne",
-            "Rozklad z wieloma szczytami odpowiadajacymi roznym grupom",
-            "Symetryczny rozklad gdzie srednia, mediana i moda sa rowne",
+            "Rozkład w którym wszystkie wartości są jednakowo prawdopodobne",
+            "Rozkład z wieloma szczytami odpowiadającymi różnym grupom",
+            "Symetryczny rozkład gdzie średnia, mediana i moda są równe",
         ],
         "options_en": [
             "A distribution where all values are equally probable",
@@ -193,12 +192,12 @@ QUIZ_QUESTIONS: dict[int, dict] = {
         "correct": 2,
     },
     14: {
-        "q_pl": "Dlaczego korelacja nie oznacza przyczynowosci?",
+        "q_pl": "Dlaczego korelacja nie oznacza przyczynowości?",
         "q_en": "Why does correlation not imply causation?",
         "options_pl": [
-            "Korelacja mierzy tylko liniowe zaleznosci, a zwiazki sa zawsze nieliniowe",
-            "Obie zmienne moga zalezec od trzeciej lub wspolwystepowanie moze byc przypadkowe",
-            "Zbyt malo danych zawsze powoduje korelacje pozorna",
+            "Korelacja mierzy tylko liniowe zależności, a związki są zawsze nieliniowe",
+            "Obie zmienne mogą zależeć od trzeciej lub współwystępowanie może być przypadkowe",
+            "Zbyt mało danych zawsze powoduje korelację pozorną",
         ],
         "options_en": [
             "Correlation only measures linear relationships, which are always non-linear",
@@ -211,9 +210,9 @@ QUIZ_QUESTIONS: dict[int, dict] = {
         "q_pl": "Co oznacza p < 0.05 w testowaniu hipotez?",
         "q_en": "What does p < 0.05 mean in hypothesis testing?",
         "options_pl": [
-            "Hipoteza alternatywna jest prawdziwa z 95% pewnoscia",
-            "Wynik jest praktycznie istotny i ma duzy efekt",
-            "Szansa uzyskania takich wynikow przez przypadek (gdy H0 prawdziwa) jest < 5%",
+            "Hipoteza alternatywna jest prawdziwa z 95% pewnością",
+            "Wynik jest praktycznie istotny i ma duży efekt",
+            "Szansa uzyskania takich wyników przez przypadek (gdy H0 prawdziwa) jest < 5%",
         ],
         "options_en": [
             "The alternative hypothesis is true with 95% certainty",
@@ -223,12 +222,12 @@ QUIZ_QUESTIONS: dict[int, dict] = {
         "correct": 2,
     },
     16: {
-        "q_pl": "Czym rozni sie regresja od klasyfikacji?",
+        "q_pl": "Czym różni się regresja od klasyfikacji?",
         "q_en": "How does regression differ from classification?",
         "options_pl": [
-            "Regresja dziala tylko na danych czasowych, klasyfikacja na statycznych",
-            "Regresja przewiduje wartosc ciagla (np. temperature), klasyfikacja przypisuje do kategorii",
-            "Klasyfikacja wymaga zawsze wiecej danych treningowych niz regresja",
+            "Regresja działa tylko na danych czasowych, klasyfikacja na statycznych",
+            "Regresja przewiduje wartość ciągłą (np. temperaturę), klasyfikacja przypisuje do kategorii",
+            "Klasyfikacja wymaga zawsze więcej danych treningowych niż regresja",
         ],
         "options_en": [
             "Regression works only on time-series data, classification on static data",
@@ -238,12 +237,12 @@ QUIZ_QUESTIONS: dict[int, dict] = {
         "correct": 1,
     },
     17: {
-        "q_pl": "Dlaczego dobor cech (feature selection) jest wazny w ML?",
+        "q_pl": "Dlaczego dobór cech (feature selection) jest ważny w ML?",
         "q_en": "Why is feature selection important in ML?",
         "options_pl": [
-            "Wieksza liczba cech zawsze poprawia dokladnosc modelu",
-            "Cechy sa dobierane przez algorytm automatycznie bez ingerencji",
-            "Nieistotne cechy zwiekszaja szum, czas obliczen i ryzyko przeuczenia",
+            "Większa liczba cech zawsze poprawia dokładność modelu",
+            "Cechy są dobierane przez algorytm automatycznie bez ingerencji",
+            "Nieistotne cechy zwiększają szum, czas obliczeń i ryzyko przeuczenia",
         ],
         "options_en": [
             "More features always improve model accuracy",
@@ -253,12 +252,12 @@ QUIZ_QUESTIONS: dict[int, dict] = {
         "correct": 2,
     },
     18: {
-        "q_pl": "Co to jest dokladnosc (accuracy) klasyfikatora?",
+        "q_pl": "Co to jest dokładność (accuracy) klasyfikatora?",
         "q_en": "What is classifier accuracy?",
         "options_pl": [
-            "Prawdopodobienstwo poprawnej klasyfikacji przykladu pozytywnego",
-            "Udzial poprawnie sklasyfikowanych przykladow sposrod wszystkich przykladow",
-            "Sredni czas klasyfikacji jednego przykladu testowego",
+            "Prawdopodobieństwo poprawnej klasyfikacji przykładu pozytywnego",
+            "Udział poprawnie sklasyfikowanych przykładów spośród wszystkich przykładów",
+            "Średni czas klasyfikacji jednego przykładu testowego",
         ],
         "options_en": [
             "Probability of correctly classifying a positive example",
@@ -271,9 +270,9 @@ QUIZ_QUESTIONS: dict[int, dict] = {
         "q_pl": "Co to jest przeuczenie (overfitting)?",
         "q_en": "What is overfitting?",
         "options_pl": [
-            "Model ktory trenuje zbyt dlugo i zaczyna sie przegrzewac",
-            "Model z za duza liczba warstw jak w glebokiej sieci neuronowej",
-            "Model zbyt dobrze dopasowany do danych treningowych, slabo generalizujacy na nowe dane",
+            "Model który trenuje zbyt długo i zaczyna się przegrzewać",
+            "Model z za dużą liczbą warstw jak w głębokiej sieci neuronowej",
+            "Model zbyt dobrze dopasowany do danych treningowych, słabo generalizujący na nowe dane",
         ],
         "options_en": [
             "A model that trains too long and starts to overheat",
@@ -283,11 +282,11 @@ QUIZ_QUESTIONS: dict[int, dict] = {
         "correct": 2,
     },
     20: {
-        "q_pl": "Czym rozni sie anomalia od szumu w danych?",
+        "q_pl": "Czym różni się anomalia od szumu w danych?",
         "q_en": "How does an anomaly differ from noise in data?",
         "options_pl": [
-            "Anomalie to zawsze bledy pomiarowe wymagajace korekcji",
-            "Szum pojawia sie tylko w danych dzwiekowych i wideo",
+            "Anomalie to zawsze błędy pomiarowe wymagające korekcji",
+            "Szum pojawia się tylko w danych dźwiękowych i wideo",
             "Anomalia to rzadkie zdarzenie o potencjalnym znaczeniu, szum to losowe odchylenia bez znaczenia",
         ],
         "options_en": [
@@ -301,9 +300,9 @@ QUIZ_QUESTIONS: dict[int, dict] = {
         "q_pl": "Co to jest tokenizacja tekstu?",
         "q_en": "What is text tokenization?",
         "options_pl": [
-            "Tlumaczenie tekstu na wektor liczb zmiennoprzecinkowych",
-            "Usuwanie slow stopu z tekstu przed analiza",
-            "Podzial tekstu na mniejsze jednostki takie jak slowa lub znaki interpunkcyjne",
+            "Tłumaczenie tekstu na wektor liczb zmiennoprzecinkowych",
+            "Usuwanie słów stopu z tekstu przed analizą",
+            "Podział tekstu na mniejsze jednostki takie jak słowa lub znaki interpunkcyjne",
         ],
         "options_en": [
             "Translating text into a vector of floating-point numbers",
@@ -316,9 +315,9 @@ QUIZ_QUESTIONS: dict[int, dict] = {
         "q_pl": "Co mierzy miara TF-IDF?",
         "q_en": "What does TF-IDF measure?",
         "options_pl": [
-            "Liczbe wystapien slowa w calym zbiorze dokumentow",
-            "Waznosc slowa w dokumencie wzgledem calego zbioru - czeste tu, rzadkie globalnie",
-            "Semantyczne podobienstwo dwoch slow na podstawie kontekstu",
+            "Liczbę wystąpień słowa w całym zbiorze dokumentów",
+            "Ważność słowa w dokumencie względem całego zbioru - częste tu, rzadkie globalnie",
+            "Semantyczne podobieństwo dwóch słów na podstawie kontekstu",
         ],
         "options_en": [
             "Number of occurrences of a word across the entire document collection",
@@ -328,12 +327,12 @@ QUIZ_QUESTIONS: dict[int, dict] = {
         "correct": 1,
     },
     23: {
-        "q_pl": "Dlaczego klasyfikacja emocji w tekscie jest trudna?",
+        "q_pl": "Dlaczego klasyfikacja emocji w tekście jest trudna?",
         "q_en": "Why is emotion classification in text difficult?",
         "options_pl": [
-            "Modele jezykowe nie radza sobie z tekstem krotszym niz 100 slow",
-            "Emocje wystepuja tylko w mowie bezposredniej, nie w pisemnej",
-            "Kontekst, ironia i kultura wplywaja na znaczenie - to samo zdanie moze wyrazac rozne emocje",
+            "Modele językowe nie radzą sobie z tekstem krótszym niż 100 słów",
+            "Emocje występują tylko w mowie bezpośredniej, nie w pisemnej",
+            "Kontekst, ironia i kultura wpływają na znaczenie - to samo zdanie może wyrażać różne emocje",
         ],
         "options_en": [
             "Language models cannot handle texts shorter than 100 words",
@@ -343,12 +342,12 @@ QUIZ_QUESTIONS: dict[int, dict] = {
         "correct": 2,
     },
     24: {
-        "q_pl": "Co oznacza ze dwa slowa sa 'blisko siebie' w przestrzeni semantycznej?",
+        "q_pl": "Co oznacza że dwa słowa są 'blisko siebie' w przestrzeni semantycznej?",
         "q_en": "What does it mean for two words to be 'close' in semantic space?",
         "options_pl": [
-            "Slowa maja podobna liczbe liter i brzmia podobnie",
-            "Slowa naleza do tej samej kategorii gramatycznej",
-            "Slowa czesto wspolwystepuja w podobnych kontekstach i maja zblizone znaczenie",
+            "Słowa mają podobną liczbę liter i brzmią podobnie",
+            "Słowa należą do tej samej kategorii gramatycznej",
+            "Słowa często współwystępują w podobnych kontekstach i mają zbliżone znaczenie",
         ],
         "options_en": [
             "The words have a similar number of letters and sound similar",
@@ -361,9 +360,9 @@ QUIZ_QUESTIONS: dict[int, dict] = {
         "q_pl": "Co robi modelowanie tematyczne (topic modeling)?",
         "q_en": "What does topic modeling do?",
         "options_pl": [
-            "Klasyfikuje dokumenty do z gory ustalonych kategorii",
-            "Automatycznie odkrywa ukryte tematy w zbiorze dokumentow bez etykiet",
-            "Tlumaczy dokumenty na inny jezyk zachowujac tematyke",
+            "Klasyfikuje dokumenty do z góry ustalonych kategorii",
+            "Automatycznie odkrywa ukryte tematy w zbiorze dokumentów bez etykiet",
+            "Tłumaczy dokumenty na inny język zachowując tematykę",
         ],
         "options_en": [
             "Classifies documents into predefined categories",
@@ -373,12 +372,12 @@ QUIZ_QUESTIONS: dict[int, dict] = {
         "correct": 1,
     },
     26: {
-        "q_pl": "W jakich zadaniach ludzie zazwyczaj przewyzszaja modele ML?",
+        "q_pl": "W jakich zadaniach ludzie zazwyczaj przewyższają modele ML?",
         "q_en": "In which tasks do humans typically outperform ML models?",
         "options_pl": [
-            "Zadaniach wymagajacych szybkiego przetwarzania duzych zbiorow danych",
-            "Zadaniach z wyraznie zdefiniowanymi regulami i duza liczba przykladow",
-            "Zadaniach wymagajacych zdrowego rozsadku i rozumowania w zupelnie nowych sytuacjach",
+            "Zadaniach wymagających szybkiego przetwarzania dużych zbiorów danych",
+            "Zadaniach z wyraźnie zdefiniowanymi regułami i dużą liczbą przykładów",
+            "Zadaniach wymagających zdrowego rozsądku i rozumowania w zupełnie nowych sytuacjach",
         ],
         "options_en": [
             "Tasks requiring rapid processing of large datasets",
@@ -388,12 +387,12 @@ QUIZ_QUESTIONS: dict[int, dict] = {
         "correct": 2,
     },
     27: {
-        "q_pl": "Co to jest centralnosc (centrality) w sieci spolecznej?",
+        "q_pl": "Co to jest centralność (centrality) w sieci społecznej?",
         "q_en": "What is centrality in a social network?",
         "options_pl": [
-            "Liczba grup do ktorych nalezy uczestnik sieci",
-            "Srednia dlugosc sciezki miedzy dwoma wezlami w sieci",
-            "Miara waznosci wezla w sieci na podstawie jego polaczen",
+            "Liczba grup do których należy uczestnik sieci",
+            "Średnia długość ścieżki między dwoma węzłami w sieci",
+            "Miara ważności węzła w sieci na podstawie jego połączeń",
         ],
         "options_en": [
             "The number of groups a network participant belongs to",
@@ -403,12 +402,12 @@ QUIZ_QUESTIONS: dict[int, dict] = {
         "correct": 2,
     },
     28: {
-        "q_pl": "Co przyspiesza rozprzestrzenianie sie dezinformacji?",
+        "q_pl": "Co przyspiesza rozprzestrzenianie się dezinformacji?",
         "q_en": "What accelerates the spread of misinformation?",
         "options_pl": [
-            "Dlugosc i szczegolowsc informacji",
-            "Anonimowsc nadawcy wiadomosci",
-            "Emocjonalny przekaz, potwierdzenie przekonan i latwost udostepniania",
+            "Długość i szczegółowość informacji",
+            "Anonimowość nadawcy wiadomości",
+            "Emocjonalny przekaz, potwierdzenie przekonań i łatwość udostępniania",
         ],
         "options_en": [
             "Length and detail of the information",
@@ -418,12 +417,12 @@ QUIZ_QUESTIONS: dict[int, dict] = {
         "correct": 2,
     },
     29: {
-        "q_pl": "Co to jest banka filtrujaca (filter bubble)?",
+        "q_pl": "Co to jest bańka filtrująca (filter bubble)?",
         "q_en": "What is a filter bubble?",
         "options_pl": [
-            "Blad algorytmu pokazujacego nieodpowiednie tresci uzytkownikowi",
-            "Technika marketingowa skierowana do okreslonej grupy wiekowej",
-            "Srodowisko informacyjne gdzie algorytmy pokazuja tresci zgodne z preferencjami, ograniczajac roznorodnosc",
+            "Błąd algorytmu pokazującego nieodpowiednie treści użytkownikowi",
+            "Technika marketingowa skierowana do określonej grupy wiekowej",
+            "Środowisko informacyjne gdzie algorytmy pokazują treści zgodne z preferencjami, ograniczając różnorodność",
         ],
         "options_en": [
             "An algorithm error showing inappropriate content to a user",
@@ -436,9 +435,9 @@ QUIZ_QUESTIONS: dict[int, dict] = {
         "q_pl": "Co to jest 'bias blind spot'?",
         "q_en": "What is the 'bias blind spot'?",
         "options_pl": [
-            "Selektywne zapamietywanie informacji potwierdzajacych nasze przekonania",
-            "Tendencja do dostrzegania uprzedzen u innych przy slabej zdolnosci do ich wykrywania u siebie",
-            "Trudnosc w podejmowaniu decyzji przy nadmiarze opcji",
+            "Selektywne zapamiętywanie informacji potwierdzających nasze przekonania",
+            "Tendencja do dostrzegania uprzedzeń u innych przy słabej zdolności do ich wykrywania u siebie",
+            "Trudność w podejmowaniu decyzji przy nadmiarze opcji",
         ],
         "options_en": [
             "Selectively remembering information that confirms our beliefs",
@@ -451,9 +450,9 @@ QUIZ_QUESTIONS: dict[int, dict] = {
         "q_pl": "Jaka jest kluczowa lekcja kursu 'You Were the Dataset'?",
         "q_en": "What is the key lesson of 'You Were the Dataset'?",
         "options_pl": [
-            "Modele AI sa zawsze obiektywne bo nie maja emocji ani uprzedzen",
-            "Prywatnosc danych nie ma znaczenia dla postepu nauki",
-            "Nasze zachowania i decyzje sa danymi ktore mozna zbierac, analizowac i modelowac",
+            "Modele AI są zawsze obiektywne bo nie mają emocji ani uprzedzeń",
+            "Prywatność danych nie ma znaczenia dla postępu nauki",
+            "Nasze zachowania i decyzje są danymi które można zbierać, analizować i modelować",
         ],
         "options_en": [
             "AI models are always objective because they have no emotions or biases",
@@ -463,12 +462,12 @@ QUIZ_QUESTIONS: dict[int, dict] = {
         "correct": 2,
     },
     32: {
-        "q_pl": "Co odroznia dobrego architekta systemu AI od zlyego?",
+        "q_pl": "Co odróżnia dobrego architekta systemu AI od złego?",
         "q_en": "What distinguishes a good AI system architect from a poor one?",
         "options_pl": [
-            "Uzywanie najnowszych i najbardziej zlozonych algorytmow",
-            "Maksymalizacja dokladnosci na zbiorze testowym za wszelka cene",
-            "Uwzglednienie ograniczen danych, etyki i konsekwencji obok dokladnosci technicznej",
+            "Używanie najnowszych i najbardziej złożonych algorytmów",
+            "Maksymalizacja dokładności na zbiorze testowym za wszelką cenę",
+            "Uwzględnienie ograniczeń danych, etyki i konsekwencji obok dokładności technicznej",
         ],
         "options_en": [
             "Using the latest and most complex algorithms",
