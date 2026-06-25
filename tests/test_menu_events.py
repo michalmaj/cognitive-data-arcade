@@ -99,7 +99,7 @@ def test_ensure_visible_on_down_near_bottom():
 
 
 def test_click_module_header_opens_runner():
-    from cognitive_data_arcade.ui.module_runner_scene import ModuleRunnerScene
+    from cognitive_data_arcade.ui.act_intro_scene import ActIntroScene
 
     pygame.init()
     s = _make()
@@ -108,4 +108,4 @@ def test_click_module_header_opens_runner():
     click = pygame.event.Event(pygame.MOUSEBUTTONDOWN, button=1, pos=(100, 72))
     s.handle_event(click)
     assert s.is_done()
-    assert isinstance(s.next_scene(), ModuleRunnerScene)
+    assert isinstance(s.next_scene(), ActIntroScene)

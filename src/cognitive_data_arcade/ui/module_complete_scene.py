@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import pygame
 
+from cognitive_data_arcade.data.act_content import ACT_BRIDGES
 from cognitive_data_arcade.engine.badges import _MODULE_BADGES, load_badge_icon
 from cognitive_data_arcade.engine.fonts import get_font, get_font_medium
 from cognitive_data_arcade.engine.i18n import Strings
@@ -66,9 +67,12 @@ class ModuleCompleteScene(Scene):
 
     def _go_next_module(self) -> None:
         from cognitive_data_arcade.ui.module_runner_scene import ModuleRunnerScene
+        from cognitive_data_arcade.ui.act_intro_scene import make_act_intro
 
-        self._pm.set_current_module(self._module_idx + 1)
-        self._next = ModuleRunnerScene(self._module_idx + 1, self._pm, self._strings)
+        next_idx = self._module_idx + 1
+        self._pm.set_current_module(next_idx)
+        runner = ModuleRunnerScene(next_idx, self._pm, self._strings)
+        self._next = make_act_intro(self._pm, next_idx, self._strings, back_scene=runner)
         self._done = True
 
     def update(self, dt_ms: float) -> None:
@@ -160,3 +164,15 @@ class ModuleCompleteScene(Scene):
             )
         else:
             self._next_btn_rect = None
+
+        # Bridge narrative text (below buttons)
+        bridge_key = "text_pl" if lang == "pl" else "text_en"
+        bridge_text = ACT_BRIDGES[self._module_idx][bridge_key]
+        bridge_font = get_font(16)
+        bridge_y = 480
+        for bline in bridge_text.split("\n"):
+            bline = bline.strip()
+            if bline:
+                bs = bridge_font.render(bline, True, (90, 96, 144))
+                surface.blit(bs, (cx - bs.get_width() // 2, bridge_y))
+                bridge_y += bridge_font.get_height() + 4
