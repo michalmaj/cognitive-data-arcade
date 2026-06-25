@@ -127,8 +127,8 @@ ACT_INTROS: list[dict[str, str]] = [
 ACT_BRIDGES: list[dict[str, str]] = [
     {  # After Act 0
         "text_pl": (
-            "Zauwazyłes? W Reaction Time Lab\n"
-            "dane nie byly skads pobrane — to Ty je stworzyłes.\n"
+            "Zauwazylestem? W Reaction Time Lab\n"
+            "dane nie byly skads pobrane — to Ty je stworzylestem.\n"
             "Co to mowi o Tobie?"
         ),
         "text_en": (
@@ -149,7 +149,7 @@ ACT_BRIDGES: list[dict[str, str]] = [
     },
     {  # After Act 2
         "text_pl": (
-            "Wiesz juz jak analizowac dane.\nAle co jesli zamiast Ciebie — analizowałaby maszyna?"
+            "Wiesz juz jak analizowac dane.\nAle co jesli zamiast Ciebie — analizowababy maszyna?"
         ),
         "text_en": (
             "You now know how to analyze data.\n"
