@@ -109,3 +109,34 @@ class ProfileManager:
         profile.current_module_idx = None
         self.save(profile)
         return profile
+
+    def reset_progress(self) -> Profile:
+        profile = self.load()
+        profile.arcade_points = 0
+        profile.science_points = 0
+        profile.badges = []
+        profile.completed_lessons = []
+        self.save(profile)
+        return profile
+
+    def reset_module_progress(self) -> Profile:
+        profile = self.load()
+        profile.current_module_idx = None
+        profile.seen_intro = False
+        self.save(profile)
+        return profile
+
+    def reset_all(self) -> Profile:
+        profile = self.load()
+        fresh = Profile(
+            device_uuid=profile.device_uuid,
+            alias=profile.alias,
+            language=profile.language,
+            music_enabled=profile.music_enabled,
+            sfx_enabled=profile.sfx_enabled,
+            music_volume=profile.music_volume,
+            sfx_volume=profile.sfx_volume,
+            fullscreen=profile.fullscreen,
+        )
+        self.save(fresh)
+        return fresh
