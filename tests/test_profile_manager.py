@@ -218,3 +218,38 @@ def test_reset_all_keeps_identity_and_settings(tmp_path: Path) -> None:
     assert after.seen_intro is False
     assert after.music_enabled is True
     assert after.sfx_enabled is True
+
+
+def test_seen_act_intros_defaults_empty(tmp_path: Path) -> None:
+    pm = ProfileManager(tmp_path / "p.json")
+    assert pm.load().seen_act_intros == []
+
+
+def test_quiz_results_defaults_empty(tmp_path: Path) -> None:
+    pm = ProfileManager(tmp_path / "p.json")
+    assert pm.load().quiz_results == {}
+
+
+def test_set_seen_act_intro_adds_once(tmp_path: Path) -> None:
+    pm = ProfileManager(tmp_path / "p.json")
+    pm.set_seen_act_intro(0)
+    pm.set_seen_act_intro(0)  # idempotent
+    pm.set_seen_act_intro(2)
+    after = pm.load()
+    assert after.seen_act_intros == [0, 2]
+
+
+def test_record_quiz_result_stores(tmp_path: Path) -> None:
+    pm = ProfileManager(tmp_path / "p.json")
+    pm.record_quiz_result(7, correct=True)
+    pm.record_quiz_result(8, correct=False)
+    after = pm.load()
+    assert after.quiz_results["L7"] is True
+    assert after.quiz_results["L8"] is False
+
+
+def test_record_quiz_result_idempotent(tmp_path: Path) -> None:
+    pm = ProfileManager(tmp_path / "p.json")
+    pm.record_quiz_result(7, correct=True)
+    pm.record_quiz_result(7, correct=False)  # second call ignored
+    assert pm.load().quiz_results["L7"] is True

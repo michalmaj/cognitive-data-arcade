@@ -34,6 +34,8 @@ class Profile:
     fullscreen: bool = False
     seen_intro: bool = False
     current_module_idx: int | None = None
+    seen_act_intros: list[int] = field(default_factory=list)
+    quiz_results: dict[str, bool] = field(default_factory=dict)
 
 
 class ProfileManager:
@@ -124,6 +126,21 @@ class ProfileManager:
         profile.current_module_idx = None
         profile.seen_intro = False
         self.save(profile)
+        return profile
+
+    def set_seen_act_intro(self, module_idx: int) -> Profile:
+        profile = self.load()
+        if module_idx not in profile.seen_act_intros:
+            profile.seen_act_intros.append(module_idx)
+            self.save(profile)
+        return profile
+
+    def record_quiz_result(self, lesson_num: int, correct: bool) -> Profile:
+        profile = self.load()
+        key = f"L{lesson_num}"
+        if key not in profile.quiz_results:
+            profile.quiz_results[key] = correct
+            self.save(profile)
         return profile
 
     def reset_all(self) -> Profile:
