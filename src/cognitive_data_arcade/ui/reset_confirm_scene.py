@@ -46,6 +46,7 @@ class ResetConfirmScene(Scene):
         self._profile_back = profile_back_scene
         self._state = "choosing"  # "choosing" | "confirming"
         self._selected: int | None = None
+        self._confirm_profile = None
         self._done = False
         self._next: Scene | None = None
 
@@ -79,12 +80,15 @@ class ResetConfirmScene(Scene):
             self._exit_to_profile()
         elif key == pygame.K_1:
             self._selected = 0
+            self._confirm_profile = self._pm.load()
             self._state = "confirming"
         elif key == pygame.K_2:
             self._selected = 1
+            self._confirm_profile = self._pm.load()
             self._state = "confirming"
         elif key == pygame.K_3:
             self._selected = 2
+            self._confirm_profile = self._pm.load()
             self._state = "confirming"
 
     def _handle_confirming(self, key: int) -> None:
@@ -98,7 +102,7 @@ class ResetConfirmScene(Scene):
             self._pm.reset_progress()
         elif self._selected == 1:
             self._pm.reset_module_progress()
-        else:
+        elif self._selected == 2:
             self._pm.reset_all()
         self._exit_to_profile()
 
@@ -160,7 +164,7 @@ class ResetConfirmScene(Scene):
 
     def _draw_confirming(self, surface: pygame.Surface, px: int, py: int, pw: int, ph: int) -> None:
         is_pl = self._strings.language == "pl"
-        profile = self._pm.load()
+        profile = self._confirm_profile
 
         lbl_pl, lbl_en, color = _OPTIONS[self._selected]
         option_name = lbl_pl if is_pl else lbl_en
