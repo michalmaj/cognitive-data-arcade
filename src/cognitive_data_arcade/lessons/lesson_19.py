@@ -5,20 +5,20 @@ from __future__ import annotations
 CONTENT: dict[str, dict[str, list[str]]] = {
     "pl": {
         "theory": [
-            "Overfitting (przeuczenie) to zjawisko, gdy model zbyt dokładnie dopasowuje sie do danych treningowych i źle działa na nowych danych. Model 'zapamiętuje' szum zamiast uczyć sie prawdziwych wzorców.",
-            "KNN z małym k (np. k=1) tworzy bardzo giętkę granicę decyzyjną - każdy punkt treningowy staje sie 'wyspą'. Dokładność treningowa wynosi 100%, ale testowa spada. To klasyczny przykład overfittingu.",
-            "Brzytwa Ockhama w uczeniu maszynowym - William z Ockham (XIV w.) sformułował zasadę: nie mnożyć bytów ponad potrzebę. W ML przekłada sie to na: jeśli prostszy model wyjaśnia dane równie dobrze co złożony, prostszy jest preferowany. Regularyzacja formalizuje tę zasadę matematycznie.",
+            "Overfitting (przeuczenie) to zjawisko, gdy model zbyt dokładnie dopasowuje się do danych treningowych i źle działa na nowych danych. Model 'zapamiętuje' szum zamiast uczyć się prawdziwych wzorców.",
+            "KNN z małym k (np. k=1) tworzy bardzo giętkę granicę decyzyjną - każdy punkt treningowy staje się 'wyspą'. Dokładność treningowa wynosi 100%, ale testowa spada. To klasyczny przykład overfittingu.",
+            "Brzytwa Ockhama w uczeniu maszynowym - William z Ockham (XIV w.) sformułował zasadę: nie mnożyć bytów ponad potrzebę. W ML przekłada się to na: jeśli prostszy model wyjaśnia dane równie dobrze co złożony, prostszy jest preferowany. Regularyzacja formalizuje tę zasadę matematycznie.",
             "Regularyzacja L2 (Ridge) - Tikhonow (1963) wprowadził regularyzację do matematyki jako metodę rozwiązywania problemów niepoprawnie postawionych. W ML Ridge regression dodaje karę za duże współczynniki (suma kwadratów), zmniejszając overfitting bez zerowania cech.",
-            "Podział trening/test pozwala ocenić, jak dobrze model generalizuje. Zbiór testowy jest 'niewidzialny' dla modelu podczas trenowania - dopiero po wyborze modelu sprawdza sie na nim wyniki.",
+            "Podział trening/test pozwala ocenić, jak dobrze model generalizuje. Zbiór testowy jest 'niewidzialny' dla modelu podczas trenowania - dopiero po wyborze modelu sprawdza się na nim wyniki.",
             "Różnica między dokładnością treningową a testową (gap) to miara overfittingu. Mały gap oznacza, że model generalizuje. Duży gap (np. 30 pp) oznacza przeuczenie.",
         ],
         "notes": [
             "Kompromis bias-wariancja: zbyt prosty model (duże k w KNN) ma wysoki bias - nie doszacowuje złożoności danych. Zbyt złożony model (małe k) ma wysoką wariancję - jest wrażliwy na szum. Optymalny model leży pośrodku.",
-            "Dobór hiperparametrów (jak k) powinien opierać sie na zbiorze walidacyjnym, nie testowym. W praktyce używa sie walidacji krzyżowej, by nie 'zużyć' zbioru testowego podczas tuningu.",
+            "Dobór hiperparametrów (jak k) powinien opierać się na zbiorze walidacyjnym, nie testowym. W praktyce używa się walidacji krzyżowej, by nie 'zużyć' zbioru testowego podczas tuningu.",
             "Dropout (Srivastava i in., 2014) - kluczowa technika zapobiegania overfittingowi w głębokich sieciach neuronowych: losowo 'wyłącza' ok. 50% neuronów podczas treningu. Zdobyła powszechne zastosowanie po wygraniu wielu konkursów ImageNet przez sieć AlexNet.",
         ],
         "tasks": [
-            "Zagraj w Overfitting Monster - przy którym k pojawia sie największy gap między dokładnością treningową a testową?",
+            "Zagraj w Overfitting Monster - przy którym k pojawia się największy gap między dokładnością treningową a testową?",
             "Porównaj dwie rundy: jedna z małym k i dużym gapem, druga z optymalnym k. Co różni te sytuacje?",
             "Wyjaśnij, dlaczego KNN z k=1 zawsze osiąga 100% dokładności na danych treningowych.",
         ],

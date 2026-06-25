@@ -6,10 +6,10 @@ CONTENT: dict[str, dict[str, list[str]]] = {
     "pl": {
         "theory": [
             "Tokenizacja to pierwszy krok przetwarzania języka naturalnego (NLP): dzielimy surowy tekst na mniejsze jednostki zwane tokenami. Najprościej rozbijamy zdanie na słowa po białych znakach, ale prawdziwe systemy muszą radzić sobie z interpunkcją, skrótami i emotikonami. Każdy wybór metody wpływa na jakość dalszej analizy.",
-            "Normalizacja obejmuje zamianę liter na małe (lowercasing) oraz usuwanie interpunkcji. Dzięki temu 'Czas', 'czas' i 'CZAS' traktowane są jako ten sam token. Bez normalizacji słownik rośnie sztucznie, a modele uczą sie pozornych różnic zamiast semantycznych podobieństw.",
-            "Stop words (słowa funkcyjne) to wyrazy tak częste, że niosą mało informacji: 'i', 'w', 'sie', 'że', 'na'. Usunięcie ich zmniejsza szum i przyspiesza obliczenia, ale może uszkodzić zdania wymagające kontekstu gramatycznego. W analizie kognitywnej stop words bywają ważne - np. częstość 'nie' sygnalizuje negację.",
-            "N-gramy to sekwencje n kolejnych tokenów. Bigram 'czas reakcji' niesie więcej znaczenia niż dwa osobne słowa 'czas' i 'reakcji'. Trigramy ('długi czas reakcji') dodają jeszcze więcej kontekstu. W psychologii eksperymentalnej n-gramy pomagają wykryć powtarzające sie frazy w opisach uczestników badania.",
-            "Prawo Zipfa - George Kingsley Zipf odkrył je w 1935 r. analizując frekwencję słów w angielszczyźnie. Częstość słowa jest odwrotnie proporcjonalna do jego rangi: najczęstsze słowo pojawia sie ok. dwa razy częściej niż drugie, trzy razy częściej niż trzecie itd. Zjawisko obserwuje sie w każdym języku naturalnym.",
+            "Normalizacja obejmuje zamianę liter na małe (lowercasing) oraz usuwanie interpunkcji. Dzięki temu 'Czas', 'czas' i 'CZAS' traktowane są jako ten sam token. Bez normalizacji słownik rośnie sztucznie, a modele uczą się pozornych różnic zamiast semantycznych podobieństw.",
+            "Stop words (słowa funkcyjne) to wyrazy tak częste, że niosą mało informacji: 'i', 'w', 'się', 'że', 'na'. Usunięcie ich zmniejsza szum i przyspiesza obliczenia, ale może uszkodzić zdania wymagające kontekstu gramatycznego. W analizie kognitywnej stop words bywają ważne - np. częstość 'nie' sygnalizuje negację.",
+            "N-gramy to sekwencje n kolejnych tokenów. Bigram 'czas reakcji' niesie więcej znaczenia niż dwa osobne słowa 'czas' i 'reakcji'. Trigramy ('długi czas reakcji') dodają jeszcze więcej kontekstu. W psychologii eksperymentalnej n-gramy pomagają wykryć powtarzające się frazy w opisach uczestników badania.",
+            "Prawo Zipfa - George Kingsley Zipf odkrył je w 1935 r. analizując frekwencję słów w angielszczyźnie. Częstość słowa jest odwrotnie proporcjonalna do jego rangi: najczęstsze słowo pojawia się ok. dwa razy częściej niż drugie, trzy razy częściej niż trzecie itd. Zjawisko obserwuje się w każdym języku naturalnym.",
             "BPE (Byte-Pair Encoding) - algorytm tokenizacji zaproponowany przez Sennricha i in. (2016) dla tłumaczenia maszynowego. Iteracyjnie scala najczęstsze pary tokenów w nowe tokeny, tworząc słownik podwyrazowy. GPT-2 (OpenAI, 2019) używa słownika 50 257 tokenów BPE; nieznane słowa rozkłada na fragmenty, nie traci żadnego tekstu.",
             "Korpus Browna (1964) - pierwszy milionowy korpus języka angielskiego; zebrany na Brown University przez Francisa i Kucerę. Zawierał 500 próbek z 15 gatunków tekstu po ok. 2000 słów każda. Był przez dekadę standardem w językoznawstwie korpusowym i umożliwił pierwsze ilościowe badania frekwencji słów.",
         ],
@@ -18,10 +18,10 @@ CONTENT: dict[str, dict[str, list[str]]] = {
             "Każdy etap preprocessingu to kompromis. Usunięcie stop words przyspiesza obliczenia, lecz może pogorszyć wyniki klasyfikacji sentimentu (słowo 'nie' bywa stop word). Lowercasing upraszcza słownik, ale zamazuje różnicę między 'Polska' (kraj) a 'polska' (przymiotnik). Decyzje te warto dokumentować i testować eksperymentalnie.",
         ],
         "tasks": [
-            "Uruchom Text Tokenizer Lab i załaduj preset 'Tweet PL'. Sprawdź, co sie dzieje z tokenami po włączeniu usuwania interpunkcji. Ile tokenów znika? Dlaczego?",
-            "Przełącz sie na preset 'Abstract EN' i porównaj wyniki bigramów i trigramów. Które n-gramy najlepiej opisują temat tekstu? Zapisz trzy najważniejsze.",
-            "Włącz usuwanie stop words i sprawdź wykres częstości. Czy rozkład nadal przypomina prawo Zipfa? Co zmieniło sie na szczycie listy najczęstszych tokenów?",
-            "Porównaj ten sam tekst z włączonym i wyłączonym lowercasingiem. O ile różni sie liczba unikalnych tokenów? Wyjaśnij, skąd wynika ta różnica.",
+            "Uruchom Text Tokenizer Lab i załaduj preset 'Tweet PL'. Sprawdź, co się dzieje z tokenami po włączeniu usuwania interpunkcji. Ile tokenów znika? Dlaczego?",
+            "Przełącz się na preset 'Abstract EN' i porównaj wyniki bigramów i trigramów. Które n-gramy najlepiej opisują temat tekstu? Zapisz trzy najważniejsze.",
+            "Włącz usuwanie stop words i sprawdź wykres częstości. Czy rozkład nadal przypomina prawo Zipfa? Co zmieniło się na szczycie listy najczęstszych tokenów?",
+            "Porównaj ten sam tekst z włączonym i wyłączonym lowercasingiem. O ile różni się liczba unikalnych tokenów? Wyjaśnij, skąd wynika ta różnica.",
         ],
     },
     "en": {

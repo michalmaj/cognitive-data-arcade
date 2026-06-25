@@ -8,17 +8,17 @@ CONTENT: dict[str, dict[str, list[str]]] = {
             "Graf to zbiór węzłów (nodes) połączonych krawędziami (edges). W sieci społecznej węzły to ludzie, krawędzie to znajomości. Stopień węzła (degree) to liczba jego krawędzi - im wyższy stopień, tym ważniejszy węzeł.",
             "Eksperyment małego świata (Milgram, 1967) - Milgram poprosił losowych uczestników w Nebrasce, by wysłali list do nieznanej im osoby w Bostonie, przekazując go tylko przez bezpośrednich znajomych. Mediana liczby pośredników wynosiła 6 - stąd wyrażenie '6 stopni separacji'. Watts i Strogatz (1998) sformalizowali tę własność matematycznie.",
             "Hub to węzeł o bardzo wysokim stopniu. W sieci społecznej to influencer, w sieci komputerowej to serwer centralny. Usunięcie huba może rozpaść sieć na wiele odłączonych składowych.",
-            "Sieć losowa (Erdos-Renyi) łączy każdą parę węzłów z tym samym prawdopodobieństwem p. Sieć bezskalowa (Barabasi i Albert, 1999) łączy nowe węzły preferencyjnie z tymi, które już mają dużo połączeń - 'bogaty staje sie bogatszy'. Artykuł Barabasiego z 1999 r. w Science wykazał, że internet, WWW i sieci białkowe mają rozkład potęgowy stopni.",
+            "Sieć losowa (Erdos-Renyi) łączy każdą parę węzłów z tym samym prawdopodobieństwem p. Sieć bezskalowa (Barabasi i Albert, 1999) łączy nowe węzły preferencyjnie z tymi, które już mają dużo połączeń - 'bogaty staje się bogatszy'. Artykuł Barabasiego z 1999 r. w Science wykazał, że internet, WWW i sieci białkowe mają rozkład potęgowy stopni.",
             "Model SIR dzieli populację na S (podatny), I (zarażony), R (odporny). Co krok: każdy I zaraża sąsiadów S z prawdopodobieństwem p_infect, sam wraca do R z prawdopodobieństwem p_recover. Epidemia gaśnie gdy nie ma już węzłów I.",
         ],
         "notes": [
             "Sieci bezskalowe są odporne na losowe awarie (mało hubów, dużo peryferyjnych węzłów), ale wrażliwe na celowe ataki na huby. Internet, sieci społecznościowe i sieci cytatów wykazują rozkład potęgowy - to efekt preferential attachment w czasie wzrostu sieci.",
-            "Model SIR zakłada jednorodne mieszanie - każdy zarażony kontaktuje sie z każdym sąsiadem z tym samym prawdopodobieństwem. Realne epidemie zależą od struktury sieci kontaktów, asymetrii, super-spreaderów i interwencji (np. szczepień targetowanych na huby).",
+            "Model SIR zakłada jednorodne mieszanie - każdy zarażony kontaktuje się z każdym sąsiadem z tym samym prawdopodobieństwem. Realne epidemie zależą od struktury sieci kontaktów, asymetrii, super-spreaderów i interwencji (np. szczepień targetowanych na huby).",
         ],
         "tasks": [
             "Zbuduj sieć z jednym centralnym hubem (gwiazda) i uruchom spread od huba. Potem zbuduj łańcuch i uruchom od peryferium. Porównaj szybkość rozprzestrzeniania - co decyduje o różnicy?",
             "Wygeneruj sieć Random i Scale-free dla tej samej liczby węzłów. Uruchom spread od huba na obu jednocześnie. Która epidemia osiąga szczyt szybciej? Dlaczego?",
-            "Pomyśl o realnym scenariuszu gdzie usunięcie hubów spowalnia spread (np. szczepienia influencerów, zamknięcie węzłów kolejowych). Co stałoby sie po usunięciu huba ze sieci przed uruchomieniem epidemii?",
+            "Pomyśl o realnym scenariuszu gdzie usunięcie hubów spowalnia spread (np. szczepienia influencerów, zamknięcie węzłów kolejowych). Co stałoby się po usunięciu huba ze sieci przed uruchomieniem epidemii?",
         ],
     },
     "en": {

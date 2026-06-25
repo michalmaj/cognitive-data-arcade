@@ -5,20 +5,20 @@ from __future__ import annotations
 CONTENT: dict[str, dict[str, list[str]]] = {
     "pl": {
         "theory": [
-            "Embedding to reprezentacja słowa jako wektora liczb. Słowa uczone na dużych tekstach - 'kot' i 'pies' pojawiają sie w podobnych zdaniach, więc ich wektory są blisko siebie w przestrzeni wielowymiarowej.",
-            "Hipoteza dystrybucyjna (Harris, 1954) - 'słowa, które pojawiają sie w tych samych kontekstach, mają tendencję do podobnych znaczeń'. Word2Vec (Mikolov, 2013) sformalizował tę intuicję algorytmicznie - o 59 lat po oryginalnej hipotezie. Hipoteza Harrisa leży u podstaw każdego współczesnego modelu językowego.",
-            "Podobieństwo kosinusowe (cosine similarity) mierzy kąt między wektorami. Wynik bliski 1.0 = bardzo podobne, bliski 0.0 = niepowiązane, ujemny = przeciwstawne. Mierzy sie kąt, nie odległość - skala wektora nie ma znaczenia.",
-            "Klastry semantyczne wyłaniają sie automatycznie: emocje blisko emocji, zwierzęta blisko zwierząt. Nikt nie programował tych kategorii - model nauczył sie ich z kontekstu. To emergentna właściwość wynikająca wyłącznie z rozkładu słów w tekstach.",
+            "Embedding to reprezentacja słowa jako wektora liczb. Słowa uczone na dużych tekstach - 'kot' i 'pies' pojawiają się w podobnych zdaniach, więc ich wektory są blisko siebie w przestrzeni wielowymiarowej.",
+            "Hipoteza dystrybucyjna (Harris, 1954) - 'słowa, które pojawiają się w tych samych kontekstach, mają tendencję do podobnych znaczeń'. Word2Vec (Mikolov, 2013) sformalizował tę intuicję algorytmicznie - o 59 lat po oryginalnej hipotezie. Hipoteza Harrisa leży u podstaw każdego współczesnego modelu językowego.",
+            "Podobieństwo kosinusowe (cosine similarity) mierzy kąt między wektorami. Wynik bliski 1.0 = bardzo podobne, bliski 0.0 = niepowiązane, ujemny = przeciwstawne. Mierzy się kąt, nie odległość - skala wektora nie ma znaczenia.",
+            "Klastry semantyczne wyłaniają się automatycznie: emocje blisko emocji, zwierzęta blisko zwierząt. Nikt nie programował tych kategorii - model nauczył się ich z kontekstu. To emergentna właściwość wynikająca wyłącznie z rozkładu słów w tekstach.",
             "Analogie wektorowe: krol - mezczyzna + kobieta = krolowa. To odkrycie z 2013 r. (Word2Vec, Mikolov) pokazało, że embeddingi kodują relacje semantyczne jako arytmetykę wektorów.",
-            "Bias w embeddingach - Bolukbasi i in. (2016) wykazali, że Word2Vec koduje stereotypy płciowe: 'pielęgniarka' jest do 'kobiety' jak 'lekarz' do 'mężczyzny'. Embeddingi uczą sie nie tylko struktury językowej, ale też uprzedzeń obecnych w treningowym korpusie tekstów.",
+            "Bias w embeddingach - Bolukbasi i in. (2016) wykazali, że Word2Vec koduje stereotypy płciowe: 'pielęgniarka' jest do 'kobiety' jak 'lekarz' do 'mężczyzny'. Embeddingi uczą się nie tylko struktury językowej, ale też uprzedzeń obecnych w treningowym korpusie tekstów.",
         ],
         "notes": [
-            "Embeddingi mają wady: bias społeczny (lekarz = mężczyzna), polisemia (bank = rzeka / finansowy), brak rozumienia negacji ('nie dobry' nie równa sie 'zły'). Modele kontekstowe (BERT, GPT) częściowo rozwiązują te problemy.",
+            "Embeddingi mają wady: bias społeczny (lekarz = mężczyzna), polisemia (bank = rzeka / finansowy), brak rozumienia negacji ('nie dobry' nie równa się 'zły'). Modele kontekstowe (BERT, GPT) częściowo rozwiązują te problemy.",
             "Popularne modele: Word2Vec (2013), GloVe (Pennington i in., 2014 - Global Vectors z macierzy współwystępowań), FastText (2016 - obsługa podwyrazów), oraz kontekstowe: ELMo, BERT, GPT. W modelach kontekstowych każde słowo dostaje inny wektor zależnie od zdania.",
         ],
         "tasks": [
-            "Zagraj w Semantic Space Explorer - w której misji pojawiało sie najwięcej błędów? Co to mówi o intuicji dotyczącej klastrów semantycznych?",
-            "Wymień 3 polskie słowa, które wydają sie leżeć na granicy dwóch kategorii semantycznych. Dlaczego są trudne do jednoznacznego zaklasyfikowania?",
+            "Zagraj w Semantic Space Explorer - w której misji pojawiało się najwięcej błędów? Co to mówi o intuicji dotyczącej klastrów semantycznych?",
+            "Wymień 3 polskie słowa, które wydają się leżeć na granicy dwóch kategorii semantycznych. Dlaczego są trudne do jednoznacznego zaklasyfikowania?",
             "Porównaj podobieństwo kosinusowe i odległość euklidesową dla wektorów słów. Kiedy każda miara jest lepsza?",
         ],
     },

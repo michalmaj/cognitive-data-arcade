@@ -18,9 +18,9 @@ CONTENT: dict[str, dict[str, list[str]]] = {
             "p >= 0.05 nie znaczy 'brak efektu' - może znaczyć 'za mała próba by go wykryć'. Nieistotny wynik bez obliczenia mocy to wynik niekonkluzywny, nie negatywny.",
         ],
         "tasks": [
-            "Faza A - Eksploracja: ustaw d = 0.10 i przesuwaj N od 10 do 500. Kiedy pojawia sie p < 0.05? Co to mówi o pułapce małych efektów przy dużym N?",
+            "Faza A - Eksploracja: ustaw d = 0.10 i przesuwaj N od 10 do 500. Kiedy pojawia się p < 0.05? Co to mówi o pułapce małych efektów przy dużym N?",
             "Faza B - Eksperyment: przejdź wszystkie 6 scenariuszy. Dobierz N tak, żeby moc była >= 80% dla każdego scenariusza.",
-            "Faza C - Sandbox: ustaw d = 0.20 i alfa = 0.05. Ile N potrzeba do mocy 80%? Jak zmienia sie macierz błędów?",
+            "Faza C - Sandbox: ustaw d = 0.20 i alfa = 0.05. Ile N potrzeba do mocy 80%? Jak zmienia się macierz błędów?",
         ],
     },
     "en": {

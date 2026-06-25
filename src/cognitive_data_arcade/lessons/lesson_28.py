@@ -5,15 +5,15 @@ from __future__ import annotations
 CONTENT: dict[str, dict[str, list[str]]] = {
     "pl": {
         "theory": [
-            "Dezinformacja rozchodzi sie w sieciach społecznych jak epidemia biologiczna. Model SIR (S=podatny, I=zarażony, R=odporny) dobrze opisuje oba procesy. Każdy zarażony węzeł infekuje sąsiadów z prawdopodobieństwem p_infect i sam 'ozdrowieje' (przestaje aktywnie siać) z prawdopodobieństwem p_recover.",
+            "Dezinformacja rozchodzi się w sieciach społecznych jak epidemia biologiczna. Model SIR (S=podatny, I=zarażony, R=odporny) dobrze opisuje oba procesy. Każdy zarażony węzeł infekuje sąsiadów z prawdopodobieństwem p_infect i sam 'ozdrowieje' (przestaje aktywnie siać) z prawdopodobieństwem p_recover.",
             "Model SIR opracowali Kermack i McKendrick (1927) do modelowania pandemii grypy z 1918 r. Zdefiniowali podstawową liczbę reprodukcji R0 = p_infect / p_recover. Jeśli R0 > 1, epidemia rośnie wykładniczo. Jeśli R0 < 1, gaśnie. Vosoughi i in. (2018) oszacowali, że fałszywe newsy na Twitterze miały R0 wyższe niż prawdziwe.",
             "Huby (węzły o bardzo wysokim stopniu) są kluczowymi wzmacniaczami. Gdy hub jest 'patient zero', dezinformacja dociera do niemal wszystkich węzłów w ciągu kilku kroków SIR - zanim fact-checker zdąży zareagować. To wyjaśnia, dlaczego wielcy influencerzy są tak niebezpieczni jako źródło fake-newsów.",
             "Asymetria spreader vs fact-checker wynika z dwóch efektów: spreader działa ekspansywnie (każdy zarażony tworzy nowych zarażonych), a fact-checker działa zastępczo (jeden klik leczy tylko jeden węzeł, a SIR nie zatrzymuje sie). W sieci bezskalowej asymetria jest dramatycznie większa niż w sieci losowej.",
-            "Interwencje platformowe targetują huby: weryfikacja kont z dużym zasięgiem, obniżone algorytmiczne wzmocnienie, szybsze moderowanie. Prebunking (szczepienie kognitywne) - uodparnia użytkowników zanim zetkną sie z dezinformacją, co odpowiada szczepieniu huba przed epidemią.",
-            "Gra 'Bad News' (Cook i in., 2017, Cambridge) - przeglądarkowa gra RPG, w której gracz wciela sie w producenta dezinformacji. Przekroczyła 1 milion graczy i wykazała w badaniach, że zmniejsza podatność na realne kampanie dezinformacyjne. To przykład 'prebunkingu przez symulację'.",
+            "Interwencje platformowe targetują huby: weryfikacja kont z dużym zasięgiem, obniżone algorytmiczne wzmocnienie, szybsze moderowanie. Prebunking (szczepienie kognitywne) - uodparnia użytkowników zanim zetkną się z dezinformacją, co odpowiada szczepieniu huba przed epidemią.",
+            "Gra 'Bad News' (Cook i in., 2017, Cambridge) - przeglądarkowa gra RPG, w której gracz wciela się w producenta dezinformacji. Przekroczyła 1 milion graczy i wykazała w badaniach, że zmniejsza podatność na realne kampanie dezinformacyjne. To przykład 'prebunkingu przez symulację'.",
         ],
         "notes": [
-            "Vosoughi i in. 2018 (Science): fałszywe newsy rozchodzą sie na Twitterze 6x szybciej i dalej niż prawdziwe - ludzie chętniej udostępniają novelty. To efekt społeczny, nie algorytmiczny.",
+            "Vosoughi i in. 2018 (Science): fałszywe newsy rozchodzą się na Twitterze 6x szybciej i dalej niż prawdziwe - ludzie chętniej udostępniają novelty. To efekt społeczny, nie algorytmiczny.",
             "Prebunking (teoria inokulacji) jest skuteczniejszy niż debunking post-factum: wyjaśnienie, jak działa manipulacja, zwiększa odporność kognitywną. Taktyki prebunkingu: pokazywanie przykładów manipulacyjnych nagłówków, uwydatnianie bot-patterns, ćwiczenia z rozpoznawania dezinformacji.",
         ],
         "tasks": [

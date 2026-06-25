@@ -5,10 +5,10 @@ from __future__ import annotations
 CONTENT: dict[str, dict[str, list[str]]] = {
     "pl": {
         "theory": [
-            "Model językowy to maszyna do przewidywania następnego słowa na podstawie statystyk. Nie 'rozumie' tekstu - uczy sie wzorców z miliardów zdań. To wystarcza do wielu zadań, ale zawodzi gdy potrzebna jest logika lub kontekst.",
-            "Negacja to systematyczna słaba strona modeli. 'Nie był zły film' zawiera słowo 'zły', które model może skojarzyć z negatywnym sentymentem - ignorując 'nie'. Proste klasyfikatory sentymentu mylą sie na tego typu zdaniach w 30-40% przypadków.",
-            "Sarkazm i ironia wymagają znajomości kontekstu kulturowego i tonu, którego model nie 'słyszy'. Zdanie 'No jasne, to genialny pomysł...' - model widzi 'genialny', nie słyszy ironii. Idiomy są podobnym wyzwaniem: 'kopać sie z koniem' to nie fizyka.",
-            "Schemat Winograda (Levesque i in., 2011) - test zdrowego rozsądku dla modeli językowych. Przykład: 'Trofeum nie zmieściło sie w walizce, bo było za duże.' Które 'ono' jest za duże? Dla człowieka to oczywiste (trofeum), model musi rozumieć semantykę wielkości. GPT-4 rozwiązuje ok. 90% przypadków, mniejsze modele - ok. 60%.",
+            "Model językowy to maszyna do przewidywania następnego słowa na podstawie statystyk. Nie 'rozumie' tekstu - uczy się wzorców z miliardów zdań. To wystarcza do wielu zadań, ale zawodzi gdy potrzebna jest logika lub kontekst.",
+            "Negacja to systematyczna słaba strona modeli. 'Nie był zły film' zawiera słowo 'zły', które model może skojarzyć z negatywnym sentymentem - ignorując 'nie'. Proste klasyfikatory sentymentu mylą się na tego typu zdaniach w 30-40% przypadków.",
+            "Sarkazm i ironia wymagają znajomości kontekstu kulturowego i tonu, którego model nie 'słyszy'. Zdanie 'No jasne, to genialny pomysł...' - model widzi 'genialny', nie słyszy ironii. Idiomy są podobnym wyzwaniem: 'kopać się z koniem' to nie fizyka.",
+            "Schemat Winograda (Levesque i in., 2011) - test zdrowego rozsądku dla modeli językowych. Przykład: 'Trofeum nie zmieściło się w walizce, bo było za duże.' Które 'ono' jest za duże? Dla człowieka to oczywiste (trofeum), model musi rozumieć semantykę wielkości. GPT-4 rozwiązuje ok. 90% przypadków, mniejsze modele - ok. 60%.",
             "Argument Chińskiego Pokoju (Searle, 1980) - filozoficzny argument, że model wykonujący poprawne operacje na symbolach nie 'rozumie' ich znaczenia, tak jak osoba w pokoju odpowiadająca na chińskie pytania za pomocą słownika nie rozumie chińskiego.",
             "Dlaczego ludzie wciąż wygrywają z modelami na trudnych przypadkach? Bo dysponujemy wspólnymi doświadczeniami, intuicjami językowymi i zdolnością rozumowania przyczynowego. AI jest świetna w typowych przypadkach, człowiek - na krawędzi rozkładu.",
         ],
@@ -17,7 +17,7 @@ CONTENT: dict[str, dict[str, list[str]]] = {
             "Benchmarki NLP (GLUE, SuperGLUE) mierzą średnie wyniki na dużych zbiorach testowych. Dobry wynik benchmarkowy nie gwarantuje odporności na krawędzi rozkładu - dlatego testy adversarialne i red-teaming są niezbędne przed wdrożeniem modelu.",
         ],
         "tasks": [
-            "Znajdź zdanie, na którym chatbot sie myli - użyj negacji lub sarkazmu. Zapisz zdanie, odpowiedź modelu i poprawną odpowiedź. Co model 'zobaczył' zamiast sensu?",
+            "Znajdź zdanie, na którym chatbot się myli - użyj negacji lub sarkazmu. Zapisz zdanie, odpowiedź modelu i poprawną odpowiedź. Co model 'zobaczył' zamiast sensu?",
             "Wyjaśnij, dlaczego sarkazm jest trudny dla modelu językowego. Co musi wiedzieć człowiek, żeby rozpoznać sarkazm w tekście bez kontekstu głosu?",
             "Zaprojektuj test, który niezawodnie zmyli klasyfikator sentymentu. Napisz 3 zdania: jedno z negacją, jedno sarkazm, jedno idiom. Sprawdź na dowolnym darmowym narzędziu NLP online.",
         ],

@@ -9,12 +9,12 @@ CONTENT: dict[str, dict[str, list[str]]] = {
             "Klasyczna reguła 3 sigma: w rozkładzie normalnym ponad 99.7% obserwacji leży w zakresie plus minus 3 odchylenia standardowego od średniej. Punkt poza tym zakresem jest podejrzany. W seriach czasowych EEG takie skoki to często artefakty sprzętowe (ruch mięśni, poruszenie elektrody).",
             "Kryterium Tukeya dla boxplota: outlier to punkt leżący dalej niż 1.5 x IQR (rozstęp międzykwartylowy) od krawędzi pudełka. To standardowa definicja używana przez matplotlib i większość narzędzi statystycznych. Przy skośnych rozkładach reguła 3 sigma daje za mało flag, kryterium Tukeya działa poprawniej.",
             "Izolacyjny las (Isolation Forest, Liu i in., 2008) - algorytm anomalii oparty na losowych drzewach decyzyjnych. Anomalia jest przez algorytm 'izolowana' przy mniejszej liczbie podziałów niż normalna obserwacja. Idea: rzadkie wartości leżą daleko od pozostałych, więc łatwo je odizolować.",
-            "W przestrzeni 2D (scatter) anomalię oblicza sie jako odległość euklidesową od centroidu grupy podzieloną przez odchylenie standardowe odległości. Punkty powyżej 2.5 sigma to anomalie - mogą wskazywać na uczestników badania z wyjątkowym profilem poznawczym.",
+            "W przestrzeni 2D (scatter) anomalię oblicza się jako odległość euklidesową od centroidu grupy podzieloną przez odchylenie standardowe odległości. Punkty powyżej 2.5 sigma to anomalie - mogą wskazywać na uczestników badania z wyjątkowym profilem poznawczym.",
             "Odległość Mahalanobisa - rozszerzenie odległości euklidesowej, które uwzględnia korelacje między zmiennymi. Punkt może być blisko centroidu w każdej zmiennej z osobna, ale daleko w sensie Mahalanobisa, jeśli kombinacja wartości jest mało prawdopodobna. Stosowana w wielowymiarowej detekcji anomalii EEG.",
         ],
         "notes": [
             "Nie każda anomalia to błąd - outlier w badaniu kognitywnym może oznaczać uczestnika z wyjątkowymi zdolnościami, zmęczeniem lub inną strategią. Zawsze warto sprawdzić kontekst przed usunięciem punktu z analizy.",
-            "Heatmapy korelacji EEG: anomalna komórka to potencjalny sygnał biologiczny. Przed wyciągnięciem wniosków warto sprawdzić, czy wzorzec pojawia sie konsekwentnie w wielu sesjach i uczestnikach.",
+            "Heatmapy korelacji EEG: anomalna komórka to potencjalny sygnał biologiczny. Przed wyciągnięciem wniosków warto sprawdzić, czy wzorzec pojawia się konsekwentnie w wielu sesjach i uczestnikach.",
         ],
         "tasks": [
             "Zagraj w Anomaly Alert - w której rundzie najtrudniej było odróżnić anomalię od normalnego punktu? Co sprawiło, że była trudna?",

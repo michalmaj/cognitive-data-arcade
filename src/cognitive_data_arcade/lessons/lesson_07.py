@@ -11,7 +11,7 @@ CONTENT: dict[str, dict[str, list[str]]] = {
             "Trzy warunki - zgodny (CZERWONY czerwonym tuszem): najszybszy. Neutralny (XXXXX czerwonym tuszem): pośredni. Niezgodny (NIEBIESKI czerwonym tuszem): najwolniejszy. Różnica to efekt Stroopa.",
             "Co mierzy efekt Stroopa - interference = RT(niezgodny) - RT(neutralny). Facilitation = RT(neutralny) - RT(zgodny). Oba mierzą zdolność do hamowania procesów automatycznych.",
             "Podstawa neuronalna - badania fMRI wskazują, że warunki niezgodne aktywują przedni zakręt obręczy (ACC) i grzbietowo-boczną korę przedczołową (dlPFC). ACC jest obszarem kluczowym dla monitorowania konfliktów, dlPFC - dla kontroli hamowania. MacLeod (1991) w przeglądzie 50 lat badań wykazał, że efekt jest jednym z najbardziej replikowalnych w psychologii.",
-            "Zastosowania kliniczne - zmniejszony efekt Stroopa obserwuje sie w ADHD, demencji i schizofrenii. Test Stroopa jest używany w neuropsychologicznej ocenie funkcji wykonawczych.",
+            "Zastosowania kliniczne - zmniejszony efekt Stroopa obserwuje się w ADHD, demencji i schizofrenii. Test Stroopa jest używany w neuropsychologicznej ocenie funkcji wykonawczych.",
         ],
         "notes": [
             "RT i dokładność łącznie - uczestnik odpowiadający szybko z niską dokładnością stosuje inną strategię niż uczestnik wolny i dokładny. Obie miary razem dają pełny obraz zachowania.",
@@ -19,7 +19,7 @@ CONTENT: dict[str, dict[str, list[str]]] = {
             "Facilitation vs. interference - to dwa odrębne procesy. Duże interference (spowolnienie przez niezgodność) może współistnieć z małą facilitation (przyspieszeniem przez zgodność).",
         ],
         "tasks": [
-            "Oblicz efekt Stroopa: RT(niezgodny) - RT(zgodny). Typowe wartości to 100-300 ms. Czy wynik mieści sie w granicach normy?",
+            "Oblicz efekt Stroopa: RT(niezgodny) - RT(zgodny). Typowe wartości to 100-300 ms. Czy wynik mieści się w granicach normy?",
             "Porównaj interference i facilitation osobno. Które jest większe? Co to mówi o sposobie przetwarzania konfliktów percepcyjnych?",
             "Czy dokładność spada w warunku niezgodnym? Jeśli tak - czy są to błędy impulsywne (szybkie złe odpowiedzi) czy wahanie (wolne złe odpowiedzi)?",
         ],

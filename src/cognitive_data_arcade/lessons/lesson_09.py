@@ -5,21 +5,21 @@ from __future__ import annotations
 CONTENT: dict[str, dict[str, list[str]]] = {
     "pl": {
         "theory": [
-            "Zadanie Go/No-Go - przy bodźcu Go (częsty) naciśnij klawisz jak najszybciej. Przy bodźcu No-Go (rzadki) powstrzymaj sie. Mierzy hamowanie motoryczne - zdolność do zatrzymania przygotowanej odpowiedzi.",
+            "Zadanie Go/No-Go - przy bodźcu Go (częsty) naciśnij klawisz jak najszybciej. Przy bodźcu No-Go (rzadki) powstrzymaj się. Mierzy hamowanie motoryczne - zdolność do zatrzymania przygotowanej odpowiedzi.",
             "Fałszywy alarm (FA) - naciśniecie klawisza przy bodźcu No-Go to wskaźnik impulsywności. FA rate 5-15% to norma. Powyżej 25% sygnalizuje trudności z hamowaniem odpowiedzi.",
-            "Paradygmat sygnału stopu (Logan, 1984) - bardziej zaawansowana wersja hamowania: po bodźcu Go pojawia sie opcjonalny sygnał stopu z różnym opóźnieniem. Mierzy SSRT (Stop-Signal Reaction Time) - czas potrzebny do zablokowania już rozpoczętej odpowiedzi. Typowa wartość SSRT wynosi 200-250 ms.",
-            "Poprawne odrzucenie - powstrzymanie sie przy No-Go to aktywny proces hamowania, nie brak odpowiedzi. Wymaga wykrycia bodźca, rozpoznania go jako No-Go i zablokowania przygotowanej reakcji.",
+            "Paradygmat sygnału stopu (Logan, 1984) - bardziej zaawansowana wersja hamowania: po bodźcu Go pojawia się opcjonalny sygnał stopu z różnym opóźnieniem. Mierzy SSRT (Stop-Signal Reaction Time) - czas potrzebny do zablokowania już rozpoczętej odpowiedzi. Typowa wartość SSRT wynosi 200-250 ms.",
+            "Poprawne odrzucenie - powstrzymanie się przy No-Go to aktywny proces hamowania, nie brak odpowiedzi. Wymaga wykrycia bodźca, rozpoznania go jako No-Go i zablokowania przygotowanej reakcji.",
             "Signal Detection Theory - d' (d-prime) mierzy zdolność do rozróżnienia Go od No-Go niezależnie od strategii odpowiadania. Wysokie d' = dobra czułość percepcyjna.",
             "Neurobiologia hamowania - uszkodzenie kory oczodołowo-czołowej (OFC) sprawia, że pacjenci nie mogą hamować odpowiedzi nawet gdy wiedzą, że powinni (Bechara i in., 1994). Niski poziom dopaminy w korze przedczołowej koreluje z wysokim FA rate; metylofenidat (Ritalin) obniża FA rate w ADHD.",
             "Zastosowania kliniczne - Go/No-Go używany jest w ocenie ADHD (wysoki FA), impulsywności, zdolności do prowadzenia pojazdów i monitorowaniu efektów leków na funkcje wykonawcze.",
         ],
         "notes": [
             "FA rate vs. miss rate - fałszywy alarm (naciśniecie przy No-Go) i opuszczenie (brak reakcji przy Go) to dwa różne błędy. FA mierzy impulsywność. Miss mierzy spowolnienie lub rozproszenie uwagi.",
-            "Hamowanie słabnie z czasem - FA rate często rośnie pod koniec bloku. Hamowanie to zasób, który sie wyczerpuje. Wzrost FA w końcówce sesji to normalny efekt zmęczenia hamowania.",
-            "Proporcja No-Go ma znaczenie - im więcej bodźców No-Go, tym łatwiej hamować (rzadsze Go = mniejsza automatyczność naciśniecia). Wyniki porównuje sie tylko przy tej samej proporcji Go/No-Go.",
+            "Hamowanie słabnie z czasem - FA rate często rośnie pod koniec bloku. Hamowanie to zasób, który się wyczerpuje. Wzrost FA w końcówce sesji to normalny efekt zmęczenia hamowania.",
+            "Proporcja No-Go ma znaczenie - im więcej bodźców No-Go, tym łatwiej hamować (rzadsze Go = mniejsza automatyczność naciśniecia). Wyniki porównuje się tylko przy tej samej proporcji Go/No-Go.",
         ],
         "tasks": [
-            "Jaki jest FA rate? Oblicz: (liczba FA) / (liczba prób No-Go) x 100%. Czy mieści sie w normie 5-15%?",
+            "Jaki jest FA rate? Oblicz: (liczba FA) / (liczba prób No-Go) x 100%. Czy mieści się w normie 5-15%?",
             "Czy FA rate rośnie w późniejszych blokach? Jeśli tak - o ile? Co to mówi o hamowaniu pod wpływem zmęczenia poznawczego?",
             "Porównaj RT w próbach Go z wynikami z RT Lab (lekcja 02). Czy dodanie zadania hamowania (No-Go) wpłynęło na czas reakcji na bodźce Go?",
         ],

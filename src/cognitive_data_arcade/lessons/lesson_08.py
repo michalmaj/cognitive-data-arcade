@@ -6,22 +6,22 @@ CONTENT: dict[str, dict[str, list[str]]] = {
     "pl": {
         "theory": [
             "Zadanie Eriksena Flankera (1974) - środkowa strzałka to cel, otaczające ją strzałki to flankers. Kongruentny (>>>): szybki. Inkongruentny (<><): wolniejszy. Zadanie: ignoruj flankers, odpowiedz na cel.",
-            "Artykuł opublikowali razem Barbara i Charles Eriksen - małżeństwo pracujące w University of Illinois. Barbara Eriksen (z domu Hamm) była współautorką oryginalnej pracy z 1974 roku, choć w cytowaniach często pojawia sie samo nazwisko Charles'a.",
+            "Artykuł opublikowali razem Barbara i Charles Eriksen - małżeństwo pracujące w University of Illinois. Barbara Eriksen (z domu Hamm) była współautorką oryginalnej pracy z 1974 roku, choć w cytowaniach często pojawia się samo nazwisko Charles'a.",
             "Flanker effect - RT(inkongruentny) - RT(kongruentny). Mierzy zdolność do selektywnej uwagi i hamowania dystraktorów. Typowe wartości: 20-80 ms. Duży efekt = trudność z ignorowaniem bodźców otoczenia.",
             "Skąd nazwa 'flanker' - flanker to żołnierz osłaniający skrzydła formacji. W zadaniu flankers 'otaczają' cel tak jak żołnierze flankujący chronią centrum szyku bojowego.",
-            "Uwaga selektywna - zdolność do skupienia sie na istotnym bodźcu przy ignorowaniu nieistotnych. Flanker task mierzy tę zdolność w warunkach konfliktu przestrzennego.",
+            "Uwaga selektywna - zdolność do skupienia się na istotnym bodźcu przy ignorowaniu nieistotnych. Flanker task mierzy tę zdolność w warunkach konfliktu przestrzennego.",
             "Model uwagi Posnera - uwaga może być ukierunkowana jak reflektor. Gdy cel i dystraktory są blisko siebie, reflektor 'rozlewa sie' na sąsiednie bodźce. Efekt maleje, gdy flankers są dalej od celu.",
             "ANT (Attention Network Test) - Fan i in. (2002) połączyli zadanie flankera z paradygmatem wskazówek Posnera. Test mierzy trzy sieci uwagi niezależnie: alerting (czujność), orienting (ukierunkowanie), executive control (kontrola wykonawcza). Jeden test dostarcza trzech niezależnych miar funkcji uwagi.",
         ],
         "notes": [
             "Efekt flankera = RT(inkongruentny) - RT(kongruentny). Warto sprawdzić też dokładność w obu warunkach. Uczestnik szybki z niską dokładnością może stosować strategię 'szybko bez refleksji'.",
             "Typowe wartości - efekt flankera 20-50 ms to norma dla młodych dorosłych. Powyżej 80 ms sugeruje trudności z kontrolą hamowania. Poniżej 10 ms może oznaczać strategię 'wolno i dokładnie'.",
-            "Efekt ćwiczenia a flanker effect - wraz z ćwiczeniem ogólny RT spada, ale flanker effect może pozostać podobny. Można nauczyć sie reagować szybciej, ale konflikt dystraktorów nie znika automatycznie.",
+            "Efekt ćwiczenia a flanker effect - wraz z ćwiczeniem ogólny RT spada, ale flanker effect może pozostać podobny. Można nauczyć się reagować szybciej, ale konflikt dystraktorów nie znika automatycznie.",
         ],
         "tasks": [
             "Jaki jest medianowy efekt flankera? Porównaj go z typowym zakresem 20-80 ms. Czy wynik wskazuje na trudności z ignorowaniem strzałek otaczających cel?",
-            "Porównaj dokładność dla warunków kongruentnego i inkongruentnego. Czy w warunku inkongruentnym pojawia sie więcej błędów?",
-            "Czy efekt flankera zmienia sie między pierwszym a ostatnim blokiem? Czy widoczna jest adaptacja uwagi w trakcie sesji?",
+            "Porównaj dokładność dla warunków kongruentnego i inkongruentnego. Czy w warunku inkongruentnym pojawia się więcej błędów?",
+            "Czy efekt flankera zmienia się między pierwszym a ostatnim blokiem? Czy widoczna jest adaptacja uwagi w trakcie sesji?",
         ],
     },
     "en": {
