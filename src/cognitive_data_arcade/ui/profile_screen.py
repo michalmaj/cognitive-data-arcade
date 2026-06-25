@@ -49,6 +49,8 @@ class ProfileScene(Scene):
         self._next: Scene | None = None
         self._editing_alias = False
         self._alias_buffer = ""
+        self._export_msg: str = ""
+        self._export_msg_ttl: float = 0.0
         pygame.font.init()
         self._font_sm = get_font(22)
         self._font_med = get_font(28)
@@ -92,6 +94,8 @@ class ProfileScene(Scene):
 
             out = pathlib.Path.home() / f"cda_progress_{self._profile.alias}.json"
             self._pm.export_progress(out)
+            self._export_msg = str(out)
+            self._export_msg_ttl = 4000.0
 
     def _handle_alias_input(self, event: pygame.event.Event) -> None:
         if event.key == pygame.K_RETURN:
@@ -108,7 +112,10 @@ class ProfileScene(Scene):
             self._alias_buffer += event.unicode
 
     def update(self, dt_ms: float) -> None:
-        pass
+        if self._export_msg_ttl > 0:
+            self._export_msg_ttl -= dt_ms
+            if self._export_msg_ttl <= 0:
+                self._export_msg = ""
 
     def is_done(self) -> bool:
         return self._next is not None
@@ -288,13 +295,18 @@ class ProfileScene(Scene):
         surface.blit(back_surf, (28, footer_y + 15))
 
         edit_surf = self._font_label.render(self._strings.label_edit_alias, True, _DIM_COLOR)
-        surface.blit(edit_surf, (220, footer_y + 15))
+        surface.blit(edit_surf, (200, footer_y + 15))
 
         reset_surf = self._font_label.render(self._strings.label_reset, True, (160, 60, 60))
-        surface.blit(reset_surf, (430, footer_y + 15))
+        surface.blit(reset_surf, (390, footer_y + 15))
 
         syllabus_surf = self._font_label.render(self._strings.label_syllabus, True, _DIM_COLOR)
-        surface.blit(syllabus_surf, (650, footer_y + 15))
+        surface.blit(syllabus_surf, (600, footer_y + 15))
 
         export_surf = self._font_label.render(self._strings.label_export, True, _DIM_COLOR)
-        surface.blit(export_surf, (28, footer_y + 30))
+        surface.blit(export_surf, (760, footer_y + 15))
+
+        if self._export_msg:
+            msg_font = get_font(16)
+            msg_surf = msg_font.render(self._export_msg, True, (74, 222, 128))
+            surface.blit(msg_surf, (w // 2 - msg_surf.get_width() // 2, footer_y - 22))
