@@ -148,3 +148,73 @@ def test_clear_current_module_sets_none(tmp_path: Path) -> None:
     manager.set_current_module(3)
     manager.clear_current_module()
     assert manager.load().current_module_idx is None
+
+
+def test_reset_progress_zeroes_game_data(tmp_path: Path) -> None:
+    pm = ProfileManager(tmp_path / "p.json")
+    p = pm.load()
+    p.arcade_points = 500
+    p.science_points = 200
+    p.badges = ["first_game", "module_1"]
+    p.completed_lessons = [1, 2, 3]
+    p.alias = "Alice"
+    p.current_module_idx = 2
+    pm.save(p)
+
+    pm.reset_progress()
+
+    after = pm.load()
+    assert after.arcade_points == 0
+    assert after.science_points == 0
+    assert after.badges == []
+    assert after.completed_lessons == []
+    # non-progress fields preserved
+    assert after.alias == "Alice"
+    assert after.current_module_idx == 2
+
+
+def test_reset_module_progress_clears_module_state(tmp_path: Path) -> None:
+    pm = ProfileManager(tmp_path / "p.json")
+    pm.set_seen_intro(True)
+    pm.set_current_module(3)
+    p = pm.load()
+    p.arcade_points = 999
+    pm.save(p)
+
+    pm.reset_module_progress()
+
+    after = pm.load()
+    assert after.current_module_idx is None
+    assert after.seen_intro is False
+    assert after.arcade_points == 999  # preserved
+
+
+def test_reset_all_keeps_identity_and_settings(tmp_path: Path) -> None:
+    pm = ProfileManager(tmp_path / "p.json")
+    p = pm.load()
+    p.arcade_points = 999
+    p.badges = ["first_game"]
+    p.alias = "Bob"
+    p.language = "en"
+    p.music_volume = 0.3
+    p.sfx_volume = 0.5
+    p.fullscreen = True
+    saved_uuid = p.device_uuid
+    pm.save(p)
+
+    pm.reset_all()
+
+    after = pm.load()
+    assert after.arcade_points == 0
+    assert after.badges == []
+    assert after.completed_lessons == []
+    assert after.alias == "Bob"
+    assert after.language == "en"
+    assert after.music_volume == 0.3
+    assert after.sfx_volume == 0.5
+    assert after.fullscreen is True
+    assert after.device_uuid == saved_uuid
+    assert after.current_module_idx is None
+    assert after.seen_intro is False
+    assert after.music_enabled is True
+    assert after.sfx_enabled is True

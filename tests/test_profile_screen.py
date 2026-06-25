@@ -86,3 +86,14 @@ def test_profile_scene_alias_edit_cancel_restores(tmp_path: Path) -> None:
 
     # Alias not saved
     assert pm.load().alias == "anonymous"
+
+
+def test_r_key_opens_reset_confirm(tmp_path: Path) -> None:
+    pygame.init()
+    pygame.display.set_mode((1024, 768))
+    from cognitive_data_arcade.ui.reset_confirm_scene import ResetConfirmScene
+
+    scene = _make_scene(tmp_path)
+    scene.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_r, mod=0, unicode="r"))
+    assert scene.is_done()
+    assert isinstance(scene.next_scene(), ResetConfirmScene)

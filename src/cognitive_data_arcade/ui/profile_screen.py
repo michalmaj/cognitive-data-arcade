@@ -79,6 +79,10 @@ class ProfileScene(Scene):
         elif event.key == pygame.K_e:
             self._editing_alias = True
             self._alias_buffer = ""
+        elif event.key == pygame.K_r:
+            from cognitive_data_arcade.ui.reset_confirm_scene import ResetConfirmScene
+
+            self._next = ResetConfirmScene(self._pm, self._strings, self._back)
 
     def _handle_alias_input(self, event: pygame.event.Event) -> None:
         if event.key == pygame.K_RETURN:
@@ -276,3 +280,6 @@ class ProfileScene(Scene):
 
         edit_surf = self._font_label.render(self._strings.label_edit_alias, True, _DIM_COLOR)
         surface.blit(edit_surf, (220, footer_y + 15))
+
+        reset_surf = self._font_label.render(self._strings.label_reset, True, (160, 60, 60))
+        surface.blit(reset_surf, (430, footer_y + 15))
