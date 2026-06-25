@@ -216,3 +216,5 @@ def test_reset_all_keeps_identity_and_settings(tmp_path: Path) -> None:
     assert after.device_uuid == saved_uuid
     assert after.current_module_idx is None
     assert after.seen_intro is False
+    assert after.music_enabled is True
+    assert after.sfx_enabled is True
