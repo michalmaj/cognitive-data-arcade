@@ -157,3 +157,12 @@ class ProfileManager:
         )
         self.save(fresh)
         return fresh
+
+    def export_progress(self, path: Path) -> None:
+        import datetime
+
+        profile = self.load()
+        data = asdict(profile)
+        data["exported_at"] = datetime.datetime.now().isoformat()
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
