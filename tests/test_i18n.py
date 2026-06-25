@@ -187,8 +187,8 @@ def test_menu_modules_has_6_entries():
     assert len(PL.menu_modules) == 6
 
 
-def test_menu_hintbar_items_has_5_entries():
+def test_menu_hintbar_items_has_6_entries():
     from cognitive_data_arcade.engine.i18n import EN, PL
 
-    assert len(EN.menu_hintbar_items) == 5
-    assert len(PL.menu_hintbar_items) == 5
+    assert len(EN.menu_hintbar_items) == 6
+    assert len(PL.menu_hintbar_items) == 6

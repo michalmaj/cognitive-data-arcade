@@ -663,6 +663,11 @@ class LessonMenuScene(Scene):
             back = LessonMenuScene(self._pm, self._strings, self._selected)
             self._next = OptionsScene(self._pm, self._strings, back)
             self._done = True
+        elif event.key == pygame.K_s:
+            from cognitive_data_arcade.ui.syllabus_scene import SyllabusScene
+
+            self._next = SyllabusScene(self._pm, self._strings, self)
+            self._done = True
         elif event.key == pygame.K_z:
             self._launch_stroop_picker()
 
