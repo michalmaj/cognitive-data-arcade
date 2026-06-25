@@ -123,12 +123,12 @@ QUIZ_QUESTIONS: dict[int, dict] = {
         "options_pl": [
             "Szybkosc uczenia sie sekwencji ruchowych",
             "Rozroznianie kolorow pod presja czasu",
-            "Hamowanie odpowiedzi — zdolnosc do powstrzymania automatycznej reakcji",
+            "Hamowanie odpowiedzi - zdolnosc do powstrzymania automatycznej reakcji",
         ],
         "options_en": [
             "Speed of learning motor sequences",
             "Colour discrimination under time pressure",
-            "Response inhibition — ability to suppress an automatic reaction",
+            "Response inhibition - ability to suppress an automatic reaction",
         ],
         "correct": 2,
     },
@@ -317,12 +317,12 @@ QUIZ_QUESTIONS: dict[int, dict] = {
         "q_en": "What does TF-IDF measure?",
         "options_pl": [
             "Liczbe wystapien slowa w calym zbiorze dokumentow",
-            "Waznosc slowa w dokumencie wzgledem calego zbioru — czeste tu, rzadkie globalnie",
+            "Waznosc slowa w dokumencie wzgledem calego zbioru - czeste tu, rzadkie globalnie",
             "Semantyczne podobienstwo dwoch slow na podstawie kontekstu",
         ],
         "options_en": [
             "Number of occurrences of a word across the entire document collection",
-            "Importance of a word in a document relative to the collection — frequent here, rare globally",
+            "Importance of a word in a document relative to the collection - frequent here, rare globally",
             "Semantic similarity of two words based on context",
         ],
         "correct": 1,
@@ -333,12 +333,12 @@ QUIZ_QUESTIONS: dict[int, dict] = {
         "options_pl": [
             "Modele jezykowe nie radza sobie z tekstem krotszym niz 100 slow",
             "Emocje wystepuja tylko w mowie bezposredniej, nie w pisemnej",
-            "Kontekst, ironia i kultura wplywaja na znaczenie — to samo zdanie moze wyrazac rozne emocje",
+            "Kontekst, ironia i kultura wplywaja na znaczenie - to samo zdanie moze wyrazac rozne emocje",
         ],
         "options_en": [
             "Language models cannot handle texts shorter than 100 words",
             "Emotions appear only in direct speech, not in written form",
-            "Context, irony and culture affect meaning — the same sentence can express different emotions",
+            "Context, irony and culture affect meaning - the same sentence can express different emotions",
         ],
         "correct": 2,
     },
