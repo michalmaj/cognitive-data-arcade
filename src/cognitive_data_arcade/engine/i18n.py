@@ -49,6 +49,8 @@ class Strings:
     label_back: str
     label_edit_alias: str
     label_reset: str
+    label_syllabus: str
+    label_export: str
     # Level titles (include emoji)
     level_seedling: str
     level_explorer: str
@@ -213,6 +215,8 @@ EN = Strings(
     label_back="ESC  back",
     label_edit_alias="E  edit alias",
     label_reset="R  reset progress",
+    label_syllabus="S  syllabus",
+    label_export="X  export progress",
     level_seedling="🌱 Data Seedling",
     level_explorer="🔍 Data Explorer",
     level_analyst="📊 Data Analyst",
@@ -316,6 +320,7 @@ EN = Strings(
         "Enter  play",
         "T  theory",
         "P  profile",
+        "S  syllabus",
         "ESC  quit",
     ),
     menu_modules=(
@@ -388,6 +393,8 @@ PL = Strings(
     label_back="ESC  wróć",
     label_edit_alias="E  edytuj alias",
     label_reset="R  resetuj postep",
+    label_syllabus="S  sylabus",
+    label_export="X  eksport danych",
     level_seedling="🌱 Siewca Danych",
     level_explorer="🔍 Odkrywca Danych",
     level_analyst="📊 Analityk Danych",
@@ -491,6 +498,7 @@ PL = Strings(
         "Enter  graj",
         "T  teoria",
         "P  profil",
+        "S  sylabus",
         "ESC  wyjdź",
     ),
     menu_modules=(

@@ -663,6 +663,11 @@ class LessonMenuScene(Scene):
             back = LessonMenuScene(self._pm, self._strings, self._selected)
             self._next = OptionsScene(self._pm, self._strings, back)
             self._done = True
+        elif event.key == pygame.K_s:
+            from cognitive_data_arcade.ui.syllabus_scene import SyllabusScene
+
+            self._next = SyllabusScene(self._pm, self._strings, self)
+            self._done = True
         elif event.key == pygame.K_z:
             self._launch_stroop_picker()
 
@@ -683,9 +688,11 @@ class LessonMenuScene(Scene):
             for kind, param, row_vy, row_vh in _VIRTUAL_ROWS:
                 if kind == "header" and row_vy <= vy < row_vy + row_vh:
                     from cognitive_data_arcade.ui.module_runner_scene import ModuleRunnerScene
+                    from cognitive_data_arcade.ui.act_intro_scene import make_act_intro
 
                     self._pm.set_current_module(param)
-                    self._next = ModuleRunnerScene(param, self._pm, self._strings)
+                    _runner = ModuleRunnerScene(param, self._pm, self._strings)
+                    self._next = make_act_intro(self._pm, param, self._strings, back_scene=_runner)
                     self._done = True
                     return
             idx = self._lesson_idx_at(y)

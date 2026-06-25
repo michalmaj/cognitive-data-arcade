@@ -83,6 +83,15 @@ class ProfileScene(Scene):
             from cognitive_data_arcade.ui.reset_confirm_scene import ResetConfirmScene
 
             self._next = ResetConfirmScene(self._pm, self._strings, self._back)
+        elif event.key == pygame.K_s:
+            from cognitive_data_arcade.ui.syllabus_scene import SyllabusScene
+
+            self._next = SyllabusScene(self._pm, self._strings, self._back)
+        elif event.key == pygame.K_x:
+            import pathlib
+
+            out = pathlib.Path.home() / f"cda_progress_{self._profile.alias}.json"
+            self._pm.export_progress(out)
 
     def _handle_alias_input(self, event: pygame.event.Event) -> None:
         if event.key == pygame.K_RETURN:
@@ -283,3 +292,9 @@ class ProfileScene(Scene):
 
         reset_surf = self._font_label.render(self._strings.label_reset, True, (160, 60, 60))
         surface.blit(reset_surf, (430, footer_y + 15))
+
+        syllabus_surf = self._font_label.render(self._strings.label_syllabus, True, _DIM_COLOR)
+        surface.blit(syllabus_surf, (650, footer_y + 15))
+
+        export_surf = self._font_label.render(self._strings.label_export, True, _DIM_COLOR)
+        surface.blit(export_surf, (28, footer_y + 30))

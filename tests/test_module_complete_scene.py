@@ -41,12 +41,12 @@ def test_escape_returns_to_menu():
 
 def test_enter_goes_to_next_module():
     from cognitive_data_arcade.ui.module_complete_scene import ModuleCompleteScene
-    from cognitive_data_arcade.ui.module_runner_scene import ModuleRunnerScene
+    from cognitive_data_arcade.ui.act_intro_scene import ActIntroScene
 
     scene = ModuleCompleteScene(0, _make_pm(), EN)
     scene.handle_event(_key(pygame.K_RETURN))
     assert scene.is_done()
-    assert isinstance(scene.next_scene(), ModuleRunnerScene)
+    assert isinstance(scene.next_scene(), ActIntroScene)
 
 
 def test_last_module_enter_goes_to_menu():

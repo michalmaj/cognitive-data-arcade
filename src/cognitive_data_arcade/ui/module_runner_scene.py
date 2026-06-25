@@ -30,7 +30,13 @@ def _module_lessons(module_idx: int) -> list[dict]:
 
 
 class ModuleRunnerScene(Scene):
-    def __init__(self, module_idx: int, pm: ProfileManager, strings: Strings) -> None:
+    def __init__(
+        self,
+        module_idx: int,
+        pm: ProfileManager,
+        strings: Strings,
+        pending_quiz_lesson: int | None = None,
+    ) -> None:
         self._module_idx = module_idx
         self._pm = pm
         self._strings = strings
@@ -44,6 +50,7 @@ class ModuleRunnerScene(Scene):
         self._teoria_rect: pygame.Rect | None = None
         self._step_rects: list[pygame.Rect] = []
         self._mini_bar_rects: list[pygame.Rect] = []
+        self._pending_quiz_lesson = pending_quiz_lesson
 
     def _find_current_step(self, completed: set[int]) -> int:
         for i, lesson in enumerate(self._lessons):
@@ -92,7 +99,12 @@ class ModuleRunnerScene(Scene):
         from cognitive_data_arcade.ui.game_launcher import game_factory_for_with_back
 
         lesson_num = self._current_lesson()["num"]
-        back = ModuleRunnerScene(self._module_idx, self._pm, self._strings)
+        back = ModuleRunnerScene(
+            self._module_idx,
+            self._pm,
+            self._strings,
+            pending_quiz_lesson=lesson_num,
+        )
         scene = game_factory_for_with_back(lesson_num, self._pm, self._strings, back_scene=back)
         if scene is None:
             return
@@ -130,8 +142,19 @@ class ModuleRunnerScene(Scene):
             except ImportError:
                 pass
 
-    def update(self, dt_ms: float) -> None:
-        pass
+    def update(self, dt_ms: float = 0.0) -> None:
+        if self._pending_quiz_lesson is not None:
+            lesson_num = self._pending_quiz_lesson
+            self._pending_quiz_lesson = None
+            from cognitive_data_arcade.data.quiz_data import get_question
+
+            profile = self._pm.load()
+            if get_question(lesson_num) and f"L{lesson_num}" not in profile.quiz_results:
+                from cognitive_data_arcade.ui.quiz_scene import QuizScene
+
+                back = ModuleRunnerScene(self._module_idx, self._pm, self._strings)
+                self._next = QuizScene(lesson_num, self._pm, self._strings, back_scene=back)
+                self._done = True
 
     def is_done(self) -> bool:
         return self._done
