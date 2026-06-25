@@ -86,9 +86,14 @@ def stop_music() -> None:
 def play_sfx(name: str) -> None:
     if not _sfx_enabled:
         return
+    if not pygame.mixer.get_init():
+        return
     sound = _sfx.get(name)
     if sound is not None:
-        sound.play()
+        try:
+            sound.play()
+        except pygame.error:
+            pass
 
 
 def set_music_volume(v: float) -> None:

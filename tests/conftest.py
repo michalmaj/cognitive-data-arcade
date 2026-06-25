@@ -13,3 +13,18 @@ def _reset_font_cache():
 
     fonts.reset()
     yield
+
+
+@pytest.fixture(autouse=True)
+def _mock_audio(monkeypatch):
+    """Prevent real pygame.mixer calls during tests.
+
+    Multiple pygame.init()/quit() cycles across test files leave stale
+    Sound objects in audio._sfx.  Calling .play() on a stale Sound after
+    a mixer restart causes a C-level SIGSEGV that pytest cannot catch.
+    Stubbing the three public audio helpers avoids the crash without
+    affecting any game-logic assertions.
+    """
+    import cognitive_data_arcade.engine.audio as _audio
+
+    monkeypatch.setattr(_audio, "play_sfx", lambda *_a, **_kw: None)
