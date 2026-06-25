@@ -1,7 +1,12 @@
 """Narrative texts for act intro screens and act bridge screens.
 
 Each entry corresponds to module_idx 0-5 (same as _MODULES in menu.py).
-ASCII only in any text rendered via pygame font — no Polish diacritics.
+
+Fields:
+  title_pl / title_en      — full title used in ActIntroScene (ASCII, SysFont-safe)
+  short_title_pl / _en     — card title for SyllabusScene (Space Grotesk, Unicode OK)
+  desc_pl / desc_en        — 1-2 line description for SyllabusScene cards
+  text_pl / text_en        — multi-line narrative body for ActIntroScene
 """
 
 from __future__ import annotations
@@ -11,6 +16,10 @@ ACT_INTROS: list[dict[str, str]] = [
     {  # Act 0 - Module 1: Data Basics
         "title_pl": "Akt 1: Swiat pelny danych",
         "title_en": "Act 1: A World Full of Data",
+        "short_title_pl": "Świat pełen danych",
+        "short_title_en": "A World Full of Data",
+        "desc_pl": "Dane są wszędzie — w każdym kliknięciu i każdej decyzji.\nZacznij obserwować i zadawaj pierwsze pytania.",
+        "desc_en": "Data is everywhere — in every click and every decision.\nStart observing and ask your first questions.",
         "text_pl": (
             "Zanim zaczniesz analizowac dane, musisz je zobaczyc.\n"
             "Sa wszedzie - w kazdym kliknieciu, kazdej decyzji,\n"
@@ -29,6 +38,10 @@ ACT_INTROS: list[dict[str, str]] = [
     {  # Act 1 - Module 2: Cognitive Experiments
         "title_pl": "Akt 2: Ty jestes danymi",
         "title_en": "Act 2: You Are the Data",
+        "short_title_pl": "Ty jesteś danymi",
+        "short_title_en": "You Are the Data",
+        "desc_pl": "Przez sześć gier to Ty jesteś obiektem badania.\nTwój czas reakcji i pamięć robocza stają się danymi.",
+        "desc_en": "For six games you are the subject under study.\nYour reaction time and working memory become data points.",
         "text_pl": (
             "Czas zmienic perspektywe.\n"
             "Przez szesc kolejnych gier to Ty jestes obiektem badania -\n"
@@ -49,6 +62,10 @@ ACT_INTROS: list[dict[str, str]] = [
     {  # Act 2 - Module 3: Statistics
         "title_pl": "Akt 3: Jak wyciagac sens z liczb",
         "title_en": "Act 3: Making Sense of Numbers",
+        "short_title_pl": "Sens z liczb",
+        "short_title_en": "Making Sense of Numbers",
+        "desc_pl": "Rozkłady, korelacje, hipotezy, predykcje —\njęzyk którym nauka rozmawia z danymi.",
+        "desc_en": "Distributions, correlations, hypotheses, predictions —\nthe language scientists use to speak with data.",
         "text_pl": (
             "Masz dane - teraz potrzebujesz narzedzi.\n"
             "Rozklady, korelacje, hipotezy, predykcje -\n"
@@ -67,6 +84,10 @@ ACT_INTROS: list[dict[str, str]] = [
     {  # Act 3 - Module 4: Machine Learning
         "title_pl": "Akt 4: Maszyny ucza sie",
         "title_en": "Act 4: Machines That Learn",
+        "short_title_pl": "Maszyny się uczą",
+        "short_title_en": "Machines That Learn",
+        "desc_pl": "Maszyny uczą się z wzorców w danych — mogą uczyć się\nzbyt dobrze, wykrywać anomalie i klasyfikować nieznane.",
+        "desc_en": "Machines learn from patterns — they can overfit,\nspot anomalies and classify things they've never seen.",
         "text_pl": (
             "Maszyny nie rozumieja - ucza sie z wzorcow w danych.\n"
             "Moga uczyc sie zbyt dobrze (overfitting),\n"
@@ -85,6 +106,10 @@ ACT_INTROS: list[dict[str, str]] = [
     {  # Act 4 - Module 5: Language & NLP
         "title_pl": "Akt 5: Maszyny czytaja",
         "title_en": "Act 5: Machines That Read",
+        "short_title_pl": "Maszyny czytają",
+        "short_title_en": "Machines That Read",
+        "desc_pl": "Tekst to też dane. Tokenizacja, wagi słów, semantyka —\nmaszyny 'czytają' inaczej, lecz skalują się na miliony tekstów.",
+        "desc_en": "Text is data too. Tokenization, word weights, semantics —\nmachines 'read' differently but scale to millions of documents.",
         "text_pl": (
             "Tekst to tez dane.\n"
             "Tokenizacja, wagi slow, emocje, semantyka -\n"
@@ -103,6 +128,10 @@ ACT_INTROS: list[dict[str, str]] = [
     {  # Act 5 - Module 6: Networks, Ethics & Finale
         "title_pl": "Akt 6: Dane tworza spoleczenstwo - i synteza",
         "title_en": "Act 6: Data Shapes Society - and the Synthesis",
+        "short_title_pl": "Dane tworzą społeczeństwo",
+        "short_title_en": "Data Shapes Society",
+        "desc_pl": "Algorytmy decydują co widzisz w sieci i w jakiej bańce żyjesz.\nNa końcu odkryjesz, że przez całą podróż byłeś zestawem danych.",
+        "desc_en": "Algorithms decide what you see online and what bubble you live in.\nAt the end you'll discover that throughout this journey you were the dataset.",
         "text_pl": (
             "Algorytmy decyduja co widzisz w sieci,\n"
             "jak szybko dezinformacja sie rozprzestrzenia,\n"
