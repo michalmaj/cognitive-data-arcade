@@ -18,7 +18,7 @@ _W, _H = 1024, 768
 _PANEL = (22, 12, 28)
 
 _LINES = [
-    ("Dezinformacja rozchodzi sie w sieciach spolecznych jak epidemia.", _DIM),
+    ("Dezinformacja rozchodzi się w sieciach spolecznych jak epidemia.", _DIM),
     ("", _DIM),
     ("AKT 1 -- SPREADER", _RED),
     ("Klikaj szare wezly, zeby je zarazic dezinformacja.", _DIM),
@@ -26,7 +26,7 @@ _LINES = [
     ("", _DIM),
     ("AKT 2 -- FACT-CHECKER", _BLUE),
     ("Klikaj czerwone wezly, zeby je wyleczyc.", _DIM),
-    ("SIR nie zatrzymuje sie!  Cel: zdrowych pozostac >=80%.", _DIM),
+    ("SIR nie zatrzymuje się!  Cel: zdrowych pozostac >=80%.", _DIM),
     ("", _DIM),
     ("3 rundy -- coraz wieksza, bardziej bezskalowa siec.", _DIM),
 ]

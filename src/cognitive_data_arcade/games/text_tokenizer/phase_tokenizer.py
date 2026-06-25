@@ -56,7 +56,7 @@ class PhaseTokenizerScene(Scene):
         self._toggles = [
             _Toggle("Male litery", '"CZAS" -> "czas"', 8, 60, default=True),
             _Toggle("Usun interpunkcje", '"reakcji," -> "reakcji"', 8, 112, default=True),
-            _Toggle("Usun stop words", "ze, sie, i, w...", 8, 164, default=False),
+            _Toggle("Usun stop words", "ze, się, i, w...", 8, 164, default=False),
         ]
         self._chip_rects: list[pygame.Rect] = []
 
@@ -165,7 +165,7 @@ class PhaseTokenizerScene(Scene):
             tok = result.tokens[self._selected_idx]
             count = result.freq.get(tok, 0)
             positions = [i for i, t in enumerate(result.tokens) if t == tok]
-            detail = f'"{tok}"  pojawia sie {count}x  pozycje: {positions[:6]}'
+            detail = f'"{tok}"  pojawia się {count}x  pozycje: {positions[:6]}'
             det_s = get_font(11).render(detail, True, _AMBER)
             surface.blit(det_s, (rx, cy))
 
@@ -190,5 +190,5 @@ class PhaseTokenizerScene(Scene):
             removed = sum(1 for t in result.raw_tokens if t.lower() in stops)
             if removed:
                 pct = round(100 * removed / max(1, len(result.raw_tokens)))
-                return f"Usunieto {removed} stop words — slownik skurczyl sie o ~{pct}%."
+                return f"Usunieto {removed} stop words — slownik skurczyl się o ~{pct}%."
         return "Kliknij token zeby zobaczyc ile razy wystepuje w tekscie."

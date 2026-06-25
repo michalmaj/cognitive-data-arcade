@@ -26,7 +26,7 @@ _LINES = [
     ("Przeanalizuj decyzje algorytmu. Znajdz wzorzec.", _DIM),
     ("", _DIM),
     ("AKT 2 -- INZYNIER", _C_ENG),
-    ("Usuwaj cechy modelu. Obserwuj jak zmienia sie bias.", _DIM),
+    ("Usuwaj cechy modelu. Obserwuj jak zmienia się bias.", _DIM),
     ("", _DIM),
     ("AKT 3 -- REGULATOR", _C_REG),
     ("Wybierz kryterium sprawiedliwosci. Obserwuj konsekwencje.", _DIM),

@@ -11,7 +11,7 @@ def get_game_info(strings: Strings) -> GameInfo:
             description_lines=[
                 "Odkryj ukryte tematy w dokumentach tekstowych.",
                 "8 misji: nazwij temat, przypisz dokument, znajdz intruza.",
-                "Naucz sie jak LDA koduje tematy jako rozklady slow.",
+                "Naucz się jak LDA koduje tematy jako rozklady slow.",
             ],
             key_bindings=[
                 ("Klik", "wybierz odpowiedz"),

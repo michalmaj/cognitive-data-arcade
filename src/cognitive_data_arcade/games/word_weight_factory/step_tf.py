@@ -103,7 +103,7 @@ class StepTfScene(Scene):
                             f'Token: "{tok}"',
                             "",
                             "TF mierzy jak czesto token",
-                            "pojawia sie w dokumencie",
+                            "pojawia się w dokumencie",
                             "wzgledem jego dlugosci.",
                         ]
                         self._tooltip_pos = pos

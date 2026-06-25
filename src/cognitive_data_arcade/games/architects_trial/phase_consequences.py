@@ -51,7 +51,7 @@ class PhaseConsequencesScene(Scene):
         title = get_font(20).render("AKT 4 -- KONSEKWENCJE", True, _DIM)
         surface.blit(title, (_W // 2 - title.get_width() // 2, 14))
 
-        sub = get_font(16).render("System dziala od 6 miesiecy. Oto co sie stalo.", True, _WHITE)
+        sub = get_font(16).render("System dziala od 6 miesiecy. Oto co się stało.", True, _WHITE)
         surface.blit(sub, (_W // 2 - sub.get_width() // 2, 80))
 
         border_colors = [_RED, _BLUE, _GREEN, _RED]

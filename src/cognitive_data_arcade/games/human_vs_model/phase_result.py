@@ -25,7 +25,7 @@ _BTN_PLAY = pygame.Rect(_W // 2 - 120, 460, 240, 50)
 _BTN_MENU = pygame.Rect(_W // 2 - 120, 530, 240, 50)
 
 _AHA_INSIGHTS = [
-    "AI najczesciej myli sie na negacji -- 'nie byl zly' to dla modelu chaos.",
+    "AI najczesciej myli się na negacji -- 'nie byl zly' to dla modelu chaos.",
     "Detekcja tekstu AI jest trudna nawet dla modeli -- formalizm to nie dowod.",
     "Uzupelnianie zdan ujawnia ze AI wybiera 'bezpieczne' zakonczenia, nie naturalne.",
 ]

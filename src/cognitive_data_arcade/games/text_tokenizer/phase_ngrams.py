@@ -114,13 +114,13 @@ class PhaseNgramsScene(Scene):
     def _make_insight(self, result: TokenizerState, counts: Counter) -> str:
         n = self._state.ngram_n
         if n >= 3 and len(result.tokens) < 6:
-            return "Tekst za krotki na powtarzajace sie trigramy — sprobuj dluzszego."
+            return "Tekst za krotki na powtarzajace się trigramy — sprobuj dluzszego."
         repeated = [(g, c) for g, c in counts.items() if c > 1]
         if repeated and n > 1:
             top = max(repeated, key=lambda x: x[1])
             gram_str = " ".join(top[0])
             return (
-                f'"{gram_str}" pojawia sie {top[1]}x — '
+                f'"{gram_str}" pojawia się {top[1]}x — '
                 f"n-gramy wykrywaja kolokacje, ktorych unigramy nie widza."
             )
-        return "N-gramy = sekwencje N sasiadujacych tokenow. Niebieskie = powtarzajace sie."
+        return "N-gramy = sekwencje N sasiadujacych tokenow. Niebieskie = powtarzajace się."

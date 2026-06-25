@@ -205,7 +205,7 @@ class PhasePrerequisiteScene(Scene):
             )
         else:
             foot = get_font(13).render(
-                "Zagraj w brakujace gry, a lista zaktualizuje sie.", True, _DIM
+                "Zagraj w brakujace gry, a lista zaktualizuje się.", True, _DIM
             )
             surface.blit(foot, (_W // 2 - foot.get_width() // 2, _H - 40))
 

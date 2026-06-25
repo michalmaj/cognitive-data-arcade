@@ -167,7 +167,7 @@ class PhaseFrequencyScene(Scene):
         vals = list(result.freq.values())
         if len(vals) >= 2 and vals[0] >= 2 * vals[1]:
             return (
-                "Prawo Zipfa: najczestszy token pojawia sie ~2x czesciej "
+                "Prawo Zipfa: najczestszy token pojawia się ~2x czesciej "
                 "niz drugi — nawet w krotkich tekstach."
             )
         return (

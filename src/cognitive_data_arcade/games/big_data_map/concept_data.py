@@ -137,7 +137,7 @@ CONCEPT_NODES: list[LessonNode] = [
         "Pulapka\nKorelacji",
         "Correlation\nTrap",
         3,
-        "Pearson r (1896), Vigen falszywe korelacje (2015) — korelacja nie rowna sie przyczynowosci.",
+        "Pearson r (1896), Vigen falszywe korelacje (2015) — korelacja nie rowna się przyczynowosci.",
         "Pearson r (1896), Vigen spurious correlations (2015) — correlation does not equal causation.",
     ),
     LessonNode(
@@ -186,7 +186,7 @@ CONCEPT_NODES: list[LessonNode] = [
         "Alert\nAnomalii",
         "Anomaly\nAlert",
         4,
-        "Isolation Forest (Liu 2008): anomalie izoluja sie szybciej niz typowe punkty.",
+        "Isolation Forest (Liu 2008): anomalie izoluja się szybciej niz typowe punkty.",
         "Isolation Forest (Liu 2008): anomalies isolate faster than typical points.",
     ),
     # Module 5 - NLP (lessons 21-26)
@@ -320,7 +320,7 @@ EDGE_REASONS: dict[tuple[int, int], tuple[str, str]] = {
     ),
     # RT Lab cross-module
     (2, 7): (
-        "Efekt Stroopa mierzy sie przez czas reakcji — fundamentalne powiazanie.",
+        "Efekt Stroopa mierzy się przez czas reakcji — fundamentalne powiazanie.",
         "The Stroop effect is measured via reaction time — a fundamental link.",
     ),
     (2, 8): (
@@ -380,7 +380,7 @@ EDGE_REASONS: dict[tuple[int, int], tuple[str, str]] = {
         "EDA is first to reveal correlations in data — including spurious ones.",
     ),
     (6, 17): (
-        "Selekcja cech zaczyna sie od wizualizacji i eksploracji EDA.",
+        "Selekcja cech zaczyna się od wizualizacji i eksploracji EDA.",
         "Feature selection starts with EDA visualisation and exploration.",
     ),
     # Module 2 internal
@@ -410,7 +410,7 @@ EDGE_REASONS: dict[tuple[int, int], tuple[str, str]] = {
         "Stroop is one of three executive function tests in the dashboard.",
     ),
     (7, 15): (
-        "Hipotezy o efekcie Stroopa testuje sie statystycznie na danych RT.",
+        "Hipotezy o efekcie Stroopa testuje się statystycznie na danych RT.",
         "Hypotheses about the Stroop effect are tested statistically on RT data.",
     ),
     (8, 12): (
@@ -430,11 +430,11 @@ EDGE_REASONS: dict[tuple[int, int], tuple[str, str]] = {
         "Working memory capacity is a predictive feature in machine learning.",
     ),
     (11, 13): (
-        "Rozklady czasow przeszukiwania wzrokowego opisuje sie statystycznie.",
+        "Rozklady czasow przeszukiwania wzrokowego opisuje się statystycznie.",
         "Visual search time distributions are described statistically.",
     ),
     (12, 17): (
-        "Cechy z dashboardu kognitywnego (RT, bledy) staja sie wejsciem do ML.",
+        "Cechy z dashboardu kognitywnego (RT, bledy) staja się wejsciem do ML.",
         "Dashboard features (RT, errors) become input data for machine learning.",
     ),
     # Module 3 internal
@@ -485,7 +485,7 @@ EDGE_REASONS: dict[tuple[int, int], tuple[str, str]] = {
         "Feature selection is necessary before training a classifier.",
     ),
     (18, 19): (
-        "Kazdy klasyfikator moze przeuczyc sie na zbiorze treningowym.",
+        "Kazdy klasyfikator moze przeuczyc się na zbiorze treningowym.",
         "Every classifier can overfit on the training set.",
     ),
     (19, 20): (
@@ -518,7 +518,7 @@ EDGE_REASONS: dict[tuple[int, int], tuple[str, str]] = {
         "The variance-bias trade-off mirrors the fairness metrics trade-off.",
     ),
     (20, 28): (
-        "Anomalnie szybkie rozprzestrzenianie sie tresci jest sygnalem dezinformacji.",
+        "Anomalnie szybkie rozprzestrzenianie się tresci jest sygnalem dezinformacji.",
         "Anomalously fast content spread is a signal of misinformation.",
     ),
     (20, 29): (
@@ -556,7 +556,7 @@ EDGE_REASONS: dict[tuple[int, int], tuple[str, str]] = {
         "TF-IDF and embeddings are two complementary text representations.",
     ),
     (22, 25): (
-        "TF-IDF wazenia slow stosuje sie przy modelowaniu tematow LDA.",
+        "TF-IDF wazenia slow stosuje się przy modelowaniu tematow LDA.",
         "TF-IDF word weighting is applied in LDA topic modelling.",
     ),
     (23, 26): (
@@ -572,7 +572,7 @@ EDGE_REASONS: dict[tuple[int, int], tuple[str, str]] = {
         "Semantic space enables algorithmic measurement of language understanding.",
     ),
     (25, 28): (
-        "Klastry tematyczne dezinformacji identyfikuje sie modelowaniem tematow.",
+        "Klastry tematyczne dezinformacji identyfikuje się modelowaniem tematow.",
         "Misinformation topic clusters are identified via topic modelling.",
     ),
     (25, 29): (
@@ -585,7 +585,7 @@ EDGE_REASONS: dict[tuple[int, int], tuple[str, str]] = {
     ),
     # Module 6 internal
     (27, 28): (
-        "Sieci spoleczne sa medium rozprzestrzeniania sie dezinformacji.",
+        "Sieci spoleczne sa medium rozprzestrzeniania się dezinformacji.",
         "Social networks are the medium through which misinformation spreads.",
     ),
     (28, 29): (

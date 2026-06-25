@@ -11,7 +11,7 @@ def get_game_info(strings: Strings) -> GameInfo:
             description_lines=[
                 "Zbuduj siec wezlow i krawedzi, uruchom epidemie SIR.",
                 "Porownaj swoja siec z auto-generowana Random lub Scale-free.",
-                "Odkryj, dlaczego huby przyspieszaja rozprzestrzenianie sie.",
+                "Odkryj, dlaczego huby przyspieszaja rozprzestrzenianie się.",
             ],
             key_bindings=[
                 ("Klik lewy panel", "dodaj wezel lub krawedz"),

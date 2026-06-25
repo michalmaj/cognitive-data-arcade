@@ -103,7 +103,7 @@ DOMAIN_DATA: dict[str, dict] = {
             _card(
                 "kpi_outcomes",
                 "KPI: wyniki po roku",
-                "Czy dzieci z interwencja maja sie lepiej po 12 miesiacach?",
+                "Czy dzieci z interwencja maja się lepiej po 12 miesiacach?",
                 "Trudne do zmierzenia",
                 "orange",
                 20,
@@ -137,7 +137,7 @@ DOMAIN_DATA: dict[str, dict] = {
         "title": "System Rekrutacji AI",
         "institution": "Magistrat / Sluzba Cywilna",
         "act1_question": "Jakie dane o kandydatach zbierasz?",
-        "act2_question": "Na czym uczy sie Twoj model?",
+        "act2_question": "Na czym uczy się Twoj model?",
         "act3_question": "Jak mierzysz sukces rekrutacji?",
         "act1_cards": [
             _card(
@@ -174,7 +174,7 @@ DOMAIN_DATA: dict[str, dict] = {
         "act2_cards": [
             _card(
                 "h_past_performance",
-                "Ucz sie na dotychczasowych pracownikach",
+                "Ucz się na dotychczasowych pracownikach",
                 "Model wykrywa pattern dobrego pracownika z historii.",
                 "Amazon 2018 -- bias plciowy",
                 "red",
@@ -239,7 +239,7 @@ DOMAIN_DATA: dict[str, dict] = {
             "h_historical_cv": "System odrzuca kandydatki po urlopie macierzynskim -- przerwa w CV obniza score.",
             "h_blind_cv": "Anonimizacja wydluzyla proces rekrutacji o 40%. Dzial HR jest niezadowolony.",
             "h_assessments": "Testy online faworyzuja kandydatow z szybkim internetem i ciszonym miejscem.",
-            "h_past_performance": "Model odrzuca kobiety -- nauczyl sie wzorca z danych sprzed 2010 roku.",
+            "h_past_performance": "Model odrzuca kobiety -- nauczyl się wzorca z danych sprzed 2010 roku.",
             "h_diverse_criteria": "Rekrutacja wolniejsza, ale skargi na dyskryminacje spadly o 60%.",
             "h_structured_interview": "Kandydaci finalni sa lepiej dobrani. HR twierdzi ze AI jest zbedne.",
             "h_kpi_speed": "Rekrutacja szybsza, ale nowi pracownicy odchodza po 6 miesiacach.",
@@ -352,7 +352,7 @@ DOMAIN_DATA: dict[str, dict] = {
         "act4_consequences": {
             "t_vitals": "Baza tylko na pomiarach dziala dobrze dla ostrych przypadkow. Choroby chroniczne niedoreprezentowane.",
             "t_vitals_history": "Historia chorob ujawnia wiek i choroby. Mlodsi automatycznie w kolejce pierwsi.",
-            "t_vitals_social": "Ubezpieczenie prywatne stalo sie proxy statusu. Bogatsi czekaja krocej o 34%.",
+            "t_vitals_social": "Ubezpieczenie prywatne stalo się proxy statusu. Bogatsi czekaja krocej o 34%.",
             "t_minimize_mortality": "Seniorzy z wieloma schorzeniami trafiaja na koniec kolejki mimo ostrego bolu.",
             "t_qaly": "Pacjenci z niepelnosprawnoscia oceniani jako nizsza jakosc zycia -- skargi do rzecznika.",
             "t_equal_waiting": "Czas oczekiwania wyrownany, ale smiertelnosc w SOR wzrosla o 4% w pierwszym kwartale.",

@@ -165,7 +165,7 @@ DOCUMENTS: list[dict] = [
     },
     # tech (3 documents)
     {
-        "text_pl": "Nowy algorytm sztucznej inteligencji bije rekordy na benchmarkach. Model uczy sie na danych z chmury.",
+        "text_pl": "Nowy algorytm sztucznej inteligencji bije rekordy na benchmarkach. Model uczy się na danych z chmury.",
         "dominant": "tech",
         "weights": {"sport": 0.04, "nauka": 0.15, "zdrowie": 0.03, "polityka": 0.04, "tech": 0.74},
     },

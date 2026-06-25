@@ -278,7 +278,7 @@ class PhaseDetectScene(Scene):
             # AI always fails detect
             ai_lbl = get_font(16).render("AI: Prawy", True, _RED)
             surface.blit(ai_lbl, (cx - ai_lbl.get_width() // 2, _TOP_H + 60))
-            verdict = get_font(13).render("(AI sie pomylila)", True, _RED)
+            verdict = get_font(13).render("(AI się pomylila)", True, _RED)
             surface.blit(verdict, (cx - verdict.get_width() // 2, _TOP_H + 86))
 
             if self._beat_ai:

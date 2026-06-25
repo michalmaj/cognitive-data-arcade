@@ -34,10 +34,10 @@ _BTN_MENU = pygame.Rect(_W // 2 + 20, _H - 70, 190, 44)
 
 _AHA_LINES = [
     "Bias w AI nie pochodzi ze zlej woli. Pochodzi z historii.",
-    "Algorytm nauczyl sie swiata takiego jakim byl.",
+    "Algorytm nauczyl się swiata takiego jakim byl.",
     "Usuniecie chronionego atrybutu nie usuwa dyskryminacji",
     "(inne cechy niosa ta sama informacje -- proxy features).",
-    "Sprawiedliwosc ma wiele definicji -- nie daja sie naraz spelnic.",
+    "Sprawiedliwosc ma wiele definicji -- nie daja się naraz spelnic.",
 ]
 
 _METRICS_LABELS = [

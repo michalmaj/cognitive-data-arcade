@@ -10,7 +10,7 @@ def get_game_info(strings: Strings) -> GameInfo:
             title="Recommendation Bubble",
             description_lines=[
                 "Zagraj jako uzytkownik, kurator i algorytm.",
-                "Obserwuj, jak preferencje staja sie banka informacyjna.",
+                "Obserwuj, jak preferencje staja się banka informacyjna.",
                 "Algorytm nie jest zly -- optymalizuje to, o co go prosisz.",
             ],
             key_bindings=[
