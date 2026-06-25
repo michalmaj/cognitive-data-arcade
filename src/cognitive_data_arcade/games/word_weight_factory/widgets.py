@@ -135,7 +135,7 @@ class CorpusPanel:
                 "Wlasny tekst",
                 "",
                 "Wpisz swoj tekst i obserwuj",
-                "jak zmienia sie macierze",
+                "jak zmienia się macierze",
                 "BoW / TF / IDF / TF-IDF.",
             ]
             self._tooltip_panel_pos = pos
@@ -143,7 +143,7 @@ class CorpusPanel:
         # Checkboxes
         _chk_explanations = [
             ["Lowercase", "", "Zamienia litery na male.", "'Ala' i 'ala' to ten sam token."],
-            ["Usun interpunkcje", "", "Usuwa kropki, przecinki.", "'slowo.' staje sie 'slowo'."],
+            ["Usun interpunkcje", "", "Usuwa kropki, przecinki.", "'slowo.' staje się 'slowo'."],
             ["Usun stop words", "", "Usuwa slowa bez wartosci", "informacyjnej (i, w, z, ale...)."],
         ]
         for i, rect in enumerate(self._chk_rects):

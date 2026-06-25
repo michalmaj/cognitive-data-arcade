@@ -191,9 +191,9 @@ class PhaseActScene(Scene):
 
         # Hint line
         if spreader:
-            hint = "Klikaj szare wezly -- dezinformacja rozchodzi sie sama!"
+            hint = "Klikaj szare wezly -- dezinformacja rozchodzi się sama!"
         else:
-            hint = "Klikaj czerwone wezly -- ale SIR sie nie zatrzymuje!"
+            hint = "Klikaj czerwone wezly -- ale SIR się nie zatrzymuje!"
         hint_surf = get_font(13).render(hint, True, (160, 140, 140))
         surface.blit(hint_surf, (_W // 2 - hint_surf.get_width() // 2, bot_y + 34))
 

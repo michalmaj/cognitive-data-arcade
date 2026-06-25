@@ -898,7 +898,7 @@ _s3_d1 = Decision(
             label_pl="JSON",
             label_en="JSON",
             is_correct=False,
-            consequence_easy_pl=("JSON nie nadaje sie do sygnału EEG."),
+            consequence_easy_pl=("JSON nie nadaje się do sygnału EEG."),
             consequence_easy_en=("JSON: not suitable for EEG signals."),
         ),
     ),
@@ -1074,7 +1074,7 @@ _s3_d5 = Decision(
         "Reports will later be aggregated and automatically processed "
         "in a multi-site meta-analysis."
     ),
-    hint_medium_pl=("Zastanów sie, który format łatwo parsuje skrypt Pythona bez NLP."),
+    hint_medium_pl=("Zastanów się, który format łatwo parsuje skrypt Pythona bez NLP."),
     hint_medium_en=("Think about which format a Python script can parse easily without NLP."),
     report_pl=(
         "Ustrukturyzowany JSON lub HL7 FHIR umożliwiają automatyczne przetwarzanie. "
@@ -1220,7 +1220,7 @@ _s4_d1 = Decision(
         "You must decide how to determine the required sample size."
     ),
     hint_medium_pl=(
-        "Zastanow sie, czy mozna oszacowac liczebnosc probki na podstawie danych historycznych "
+        "Zastanow się, czy mozna oszacowac liczebnosc probki na podstawie danych historycznych "
         "i wymaganej mocy testu."
     ),
     hint_medium_en=(
@@ -1416,7 +1416,7 @@ _s4_d4 = Decision(
         "How should you split traffic between control (A) and experimental (B) variant? "
         "You are worried the new page might perform worse."
     ),
-    hint_medium_pl=("Zastanow sie nad kompromisem miedzy szybkoscia eksperymentu a ryzykiem."),
+    hint_medium_pl=("Zastanow się nad kompromisem miedzy szybkoscia eksperymentu a ryzykiem."),
     hint_medium_en=("Consider the trade-off between experiment speed and risk exposure."),
     report_pl=(
         "Podzia 50/50 maksymalizuje moc statystyczna i minimalizuje czas testu. "
@@ -1526,7 +1526,7 @@ _s4_d5 = Decision(
             consequence_easy_pl=(
                 "Przy testowaniu 3 niezaleznych hipotez szansa na przynajmniej "
                 "jeden falszywy pozytyw (przy alpha=0.05) wynosi ~14%. "
-                "Nalezy trzymac sie metryki pierwotnej."
+                "Nalezy trzymac się metryki pierwotnej."
             ),
             consequence_easy_en=(
                 "Testing 3 independent hypotheses gives a ~14% chance of at least "

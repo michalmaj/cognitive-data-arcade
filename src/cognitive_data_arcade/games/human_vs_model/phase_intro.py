@@ -20,7 +20,7 @@ _SLIDES = [
         "Co potrafi model jezykowy?",
         [
             "Model to maszyna do przewidywania nastepnego slowa.",
-            "Uczy sie ze statystyk -- nie rozumie znaczenia.",
+            "Uczy się ze statystyk -- nie rozumie znaczenia.",
             "",
             "Wzorzec bez sensu: 'nie byl zly' = zly, 'wszyscy uwielbiaja' = pozytywny.",
         ],
@@ -40,7 +40,7 @@ _SLIDES = [
             "3 rodzaje zadan: klasyfikacja, detekcja, uzupelnianie.",
             "Pobij AI na trudnych przypadkach.",
             "",
-            "Obserwuj gdzie model sie myli -- to wlasnie uczy najbardziej.",
+            "Obserwuj gdzie model się myli -- to wlasnie uczy najbardziej.",
             "Nacisnij SPACJE lub kliknij, zeby zaczac!",
         ],
     ),

@@ -10,7 +10,7 @@ def get_game_info(strings: Strings) -> GameInfo:
         return GameInfo(
             title="Word Weight Factory",
             description_lines=[
-                "Obserwuj jak tekst staje sie wektorem liczb.",
+                "Obserwuj jak tekst staje się wektorem liczb.",
                 "Pipeline: Korpus -> BoW -> TF -> IDF -> TF-IDF.",
                 "Zmien preprocessing i obserwuj zmiany w macierzy.",
             ],

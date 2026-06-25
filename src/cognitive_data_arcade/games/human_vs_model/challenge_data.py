@@ -37,7 +37,7 @@ CLASSIFY_CHALLENGES: list[ClassifyChallenge] = [
         options=["Pozytywny", "Negatywny", "Neutralny"],
         answer="Pozytywny",
         model_answer="Negatywny",
-        explanation="AI myli sie na negacji: 'nie byl zly' znaczy 'byl dobry'.",
+        explanation="AI myli się na negacji: 'nie byl zly' znaczy 'byl dobry'.",
         difficulty=1,
     ),
     ClassifyChallenge(
@@ -53,7 +53,7 @@ CLASSIFY_CHALLENGES: list[ClassifyChallenge] = [
         options=["Pozytywny", "Negatywny", "Neutralny"],
         answer="Pozytywny",
         model_answer="Pozytywny",
-        explanation="AI i czlowiek zgadzaja sie -- 'naprawde udany' to wyrazny sygnal pozytywny.",
+        explanation="AI i czlowiek zgadzaja się -- 'naprawde udany' to wyrazny sygnal pozytywny.",
         difficulty=1,
     ),
 ]
@@ -72,7 +72,7 @@ DETECT_CHALLENGES: list[DetectChallenge] = [
         difficulty=2,
     ),
     DetectChallenge(
-        human_text="Chyba nie da sie bardziej spac na wykladzie? A ty co -- notatki piszesz??",
+        human_text="Chyba nie da się bardziej spac na wykladzie? A ty co -- notatki piszesz??",
         ai_text="Aktywne uczestnictwo w zajeciach akademickich pozytywnie wplywa na wyniki nauczania.",
         explanation="Czlowiek: pytanie retoryczne, sarkazm wobec znajomego. AI: ogolna prawda, brak osoby.",
         difficulty=2,
@@ -112,7 +112,7 @@ COMPLETE_CHALLENGES: list[CompleteChallenge] = [
             "siedzial przy barze",
             "uczestniczyl w uroczystosci",
             "wyrabal figury",
-            "poruszal sie rytmicznie",
+            "poruszal się rytmicznie",
         ],
         answer="siedzial przy barze",
         model_answer="uczestniczyl w uroczystosci",

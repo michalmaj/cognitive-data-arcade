@@ -8,7 +8,7 @@ STOP_WORDS_PL: frozenset[str] = frozenset(
         "na",
         "do",
         "nie",
-        "sie",
+        "się",
         "ze",
         "jest",
         "jak",

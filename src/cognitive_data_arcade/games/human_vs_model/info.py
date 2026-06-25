@@ -9,7 +9,7 @@ def get_game_info(strings: Strings) -> GameInfo:
         return GameInfo(
             title="Human vs Model",
             description_lines=[
-                "Zmierz sie z modelem jezykowym na zadaniach NLP.",
+                "Zmierz się z modelem jezykowym na zadaniach NLP.",
                 "3 fazy: klasyfikacja, detekcja AI, uzupelnianie zdan.",
                 "Pobij AI na trudnych przypadkach i zdobadz bonus!",
             ],

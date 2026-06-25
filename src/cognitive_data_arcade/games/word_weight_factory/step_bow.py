@@ -186,7 +186,7 @@ class StepBowScene(Scene):
             "Bag of Words (BoW)",
             "",
             "Zlicza ile razy kazdy token",
-            "pojawia sie w dokumencie.",
+            "pojawia się w dokumencie.",
             "",
             "Ignoruje kolejnosc slow.",
         ]

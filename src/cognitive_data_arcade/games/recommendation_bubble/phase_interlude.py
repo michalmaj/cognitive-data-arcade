@@ -68,7 +68,7 @@ class PhaseInterludeScene(Scene):
                 ("", (0, 0, 0)),
                 ("Teraz jestes ALGORYTMEM.", _C_ALGO),
                 ("Klikaj tresci dla max. engagement.", _DIM),
-                ("Diversity jest ukryta -- liczy sie wynik.", _DIM),
+                ("Diversity jest ukryta -- liczy się wynik.", _DIM),
             ]
 
         y = _H // 2 - len(lines) * 24
