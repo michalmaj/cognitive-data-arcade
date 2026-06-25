@@ -48,6 +48,7 @@ class Strings:
     label_badges_earned: str
     label_back: str
     label_edit_alias: str
+    label_reset: str
     # Level titles (include emoji)
     level_seedling: str
     level_explorer: str
@@ -211,6 +212,7 @@ EN = Strings(
     label_badges_earned="Badges",
     label_back="ESC  back",
     label_edit_alias="E  edit alias",
+    label_reset="R  reset progress",
     level_seedling="🌱 Data Seedling",
     level_explorer="🔍 Data Explorer",
     level_analyst="📊 Data Analyst",
@@ -385,6 +387,7 @@ PL = Strings(
     label_badges_earned="Odznaki",
     label_back="ESC  wróć",
     label_edit_alias="E  edytuj alias",
+    label_reset="R  resetuj postep",
     level_seedling="🌱 Siewca Danych",
     level_explorer="🔍 Odkrywca Danych",
     level_analyst="📊 Analityk Danych",
