@@ -2,11 +2,58 @@
 
 All notable changes to Cognitive Data Arcade are documented here.
 
-## [Unreleased] — v0.6.0
+## [v0.8.0] — 2026-06-26
 
-### Planned
+Streak + Daily Challenge — daily habit loop and standalone quiz mode.
 
-- **Game quality audit** — UX review of all 31 games: feedback clarity, difficulty calibration, pedagogical fit
+### Added
+
+- **Streak tracking** — `Profile` gains `streak_days` and `last_active_date`; `ProfileManager.touch_streak()` increments on consecutive days, resets on gap; called at game start (`ModuleRunnerScene`) and after Daily Challenge
+- **Streak badges** — `streak_3` (3 dni z rzędu), `streak_7` (Tygodniowy), `streak_30` (Miesięczny); awarded automatically when threshold is first crossed; visible in ProfileScene badge gallery
+- **Daily Challenge** — 20-question TOML bank (`data/daily_challenges.toml`); deterministic daily selection (`pick_daily` seeds on `date.toordinal()`); same 5 questions for all students on a given day
+- **DailyChallengeScene** — 4-state flow: TITLE → QUESTION → RESULT → SUMMARY; A/B/C/D keys or mouse click; explanation shown after each answer; wrapped in `PausableGame` (ESC opens pause menu)
+- **`D` key in menu** — opens Daily Challenge; streak chip `* Nd` shown in topbar when streak > 0
+- **Streak row in ProfileScene** — displayed between SP total and lesson dots
+- **RESULT polish** — verdict prefixed with `✓` (correct) or `✗` (wrong); question text word-wraps on long strings
+- **SUMMARY badge reveal** — if a streak milestone was crossed, SUMMARY shows "Nowa odznaka! / New badge!" with the badge name
+- **Tests** — `tests/test_streak.py` and `tests/test_challenge_loader.py`
+
+---
+
+## [v0.7.0] — 2026-06-25
+
+Semester Platform — act narrative layer, checkpoint quizzes, syllabus overview, and full diacritics audit.
+
+### Added
+
+- **Act intro screens** (`ActIntroScene`) — narrative text shown once per act before the first game; skipped on repeat visits; `seen_act_intros: list[int]` in Profile
+- **Checkpoint quizzes** (`QuizScene`) — 3-option quiz after each lesson (31 questions in `data/quiz_data.py`); result stored once in `quiz_results: dict[str, bool]`; wired via `pending_quiz_lesson` in `ModuleRunnerScene`
+- **Act bridge texts** — motivational paragraph in `ModuleCompleteScene` connecting acts narratively (`data/act_content.py`)
+- **SyllabusScene** — 2×3 grid of all 6 acts with completion status; `S` key from menu and profile screen; Polish titles, descriptions, and act-click navigation to the corresponding module
+- **Progress export** — `X` key in ProfileScene exports full profile JSON to `~/cda_progress_<alias>.json`; footer layout and success toast polished
+
+### Fixed
+
+- **Polish diacritics** — comprehensive audit: `i18n.py`, `act_content.py`, `quiz_data.py` (P1); 26 lesson files (P2); 27 game files (P3); residual cleanup (P4) — ą/ę/ś/ź/ż/ó/ń/ł/ć now consistent throughout
+- `SyllabusScene` back-scene creates a fresh `LessonMenuScene` to avoid stale state
+- Pygame mixer segfault in CI caused by stale `Sound` objects on re-import
+
+---
+
+## [v0.6.0] — 2026-06-24
+
+Game Quality Audit — UX review of all 31 games: feedback, session results, and HowToPlay wiring.
+
+### Added
+
+- **SessionResult wiring** — `SessionResult` → `BadgeEngine` → `SessionSummaryScene` wired for all 26 games that were missing it; sandbox games get Q-key exit with exploration-depth score; phase-delegation and phase-carousel games get correct routing
+- **Per-decision feedback and session summary overlays** — L10 N-Back: 600 ms OK/X overlay after each trial; L24 Semantic Space: 1.5 s feedback screen between missions; L01/L06/L13/L21/L22/L27: Q-key summary overlay with stats then auto-exit; L18/L19: verdict line on PhaseRoundResultScene; L29: diversity verdict; L31: synthesis sentence based on cognitive profile
+- **HowToPlay wiring** — `make_how_to_play()` wired for 10 games that were missing the intro screen
+- **Reset progress dialog** — ProfileScene shows a confirmation dialog before wiping completed lessons and arcade points
+
+### Fixed
+
+- **L04 Data Quality Lab** — critical bug that blocked game completion; `SessionResult` and `HowToPlayScene` now wired correctly
 
 ---
 
@@ -154,7 +201,10 @@ First complete release: 31 playable games, full CI, analysis scenes.
 
 | Version | Theme | Key deliverables |
 |---------|-------|-----------------|
-| **v0.3.0** | Content & Discovery | Diacritics fix (L29-32) · Concept network map |
-| **v0.4.0** | Progress & Settings | Progress tracking · Skip-intro wiring · ELD Scenario 4 |
+| **v0.3.0** ✅ | Content & Discovery | Diacritics fix (L29-32) · Concept network map |
+| **v0.4.0** ✅ | Progress & Settings | Progress tracking · Skip-intro wiring · ELD Scenario 4 |
 | **v0.5.0** ✅ | Data & Gamification | Cognitive Dashboard wiring (real CSV) · Badges · Sequential learning mode |
-| **v0.6.0** | Game quality | UX audit of all 31 games — feedback, difficulty, pedagogical fit |
+| **v0.6.0** ✅ | Game quality | SessionResult + HowToPlay wiring for all 31 games · Per-decision feedback overlays · Reset progress |
+| **v0.7.0** ✅ | Semester Platform | Act intros · Checkpoint quizzes · SyllabusScene · Progress export · Diacritics audit |
+| **v0.8.0** ✅ | Streak + Daily | Streak tracking · Daily Challenge scene · 20-question bank · Streak badges |
+| **v0.9.0** | _TBD_ | — |
