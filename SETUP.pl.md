@@ -4,15 +4,34 @@ Niniejszy przewodnik opisuje instalację i uruchomienie Cognitive Data Arcade na
 
 ---
 
-## Wymagania
+## Opcja A — Pobierz gotową aplikację (zalecane dla studentów)
+
+Nie wymaga Pythona ani terminala.
+
+1. Przejdź na [stronę Releases](https://github.com/michalmaj/cognitive-data-arcade/releases/latest)
+2. Pobierz plik odpowiedni dla Twojego systemu:
+   - **Windows** → `CognitiveDataArcade-windows.exe`
+   - **macOS** → `CognitiveDataArcade-macos`
+   - **Linux** → `CognitiveDataArcade-linux`
+3. Umieść plik obok folderu `assets/` (zapytaj prowadzącego o paczkę z zasobami)
+4. Uruchom:
+   - **Windows** — kliknij dwukrotnie plik `.exe`
+   - **macOS** — otwórz terminal, wpisz `chmod +x CognitiveDataArcade-macos`, następnie `./CognitiveDataArcade-macos`
+   - **Linux** — otwórz terminal, wpisz `chmod +x CognitiveDataArcade-linux`, następnie `./CognitiveDataArcade-linux`
+
+> **Uwaga dla macOS:** Przy pierwszym uruchomieniu może pojawić się ostrzeżenie systemowe. Przejdź do Ustawień systemowych → Prywatność i bezpieczeństwo → kliknij „Otwórz mimo to".
+
+---
+
+## Opcja B — Uruchomienie ze źródła (deweloperzy / zaawansowani użytkownicy)
+
+### Wymagania
 
 - **Python 3.12 lub nowszy** — pobierz ze strony [python.org](https://www.python.org/downloads/)
 - **uv** — szybki menedżer pakietów Python
 - **git** — do sklonowania repozytorium
 
 ---
-
-## Instalacja
 
 ### Krok 1: Zainstaluj uv
 

@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import numpy as np
 import pygame
-from pathlib import Path
 
+from cognitive_data_arcade.engine.assets import assets_dir
 from cognitive_data_arcade.profile.manager import Profile
 
 _music_enabled: bool = True
@@ -61,7 +61,7 @@ def play_music(track: str) -> None:
 
 def _start_music(track: str) -> None:
     for ext in (".ogg", ".mp3", ".wav"):
-        path = Path("assets") / "audio" / "music" / f"{track}{ext}"
+        path = assets_dir() / "audio" / "music" / f"{track}{ext}"
         if path.exists():
             break
     else:

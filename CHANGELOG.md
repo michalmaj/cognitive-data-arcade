@@ -2,6 +2,22 @@
 
 All notable changes to Cognitive Data Arcade are documented here.
 
+## [v0.9.0] — 2026-06-26
+
+Distribution & Instructor Tools — standalone binaries and aggregate progress reporting.
+
+### Added
+
+- **Standalone executables** — Nuitka `--onefile` builds for Windows, macOS, and Linux; no Python installation required on student machines
+- **GitHub Actions release workflow** — triggered on `v*` tags; matrix build across all three platforms; artifacts attached automatically to GitHub Release
+- **`engine/assets.py`** — `assets_dir()` helper resolves `assets/` directory in both dev mode and Nuitka frozen mode; replaces all `Path("assets")` hardcodes in `fonts.py`, `audio.py`, `badges.py`
+- **`engine/lesson_registry.py`** — `lesson_available(n)` backed by a frozenset; replaces unreliable `importlib.util.find_spec()` in Nuitka onefile builds
+- **`__main__.py`** — explicit entry point required by Nuitka (`from cognitive_data_arcade import main; main()`)
+- **Rich profile export** — `ProfileManager.export_progress()` now writes a flat, instructor-friendly JSON with `app_version`, `completed_count`, `sp_points`, `quiz_accuracy_pct`, and per-module `module_completion` dictionary; same `X` key and filename as before
+- **`tools/aggregate_progress.py`** — standalone instructor script (stdlib + optional `openpyxl`); reads all `*.json` exports from a directory and produces a CSV or Excel summary with one row per student; malformed files skipped with a warning
+
+---
+
 ## [v0.8.0] — 2026-06-26
 
 Streak + Daily Challenge — daily habit loop and standalone quiz mode.
