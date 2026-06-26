@@ -232,7 +232,10 @@ class DailyChallengeScene(Scene):
         labels = ["A", "B", "C", "D"]
 
         correct = self._selected == correct_idx
-        verdict_text = self._strings.daily_correct if correct else self._strings.daily_wrong
+        symbol = "✓" if correct else "✗"
+        verdict_text = (
+            f"{symbol} {self._strings.daily_correct if correct else self._strings.daily_wrong}"
+        )
         verdict_color = _GREEN if correct else _RED
         verdict = get_font(34).render(verdict_text, True, verdict_color)
         surface.blit(verdict, (w // 2 - verdict.get_width() // 2, 60))
