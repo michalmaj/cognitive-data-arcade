@@ -808,11 +808,10 @@ class LessonMenuScene(Scene):
             self._launch_stroop()
 
     def _teoria_available(self) -> bool:
-        import importlib.util
+        from cognitive_data_arcade.engine.lesson_registry import lesson_available
 
         lesson_num = _LESSON_DATA[self._selected]["num"]
-        spec = importlib.util.find_spec(f"cognitive_data_arcade.lessons.lesson_{lesson_num:02d}")
-        return spec is not None
+        return lesson_available(lesson_num)
 
     def _game_factory_for(self, lesson_num: int):
         from cognitive_data_arcade.ui.game_launcher import game_factory_for
