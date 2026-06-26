@@ -9,6 +9,7 @@ from enum import Enum, auto
 import pygame
 
 from cognitive_data_arcade.data.act_content import ACT_INTROS
+from cognitive_data_arcade.engine.badges import ALL_MODULE_BADGES
 from cognitive_data_arcade.engine.challenge_loader import load_questions, pick_daily
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.i18n import Strings
@@ -58,6 +59,8 @@ class DailyChallengeScene(Scene):
         self._correct_count = 0
         self._state = _State.TITLE
         self._profile = pm.load()
+        self._badges_before: set[str] = set(self._profile.badges)
+        self._new_badge_ids: list[str] = []
         self._option_rects: list[pygame.Rect] = []
 
     def handle_event(self, event: pygame.event.Event) -> None:
@@ -116,6 +119,7 @@ class DailyChallengeScene(Scene):
 
     def _finish(self) -> None:
         self._profile = self._pm.touch_streak(self._today)
+        self._new_badge_ids = [b for b in self._profile.badges if b not in self._badges_before]
         self._state = _State.SUMMARY
 
     def _exit(self) -> None:
@@ -287,6 +291,22 @@ class DailyChallengeScene(Scene):
             streak_text = f"🔥 {streak} {label}"
             streak_surf = get_font(26).render(streak_text, True, _ACCENT)
             surface.blit(streak_surf, (w // 2 - streak_surf.get_width() // 2, 195))
+
+        if self._new_badge_ids:
+            badge_lookup = {b.id: b for b in ALL_MODULE_BADGES}
+            badge_y = 255
+            header = "Nowa odznaka!" if is_pl else "New badge!"
+            hdr_surf = get_font(22).render(header, True, _ACCENT)
+            surface.blit(hdr_surf, (w // 2 - hdr_surf.get_width() // 2, badge_y))
+            badge_y += hdr_surf.get_height() + 6
+            for bid in self._new_badge_ids:
+                badge = badge_lookup.get(bid)
+                if badge is None:
+                    continue
+                name = badge.label_pl if is_pl else badge.label_en
+                name_surf = get_font(20).render(f"* {name}", True, _TEXT)
+                surface.blit(name_surf, (w // 2 - name_surf.get_width() // 2, badge_y))
+                badge_y += name_surf.get_height() + 4
 
         hint_text = "SPACJA - wróć do menu" if is_pl else "SPACE - back to menu"
         hint = get_font(16).render(hint_text, True, _DIM)
