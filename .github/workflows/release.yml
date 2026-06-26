@@ -46,15 +46,18 @@ jobs:
         run: |
           uv run python -m nuitka \
             --onefile \
+            --assume-yes-for-downloads \
             --include-package=cognitive_data_arcade \
             --include-data-dir=assets=assets \
             --output-dir=dist \
             --output-filename=CognitiveDataArcade \
-            src/cognitive_data_arcade/__main__.py
+            --python-flag=-m cognitive_data_arcade
         shell: bash
 
       - name: Rename artifact
-        run: mv dist/${{ matrix.nuitka_output }} dist/${{ matrix.artifact }}
+        run: |
+          src=$(ls dist/CognitiveDataArcade* | head -1)
+          mv "$src" dist/${{ matrix.artifact }}
         shell: bash
 
       - name: Upload artifact
