@@ -207,4 +207,6 @@ First complete release: 31 playable games, full CI, analysis scenes.
 | **v0.6.0** ✅ | Game quality | SessionResult + HowToPlay wiring for all 31 games · Per-decision feedback overlays · Reset progress |
 | **v0.7.0** ✅ | Semester Platform | Act intros · Checkpoint quizzes · SyllabusScene · Progress export · Diacritics audit |
 | **v0.8.0** ✅ | Streak + Daily | Streak tracking · Daily Challenge scene · 20-question bank · Streak badges |
-| **v0.9.0** | _TBD_ | — |
+| **v0.9.0** | Distribution & Instructor | Standalone exe (Win/Mac/Linux) · GitHub Releases · Rich profile export · Instructor aggregator script |
+| **v0.10.0** | Content completion | Lesson content for all 31 lessons · 60+ daily challenge questions · Analysis scenes (ML/NLP) · Quiz audit |
+| **v1.0.0** | Release | Student-facing README · Final polish · Official release builds |
