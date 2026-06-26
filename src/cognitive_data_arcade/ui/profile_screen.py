@@ -247,7 +247,7 @@ class ProfileScene(Scene):
         # ---- Module completion badges ----
         ry += (1 + len(self._badge_registry) // cols) * (card_h + card_gap) + 14
         mod_lbl = self._font_sm.render(
-            "Odznaki modulow" if self._strings.language == "pl" else "Module badges",
+            "Odznaki modułów" if self._strings.language == "pl" else "Module badges",
             True,
             _DIM_COLOR,
         )

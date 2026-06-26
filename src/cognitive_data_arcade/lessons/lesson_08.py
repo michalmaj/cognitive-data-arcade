@@ -10,7 +10,7 @@ CONTENT: dict[str, dict[str, list[str]]] = {
             "Flanker effect - RT(inkongruentny) - RT(kongruentny). Mierzy zdolność do selektywnej uwagi i hamowania dystraktorów. Typowe wartości: 20-80 ms. Duży efekt = trudność z ignorowaniem bodźców otoczenia.",
             "Skąd nazwa 'flanker' - flanker to żołnierz osłaniający skrzydła formacji. W zadaniu flankers 'otaczają' cel tak jak żołnierze flankujący chronią centrum szyku bojowego.",
             "Uwaga selektywna - zdolność do skupienia się na istotnym bodźcu przy ignorowaniu nieistotnych. Flanker task mierzy tę zdolność w warunkach konfliktu przestrzennego.",
-            "Model uwagi Posnera - uwaga może być ukierunkowana jak reflektor. Gdy cel i dystraktory są blisko siebie, reflektor 'rozlewa sie' na sąsiednie bodźce. Efekt maleje, gdy flankers są dalej od celu.",
+            "Model uwagi Posnera - uwaga może być ukierunkowana jak reflektor. Gdy cel i dystraktory są blisko siebie, reflektor 'rozlewa się' na sąsiednie bodźce. Efekt maleje, gdy flankers są dalej od celu.",
             "ANT (Attention Network Test) - Fan i in. (2002) połączyli zadanie flankera z paradygmatem wskazówek Posnera. Test mierzy trzy sieci uwagi niezależnie: alerting (czujność), orienting (ukierunkowanie), executive control (kontrola wykonawcza). Jeden test dostarcza trzech niezależnych miar funkcji uwagi.",
         ],
         "notes": [

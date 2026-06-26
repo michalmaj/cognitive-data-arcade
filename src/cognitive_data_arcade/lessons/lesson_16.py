@@ -6,7 +6,7 @@ CONTENT: dict[str, dict[str, list[str]]] = {
     "pl": {
         "theory": [
             "Regresja liniowa dopasowuje prostą linię y = a*x + b do danych, minimalizując sumę kwadratów reszt (OLS - Ordinary Least Squares). Slope (a) mówi, jak bardzo zmienia się y gdy x rośnie o 1. Intercept (b) to wartość y gdy x = 0.",
-            "Francis Galton (1886) - regresję liniową wynalazł Galton przy badaniu dziedziczenia wzrostu. Odkrył, że wzrost synów 'cofa sie' w stronę średniej populacji - stąd nazwa 'regresja'. Karl Pearson sformalizował matematycznie metodę Galton w latach 90. XIX w.",
+            "Francis Galton (1886) - regresję liniową wynalazł Galton przy badaniu dziedziczenia wzrostu. Odkrył, że wzrost synów 'cofa się' w stronę średniej populacji - stąd nazwa 'regresja'. Karl Pearson sformalizował matematycznie metodę Galton w latach 90. XIX w.",
             "R² - miara dopasowania modelu. R² (R-squared) mierzy jaki procent zmienności y wyjaśnia model. R² = 1.0 to idealne dopasowanie, R² = 0.0 to brak związku. R² = 0.65 oznacza, że model wyjaśnia 65% zmienności y.",
             "Twierdzenie Gaussa-Markowa - pod standardowymi założeniami (liniowość, homoskedastyczność, brak autokorelacji, brak endogeniczności) szacownik OLS jest BLUE: Best Linear Unbiased Estimator - najlepszy liniowy nieobciążony estymator.",
             "Reszty (residuals) - błędy predykcji. Reszta = y_rzeczywiste - y_przewidywane. Dobry model ma reszty losowe, bez wzorca. Wzorzec w resztach (np. krzywizna lub lejkowanie) sugeruje, że model liniowy jest nieodpowiedni lub wariancja nie jest stała.",
