@@ -177,15 +177,30 @@ class DailyChallengeScene(Scene):
 
         q_key = "q_pl" if is_pl else "q_en"
         q_text = q[q_key]
-        q_surf = get_font(26).render(q_text, True, _TEXT)
-        surface.blit(q_surf, (w // 2 - q_surf.get_width() // 2, 70))
+        q_font = get_font(26)
+        q_y = 55
+        words = q_text.split()
+        line, q_lines = "", []
+        for word in words:
+            test = (line + " " + word).strip()
+            if q_font.size(test)[0] < w - 120:
+                line = test
+            else:
+                q_lines.append(line)
+                line = word
+        if line:
+            q_lines.append(line)
+        for ln in q_lines:
+            ln_surf = q_font.render(ln, True, _TEXT)
+            surface.blit(ln_surf, (w // 2 - ln_surf.get_width() // 2, q_y))
+            q_y += q_font.get_height() + 4
 
         opts_key = "options_pl" if is_pl else "options_en"
         options = q[opts_key]
         labels = ["A", "B", "C", "D"]
         btn_w, btn_h = w - 120, 56
         btn_x = 60
-        opt_y = 150
+        opt_y = max(150, q_y + 12)
         self._option_rects = []
         for i, opt in enumerate(options):
             rect = pygame.Rect(btn_x, opt_y, btn_w, btn_h)
