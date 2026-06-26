@@ -1,8 +1,6 @@
 import json
 from pathlib import Path
 
-import pytest
-
 from tools.aggregate_progress import _parse_file, main
 
 
