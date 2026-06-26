@@ -149,7 +149,7 @@ def test_session_result_rejects_more_correct_than_total() -> None:
 
 
 def test_all_badges_count():
-    assert len(ALL_MODULE_BADGES) == 8  # 6 module + 2 special
+    assert len(ALL_MODULE_BADGES) == 11  # 6 module + 2 special + 3 streak
 
 
 def test_module_lessons_cover_all_31():
