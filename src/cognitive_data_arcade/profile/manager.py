@@ -1,7 +1,7 @@
 import json
 import uuid
 from dataclasses import asdict, dataclass, field
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 
 _LEVELS = [
@@ -147,8 +147,6 @@ class ProfileManager:
         return profile
 
     def touch_streak(self, today: date) -> Profile:
-        from datetime import timedelta
-
         profile = self.load()
         today_str = today.isoformat()
         yesterday_str = (today - timedelta(days=1)).isoformat()

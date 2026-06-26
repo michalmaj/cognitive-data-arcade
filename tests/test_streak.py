@@ -1,8 +1,7 @@
 import json
 from datetime import date
-from pathlib import Path
 import pytest
-from cognitive_data_arcade.profile.manager import Profile, ProfileManager
+from cognitive_data_arcade.profile.manager import ProfileManager
 
 
 @pytest.fixture
