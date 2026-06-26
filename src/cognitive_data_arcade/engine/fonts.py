@@ -2,12 +2,12 @@
 
 from __future__ import annotations
 
-from pathlib import Path
-
 import pygame
 
-_BUNDLED = Path("assets") / "fonts" / "SpaceGrotesk-Regular.ttf"
-_BUNDLED_MEDIUM = Path("assets") / "fonts" / "SpaceGrotesk-Medium.ttf"
+from cognitive_data_arcade.engine.assets import assets_dir
+
+_BUNDLED = assets_dir() / "fonts" / "SpaceGrotesk-Regular.ttf"
+_BUNDLED_MEDIUM = assets_dir() / "fonts" / "SpaceGrotesk-Medium.ttf"
 
 # Space Grotesk renders ~1.87x taller than pygame's bitmap SysFont(None,...) at
 # the same nominal size.  All size constants in the codebase were calibrated for

@@ -184,9 +184,55 @@ class ProfileManager:
 
     def export_progress(self, path: Path) -> None:
         import datetime
+        from importlib.metadata import PackageNotFoundError, version
+
+        _MODULE_LESSONS = [
+            [1, 2, 3, 4, 6],
+            [7, 8, 9, 10, 11, 12],
+            [13, 14, 15, 16],
+            [17, 18, 19, 20],
+            [21, 22, 23, 24, 25, 26],
+            [27, 28, 29, 30, 31, 32],
+        ]
 
         profile = self.load()
-        data = asdict(profile)
-        data["exported_at"] = datetime.datetime.now().isoformat()
+        completed_set = set(profile.completed_lessons)
+
+        try:
+            app_version = version("cognitive-data-arcade")
+        except PackageNotFoundError:
+            app_version = "unknown"
+
+        quiz = profile.quiz_results
+        if quiz:
+            correct = sum(1 for v in quiz.values() if v)
+            quiz_accuracy_pct: int | None = round(100 * correct / len(quiz))
+        else:
+            quiz_accuracy_pct = None
+
+        module_completion = {
+            str(i + 1): {
+                "done": sum(1 for n in lessons if n in completed_set),
+                "total": len(lessons),
+            }
+            for i, lessons in enumerate(_MODULE_LESSONS)
+        }
+
+        data = {
+            "alias": profile.alias,
+            "exported_at": datetime.datetime.now().isoformat(),
+            "app_version": app_version,
+            "completed_lessons": sorted(profile.completed_lessons),
+            "completed_count": len(profile.completed_lessons),
+            "arcade_points": profile.arcade_points,
+            "sp_points": profile.science_points,
+            "streak_days": profile.streak_days,
+            "last_active_date": profile.last_active_date,
+            "quiz_results": profile.quiz_results,
+            "quiz_accuracy_pct": quiz_accuracy_pct,
+            "badges": profile.badges,
+            "module_completion": module_completion,
+        }
+
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")

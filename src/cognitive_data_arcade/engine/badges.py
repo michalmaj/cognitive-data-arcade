@@ -2,10 +2,9 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from dataclasses import dataclass
-from pathlib import Path
-
 import pygame
 
+from cognitive_data_arcade.engine.assets import assets_dir
 from cognitive_data_arcade.profile.manager import Profile
 
 
@@ -107,7 +106,7 @@ class BadgeEngine:
 
 # ── Module completion badges (PNG icons, lesson-progress based) ───────────────
 
-_ASSET_DIR = Path("assets") / "badges"
+_ASSET_DIR = assets_dir() / "badges"
 
 _MODULE_LESSONS: list[list[int]] = [
     [1, 2, 3, 4, 6],  # Module 1 -- Data & Cognition Basics
