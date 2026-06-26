@@ -70,20 +70,16 @@ class DailyChallengeScene(Scene):
         if self._state == _State.TITLE:
             if key in (pygame.K_SPACE, pygame.K_RETURN):
                 self._state = _State.QUESTION
-            elif key == pygame.K_ESCAPE:
-                self._exit()
         elif self._state == _State.QUESTION:
-            if key == pygame.K_ESCAPE:
-                self._exit()
-            elif key in _OPTION_KEYS:
+            if key in _OPTION_KEYS:
                 self._selected = _OPTION_KEYS.index(key)
             elif key == pygame.K_RETURN and self._selected is not None:
                 self._confirm()
         elif self._state == _State.RESULT:
-            if key in (pygame.K_SPACE, pygame.K_RETURN, pygame.K_ESCAPE):
+            if key in (pygame.K_SPACE, pygame.K_RETURN):
                 self._advance()
         elif self._state == _State.SUMMARY:
-            if key in (pygame.K_SPACE, pygame.K_RETURN, pygame.K_ESCAPE):
+            if key in (pygame.K_SPACE, pygame.K_RETURN):
                 self._exit()
 
     def _handle_click(self, pos: tuple[int, int]) -> None:

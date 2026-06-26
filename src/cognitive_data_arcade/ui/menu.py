@@ -670,10 +670,7 @@ class LessonMenuScene(Scene):
             self._next = SyllabusScene(self._pm, self._strings, back)
             self._done = True
         elif event.key == pygame.K_d:
-            from cognitive_data_arcade.ui.daily_challenge_scene import DailyChallengeScene
-
-            back = LessonMenuScene(self._pm, self._strings, self._selected)
-            self._next = DailyChallengeScene(self._pm, self._strings, back)
+            self._next = self._make_daily_challenge()
             self._done = True
         elif event.key == pygame.K_z:
             self._launch_stroop_picker()
@@ -903,6 +900,33 @@ class LessonMenuScene(Scene):
     def _launch_data_cleaning(self) -> None:
         self._next = self._make_data_cleaning_game()
         self._done = True
+
+    def _make_daily_challenge(self) -> Scene:
+        from cognitive_data_arcade.engine.pause import GameInfo, PausableGame
+        from cognitive_data_arcade.ui.daily_challenge_scene import DailyChallengeScene
+
+        back = LessonMenuScene(self._pm, self._strings, self._selected)
+        is_pl = self._strings.language == "pl"
+        game_info = GameInfo(
+            title=self._strings.daily_title,
+            description_lines=[self._strings.daily_subtitle],
+            key_bindings=[
+                ("A/B/C/D", "wybierz odpowiedź" if is_pl else "select answer"),
+                ("ENTER", "potwierdź" if is_pl else "confirm"),
+                ("SPACJA", "dalej" if is_pl else "next"),
+            ],
+        )
+
+        def _factory() -> Scene:
+            return PausableGame(
+                DailyChallengeScene(self._pm, self._strings, back),
+                game_info,
+                _factory,
+                self._strings,
+                self._pm,
+            )
+
+        return _factory()
 
     def _make_data_cleaning_game(self) -> Scene:
         from cognitive_data_arcade.engine.pause import PausableGame
