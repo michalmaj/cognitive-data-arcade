@@ -17,6 +17,7 @@ class _FakePM:
         music_volume = 1.0
         sfx_volume = 1.0
         current_module_idx = None
+        streak_days = 0
 
     def __init__(self):
         self._completed: list[int] = []
