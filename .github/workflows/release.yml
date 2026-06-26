@@ -51,7 +51,7 @@ jobs:
             --include-data-dir=assets=assets \
             --output-dir=dist \
             --output-filename=CognitiveDataArcade \
-            --python-flag=-m cognitive_data_arcade
+            src/cognitive_data_arcade/__main__.py
         shell: bash
 
       - name: Rename artifact
