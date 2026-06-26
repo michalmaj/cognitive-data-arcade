@@ -1,8 +1,6 @@
 import json
 from pathlib import Path
 
-import pytest
-
 from cognitive_data_arcade.profile.manager import Profile, ProfileManager
 
 
