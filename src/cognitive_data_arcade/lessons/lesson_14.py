@@ -6,7 +6,7 @@ CONTENT: dict[str, dict[str, list[str]]] = {
     "pl": {
         "theory": [
             "Korelacja Pearsona (r) mierzy siłę i kierunek liniowego związku między dwiema zmiennymi. Zakres: od -1 (idealna ujemna) przez 0 (brak związku) do +1 (idealna dodatnia). r^2 (współczynnik determinacji) mówi, jaki procent zmienności Y wyjaśnia X.",
-            "Karl Pearson (1896) - wzór na r wprowadził Pearson na podstawie wcześniejszych prac Galtona nad dziedziczeniem cech. Galton odkrył, że wzrost dorosłych synów 'cofa sie' w stronę średniej populacji - to zjawisko regresji do średniej. Pearson sformalizował ten pomysł w miarę korelacji.",
+            "Karl Pearson (1896) - wzór na r wprowadził Pearson na podstawie wcześniejszych prac Galtona nad dziedziczeniem cech. Galton odkrył, że wzrost dorosłych synów 'cofa się' w stronę średniej populacji - to zjawisko regresji do średniej. Pearson sformalizował ten pomysł w miarę korelacji.",
             "Korelacja NIE oznacza przyczynowości. Trzy główne powody pozornej korelacji bez związku przyczynowego: 1) Zmienna ukryta (confounding) - trzecia zmienna Z wpływa na obie. 2) Przypadek - przy małym N łatwo o spurious correlation. 3) Trend czasowy - obie zmienne rosną w czasie z różnych powodów.",
             "Spurious Correlations - Tyler Vigen (2015) stworzył stronę internetową, na której automatycznie wyszukuje korelacje między przypadkowymi zmiennymi z danych rządowych USA. Spożycie sera na głowę koreluje ze śmiercią przez zaplątanie w pościel (r=0.947). Strona stała się podręcznikowym przykładem korelacji spuriousowych.",
             "Jak ustalamy przyczynowość? Złotym standardem jest eksperyment z randomizacją (RCT). Bez randomizacji używa się badań naturalnych, regresji z kontrolą zmiennych ukrytych lub kryteriów Bradforda-Hilla (1965) - 9 kryteriów opracowanych po epidemiologicznych badaniach nad związkiem palenia z rakiem płuca.",
@@ -19,7 +19,7 @@ CONTENT: dict[str, dict[str, list[str]]] = {
         ],
         "tasks": [
             "W Fazie A: ustaw r=0.9, N=20 i r=0.9, N=200. Jak różni się wygląd chmury punktów? Teraz utrzymaj r=0.9, N=200 i zwiększ szum do 0.8. Jak zmieniło się wizualne wrażenie? Czy r się zmieniło?",
-            "W Fazie B: przejdź przez wszystkie 8 scenariuszy. Dla każdego spurious - znajdź zmienną ukrytą zanim klikniesz 'Poddaj sie'. Dla każdego causal - zastanów się jak można to sprawdzić eksperymentalnie.",
+            "W Fazie B: przejdź przez wszystkie 8 scenariuszy. Dla każdego spurious - znajdź zmienną ukrytą zanim klikniesz 'Poddaj się'. Dla każdego causal - zastanów się jak można to sprawdzić eksperymentalnie.",
             "W Fazie C: znajdź 3 pary zmiennych z r > 0.7. Dla każdej zapisz: czy to przyczynowość, zmienna ukryta czy trend czasowy? Potem znajdź parę z r najbliższym 0 - co łączy te zmienne?",
         ],
     },
