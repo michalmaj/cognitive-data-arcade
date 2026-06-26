@@ -8,7 +8,15 @@ Interactive mini-games that teach **Big Data, Data Science, and Machine Learning
 game → data → analysis → interpretation → reflection
 ```
 
-## Quick start
+## Download
+
+Pre-built binaries for Windows, macOS, and Linux — no Python required:
+
+**[→ Latest release](https://github.com/michalmaj/cognitive-data-arcade/releases/latest)**
+
+See [SETUP.md](SETUP.md) for installation instructions.
+
+## Quick start (from source)
 
 ```bash
 uv sync
