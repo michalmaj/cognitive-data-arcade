@@ -22,6 +22,7 @@ def _make(selected=0):
         music_volume=1.0,
         sfx_volume=1.0,
         seen_intro=False,
+        streak_days=0,
     )
     return LessonMenuScene(pm, EN, selected)
 

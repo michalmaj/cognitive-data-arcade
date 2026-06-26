@@ -145,7 +145,12 @@ _SPECIAL_BADGES: list[ModuleBadge] = [
     ModuleBadge("first", "badge_first_lesson.png", "Pierwsze kroki", "First Steps", None),
     ModuleBadge("all_done", "badge_all_done.png", "Kompletny", "Complete", None),
 ]
-ALL_MODULE_BADGES: list[ModuleBadge] = _MODULE_BADGES + _SPECIAL_BADGES
+_STREAK_BADGES: list[ModuleBadge] = [
+    ModuleBadge("streak_3", "badge_streak_3.png", "3 dni z rzędu", "3-day streak", None),
+    ModuleBadge("streak_7", "badge_streak_7.png", "Tygodniowy", "Weekly ritual", None),
+    ModuleBadge("streak_30", "badge_streak_30.png", "Miesięczny", "Monthly habit", None),
+]
+ALL_MODULE_BADGES: list[ModuleBadge] = _MODULE_BADGES + _SPECIAL_BADGES + _STREAK_BADGES
 
 
 def earned_badges(completed: set[int]) -> list[ModuleBadge]:

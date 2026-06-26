@@ -1,6 +1,7 @@
 import json
 import uuid
 from dataclasses import asdict, dataclass, field
+from datetime import date, timedelta
 from pathlib import Path
 
 _LEVELS = [
@@ -36,6 +37,8 @@ class Profile:
     current_module_idx: int | None = None
     seen_act_intros: list[int] = field(default_factory=list)
     quiz_results: dict[str, bool] = field(default_factory=dict)
+    streak_days: int = 0
+    last_active_date: str = ""  # ISO date "YYYY-MM-DD", empty = never
 
 
 class ProfileManager:
@@ -141,6 +144,27 @@ class ProfileManager:
         if key not in profile.quiz_results:
             profile.quiz_results[key] = correct
             self.save(profile)
+        return profile
+
+    def touch_streak(self, today: date) -> Profile:
+        profile = self.load()
+        today_str = today.isoformat()
+        yesterday_str = (today - timedelta(days=1)).isoformat()
+        if profile.last_active_date == today_str:
+            return profile
+        if profile.last_active_date == yesterday_str:
+            profile.streak_days += 1
+        else:
+            profile.streak_days = 1
+        profile.last_active_date = today_str
+        for threshold, badge_id in [
+            (3, "streak_3"),
+            (7, "streak_7"),
+            (30, "streak_30"),
+        ]:
+            if profile.streak_days >= threshold and badge_id not in profile.badges:
+                profile.badges.append(badge_id)
+        self.save(profile)
         return profile
 
     def reset_all(self) -> Profile:

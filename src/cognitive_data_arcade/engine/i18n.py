@@ -51,6 +51,14 @@ class Strings:
     label_reset: str
     label_syllabus: str
     label_export: str
+    label_daily: str
+    daily_title: str
+    daily_subtitle: str
+    daily_correct: str
+    daily_wrong: str
+    daily_correct_was: str
+    daily_summary_score: str
+    daily_streak_label: str
     # Level titles (include emoji)
     level_seedling: str
     level_explorer: str
@@ -217,6 +225,14 @@ EN = Strings(
     label_reset="R  reset progress",
     label_syllabus="S  syllabus",
     label_export="X  export progress",
+    label_daily="D  challenge",
+    daily_title="Daily Challenge",
+    daily_subtitle="5 questions · ~5 min",
+    daily_correct="Correct!",
+    daily_wrong="Wrong",
+    daily_correct_was="Correct answer:",
+    daily_summary_score="Score:",
+    daily_streak_label="day streak",
     level_seedling="🌱 Data Seedling",
     level_explorer="🔍 Data Explorer",
     level_analyst="📊 Data Analyst",
@@ -321,6 +337,7 @@ EN = Strings(
         "T  theory",
         "P  profile",
         "S  syllabus",
+        "D  challenge",
         "ESC  quit",
     ),
     menu_modules=(
@@ -395,6 +412,14 @@ PL = Strings(
     label_reset="R  resetuj postęp",
     label_syllabus="S  sylabus",
     label_export="X  eksport danych",
+    label_daily="D  wyzwanie",
+    daily_title="Wyzwanie dnia",
+    daily_subtitle="5 pytań · ~5 min",
+    daily_correct="Dobrze!",
+    daily_wrong="Źle",
+    daily_correct_was="Poprawna odpowiedź:",
+    daily_summary_score="Wynik:",
+    daily_streak_label="dni z rzędu",
     level_seedling="🌱 Siewca Danych",
     level_explorer="🔍 Odkrywca Danych",
     level_analyst="📊 Analityk Danych",
@@ -499,6 +524,7 @@ PL = Strings(
         "T  teoria",
         "P  profil",
         "S  sylabus",
+        "D  wyzwanie",
         "ESC  wyjdź",
     ),
     menu_modules=(

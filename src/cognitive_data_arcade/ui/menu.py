@@ -669,6 +669,12 @@ class LessonMenuScene(Scene):
             back = LessonMenuScene(self._pm, self._strings, self._selected)
             self._next = SyllabusScene(self._pm, self._strings, back)
             self._done = True
+        elif event.key == pygame.K_d:
+            from cognitive_data_arcade.ui.daily_challenge_scene import DailyChallengeScene
+
+            back = LessonMenuScene(self._pm, self._strings, self._selected)
+            self._next = DailyChallengeScene(self._pm, self._strings, back)
+            self._done = True
         elif event.key == pygame.K_z:
             self._launch_stroop_picker()
 
@@ -1410,6 +1416,11 @@ class LessonMenuScene(Scene):
             hint_txt = f"Kontynuuj: {mname}" if lang == "pl" else f"Continue: {mname}"
             hint_surf = self._font_topbar_sub.render(hint_txt, True, _C_ACCENT)
             surface.blit(hint_surf, (px - hint_surf.get_width() - 24, py))
+
+        # Streak chip — left of lang badge area
+        if profile.streak_days > 0:
+            streak_surf = self._font_topbar_sub.render(f"* {profile.streak_days}d", True, _C_ACCENT)
+            surface.blit(streak_surf, (_W - 200, (_TOPBAR_H - streak_surf.get_height()) // 2))
 
     def _draw_sidebar(self, surface: pygame.Surface) -> None:
         pygame.draw.rect(surface, _C_BG, (0, _TOPBAR_H, _SIDEBAR_W, _SIDEBAR_H))

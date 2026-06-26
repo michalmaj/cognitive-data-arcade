@@ -1,0 +1,436 @@
+# src/cognitive_data_arcade/data/daily_challenges.toml
+# Daily Challenge question bank.
+# To add a question: copy a [[questions]] block, fill in all fields, restart app.
+# module_idx: 0=Data Basics  1=Cognitive  2=Statistics  3=ML  4=NLP  5=Networks
+
+# ── Act 1: Data Basics ────────────────────────────────────────────────────────
+
+[[questions]]
+id = "dc001"
+module_idx = 0
+q_pl = "10 000 wierszy w tabeli to już Big Data — prawda?"
+q_en = "10,000 rows in a table already counts as Big Data — true?"
+options_pl = [
+  "Tak — to dużo rekordów",
+  "Nie — Big Data to kwestia niemożności przetworzenia zwykłymi narzędziami",
+  "Zależy od liczby kolumn",
+  "Tak — każda baza powyżej 1 GB to Big Data",
+]
+options_en = [
+  "True — that's a lot of records",
+  "False — Big Data means you can't process it with standard tools",
+  "Depends on the number of columns",
+  "True — any database over 1 GB is Big Data",
+]
+correct_idx = 1
+explanation_pl = "Big Data to nie kwestia liczby wierszy, lecz niemożności przetworzenia zwykłymi narzędziami (RAM, czas, architektura). 10 000 wierszy to zwykła tabela — Excel sobie poradzi."
+explanation_en = "Big Data is not about row count but about inability to process with standard tools (RAM, time, architecture). 10,000 rows is a normal table — Excel can handle it."
+
+[[questions]]
+id = "dc002"
+module_idx = 0
+q_pl = "Brak wartości NULL oznacza, że dane są czyste — prawda?"
+q_en = "No NULL values means the data is clean — true?"
+options_pl = [
+  "Tak — NULL to główny problem jakości danych",
+  "Nie — dane mogą zawierać wartości niemożliwe, duplikaty lub błędy kodowania",
+  "Tak, jeśli dodatkowo nie ma duplikatów",
+  "Zależy od źródła danych",
+]
+options_en = [
+  "True — NULLs are the main data quality problem",
+  "False — data can contain impossible values, duplicates or encoding errors",
+  "True, if there are also no duplicates",
+  "Depends on the data source",
+]
+correct_idx = 1
+explanation_pl = "Dane mogą być kompletne (zero NULL) a mimo to zawierać RT=-400 ms, zduplikowane wiersze z restartu sesji, czy błędne kody klawiszy. Brak NULL to warunek konieczny, nie wystarczający."
+explanation_en = "Data can be complete (zero NULLs) yet contain RT=-400 ms, duplicate rows from session restarts, or wrong key codes. No NULLs is necessary but not sufficient."
+
+[[questions]]
+id = "dc003"
+module_idx = 0
+q_pl = "Dane nieustrukturyzowane (tekst, obraz) są zawsze trudniejsze do analizy niż tabelaryczne?"
+q_en = "Unstructured data (text, images) is always harder to analyse than tabular data?"
+options_pl = [
+  "Tak — tabelaryczne mają jasny schemat",
+  "Nie — słabo wypełniona tabela może być trudniejsza niż bogaty tekst",
+  "Tak — algorytmy ML działają tylko na liczbach",
+  "Zależy od liczby kolumn",
+]
+options_en = [
+  "True — tabular data has a clear schema",
+  "False — a sparsely filled table can be harder than rich text",
+  "True — ML algorithms only work on numbers",
+  "Depends on the number of columns",
+]
+correct_idx = 1
+explanation_pl = "Tabela z 90% brakującymi wartościami i niejasnym schematem może być trudniejsza niż tekst o bogatej semantyce. Trudność analizy nie wynika z formatu, lecz z jakości i kontekstu danych."
+explanation_en = "A table with 90% missing values and an unclear schema can be harder than semantically rich text. Analysis difficulty comes from quality and context, not format."
+
+[[questions]]
+id = "dc004"
+module_idx = 0
+q_pl = "Dwa identyczne wiersze w tabeli eksperymentalnej zawsze oznaczają błąd?"
+q_en = "Two identical rows in an experimental table always indicate an error?"
+options_pl = [
+  "Tak — dane eksperymentalne muszą być unikalne",
+  "Nie — mogą to być dwa różne zdarzenia z tymi samymi wartościami",
+  "Tak — każdy duplikat należy usunąć",
+  "Nie — duplikaty są niegroźne",
+]
+options_en = [
+  "True — experimental data must be unique",
+  "False — they could be two different events with identical values",
+  "True — every duplicate should be removed",
+  "False — duplicates are harmless",
+]
+correct_idx = 1
+explanation_pl = "Dwa uczestnicy mogą mieć identyczny RT=250 ms na tej samej próbie. Duplikat to problem kontekstowy — sprawdzamy czy ten sam participant_id + trial_id pojawia się dwa razy, nie czy wartości są identyczne."
+explanation_en = "Two participants can have identical RT=250 ms on the same trial. A duplicate is a context problem — we check if the same participant_id + trial_id appears twice, not whether values match."
+
+# ── Act 2: Cognitive Experiments ──────────────────────────────────────────────
+
+[[questions]]
+id = "dc005"
+module_idx = 1
+q_pl = "Czas reakcji 150 ms — czy to fizjologicznie możliwy wynik?"
+q_en = "A reaction time of 150 ms — is that physiologically possible?"
+options_pl = [
+  "Tak — wytrenowani sportowcy osiągają takie wyniki",
+  "Nie — fizjologiczne minimum to ~180 ms; 150 ms to antycypacja",
+  "Tak — przy bodźcu dźwiękowym jest to normalne",
+  "Zależy od rodzaju bodźca",
+]
+options_en = [
+  "Yes — trained athletes achieve such results",
+  "No — the physiological minimum is ~180 ms; 150 ms means anticipation",
+  "Yes — it is normal for auditory stimuli",
+  "Depends on the type of stimulus",
+]
+correct_idx = 1
+explanation_pl = "Czas przewodzenia nerwowego + przetwarzanie korowe to minimum ok. 180 ms. Wynik 150 ms oznacza antycypację (uczestnik nacisnął przed bodźcem), nie szybką reakcję. Taki trial należy wykluczyć z analizy."
+explanation_en = "Neural conduction + cortical processing takes at least ~180 ms. A result of 150 ms means anticipation (participant pressed before the stimulus), not a fast response. Such trials should be excluded."
+
+[[questions]]
+id = "dc006"
+module_idx = 1
+q_pl = "Wyższy wynik w N-Back zawsze oznacza lepszą pamięć roboczą?"
+q_en = "A higher score in N-Back always means better working memory?"
+options_pl = [
+  "Tak — to jedyny czynnik wpływający na wynik",
+  "Nie — strategia zgadywania może zawyżyć wynik bez angażowania pamięci roboczej",
+  "Tak, jeśli uczestnik nie oszukiwał",
+  "Nie — wynik zależy wyłącznie od prędkości reakcji",
+]
+options_en = [
+  "Yes — it is the only factor affecting the score",
+  "No — a guessing strategy can inflate the score without engaging working memory",
+  "Yes, if the participant didn't cheat",
+  "No — the score depends only on reaction speed",
+]
+correct_idx = 1
+explanation_pl = "Przy niskim N-Back można zgadywać 'tak' na każdy bodziec i uzyskać wysoką accuracy bez użycia pamięci roboczej. Dlatego ważne jest też mierzenie FA (false alarms) — wysoka accuracy przy wielu FA sugeruje strategię, nie zdolność."
+explanation_en = "At low N-Back you can guess 'yes' for every stimulus and get high accuracy without using working memory. That's why measuring FA (false alarms) matters — high accuracy with many FAs suggests a strategy, not ability."
+
+[[questions]]
+id = "dc007"
+module_idx = 1
+q_pl = "Efekt Stroopa: wolniejsza odpowiedź przy niezgodnym bodźcu to błąd wykonania?"
+q_en = "Stroop effect: a slower response to incongruent stimuli is a performance error?"
+options_pl = [
+  "Tak — uczestnik powinien ignorować słowo",
+  "Nie — to normalny efekt interferencji kognitywnej",
+  "Tak, jeśli spowolnienie przekracza 100 ms",
+  "Nie — to wynik ćwiczenia",
+]
+options_en = [
+  "Yes — the participant should ignore the word",
+  "No — it is a normal cognitive interference effect",
+  "Yes, if slowdown exceeds 100 ms",
+  "No — it is the result of practice",
+]
+correct_idx = 1
+explanation_pl = "Spowolnienie przy niezgodnym bodźcu to mierzony efekt kognitywny, nie błąd. Mózg automatycznie przetwarza znaczenie słowa nawet gdy zadanie tego nie wymaga — i to właśnie mierzymy efektem Stroopa."
+explanation_en = "Slowdown on incongruent stimuli is a measured cognitive effect, not an error. The brain automatically processes word meaning even when the task doesn't require it — that's what the Stroop effect measures."
+
+[[questions]]
+id = "dc008"
+module_idx = 1
+q_pl = "W zadaniu Go/No-Go: wstrzymanie się przy bodźcu No-Go to brak odpowiedzi, nie aktywny proces?"
+q_en = "In Go/No-Go: withholding a response to No-Go stimuli is a passive non-response, not an active process?"
+options_pl = [
+  "Tak — uczestnik po prostu nic nie robi",
+  "Nie — hamowanie to aktywny proces wymagający zasobów kognitywnych",
+  "Tak — bierność nie wymaga przetwarzania",
+  "Zależy od trudności zadania",
+]
+options_en = [
+  "True — the participant simply does nothing",
+  "False — inhibition is an active process requiring cognitive resources",
+  "True — passivity requires no processing",
+  "Depends on task difficulty",
+]
+correct_idx = 1
+explanation_pl = "Hamowanie reakcji to aktywny proces wymagający wykrycia bodźca, rozpoznania go jako No-Go i zablokowania przygotowanej odpowiedzi motorycznej. Wymagane zasoby są mierzalne przez FA rate i wzrost RT pod koniec sesji."
+explanation_en = "Response inhibition is an active process requiring stimulus detection, classifying it as No-Go, and blocking the prepared motor response. The required resources are measurable via FA rate and RT increase at session end."
+
+# ── Act 3: Statistics ─────────────────────────────────────────────────────────
+
+[[questions]]
+id = "dc009"
+module_idx = 2
+q_pl = "Masz p=0,03 przy N=8. Czy to solidny dowód hipotezy?"
+q_en = "You get p=0.03 with N=8. Is that solid evidence for your hypothesis?"
+options_pl = [
+  "Tak — p<0,05 to próg istotności statystycznej",
+  "Nie — przy N=8 moc testu jest zbyt niska",
+  "Tak, jeśli efekt jest duży",
+  "Zależy od testu jednostronnego lub dwustronnego",
+]
+options_en = [
+  "Yes — p<0.05 is the threshold for statistical significance",
+  "No — with N=8 statistical power is too low",
+  "Yes, if the effect is large",
+  "Depends on one-tailed vs two-tailed test",
+]
+correct_idx = 1
+explanation_pl = "Przy N=8 typowa moc testu wynosi poniżej 30%. Efekt losowy łatwo daje p<0,05 przy tak małej próbie. Przed wnioskowaniem sprawdź moc: przy d=0,5 i alfa=0,05 potrzeba N≈64 do mocy 80%."
+explanation_en = "With N=8 typical test power is below 30%. A chance effect easily yields p<0.05 with such a small sample. Before concluding, check power: for d=0.5, alpha=0.05, you need N≈64 for 80% power."
+
+[[questions]]
+id = "dc010"
+module_idx = 2
+q_pl = "Korelacja r=0,9 między A i B oznacza, że A powoduje B?"
+q_en = "A correlation of r=0.9 between A and B means A causes B?"
+options_pl = [
+  "Tak — silna korelacja to dowód przyczynowości",
+  "Nie — może być zmienna ukryta, odwrotna przyczynowość lub przypadek",
+  "Tak, jeśli r > 0,8",
+  "Nie — korelacja nigdy nie jest dowodem",
+]
+options_en = [
+  "True — strong correlation is evidence of causality",
+  "False — there may be a confound, reverse causality or chance",
+  "True, if r > 0.8",
+  "False — correlation is never evidence",
+]
+correct_idx = 1
+explanation_pl = "Spożycie lodów i liczba utonięć korelują r≈0,9 — obie zmienne rosną latem (zmienna ukryta: temperatura). Korelacja nie mówi nic o kierunku ani mechanizmie przyczynowym."
+explanation_en = "Ice cream consumption and drowning deaths correlate at r≈0.9 — both increase in summer (confound: temperature). Correlation says nothing about direction or causal mechanism."
+
+[[questions]]
+id = "dc011"
+module_idx = 2
+q_pl = "Odrzucenie H0 przy p<0,05 oznacza, że H0 jest fałszywa?"
+q_en = "Rejecting H0 at p<0.05 means H0 is false?"
+options_pl = [
+  "Tak — to definicja testu istotności",
+  "Nie — oznacza tylko, że dane są mało prawdopodobne przy założeniu H0",
+  "Tak, przy co najmniej 95% pewności",
+  "Zależy od rozmiaru próby",
+]
+options_en = [
+  "True — that is the definition of significance testing",
+  "False — it only means the data are unlikely under H0",
+  "True, with at least 95% confidence",
+  "Depends on sample size",
+]
+correct_idx = 1
+explanation_pl = "p-wartość to P(dane | H0), nie P(H0 | dane). Przy progu 5% i 20 niezależnych testach spodziewamy się jednego fałszywego alarmu przez sam przypadek, nawet jeśli wszystkie H0 są prawdziwe."
+explanation_en = "The p-value is P(data | H0), not P(H0 | data). At a 5% threshold and 20 independent tests, we expect one false alarm by chance alone, even if all H0s are true."
+
+# ── Act 4: Machine Learning ───────────────────────────────────────────────────
+
+[[questions]]
+id = "dc012"
+module_idx = 3
+q_pl = "Model z 97% accuracy na zbiorze testowym jest na pewno dobry?"
+q_en = "A model with 97% accuracy on the test set is definitely good?"
+options_pl = [
+  "Tak — 97% to bardzo dobry wynik",
+  "Nie — jeśli 97% próbek należy do jednej klasy, model głupi też osiągnie 97%",
+  "Tak, jeśli zbiór testowy jest duży",
+  "Zależy od algorytmu",
+]
+options_en = [
+  "Yes — 97% is a very good result",
+  "No — if 97% of samples belong to one class, a naive model also hits 97%",
+  "Yes, if the test set is large",
+  "Depends on the algorithm",
+]
+correct_idx = 1
+explanation_pl = "Przy klasie dominującej 97% model, który zawsze przewiduje klasę dominującą, osiąga 97% accuracy bez żadnej nauki. Sprawdź precision/recall lub F1 dla klas mniejszościowych."
+explanation_en = "With a 97% majority class, a model that always predicts the majority class achieves 97% accuracy without learning anything. Check precision/recall or F1 for minority classes."
+
+[[questions]]
+id = "dc013"
+module_idx = 3
+q_pl = "KNN z k=1 osiąga 100% accuracy na danych treningowych — to dobrze?"
+q_en = "KNN with k=1 achieves 100% accuracy on training data — is that good?"
+options_pl = [
+  "Tak — 100% to cel każdego modelu",
+  "Nie — model zapamiętał szum zamiast wzorców; na nowych danych będzie słaby",
+  "Tak, jeśli dane treningowe są duże",
+  "Zależy od liczby klas",
+]
+options_en = [
+  "Yes — 100% is every model's goal",
+  "No — the model memorised noise instead of patterns; it will fail on new data",
+  "Yes, if the training data is large",
+  "Depends on the number of classes",
+]
+correct_idx = 1
+explanation_pl = "k=1 oznacza, że każdy punkt treningowy jest swoim własnym sąsiadem — model zawsze trafi w punkt treningowy. To klasyczny overfitting: 100% na train, znacznie niżej na test."
+explanation_en = "k=1 means every training point is its own neighbour — the model always hits a training point exactly. Classic overfitting: 100% on train, much lower on test."
+
+[[questions]]
+id = "dc014"
+module_idx = 3
+q_pl = "Więcej danych treningowych zawsze poprawia model?"
+q_en = "More training data always improves a model?"
+options_pl = [
+  "Tak — więcej danych = lepsza generalizacja",
+  "Nie — jeśli dane są zaszumione lub model zbyt prosty, dodatkowe dane nie pomogą",
+  "Tak, szczególnie dla modeli głębokich",
+  "Nie — powyżej pewnego progu dane szkodzą",
+]
+options_en = [
+  "Yes — more data = better generalisation",
+  "No — if data is noisy or the model too simple, more data won't help",
+  "Yes, especially for deep models",
+  "No — beyond a threshold data hurts",
+]
+correct_idx = 1
+explanation_pl = "Przy underfittingu (model zbyt prosty) więcej danych nie pomoże — model nie jest w stanie uchwycić prawdziwego wzorca niezależnie od N. Najpierw sprawdź czy model ma wystarczającą pojemność."
+explanation_en = "With underfitting (model too simple), more data won't help — the model can't capture the true pattern regardless of N. First check whether the model has sufficient capacity."
+
+# ── Act 5: Language & NLP ─────────────────────────────────────────────────────
+
+[[questions]]
+id = "dc015"
+module_idx = 4
+q_pl = "Stop words należy zawsze usuwać przed analizą tekstu?"
+q_en = "Stop words should always be removed before text analysis?"
+options_pl = [
+  "Tak — zmniejszają szum i przyspieszają obliczenia",
+  "Nie — usunięcie 'nie' niszczy analizę sentymentu",
+  "Tak, szczególnie dla klasyfikacji",
+  "Nie — stop words zawierają kluczowe informacje semantyczne",
+]
+options_en = [
+  "Yes — they reduce noise and speed up computation",
+  "No — removing 'not' destroys sentiment analysis",
+  "Yes, especially for classification",
+  "No — stop words carry key semantic information",
+]
+correct_idx = 1
+explanation_pl = "Słowo 'nie' to typowy stop word, który bywa usuwany automatycznie. W analizie sentymentu 'nie dobry' zmienia się wtedy w 'dobry' — odwrotny wydźwięk. Decyzja o usuwaniu stop words zależy od zadania."
+explanation_en = "The word 'not' is a typical stop word that often gets removed automatically. In sentiment analysis 'not good' becomes 'good' — the opposite meaning. Removing stop words depends on the task."
+
+[[questions]]
+id = "dc016"
+module_idx = 4
+q_pl = "Słowo 'bank' (rzeka) i 'bank' (finansowy) mają ten sam embedding w klasycznym Word2Vec?"
+q_en = "The word 'bank' (river) and 'bank' (financial) have the same embedding in classic Word2Vec?"
+options_pl = [
+  "Nie — Word2Vec rozróżnia znaczenia",
+  "Tak — klasyczny Word2Vec uczy jeden wektor na słowo bez względu na kontekst",
+  "Zależy od rozmiaru słownika",
+  "Tak, ale tylko dla języka angielskiego",
+]
+options_en = [
+  "No — Word2Vec distinguishes meanings",
+  "Yes — classic Word2Vec learns one vector per word regardless of context",
+  "Depends on vocabulary size",
+  "Yes, but only for English",
+]
+correct_idx = 1
+explanation_pl = "Klasyczny Word2Vec przypisuje jeden wektor do każdego słowa — to problem polisemii. Embeddingi kontekstowe (BERT, GPT) rozwiązują ten problem, tworząc różne wektory dla 'bank' w różnych zdaniach."
+explanation_en = "Classic Word2Vec assigns one vector per word — this is the polysemy problem. Contextual embeddings (BERT, GPT) solve this by creating different vectors for 'bank' in different sentences."
+
+[[questions]]
+id = "dc017"
+module_idx = 4
+q_pl = "Im więcej n-gramów (trigramy, 4-gramy), tym lepsza reprezentacja tekstu?"
+q_en = "The more n-grams (trigrams, 4-grams), the better the text representation?"
+options_pl = [
+  "Tak — wyższe n-gramy chwytają więcej kontekstu",
+  "Nie — przy małych korpusach wyższe n-gramy eksplodują przestrzeń cech i pogarszają wyniki",
+  "Tak — zawsze używaj co najmniej trigramów",
+  "Zależy od języka",
+]
+options_en = [
+  "Yes — higher n-grams capture more context",
+  "No — with small corpora higher n-grams explode the feature space and hurt performance",
+  "Yes — always use at least trigrams",
+  "Depends on language",
+]
+correct_idx = 1
+explanation_pl = "Liczba możliwych n-gramów rośnie wykładniczo z n. Przy małym zbiorze treningowym większość trigramów i 4-gramów pojawi się tylko raz — to rzadkie cechy, które nie generalizują. Bigramy są zazwyczaj optymalnym kompromisem."
+explanation_en = "The number of possible n-grams grows exponentially with n. With a small training set most trigrams and 4-grams appear only once — sparse features that don't generalise. Bigrams are usually the optimal trade-off."
+
+# ── Act 6: Networks, Ethics & Finale ─────────────────────────────────────────
+
+[[questions]]
+id = "dc018"
+module_idx = 5
+q_pl = "Hub sieci (węzeł o wysokim stopniu) = zawsze najważniejszy węzeł?"
+q_en = "A network hub (high-degree node) = always the most important node?"
+options_pl = [
+  "Tak — stopień węzła wyznacza jego ważność",
+  "Nie — węzeł z wysoką pośredniością może kontrolować więcej przepływu niż hub",
+  "Tak, w sieciach bezskalowych",
+  "Nie — ważność węzła jest niemierzalna",
+]
+options_en = [
+  "Yes — node degree defines its importance",
+  "No — a node with high betweenness can control more flow than a hub",
+  "Yes, in scale-free networks",
+  "No — node importance is unmeasurable",
+]
+correct_idx = 1
+explanation_pl = "Betweenness centrality mierzy ile najkrótszych ścieżek przechodzi przez węzeł. Węzeł łączący dwie gęste społeczności może mieć niski stopień, ale usunięcie go rozspójni całą sieć."
+explanation_en = "Betweenness centrality measures how many shortest paths pass through a node. A node connecting two dense communities may have low degree, but removing it disconnects the entire network."
+
+[[questions]]
+id = "dc019"
+module_idx = 5
+q_pl = "Usunięcie 5% losowych węzłów sieci bezskalowej zatrzyma epidemię?"
+q_en = "Removing 5% of random nodes in a scale-free network stops an epidemic?"
+options_pl = [
+  "Tak — zmniejsza liczbę połączeń",
+  "Nie — sieci bezskalowe są odporne na losowe usunięcia, lecz wrażliwe na ataki na huby",
+  "Tak, jeśli usunięte węzły są hubami",
+  "Nie — epidemii nie można zatrzymać usunięciem węzłów",
+]
+options_en = [
+  "Yes — it reduces the number of connections",
+  "No — scale-free networks are robust to random removal but fragile to hub attacks",
+  "Yes, if the removed nodes are hubs",
+  "No — epidemics cannot be stopped by node removal",
+]
+correct_idx = 1
+explanation_pl = "Sieć bezskalowa ma mało hubów i dużo peryferyjnych węzłów — losowe 5% usunięcie trafi głównie peryferia. Targetowane usunięcie top-5% hubów natomiast może rozbić sieć na izolowane składowe."
+explanation_en = "A scale-free network has few hubs and many peripheral nodes — random 5% removal hits mostly periphery. Targeted removal of the top-5% hubs can break the network into isolated components."
+
+[[questions]]
+id = "dc020"
+module_idx = 5
+q_pl = "Algorytm rekomendacji filtruje treści obiektywnie, bez uprzedzeń?"
+q_en = "A recommendation algorithm filters content objectively, without bias?"
+options_pl = [
+  "Tak — algorytmy są matematyczne i neutralne",
+  "Nie — uczą się z zachowań użytkowników, reprodukując ich uprzedzenia",
+  "Tak, jeśli dane treningowe są duże",
+  "Zależy od firmy która go projektuje",
+]
+options_en = [
+  "Yes — algorithms are mathematical and neutral",
+  "No — they learn from user behaviour, reproducing existing biases",
+  "Yes, if the training data is large",
+  "Depends on the company that designed it",
+]
+correct_idx = 1
+explanation_pl = "Algorytm rekomendacji optymalizuje zaangażowanie — jeśli kontrowersyjne treści generują więcej kliknięć, algorytm się tego 'uczy'. Bańki filtrujące nie są błędem implementacyjnym, lecz efektem optymalizacji."
+explanation_en = "A recommendation algorithm optimises engagement — if controversial content generates more clicks, the algorithm 'learns' this. Filter bubbles are not implementation bugs but optimisation outcomes."

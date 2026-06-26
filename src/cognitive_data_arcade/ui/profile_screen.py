@@ -178,6 +178,17 @@ class ProfileScene(Scene):
         surface.blit(sp_val, (15, y))
         y += 52
 
+        # Streak row
+        streak_days = self._profile.streak_days
+        if streak_days > 0:
+            streak_lbl = self._font_sm.render(
+                f"* {streak_days} {self._strings.daily_streak_label}",
+                True,
+                (99, 102, 241),
+            )
+            surface.blit(streak_lbl, (15, y))
+            y += 28
+
         pygame.draw.line(surface, _BORDER_COLOR, (15, y), (_LEFT_W - 15, y))
         y += 16
 
@@ -255,12 +266,14 @@ class ProfileScene(Scene):
         ry += 26
 
         completed_set = set(self._profile.completed_lessons)
-        mod_earned = {b.id for b in earned_badges(completed_set)}
+        mod_earned = {b.id for b in earned_badges(completed_set)} | set(self._profile.badges)
         mod_icon_size = 36
         mod_card_w = 90
         mod_card_h = 60
         mod_gap = 6
-        all_mod_badges = _MODULE_BADGES + _SPECIAL_BADGES
+        from cognitive_data_arcade.engine.badges import _STREAK_BADGES
+
+        all_mod_badges = _MODULE_BADGES + _SPECIAL_BADGES + _STREAK_BADGES
         for i, mb in enumerate(all_mod_badges):
             bx = right_x + i * (mod_card_w + mod_gap)
             by = ry

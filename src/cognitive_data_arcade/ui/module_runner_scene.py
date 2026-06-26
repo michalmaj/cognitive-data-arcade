@@ -39,6 +39,9 @@ class ModuleRunnerScene(Scene):
     ) -> None:
         self._module_idx = module_idx
         self._pm = pm
+        from datetime import date
+
+        pm.touch_streak(date.today())
         self._strings = strings
         self._lessons = _module_lessons(module_idx)
         profile = pm.load()
