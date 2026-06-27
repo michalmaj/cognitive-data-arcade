@@ -26,6 +26,13 @@ _PANEL_BG = (18, 18, 42)
 _BORDER_COLOR = (42, 42, 80)
 _LEVEL_COLOR = (192, 132, 252)
 
+_REFLECTION_TASK_MAP: dict[str, tuple[str, str]] = {
+    "big_data_map": ("lesson_01", "REFLECTION"),
+    "data_quality_lab": ("lesson_04", "REFLECTION"),
+    "eda_sandbox": ("lesson_06", "REFLECTION"),
+    "distribution_playground": ("lesson_13", "REFLECTION"),
+}
+
 
 class SessionSummaryScene(Scene):
     def __init__(
@@ -108,8 +115,23 @@ class SessionSummaryScene(Scene):
             back = LessonMenuScene(self._pm, self._strings)
             self._next = ProfileScene(self._pm, self._strings, back)
         else:
-            self._next = LessonMenuScene(self._pm, self._strings)
+            menu = LessonMenuScene(self._pm, self._strings)
+            self._next = self._maybe_reflection(menu)
         return self._next
+
+    def _maybe_reflection(self, back: Scene) -> Scene:
+        entry = _REFLECTION_TASK_MAP.get(self._session.task_name)
+        if entry is None:
+            return back
+        from importlib import import_module
+
+        mod = import_module(f"cognitive_data_arcade.lessons.{entry[0]}")
+        reflection = getattr(mod, entry[1], None)
+        if reflection is None:
+            return back
+        from cognitive_data_arcade.ui.reflection_scene import ReflectionScene
+
+        return ReflectionScene(reflection, self._strings, back_scene=back)
 
     def draw(self, surface: pygame.Surface) -> None:
         surface.fill(_BG)
