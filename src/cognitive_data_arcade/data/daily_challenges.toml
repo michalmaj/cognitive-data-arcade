@@ -434,3 +434,152 @@ options_en = [
 correct_idx = 1
 explanation_pl = "Algorytm rekomendacji optymalizuje zaangażowanie — jeśli kontrowersyjne treści generują więcej kliknięć, algorytm się tego 'uczy'. Bańki filtrujące nie są błędem implementacyjnym, lecz efektem optymalizacji."
 explanation_en = "A recommendation algorithm optimises engagement — if controversial content generates more clicks, the algorithm 'learns' this. Filter bubbles are not implementation bugs but optimisation outcomes."
+
+# ── Act 1 continued: Data Basics ──────────────────────────────────────────────
+
+[[questions]]
+id = "dc021"
+module_idx = 0
+q_pl = "Aplikacja webowa loguje każde kliknięcie użytkownika jako zdarzenie. W porównaniu do wiersza w ankiecie, ile zdarzeń może wygenerować jeden aktywny użytkownik dziennie?"
+q_en = "A web app logs every user click as an event. Compared to a row per user in a survey, how many events might one active user generate per day?"
+options_pl = [
+  "Tyle samo — jedno zdarzenie to jedna odpowiedź ankietowa",
+  "Dziesięć razy więcej — kliknięcia zdarzają się raz na minutę",
+  "Tysiące razy więcej — zachowanie jest ciągłe",
+  "Mniej — zdarzenia są automatycznie kompresowane",
+]
+options_en = [
+  "About the same — one event equals one survey answer",
+  "Ten times more — clicks happen once per minute",
+  "Thousands of times more — behaviour is continuous",
+  "Fewer — events are compressed automatically",
+]
+correct_idx = 2
+explanation_pl = "Aktywny użytkownik może wygenerować tysiące zdarzeń (kliknięcia, przewijanie, najechanie kursorem) dziennie, podczas gdy ankieta zbiera tylko jeden ustrukturyzowany wiersz. Logi skalują się z częstotliwością zachowania, nie z liczbą użytkowników."
+explanation_en = "An active user can generate thousands of click, scroll, and hover events per day, while a survey captures only one structured row. Event logs scale with behaviour frequency, not headcount."
+
+[[questions]]
+id = "dc022"
+module_idx = 0
+q_pl = "Ankieta w aplikacji mobilnej podaje 91% zadowolonych użytkowników. Co jest najbardziej prawdopodobnym źródłem błędu próby?"
+q_en = "A mobile app survey reports 91% user satisfaction. Which is the most likely source of sampling bias?"
+options_pl = [
+  "Ankieta używa pytań sugerujących odpowiedź",
+  "Niezadowoleni użytkownicy przestali używać aplikacji i nie widzieli ankiety",
+  "Próba jest zbyt mała, żeby być miarodajna",
+  "Satysfakcja jest mierzona na skali porządkowej",
+]
+options_en = [
+  "The survey uses a leading question format",
+  "Dissatisfied users stopped using the app and never saw the survey",
+  "The sample size is too small to be reliable",
+  "Satisfaction is measured on an ordinal scale",
+]
+correct_idx = 1
+explanation_pl = "Błąd samoselekcji: niezadowoleni użytkownicy porzucają aplikację zanim zobaczą ankietę. Respondenci są nieproporcjonalnie zadowoleni. To forma błędu przeżywalności (survivorship bias)."
+explanation_en = "Self-selection bias: unhappy users tend to abandon the app before encountering the survey. The remaining respondents are disproportionately satisfied — a form of survivorship bias."
+
+[[questions]]
+id = "dc023"
+module_idx = 0
+q_pl = "Które twierdzenie najlepiej wyjaśnia, dlaczego surowych danych nie należy nigdy nadpisywać?"
+q_en = "Which statement best explains why raw data should never be overwritten?"
+options_pl = [
+  "Surowe pliki są z konwencji tylko do odczytu w większości baz danych",
+  "Nadpisywanie surowych danych narusza przepisy RODO",
+  "W praktyce nie ma technicznej możliwości nadpisania surowych danych",
+  "Jeśli błąd preprocesowania zostanie wykryty później, surowe dane to jedyny sposób na odtworzenie czystych wyników od podstaw",
+]
+options_en = [
+  "Raw files are read-only by convention in most databases",
+  "Overwriting raw data violates GDPR regulations",
+  "It is technically impossible to overwrite raw data in practice",
+  "If a preprocessing error is found later, the raw data is the only way to reproduce clean output from scratch",
+]
+correct_idx = 3
+explanation_pl = "Odtwarzalność to główny powód. Jeśli po zgubieniu surowego pliku wykryjemy błąd w skrypcie czyszczącym, nie możemy poprawnie zregenerować czystego zbioru. Surowe dane to jedyne źródło prawdy."
+explanation_en = "Reproducibility is the core reason. If a bug is found in a cleaning script after the raw file is gone, the clean dataset cannot be regenerated correctly. Raw data is the single source of truth."
+
+[[questions]]
+id = "dc024"
+module_idx = 0
+q_pl = "Które podejście stosuje schemat danych dopiero przy odczycie, a nie podczas przechowywania?"
+q_en = "Which approach applies a schema only when data is read, not when it is stored?"
+options_pl = [
+  "Schema-on-read",
+  "Schema-on-write",
+  "Schema-on-query",
+  "Lazy schema",
+]
+options_en = [
+  "Schema-on-read",
+  "Schema-on-write",
+  "Schema-on-query",
+  "Lazy schema",
+]
+correct_idx = 0
+explanation_pl = "Schema-on-read (stosowane w data lake, Hadoop, Parquet) przechowuje surowe bajty i wymusza strukturę dopiero przy zapytaniu. Schema-on-write (relacyjne bazy) waliduje dane w momencie zapisu — szybsze zapytania, mniejsza elastyczność."
+explanation_en = "Schema-on-read (data lakes, Hadoop, Parquet) stores raw bytes and enforces structure at query time. Schema-on-write (relational databases) validates data on ingestion — faster queries, less flexibility."
+
+[[questions]]
+id = "dc025"
+module_idx = 0
+q_pl = "Usuwasz wszystkie czasy reakcji powyżej 2000 ms jako 'wartości odstające'. Jakie jest główne ryzyko?"
+q_en = "You remove all reaction time values above 2000 ms as outliers. What is the key risk?"
+options_pl = [
+  "Pozostały rozkład nie będzie już normalny",
+  "Usuwanie obserwacji odstających zawsze wprowadza błąd selekcji",
+  "Wolne odpowiedzi mogą być teoretycznie znaczące i ich usunięcie odrzuca prawdziwy sygnał",
+  "Testy statystyczne wymagają wartości odstających do poprawnego obliczenia wariancji",
+]
+options_en = [
+  "The remaining distribution will no longer be normal",
+  "Removing outliers always introduces selection bias",
+  "Slow responses may be theoretically meaningful and removing them discards real signal",
+  "Statistical tests require outliers to calculate variance correctly",
+]
+correct_idx = 2
+explanation_pl = "Bardzo wolne RT mogą odzwierciedlać prawdziwe zdarzenia poznawcze: lapsusy uwagi, rozproszenie lub trudne próby. Usunięcie ich może wypaczyć estymaty średniego RT i ukryć ważne efekty. Próg musi być teoretycznie uzasadniony."
+explanation_en = "Very slow RTs may reflect genuine cognitive events: attentional lapses, task disengagement, or difficult trials. Removing them can bias mean RT estimates and hide important effects. The cutoff must be theoretically justified."
+
+[[questions]]
+id = "dc026"
+module_idx = 0
+q_pl = "Kiedy przejście z CSV na format Parquet ma największe znaczenie praktyczne?"
+q_en = "When does switching from CSV to Parquet format matter most in practice?"
+options_pl = [
+  "Gdy dane zawierają tekst z przecinkami",
+  "Gdy potrzebujemy plików czytelnych dla człowieka do ręcznej inspekcji",
+  "Gdy przechowujemy dane w chmurowym object store",
+  "Gdy odpytujemy tylko kilka kolumn z bardzo szerokiej tabeli z milionami wierszy",
+]
+options_en = [
+  "When the data contains text with commas",
+  "When you need human-readable files for manual inspection",
+  "When storing data in a cloud object store",
+  "When querying only a few columns from a very wide table with millions of rows",
+]
+correct_idx = 3
+explanation_pl = "Parquet jest kolumnowy: odczyt tylko kolumn A i B z tabeli 500-kolumnowej i 10 mln wierszy pomija wszystkie pozostałe dane. CSV czyta każdy bajt każdego wiersza. Różnica jest nieistotna dla małych plików, lecz ogromna przy dużej skali."
+explanation_en = "Parquet is columnar: reading only columns A and B from a 500-column, 10M-row table skips all other column data entirely. CSV reads every byte in every row. The difference is negligible for small files but extreme at scale."
+
+[[questions]]
+id = "dc027"
+module_idx = 0
+q_pl = "Badanie obserwacyjne wykazuje, że osoby pijące więcej kawy mają szybsze czasy reakcji. Czy możemy stwierdzić, że kawa przyspiesza reakcje?"
+q_en = "An observational study finds that people who drink more coffee have faster reaction times. Can we conclude that coffee causes faster reactions?"
+options_pl = [
+  "Tak — silna korelacja implikuje przyczynowość",
+  "Nie — dane obserwacyjne nie mogą ustalić przyczynowości ze względu na zmienne zakłócające",
+  "Tak — jeśli efekt jest istotny statystycznie przy p < 0,01",
+  "Nie — czasu reakcji nie można dokładnie zmierzyć w badaniach obserwacyjnych",
+]
+options_en = [
+  "Yes — a strong correlation implies causation",
+  "No — observational data cannot establish causation due to confounders",
+  "Yes — if the effect is statistically significant at p < 0.01",
+  "No — reaction time cannot be accurately measured in observational studies",
+]
+correct_idx = 1
+explanation_pl = "Dane obserwacyjne pokazują korelację, nie przyczynowość. Zmienna zakłócająca (np. jakość snu) może napędzać zarówno spożycie kawy, jak i szybkość reakcji. Tylko randomizowany eksperyment kontrolowany może ustalić kierunek przyczynowy."
+explanation_en = "Observational data shows correlation, not causation. A confounder (e.g., sleep quality) might drive both coffee consumption and reaction speed. Only a randomised controlled experiment can establish causal direction."
