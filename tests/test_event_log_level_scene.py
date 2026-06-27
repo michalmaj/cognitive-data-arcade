@@ -9,7 +9,6 @@ from cognitive_data_arcade.ui.event_log_level_scene import (
     _ROW1_Y,
     _ROW2_Y,
 )
-from cognitive_data_arcade.ui.menu import LessonMenuScene
 
 
 class _FakePM:
