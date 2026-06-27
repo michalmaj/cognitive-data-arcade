@@ -1030,3 +1030,152 @@ options_en = [
 correct_idx = 1
 explanation_pl = "Wyciek danych: średnia i odchylenie standardowe zbioru testowego wyciekają do potoku treningowego gdy skalujesz przed podziałem. Poprawna procedura: dopasuj scaler tylko na zbiorze treningowym, potem transformuj oba. Użyj Pipeline sklearn, żeby to wymusić."
 explanation_en = "Data leakage: test set mean and std leak into the training pipeline when you scale before splitting. Correct procedure: fit scaler on train only, then transform both sets. Use sklearn Pipeline to enforce this."
+
+# ── Act 5 continued: NLP ──────────────────────────────────────────────────────
+
+[[questions]]
+id = "dc049"
+module_idx = 4
+q_pl = "Dlaczego dzielenie tekstu po białych znakach nie sprawdza się jako strategia tokenizacji dla tekstu polskiego?"
+q_en = "Why does splitting text on whitespace fail as a tokenisation strategy for Polish text?"
+options_pl = [
+  "Polskie słowa są zbyt długie do efektywnego przetwarzania",
+  "Język polski używa cyrylicy, której tokenizery na białe znaki nie obsługują",
+  "Tokenizacja na białe znaki wymaga słownika wszystkich ważnych słów",
+  "Język polski jest wysoko fleksyjny — 'pies', 'psa', 'psu', 'psem' to to samo słowo w różnych formach, lecz dzielone jako osobne tokeny",
+]
+options_en = [
+  "Polish words are too long to process efficiently",
+  "Polish uses the Cyrillic alphabet which whitespace tokenisers cannot handle",
+  "Whitespace tokenisation requires a dictionary of all valid words",
+  "Polish is highly inflected — 'pies', 'psa', 'psu', 'psem' are the same word in different forms but treated as separate tokens",
+]
+correct_idx = 3
+explanation_pl = "Język polski ma bogatą morfologię fleksyjną: ten sam lemat ('pies') pojawia się w wielu formach zależnie od przypadku. Podział na białe znaki traktuje 'pies' i 'psa' jako niezwiązane tokeny, poważnie szkodząc miarom częstości wyrazów i podobieństwa semantycznego."
+explanation_en = "Polish has rich inflectional morphology: the same lemma ('pies' — dog) appears in many forms by case, gender, and number. Whitespace splitting treats 'pies' and 'psa' as unrelated tokens, severely harming term frequency and semantic similarity measures."
+
+[[questions]]
+id = "dc050"
+module_idx = 4
+q_pl = "W TF-IDF, dlaczego rzadkie słowa mają wyższą wagę IDF niż powszechne?"
+q_en = "In TF-IDF, why do rare words get a higher IDF weight than common words?"
+options_pl = [
+  "Rzadkie słowa pojawiają się w mniejszej liczbie dokumentów, więc log(N/df) jest duże — są bardziej dyskryminacyjne",
+  "Rzadkie słowa są dłuższe i niosą więcej informacji na znak",
+  "Powszechne słowa są filtrowane przez listę stop-words przed zastosowaniem IDF",
+  "Wagi IDF są proporcjonalne do częstości terminu w dokumencie",
+]
+options_en = [
+  "Rare words appear in fewer documents, so log(N/df) is large — they are more discriminative",
+  "Rare words are longer and carry more information per character",
+  "Common words are filtered by the stop-word list before IDF is applied",
+  "IDF weights are proportional to term frequency within a document",
+]
+correct_idx = 0
+explanation_pl = "IDF = log(N / df), gdzie N to liczba dokumentów, a df to liczba zawierających dany termin. 'A' pojawia się w prawie każdym dokumencie (df ≈ N → IDF ≈ 0). Termin techniczny jak 'elektroencefalografia' pojawia się rzadko (małe df → wysokie IDF). Wysokie IDF sygnalizuje, że słowo rozróżnia dokumenty."
+explanation_en = "IDF = log(N / df) where N is total documents and df is the number containing the term. 'The' appears in almost every document (df ≈ N → IDF ≈ 0). A technical term like 'electroencephalography' is rare (small df → high IDF). High IDF signals the word distinguishes documents."
+
+[[questions]]
+id = "dc051"
+module_idx = 4
+q_pl = "Dlaczego zdanie 'Nie lubię tego produktu' jest często błędnie klasyfikowane jako pozytywne przez proste klasyfikatory sentymentu?"
+q_en = "Why is 'I do not like this product' often misclassified as positive by simple sentiment classifiers?"
+options_pl = [
+  "Słowo 'produkt' ma pozytywny wynik sentymentu",
+  "Proste klasyfikatory liczą znaki, nie słowa",
+  "Modele bag-of-words traktują 'lubię' jako pozytywne nie rozumiejąc, że 'nie' neguje jego wydźwięk",
+  "Klasyfikator był trenowany na zbyt wielu przykładach pozytywnych",
+]
+options_en = [
+  "The word 'product' has a positive sentiment score",
+  "Simple classifiers count characters, not words",
+  "Bag-of-words models treat 'like' as positive without understanding that 'not' negates it",
+  "The classifier was trained on too many positive examples",
+]
+correct_idx = 2
+explanation_pl = "Klasyfikatory bag-of-words sumują sentyment na poziomie słów bez śledzenia zakresu składniowego. 'Lubię' jest pozytywne, 'nie' ma niską wagę — więc zdanie uzyskuje wynik pozytywny. Obsługa negacji wymaga parsowania zależności lub modeli transformerowych wychwytujących kontekst długodystansowy."
+explanation_en = "Bag-of-words classifiers sum word-level sentiment without tracking syntactic scope. 'Like' is positive, 'not' has low sentiment weight — so the sentence scores positive. Negation handling requires dependency parsing or transformer models that capture long-range context."
+
+[[questions]]
+id = "dc052"
+module_idx = 4
+q_pl = "W rozpoznawaniu nazwanych encji (NER), dlaczego 'Apple' może być oznaczone inaczej w 'Apple wypuściło nowego iPhone' i 'Drzewa jabłoni rosną w Oregonie'?"
+q_en = "In Named Entity Recognition, why might 'Apple' be labelled differently in 'Apple releases iPhone' versus 'Apple trees grow in Oregon'?"
+options_pl = [
+  "Systemy NER losowo przypisują etykiety niejednoznacznym tokenom",
+  "Kontekst ('wypuściło iPhone' vs. 'drzewa rosną') pozwala modelowi wnioskować ORG vs. brak encji",
+  "NER używa reguł wielkich liter — wielkie A zawsze oznacza organizację",
+  "Apple Inc. i jabłko (owoc) są w różnych słownikach",
+]
+options_en = [
+  "NER systems assign random labels to ambiguous tokens",
+  "Context ('releases iPhone' vs. 'trees grow') lets the model infer ORG vs. no entity",
+  "NER uses capitalisation rules — capital A always means organisation",
+  "Apple Inc. and apple (fruit) are in different vocabularies",
+]
+correct_idx = 1
+explanation_pl = "Rozpoznawanie nazwanych encji zależy od kontekstu: ten sam token może być firmą (ORG), jedzeniem lub miejscem w zależności od otaczających słów. Nowoczesne modele NER oparte na BERT używają bidirektionalnego kontekstu do dezambiguacji. Sama wielka litera nie jest wystarczająca."
+explanation_en = "NER is context-dependent: the same token can be a company (ORG), a food, or a place depending on surrounding words. Modern BERT-based NER models use bidirectional context to disambiguate. Capitalisation alone is not sufficient."
+
+[[questions]]
+id = "dc053"
+module_idx = 4
+q_pl = "Model językowy ma perplexity 50 na korpusie testowym. Co to z grubsza oznacza?"
+q_en = "A language model has perplexity 50 on a test corpus. What does this roughly mean?"
+options_pl = [
+  "Model popełnia 50 błędów na 100 tokenów",
+  "Słownik modelu zawiera 50 unikalnych słów",
+  "Model jest 50 razy bardziej niepewny niż doskonały model",
+  "Przeciętnie model jest tak niepewny jak równomierny wybór spośród 50 słów na każdym kroku",
+]
+options_en = [
+  "The model makes 50 errors per 100 tokens",
+  "The model's vocabulary contains 50 unique words",
+  "The model is 50 times more uncertain than a perfect model",
+  "On average, the model is as uncertain as choosing uniformly among 50 words at each step",
+]
+correct_idx = 3
+explanation_pl = "Perplexity to wykładnicza średnia ujemnego log-prawdopodobieństwa na token. Perplexity = 50 oznacza, że model jest tak 'zdezorientowany' jak gdyby musiał wybierać równomiernie spośród 50 słów na każdej pozycji. Niższe perplexity = lepszy model."
+explanation_en = "Perplexity is the exponentiated average negative log-likelihood per token. Perplexity = 50 means the model is as uncertain as if it had to choose uniformly among 50 equally likely words at each position. Lower perplexity = better model."
+
+[[questions]]
+id = "dc054"
+module_idx = 4
+q_pl = "Co oznacza 'zero-shot' opisując możliwości modelu językowego?"
+q_en = "What does 'zero-shot' mean when describing a language model's capability?"
+options_pl = [
+  "Model wykonuje zadanie używając tylko opisu zadania, bez żadnych oznaczonych przykładów w prompcie",
+  "Model był trenowany bez żadnych oznaczonych danych",
+  "Model osiąga zerowy błąd na benchmarku",
+  "Model używa zerowej pamięci podczas wnioskowania",
+]
+options_en = [
+  "The model performs a task using only the task description, without any labelled examples in the prompt",
+  "The model was trained with zero labelled data",
+  "The model achieves zero errors on the benchmark",
+  "The model uses zero memory during inference",
+]
+correct_idx = 0
+explanation_pl = "Zero-shot oznacza brak przykładów specyficznych dla zadania w prompcie — tylko opis w języku naturalnym co robić. Few-shot oznacza, że dołączona jest mała liczba przykładów wejście-wyjście. 'Shots' odnoszą się do przykładów w kontekście, nie w treningu."
+explanation_en = "Zero-shot means no task-specific examples are given in the prompt — only a natural language description of what to do. Few-shot means a small number of input-output examples are included. 'Shots' refers to examples in the context, not in training."
+
+[[questions]]
+id = "dc055"
+module_idx = 4
+q_pl = "Dlaczego duże modele językowe czasem produkują pewne siebie, lecz faktycznie błędne odpowiedzi?"
+q_en = "Why do large language models sometimes produce confident but factually wrong answers?"
+options_pl = [
+  "Modele są zaprogramowane żeby być uprzejme i unikać mówienia 'nie wiem'",
+  "Modele nie były wystawione na wystarczającą ilość danych treningowych",
+  "Są trenowane do przewidywania prawdopodobnych kolejnych tokenów, nie do weryfikowania faktycznej prawdy — płynność i dokładność to różne cele",
+  "Halucynacje pojawiają się tylko gdy model jest pytany o przyszłe zdarzenia",
+]
+options_en = [
+  "LLMs are programmed to be polite and avoid saying 'I don't know'",
+  "The models have not seen enough training data",
+  "They are trained to predict likely next tokens, not to verify factual truth — fluency and accuracy are different objectives",
+  "Hallucination only occurs when the model is asked about future events",
+]
+correct_idx = 2
+explanation_pl = "Duże modele językowe są trenowane do maksymalizowania prawdopodobieństwa kolejnego tokenu, co produkuje płynny tekst. Ten cel nie nagradza jawnie faktycznej dokładności. Model interpoluje wzorce z danych treningowych i może generować brzmiące wiarygodnie, lecz fałszywe informacje — szczególnie o niszowych tematach."
+explanation_en = "LLMs are trained to maximise next-token probability, producing fluent text. This objective does not explicitly reward factual accuracy. The model interpolates patterns from training data and can generate plausible-sounding but false information — especially on obscure topics."
