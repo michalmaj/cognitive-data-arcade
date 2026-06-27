@@ -44,3 +44,48 @@ CONTENT: dict[str, dict[str, list[str]]] = {
         ],
     },
 }
+
+REFLECTION = {
+    "pl": {
+        "title": "Distribution Playground — Refleksja",
+        "cards": [
+            {
+                "label": "Rozkład",
+                "color": "indigo",
+                "text": "Rozkład prawdopodobieństwa opisuje, jakie wartości są możliwe i jak często się pojawiają — kompresja tysięcy obserwacji do jednej funkcji.",
+            },
+            {
+                "label": "Właściwość",
+                "color": "orange",
+                "text": "Średnia, wariancja i skośność charakteryzują kształt rozkładu — trzy liczby, które zastępują tysiące surowych pomiarów.",
+            },
+            {
+                "label": "Zastosowanie",
+                "color": "green",
+                "text": "CLT: suma niezależnych zmiennych losowych dąży do rozkładu normalnego niezależnie od rozkładu składników — to fundament wnioskowania statystycznego.",
+            },
+        ],
+        "question": "Dlaczego rzut monetą powtórzony 1000 razy daje wynik bliski rozkładowi normalnemu, choć pojedynczy rzut to tylko 0 lub 1?",
+    },
+    "en": {
+        "title": "Distribution Playground — Reflection",
+        "cards": [
+            {
+                "label": "Distribution",
+                "color": "indigo",
+                "text": "A probability distribution describes which values are possible and how often they occur — compressing thousands of observations into a single function.",
+            },
+            {
+                "label": "Property",
+                "color": "orange",
+                "text": "Mean, variance, and skewness characterise the shape of a distribution — three numbers that stand in for thousands of raw measurements.",
+            },
+            {
+                "label": "Application",
+                "color": "green",
+                "text": "CLT: the sum of independent random variables tends to a normal distribution regardless of the component distributions — the foundation of statistical inference.",
+            },
+        ],
+        "question": "Why does flipping a coin 1000 times produce a result close to a normal distribution, even though a single flip is just 0 or 1?",
+    },
+}

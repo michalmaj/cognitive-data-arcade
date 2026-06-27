@@ -52,3 +52,48 @@ CONTENT: dict[str, dict[str, list[str]]] = {
         ],
     },
 }
+
+REFLECTION = {
+    "pl": {
+        "title": "Event Log Detective — Refleksja",
+        "cards": [
+            {
+                "label": "Format",
+                "color": "indigo",
+                "text": "Event logi to sekwencje zdarzeń z timestampem — zupełnie inaczej niż tabele z jednym wierszem na obserwację.",
+            },
+            {
+                "label": "Standard",
+                "color": "orange",
+                "text": "BIDS porządkuje pliki tak, żeby każde laboratorium mogło czytać Twoje dane bez dodatkowych instrukcji.",
+            },
+            {
+                "label": "Pułapka",
+                "color": "green",
+                "text": "Kolejność wierszy w CSV bywa przypadkowa. W logu zdarzeń kolejność to dane — jej utrata niszczy sens pliku.",
+            },
+        ],
+        "question": "Jakie zdarzenia generuje Twoja aplikacja mobilna? Czy można z nich odtworzyć sesję użytkownika?",
+    },
+    "en": {
+        "title": "Event Log Detective — Reflection",
+        "cards": [
+            {
+                "label": "Format",
+                "color": "indigo",
+                "text": "Event logs are sequences of timestamped events — completely different from tables with one row per observation.",
+            },
+            {
+                "label": "Standard",
+                "color": "orange",
+                "text": "BIDS organises files so any lab in the world can read your data without extra instructions.",
+            },
+            {
+                "label": "Pitfall",
+                "color": "green",
+                "text": "Row order in a CSV can be arbitrary. In an event log, order is data — losing it destroys meaning.",
+            },
+        ],
+        "question": "What events does your mobile app generate? Could you reconstruct a user session from them?",
+    },
+}

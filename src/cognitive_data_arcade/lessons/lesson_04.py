@@ -72,3 +72,48 @@ CONTENT: dict[str, dict[str, list[str]]] = {
         ],
     },
 }
+
+REFLECTION = {
+    "pl": {
+        "title": "Data Quality Lab — Refleksja",
+        "cards": [
+            {
+                "label": "Problem",
+                "color": "indigo",
+                "text": "Brudne dane (braki, duplikaty, błędy pomiaru) mogą zepsuć analizę nawet przy idealnym modelu statystycznym.",
+            },
+            {
+                "label": "Rodzaj",
+                "color": "orange",
+                "text": "MCAR — brak losowy; MAR — brak zależny od innych zmiennych; MNAR — brak zależny od samej brakującej wartości. Każdy wymaga innej strategii.",
+            },
+            {
+                "label": "Metoda",
+                "color": "green",
+                "text": "Imputacja, usuwanie przypadków, modelowanie braków — wybór metody zależy od mechanizmu braków, a nie od wygody.",
+            },
+        ],
+        "question": "Masz survey z 30% brakami w pytaniu o dochód. Jak sprawdzisz, czy to MCAR, MAR czy MNAR — i co zrobisz z tymi brakami?",
+    },
+    "en": {
+        "title": "Data Quality Lab — Reflection",
+        "cards": [
+            {
+                "label": "Problem",
+                "color": "indigo",
+                "text": "Dirty data (missing values, duplicates, measurement errors) can ruin an analysis even with a perfect statistical model.",
+            },
+            {
+                "label": "Type",
+                "color": "orange",
+                "text": "MCAR — missing completely at random; MAR — missing depends on other variables; MNAR — missing depends on the missing value itself. Each requires a different strategy.",
+            },
+            {
+                "label": "Method",
+                "color": "green",
+                "text": "Imputation, case deletion, missing-data modelling — the choice of method depends on the missingness mechanism, not convenience.",
+            },
+        ],
+        "question": "You have a survey with 30% missing values on the income question. How do you determine whether it is MCAR, MAR, or MNAR — and what do you do about it?",
+    },
+}
