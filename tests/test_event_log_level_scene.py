@@ -106,10 +106,23 @@ def test_enter_sets_done():
 
 
 def test_esc_returns_to_menu():
+    from cognitive_data_arcade.ui.reflection_scene import ReflectionScene
+
     scene = _make_scene()
     scene.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode=""))
     assert scene.is_done()
-    assert isinstance(scene.next_scene(), LessonMenuScene)
+    assert isinstance(scene.next_scene(), ReflectionScene)
+
+
+def test_esc_goes_through_reflection_scene() -> None:
+    from cognitive_data_arcade.ui.reflection_scene import ReflectionScene
+
+    scene = _make_scene()
+    esc = pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode="")
+    scene.handle_event(esc)
+    assert scene.is_done()
+    next_s = scene.next_scene()
+    assert isinstance(next_s, ReflectionScene), f"Expected ReflectionScene, got {type(next_s)}"
 
 
 def test_not_done_initially():
