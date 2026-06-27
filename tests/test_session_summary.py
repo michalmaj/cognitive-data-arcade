@@ -8,9 +8,9 @@ from cognitive_data_arcade.profile.manager import Profile, ProfileManager
 from cognitive_data_arcade.ui.session_summary import SessionSummaryScene
 
 
-def _make_session() -> SessionResult:
+def _make_session(task_name: str = "reaction_time") -> SessionResult:
     return SessionResult(
-        task_name="reaction_time",
+        task_name=task_name,
         participant_id="p1",
         session_id="s1",
         total_trials=20,
@@ -35,13 +35,17 @@ def _make_profile(ap: int = 0) -> Profile:
     )
 
 
-def _make_scene(tmp_path: Path, new_badge_ids: list[str] | None = None) -> SessionSummaryScene:
+def _make_scene(
+    tmp_path: Path,
+    new_badge_ids: list[str] | None = None,
+    task_name: str = "reaction_time",
+) -> SessionSummaryScene:
     pygame.init()
     pm = ProfileManager(tmp_path / "profile.json")
     profile_before = _make_profile(ap=200)
     profile_after = _make_profile(ap=270)
     return SessionSummaryScene(
-        session=_make_session(),
+        session=_make_session(task_name=task_name),
         new_badge_ids=new_badge_ids or [],
         profile_before=profile_before,
         profile_after=profile_after,
@@ -112,3 +116,24 @@ def test_session_summary_p_key_transitions_to_profile(tmp_path: Path) -> None:
     scene.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_p, mod=0, unicode="p"))
     assert scene.is_done()
     assert isinstance(scene.next_scene(), ProfileScene)
+
+
+def test_reflection_scene_shown_for_big_data_map(tmp_path: Path) -> None:
+    from cognitive_data_arcade.ui.reflection_scene import ReflectionScene
+
+    scene = _make_scene(tmp_path, task_name="big_data_map")
+    space = pygame.event.Event(pygame.KEYDOWN, key=pygame.K_SPACE, mod=0, unicode=" ")
+    scene.handle_event(space)
+    assert scene.is_done()
+    next_s = scene.next_scene()
+    assert isinstance(next_s, ReflectionScene), f"Expected ReflectionScene, got {type(next_s)}"
+
+
+def test_no_reflection_for_reaction_time(tmp_path: Path) -> None:
+    from cognitive_data_arcade.ui.menu import LessonMenuScene
+
+    scene = _make_scene(tmp_path, task_name="reaction_time")
+    space = pygame.event.Event(pygame.KEYDOWN, key=pygame.K_SPACE, mod=0, unicode=" ")
+    scene.handle_event(space)
+    next_s = scene.next_scene()
+    assert isinstance(next_s, LessonMenuScene), f"Expected LessonMenuScene, got {type(next_s)}"

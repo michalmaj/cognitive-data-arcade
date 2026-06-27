@@ -71,7 +71,11 @@ class EventLogLevelScene(Scene):
         if event.type != pygame.KEYDOWN:
             return
         if event.key == pygame.K_ESCAPE:
-            self._next = LessonMenuScene(self._pm, self._strings)
+            from cognitive_data_arcade.lessons.lesson_03 import REFLECTION
+            from cognitive_data_arcade.ui.reflection_scene import ReflectionScene
+
+            menu = LessonMenuScene(self._pm, self._strings)
+            self._next = ReflectionScene(REFLECTION, self._strings, back_scene=menu)
             self._done = True
         elif event.key == pygame.K_UP:
             self._active_row = 0

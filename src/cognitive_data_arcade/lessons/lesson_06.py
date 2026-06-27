@@ -48,3 +48,48 @@ CONTENT: dict[str, dict[str, list[str]]] = {
         ],
     },
 }
+
+REFLECTION = {
+    "pl": {
+        "title": "EDA Sandbox — Refleksja",
+        "cards": [
+            {
+                "label": "Cel",
+                "color": "indigo",
+                "text": "EDA to pierwsza rozmowa z danymi — szukasz anomalii, rozkładów i korelacji zanim postawisz formalną hipotezę.",
+            },
+            {
+                "label": "Technika",
+                "color": "orange",
+                "text": "Histogram, boxplot, mapa cieplna korelacji — każdy wykres odpowiada na inne pytanie o kształt i strukturę danych.",
+            },
+            {
+                "label": "Błąd",
+                "color": "green",
+                "text": "Fishing for patterns: zbyt dużo EDA bez hipotezy prowadzi do przypadkowych znalezisk, które nie replikują się w nowych danych.",
+            },
+        ],
+        "question": "Jak odróżnić prawdziwy wzorzec w danych od artefaktu, który pojawił się przez zbyt długą eksplorację bez wcześniejszej hipotezy?",
+    },
+    "en": {
+        "title": "EDA Sandbox — Reflection",
+        "cards": [
+            {
+                "label": "Goal",
+                "color": "indigo",
+                "text": "EDA is your first conversation with the data — you look for anomalies, distributions, and correlations before stating a formal hypothesis.",
+            },
+            {
+                "label": "Technique",
+                "color": "orange",
+                "text": "Histogram, boxplot, correlation heatmap — each plot answers a different question about the shape and structure of the data.",
+            },
+            {
+                "label": "Pitfall",
+                "color": "green",
+                "text": "Fishing for patterns: too much EDA without a prior hypothesis produces spurious findings that fail to replicate on new data.",
+            },
+        ],
+        "question": "How do you distinguish a genuine pattern in data from an artefact that emerged from exploring too long without a prior hypothesis?",
+    },
+}
