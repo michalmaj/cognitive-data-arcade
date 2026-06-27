@@ -1,22 +1,23 @@
 from __future__ import annotations
 
+from typing import Any
+
 import pygame
 
-from cognitive_data_arcade.engine.colors import BG as _BG, DIM as _DIM, WHITE as _WHITE
+from cognitive_data_arcade.engine.colors import BG as _BG, DIM as _DIM, ORANGE, WHITE as _WHITE
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
 
 _INDIGO = (99, 102, 241)
 _BRIGHT_GREEN = (74, 222, 128)
-_ORANGE_C = (243, 156, 18)
 _PURPLE = (167, 139, 250)
 _CARD_BG = (19, 21, 42)
 _QUESTION_BG = (15, 17, 32)
 
 _COLOR_MAP: dict[str, tuple[int, int, int]] = {
     "indigo": _INDIGO,
-    "orange": _ORANGE_C,
+    "orange": ORANGE,
     "green": _BRIGHT_GREEN,
 }
 
@@ -52,7 +53,7 @@ def _wrap(text: str, font: pygame.font.Font, max_w: int) -> list[str]:
 class ReflectionScene(Scene):
     def __init__(
         self,
-        reflection: dict,
+        reflection: dict[str, Any],
         strings: Strings,
         back_scene: Scene,
     ) -> None:
