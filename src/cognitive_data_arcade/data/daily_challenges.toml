@@ -583,3 +583,152 @@ options_en = [
 correct_idx = 1
 explanation_pl = "Dane obserwacyjne pokazują korelację, nie przyczynowość. Zmienna zakłócająca (np. jakość snu) może napędzać zarówno spożycie kawy, jak i szybkość reakcji. Tylko randomizowany eksperyment kontrolowany może ustalić kierunek przyczynowy."
 explanation_en = "Observational data shows correlation, not causation. A confounder (e.g., sleep quality) might drive both coffee consumption and reaction speed. Only a randomised controlled experiment can establish causal direction."
+
+# ── Act 2 continued: Cognitive Experiments ────────────────────────────────────
+
+[[questions]]
+id = "dc028"
+module_idx = 1
+q_pl = "Średni czas reakcji uczestnika spada z 350 ms do 290 ms przez 200 prób. Co to najbardziej prawdopodobnie wyjaśnia?"
+q_en = "A participant's mean reaction time drops from 350 ms to 290 ms across 200 trials. What most likely explains this?"
+options_pl = [
+  "Efekt treningu — wielokrotne wykonywanie zadania poprawia wyniki niezależnie od zmiennej eksperymentalnej",
+  "Zmęczenie — zmęczeni uczestnicy reagują szybciej, żeby skończyć zadanie",
+  "Efekt sufitu — wyniki nie mogą dalej się poprawiać",
+  "Regresja do średniej — skrajne wyniki wracają do przeciętnych",
+]
+options_en = [
+  "Practice effect — repeated task exposure improves performance independent of the experimental variable",
+  "Fatigue — tired participants respond faster to finish the task",
+  "Ceiling effect — performance cannot improve further",
+  "Regression to the mean — extreme scores return to average",
+]
+correct_idx = 0
+explanation_pl = "Efekty treningu pojawiają się, bo uczestnicy uczą się mechaniki zadania, antycypują bodźce i rozwijają rutyny motoryczne. Jeśli nie są kontrolowane (np. przez kontrbalansowanie lub odrzucanie prób rozgrzewkowych), efekt treningu zakłóca zmienną eksperymentalną."
+explanation_en = "Practice effects occur because participants learn the task mechanics, anticipate stimuli, and develop motor routines. If uncontrolled (e.g., by counterbalancing or discarding warm-up trials), practice effect confounds the experimental variable."
+
+[[questions]]
+id = "dc029"
+module_idx = 1
+q_pl = "W zadaniu Flankera, dlaczego próby kongruentne (>>>>>) są zazwyczaj szybsze niż niekongruentne (<<><<)?"
+q_en = "In the flanker task, why are congruent trials (>>>>>) typically faster than incongruent trials (<<><<)?"
+options_pl = [
+  "Bodźce kongruentne są fizycznie jaśniejsze i łatwiejsze do percepcji",
+  "Uczestnicy zgadują w próbach niekongruentnych, dodając zmienność",
+  "Flankery aktywują konkurujące kody odpowiedzi, spowalniając wybór reakcji w próbach niekongruentnych",
+  "Próby kongruentne pojawiają się częściej, co tworzy przewagę częstości",
+]
+options_en = [
+  "Congruent stimuli are physically brighter and easier to perceive",
+  "Participants guess on incongruent trials, adding variability",
+  "Flankers activate competing response codes, slowing response selection on incongruent trials",
+  "Congruent trials appear more frequently, creating a frequency advantage",
+]
+correct_idx = 2
+explanation_pl = "Efekt flankera odzwierciedla rywalizację odpowiedzi: flankujące strzałki automatycznie aktywują własne tendencje reakcyjne. W próbach niekongruentnych system musi zahamować odpowiedź wywoływaną przez flankery przed wykonaniem właściwej — stąd 20–80 ms opóźnienia."
+explanation_en = "The flanker effect reflects response competition: flanking arrows automatically activate their own response tendencies. On incongruent trials, the system must suppress the flanker-driven response before executing the correct one — adding 20–80 ms."
+
+[[questions]]
+id = "dc030"
+module_idx = 1
+q_pl = "W teorii detekcji sygnału (SDT) co oznacza 'trafienie' (hit)?"
+q_en = "In Signal Detection Theory (SDT), what is a 'hit'?"
+options_pl = [
+  "Poprawne odrzucenie próby bez sygnału",
+  "Odpowiedź gdy sygnał jest nieobecny",
+  "Brak odpowiedzi gdy sygnał jest obecny",
+  "Poprawne wykrycie sygnału gdy jest obecny",
+]
+options_en = [
+  "Correctly rejecting a trial with no signal present",
+  "Responding when no signal is present",
+  "Failing to respond when a signal is present",
+  "Correctly detecting a signal when it is present",
+]
+correct_idx = 3
+explanation_pl = "SDT ma cztery wyniki: trafienie (sygnał obecny + odpowiedź), chybienie (sygnał obecny + brak odpowiedzi), fałszywy alarm (brak sygnału + odpowiedź), poprawne odrzucenie (brak sygnału + brak odpowiedzi). Miara d' oddziela czułość od nastawienia."
+explanation_en = "SDT has four outcomes: hit (signal present, responded), miss (signal present, no response), false alarm (no signal, responded), correct rejection (no signal, no response). d' separates sensitivity from response bias."
+
+[[questions]]
+id = "dc031"
+module_idx = 1
+q_pl = "Dlaczego znalezienie czerwonego koła wśród niebieskich kół (wyszukiwanie cechowe) jest szybsze niż wśród niebieskich kół I czerwonych kwadratów (wyszukiwanie koniunkcyjne)?"
+q_en = "Why is finding a red circle among blue circles (feature search) faster than among blue circles AND red squares (conjunction search)?"
+options_pl = [
+  "Wyszukiwanie cechowe wymaga więcej ruchów gałek ocznych",
+  "Wyszukiwanie cechowe jest równoległe (pop-out); koniunkcyjne wymaga szeregowej uwagi na każdy element",
+  "Kolor jest przetwarzany szybciej niż kształt w mózgu",
+  "Wyszukiwanie koniunkcyjne wymaga więcej pojemności pamięci roboczej",
+]
+options_en = [
+  "Feature search uses more eye movements than conjunction search",
+  "Feature search is parallel (pop-out); conjunction search requires serial attention to each item",
+  "Colour is processed faster than shape in the brain",
+  "Conjunction search requires more working memory capacity",
+]
+correct_idx = 1
+explanation_pl = "Unikalna cecha (sam kolor lub kształt) wyskakuje pre-atencyjnie, a czas wyszukiwania jest niezależny od liczby dystraktorów. Cele koniunkcyjne (zdefiniowane przez dwie cechy) wymagają skupionej uwagi na każdym elemencie kolejno, więc RT rośnie liniowo z liczbą dystraktorów."
+explanation_en = "A unique feature (colour or shape alone) pops out pre-attentively and search time is independent of set size. Conjunction targets (defined by two features) require focused serial attention, so RT grows linearly with the number of distractors."
+
+[[questions]]
+id = "dc032"
+module_idx = 1
+q_pl = "Uczestnik wykonuje zadanie śledzenia i jednocześnie zapamiętuje 7-cyfrową liczbę. Śledzenie jest gorsze niż solo. Co to demonstruje?"
+q_en = "A participant tracks a target while simultaneously memorising a 7-digit number. Tracking performance is worse than tracking alone. What does this demonstrate?"
+options_pl = [
+  "Obciążenie poznawcze — dwa zadania rywalizują o ograniczone zasoby pamięci roboczej",
+  "Interferencja — cyfry maskują wzrokowe bodźce śledzenia",
+  "Zmęczenie — robienie dwóch zadań naraz jest fizycznie wyczerpujące",
+  "Interferencja proaktywna — stare wspomnienia blokują nowe",
+]
+options_en = [
+  "Cognitive load — two tasks compete for limited working memory resources",
+  "Interference — the digits mask the visual tracking stimuli",
+  "Fatigue — doing two tasks simultaneously is physically tiring",
+  "Proactive interference — old memories block new ones",
+]
+correct_idx = 0
+explanation_pl = "Obciążenie poznawcze: oba zadania rywalizują o ograniczone zasoby pamięci roboczej. Koszt podwójnego zadania (różnica w wydajności) mierzy zaangażowane zasoby uwagowe w zadaniu pierwotnym. To podstawa paradygmatu dual-task."
+explanation_en = "Cognitive load: both tasks compete for limited working memory resources. The dual-task cost (performance difference) measures attentional resources consumed by the primary task — the foundation of dual-task methodology."
+
+[[questions]]
+id = "dc033"
+module_idx = 1
+q_pl = "Grupa A ma średnie RT 280 ms; grupa B ma 320 ms. Dlaczego to porównanie może być mylące bez spojrzenia na rozkłady?"
+q_en = "Group A has a mean RT of 280 ms; group B has 320 ms. Why is this comparison potentially misleading without examining distributions?"
+options_pl = [
+  "Średnie są zawsze mylące — używać należy tylko median",
+  "Grupy mogą mieć różne liczebności prób",
+  "Obie grupy mogą mieć duże nakładające się rozkłady, przez co jednostki są nie do odróżnienia",
+  "Dane RT są zawsze skośne i nie można obliczać z nich średnich",
+]
+options_en = [
+  "Means are always misleading — only medians should be used",
+  "The groups may have different sample sizes",
+  "Both groups may have large overlapping distributions, making individuals indistinguishable",
+  "RT data is always skewed and means cannot be computed",
+]
+correct_idx = 2
+explanation_pl = "Średnie grup ukrywają wariancję. Jeśli obie grupy mają SD ≈ 80 ms, rozkłady znacznie się nakładają i większość uczestników grupy B jest szybsza niż wielu uczestników grupy A. Zawsze raportuj miary rozproszenia i wielkość efektu (d Cohena)."
+explanation_en = "Group means hide variance. If both groups have SD ≈ 80 ms, distributions overlap substantially — most group B participants are faster than many group A participants. Always report dispersion measures and effect size (Cohen's d)."
+
+[[questions]]
+id = "dc034"
+module_idx = 1
+q_pl = "Uczestnicy badania uwagi zachowują się inaczej, gdy wiedzą że są obserwowani przez badacza. Opisuje to najlepiej:"
+q_en = "Participants in an attention study behave differently when they know they are being observed by the researcher. This is best described as:"
+options_pl = [
+  "Efekt placebo — oczekiwania zmieniają wyniki",
+  "Ułatwienie społeczne — obecność innych poprawia wyniki",
+  "Efekt obserwatora — narzędzia pomiarowe zmieniają to, co mierzą",
+  "Cechy zapotrzebowania (demand characteristics) — uczestnicy odczytują wskazówki dotyczące hipotezy i dostosowują zachowanie",
+]
+options_en = [
+  "Placebo effect — expectations alter performance",
+  "Social facilitation — presence of others improves performance",
+  "Observer effect — measurement instruments alter what is measured",
+  "Demand characteristics — participants pick up cues about the study's hypothesis and adjust behaviour",
+]
+correct_idx = 3
+explanation_pl = "Cechy zapotrzebowania (Orne, 1962): uczestnicy wnioskują, jaką odpowiedź chce badacz i dostosowują zachowanie. Zagraża to trafności wewnętrznej i jest powodem istnienia badań z zaślepieniem."
+explanation_en = "Demand characteristics (Orne, 1962): participants infer what response the researcher wants and comply or contrast accordingly. This threatens internal validity and is why blinding exists in experimental design."
