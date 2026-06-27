@@ -732,3 +732,152 @@ options_en = [
 correct_idx = 3
 explanation_pl = "Cechy zapotrzebowania (Orne, 1962): uczestnicy wnioskują, jaką odpowiedź chce badacz i dostosowują zachowanie. Zagraża to trafności wewnętrznej i jest powodem istnienia badań z zaślepieniem."
 explanation_en = "Demand characteristics (Orne, 1962): participants infer what response the researcher wants and comply or contrast accordingly. This threatens internal validity and is why blinding exists in experimental design."
+
+# ── Act 3 continued: Statistics ───────────────────────────────────────────────
+
+[[questions]]
+id = "dc035"
+module_idx = 2
+q_pl = "Centralne Twierdzenie Graniczne (CTG) mówi, że rozkład próbkowy średniej staje się normalny niezależnie od rozkładu populacji. Kiedy to zazwyczaj obowiązuje?"
+q_en = "The Central Limit Theorem states that the sampling distribution of the mean approaches normal regardless of the population distribution. When does this typically apply?"
+options_pl = [
+  "Gdy liczebność próby n jest wystarczająco duża (często n >= 30)",
+  "Tylko gdy populacja jest już normalnie rozłożona",
+  "Tylko dla zmiennych ciągłych",
+  "Gdy wariancja jest mniejsza niż średnia",
+]
+options_en = [
+  "When sample size n is sufficiently large (often n >= 30)",
+  "Only when the population is already normally distributed",
+  "Only for continuous variables",
+  "When the variance is smaller than the mean",
+]
+correct_idx = 0
+explanation_pl = "CTG działa dla dużego n (reguła kciuka: >= 30, lecz zależy od skośności). To dlatego wiele testów parametrycznych jest odporne nawet gdy surowe dane są nienormalne — opierają się na rozkładzie próbkowym średnich, nie indywidualnych wyników."
+explanation_en = "CLT kicks in for large n (rule of thumb >= 30, but depends on skewness). This is why many parametric tests are robust even when raw data is non-normal — they rely on the sampling distribution of means, not of individual scores."
+
+[[questions]]
+id = "dc036"
+module_idx = 2
+q_pl = "Badanie wykazuje p = 0,001 dla różnicy w czasie reakcji między grupami. Dlaczego to odkrycie może być mimo to praktycznie nieistotne?"
+q_en = "A study finds p = 0.001 for a reaction time difference between groups. Why might this finding still be practically unimportant?"
+options_pl = [
+  "Ponieważ p < 0,05 to jedyny ważny próg istotności",
+  "Ponieważ efekt mógł być mierzony słabym narzędziem",
+  "Ponieważ duża próba zawyża istotność — wielkość efektu (d Cohena) może być znikoma",
+  "Ponieważ dane RT są z natury zaszumione i wartości p są zawodne",
+]
+options_en = [
+  "Because p < 0.05 is the only valid significance threshold",
+  "Because the effect may have been measured with a poor instrument",
+  "Because a large sample inflates significance — the effect size (Cohen's d) might be negligible",
+  "Because RT data is inherently noisy and p-values are unreliable",
+]
+correct_idx = 2
+explanation_pl = "Przy N = 10 000 nawet 2 ms różnicy RT może osiągnąć p < 0,001, podczas gdy d Cohena ≈ 0,02 (efekt pomijalny). Wartość p zależy zarówno od wielkości efektu, jak i liczebności próby. Zawsze raportuj d."
+explanation_en = "With N = 10,000, even a 2 ms RT difference can reach p < 0.001 while Cohen's d ≈ 0.02 (negligible effect). p-value depends on both effect size AND sample size. Always report d."
+
+[[questions]]
+id = "dc037"
+module_idx = 2
+q_pl = "Badacz testuje 20 hipotez przy α = 0,05. Ile fałszywie pozytywnych wyników oczekuje się przez przypadek?"
+q_en = "A researcher tests 20 hypotheses at alpha = 0.05. How many false positives are expected by chance alone?"
+options_pl = [
+  "Żadnych — α = 0,05 kontroluje wskaźnik błędów dla całej rodziny testów",
+  "Co najwyżej jeden — korekcja Bonferroniego to zapewnia",
+  "Dokładnie 0,05",
+  "Około 1 — bo 20 × 0,05 = 1,0 oczekiwanych fałszywie pozytywnych",
+]
+options_en = [
+  "None — alpha = 0.05 controls the family-wise error rate",
+  "At most one — the Bonferroni correction ensures this",
+  "Exactly 0.05",
+  "About 1 — because 20 x 0.05 = 1.0 expected false positives",
+]
+correct_idx = 3
+explanation_pl = "Bez korekty oczekiwana liczba fałszywie pozytywnych to 20 × 0,05 = 1. Korekcja Bonferroniego dzieli α przez liczbę testów (0,05/20 = 0,0025), aby kontrolować wskaźnik błędów dla całej rodziny na poziomie 0,05."
+explanation_en = "Without correction, the expected number of false positives is 20 x 0.05 = 1. The Bonferroni correction divides alpha by the number of tests (0.05/20 = 0.0025) to control family-wise error rate at 0.05."
+
+[[questions]]
+id = "dc038"
+module_idx = 2
+q_pl = "Przedział ufności 95% dla średniego RT wynosi [312 ms, 348 ms]. Co oznacza '95% pewności'?"
+q_en = "A 95% confidence interval for mean RT is [312 ms, 348 ms]. What does '95% confidence' mean?"
+options_pl = [
+  "Istnieje 95% prawdopodobieństwo, że prawdziwa średnia leży między 312 a 348 ms",
+  "Gdybyśmy powtórzyli eksperyment wiele razy, 95% skonstruowanych przedziałów zawierałoby prawdziwą średnią",
+  "95% indywidualnych RT leży między 312 a 348 ms",
+  "Badanie ma 95% moc statystyczną",
+]
+options_en = [
+  "There is a 95% probability the true mean lies between 312 and 348 ms",
+  "If we repeated this experiment many times, 95% of the constructed intervals would contain the true mean",
+  "95% of individual RTs lie between 312 and 348 ms",
+  "The study has 95% statistical power",
+]
+correct_idx = 1
+explanation_pl = "Frekwentystyczny przedział ufności to własność procedury, nie konkretnego przedziału. Prawdziwa średnia jest stała; ten konkretny przedział albo ją zawiera, albo nie. '95%' odnosi się do długoterminowego pokrycia procedury w wielu powtórzeniach."
+explanation_en = "The frequentist CI is a property of the procedure, not this particular interval. The true mean is fixed; this specific interval either contains it or it doesn't. '95%' refers to the long-run coverage of the procedure across many repetitions."
+
+[[questions]]
+id = "dc039"
+module_idx = 2
+q_pl = "Uczniowie z najniższymi wynikami w preteście pokazują największą poprawę w postteście — nawet w grupie kontrolnej. Co to wyjaśnia?"
+q_en = "Students who scored lowest on a pretest show the biggest improvement on a posttest — even in the control group. What explains this?"
+options_pl = [
+  "Regresja do średniej — skrajne wyniki częściowo zależą od przypadku i na ponownym pomiarze są bliżej średniej",
+  "Test był łatwiejszy za drugim razem",
+  "Uczniowie z niskimi wynikami uczyli się intensywniej z powodu niepokoju o ocenę",
+  "Pretest miał efekt sufitu",
+]
+options_en = [
+  "Regression to the mean — extreme scores are partly due to chance and tend to be closer to average on re-measurement",
+  "The test was easier the second time",
+  "Low scorers studied harder because they were anxious about their score",
+  "The pretest had a ceiling effect",
+]
+correct_idx = 0
+explanation_pl = "Skrajne wyniki zawierają komponent losowy. Przy ponownym pomiarze komponent ten jest mało prawdopodobny, by być równie skrajny, więc wyniki 'regresują' ku średniej grupowej. Bez grupy kontrolnej może to imitować efekt interwencji."
+explanation_en = "Extreme scores contain a random component. On re-measurement, this component is unlikely to be as extreme, so scores regress toward the group mean. Without a control group, this can masquerade as a treatment effect."
+
+[[questions]]
+id = "dc040"
+module_idx = 2
+q_pl = "Kiedy test jednostronny jest właściwy?"
+q_en = "When is a one-tailed test appropriate?"
+options_pl = [
+  "Gdy efekt może iść w obu kierunkach",
+  "Gdy liczebność próby jest mała",
+  "Gdy teoria silnie przewiduje kierunek efektu przed zbieraniem danych",
+  "Zawsze — testy jednostronne mają większą moc statystyczną",
+]
+options_en = [
+  "When the effect could go in either direction",
+  "When the sample size is small",
+  "When theory strongly predicts the direction of the effect before data collection",
+  "Always — one-tailed tests have more statistical power",
+]
+correct_idx = 2
+explanation_pl = "Test jednostronny jest ważny tylko gdy kierunek efektu jest teoretycznie uzasadniony i zobowiązano się do niego przed zbieraniem danych. Używanie go po zobaczeniu danych zawyża ryzyko fałszywie pozytywnych i jest formą p-hackingu."
+explanation_en = "A one-tailed test is valid only when the direction of the effect is theoretically motivated and committed to before data collection. Using it after seeing the data inflates false positive risk and is a form of p-hacking."
+
+[[questions]]
+id = "dc041"
+module_idx = 2
+q_pl = "Badanie z N = 50 000 uczestnikami wykazuje p = 0,00001 dla nowej interwencji czytelniczej. Jakie dodatkowe informacje są kluczowe?"
+q_en = "A study with N = 50,000 participants finds p = 0.00001 for a reading intervention. What additional information is crucial?"
+options_pl = [
+  "Dokładna wartość p z większą liczbą miejsc po przecinku",
+  "Czy efekt był replikowany w innym laboratorium",
+  "Przedział ufności dla wartości p",
+  "Wielkość efektu — bo bardzo duże N sprawia, że nawet małe efekty są statystycznie istotne",
+]
+options_en = [
+  "The exact p-value to more decimal places",
+  "Whether the effect was replicated in a different lab",
+  "The confidence interval for the p-value",
+  "The effect size — because very large N makes even tiny effects statistically significant",
+]
+correct_idx = 3
+explanation_pl = "Istotność statystyczna zależy od N. Przy N = 50 000 interwencja poprawiająca czytanie o 0,3 słowa na minutę może osiągnąć p < 0,00001. Czy 0,3 słowa/min ma znaczenie w klasie to pytanie praktyczne — właśnie to adresuje wielkość efektu."
+explanation_en = "Statistical significance depends on N. With N = 50,000, an improvement of 0.3 words per minute could easily reach p < 0.00001. Whether 0.3 words/min matters in the classroom is the practical question — that is what effect size addresses."
