@@ -434,3 +434,897 @@ options_en = [
 correct_idx = 1
 explanation_pl = "Algorytm rekomendacji optymalizuje zaangażowanie — jeśli kontrowersyjne treści generują więcej kliknięć, algorytm się tego 'uczy'. Bańki filtrujące nie są błędem implementacyjnym, lecz efektem optymalizacji."
 explanation_en = "A recommendation algorithm optimises engagement — if controversial content generates more clicks, the algorithm 'learns' this. Filter bubbles are not implementation bugs but optimisation outcomes."
+
+# ── Act 1 continued: Data Basics ──────────────────────────────────────────────
+
+[[questions]]
+id = "dc021"
+module_idx = 0
+q_pl = "Aplikacja webowa loguje każde kliknięcie użytkownika jako zdarzenie. W porównaniu do wiersza w ankiecie, ile zdarzeń może wygenerować jeden aktywny użytkownik dziennie?"
+q_en = "A web app logs every user click as an event. Compared to a row per user in a survey, how many events might one active user generate per day?"
+options_pl = [
+  "Tyle samo — jedno zdarzenie to jedna odpowiedź ankietowa",
+  "Dziesięć razy więcej — kliknięcia zdarzają się raz na minutę",
+  "Tysiące razy więcej — zachowanie jest ciągłe",
+  "Mniej — zdarzenia są automatycznie kompresowane",
+]
+options_en = [
+  "About the same — one event equals one survey answer",
+  "Ten times more — clicks happen once per minute",
+  "Thousands of times more — behaviour is continuous",
+  "Fewer — events are compressed automatically",
+]
+correct_idx = 2
+explanation_pl = "Aktywny użytkownik może wygenerować tysiące zdarzeń (kliknięcia, przewijanie, najechanie kursorem) dziennie, podczas gdy ankieta zbiera tylko jeden ustrukturyzowany wiersz. Logi skalują się z częstotliwością zachowania, nie z liczbą użytkowników."
+explanation_en = "An active user can generate thousands of click, scroll, and hover events per day, while a survey captures only one structured row. Event logs scale with behaviour frequency, not headcount."
+
+[[questions]]
+id = "dc022"
+module_idx = 0
+q_pl = "Ankieta w aplikacji mobilnej podaje 91% zadowolonych użytkowników. Co jest najbardziej prawdopodobnym źródłem błędu próby?"
+q_en = "A mobile app survey reports 91% user satisfaction. Which is the most likely source of sampling bias?"
+options_pl = [
+  "Ankieta używa pytań sugerujących odpowiedź",
+  "Niezadowoleni użytkownicy przestali używać aplikacji i nie widzieli ankiety",
+  "Próba jest zbyt mała, żeby być miarodajna",
+  "Satysfakcja jest mierzona na skali porządkowej",
+]
+options_en = [
+  "The survey uses a leading question format",
+  "Dissatisfied users stopped using the app and never saw the survey",
+  "The sample size is too small to be reliable",
+  "Satisfaction is measured on an ordinal scale",
+]
+correct_idx = 1
+explanation_pl = "Błąd samoselekcji: niezadowoleni użytkownicy porzucają aplikację zanim zobaczą ankietę. Respondenci są nieproporcjonalnie zadowoleni. To forma błędu przeżywalności (survivorship bias)."
+explanation_en = "Self-selection bias: unhappy users tend to abandon the app before encountering the survey. The remaining respondents are disproportionately satisfied — a form of survivorship bias."
+
+[[questions]]
+id = "dc023"
+module_idx = 0
+q_pl = "Które twierdzenie najlepiej wyjaśnia, dlaczego surowych danych nie należy nigdy nadpisywać?"
+q_en = "Which statement best explains why raw data should never be overwritten?"
+options_pl = [
+  "Surowe pliki są z konwencji tylko do odczytu w większości baz danych",
+  "Nadpisywanie surowych danych narusza przepisy RODO",
+  "W praktyce nie ma technicznej możliwości nadpisania surowych danych",
+  "Jeśli błąd preprocesowania zostanie wykryty później, surowe dane to jedyny sposób na odtworzenie czystych wyników od podstaw",
+]
+options_en = [
+  "Raw files are read-only by convention in most databases",
+  "Overwriting raw data violates GDPR regulations",
+  "It is technically impossible to overwrite raw data in practice",
+  "If a preprocessing error is found later, the raw data is the only way to reproduce clean output from scratch",
+]
+correct_idx = 3
+explanation_pl = "Odtwarzalność to główny powód. Jeśli po zgubieniu surowego pliku wykryjemy błąd w skrypcie czyszczącym, nie możemy poprawnie zregenerować czystego zbioru. Surowe dane to jedyne źródło prawdy."
+explanation_en = "Reproducibility is the core reason. If a bug is found in a cleaning script after the raw file is gone, the clean dataset cannot be regenerated correctly. Raw data is the single source of truth."
+
+[[questions]]
+id = "dc024"
+module_idx = 0
+q_pl = "Które podejście stosuje schemat danych dopiero przy odczycie, a nie podczas przechowywania?"
+q_en = "Which approach applies a schema only when data is read, not when it is stored?"
+options_pl = [
+  "Schema-on-read",
+  "Schema-on-write",
+  "Schema-on-query",
+  "Lazy schema",
+]
+options_en = [
+  "Schema-on-read",
+  "Schema-on-write",
+  "Schema-on-query",
+  "Lazy schema",
+]
+correct_idx = 0
+explanation_pl = "Schema-on-read (stosowane w data lake, Hadoop, Parquet) przechowuje surowe bajty i wymusza strukturę dopiero przy zapytaniu. Schema-on-write (relacyjne bazy) waliduje dane w momencie zapisu — szybsze zapytania, mniejsza elastyczność."
+explanation_en = "Schema-on-read (data lakes, Hadoop, Parquet) stores raw bytes and enforces structure at query time. Schema-on-write (relational databases) validates data on ingestion — faster queries, less flexibility."
+
+[[questions]]
+id = "dc025"
+module_idx = 0
+q_pl = "Usuwasz wszystkie czasy reakcji powyżej 2000 ms jako 'wartości odstające'. Jakie jest główne ryzyko?"
+q_en = "You remove all reaction time values above 2000 ms as outliers. What is the key risk?"
+options_pl = [
+  "Pozostały rozkład nie będzie już normalny",
+  "Usuwanie obserwacji odstających zawsze wprowadza błąd selekcji",
+  "Wolne odpowiedzi mogą być teoretycznie znaczące i ich usunięcie odrzuca prawdziwy sygnał",
+  "Testy statystyczne wymagają wartości odstających do poprawnego obliczenia wariancji",
+]
+options_en = [
+  "The remaining distribution will no longer be normal",
+  "Removing outliers always introduces selection bias",
+  "Slow responses may be theoretically meaningful and removing them discards real signal",
+  "Statistical tests require outliers to calculate variance correctly",
+]
+correct_idx = 2
+explanation_pl = "Bardzo wolne RT mogą odzwierciedlać prawdziwe zdarzenia poznawcze: lapsusy uwagi, rozproszenie lub trudne próby. Usunięcie ich może wypaczyć estymaty średniego RT i ukryć ważne efekty. Próg musi być teoretycznie uzasadniony."
+explanation_en = "Very slow RTs may reflect genuine cognitive events: attentional lapses, task disengagement, or difficult trials. Removing them can bias mean RT estimates and hide important effects. The cutoff must be theoretically justified."
+
+[[questions]]
+id = "dc026"
+module_idx = 0
+q_pl = "Kiedy przejście z CSV na format Parquet ma największe znaczenie praktyczne?"
+q_en = "When does switching from CSV to Parquet format matter most in practice?"
+options_pl = [
+  "Gdy dane zawierają tekst z przecinkami",
+  "Gdy potrzebujemy plików czytelnych dla człowieka do ręcznej inspekcji",
+  "Gdy przechowujemy dane w chmurowym object store",
+  "Gdy odpytujemy tylko kilka kolumn z bardzo szerokiej tabeli z milionami wierszy",
+]
+options_en = [
+  "When the data contains text with commas",
+  "When you need human-readable files for manual inspection",
+  "When storing data in a cloud object store",
+  "When querying only a few columns from a very wide table with millions of rows",
+]
+correct_idx = 3
+explanation_pl = "Parquet jest kolumnowy: odczyt tylko kolumn A i B z tabeli 500-kolumnowej i 10 mln wierszy pomija wszystkie pozostałe dane. CSV czyta każdy bajt każdego wiersza. Różnica jest nieistotna dla małych plików, lecz ogromna przy dużej skali."
+explanation_en = "Parquet is columnar: reading only columns A and B from a 500-column, 10M-row table skips all other column data entirely. CSV reads every byte in every row. The difference is negligible for small files but extreme at scale."
+
+[[questions]]
+id = "dc027"
+module_idx = 0
+q_pl = "Badanie obserwacyjne wykazuje, że osoby pijące więcej kawy mają szybsze czasy reakcji. Czy możemy stwierdzić, że kawa przyspiesza reakcje?"
+q_en = "An observational study finds that people who drink more coffee have faster reaction times. Can we conclude that coffee causes faster reactions?"
+options_pl = [
+  "Tak — silna korelacja implikuje przyczynowość",
+  "Nie — dane obserwacyjne nie mogą ustalić przyczynowości ze względu na zmienne zakłócające",
+  "Tak — jeśli efekt jest istotny statystycznie przy p < 0,01",
+  "Nie — czasu reakcji nie można dokładnie zmierzyć w badaniach obserwacyjnych",
+]
+options_en = [
+  "Yes — a strong correlation implies causation",
+  "No — observational data cannot establish causation due to confounders",
+  "Yes — if the effect is statistically significant at p < 0.01",
+  "No — reaction time cannot be accurately measured in observational studies",
+]
+correct_idx = 1
+explanation_pl = "Dane obserwacyjne pokazują korelację, nie przyczynowość. Zmienna zakłócająca (np. jakość snu) może napędzać zarówno spożycie kawy, jak i szybkość reakcji. Tylko randomizowany eksperyment kontrolowany może ustalić kierunek przyczynowy."
+explanation_en = "Observational data shows correlation, not causation. A confounder (e.g., sleep quality) might drive both coffee consumption and reaction speed. Only a randomised controlled experiment can establish causal direction."
+
+# ── Act 2 continued: Cognitive Experiments ────────────────────────────────────
+
+[[questions]]
+id = "dc028"
+module_idx = 1
+q_pl = "Średni czas reakcji uczestnika spada z 350 ms do 290 ms przez 200 prób. Co to najbardziej prawdopodobnie wyjaśnia?"
+q_en = "A participant's mean reaction time drops from 350 ms to 290 ms across 200 trials. What most likely explains this?"
+options_pl = [
+  "Efekt treningu — wielokrotne wykonywanie zadania poprawia wyniki niezależnie od zmiennej eksperymentalnej",
+  "Zmęczenie — zmęczeni uczestnicy reagują szybciej, żeby skończyć zadanie",
+  "Efekt sufitu — wyniki nie mogą dalej się poprawiać",
+  "Regresja do średniej — skrajne wyniki wracają do przeciętnych",
+]
+options_en = [
+  "Practice effect — repeated task exposure improves performance independent of the experimental variable",
+  "Fatigue — tired participants respond faster to finish the task",
+  "Ceiling effect — performance cannot improve further",
+  "Regression to the mean — extreme scores return to average",
+]
+correct_idx = 0
+explanation_pl = "Efekty treningu pojawiają się, bo uczestnicy uczą się mechaniki zadania, antycypują bodźce i rozwijają rutyny motoryczne. Jeśli nie są kontrolowane (np. przez kontrbalansowanie lub odrzucanie prób rozgrzewkowych), efekt treningu zakłóca zmienną eksperymentalną."
+explanation_en = "Practice effects occur because participants learn the task mechanics, anticipate stimuli, and develop motor routines. If uncontrolled (e.g., by counterbalancing or discarding warm-up trials), practice effect confounds the experimental variable."
+
+[[questions]]
+id = "dc029"
+module_idx = 1
+q_pl = "W zadaniu Flankera, dlaczego próby kongruentne (>>>>>) są zazwyczaj szybsze niż niekongruentne (<<><<)?"
+q_en = "In the flanker task, why are congruent trials (>>>>>) typically faster than incongruent trials (<<><<)?"
+options_pl = [
+  "Bodźce kongruentne są fizycznie jaśniejsze i łatwiejsze do percepcji",
+  "Uczestnicy zgadują w próbach niekongruentnych, dodając zmienność",
+  "Flankery aktywują konkurujące kody odpowiedzi, spowalniając wybór reakcji w próbach niekongruentnych",
+  "Próby kongruentne pojawiają się częściej, co tworzy przewagę częstości",
+]
+options_en = [
+  "Congruent stimuli are physically brighter and easier to perceive",
+  "Participants guess on incongruent trials, adding variability",
+  "Flankers activate competing response codes, slowing response selection on incongruent trials",
+  "Congruent trials appear more frequently, creating a frequency advantage",
+]
+correct_idx = 2
+explanation_pl = "Efekt flankera odzwierciedla rywalizację odpowiedzi: flankujące strzałki automatycznie aktywują własne tendencje reakcyjne. W próbach niekongruentnych system musi zahamować odpowiedź wywoływaną przez flankery przed wykonaniem właściwej — stąd 20–80 ms opóźnienia."
+explanation_en = "The flanker effect reflects response competition: flanking arrows automatically activate their own response tendencies. On incongruent trials, the system must suppress the flanker-driven response before executing the correct one — adding 20–80 ms."
+
+[[questions]]
+id = "dc030"
+module_idx = 1
+q_pl = "W teorii detekcji sygnału (SDT) co oznacza 'trafienie' (hit)?"
+q_en = "In Signal Detection Theory (SDT), what is a 'hit'?"
+options_pl = [
+  "Poprawne odrzucenie próby bez sygnału",
+  "Odpowiedź gdy sygnał jest nieobecny",
+  "Brak odpowiedzi gdy sygnał jest obecny",
+  "Poprawne wykrycie sygnału gdy jest obecny",
+]
+options_en = [
+  "Correctly rejecting a trial with no signal present",
+  "Responding when no signal is present",
+  "Failing to respond when a signal is present",
+  "Correctly detecting a signal when it is present",
+]
+correct_idx = 3
+explanation_pl = "SDT ma cztery wyniki: trafienie (sygnał obecny + odpowiedź), chybienie (sygnał obecny + brak odpowiedzi), fałszywy alarm (brak sygnału + odpowiedź), poprawne odrzucenie (brak sygnału + brak odpowiedzi). Miara d' oddziela czułość od nastawienia."
+explanation_en = "SDT has four outcomes: hit (signal present, responded), miss (signal present, no response), false alarm (no signal, responded), correct rejection (no signal, no response). d' separates sensitivity from response bias."
+
+[[questions]]
+id = "dc031"
+module_idx = 1
+q_pl = "Dlaczego znalezienie czerwonego koła wśród niebieskich kół (wyszukiwanie cechowe) jest szybsze niż wśród niebieskich kół I czerwonych kwadratów (wyszukiwanie koniunkcyjne)?"
+q_en = "Why is finding a red circle among blue circles (feature search) faster than among blue circles AND red squares (conjunction search)?"
+options_pl = [
+  "Wyszukiwanie cechowe wymaga więcej ruchów gałek ocznych",
+  "Wyszukiwanie cechowe jest równoległe (pop-out); koniunkcyjne wymaga szeregowej uwagi na każdy element",
+  "Kolor jest przetwarzany szybciej niż kształt w mózgu",
+  "Wyszukiwanie koniunkcyjne wymaga więcej pojemności pamięci roboczej",
+]
+options_en = [
+  "Feature search uses more eye movements than conjunction search",
+  "Feature search is parallel (pop-out); conjunction search requires serial attention to each item",
+  "Colour is processed faster than shape in the brain",
+  "Conjunction search requires more working memory capacity",
+]
+correct_idx = 1
+explanation_pl = "Unikalna cecha (sam kolor lub kształt) wyskakuje pre-atencyjnie, a czas wyszukiwania jest niezależny od liczby dystraktorów. Cele koniunkcyjne (zdefiniowane przez dwie cechy) wymagają skupionej uwagi na każdym elemencie kolejno, więc RT rośnie liniowo z liczbą dystraktorów."
+explanation_en = "A unique feature (colour or shape alone) pops out pre-attentively and search time is independent of set size. Conjunction targets (defined by two features) require focused serial attention, so RT grows linearly with the number of distractors."
+
+[[questions]]
+id = "dc032"
+module_idx = 1
+q_pl = "Uczestnik wykonuje zadanie śledzenia i jednocześnie zapamiętuje 7-cyfrową liczbę. Śledzenie jest gorsze niż solo. Co to demonstruje?"
+q_en = "A participant tracks a target while simultaneously memorising a 7-digit number. Tracking performance is worse than tracking alone. What does this demonstrate?"
+options_pl = [
+  "Obciążenie poznawcze — dwa zadania rywalizują o ograniczone zasoby pamięci roboczej",
+  "Interferencja — cyfry maskują wzrokowe bodźce śledzenia",
+  "Zmęczenie — robienie dwóch zadań naraz jest fizycznie wyczerpujące",
+  "Interferencja proaktywna — stare wspomnienia blokują nowe",
+]
+options_en = [
+  "Cognitive load — two tasks compete for limited working memory resources",
+  "Interference — the digits mask the visual tracking stimuli",
+  "Fatigue — doing two tasks simultaneously is physically tiring",
+  "Proactive interference — old memories block new ones",
+]
+correct_idx = 0
+explanation_pl = "Obciążenie poznawcze: oba zadania rywalizują o ograniczone zasoby pamięci roboczej. Koszt podwójnego zadania (różnica w wydajności) mierzy zaangażowane zasoby uwagowe w zadaniu pierwotnym. To podstawa paradygmatu dual-task."
+explanation_en = "Cognitive load: both tasks compete for limited working memory resources. The dual-task cost (performance difference) measures attentional resources consumed by the primary task — the foundation of dual-task methodology."
+
+[[questions]]
+id = "dc033"
+module_idx = 1
+q_pl = "Grupa A ma średnie RT 280 ms; grupa B ma 320 ms. Dlaczego to porównanie może być mylące bez spojrzenia na rozkłady?"
+q_en = "Group A has a mean RT of 280 ms; group B has 320 ms. Why is this comparison potentially misleading without examining distributions?"
+options_pl = [
+  "Średnie są zawsze mylące — używać należy tylko median",
+  "Grupy mogą mieć różne liczebności prób",
+  "Obie grupy mogą mieć duże nakładające się rozkłady, przez co jednostki są nie do odróżnienia",
+  "Dane RT są zawsze skośne i nie można obliczać z nich średnich",
+]
+options_en = [
+  "Means are always misleading — only medians should be used",
+  "The groups may have different sample sizes",
+  "Both groups may have large overlapping distributions, making individuals indistinguishable",
+  "RT data is always skewed and means cannot be computed",
+]
+correct_idx = 2
+explanation_pl = "Średnie grup ukrywają wariancję. Jeśli obie grupy mają SD ≈ 80 ms, rozkłady znacznie się nakładają i większość uczestników grupy B jest szybsza niż wielu uczestników grupy A. Zawsze raportuj miary rozproszenia i wielkość efektu (d Cohena)."
+explanation_en = "Group means hide variance. If both groups have SD ≈ 80 ms, distributions overlap substantially — most group B participants are faster than many group A participants. Always report dispersion measures and effect size (Cohen's d)."
+
+[[questions]]
+id = "dc034"
+module_idx = 1
+q_pl = "Uczestnicy badania uwagi zachowują się inaczej, gdy wiedzą że są obserwowani przez badacza. Opisuje to najlepiej:"
+q_en = "Participants in an attention study behave differently when they know they are being observed by the researcher. This is best described as:"
+options_pl = [
+  "Efekt placebo — oczekiwania zmieniają wyniki",
+  "Ułatwienie społeczne — obecność innych poprawia wyniki",
+  "Efekt obserwatora — narzędzia pomiarowe zmieniają to, co mierzą",
+  "Cechy zapotrzebowania (demand characteristics) — uczestnicy odczytują wskazówki dotyczące hipotezy i dostosowują zachowanie",
+]
+options_en = [
+  "Placebo effect — expectations alter performance",
+  "Social facilitation — presence of others improves performance",
+  "Observer effect — measurement instruments alter what is measured",
+  "Demand characteristics — participants pick up cues about the study's hypothesis and adjust behaviour",
+]
+correct_idx = 3
+explanation_pl = "Cechy zapotrzebowania (Orne, 1962): uczestnicy wnioskują, jaką odpowiedź chce badacz i dostosowują zachowanie. Zagraża to trafności wewnętrznej i jest powodem istnienia badań z zaślepieniem."
+explanation_en = "Demand characteristics (Orne, 1962): participants infer what response the researcher wants and comply or contrast accordingly. This threatens internal validity and is why blinding exists in experimental design."
+
+# ── Act 3 continued: Statistics ───────────────────────────────────────────────
+
+[[questions]]
+id = "dc035"
+module_idx = 2
+q_pl = "Centralne Twierdzenie Graniczne (CTG) mówi, że rozkład próbkowy średniej staje się normalny niezależnie od rozkładu populacji. Kiedy to zazwyczaj obowiązuje?"
+q_en = "The Central Limit Theorem states that the sampling distribution of the mean approaches normal regardless of the population distribution. When does this typically apply?"
+options_pl = [
+  "Gdy liczebność próby n jest wystarczająco duża (często n >= 30)",
+  "Tylko gdy populacja jest już normalnie rozłożona",
+  "Tylko dla zmiennych ciągłych",
+  "Gdy wariancja jest mniejsza niż średnia",
+]
+options_en = [
+  "When sample size n is sufficiently large (often n >= 30)",
+  "Only when the population is already normally distributed",
+  "Only for continuous variables",
+  "When the variance is smaller than the mean",
+]
+correct_idx = 0
+explanation_pl = "CTG działa dla dużego n (reguła kciuka: >= 30, lecz zależy od skośności). To dlatego wiele testów parametrycznych jest odporne nawet gdy surowe dane są nienormalne — opierają się na rozkładzie próbkowym średnich, nie indywidualnych wyników."
+explanation_en = "CLT kicks in for large n (rule of thumb >= 30, but depends on skewness). This is why many parametric tests are robust even when raw data is non-normal — they rely on the sampling distribution of means, not of individual scores."
+
+[[questions]]
+id = "dc036"
+module_idx = 2
+q_pl = "Badanie wykazuje p = 0,001 dla różnicy w czasie reakcji między grupami. Dlaczego to odkrycie może być mimo to praktycznie nieistotne?"
+q_en = "A study finds p = 0.001 for a reaction time difference between groups. Why might this finding still be practically unimportant?"
+options_pl = [
+  "Ponieważ p < 0,05 to jedyny ważny próg istotności",
+  "Ponieważ efekt mógł być mierzony słabym narzędziem",
+  "Ponieważ duża próba zawyża istotność — wielkość efektu (d Cohena) może być znikoma",
+  "Ponieważ dane RT są z natury zaszumione i wartości p są zawodne",
+]
+options_en = [
+  "Because p < 0.05 is the only valid significance threshold",
+  "Because the effect may have been measured with a poor instrument",
+  "Because a large sample inflates significance — the effect size (Cohen's d) might be negligible",
+  "Because RT data is inherently noisy and p-values are unreliable",
+]
+correct_idx = 2
+explanation_pl = "Przy N = 10 000 nawet 2 ms różnicy RT może osiągnąć p < 0,001, podczas gdy d Cohena ≈ 0,02 (efekt pomijalny). Wartość p zależy zarówno od wielkości efektu, jak i liczebności próby. Zawsze raportuj d."
+explanation_en = "With N = 10,000, even a 2 ms RT difference can reach p < 0.001 while Cohen's d ≈ 0.02 (negligible effect). p-value depends on both effect size AND sample size. Always report d."
+
+[[questions]]
+id = "dc037"
+module_idx = 2
+q_pl = "Badacz testuje 20 hipotez przy α = 0,05. Ile fałszywie pozytywnych wyników oczekuje się przez przypadek?"
+q_en = "A researcher tests 20 hypotheses at alpha = 0.05. How many false positives are expected by chance alone?"
+options_pl = [
+  "Żadnych — α = 0,05 kontroluje wskaźnik błędów dla całej rodziny testów",
+  "Co najwyżej jeden — korekcja Bonferroniego to zapewnia",
+  "Dokładnie 0,05",
+  "Około 1 — bo 20 × 0,05 = 1,0 oczekiwanych fałszywie pozytywnych",
+]
+options_en = [
+  "None — alpha = 0.05 controls the family-wise error rate",
+  "At most one — the Bonferroni correction ensures this",
+  "Exactly 0.05",
+  "About 1 — because 20 x 0.05 = 1.0 expected false positives",
+]
+correct_idx = 3
+explanation_pl = "Bez korekty oczekiwana liczba fałszywie pozytywnych to 20 × 0,05 = 1. Korekcja Bonferroniego dzieli α przez liczbę testów (0,05/20 = 0,0025), aby kontrolować wskaźnik błędów dla całej rodziny na poziomie 0,05."
+explanation_en = "Without correction, the expected number of false positives is 20 x 0.05 = 1. The Bonferroni correction divides alpha by the number of tests (0.05/20 = 0.0025) to control family-wise error rate at 0.05."
+
+[[questions]]
+id = "dc038"
+module_idx = 2
+q_pl = "Przedział ufności 95% dla średniego RT wynosi [312 ms, 348 ms]. Co oznacza '95% pewności'?"
+q_en = "A 95% confidence interval for mean RT is [312 ms, 348 ms]. What does '95% confidence' mean?"
+options_pl = [
+  "Istnieje 95% prawdopodobieństwo, że prawdziwa średnia leży między 312 a 348 ms",
+  "Gdybyśmy powtórzyli eksperyment wiele razy, 95% skonstruowanych przedziałów zawierałoby prawdziwą średnią",
+  "95% indywidualnych RT leży między 312 a 348 ms",
+  "Badanie ma 95% moc statystyczną",
+]
+options_en = [
+  "There is a 95% probability the true mean lies between 312 and 348 ms",
+  "If we repeated this experiment many times, 95% of the constructed intervals would contain the true mean",
+  "95% of individual RTs lie between 312 and 348 ms",
+  "The study has 95% statistical power",
+]
+correct_idx = 1
+explanation_pl = "Frekwentystyczny przedział ufności to własność procedury, nie konkretnego przedziału. Prawdziwa średnia jest stała; ten konkretny przedział albo ją zawiera, albo nie. '95%' odnosi się do długoterminowego pokrycia procedury w wielu powtórzeniach."
+explanation_en = "The frequentist CI is a property of the procedure, not this particular interval. The true mean is fixed; this specific interval either contains it or it doesn't. '95%' refers to the long-run coverage of the procedure across many repetitions."
+
+[[questions]]
+id = "dc039"
+module_idx = 2
+q_pl = "Uczniowie z najniższymi wynikami w preteście pokazują największą poprawę w postteście — nawet w grupie kontrolnej. Co to wyjaśnia?"
+q_en = "Students who scored lowest on a pretest show the biggest improvement on a posttest — even in the control group. What explains this?"
+options_pl = [
+  "Regresja do średniej — skrajne wyniki częściowo zależą od przypadku i na ponownym pomiarze są bliżej średniej",
+  "Test był łatwiejszy za drugim razem",
+  "Uczniowie z niskimi wynikami uczyli się intensywniej z powodu niepokoju o ocenę",
+  "Pretest miał efekt sufitu",
+]
+options_en = [
+  "Regression to the mean — extreme scores are partly due to chance and tend to be closer to average on re-measurement",
+  "The test was easier the second time",
+  "Low scorers studied harder because they were anxious about their score",
+  "The pretest had a ceiling effect",
+]
+correct_idx = 0
+explanation_pl = "Skrajne wyniki zawierają komponent losowy. Przy ponownym pomiarze komponent ten jest mało prawdopodobny, by być równie skrajny, więc wyniki 'regresują' ku średniej grupowej. Bez grupy kontrolnej może to imitować efekt interwencji."
+explanation_en = "Extreme scores contain a random component. On re-measurement, this component is unlikely to be as extreme, so scores regress toward the group mean. Without a control group, this can masquerade as a treatment effect."
+
+[[questions]]
+id = "dc040"
+module_idx = 2
+q_pl = "Kiedy test jednostronny jest właściwy?"
+q_en = "When is a one-tailed test appropriate?"
+options_pl = [
+  "Gdy efekt może iść w obu kierunkach",
+  "Gdy liczebność próby jest mała",
+  "Gdy teoria silnie przewiduje kierunek efektu przed zbieraniem danych",
+  "Zawsze — testy jednostronne mają większą moc statystyczną",
+]
+options_en = [
+  "When the effect could go in either direction",
+  "When the sample size is small",
+  "When theory strongly predicts the direction of the effect before data collection",
+  "Always — one-tailed tests have more statistical power",
+]
+correct_idx = 2
+explanation_pl = "Test jednostronny jest ważny tylko gdy kierunek efektu jest teoretycznie uzasadniony i zobowiązano się do niego przed zbieraniem danych. Używanie go po zobaczeniu danych zawyża ryzyko fałszywie pozytywnych i jest formą p-hackingu."
+explanation_en = "A one-tailed test is valid only when the direction of the effect is theoretically motivated and committed to before data collection. Using it after seeing the data inflates false positive risk and is a form of p-hacking."
+
+[[questions]]
+id = "dc041"
+module_idx = 2
+q_pl = "Badanie z N = 50 000 uczestnikami wykazuje p = 0,00001 dla nowej interwencji czytelniczej. Jakie dodatkowe informacje są kluczowe?"
+q_en = "A study with N = 50,000 participants finds p = 0.00001 for a reading intervention. What additional information is crucial?"
+options_pl = [
+  "Dokładna wartość p z większą liczbą miejsc po przecinku",
+  "Czy efekt był replikowany w innym laboratorium",
+  "Przedział ufności dla wartości p",
+  "Wielkość efektu — bo bardzo duże N sprawia, że nawet małe efekty są statystycznie istotne",
+]
+options_en = [
+  "The exact p-value to more decimal places",
+  "Whether the effect was replicated in a different lab",
+  "The confidence interval for the p-value",
+  "The effect size — because very large N makes even tiny effects statistically significant",
+]
+correct_idx = 3
+explanation_pl = "Istotność statystyczna zależy od N. Przy N = 50 000 interwencja poprawiająca czytanie o 0,3 słowa na minutę może osiągnąć p < 0,00001. Czy 0,3 słowa/min ma znaczenie w klasie to pytanie praktyczne — właśnie to adresuje wielkość efektu."
+explanation_en = "Statistical significance depends on N. With N = 50,000, an improvement of 0.3 words per minute could easily reach p < 0.00001. Whether 0.3 words/min matters in the classroom is the practical question — that is what effect size addresses."
+
+# ── Act 4 continued: Machine Learning ─────────────────────────────────────────
+
+[[questions]]
+id = "dc042"
+module_idx = 3
+q_pl = "Dlaczego potrzebujemy trzech osobnych zbiorów (train, validation, test) zamiast dwóch (train, test)?"
+q_en = "Why do we need three separate splits (train, validation, test) instead of two (train, test)?"
+options_pl = [
+  "Dostrajanie hiperparametrów na zbiorze testowym sprawia, że nie jest on już niezależną oceną — zbiór walidacyjny pochłania te decyzje, zachowując zbiór testowy naprawdę ukryty",
+  "Trzy podziały dają więcej danych treningowych niż dwa",
+  "Walidacja jest potrzebna tylko dla głębokiego uczenia, nie prostszych modeli",
+  "Zbiór testowy jest za mały zarówno na ocenę, jak i dostrajanie hiperparametrów",
+]
+options_en = [
+  "Hyperparameter tuning on the test set makes it no longer independent — the validation set absorbs those decisions, keeping the test set truly held-out",
+  "Three splits provide more training data than two",
+  "Validation is only needed for deep learning, not simpler models",
+  "The test set is too small for both evaluation and hyperparameter tuning",
+]
+correct_idx = 0
+explanation_pl = "Za każdym razem gdy sprawdzamy wydajność testową i dostosowujemy model, zbiór testowy pośrednio wpływa na selekcję modelu. Zbiór walidacyjny pochłania te decyzje. Zbiór testowy jest używany tylko raz — na samym końcu — do bezstronnej estymaty błędu uogólnienia."
+explanation_en = "Every time you inspect test performance and adjust the model, the test set leaks into model selection. The validation set absorbs those decisions. The test set is used only once — at the very end — for an unbiased generalisation error estimate."
+
+[[questions]]
+id = "dc043"
+module_idx = 3
+q_pl = "Dla którego algorytmu normalizacja cech jest najbardziej krytyczna?"
+q_en = "For which algorithm is feature scaling most critical?"
+options_pl = [
+  "Drzewo decyzyjne",
+  "Las losowy",
+  "Maszyna wektorów nośnych (SVM)",
+  "Gradient Boosting (XGBoost)",
+]
+options_en = [
+  "Decision tree",
+  "Random forest",
+  "Support Vector Machine (SVM)",
+  "Gradient Boosted Trees (XGBoost)",
+]
+correct_idx = 2
+explanation_pl = "SVM i k-NN zależą od odległości lub iloczynu skalarnego. Cecha o zakresie [0, 10 000] dominuje tę o zakresie [0, 1] i zniekształca obliczenia. Modele drzewiaste dzielą na progach i są niezmiennicze na monotoniczną transformację cech — skalowanie im nie pomaga."
+explanation_en = "SVMs and k-NN depend on distances or dot products. A feature with range [0, 10000] dominates one with range [0, 1]. Tree-based models split on thresholds and are invariant to monotonic feature transformations — scaling does not help them."
+
+[[questions]]
+id = "dc044"
+module_idx = 3
+q_pl = "Model wykrywania oszustw osiąga 99% dokładności na zbiorze, gdzie 1% transakcji to oszustwa. Dlaczego jest to mylące?"
+q_en = "A fraud detection model achieves 99% accuracy on a dataset where 1% of transactions are fraudulent. Why is this misleading?"
+options_pl = [
+  "Dokładność nie jest ważną metryką dla klasyfikacji",
+  "Model przewidujący 'brak oszustwa' za każdym razem też osiągnie 99% — niczego się nie nauczył",
+  "Zbiór danych jest zbyt duży, żeby dokładność była wiarygodna",
+  "Wykrywanie oszustw powinno używać regresji, nie klasyfikacji",
+]
+options_en = [
+  "Accuracy is not a valid metric for classification",
+  "A model predicting 'not fraud' every time also achieves 99% — it has learned nothing",
+  "The dataset is too large for accuracy to be reliable",
+  "Fraud detection should use regression, not classification",
+]
+correct_idx = 1
+explanation_pl = "Gdy klasy są niezbalansowane, klasa większościowa dominuje dokładność. Trywialny klasyfikator zawsze przewidujący brak oszustwa osiągnie 99%. Dla niezbalansowanych zbiorów używaj precyzji, czułości (recall), F1 lub AUC-ROC."
+explanation_en = "When classes are imbalanced, the majority class dominates accuracy. A trivial classifier always predicting the majority class scores 99%. For imbalanced datasets use precision, recall, F1-score, or AUC-ROC."
+
+[[questions]]
+id = "dc045"
+module_idx = 3
+q_pl = "Jaka jest główna zaleta k-krotnej walidacji krzyżowej nad pojedynczym podziałem train/test?"
+q_en = "What is the main advantage of k-fold cross-validation over a single train/test split?"
+options_pl = [
+  "Zawsze daje wyższy szacunek dokładności",
+  "Usuwa potrzebę posiadania zbioru testowego",
+  "Trenuje k modeli jednocześnie, skracając czas obliczeń",
+  "Używa wszystkich danych zarówno do trenowania, jak i walidacji, dając szacunek błędu uogólnienia z mniejszą wariancją",
+]
+options_en = [
+  "It always gives a higher accuracy estimate",
+  "It removes the need for a test set",
+  "It trains k models simultaneously, reducing computation time",
+  "It uses all data for both training and validation, giving a lower-variance estimate of generalisation error",
+]
+correct_idx = 3
+explanation_pl = "W k-krotnej CV każdy punkt danych jest raz w zbiorze walidacyjnym. Uśrednienie k szacunków zmniejsza wariancję w porównaniu do pojedynczego podziału. Zbiór testowy nadal istnieje osobno do końcowej oceny."
+explanation_en = "In k-fold CV each data point is in the validation fold exactly once. Averaging k estimates reduces variance compared to a single split. The test set still exists separately for final evaluation."
+
+[[questions]]
+id = "dc046"
+module_idx = 3
+q_pl = "Który z poniższych jest hiperparametrem (ustawionym przez ciebie przed treningiem), a nie parametrem modelu (nauczonym z danych)?"
+q_en = "Which of the following is a hyperparameter (set before training), not a model parameter (learned from data)?"
+options_pl = [
+  "Współczynnik uczenia w gradientowym opadaniu",
+  "Wagi sieci neuronowej",
+  "Wyraz wolny regresji liniowej",
+  "Ważności cech lasu losowego",
+]
+options_en = [
+  "The learning rate in gradient descent",
+  "The weights of a neural network",
+  "The intercept of a linear regression",
+  "The feature importances of a random forest",
+]
+correct_idx = 0
+explanation_pl = "Hiperparametry (współczynnik uczenia, głębokość drzewa, siła regularyzacji) to wybory konfiguracyjne dokonane przed treningiem. Parametry (wagi, współczynniki) są optymalizowane przez algorytm uczący na danych treningowych."
+explanation_en = "Hyperparameters (learning rate, tree depth, regularisation strength) are configuration choices made before training. Parameters (weights, coefficients) are optimised by the learning algorithm on training data."
+
+[[questions]]
+id = "dc047"
+module_idx = 3
+q_pl = "W teście przesiewowym na raka, którą metrykę najważniej jest maksymalizować?"
+q_en = "In a cancer screening test, which metric is most important to maximise?"
+options_pl = [
+  "Precyzja — chcemy unikać niepotrzebnego leczenia",
+  "Dokładność — chcemy mieć rację jak najczęściej",
+  "Czułość (recall) — chcemy wykryć każdy prawdziwy przypadek raka, nawet kosztem fałszywych alarmów",
+  "Swoistość — chcemy poprawnie identyfikować zdrowych pacjentów",
+]
+options_en = [
+  "Precision — we want to avoid unnecessary treatment",
+  "Accuracy — we want to be right as often as possible",
+  "Recall (sensitivity) — we want to detect every true cancer case, even at the cost of false alarms",
+  "Specificity — we want to correctly identify healthy patients",
+]
+correct_idx = 2
+explanation_pl = "Pominięcie przypadku raka (fałszywie negatywny) jest groźniejsze niż niepotrzebne badania (fałszywie pozytywny). Wysoka czułość zapewnia wykrycie prawie każdego prawdziwego pozytywu. Precyzja jest ważna na etapie diagnostycznym, gdzie fałszywe alarmy stają się kosztowne."
+explanation_en = "Missing a cancer case (false negative) is more dangerous than unnecessary follow-up (false positive). High recall ensures we catch nearly every true positive. Precision matters at the diagnostic stage where false alarms become costly."
+
+[[questions]]
+id = "dc048"
+module_idx = 3
+q_pl = "Standaryzujesz wszystkie cechy przed podziałem danych na zbiór treningowy i testowy. Jaki problem to powoduje?"
+q_en = "You standardise all features before splitting data into train and test sets. What problem does this cause?"
+options_pl = [
+  "Standaryzacja jest ważna tylko dla modeli liniowych",
+  "Statystyki zbioru testowego (średnia, std) wpłynęły na skalowanie — model pośrednio zobaczył dane testowe",
+  "Zbiór testowy będzie miał inne wymiary niż treningowy",
+  "Żaden — standaryzacja powinna być zawsze stosowana do całego zbioru danych",
+]
+options_en = [
+  "Standardisation is only valid for linear models",
+  "Test set statistics (mean, std) influenced the scaling — the model has indirectly seen the test data",
+  "The test set will have different dimensions than the training set",
+  "No problem — standardisation should always be applied to the full dataset",
+]
+correct_idx = 1
+explanation_pl = "Wyciek danych: średnia i odchylenie standardowe zbioru testowego wyciekają do potoku treningowego gdy skalujesz przed podziałem. Poprawna procedura: dopasuj scaler tylko na zbiorze treningowym, potem transformuj oba. Użyj Pipeline sklearn, żeby to wymusić."
+explanation_en = "Data leakage: test set mean and std leak into the training pipeline when you scale before splitting. Correct procedure: fit scaler on train only, then transform both sets. Use sklearn Pipeline to enforce this."
+
+# ── Act 5 continued: NLP ──────────────────────────────────────────────────────
+
+[[questions]]
+id = "dc049"
+module_idx = 4
+q_pl = "Dlaczego dzielenie tekstu po białych znakach nie sprawdza się jako strategia tokenizacji dla tekstu polskiego?"
+q_en = "Why does splitting text on whitespace fail as a tokenisation strategy for Polish text?"
+options_pl = [
+  "Polskie słowa są zbyt długie do efektywnego przetwarzania",
+  "Język polski używa cyrylicy, której tokenizery na białe znaki nie obsługują",
+  "Tokenizacja na białe znaki wymaga słownika wszystkich ważnych słów",
+  "Język polski jest wysoko fleksyjny — 'pies', 'psa', 'psu', 'psem' to to samo słowo w różnych formach, lecz dzielone jako osobne tokeny",
+]
+options_en = [
+  "Polish words are too long to process efficiently",
+  "Polish uses the Cyrillic alphabet which whitespace tokenisers cannot handle",
+  "Whitespace tokenisation requires a dictionary of all valid words",
+  "Polish is highly inflected — 'pies', 'psa', 'psu', 'psem' are the same word in different forms but treated as separate tokens",
+]
+correct_idx = 3
+explanation_pl = "Język polski ma bogatą morfologię fleksyjną: ten sam lemat ('pies') pojawia się w wielu formach zależnie od przypadku. Podział na białe znaki traktuje 'pies' i 'psa' jako niezwiązane tokeny, poważnie szkodząc miarom częstości wyrazów i podobieństwa semantycznego."
+explanation_en = "Polish has rich inflectional morphology: the same lemma ('pies' — dog) appears in many forms by case, gender, and number. Whitespace splitting treats 'pies' and 'psa' as unrelated tokens, severely harming term frequency and semantic similarity measures."
+
+[[questions]]
+id = "dc050"
+module_idx = 4
+q_pl = "W TF-IDF, dlaczego rzadkie słowa mają wyższą wagę IDF niż powszechne?"
+q_en = "In TF-IDF, why do rare words get a higher IDF weight than common words?"
+options_pl = [
+  "Rzadkie słowa pojawiają się w mniejszej liczbie dokumentów, więc log(N/df) jest duże — są bardziej dyskryminacyjne",
+  "Rzadkie słowa są dłuższe i niosą więcej informacji na znak",
+  "Powszechne słowa są filtrowane przez listę stop-words przed zastosowaniem IDF",
+  "Wagi IDF są proporcjonalne do częstości terminu w dokumencie",
+]
+options_en = [
+  "Rare words appear in fewer documents, so log(N/df) is large — they are more discriminative",
+  "Rare words are longer and carry more information per character",
+  "Common words are filtered by the stop-word list before IDF is applied",
+  "IDF weights are proportional to term frequency within a document",
+]
+correct_idx = 0
+explanation_pl = "IDF = log(N / df), gdzie N to liczba dokumentów, a df to liczba zawierających dany termin. 'A' pojawia się w prawie każdym dokumencie (df ≈ N → IDF ≈ 0). Termin techniczny jak 'elektroencefalografia' pojawia się rzadko (małe df → wysokie IDF). Wysokie IDF sygnalizuje, że słowo rozróżnia dokumenty."
+explanation_en = "IDF = log(N / df) where N is total documents and df is the number containing the term. 'The' appears in almost every document (df ≈ N → IDF ≈ 0). A technical term like 'electroencephalography' is rare (small df → high IDF). High IDF signals the word distinguishes documents."
+
+[[questions]]
+id = "dc051"
+module_idx = 4
+q_pl = "Dlaczego zdanie 'Nie lubię tego produktu' jest często błędnie klasyfikowane jako pozytywne przez proste klasyfikatory sentymentu?"
+q_en = "Why is 'I do not like this product' often misclassified as positive by simple sentiment classifiers?"
+options_pl = [
+  "Słowo 'produkt' ma pozytywny wynik sentymentu",
+  "Proste klasyfikatory liczą znaki, nie słowa",
+  "Modele bag-of-words traktują 'lubię' jako pozytywne nie rozumiejąc, że 'nie' neguje jego wydźwięk",
+  "Klasyfikator był trenowany na zbyt wielu przykładach pozytywnych",
+]
+options_en = [
+  "The word 'product' has a positive sentiment score",
+  "Simple classifiers count characters, not words",
+  "Bag-of-words models treat 'like' as positive without understanding that 'not' negates it",
+  "The classifier was trained on too many positive examples",
+]
+correct_idx = 2
+explanation_pl = "Klasyfikatory bag-of-words sumują sentyment na poziomie słów bez śledzenia zakresu składniowego. 'Lubię' jest pozytywne, 'nie' ma niską wagę — więc zdanie uzyskuje wynik pozytywny. Obsługa negacji wymaga parsowania zależności lub modeli transformerowych wychwytujących kontekst długodystansowy."
+explanation_en = "Bag-of-words classifiers sum word-level sentiment without tracking syntactic scope. 'Like' is positive, 'not' has low sentiment weight — so the sentence scores positive. Negation handling requires dependency parsing or transformer models that capture long-range context."
+
+[[questions]]
+id = "dc052"
+module_idx = 4
+q_pl = "W rozpoznawaniu nazwanych encji (NER), dlaczego 'Apple' może być oznaczone inaczej w 'Apple wypuściło nowego iPhone' i 'Drzewa jabłoni rosną w Oregonie'?"
+q_en = "In Named Entity Recognition, why might 'Apple' be labelled differently in 'Apple releases iPhone' versus 'Apple trees grow in Oregon'?"
+options_pl = [
+  "Systemy NER losowo przypisują etykiety niejednoznacznym tokenom",
+  "Kontekst ('wypuściło iPhone' vs. 'drzewa rosną') pozwala modelowi wnioskować ORG vs. brak encji",
+  "NER używa reguł wielkich liter — wielkie A zawsze oznacza organizację",
+  "Apple Inc. i jabłko (owoc) są w różnych słownikach",
+]
+options_en = [
+  "NER systems assign random labels to ambiguous tokens",
+  "Context ('releases iPhone' vs. 'trees grow') lets the model infer ORG vs. no entity",
+  "NER uses capitalisation rules — capital A always means organisation",
+  "Apple Inc. and apple (fruit) are in different vocabularies",
+]
+correct_idx = 1
+explanation_pl = "Rozpoznawanie nazwanych encji zależy od kontekstu: ten sam token może być firmą (ORG), jedzeniem lub miejscem w zależności od otaczających słów. Nowoczesne modele NER oparte na BERT używają bidirektionalnego kontekstu do dezambiguacji. Sama wielka litera nie jest wystarczająca."
+explanation_en = "NER is context-dependent: the same token can be a company (ORG), a food, or a place depending on surrounding words. Modern BERT-based NER models use bidirectional context to disambiguate. Capitalisation alone is not sufficient."
+
+[[questions]]
+id = "dc053"
+module_idx = 4
+q_pl = "Model językowy ma perplexity 50 na korpusie testowym. Co to z grubsza oznacza?"
+q_en = "A language model has perplexity 50 on a test corpus. What does this roughly mean?"
+options_pl = [
+  "Model popełnia 50 błędów na 100 tokenów",
+  "Słownik modelu zawiera 50 unikalnych słów",
+  "Model jest 50 razy bardziej niepewny niż doskonały model",
+  "Przeciętnie model jest tak niepewny jak równomierny wybór spośród 50 słów na każdym kroku",
+]
+options_en = [
+  "The model makes 50 errors per 100 tokens",
+  "The model's vocabulary contains 50 unique words",
+  "The model is 50 times more uncertain than a perfect model",
+  "On average, the model is as uncertain as choosing uniformly among 50 words at each step",
+]
+correct_idx = 3
+explanation_pl = "Perplexity to wykładnicza średnia ujemnego log-prawdopodobieństwa na token. Perplexity = 50 oznacza, że model jest tak 'zdezorientowany' jak gdyby musiał wybierać równomiernie spośród 50 słów na każdej pozycji. Niższe perplexity = lepszy model."
+explanation_en = "Perplexity is the exponentiated average negative log-likelihood per token. Perplexity = 50 means the model is as uncertain as if it had to choose uniformly among 50 equally likely words at each position. Lower perplexity = better model."
+
+[[questions]]
+id = "dc054"
+module_idx = 4
+q_pl = "Co oznacza 'zero-shot' opisując możliwości modelu językowego?"
+q_en = "What does 'zero-shot' mean when describing a language model's capability?"
+options_pl = [
+  "Model wykonuje zadanie używając tylko opisu zadania, bez żadnych oznaczonych przykładów w prompcie",
+  "Model był trenowany bez żadnych oznaczonych danych",
+  "Model osiąga zerowy błąd na benchmarku",
+  "Model używa zerowej pamięci podczas wnioskowania",
+]
+options_en = [
+  "The model performs a task using only the task description, without any labelled examples in the prompt",
+  "The model was trained with zero labelled data",
+  "The model achieves zero errors on the benchmark",
+  "The model uses zero memory during inference",
+]
+correct_idx = 0
+explanation_pl = "Zero-shot oznacza brak przykładów specyficznych dla zadania w prompcie — tylko opis w języku naturalnym co robić. Few-shot oznacza, że dołączona jest mała liczba przykładów wejście-wyjście. 'Shots' odnoszą się do przykładów w kontekście, nie w treningu."
+explanation_en = "Zero-shot means no task-specific examples are given in the prompt — only a natural language description of what to do. Few-shot means a small number of input-output examples are included. 'Shots' refers to examples in the context, not in training."
+
+[[questions]]
+id = "dc055"
+module_idx = 4
+q_pl = "Dlaczego duże modele językowe czasem produkują pewne siebie, lecz faktycznie błędne odpowiedzi?"
+q_en = "Why do large language models sometimes produce confident but factually wrong answers?"
+options_pl = [
+  "Modele są zaprogramowane żeby być uprzejme i unikać mówienia 'nie wiem'",
+  "Modele nie były wystawione na wystarczającą ilość danych treningowych",
+  "Są trenowane do przewidywania prawdopodobnych kolejnych tokenów, nie do weryfikowania faktycznej prawdy — płynność i dokładność to różne cele",
+  "Halucynacje pojawiają się tylko gdy model jest pytany o przyszłe zdarzenia",
+]
+options_en = [
+  "LLMs are programmed to be polite and avoid saying 'I don't know'",
+  "The models have not seen enough training data",
+  "They are trained to predict likely next tokens, not to verify factual truth — fluency and accuracy are different objectives",
+  "Hallucination only occurs when the model is asked about future events",
+]
+correct_idx = 2
+explanation_pl = "Duże modele językowe są trenowane do maksymalizowania prawdopodobieństwa kolejnego tokenu, co produkuje płynny tekst. Ten cel nie nagradza jawnie faktycznej dokładności. Model interpoluje wzorce z danych treningowych i może generować brzmiące wiarygodnie, lecz fałszywe informacje — szczególnie o niszowych tematach."
+explanation_en = "LLMs are trained to maximise next-token probability, producing fluent text. This objective does not explicitly reward factual accuracy. The model interpolates patterns from training data and can generate plausible-sounding but false information — especially on obscure topics."
+
+# ── Act 6 continued: Networks and Ethics ──────────────────────────────────────
+
+[[questions]]
+id = "dc056"
+module_idx = 5
+q_pl = "W sieci społecznościowej wysoki współczynnik gronowania (clustering coefficient) oznacza co?"
+q_en = "In a social network, a high clustering coefficient indicates what?"
+options_pl = [
+  "Sieć ma wiele izolowanych węzłów bez połączeń",
+  "Znajomi moich znajomych są ze sobą znajomymi — trójkąty są powszechne",
+  "Sieć ma małą liczbę bardzo wysoko połączonych hubów",
+  "Średnia długość ścieżki między węzłami jest krótka",
+]
+options_en = [
+  "The network has many isolated nodes with no connections",
+  "Friends of friends tend to be friends — triangles are common",
+  "The network has a small number of highly connected hubs",
+  "The average path length between nodes is short",
+]
+correct_idx = 1
+explanation_pl = "Współczynnik gronowania mierzy ułamek par sąsiadów węzła, które są ze sobą połączone. Wysoki średni współczynnik oznacza gęste lokalne połączenia — kliki i trójkąty, typowe dla sieci społecznościowych."
+explanation_en = "The clustering coefficient measures the fraction of a node's neighbour pairs that are also connected to each other. A high average clustering coefficient means dense local interconnection — cliques and triangles, typical in social networks."
+
+[[questions]]
+id = "dc057"
+module_idx = 5
+q_pl = "W epidemicznym modelu SIR, co oznacza R0 > 1?"
+q_en = "In the SIR epidemic model, what does R0 > 1 imply?"
+options_pl = [
+  "Choroba jest śmiertelna dla co najmniej 1% zakażonych",
+  "Wskaźnik zakażeń przekracza wskaźnik zdrowienia we wszystkich populacjach",
+  "Każda zakażona osoba zakaża dokładnie 1 inną osobę",
+  "Przeciętnie jedna zakażona osoba zakaża więcej niż jedną inną — epidemia będzie się rozprzestrzeniać",
+]
+options_en = [
+  "The disease is fatal to at least 1% of infected individuals",
+  "The infection rate exceeds the recovery rate in all populations",
+  "Each infected person will infect exactly 1 other person",
+  "On average, one infected person infects more than one other — the epidemic will spread",
+]
+correct_idx = 3
+explanation_pl = "R0 (podstawowa liczba reprodukcji) to oczekiwana liczba wtórnych zakażeń od jednej zakaźnej osoby w w pełni podatnej populacji. R0 > 1 → wykładniczy wzrost epidemii; R0 < 1 → wygasanie. R0 nie uwzględnia wcześniejszej odporności ani interwencji (to Re, efektywna liczba reprodukcji)."
+explanation_en = "R0 (basic reproduction number) is the expected number of secondary infections from one infectious individual in a fully susceptible population. R0 > 1 means exponential epidemic growth; R0 < 1 means die-out. R0 does not account for prior immunity or interventions (that is Re)."
+
+[[questions]]
+id = "dc058"
+module_idx = 5
+q_pl = "Jak algorytmy rekomendacji przyczyniają się do powstawania komór echa?"
+q_en = "How do recommendation algorithms contribute to echo chambers?"
+options_pl = [
+  "Optymalizują zaangażowanie (kliknięcia, czas oglądania) które koreluje z treściami pasującymi do istniejących przekonań, ograniczając ekspozycję na odmienne poglądy",
+  "Celowo pokazują treści tylko z tej samej partii politycznej",
+  "Nie mają żadnego efektu — użytkownicy sami wybierają treści",
+  "Pokazują losowe treści, przypadkowo tworząc klastry przekonań",
+]
+options_en = [
+  "They optimise for engagement (clicks, watch time) which correlates with belief-matching content, reducing exposure to opposing views",
+  "They intentionally show content only from the same political party",
+  "They have no effect — users choose their own content entirely",
+  "They show random content, accidentally creating belief clusters",
+]
+correct_idx = 0
+explanation_pl = "Maksymalizacja zaangażowania prowadzi do baniek filtrujących: algorytm uczy się, że ideologicznie dopasowane treści zatrzymują użytkowników dłużej. Z czasem tworzy to pętle sprzężenia zwrotnego zmniejszające różnorodność informacyjną i wzmacniające poglądy."
+explanation_en = "Engagement maximisation creates filter bubbles: the algorithm learns that ideologically aligned content keeps users on the platform longer. Over time, feedback loops reduce informational diversity and amplify existing beliefs."
+
+[[questions]]
+id = "dc059"
+module_idx = 5
+q_pl = "Firma wyrównuje dokładność (80%) modelu decyzyjnego we wszystkich grupach rasowych. Dlaczego może to nadal być niesprawiedliwe?"
+q_en = "A company equalises accuracy (80%) across racial groups in a decision model. Why might this still be unfair?"
+options_pl = [
+  "Wyrównanie dokładności to złoty standard sprawiedliwości algorytmicznej",
+  "Różne grupy rasowe z natury różnią się w przewidywanym wyniku",
+  "Równa dokładność może ukrywać bardzo różne wskaźniki fałszywie pozytywnych i fałszywie negatywnych — typy błędów mogą szkodzić grupom w różny sposób",
+  "Dokładność nigdy nie powinna być taka sama w różnych grupach demograficznych",
+]
+options_en = [
+  "Equalising accuracy is the gold standard of algorithmic fairness",
+  "Different racial groups are inherently different in the outcome being predicted",
+  "Equal accuracy can hide very different false positive and false negative rates — error types may harm groups differently",
+  "Accuracy should never be the same across demographic groups",
+]
+correct_idx = 2
+explanation_pl = "Równa dokładność jest kompatybilna z wysoce nierównymi wskaźnikami fałszywie pozytywnych i fałszywie negatywnych. W ocenie ryzyka recydywy wysoki wskaźnik fałszywie pozytywnych dla jednej grupy oznacza więcej niesłusznie flagowanych niewinnych. Twierdzenie Chouldechovy pokazuje, że wielokrotne kryteria sprawiedliwości nie mogą być jednocześnie spełnione."
+explanation_en = "Equal accuracy is compatible with highly unequal false positive and false negative rates. In criminal risk assessment, high false positives for one group means more innocent people flagged incorrectly. The Chouldechova impossibility theorem shows multiple fairness criteria cannot be simultaneously satisfied."
+
+[[questions]]
+id = "dc060"
+module_idx = 5
+q_pl = "Na mocy art. 22 RODO, jakie prawo ma osoba gdy jej wniosek kredytowy zostaje odrzucony przez system automatyczny?"
+q_en = "Under GDPR Article 22, what right does a person have when a loan application is rejected by an automated system?"
+options_pl = [
+  "Prawo do automatycznego odwrócenia decyzji",
+  "Prawo do sensownego wyjaśnienia logiki decyzji oraz prawo do przeglądu przez człowieka",
+  "Prawo do wglądu w dane treningowe modelu",
+  "Prawo do żądania użycia innego algorytmu",
+]
+options_en = [
+  "The right to have the decision automatically reversed",
+  "The right to meaningful explanation of the logic and the right to human review",
+  "The right to access the model's training data",
+  "The right to request a different algorithm be used",
+]
+correct_idx = 1
+explanation_pl = "Art. 22 RODO ogranicza w pełni zautomatyzowane decyzje o znaczących skutkach. Osoby mają prawo do: (1) niebycia poddanym wyłącznie automatycznym decyzjom, (2) uzyskania znaczących informacji o zaangażowanej logice, (3) żądania przeglądu przez człowieka. 'Znaczące informacje' nie wymagają ujawnienia pełnego modelu."
+explanation_en = "GDPR Art. 22 restricts fully automated decisions with significant effects. Individuals have the right to: (1) not be subject to solely automated decisions, (2) obtain meaningful information about the logic involved, (3) request human review. 'Meaningful information' does not require revealing the full model."
+
+[[questions]]
+id = "dc061"
+module_idx = 5
+q_pl = "Algorytm rekrutacyjny usuwa kolumnę 'płeć' ze swoich cech. Dlaczego może nadal dyskryminować?"
+q_en = "A hiring algorithm removes the 'gender' column from its features. Why might it still discriminate?"
+options_pl = [
+  "Usunięcie zmiennej sprawia, że model nie może działać poprawnie",
+  "Płeć nie jest chronionym atrybutem w prawie pracy",
+  "Model nie może być trenowany bez wszystkich zmiennych demograficznych",
+  "Inne cechy (kod pocztowy, nazwa uczelni, hobby) mogą działać jako proxy dla płci i odtwarzać tę samą dysproporcję",
+]
+options_en = [
+  "Removing a variable makes the model unable to perform well",
+  "Gender is not a protected attribute under employment law",
+  "The model cannot be trained without all demographic variables",
+  "Other features (postcode, university name, hobbies) can act as proxies for gender and recreate the same disparity",
+]
+correct_idx = 3
+explanation_pl = "Usunięcie chronionego atrybutu często nie eliminuje dyskryminacji. Inne cechy mogą być z nim wysoce skorelowane — kod pocztowy z rasą, hobby z płcią. Model uczy się tych korelacji pośrednich. Nazywa się to dyskryminacją przez proxy (proxy discrimination)."
+explanation_en = "Removing a protected attribute often does not eliminate discrimination. Other features can be highly correlated with it — postcode with race, hobbies with gender. The model learns these indirect correlations. This is called proxy discrimination."
+
+[[questions]]
+id = "dc062"
+module_idx = 5
+q_pl = "Call center mierzy wydajność agentów przez czas rozmowy. Agenci zaczynają rozłączać się szybko, żeby minimalizować ten czas. To ilustruje:"
+q_en = "A call centre measures agent performance by call duration. Agents start hanging up quickly to minimise call time. This illustrates:"
+options_pl = [
+  "Prawo Goodharta — gdy miara staje się celem, przestaje być dobrą miarą",
+  "Paradoks Simpsona — ogólny trend odwraca się w podgrupach",
+  "Błąd przeżywalności — mierzone są tylko udane rozmowy",
+  "Overfitting — agenci zapamiętali metrykę",
+]
+options_en = [
+  "Goodhart's law — when a measure becomes a target, it ceases to be a good measure",
+  "Simpson's paradox — the overall trend reverses within subgroups",
+  "Survivorship bias — only successful calls are measured",
+  "Overfitting — the agents have memorised the metric",
+]
+correct_idx = 0
+explanation_pl = "Prawo Goodharta: gdy metryka proxy jest używana do oceny wydajności, ludzie optymalizują samą metrykę zamiast ukrytego celu. Krótkie rozmowy mogą wyglądać dobrze, podczas gdy problemy klientów pozostają nierozwiązane. Optymalizacja metryki niszczy jej korelację z prawdziwą wydajnością."
+explanation_en = "Goodhart's law: once a proxy metric is used to evaluate performance, people optimise the metric itself rather than the underlying goal. Short calls score well while customer problems go unsolved. Optimising the metric destroys its correlation with true performance."
