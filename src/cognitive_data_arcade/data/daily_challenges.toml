@@ -1179,3 +1179,152 @@ options_en = [
 correct_idx = 2
 explanation_pl = "Duże modele językowe są trenowane do maksymalizowania prawdopodobieństwa kolejnego tokenu, co produkuje płynny tekst. Ten cel nie nagradza jawnie faktycznej dokładności. Model interpoluje wzorce z danych treningowych i może generować brzmiące wiarygodnie, lecz fałszywe informacje — szczególnie o niszowych tematach."
 explanation_en = "LLMs are trained to maximise next-token probability, producing fluent text. This objective does not explicitly reward factual accuracy. The model interpolates patterns from training data and can generate plausible-sounding but false information — especially on obscure topics."
+
+# ── Act 6 continued: Networks and Ethics ──────────────────────────────────────
+
+[[questions]]
+id = "dc056"
+module_idx = 5
+q_pl = "W sieci społecznościowej wysoki współczynnik gronowania (clustering coefficient) oznacza co?"
+q_en = "In a social network, a high clustering coefficient indicates what?"
+options_pl = [
+  "Sieć ma wiele izolowanych węzłów bez połączeń",
+  "Znajomi moich znajomych są ze sobą znajomymi — trójkąty są powszechne",
+  "Sieć ma małą liczbę bardzo wysoko połączonych hubów",
+  "Średnia długość ścieżki między węzłami jest krótka",
+]
+options_en = [
+  "The network has many isolated nodes with no connections",
+  "Friends of friends tend to be friends — triangles are common",
+  "The network has a small number of highly connected hubs",
+  "The average path length between nodes is short",
+]
+correct_idx = 1
+explanation_pl = "Współczynnik gronowania mierzy ułamek par sąsiadów węzła, które są ze sobą połączone. Wysoki średni współczynnik oznacza gęste lokalne połączenia — kliki i trójkąty, typowe dla sieci społecznościowych."
+explanation_en = "The clustering coefficient measures the fraction of a node's neighbour pairs that are also connected to each other. A high average clustering coefficient means dense local interconnection — cliques and triangles, typical in social networks."
+
+[[questions]]
+id = "dc057"
+module_idx = 5
+q_pl = "W epidemicznym modelu SIR, co oznacza R0 > 1?"
+q_en = "In the SIR epidemic model, what does R0 > 1 imply?"
+options_pl = [
+  "Choroba jest śmiertelna dla co najmniej 1% zakażonych",
+  "Wskaźnik zakażeń przekracza wskaźnik zdrowienia we wszystkich populacjach",
+  "Każda zakażona osoba zakaża dokładnie 1 inną osobę",
+  "Przeciętnie jedna zakażona osoba zakaża więcej niż jedną inną — epidemia będzie się rozprzestrzeniać",
+]
+options_en = [
+  "The disease is fatal to at least 1% of infected individuals",
+  "The infection rate exceeds the recovery rate in all populations",
+  "Each infected person will infect exactly 1 other person",
+  "On average, one infected person infects more than one other — the epidemic will spread",
+]
+correct_idx = 3
+explanation_pl = "R0 (podstawowa liczba reprodukcji) to oczekiwana liczba wtórnych zakażeń od jednej zakaźnej osoby w w pełni podatnej populacji. R0 > 1 → wykładniczy wzrost epidemii; R0 < 1 → wygasanie. R0 nie uwzględnia wcześniejszej odporności ani interwencji (to Re, efektywna liczba reprodukcji)."
+explanation_en = "R0 (basic reproduction number) is the expected number of secondary infections from one infectious individual in a fully susceptible population. R0 > 1 means exponential epidemic growth; R0 < 1 means die-out. R0 does not account for prior immunity or interventions (that is Re)."
+
+[[questions]]
+id = "dc058"
+module_idx = 5
+q_pl = "Jak algorytmy rekomendacji przyczyniają się do powstawania komór echa?"
+q_en = "How do recommendation algorithms contribute to echo chambers?"
+options_pl = [
+  "Optymalizują zaangażowanie (kliknięcia, czas oglądania) które koreluje z treściami pasującymi do istniejących przekonań, ograniczając ekspozycję na odmienne poglądy",
+  "Celowo pokazują treści tylko z tej samej partii politycznej",
+  "Nie mają żadnego efektu — użytkownicy sami wybierają treści",
+  "Pokazują losowe treści, przypadkowo tworząc klastry przekonań",
+]
+options_en = [
+  "They optimise for engagement (clicks, watch time) which correlates with belief-matching content, reducing exposure to opposing views",
+  "They intentionally show content only from the same political party",
+  "They have no effect — users choose their own content entirely",
+  "They show random content, accidentally creating belief clusters",
+]
+correct_idx = 0
+explanation_pl = "Maksymalizacja zaangażowania prowadzi do baniek filtrujących: algorytm uczy się, że ideologicznie dopasowane treści zatrzymują użytkowników dłużej. Z czasem tworzy to pętle sprzężenia zwrotnego zmniejszające różnorodność informacyjną i wzmacniające poglądy."
+explanation_en = "Engagement maximisation creates filter bubbles: the algorithm learns that ideologically aligned content keeps users on the platform longer. Over time, feedback loops reduce informational diversity and amplify existing beliefs."
+
+[[questions]]
+id = "dc059"
+module_idx = 5
+q_pl = "Firma wyrównuje dokładność (80%) modelu decyzyjnego we wszystkich grupach rasowych. Dlaczego może to nadal być niesprawiedliwe?"
+q_en = "A company equalises accuracy (80%) across racial groups in a decision model. Why might this still be unfair?"
+options_pl = [
+  "Wyrównanie dokładności to złoty standard sprawiedliwości algorytmicznej",
+  "Różne grupy rasowe z natury różnią się w przewidywanym wyniku",
+  "Równa dokładność może ukrywać bardzo różne wskaźniki fałszywie pozytywnych i fałszywie negatywnych — typy błędów mogą szkodzić grupom w różny sposób",
+  "Dokładność nigdy nie powinna być taka sama w różnych grupach demograficznych",
+]
+options_en = [
+  "Equalising accuracy is the gold standard of algorithmic fairness",
+  "Different racial groups are inherently different in the outcome being predicted",
+  "Equal accuracy can hide very different false positive and false negative rates — error types may harm groups differently",
+  "Accuracy should never be the same across demographic groups",
+]
+correct_idx = 2
+explanation_pl = "Równa dokładność jest kompatybilna z wysoce nierównymi wskaźnikami fałszywie pozytywnych i fałszywie negatywnych. W ocenie ryzyka recydywy wysoki wskaźnik fałszywie pozytywnych dla jednej grupy oznacza więcej niesłusznie flagowanych niewinnych. Twierdzenie Chouldechovy pokazuje, że wielokrotne kryteria sprawiedliwości nie mogą być jednocześnie spełnione."
+explanation_en = "Equal accuracy is compatible with highly unequal false positive and false negative rates. In criminal risk assessment, high false positives for one group means more innocent people flagged incorrectly. The Chouldechova impossibility theorem shows multiple fairness criteria cannot be simultaneously satisfied."
+
+[[questions]]
+id = "dc060"
+module_idx = 5
+q_pl = "Na mocy art. 22 RODO, jakie prawo ma osoba gdy jej wniosek kredytowy zostaje odrzucony przez system automatyczny?"
+q_en = "Under GDPR Article 22, what right does a person have when a loan application is rejected by an automated system?"
+options_pl = [
+  "Prawo do automatycznego odwrócenia decyzji",
+  "Prawo do sensownego wyjaśnienia logiki decyzji oraz prawo do przeglądu przez człowieka",
+  "Prawo do wglądu w dane treningowe modelu",
+  "Prawo do żądania użycia innego algorytmu",
+]
+options_en = [
+  "The right to have the decision automatically reversed",
+  "The right to meaningful explanation of the logic and the right to human review",
+  "The right to access the model's training data",
+  "The right to request a different algorithm be used",
+]
+correct_idx = 1
+explanation_pl = "Art. 22 RODO ogranicza w pełni zautomatyzowane decyzje o znaczących skutkach. Osoby mają prawo do: (1) niebycia poddanym wyłącznie automatycznym decyzjom, (2) uzyskania znaczących informacji o zaangażowanej logice, (3) żądania przeglądu przez człowieka. 'Znaczące informacje' nie wymagają ujawnienia pełnego modelu."
+explanation_en = "GDPR Art. 22 restricts fully automated decisions with significant effects. Individuals have the right to: (1) not be subject to solely automated decisions, (2) obtain meaningful information about the logic involved, (3) request human review. 'Meaningful information' does not require revealing the full model."
+
+[[questions]]
+id = "dc061"
+module_idx = 5
+q_pl = "Algorytm rekrutacyjny usuwa kolumnę 'płeć' ze swoich cech. Dlaczego może nadal dyskryminować?"
+q_en = "A hiring algorithm removes the 'gender' column from its features. Why might it still discriminate?"
+options_pl = [
+  "Usunięcie zmiennej sprawia, że model nie może działać poprawnie",
+  "Płeć nie jest chronionym atrybutem w prawie pracy",
+  "Model nie może być trenowany bez wszystkich zmiennych demograficznych",
+  "Inne cechy (kod pocztowy, nazwa uczelni, hobby) mogą działać jako proxy dla płci i odtwarzać tę samą dysproporcję",
+]
+options_en = [
+  "Removing a variable makes the model unable to perform well",
+  "Gender is not a protected attribute under employment law",
+  "The model cannot be trained without all demographic variables",
+  "Other features (postcode, university name, hobbies) can act as proxies for gender and recreate the same disparity",
+]
+correct_idx = 3
+explanation_pl = "Usunięcie chronionego atrybutu często nie eliminuje dyskryminacji. Inne cechy mogą być z nim wysoce skorelowane — kod pocztowy z rasą, hobby z płcią. Model uczy się tych korelacji pośrednich. Nazywa się to dyskryminacją przez proxy (proxy discrimination)."
+explanation_en = "Removing a protected attribute often does not eliminate discrimination. Other features can be highly correlated with it — postcode with race, hobbies with gender. The model learns these indirect correlations. This is called proxy discrimination."
+
+[[questions]]
+id = "dc062"
+module_idx = 5
+q_pl = "Call center mierzy wydajność agentów przez czas rozmowy. Agenci zaczynają rozłączać się szybko, żeby minimalizować ten czas. To ilustruje:"
+q_en = "A call centre measures agent performance by call duration. Agents start hanging up quickly to minimise call time. This illustrates:"
+options_pl = [
+  "Prawo Goodharta — gdy miara staje się celem, przestaje być dobrą miarą",
+  "Paradoks Simpsona — ogólny trend odwraca się w podgrupach",
+  "Błąd przeżywalności — mierzone są tylko udane rozmowy",
+  "Overfitting — agenci zapamiętali metrykę",
+]
+options_en = [
+  "Goodhart's law — when a measure becomes a target, it ceases to be a good measure",
+  "Simpson's paradox — the overall trend reverses within subgroups",
+  "Survivorship bias — only successful calls are measured",
+  "Overfitting — the agents have memorised the metric",
+]
+correct_idx = 0
+explanation_pl = "Prawo Goodharta: gdy metryka proxy jest używana do oceny wydajności, ludzie optymalizują samą metrykę zamiast ukrytego celu. Krótkie rozmowy mogą wyglądać dobrze, podczas gdy problemy klientów pozostają nierozwiązane. Optymalizacja metryki niszczy jej korelację z prawdziwą wydajnością."
+explanation_en = "Goodhart's law: once a proxy metric is used to evaluate performance, people optimise the metric itself rather than the underlying goal. Short calls score well while customer problems go unsolved. Optimising the metric destroys its correlation with true performance."
