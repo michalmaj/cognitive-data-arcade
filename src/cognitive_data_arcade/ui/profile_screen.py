@@ -54,6 +54,7 @@ class ProfileScene(Scene):
         self._alias_buffer = ""
         self._export_msg: str = ""
         self._export_msg_ttl: float = 0.0
+        self._logout_rect: pygame.Rect | None = None
         self._data_stats = compute_data_stats(Path("data") / "generated")
         self._quiz_acc = compute_quiz_accuracy(self._profile.quiz_results)
         pygame.font.init()
@@ -69,6 +70,13 @@ class ProfileScene(Scene):
             footer_y = h - _FOOTER_H
             from cognitive_data_arcade.engine.mouse import hit
 
+            if self._logout_rect and hit(self._logout_rect, event.pos):
+                from cognitive_data_arcade.ui.logout_confirm_scene import LogoutConfirmScene
+
+                self._next = LogoutConfirmScene(
+                    self._pm, self._strings, profile_back_scene=self._back
+                )
+                return
             edit_rect = pygame.Rect(220, footer_y + 15, 200, 24)
             if hit(edit_rect, event.pos):
                 self._editing_alias = True
@@ -250,6 +258,15 @@ class ProfileScene(Scene):
             dy = y + row * dot_cell
             color = _SP_COLOR if (i + 1) in completed else _BORDER_COLOR
             pygame.draw.rect(surface, color, (dx, dy, dot_size, dot_size), border_radius=3)
+
+        # Logout link at bottom of left column
+        is_pl = self._strings.language == "pl"
+        logout_y = h - _FOOTER_H - 30
+        logout_lbl = "Wyloguj i zresetuj dane" if is_pl else "Log out & reset data"
+        logout_surf = get_font(13).render(logout_lbl + "  x", True, (180, 60, 60))
+        lx = 15
+        self._logout_rect = pygame.Rect(lx, logout_y, _LEFT_W - 20, 20)
+        surface.blit(logout_surf, (lx, logout_y))
 
         # ---- RIGHT COLUMN ----
         right_x = _LEFT_W + 20
