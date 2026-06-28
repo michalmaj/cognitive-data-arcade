@@ -3,9 +3,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import pytest
-
-from cognitive_data_arcade.profile.manager import Profile, ProfileManager
+from cognitive_data_arcade.profile.manager import ProfileManager
 
 
 def _make_pm(tmp_path: Path) -> ProfileManager:

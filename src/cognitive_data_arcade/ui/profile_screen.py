@@ -216,7 +216,7 @@ class ProfileScene(Scene):
                 "Punkty danych" if is_pl else "Data points",
                 f"{self._data_stats['data_points']:,}".replace(",", " "),
             ),
-            ("Dni aktywnosci" if is_pl else "Active days", str(self._data_stats["active_days"])),
+            ("Dni aktywności" if is_pl else "Active days", str(self._data_stats["active_days"])),
             (
                 "Quiz" if is_pl else "Quiz",
                 f"{self._quiz_acc}%" if self._quiz_acc is not None else "—",

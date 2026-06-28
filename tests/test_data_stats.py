@@ -1,10 +1,7 @@
 # tests/test_data_stats.py
 from __future__ import annotations
 
-import csv
 from pathlib import Path
-
-import pytest
 
 from cognitive_data_arcade.ui.data_stats import compute_data_stats, compute_quiz_accuracy
 
