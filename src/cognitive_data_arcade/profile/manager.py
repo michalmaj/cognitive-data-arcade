@@ -39,6 +39,7 @@ class Profile:
     quiz_results: dict[str, bool] = field(default_factory=dict)
     streak_days: int = 0
     last_active_date: str = ""  # ISO date "YYYY-MM-DD", empty = never
+    onboarding_done: bool = False
 
 
 class ProfileManager:
@@ -181,6 +182,21 @@ class ProfileManager:
         )
         self.save(fresh)
         return fresh
+
+    def set_onboarding_done(self) -> Profile:
+        profile = self.load()
+        profile.onboarding_done = True
+        self.save(profile)
+        return profile
+
+    def delete_profile(self, generated_dir: Path | None = None) -> None:
+        import shutil
+
+        if self._path.exists():
+            self._path.unlink()
+        target = generated_dir if generated_dir is not None else Path("data") / "generated"
+        if target.exists():
+            shutil.rmtree(target)
 
     def export_progress(self, path: Path) -> None:
         import datetime
