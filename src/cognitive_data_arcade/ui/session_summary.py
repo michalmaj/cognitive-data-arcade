@@ -31,6 +31,13 @@ _REFLECTION_TASK_MAP: dict[str, tuple[str, str]] = {
     "data_quality_lab": ("lesson_04", "REFLECTION"),
     "eda_sandbox": ("lesson_06", "REFLECTION"),
     "distribution_playground": ("lesson_13", "REFLECTION"),
+    "correlation_trap": ("lesson_14", "REFLECTION"),
+    "hypothesis_arena": ("lesson_15", "REFLECTION"),
+    "prediction_slider": ("lesson_16", "REFLECTION"),
+    "feature_hunter": ("lesson_17", "REFLECTION"),
+    "classifier_battle": ("lesson_18", "REFLECTION"),
+    "overfitting_monster": ("lesson_19", "REFLECTION"),
+    "anomaly_alert": ("lesson_20", "REFLECTION"),
 }
 
 
