@@ -43,3 +43,48 @@ CONTENT: dict[str, dict[str, list[str]]] = {
         ],
     },
 }
+
+REFLECTION = {
+    "pl": {
+        "title": "Recommendation Bubble — Refleksja",
+        "cards": [
+            {
+                "label": "Filtrowanie kolaboratywne",
+                "color": "indigo",
+                "text": "Goldberg (1992): rekomenduj na podstawie ocen podobnych użytkowników. Netflix Prize (2009, 1M$): zwycięzca BellKor używał 107 modeli. Optymalizacja: engagement — nie różnorodność treści.",
+            },
+            {
+                "label": "Bańka vs komora echa",
+                "color": "orange",
+                "text": "Sunstein (2017): bańka informacyjna = pasywna, algorytmiczna. Komora echa = aktywna, społeczna — sam eliminujesz odmienne głosy. Oba mechanizmy mogą współwystępować, ale są od siebie niezależne.",
+            },
+            {
+                "label": "Diversity-aware ranking",
+                "color": "green",
+                "text": "Zmiana funkcji celu: minimum floor dla kategorii mniejszościowych, exposure diversity. YouTube (2019): ograniczenie zasięgu treści borderline wymagało świadomej decyzji inżynierskiej — algorytm sam się nie 'naprawił'.",
+            },
+        ],
+        "question": "Użytkownik ogląda tylko sport. Algorytm optymalizuje engagement. Po 2 tygodniach: 98% sportu w feedzie. Jak zaprojektujesz metrykę mierzącą jednocześnie engagement i różnorodność — i co poświęcasz w kompromisie?",
+    },
+    "en": {
+        "title": "Recommendation Bubble — Reflection",
+        "cards": [
+            {
+                "label": "Collaborative filtering",
+                "color": "indigo",
+                "text": "Goldberg (1992): recommend based on ratings from similar users. Netflix Prize (2009, $1M): winner BellKor used 107 models. Optimisation target: engagement — not content diversity.",
+            },
+            {
+                "label": "Bubble vs echo chamber",
+                "color": "orange",
+                "text": "Sunstein (2017): filter bubble = passive, algorithmic. Echo chamber = active, social — you yourself eliminate dissenting voices. Both mechanisms can coexist but are independent of each other.",
+            },
+            {
+                "label": "Diversity-aware ranking",
+                "color": "green",
+                "text": "Changing the objective function: minimum floor for minority categories, exposure diversity. YouTube (2019): limiting reach of borderline content required a conscious engineering decision — the algorithm did not 'fix itself'.",
+            },
+        ],
+        "question": "A user watches only sport. The algorithm optimises engagement. After 2 weeks: 98% sport in the feed. How would you design a metric that measures both engagement and diversity — and what do you sacrifice in the trade-off?",
+    },
+}

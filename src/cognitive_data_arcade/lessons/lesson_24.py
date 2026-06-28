@@ -42,3 +42,48 @@ CONTENT: dict[str, dict[str, list[str]]] = {
         ],
     },
 }
+
+REFLECTION = {
+    "pl": {
+        "title": "Semantic Space Explorer — Refleksja",
+        "cards": [
+            {
+                "label": "Hipoteza dystrybucyjna",
+                "color": "indigo",
+                "text": "Harris (1954): słowa pojawiające się w tych samych kontekstach mają podobne znaczenia. Word2Vec (Mikolov 2013) sformalizował to algorytmicznie — 59 lat po oryginalnej hipotezie.",
+            },
+            {
+                "label": "Podobieństwo kosinusowe",
+                "color": "orange",
+                "text": "cos(θ) = A·B / (|A||B|). Wynik ∈ [−1, 1]. Mierzy kąt między wektorami, nie ich długość — 'pies' i 'psy' mogą być bliskie nawet przy różnych częstościach w korpusie.",
+            },
+            {
+                "label": "Bias w embeddingach",
+                "color": "green",
+                "text": "Bolukbasi (2016): Word2Vec koduje stereotypy — 'pielęgniarka' : 'kobieta' ≈ 'lekarz' : 'mężczyzna'. Model uczy się statystyk tekstu, włącznie z uprzedzeniami obecnymi w korpusie.",
+            },
+        ],
+        "question": "Embeddingi kodują 'lekarz' bliżej 'mężczyzny' niż 'kobiety'. Jakie konsekwencje ma ten bias w systemie rekomendacji zawodów? Jak mierzysz i redukujesz bias w przestrzeni wektorowej?",
+    },
+    "en": {
+        "title": "Semantic Space Explorer — Reflection",
+        "cards": [
+            {
+                "label": "Distributional hypothesis",
+                "color": "indigo",
+                "text": "Harris (1954): words that appear in the same contexts tend to have similar meanings. Word2Vec (Mikolov 2013) formalised this algorithmically — 59 years after the original hypothesis.",
+            },
+            {
+                "label": "Cosine similarity",
+                "color": "orange",
+                "text": "cos(θ) = A·B / (|A||B|). Result ∈ [−1, 1]. Measures the angle between vectors, not their length — 'dog' and 'dogs' can be close even at different corpus frequencies.",
+            },
+            {
+                "label": "Embedding bias",
+                "color": "green",
+                "text": "Bolukbasi (2016): Word2Vec encodes stereotypes — 'nurse' : 'woman' ≈ 'doctor' : 'man'. The model learns the statistics of text, including the biases present in the training corpus.",
+            },
+        ],
+        "question": "Embeddings place 'doctor' closer to 'man' than 'woman'. What are the consequences of this bias in a job recommendation system? How do you measure and reduce bias in vector space?",
+    },
+}

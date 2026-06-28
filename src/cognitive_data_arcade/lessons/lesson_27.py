@@ -40,3 +40,48 @@ CONTENT: dict[str, dict[str, list[str]]] = {
         ],
     },
 }
+
+REFLECTION = {
+    "pl": {
+        "title": "Social Network Simulator — Refleksja",
+        "cards": [
+            {
+                "label": "Sieć bezskalowa",
+                "color": "indigo",
+                "text": "Barabasi-Albert (1999): nowe węzły łączą się preferencyjnie z hubami — 'bogaty staje się bogatszy'. Rozkład potęgowy stopni: kilka hubów z tysiącami połączeń, większość węzłów z kilkoma.",
+            },
+            {
+                "label": "Mały świat",
+                "color": "orange",
+                "text": "Milgram (1967): mediana 6 pośredników między losowymi ludźmi w USA. Watts i Strogatz (1998): wysoka lokalność + krótkie ścieżki globalne = sieć małego świata. Dotyczy internetu, WWW i sieci białkowych.",
+            },
+            {
+                "label": "SIR i epidemie",
+                "color": "green",
+                "text": "R0 = p_infect / p_recover. R0 > 1: epidemia rośnie. Sieci bezskalowe są odporne na losowe awarie węzłów, ale dramatycznie wrażliwe na celowe ataki na huby.",
+            },
+        ],
+        "question": "Hub z 500 połączeniami jest 'patient zero'. Dlaczego szczepienie hubów jest wielokrotnie skuteczniejsze niż szczepienie losowych węzłów? Jak to wynika ze struktury sieci bezskalowej?",
+    },
+    "en": {
+        "title": "Social Network Simulator — Reflection",
+        "cards": [
+            {
+                "label": "Scale-free network",
+                "color": "indigo",
+                "text": "Barabasi-Albert (1999): new nodes attach preferentially to hubs — 'the rich get richer'. Power-law degree distribution: a few hubs with thousands of connections, most nodes with just a few.",
+            },
+            {
+                "label": "Small world",
+                "color": "orange",
+                "text": "Milgram (1967): median of 6 intermediaries between random people in the USA. Watts and Strogatz (1998): high local clustering + short global paths = small-world network. Applies to the internet, WWW, and protein networks.",
+            },
+            {
+                "label": "SIR and epidemics",
+                "color": "green",
+                "text": "R0 = p_infect / p_recover. R0 > 1: epidemic grows. Scale-free networks are robust to random node failures but dramatically vulnerable to targeted attacks on hubs.",
+            },
+        ],
+        "question": "A hub with 500 connections is 'patient zero'. Why is vaccinating hubs many times more effective than vaccinating random nodes? How does this follow from the structure of a scale-free network?",
+    },
+}

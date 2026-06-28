@@ -42,3 +42,48 @@ CONTENT: dict[str, dict[str, list[str]]] = {
         ],
     },
 }
+
+REFLECTION = {
+    "pl": {
+        "title": "Bias Blind Spot — Refleksja",
+        "cards": [
+            {
+                "label": "Proxy features",
+                "color": "indigo",
+                "text": "Kod pocztowy koreluje z rasą (r=0.71) ze względu na historyczny redlining (HOLC 1933-54). Usunięcie atrybutu chronionego nie usuwa dyskryminacji. Buolamwini (2018): 34.7 pp więcej błędów dla ciemnoskórych kobiet.",
+            },
+            {
+                "label": "Twierdzenie niemożliwości",
+                "color": "orange",
+                "text": "Chouldechova (2017) i Kleinberg (2016): gdy grupy mają różne rozkłady bazowe, parytet demograficzny, równe szanse i kalibracja są wzajemnie sprzeczne. Wybór kryterium to decyzja polityczna, nie techniczna.",
+            },
+            {
+                "label": "COMPAS",
+                "color": "green",
+                "text": "ProPublica (2016): algorytm sądowy klasyfikował czarnych oskarżonych jako 'wysokie ryzyko' 2× częściej (45% vs 24% false positives). Northpointe: accuracy równa między grupami. Obaj mieli rację — twierdzenie niemożliwości w praktyce.",
+            },
+        ],
+        "question": "Model kredytowy: 79% dokładności, 33 pp dysproporcji odmów. Usunięcie kodu pocztowego: dysproporcja 9 pp, accuracy 58%. Jakie kryterium sprawiedliwości wybierzesz i jak uzasadnisz tę decyzję?",
+    },
+    "en": {
+        "title": "Bias Blind Spot — Reflection",
+        "cards": [
+            {
+                "label": "Proxy features",
+                "color": "indigo",
+                "text": "Postcode correlates with race (r=0.71) due to historical redlining (HOLC 1933–54). Removing the protected attribute does not remove discrimination. Buolamwini (2018): 34.7 pp more errors for dark-skinned women.",
+            },
+            {
+                "label": "Impossibility theorem",
+                "color": "orange",
+                "text": "Chouldechova (2017) and Kleinberg (2016): when groups have different base rates, demographic parity, equal opportunity, and calibration are mutually exclusive. The choice of criterion is a political, not a technical, decision.",
+            },
+            {
+                "label": "COMPAS",
+                "color": "green",
+                "text": "ProPublica (2016): the court algorithm classified Black defendants as 'high risk' 2× more often (45% vs 24% false positives). Northpointe: accuracy equal between groups. Both were mathematically correct — the impossibility theorem in practice.",
+            },
+        ],
+        "question": "Credit model: 79% accuracy, 33 pp disparity in rejections. Removing postcode: 9 pp disparity, 58% accuracy. Which fairness criterion do you choose and how do you justify that decision?",
+    },
+}

@@ -42,3 +42,48 @@ CONTENT: dict[str, dict[str, list[str]]] = {
         ],
     },
 }
+
+REFLECTION = {
+    "pl": {
+        "title": "Human vs Model Challenge — Refleksja",
+        "cards": [
+            {
+                "label": "Ograniczenia modeli",
+                "color": "indigo",
+                "text": "Model językowy przewiduje następne słowo ze statystyk — nie 'rozumie'. Negacja ('nie był zły film') zawiera 'zły' — model kojarzy je z negatywem bez 'nie'. Błąd w 30-40% przypadków.",
+            },
+            {
+                "label": "Schemat Winograda",
+                "color": "orange",
+                "text": "Levesque (2011): 'Trofeum nie zmieściło się w walizce, bo było za duże.' GPT-4 rozwiązuje ~90%, małe modele ~60%. Potrzebne jest rozumowanie o świecie, nie statystyka słów.",
+            },
+            {
+                "label": "Chiński pokój",
+                "color": "green",
+                "text": "Searle (1980): system wykonujący poprawne operacje na symbolach nie 'rozumie' ich znaczenia. Modele są świetne na centrum rozkładu — zawodzą na krawędziach: sarkazm, ironia, kontekst kulturowy.",
+            },
+        ],
+        "question": "Model LLM osiąga 94% na benchmarku NLI, ale zawodzi na zdaniach z podwójną negacją. Jak zaprojektujesz test odróżniający 'rozumienie' od 'statystycznego dopasowania wzorca'?",
+    },
+    "en": {
+        "title": "Human vs Model Challenge — Reflection",
+        "cards": [
+            {
+                "label": "Model limitations",
+                "color": "indigo",
+                "text": "A language model predicts the next word from statistics — it does not 'understand'. Negation ('not a bad film') contains 'bad' — the model associates it with negative sentiment without 'not'. Error in 30–40% of cases.",
+            },
+            {
+                "label": "Winograd schema",
+                "color": "orange",
+                "text": "Levesque (2011): 'The trophy did not fit in the suitcase because it was too big.' GPT-4 solves ~90%, small models ~60%. World-knowledge reasoning is needed, not word statistics.",
+            },
+            {
+                "label": "Chinese Room",
+                "color": "green",
+                "text": "Searle (1980): a system performing correct operations on symbols does not 'understand' their meaning. Models excel at the centre of the distribution — they fail at the edges: sarcasm, irony, cultural context.",
+            },
+        ],
+        "question": "An LLM achieves 94% on an NLI benchmark but fails on sentences with double negation. How would you design a test that distinguishes 'understanding' from 'statistical pattern matching'?",
+    },
+}

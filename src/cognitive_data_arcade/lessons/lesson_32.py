@@ -40,3 +40,48 @@ CONTENT: dict[str, dict[str, list[str]]] = {
         ],
     },
 }
+
+REFLECTION = {
+    "pl": {
+        "title": "The Architect's Trial — Refleksja",
+        "cards": [
+            {
+                "label": "EU AI Act",
+                "color": "indigo",
+                "text": "Kwiecień 2024: systemy 'wysokiego ryzyka' (rekrutacja, edukacja, wymiar sprawiedliwości) wymagają dokumentacji technicznej, logowania, nadzoru ludzkiego i prawa do wyjaśnienia. Kara: do 30M EUR lub 6% obrotu.",
+            },
+            {
+                "label": "Efekt Goodharta",
+                "color": "orange",
+                "text": "Goodhart (1975): 'kiedy miara staje się celem, przestaje być dobrą miarą'. Algorytm optymalizowany pod engagement maksymalizuje outrage — bo outrage trzyma użytkowników dłużej. Cel mierzalny ≠ cel rzeczywisty.",
+            },
+            {
+                "label": "Weapons of Math Destruction",
+                "color": "green",
+                "text": "O'Neil (2016): model matematyczny wzmacnia nierówności gdy jest nieprzejrzysty, działa w skali milionów decyzji i dotyka najbardziej wrażliwych grup. Brak mechanizmu odwołania to trzecia cecha 'broni'.",
+            },
+        ],
+        "question": "System rekrutacyjny zaczyna odrzucać kandydatów ze złożonym CV — optymalizuje retencję. Jak odkryjesz ten bias zanim skrzywdzi kandydatów? Jakie mechanizmy nadzoru wbudujesz w system zgodny z EU AI Act?",
+    },
+    "en": {
+        "title": "The Architect's Trial — Reflection",
+        "cards": [
+            {
+                "label": "EU AI Act",
+                "color": "indigo",
+                "text": "April 2024: 'high-risk' systems (recruitment, education, justice) require technical documentation, logging, human oversight, and the right to an explanation. Penalty: up to EUR 30M or 6% of turnover.",
+            },
+            {
+                "label": "Goodhart's law",
+                "color": "orange",
+                "text": "Goodhart (1975): 'when a measure becomes a target, it ceases to be a good measure'. An algorithm optimised for engagement maximises outrage — because outrage keeps users engaged longer. Measurable goal ≠ real goal.",
+            },
+            {
+                "label": "Weapons of Math Destruction",
+                "color": "green",
+                "text": "O'Neil (2016): a mathematical model amplifies inequality when it is opaque, operates at the scale of millions of decisions, and affects the most vulnerable groups. The absence of an appeal mechanism is the third feature of a 'weapon'.",
+            },
+        ],
+        "question": "A recruitment system starts rejecting candidates with complex CVs — it is optimising for retention. How do you detect this bias before it harms candidates? What oversight mechanisms do you build into an EU AI Act high-risk system?",
+    },
+}
