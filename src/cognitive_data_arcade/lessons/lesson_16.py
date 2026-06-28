@@ -44,3 +44,48 @@ CONTENT: dict[str, dict[str, list[str]]] = {
         ],
     },
 }
+
+REFLECTION = {
+    "pl": {
+        "title": "Prediction Slider — Refleksja",
+        "cards": [
+            {
+                "label": "Regresja",
+                "color": "indigo",
+                "text": "OLS minimalizuje sumę kwadratów reszt. Slope = zmiana y na jednostkę x. R² = procent wyjaśnionej zmienności — nie mówi, czy model jest dobry.",
+            },
+            {
+                "label": "Reszty",
+                "color": "orange",
+                "text": "Dobry model ma reszty losowe, bez wzorca. Krzywizna lub lejkowanie na wykresie reszt to sygnał, że model liniowy jest nieodpowiedni.",
+            },
+            {
+                "label": "Wpływ",
+                "color": "green",
+                "text": "Outlier daleko od średniej x (duże leverage) nieproporcjonalnie zmienia slope. Cook's D > 1 to sygnał obserwacji wymagającej sprawdzenia.",
+            },
+        ],
+        "question": "Model regresji osiąga R²=0.85, ale wykres reszt pokazuje parabolę. Czy model jest dobry? Co zrobisz jako następny krok?",
+    },
+    "en": {
+        "title": "Prediction Slider — Reflection",
+        "cards": [
+            {
+                "label": "Regression",
+                "color": "indigo",
+                "text": "OLS minimises the sum of squared residuals. Slope = change in y per unit of x. R² = percentage of variance explained — it does not tell you whether the model is good.",
+            },
+            {
+                "label": "Residuals",
+                "color": "orange",
+                "text": "A good model has random residuals with no pattern. Curvature or funnelling in the residual plot signals that the linear model is inappropriate.",
+            },
+            {
+                "label": "Influence",
+                "color": "green",
+                "text": "An outlier far from the mean of x (high leverage) disproportionately shifts the slope. Cook's D > 1 flags an observation that warrants investigation.",
+            },
+        ],
+        "question": "A regression model achieves R²=0.85, but the residual plot shows a parabola. Is the model good? What is your next step?",
+    },
+}

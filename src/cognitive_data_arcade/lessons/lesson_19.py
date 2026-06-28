@@ -44,3 +44,48 @@ CONTENT: dict[str, dict[str, list[str]]] = {
         ],
     },
 }
+
+REFLECTION = {
+    "pl": {
+        "title": "Overfitting Monster — Refleksja",
+        "cards": [
+            {
+                "label": "Przeuczenie",
+                "color": "indigo",
+                "text": "Model zapamiętuje szum zamiast prawdziwych wzorców. KNN k=1: dokładność treningowa 100%, testowa spada. Duży gap trening/test = overfitting.",
+            },
+            {
+                "label": "Bias-wariancja",
+                "color": "orange",
+                "text": "Zbyt prosty model (duże k): wysoki bias, niedoszacowanie złożoności. Zbyt złożony (małe k): wysoka wariancja, wrażliwość na szum. Optimum leży pośrodku.",
+            },
+            {
+                "label": "Regularyzacja",
+                "color": "green",
+                "text": "Ridge/L2 karze duże współczynniki, zmniejszając wariancję bez zerowania cech. Formalizuje brzytwę Ockhama: prostszy model jest preferowany przy równym dopasowaniu.",
+            },
+        ],
+        "question": "Model osiąga 98% na zbiorze treningowym i 64% na testowym. Wymień dwa kroki diagnostyczne, które wykonasz zanim zmienisz architekturę modelu.",
+    },
+    "en": {
+        "title": "Overfitting Monster — Reflection",
+        "cards": [
+            {
+                "label": "Overfitting",
+                "color": "indigo",
+                "text": "The model memorises noise instead of true patterns. KNN k=1: training accuracy 100%, test accuracy drops. A large train/test gap equals overfitting.",
+            },
+            {
+                "label": "Bias-variance",
+                "color": "orange",
+                "text": "Overly simple model (large k): high bias, underestimates complexity. Overly complex (small k): high variance, sensitive to noise. The optimum lies in between.",
+            },
+            {
+                "label": "Regularisation",
+                "color": "green",
+                "text": "Ridge/L2 penalises large coefficients, reducing variance without zeroing features. It formalises Occam's Razor: a simpler model is preferred when fit is equal.",
+            },
+        ],
+        "question": "A model achieves 98% on the training set and 64% on the test set. Name two diagnostic steps you would take before changing the model architecture.",
+    },
+}

@@ -42,3 +42,48 @@ CONTENT: dict[str, dict[str, list[str]]] = {
         ],
     },
 }
+
+REFLECTION = {
+    "pl": {
+        "title": "Anomaly Alert — Refleksja",
+        "cards": [
+            {
+                "label": "Anomalia",
+                "color": "indigo",
+                "text": "Obserwacja znacznie odbiegająca od wzorca danych. Może być błędem pomiaru, zdarzeniem losowym lub rzadkim prawdziwym zjawiskiem — każdy przypadek wymaga oceny kontekstowej.",
+            },
+            {
+                "label": "Reguły",
+                "color": "orange",
+                "text": "3-sigma: poza ±3σ = podejrzana. Tukey IQR: poza 1.5×IQR od krawędzi pudełka = outlier. Przy rozkładach skośnych Tukey działa poprawniej niż 3-sigma.",
+            },
+            {
+                "label": "Kontekst",
+                "color": "green",
+                "text": "Outlier w badaniu kognitywnym może oznaczać uczestnika z wyjątkowym profilem — nie błąd. Zawsze sprawdź kontekst przed usunięciem punktu z analizy.",
+            },
+        ],
+        "question": "W zbiorze czasów reakcji jeden uczestnik ma RT=1200ms (reszta: 200–400ms). Jak zdecydujesz: błąd pomiaru czy prawdziwy wynik? Jakie dodatkowe informacje zbierzesz?",
+    },
+    "en": {
+        "title": "Anomaly Alert — Reflection",
+        "cards": [
+            {
+                "label": "Anomaly",
+                "color": "indigo",
+                "text": "An observation that deviates significantly from the data pattern. It may be a measurement error, a random event, or a genuine rare phenomenon — each case requires contextual judgement.",
+            },
+            {
+                "label": "Rules",
+                "color": "orange",
+                "text": "3-sigma: outside ±3σ = suspicious. Tukey IQR: beyond 1.5×IQR from the box edge = outlier. For skewed distributions Tukey performs more reliably than 3-sigma.",
+            },
+            {
+                "label": "Context",
+                "color": "green",
+                "text": "An outlier in a cognitive study may indicate a participant with an exceptional profile — not an error. Always check context before removing a point from analysis.",
+            },
+        ],
+        "question": "In a reaction time dataset one participant has RT=1200ms (rest: 200–400ms). Do you treat this as a measurement error or a genuine result? What additional information would you collect?",
+    },
+}
