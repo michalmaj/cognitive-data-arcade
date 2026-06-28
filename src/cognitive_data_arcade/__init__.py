@@ -11,8 +11,16 @@ from cognitive_data_arcade.profile.manager import ProfileManager
 def main() -> None:
     pm = ProfileManager(Path.home() / ".cognitive_data_arcade" / "profile.json")
     profile = pm.load()
-    strings = get_strings(profile.language)
     audio.init(profile)
-    from cognitive_data_arcade.ui.intro_scene import TitleScene
 
-    GameLoop(TitleScene(pm, strings), pm=pm).run(profile.fullscreen)
+    if not profile.onboarding_done:
+        from cognitive_data_arcade.ui.onboarding_scene import OnboardingScene
+
+        first_scene = OnboardingScene(pm)
+    else:
+        strings = get_strings(profile.language)
+        from cognitive_data_arcade.ui.intro_scene import TitleScene
+
+        first_scene = TitleScene(pm, strings)
+
+    GameLoop(first_scene, pm=pm).run(profile.fullscreen)

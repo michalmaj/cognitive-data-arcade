@@ -17,11 +17,14 @@ from cognitive_data_arcade.engine.i18n import Strings, level_progress, level_tit
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.profile.manager import Profile, ProfileManager
 
+from pathlib import Path
+
 from cognitive_data_arcade.engine.colors import (
     BG as _BG,
     WHITE as _TITLE_COLOR,
     ORANGE as _HIGHLIGHT_COLOR,
 )
+from cognitive_data_arcade.ui.data_stats import compute_data_stats, compute_quiz_accuracy
 
 _ITEM_COLOR = (160, 160, 160)
 _SP_COLOR = (39, 174, 96)
@@ -51,6 +54,9 @@ class ProfileScene(Scene):
         self._alias_buffer = ""
         self._export_msg: str = ""
         self._export_msg_ttl: float = 0.0
+        self._logout_rect: pygame.Rect | None = None
+        self._data_stats = compute_data_stats(Path("data") / "generated")
+        self._quiz_acc = compute_quiz_accuracy(self._profile.quiz_results)
         pygame.font.init()
         self._font_sm = get_font(22)
         self._font_med = get_font(28)
@@ -64,6 +70,13 @@ class ProfileScene(Scene):
             footer_y = h - _FOOTER_H
             from cognitive_data_arcade.engine.mouse import hit
 
+            if self._logout_rect and hit(self._logout_rect, event.pos):
+                from cognitive_data_arcade.ui.logout_confirm_scene import LogoutConfirmScene
+
+                self._next = LogoutConfirmScene(
+                    self._pm, self._strings, profile_back_scene=self._back
+                )
+                return
             edit_rect = pygame.Rect(220, footer_y + 15, 200, 24)
             if hit(edit_rect, event.pos):
                 self._editing_alias = True
@@ -189,6 +202,44 @@ class ProfileScene(Scene):
             surface.blit(streak_lbl, (15, y))
             y += 28
 
+        # ---- "Moje dane / My Data" stats card ----
+        is_pl = self._strings.language == "pl"
+        card_rect = pygame.Rect(10, y, _LEFT_W - 20, 90)
+        pygame.draw.rect(surface, _PANEL_BG, card_rect, border_radius=5)
+        pygame.draw.rect(surface, (99, 102, 241), card_rect, 1, border_radius=5)
+        # left accent bar
+        pygame.draw.rect(surface, (99, 102, 241), (10, y, 3, 90), border_radius=2)
+
+        card_font = get_font(13)
+        val_font = get_font(15)
+        cy2 = y + 6
+        lbl_data = "Moje dane" if is_pl else "My Data"
+        lbl_surf2 = card_font.render(lbl_data, True, (99, 102, 241))
+        surface.blit(lbl_surf2, (16, cy2))
+        cy2 += 18
+
+        stats_rows = [
+            ("Sesje" if is_pl else "Sessions", str(self._data_stats["sessions"])),
+            (
+                "Punkty danych" if is_pl else "Data points",
+                f"{self._data_stats['data_points']:,}".replace(",", " "),
+            ),
+            ("Dni aktywności" if is_pl else "Active days", str(self._data_stats["active_days"])),
+            (
+                "Quiz" if is_pl else "Quiz",
+                f"{self._quiz_acc}%" if self._quiz_acc is not None else "—",
+            ),
+        ]
+        for label, value in stats_rows:
+            l_surf = card_font.render(label, True, _ITEM_COLOR)
+            v_surf = val_font.render(value, True, _SP_COLOR)
+            surface.blit(l_surf, (16, cy2))
+            surface.blit(v_surf, (_LEFT_W - 15 - v_surf.get_width(), cy2 - 1))
+            cy2 += 17
+
+        y = card_rect.bottom + 8
+        # ---- end "Moje dane" card ----
+
         pygame.draw.line(surface, _BORDER_COLOR, (15, y), (_LEFT_W - 15, y))
         y += 16
 
@@ -207,6 +258,15 @@ class ProfileScene(Scene):
             dy = y + row * dot_cell
             color = _SP_COLOR if (i + 1) in completed else _BORDER_COLOR
             pygame.draw.rect(surface, color, (dx, dy, dot_size, dot_size), border_radius=3)
+
+        # Logout link at bottom of left column
+        is_pl = self._strings.language == "pl"
+        logout_y = h - _FOOTER_H - 30
+        logout_lbl = "Wyloguj i zresetuj dane" if is_pl else "Log out & reset data"
+        logout_surf = get_font(13).render(logout_lbl + "  x", True, (180, 60, 60))
+        lx = 15
+        self._logout_rect = pygame.Rect(lx, logout_y, _LEFT_W - 20, 20)
+        surface.blit(logout_surf, (lx, logout_y))
 
         # ---- RIGHT COLUMN ----
         right_x = _LEFT_W + 20
