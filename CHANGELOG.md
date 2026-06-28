@@ -2,6 +2,21 @@
 
 All notable changes to Cognitive Data Arcade are documented here.
 
+## [v0.10.0] — 2026-06-28
+
+Learning Content — post-session reflection screens for all 32 lessons and an expanded daily challenge bank.
+
+### Added
+
+- **Reflection scenes** — `ReflectionScene` displays 3 concept cards (label + short text) and a reflection question after completing any content lesson; triggered automatically by `SessionSummaryScene._maybe_reflection()` for all 23 task names across modules 1–6; L03 Event Log Detective exits directly to reflection on ESC
+- **REFLECTION dicts** — bilingual (`pl`/`en`) content added to 19 lesson files: `lesson_01`, `lesson_03`, `lesson_04`, `lesson_06`, `lesson_13`–`lesson_32`; each dict has a title, three cards (indigo/orange/green), and a reflection question grounded in lesson content
+- **Daily challenge bank** — expanded from 20 to 62 questions across 6 modules: Data Basics (dc021–dc027), Cognitive Experiments (dc028–dc034), Statistics (dc035–dc041), Machine Learning (dc042–dc048), NLP (dc049–dc055), Networks & Ethics (dc056–dc062)
+- **`tests/test_reflection_scene.py`** — 6 unit tests for `ReflectionScene` (construct, draw PL/EN, ESC/mouse events, next_scene routing)
+- **`tests/test_reflection_content.py`** — parametrized structural test verifying all 19 `REFLECTION` dicts have the correct shape
+- **`tests/test_session_summary.py`** — routing tests confirming `SessionSummaryScene` returns `ReflectionScene` for lesson task names and `LessonMenuScene` for arcade-only task names
+
+---
+
 ## [v0.9.0] — 2026-06-26
 
 Distribution & Instructor Tools — standalone binaries and aggregate progress reporting.
