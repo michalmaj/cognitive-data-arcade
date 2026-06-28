@@ -60,7 +60,7 @@ REFLECTION = {
             {
                 "label": "COMPAS",
                 "color": "green",
-                "text": "ProPublica (2016): algorytm sądowy klasyfikował czarnych oskarżonych jako 'wysokie ryzyko' 2× częściej (45% vs 24% false positives). Northpointe: accuracy równa między grupami. Obaj mieli rację — twierdzenie niemożliwości w praktyce.",
+                "text": "ProPublica (2016): algorytm sądowy klasyfikował czarnych oskarżonych jako 'wysokie ryzyko' 2× częściej (45% vs 24% false positives). Northpointe: kalibracja równa między grupami. Obaj mieli rację — twierdzenie niemożliwości w praktyce.",
             },
         ],
         "question": "Model kredytowy: 79% dokładności, 33 pp dysproporcji odmów. Usunięcie kodu pocztowego: dysproporcja 9 pp, accuracy 58%. Jakie kryterium sprawiedliwości wybierzesz i jak uzasadnisz tę decyzję?",
@@ -81,7 +81,7 @@ REFLECTION = {
             {
                 "label": "COMPAS",
                 "color": "green",
-                "text": "ProPublica (2016): the court algorithm classified Black defendants as 'high risk' 2× more often (45% vs 24% false positives). Northpointe: accuracy equal between groups. Both were mathematically correct — the impossibility theorem in practice.",
+                "text": "ProPublica (2016): the court algorithm classified Black defendants as 'high risk' 2× more often (45% vs 24% false positives). Northpointe: calibration equal between groups. Both were mathematically correct — the impossibility theorem in practice.",
             },
         ],
         "question": "Credit model: 79% accuracy, 33 pp disparity in rejections. Removing postcode: 9 pp disparity, 58% accuracy. Which fairness criterion do you choose and how do you justify that decision?",

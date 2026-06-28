@@ -48,7 +48,7 @@ REFLECTION = {
             {
                 "label": "EU AI Act",
                 "color": "indigo",
-                "text": "Kwiecień 2024: systemy 'wysokiego ryzyka' (rekrutacja, edukacja, wymiar sprawiedliwości) wymagają dokumentacji technicznej, logowania, nadzoru ludzkiego i prawa do wyjaśnienia. Kara: do 30M EUR lub 6% obrotu.",
+                "text": "Maj 2024: systemy 'wysokiego ryzyka' (rekrutacja, edukacja, wymiar sprawiedliwości) wymagają dokumentacji technicznej, logowania, nadzoru ludzkiego i prawa do wyjaśnienia. Kara: do 30M EUR lub 6% obrotu.",
             },
             {
                 "label": "Efekt Goodharta",
@@ -69,7 +69,7 @@ REFLECTION = {
             {
                 "label": "EU AI Act",
                 "color": "indigo",
-                "text": "April 2024: 'high-risk' systems (recruitment, education, justice) require technical documentation, logging, human oversight, and the right to an explanation. Penalty: up to EUR 30M or 6% of turnover.",
+                "text": "May 2024: 'high-risk' systems (recruitment, education, justice) require technical documentation, logging, human oversight, and the right to an explanation. Penalty: up to EUR 30M or 6% of turnover.",
             },
             {
                 "label": "Goodhart's law",
