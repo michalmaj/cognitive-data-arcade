@@ -215,6 +215,7 @@ def test_profile_click_edit_button_enters_edit_mode():
         science_points=0,
         badges=[],
         completed_lessons=[],
+        quiz_results={},
     )
     back = MagicMock()
     scene = ProfileScene(pm, get_strings("en"), back)
@@ -236,6 +237,7 @@ def test_profile_click_outside_edit_does_not_break_keyboard():
         science_points=0,
         badges=[],
         completed_lessons=[],
+        quiz_results={},
     )
     back = MagicMock()
     scene = ProfileScene(pm, get_strings("en"), back)
