@@ -44,3 +44,48 @@ CONTENT: dict[str, dict[str, list[str]]] = {
         ],
     },
 }
+
+REFLECTION = {
+    "pl": {
+        "title": "Hypothesis Arena — Refleksja",
+        "cards": [
+            {
+                "label": "p-value",
+                "color": "indigo",
+                "text": "p to prawdopodobieństwo uzyskania co najmniej tak ekstremalnych danych przy prawdziwej H₀. p < 0.05 nie znaczy, że efekt jest duży ani ważny.",
+            },
+            {
+                "label": "Rozmiar efektu",
+                "color": "orange",
+                "text": "Cohen's d = różnica średnich / SD połączone. Przy dużym N nawet d=0.05 daje p<0.001 — istotność statystyczna nie jest równoznaczna z praktyczną ważnością.",
+            },
+            {
+                "label": "Moc testu",
+                "color": "green",
+                "text": "Moc = 1 - β = prawdopodobieństwo wykrycia efektu gdy istnieje. Standard: 80%. Mediana mocy w psychologii (Cohen, 1962) wynosiła zaledwie 0.46.",
+            },
+        ],
+        "question": "Badanie z N=50 daje p=0.08 i d=0.45. Czy to wynik negatywny? Jak sprawdzisz, czy próba była wystarczająca do wykrycia efektu tej wielkości?",
+    },
+    "en": {
+        "title": "Hypothesis Arena — Reflection",
+        "cards": [
+            {
+                "label": "p-value",
+                "color": "indigo",
+                "text": "p is the probability of observing data at least as extreme as obtained, given H₀ is true. p < 0.05 does not mean the effect is large or practically important.",
+            },
+            {
+                "label": "Effect size",
+                "color": "orange",
+                "text": "Cohen's d = mean difference / pooled SD. With large N even d=0.05 gives p<0.001 — statistical significance is not the same as practical importance.",
+            },
+            {
+                "label": "Power",
+                "color": "green",
+                "text": "Power = 1 - β = probability of detecting an effect when it exists. Standard: 80%. Median power in psychology (Cohen, 1962) was only 0.46.",
+            },
+        ],
+        "question": "A study with N=50 gives p=0.08 and d=0.45. Is this a negative result? How would you check whether the sample was large enough to detect an effect of that size?",
+    },
+}

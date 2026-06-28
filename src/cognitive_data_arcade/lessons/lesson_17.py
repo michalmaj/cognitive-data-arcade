@@ -44,3 +44,48 @@ CONTENT: dict[str, dict[str, list[str]]] = {
         ],
     },
 }
+
+REFLECTION = {
+    "pl": {
+        "title": "Feature Hunter — Refleksja",
+        "cards": [
+            {
+                "label": "Sygnał vs szum",
+                "color": "indigo",
+                "text": "Cecha-szum nie ma związku ze zmienną docelową. Dodanie jej zwiększa wymiarowość i ryzyko przeuczenia, nie poprawiając predykcji.",
+            },
+            {
+                "label": "Selekcja cech",
+                "color": "orange",
+                "text": "Filter (korelacja, ANOVA), Wrapper (testowanie podzbiorów), Embedded (LASSO zeruje współczynniki szumów automatycznie podczas trenowania).",
+            },
+            {
+                "label": "Wymiarowość",
+                "color": "green",
+                "text": "Klątwa Bellmana (1961): przestrzeń rośnie wykładniczo z liczbą cech. Więcej zmiennych w modelu to nie zawsze lepszy model.",
+            },
+        ],
+        "question": "Masz 100 cech i N=200. LASSO zostawia 8. Jak sprawdzisz, czy wybrał właściwe — i czy nie pominął cechy ważnej nieliniowo?",
+    },
+    "en": {
+        "title": "Feature Hunter — Reflection",
+        "cards": [
+            {
+                "label": "Signal vs noise",
+                "color": "indigo",
+                "text": "A noise feature has no relationship with the target variable. Adding it increases dimensionality and overfitting risk without improving prediction.",
+            },
+            {
+                "label": "Feature selection",
+                "color": "orange",
+                "text": "Filter (correlation, ANOVA), Wrapper (subset testing), Embedded (LASSO automatically zeros out noise feature coefficients during training).",
+            },
+            {
+                "label": "Dimensionality",
+                "color": "green",
+                "text": "Bellman's curse (1961): the feature space grows exponentially with the number of variables. More features in a model does not mean a better model.",
+            },
+        ],
+        "question": "You have 100 features and N=200. LASSO keeps 8. How do you check whether it selected the right ones — and whether it missed a feature that matters non-linearly?",
+    },
+}

@@ -30,6 +30,13 @@ def _assert_reflection(mod_name: str) -> None:
         "lesson_04",
         "lesson_06",
         "lesson_13",
+        "lesson_14",
+        "lesson_15",
+        "lesson_16",
+        "lesson_17",
+        "lesson_18",
+        "lesson_19",
+        "lesson_20",
     ],
 )
 def test_reflection_dict_structure(mod_name: str) -> None:

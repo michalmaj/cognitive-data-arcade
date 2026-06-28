@@ -44,3 +44,48 @@ CONTENT: dict[str, dict[str, list[str]]] = {
         ],
     },
 }
+
+REFLECTION = {
+    "pl": {
+        "title": "Correlation Trap — Refleksja",
+        "cards": [
+            {
+                "label": "Korelacja",
+                "color": "indigo",
+                "text": "Pearson r mierzy siłę i kierunek liniowego związku. r² to procent wyjaśnionej zmienności — nie mówi nic o mechanizmie przyczynowym.",
+            },
+            {
+                "label": "Przyczynowość",
+                "color": "orange",
+                "text": "Trzy powody spurious correlation: zmienna ukryta (confounding), przypadek przy małym N oraz trend czasowy. Żaden z nich to związek przyczynowy.",
+            },
+            {
+                "label": "Pułapka",
+                "color": "green",
+                "text": "Złotym standardem ustalania przyczynowości jest RCT. Bez randomizacji nawet r=0.95 nie dowodzi, że X powoduje Y.",
+            },
+        ],
+        "question": "Masz dwa zbiory z r=0.90 — lody vs utonięcia i dawka leku vs remisja. Jak odróżnisz korelację spuriousową od przyczynowej?",
+    },
+    "en": {
+        "title": "Correlation Trap — Reflection",
+        "cards": [
+            {
+                "label": "Correlation",
+                "color": "indigo",
+                "text": "Pearson r measures the strength and direction of a linear relationship. r² is the percentage of variance explained — it says nothing about a causal mechanism.",
+            },
+            {
+                "label": "Causation",
+                "color": "orange",
+                "text": "Three reasons for spurious correlation: a hidden variable (confounding), chance with small N, and a time trend. None of these is a causal link.",
+            },
+            {
+                "label": "Pitfall",
+                "color": "green",
+                "text": "The gold standard for establishing causation is the RCT. Without randomisation, even r=0.95 does not prove that X causes Y.",
+            },
+        ],
+        "question": "You have two datasets with r=0.90 — ice cream vs drownings, and drug dose vs remission. How do you tell the spurious correlation from the causal one?",
+    },
+}
