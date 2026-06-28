@@ -38,6 +38,18 @@ _REFLECTION_TASK_MAP: dict[str, tuple[str, str]] = {
     "classifier_battle": ("lesson_18", "REFLECTION"),
     "overfitting_monster": ("lesson_19", "REFLECTION"),
     "anomaly_alert": ("lesson_20", "REFLECTION"),
+    "text_tokenizer_lab": ("lesson_21", "REFLECTION"),
+    "word_weight_factory": ("lesson_22", "REFLECTION"),
+    "emotion_classifier": ("lesson_23", "REFLECTION"),
+    "semantic_space_explorer": ("lesson_24", "REFLECTION"),
+    "topic_detective": ("lesson_25", "REFLECTION"),
+    "human_vs_model": ("lesson_26", "REFLECTION"),
+    "social_network_simulator": ("lesson_27", "REFLECTION"),
+    "misinformation_spread": ("lesson_28", "REFLECTION"),
+    "recommendation_bubble": ("lesson_29", "REFLECTION"),
+    "bias_blind_spot": ("lesson_30", "REFLECTION"),
+    "you_were_the_dataset": ("lesson_31", "REFLECTION"),
+    "architects_trial": ("lesson_32", "REFLECTION"),
 }
 
 
