@@ -42,3 +42,48 @@ CONTENT: dict[str, dict[str, list[str]]] = {
         ],
     },
 }
+
+REFLECTION = {
+    "pl": {
+        "title": "Misinformation Spread — Refleksja",
+        "cards": [
+            {
+                "label": "R0 dezinformacji",
+                "color": "indigo",
+                "text": "Vosoughi (2018): fałszywe newsy na Twitterze miały wyższe R0 niż prawdziwe. Spreader infekuje sąsiadów, fact-checker leczy jeden węzeł jednym klikiem — asymetria strukturalna na korzyść dezinformacji.",
+            },
+            {
+                "label": "Efekt huba",
+                "color": "orange",
+                "text": "Hub jako 'patient zero': informacja dociera do niemal wszystkich w kilku krokach zanim fact-checker zareaguje. W sieci bezskalowej jeden influencer > 1000 kont peryferyjnych razem.",
+            },
+            {
+                "label": "Prebunking",
+                "color": "green",
+                "text": "Cook (2017) 'Bad News': gra symulująca produkcję dezinformacji uodparnia na realne kampanie. Prebunking (szczepienie kognitywne) skuteczniejszy niż debunking — interwencja przed ekspozycją > korekta po fakcie.",
+            },
+        ],
+        "question": "Masz budżet na 10 interwencji fact-checkingowych w sieci 1000 węzłów. Skąd wiesz, które węzły wybrać? Jak zmienia się strategia gdy R0 dezinformacji = 0.8 vs R0 = 1.5?",
+    },
+    "en": {
+        "title": "Misinformation Spread — Reflection",
+        "cards": [
+            {
+                "label": "Misinformation R0",
+                "color": "indigo",
+                "text": "Vosoughi (2018): false news on Twitter had a higher R0 than true news. A spreader infects neighbours; a fact-checker heals one node per click — a structural asymmetry favouring misinformation.",
+            },
+            {
+                "label": "Hub effect",
+                "color": "orange",
+                "text": "Hub as 'patient zero': information reaches almost everyone within a few SIR steps before a fact-checker can respond. In a scale-free network one influencer outweighs 1,000 peripheral accounts combined.",
+            },
+            {
+                "label": "Prebunking",
+                "color": "green",
+                "text": "Cook (2017) 'Bad News': a game simulating misinformation production inoculates against real campaigns. Prebunking (cognitive inoculation) is more effective than debunking — intervention before exposure beats correction after the fact.",
+            },
+        ],
+        "question": "You have a budget for 10 fact-checking interventions in a 1,000-node network. How do you decide which nodes to target? How does the strategy change when misinformation R0=0.8 vs R0=1.5?",
+    },
+}

@@ -41,3 +41,48 @@ CONTENT: dict[str, dict[str, list[str]]] = {
         ],
     },
 }
+
+REFLECTION = {
+    "pl": {
+        "title": "You Were the Dataset — Refleksja",
+        "cards": [
+            {
+                "label": "Odcisk poznawczy",
+                "color": "indigo",
+                "text": "Wzorce RT, błędów i stylu pisania mogą identyfikować osobę z dokładnością >95% — bez żadnych danych osobowych. Kosiński (2013): 150 lajków na Facebooku przewiduje osobowość OCEAN dokładniej niż znajomi.",
+            },
+            {
+                "label": "Efekt Hawthorne'a",
+                "color": "orange",
+                "text": "Mayo (1924-1932): zachowanie zmienia się gdy jesteśmy obserwowani. W tym kursie: uczestnicy nie wiedzieli, że każda gra zapisuje CSV. Paradoks badań — poinformowanie uczestnika zmienia to, co mierzysz.",
+            },
+            {
+                "label": "Cambridge Analytica",
+                "color": "green",
+                "text": "87 milionów profili Facebooka zebrano bez wiedzy użytkowników przez aplikację GSR. Zgoda obejmowała też znajomych. RODO (2018): dane behawioralne (RT, wzorce kliknięć) = dane osobowe wymagające podstawy prawnej.",
+            },
+        ],
+        "question": "Twoje dane RT z tego kursu mogą cię identyfikować. Co oznacza 'anonimizacja' w kontekście danych behawioralnych? Kiedy 'anonimowe dane analityczne' stają się danymi osobowymi według RODO?",
+    },
+    "en": {
+        "title": "You Were the Dataset — Reflection",
+        "cards": [
+            {
+                "label": "Cognitive fingerprint",
+                "color": "indigo",
+                "text": "Patterns of RT, errors, and typing style can identify a person with >95% accuracy — with no personal data at all. Kosinski (2013): 150 Facebook likes predict OCEAN personality more accurately than friends.",
+            },
+            {
+                "label": "Hawthorne effect",
+                "color": "orange",
+                "text": "Mayo (1924–1932): behaviour changes when we know we are observed. In this course: participants did not know every game writes a CSV file. Research paradox — informing the participant changes what you measure.",
+            },
+            {
+                "label": "Cambridge Analytica",
+                "color": "green",
+                "text": "87 million Facebook profiles were collected without users' knowledge via the GSR app. Consent covered friends too. GDPR (2018): behavioural data (RT, click patterns) = personal data requiring a legal basis.",
+            },
+        ],
+        "question": "Your RT data from this course can identify you. What does 'anonymisation' mean for behavioural data? When do 'anonymous analytics data' become personal data under the GDPR?",
+    },
+}

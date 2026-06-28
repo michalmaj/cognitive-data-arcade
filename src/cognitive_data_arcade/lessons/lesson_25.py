@@ -42,3 +42,48 @@ CONTENT: dict[str, dict[str, list[str]]] = {
         ],
     },
 }
+
+REFLECTION = {
+    "pl": {
+        "title": "Topic Detective — Refleksja",
+        "cards": [
+            {
+                "label": "LDA",
+                "color": "indigo",
+                "text": "LDA (Blei, Ng, Jordan 2003): każdy dokument to mieszanina tematów, każdy temat to rozkład słów. Nienadzorowany — sam odkrywa ukrytą strukturę. Ponad 40 000 cytowań.",
+            },
+            {
+                "label": "Wybór K",
+                "color": "orange",
+                "text": "Za mało tematów: za ogólne. Za dużo K: fragmentacja i powtórzenia. Oceniamy przez perplexity i interpretację jakościową. Nie ma jednej 'poprawnej' liczby tematów — to decyzja analityka.",
+            },
+            {
+                "label": "BERTopic",
+                "color": "green",
+                "text": "Grootendorst (2022): osadzenia zdań + HDBSCAN — liczba tematów wyłania się z danych bez podawania K z góry. Dominuje w nowych badaniach, ale wymaga GPU dla dużych korpusów.",
+            },
+        ],
+        "question": "LDA z K=5 daje tematy trudne do nazwania. K=20 daje powtórzenia. Co zrobisz? Jak perplexity i koherencja tematu pomagają — i dlaczego żadna metryka nie zastąpi interpretacji?",
+    },
+    "en": {
+        "title": "Topic Detective — Reflection",
+        "cards": [
+            {
+                "label": "LDA",
+                "color": "indigo",
+                "text": "LDA (Blei, Ng, Jordan 2003): each document is a mixture of topics, each topic is a distribution over words. Unsupervised — discovers hidden structure automatically. Over 40,000 citations.",
+            },
+            {
+                "label": "Choosing K",
+                "color": "orange",
+                "text": "Too few topics: too general. Too many K: fragmentation and repetition. We assess using perplexity and qualitative interpretation. There is no single 'correct' number of topics — it is an analyst's decision.",
+            },
+            {
+                "label": "BERTopic",
+                "color": "green",
+                "text": "Grootendorst (2022): sentence embeddings + HDBSCAN — the number of topics emerges from data without specifying K in advance. Dominates recent research, but requires GPU for large corpora.",
+            },
+        ],
+        "question": "LDA with K=5 gives topics that are hard to name. K=20 gives repetitions. What do you do? How do perplexity and topic coherence help — and why can no metric replace human interpretation?",
+    },
+}
