@@ -42,3 +42,48 @@ CONTENT: dict[str, dict[str, list[str]]] = {
         ],
     },
 }
+
+REFLECTION = {
+    "pl": {
+        "title": "Word Weight Factory — Refleksja",
+        "cards": [
+            {
+                "label": "TF-IDF",
+                "color": "indigo",
+                "text": "TF(t,d) = zliczenia / długość dokumentu. IDF(t) = log(N/df(t)) — Karen Spärck Jones (1972). Wysoki TF-IDF: słowo częste w tym dokumencie i rzadkie w korpusie — charakterystyczny sygnał.",
+            },
+            {
+                "label": "BoW vs embeddingi",
+                "color": "orange",
+                "text": "BoW ignoruje kolejność: 'pies gryzie człowieka' = 'człowiek gryzie psa'. Word2Vec (Mikolov 2013) koduje znaczenie jako pozycję w przestrzeni wektorowej.",
+            },
+            {
+                "label": "Rzadkość",
+                "color": "green",
+                "text": "Przy dużym słowniku większość dokumentów ma 99% zer w wektorze TF-IDF. Macierze rzadkie (sparse) rozwiązują problem pamięci, ale nie dodają semantyki — duże słowniki to problem wymiarowości.",
+            },
+        ],
+        "question": "Dokument zawiera słowo 'matrix' 10 razy, a w korpusie 1000 dokumentów pojawia się w 2 z nich. Oblicz IDF. Co TF-IDF mówi o tym słowie — i czego nie mówi?",
+    },
+    "en": {
+        "title": "Word Weight Factory — Reflection",
+        "cards": [
+            {
+                "label": "TF-IDF",
+                "color": "indigo",
+                "text": "TF(t,d) = count / document length. IDF(t) = log(N/df(t)) — Karen Spärck Jones (1972). High TF-IDF: a word frequent in this document and rare in the corpus — a characteristic signal.",
+            },
+            {
+                "label": "BoW vs embeddings",
+                "color": "orange",
+                "text": "BoW ignores word order: 'dog bites man' = 'man bites dog'. Word2Vec (Mikolov 2013) encodes meaning as position in a vector space.",
+            },
+            {
+                "label": "Sparsity",
+                "color": "green",
+                "text": "With a large vocabulary, most documents have 99% zeros in their TF-IDF vector. Sparse matrices solve the memory problem but add no semantics — large vocabularies are a dimensionality problem.",
+            },
+        ],
+        "question": "A document contains the word 'matrix' 10 times; it appears in 2 out of 1,000 corpus documents. Calculate the IDF. What does TF-IDF tell you about this word — and what does it not tell you?",
+    },
+}

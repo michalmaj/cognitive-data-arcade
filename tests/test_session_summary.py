@@ -137,3 +137,25 @@ def test_no_reflection_for_reaction_time(tmp_path: Path) -> None:
     scene.handle_event(space)
     next_s = scene.next_scene()
     assert isinstance(next_s, LessonMenuScene), f"Expected LessonMenuScene, got {type(next_s)}"
+
+
+def test_reflection_scene_shown_for_correlation_trap(tmp_path: Path) -> None:
+    from cognitive_data_arcade.ui.reflection_scene import ReflectionScene
+
+    scene = _make_scene(tmp_path, task_name="correlation_trap")
+    space = pygame.event.Event(pygame.KEYDOWN, key=pygame.K_SPACE, mod=0, unicode=" ")
+    scene.handle_event(space)
+    assert scene.is_done()
+    next_s = scene.next_scene()
+    assert isinstance(next_s, ReflectionScene), f"Expected ReflectionScene, got {type(next_s)}"
+
+
+def test_reflection_scene_shown_for_text_tokenizer_lab(tmp_path: Path) -> None:
+    from cognitive_data_arcade.ui.reflection_scene import ReflectionScene
+
+    scene = _make_scene(tmp_path, task_name="text_tokenizer_lab")
+    space = pygame.event.Event(pygame.KEYDOWN, key=pygame.K_SPACE, mod=0, unicode=" ")
+    scene.handle_event(space)
+    assert scene.is_done()
+    next_s = scene.next_scene()
+    assert isinstance(next_s, ReflectionScene), f"Expected ReflectionScene, got {type(next_s)}"

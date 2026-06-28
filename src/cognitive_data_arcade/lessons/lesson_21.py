@@ -46,3 +46,48 @@ CONTENT: dict[str, dict[str, list[str]]] = {
         ],
     },
 }
+
+REFLECTION = {
+    "pl": {
+        "title": "Text Tokenizer Lab — Refleksja",
+        "cards": [
+            {
+                "label": "Tokenizacja",
+                "color": "indigo",
+                "text": "Tokenizacja dzieli tekst na mniejsze jednostki. BPE (Sennrich 2016) iteracyjnie scala najczęstsze pary znaków — tak działa GPT: słownik 50 257 tokenów, żaden tekst nie jest nieznany.",
+            },
+            {
+                "label": "Normalizacja",
+                "color": "orange",
+                "text": "Lowercase i usuwanie interpunkcji redukują słownik. Prawo Zipfa (1935): najczęstsze słowo pojawia się ~2× częściej od drugiego. 20% słownika pokrywa 80% tekstu.",
+            },
+            {
+                "label": "Stop words",
+                "color": "green",
+                "text": "Słowa funkcyjne ('i', 'w', 'się') niosą mało informacji semantycznej. Usunięcie zmniejsza szum, ale usuwa kontekst gramatyczny — słowo 'nie' może być kluczowe dla negacji.",
+            },
+        ],
+        "question": "Tokenizator dzieli 'niezapomniany' na 3 tokeny. Dlaczego nieznane słowa są kosztowniejsze obliczeniowo i jak BPE radzi sobie z neologizmami?",
+    },
+    "en": {
+        "title": "Text Tokenizer Lab — Reflection",
+        "cards": [
+            {
+                "label": "Tokenisation",
+                "color": "indigo",
+                "text": "Tokenisation splits text into smaller units. BPE (Sennrich 2016) iteratively merges the most frequent character pairs — GPT uses this: a vocabulary of 50,257 tokens, no text is unknown.",
+            },
+            {
+                "label": "Normalisation",
+                "color": "orange",
+                "text": "Lowercasing and removing punctuation reduce vocabulary size. Zipf's law (1935): the most frequent word appears ~2x more often than the second. 20% of vocabulary covers 80% of text.",
+            },
+            {
+                "label": "Stop words",
+                "color": "green",
+                "text": "Function words ('and', 'in', 'the') carry little semantic information. Removing them reduces noise but removes grammatical context — the word 'not' can be crucial for negation.",
+            },
+        ],
+        "question": "A tokeniser splits 'unforgettable' into 3 tokens. Why are unknown words computationally more expensive, and how does BPE handle neologisms?",
+    },
+}

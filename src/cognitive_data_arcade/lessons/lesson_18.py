@@ -44,3 +44,48 @@ CONTENT: dict[str, dict[str, list[str]]] = {
         ],
     },
 }
+
+REFLECTION = {
+    "pl": {
+        "title": "Classifier Battle — Refleksja",
+        "cards": [
+            {
+                "label": "Granica decyzyjna",
+                "color": "indigo",
+                "text": "Granica decyzyjna dzieli przestrzeń cech na obszary klas. Liniowa działa tylko gdy klasy są liniowo separowalne — zawodzi na kształtach takich jak koncentryczne kółka.",
+            },
+            {
+                "label": "Klasyfikatory",
+                "color": "orange",
+                "text": "KNN: elastyczna granica, wrażliwa na szum. SVM: maksymalny margines z kernel trick. Drzewa: interpretowalne, podatne na overfitting przy dużej głębokości.",
+            },
+            {
+                "label": "No Free Lunch",
+                "color": "green",
+                "text": "Wolpert (1996): żaden klasyfikator nie wygrywa na wszystkich zbiorach danych. Kształt i struktura danych powinna decydować o wyborze algorytmu.",
+            },
+        ],
+        "question": "Twoje dane mają kształt koncentrycznych kółek. Regresja logistyczna: 52%, KNN k=5: 91%. Co to mówi o strukturze danych i dlaczego metoda liniowa zawodzi?",
+    },
+    "en": {
+        "title": "Classifier Battle — Reflection",
+        "cards": [
+            {
+                "label": "Decision boundary",
+                "color": "indigo",
+                "text": "A decision boundary separates the feature space into class regions. A linear boundary only works when classes are linearly separable — it fails on shapes such as concentric circles.",
+            },
+            {
+                "label": "Classifiers",
+                "color": "orange",
+                "text": "KNN: flexible boundary, sensitive to noise. SVM: maximum margin with kernel trick. Trees: interpretable, prone to overfitting at large depth.",
+            },
+            {
+                "label": "No Free Lunch",
+                "color": "green",
+                "text": "Wolpert (1996): no single classifier outperforms all others on all datasets. The shape and structure of the data should drive algorithm selection.",
+            },
+        ],
+        "question": "Your data has a concentric-circle shape. Logistic regression: 52%, KNN k=5: 91%. What does this reveal about the data structure and why does a linear method fail?",
+    },
+}

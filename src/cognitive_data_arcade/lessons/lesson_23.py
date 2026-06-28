@@ -42,3 +42,48 @@ CONTENT: dict[str, dict[str, list[str]]] = {
         ],
     },
 }
+
+REFLECTION = {
+    "pl": {
+        "title": "Emotion Classifier — Refleksja",
+        "cards": [
+            {
+                "label": "Leksykon",
+                "color": "indigo",
+                "text": "Klasyfikator leksykonowy sumuje wagi słów: 'dobry'=+2, 'zły'=−2. Suma > 0 = pozytywny. Proste, interpretowalne, zero danych treningowych — ale głuche na kontekst.",
+            },
+            {
+                "label": "Pułapki",
+                "color": "orange",
+                "text": "Negacja ('nie dobry'), intensywność ('genialny' ≠ 'dobry'), sarkazm ('Świetna robota...'). VADER (Hutto 2014) obsługuje wielkie litery i emotikony, ale nadal zawodzi na ironii.",
+            },
+            {
+                "label": "ML vs leksykon",
+                "color": "green",
+                "text": "BERT (Devlin 2018) uczy się z kontekstu całego zdania — wykrywa negację, ironię i zależności długodystansowe. Wymaga tysięcy etykiet treningowych i jest nieprzejrzysty jako black box.",
+            },
+        ],
+        "question": "Zdanie: 'Nie spodziewałem się, że to będzie aż tak niezwykłe doświadczenie.' Który klasyfikator popełni błąd i dlaczego? Jak wykryłbyś ironię algorytmicznie?",
+    },
+    "en": {
+        "title": "Emotion Classifier — Reflection",
+        "cards": [
+            {
+                "label": "Lexicon",
+                "color": "indigo",
+                "text": "A lexicon classifier sums word weights: 'good'=+2, 'bad'=−2. Sum > 0 = positive. Simple, interpretable, zero training data — but deaf to context.",
+            },
+            {
+                "label": "Pitfalls",
+                "color": "orange",
+                "text": "Negation ('not good'), intensity ('brilliant' ≠ 'good'), sarcasm ('Great job...'). VADER (Hutto 2014) handles all-caps and emoticons, but still fails on irony.",
+            },
+            {
+                "label": "ML vs lexicon",
+                "color": "green",
+                "text": "BERT (Devlin 2018) learns from the full sentence context — it detects negation, irony, and long-range dependencies. Requires thousands of training labels and is opaque as a black box.",
+            },
+        ],
+        "question": "Sentence: 'I never expected this to be such a remarkable experience.' Which classifier gets it wrong and why? How would you detect irony algorithmically?",
+    },
+}
