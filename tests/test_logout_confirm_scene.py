@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import pygame
-import pytest
 
 from cognitive_data_arcade.ui.logout_confirm_scene import LogoutConfirmScene
 
