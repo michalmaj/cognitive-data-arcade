@@ -1,8 +1,6 @@
 # tests/test_logout.py
 from __future__ import annotations
 
-import csv
-import shutil
 from pathlib import Path
 
 import pytest
