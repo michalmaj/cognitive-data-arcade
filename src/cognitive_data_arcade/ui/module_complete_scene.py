@@ -4,6 +4,7 @@ from __future__ import annotations
 import pygame
 
 from cognitive_data_arcade.data.act_content import ACT_BRIDGES
+from cognitive_data_arcade.data.home_prompts import HOME_PROMPTS
 from cognitive_data_arcade.engine.badges import _MODULE_BADGES, load_badge_icon
 from cognitive_data_arcade.engine.fonts import get_font, get_font_medium
 from cognitive_data_arcade.engine.i18n import Strings
@@ -37,6 +38,8 @@ class ModuleCompleteScene(Scene):
         self._next: Scene | None = None
         self._next_btn_rect: pygame.Rect | None = None
         self._menu_btn_rect: pygame.Rect | None = None
+        self._home_btn_rect: pygame.Rect | None = None
+        self._show_home_prompt = False
 
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
@@ -46,7 +49,10 @@ class ModuleCompleteScene(Scene):
             return
         k = event.key
         if k == pygame.K_ESCAPE:
-            self._go_menu()
+            if self._show_home_prompt:
+                self._show_home_prompt = False
+            else:
+                self._go_menu()
         elif k == pygame.K_RETURN:
             if self._module_idx < _NUM_MODULES - 1:
                 self._go_next_module()
@@ -58,6 +64,8 @@ class ModuleCompleteScene(Scene):
             self._go_menu()
         elif self._next_btn_rect and self._next_btn_rect.collidepoint(pos):
             self._go_next_module()
+        elif self._home_btn_rect and self._home_btn_rect.collidepoint(pos):
+            self._show_home_prompt = not self._show_home_prompt
 
     def _go_menu(self) -> None:
         from cognitive_data_arcade.ui.menu import LessonMenuScene
@@ -165,14 +173,67 @@ class ModuleCompleteScene(Scene):
         else:
             self._next_btn_rect = None
 
-        # Bridge narrative text (below buttons)
+        # "Do domu / Take home" button
+        _ORANGE = (251, 146, 60)
+        home_btn_w, home_btn_h = 300, 36
+        home_btn_x = cx - home_btn_w // 2
+        home_btn_y = btn_y + btn_h + 10
+        self._home_btn_rect = pygame.Rect(home_btn_x, home_btn_y, home_btn_w, home_btn_h)
+        pygame.draw.rect(surface, _BG, self._home_btn_rect, border_radius=6)
+        pygame.draw.rect(surface, _ORANGE, self._home_btn_rect, 1, border_radius=6)
+        home_lbl_text = (
+            "Co zrobic przed kolejnymi zajeciami?"
+            if lang == "pl"
+            else "What to do before the next session?"
+        )
+        home_lbl = get_font(14).render(home_lbl_text, True, _ORANGE)
+        surface.blit(
+            home_lbl,
+            (
+                cx - home_lbl.get_width() // 2,
+                home_btn_y + (home_btn_h - home_lbl.get_height()) // 2,
+            ),
+        )
+
+        # Bridge narrative text (below the home button)
         bridge_key = "text_pl" if lang == "pl" else "text_en"
         bridge_text = ACT_BRIDGES[self._module_idx][bridge_key]
         bridge_font = get_font(16)
-        bridge_y = 480
+        bridge_y = home_btn_y + home_btn_h + 12
         for bline in bridge_text.split("\n"):
             bline = bline.strip()
             if bline:
                 bs = bridge_font.render(bline, True, (90, 96, 144))
                 surface.blit(bs, (cx - bs.get_width() // 2, bridge_y))
                 bridge_y += bridge_font.get_height() + 4
+
+        # Overlay with home prompt text
+        if self._show_home_prompt and self._module_idx in HOME_PROMPTS:
+            prompt_text = HOME_PROMPTS[self._module_idx][lang]
+            sw, sh = surface.get_size()
+            ov = pygame.Surface((sw, sh), pygame.SRCALPHA)
+            ov.fill((0, 0, 0, 200))
+            surface.blit(ov, (0, 0))
+            pw2, ph2 = 560, 280
+            px2 = (sw - pw2) // 2
+            py2 = (sh - ph2) // 2
+            pygame.draw.rect(surface, _SURFACE, (px2, py2, pw2, ph2), border_radius=10)
+            pygame.draw.rect(surface, _ORANGE, (px2, py2, pw2, ph2), 2, border_radius=10)
+            title_lbl = "Przed kolejnymi zajeciami" if lang == "pl" else "Before the next session"
+            ts = get_font(18).render(title_lbl, True, _ORANGE)
+            surface.blit(ts, (cx - ts.get_width() // 2, py2 + 14))
+            line_y = py2 + 50
+            for line in prompt_text.split("\n"):
+                line = line.strip()
+                if line:
+                    ls = get_font(15).render(line, True, _TEXT)
+                    surface.blit(ls, (cx - ls.get_width() // 2, line_y))
+                    line_y += 26
+            close_hint = get_font(13).render(
+                "ESC / kliknij ponownie aby zamknac"
+                if lang == "pl"
+                else "ESC / click again to close",
+                True,
+                _TEXT_DIM,
+            )
+            surface.blit(close_hint, (cx - close_hint.get_width() // 2, py2 + ph2 - 28))
