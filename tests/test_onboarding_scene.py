@@ -86,6 +86,15 @@ def test_esc_is_noop() -> None:
     assert not scene.is_done()
 
 
+def test_close_button_exits_without_profile() -> None:
+    scene, pm = _make_scene()
+    # Simulate click on close button (cx=512, close_rect center ≈ (512, 644))
+    scene.handle_event(pygame.event.Event(pygame.MOUSEBUTTONDOWN, button=1, pos=(512, 644)))
+    assert scene.is_done()
+    assert scene.next_scene() is None  # GameLoop will exit the loop
+    assert pm.saved_alias is None  # no profile was saved
+
+
 def test_draw_does_not_crash() -> None:
     pygame.display.set_mode((1024, 768), pygame.NOFRAME)
     scene, _ = _make_scene()

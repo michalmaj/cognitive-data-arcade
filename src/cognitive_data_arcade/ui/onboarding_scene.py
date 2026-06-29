@@ -68,6 +68,9 @@ class OnboardingScene(Scene):
         submit_rect = pygame.Rect(cx - 100, 510, 200, 44)
         if submit_rect.collidepoint(pos):
             self._try_submit()
+        close_rect = pygame.Rect(cx - 60, 630, 120, 28)
+        if close_rect.collidepoint(pos):
+            self._done = True  # _next stays None → GameLoop exits
 
     def _toggle_language(self) -> None:
         self._language = "en" if self._language == "pl" else "pl"
@@ -168,3 +171,16 @@ class OnboardingScene(Scene):
         hint = "TAB — zmien jezyk" if self._language == "pl" else "TAB — switch language"
         hint_surf = get_font(13).render(hint, True, _DIM)
         surface.blit(hint_surf, (cx - hint_surf.get_width() // 2, 580))
+
+        close_rect = pygame.Rect(cx - 60, 630, 120, 28)
+        pygame.draw.rect(surface, _SURFACE, close_rect, border_radius=4)
+        pygame.draw.rect(surface, _BORDER, close_rect, 1, border_radius=4)
+        close_lbl = "Zamknij" if self._language == "pl" else "Close"
+        close_surf = get_font(13).render(close_lbl, True, _DIM)
+        surface.blit(
+            close_surf,
+            (
+                close_rect.centerx - close_surf.get_width() // 2,
+                close_rect.centery - close_surf.get_height() // 2,
+            ),
+        )
