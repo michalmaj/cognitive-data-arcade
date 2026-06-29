@@ -51,37 +51,32 @@ def test_completed_set_populated_from_profile():
     assert scene._completed == {1, 3, 7}
 
 
-def test_complete_lesson_called_on_launch(monkeypatch):
+def test_complete_lesson_not_called_on_launch(monkeypatch):
+    """Launching a game must NOT mark the lesson complete — only finishing does."""
     pm = _FakePM()
     scene = LessonMenuScene(pm, EN)
 
     launched = []
     monkeypatch.setattr(scene, "_launch_big_data_map", lambda: launched.append(1))
 
-    # lesson index 0 → lesson_num=1 (BigDataMap)
     assert scene._selected == 0
     scene._launch_selected_game()
 
-    assert 1 in pm._completed
+    assert pm._completed == []
     assert launched == [1]
 
 
-def test_complete_lesson_recorded_before_scene_transition(monkeypatch):
+def test_complete_lesson_game_launches_without_marking_completion(monkeypatch):
+    """All 31 lessons can be launched without any completion being recorded."""
     pm = _FakePM()
     scene = LessonMenuScene(pm, EN)
 
     call_order = []
-    original_complete = pm.complete_lesson
-
-    def tracked_complete(n):
-        call_order.append("complete")
-        original_complete(n)
-
-    pm.complete_lesson = tracked_complete
     monkeypatch.setattr(scene, "_launch_big_data_map", lambda: call_order.append("launch"))
 
     scene._launch_selected_game()
-    assert call_order == ["complete", "launch"]
+    assert call_order == ["launch"]
+    assert pm._completed == []
 
 
 def test_draw_with_some_completed_no_crash():

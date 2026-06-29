@@ -159,3 +159,67 @@ def test_reflection_scene_shown_for_text_tokenizer_lab(tmp_path: Path) -> None:
     assert scene.is_done()
     next_s = scene.next_scene()
     assert isinstance(next_s, ReflectionScene), f"Expected ReflectionScene, got {type(next_s)}"
+
+
+def test_lesson_marked_complete_on_session_summary_init(tmp_path: Path) -> None:
+    """complete_lesson must be called when session summary is created, not on launch."""
+    pm = ProfileManager(tmp_path / "profile.json")
+    profile_before = _make_profile()
+    profile_after = _make_profile(ap=70)
+    pygame.init()
+    SessionSummaryScene(
+        session=_make_session(task_name="reaction_time"),
+        new_badge_ids=[],
+        profile_before=profile_before,
+        profile_after=profile_after,
+        strings=PL,
+        profile_manager=pm,
+    )
+    profile = pm.load()
+    assert 2 in profile.completed_lessons
+
+
+def test_lesson_not_marked_for_unknown_task_name(tmp_path: Path) -> None:
+    """Unknown task names must not crash and must not mark any lesson."""
+    pm = ProfileManager(tmp_path / "profile.json")
+    profile_before = _make_profile()
+    profile_after = _make_profile()
+    pygame.init()
+    SessionSummaryScene(
+        session=_make_session(task_name="unknown_task"),
+        new_badge_ids=[],
+        profile_before=profile_before,
+        profile_after=profile_after,
+        strings=PL,
+        profile_manager=pm,
+    )
+    profile = pm.load()
+    assert profile.completed_lessons == []
+
+
+def test_all_mapped_tasks_mark_correct_lesson(tmp_path: Path) -> None:
+    """Spot-check a sample of _TASK_LESSON_MAP entries."""
+    from cognitive_data_arcade.ui.session_summary import _TASK_LESSON_MAP
+
+    samples = [
+        ("stroop", 7),
+        ("flanker", 8),
+        ("distribution_playground", 13),
+        ("architects_trial", 32),
+    ]
+    for task_name, expected_lesson in samples:
+        pm = ProfileManager(tmp_path / f"profile_{task_name}.json")
+        pygame.init()
+        SessionSummaryScene(
+            session=_make_session(task_name=task_name),
+            new_badge_ids=[],
+            profile_before=_make_profile(),
+            profile_after=_make_profile(),
+            strings=PL,
+            profile_manager=pm,
+        )
+        profile = pm.load()
+        assert expected_lesson in profile.completed_lessons, (
+            f"{task_name} did not mark L{expected_lesson}"
+        )
+    assert len(_TASK_LESSON_MAP) == 30, "Map must cover exactly 30 lessons (L03 handled separately)"

@@ -74,6 +74,7 @@ class EventLogLevelScene(Scene):
             from cognitive_data_arcade.lessons.lesson_03 import REFLECTION
             from cognitive_data_arcade.ui.reflection_scene import ReflectionScene
 
+            self._pm.complete_lesson(3)
             menu = LessonMenuScene(self._pm, self._strings)
             self._next = ReflectionScene(REFLECTION, self._strings, back_scene=menu)
             self._done = True

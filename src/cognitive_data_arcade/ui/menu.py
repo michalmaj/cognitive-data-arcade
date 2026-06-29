@@ -743,7 +743,6 @@ class LessonMenuScene(Scene):
     def _launch_selected_game(self) -> None:
         audio.play_sfx("select")
         lesson_num = _LESSON_DATA[self._selected]["num"]
-        self._pm.complete_lesson(lesson_num)
         if lesson_num == 1:
             self._launch_big_data_map()
         elif lesson_num == 2:

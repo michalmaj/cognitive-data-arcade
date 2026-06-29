@@ -20,6 +20,9 @@ class _FakePM:
     def load(self):
         return self._Profile()
 
+    def complete_lesson(self, lesson_num: int) -> None:
+        pass
+
 
 def _make_scene():
     pygame.init()
