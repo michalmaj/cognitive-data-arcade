@@ -128,15 +128,253 @@ These questions are what data science is actually about.
 
 ---
 
-## What next?
+## What data do games generate?
 
-The arcade is designed so that each game adds one more concept. After Reaction Time Lab, the natural next steps are:
+Six games log CSV files to `data/generated/`. Here are the exact columns for each.
 
-- **Stroop Challenge** (lesson 6) — same measurement, but now there is a cognitive manipulation. Compare your RT under interference with your baseline from this lab.
-- **Flanker Arena** (lesson 7) — attention control under conflicting signals.
-- **Cognitive Dashboard** (lesson 11) — look at all your sessions together in one place.
+### Reaction Time Lab → `data/generated/reaction_time/`
 
-Each of those games saves data in the same format. You can combine sessions across games once you understand what each column means.
+| Column | Type | Description |
+|--------|------|-------------|
+| `participant_id` | string | Device UUID — same across all your sessions |
+| `session_id` | string | Timestamp string, unique per session |
+| `trial_id` | int | Trial number within the session (1-based) |
+| `task_name` | string | Always `reaction_time` |
+| `condition` | string | `focused` or `distracted` |
+| `stimulus` | string | Shape shown (`circle`) |
+| `expected_response` | string | Key that should be pressed |
+| `actual_response` | string | Key that was pressed (empty if timeout) |
+| `correct` | bool | `True` if responded within the time limit |
+| `reaction_time_ms` | float | Time from stimulus to keypress in milliseconds |
+| `timestamp` | string | ISO 8601 wall-clock time of the trial |
+| `distractor_count` | int | Number of distractors shown in distracted mode |
+
+Key columns for analysis: `correct`, `reaction_time_ms`, `condition`.
+
+---
+
+### Stroop Challenge → `data/generated/stroop/`
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `participant_id` | string | Device UUID |
+| `session_id` | string | Session timestamp |
+| `trial_id` | int | Trial number |
+| `task_name` | string | Always `stroop` |
+| `condition` | string | `congruent` (ink matches word) or `incongruent` (mismatch) |
+| `stimulus` | string | The word shown (e.g. `RED`) |
+| `ink_color` | string | Actual ink colour (e.g. `blue`) |
+| `word_color` | string | Colour named by the word |
+| `expected_response` | string | Correct ink colour name |
+| `actual_response` | string | Key pressed |
+| `correct` | bool | Whether response was correct |
+| `reaction_time_ms` | float | Reaction time in ms |
+| `timestamp` | string | ISO 8601 trial time |
+
+Key question: is `reaction_time_ms` higher on `incongruent` trials? That is the Stroop effect.
+
+---
+
+### Flanker Arena → `data/generated/flanker/`
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `participant_id` | string | Device UUID |
+| `session_id` | string | Session timestamp |
+| `trial_id` | int | Trial number |
+| `task_name` | string | Always `flanker` |
+| `condition` | string | `congruent` or `incongruent` |
+| `target_direction` | string | `left` or `right` — the correct answer |
+| `correct` | bool | Whether response matched target direction |
+| `reaction_time_ms` | float | Reaction time in ms |
+| `timestamp` | string | ISO 8601 trial time |
+
+Key question: compare mean RT and accuracy between `congruent` and `incongruent` conditions.
+
+---
+
+### Go/No-Go Guard → `data/generated/gono/`
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `participant_id` | string | Device UUID |
+| `session_id` | string | Session timestamp |
+| `trial_id` | int | Trial number |
+| `task_name` | string | Always `go_no_go` |
+| `trial_type` | string | `go` (respond) or `nogo` (withhold) |
+| `response` | string | `hit`, `miss`, `false_alarm`, or `correct_rejection` |
+| `correct` | bool | Whether the response was appropriate |
+| `reaction_time_ms` | float | RT in ms; `0.0` if no response was made |
+| `timestamp` | string | ISO 8601 trial time |
+
+Key question: what is your false alarm rate (pressing on `nogo` trials)? That measures impulse control.
+
+---
+
+### N-Back Memory Grid → `data/generated/nback/`
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `task_name` | string | Always `n_back` |
+| `participant_id` | string | Device UUID |
+| `session_id` | string | Session timestamp |
+| `trial_id` | int | Trial number |
+| `block_id` | int | Block number |
+| `n_level` | int | N-back level played (1, 2, or 3) |
+| `position` | int | Grid position shown (0–8) |
+| `letter` | string | Letter shown |
+| `pos_match` | bool | Whether position matches N steps back |
+| `let_match` | bool | Whether letter matches N steps back |
+| `key_a_pressed` | bool | Whether the position-match key was pressed |
+| `key_l_pressed` | bool | Whether the letter-match key was pressed |
+| `pos_correct` | bool | Correct response for position match |
+| `let_correct` | bool | Correct response for letter match |
+| `rt_a_ms` | float | Reaction time for the A key (ms) |
+| `rt_l_ms` | float | Reaction time for the L key (ms) |
+
+Key question: how does accuracy (`pos_correct`, `let_correct`) change as `n_level` increases?
+
+---
+
+### Visual Search Lab → `data/generated/visual_search/`
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `participant_id` | string | Device UUID |
+| `session_id` | string | Session timestamp |
+| `trial_id` | int | Trial number |
+| `mode` | string | Search type (`feature` or `conjunction`) |
+| `condition` | string | Trial condition |
+| `set_size` | int | Number of items on screen |
+| `target_present` | bool | Whether the target was actually present |
+| `response` | string | `present`, `absent`, or `timeout` |
+| `correct` | bool | Whether response matched target presence |
+| `rt_ms` | float | Reaction time in ms (`NaN` on timeout) |
+| `timestamp` | string | ISO 8601 trial time |
+
+Key question: does `rt_ms` grow with `set_size` in conjunction search but not in feature search? That is the slope-of-the-search-function.
+
+---
+
+## Module guide
+
+The arcade is organised into 6 modules. You can play in any order, but the modules build on each other conceptually.
+
+### Module 1 — Data & Cognition Basics (lessons 1–6)
+
+**Goal:** Understand what data science data looks like before running any statistics.
+
+- **L01 Big Data Map** — overview of how all 31 lessons connect. Start here if you want to understand the big picture.
+- **L02 Reaction Time Lab** — your first CSV file. See "First lab" above.
+- **L03 Event Log Detective** — puzzle: read and interpret a messy experiment log. No CSV produced; all analysis is in-game.
+- **L04 Data Quality Lab** — detect missing values, outliers, encoding errors in a raw dataset.
+- **L06 EDA Sandbox** — design and run a mini experiment; explore the data live before any modelling.
+
+**After this module:** You should be able to load a CSV with pandas, compute basic statistics, and explain what each column means.
+
+---
+
+### Module 2 — Cognitive Science (lessons 7–12)
+
+**Goal:** Run the classic experiments of cognitive psychology on yourself and read the numbers they produce.
+
+- **L07 Stroop Challenge** — cognitive interference; logs `stroop/` CSV.
+- **L08 Flanker Arena** — selective attention; logs `flanker/` CSV.
+- **L09 Go/No-Go Guard** — inhibitory control; logs `gono/` CSV.
+- **L10 N-Back Memory Grid** — working memory load; logs `nback/` CSV.
+- **L11 Visual Search Lab** — feature vs. conjunction search; logs `visual_search/` CSV.
+- **L12 Cognitive Dashboard** — reads all five CSVs above and shows your cross-task profile. **Play the five games first, then open this.**
+
+**After this module:** You will have five CSV datasets from your own cognitive sessions. The Cognitive Dashboard reads them automatically.
+
+---
+
+### Module 3 — Statistics (lessons 13–16)
+
+**Goal:** Connect the distributions and numbers you saw in modules 1–2 to formal statistical tools.
+
+- **L13 Distribution Playground** — change parameters of Normal, Poisson, and t distributions; watch the shape change.
+- **L14 Correlation Trap** — Pearson r, causation fallacies, Anscombe's quartet.
+- **L15 Hypothesis Arena** — p-values, effect size, statistical power — interactive arcade game.
+- **L16 Prediction Slider** — linear regression; Cook's distance; see how one outlier moves the line.
+
+**After this module:** You should be able to describe a distribution, run a correlation, and interpret a p-value without treating it as a verdict.
+
+---
+
+### Module 4 — Machine Learning (lessons 17–20)
+
+**Goal:** Build intuition for what ML models actually do before you write any `sklearn` code.
+
+- **L17 Feature Hunter** — drag features onto a model; see how accuracy changes.
+- **L18 Classifier Battle** — perceptron, SVM, decision tree on the same data; compare decision boundaries.
+- **L19 Overfitting Monster** — bias-variance trade-off sandbox; watch a model overfit in real time.
+- **L20 Anomaly Alert** — Isolation Forest and Mahalanobis distance on synthetic data.
+
+**After this module:** You should be able to explain overfitting, why a high training accuracy can be bad, and what a decision boundary is.
+
+---
+
+### Module 5 — Natural Language Processing (lessons 21–26)
+
+**Goal:** Understand how text becomes numbers, and what those numbers mean for meaning.
+
+- **L21 Text Tokenizer Lab** — Zipf's law, BPE tokenisation, vocabulary statistics.
+- **L22 Word Weight Factory** — Bag-of-Words and TF-IDF pipeline, interactive.
+- **L23 Emotion Classifier** — VADER sentiment analysis; test it against your own sentences.
+- **L24 Semantic Space Explorer** — word embeddings, cosine similarity, analogy arithmetic.
+- **L25 Topic Detective** — LDA topic modelling; what themes emerge from a corpus?
+- **L26 Human vs. Model Challenge** — negation, sarcasm, Winograd schemas: where models fail.
+
+**After this module:** You should be able to describe the bag-of-words assumption and explain why word embeddings are not the same as word definitions.
+
+---
+
+### Module 6 — Networks & Ethics (lessons 27–32)
+
+**Goal:** Understand how structure shapes behaviour — and what happens when algorithms make consequential decisions.
+
+- **L27 Social Network Simulator** — SIR epidemic model on random vs. scale-free graphs.
+- **L28 Misinformation Spread** — spreader vs. fact-checker asymmetry.
+- **L29 Recommendation Bubble** — filter bubble mechanics; diversity scoring.
+- **L30 Bias Blind Spot** — proxy features, fairness impossibility theorem.
+- **L31 You Were the Dataset** — behavioural data, Hawthorne effect, GDPR.
+- **L32 The Architect's Trial** — AI ethics decision game; Goodhart's Law and the EU AI Act.
+
+**After this module:** You should be able to explain one concrete way that an algorithm can be fair by one metric and unfair by another, and why that is not a bug.
+
+---
+
+## What to hand in
+
+Each lab session or module has specific deliverables. Here is what your instructor expects.
+
+### Per-session deliverable (each time you play a game)
+
+For games that log data (L02, L07–L11):
+
+1. **The CSV file** — copy it out of `data/generated/<game>/` and keep it. Filename is the session timestamp.
+2. **A short analysis** (5–10 lines of Python) — at minimum: load the file, compute mean and median RT or accuracy per condition, print the result.
+3. **One sentence of interpretation** — what does the number mean? Is it what you expected?
+
+You do not need to write a report. A notebook cell with the code and one markdown cell with the interpretation is enough.
+
+### Module deliverable
+
+After completing all lessons in a module:
+
+| Module | What to submit |
+|--------|---------------|
+| 1 — Data Basics | Load any one of your CSVs. Describe what each column means in your own words. Identify one data quality issue (even if minor). |
+| 2 — Cognitive Science | Combine at least two of your cognitive CSVs. Compare your performance across tasks. Does any pattern emerge? |
+| 3 — Statistics | Take your RT data from Module 2. Compute a t-test between congruent and incongruent conditions. Report the p-value, effect size, and whether the result is interpretable given your sample size. |
+| 4 — Machine Learning | Use any of your CSV data as input to a scikit-learn classifier. Report training vs. test accuracy. Explain in one sentence why they differ. |
+| 5 — NLP | Run VADER on five sentences you write yourself — two clearly positive, two clearly negative, one ambiguous. Report the compound score and explain where it surprised you. |
+| 6 — Networks & Ethics | Pick one scenario from The Architect's Trial. Explain the trade-off you faced, what you chose, and what you would change if you had to make the same decision in a real system. |
+
+### Export your progress
+
+At any time, press **X** in the Profile screen to export a JSON summary of your progress. This includes completed lessons, arcade points, quiz accuracy, and per-module completion. You can share this file with your instructor as proof of completion.
 
 ---
 
@@ -153,3 +391,5 @@ Read it before playing, not after. The theory changes what you notice during the
 The data this project generates is about you. Your reaction times, your accuracy, your decisions. That makes it more interesting to analyse — and also a reason to think carefully about what conclusions are valid.
 
 A single session of 20 trials is not a scientific study. It is a starting point. The goal is to understand the pipeline, not to diagnose yourself.
+
+All data stays on your computer. The app never sends anything over the network.
