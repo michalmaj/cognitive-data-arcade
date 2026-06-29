@@ -100,9 +100,9 @@ class OnboardingScene(Scene):
         surface.blit(title_surf, (cx - title_surf.get_width() // 2, 120))
 
         if self._language == "pl":
-            tagline = "32 gry z danych, statystyki i ML — Twoje wyniki, Twoje dane"
+            tagline = "31 gier z danych, statystyki i ML — Twoje wyniki, Twoje dane"
         else:
-            tagline = "32 data science games — your results, your data"
+            tagline = "31 data science games — your results, your data"
         tag_surf = get_font(18).render(tagline, True, _DIM)
         surface.blit(tag_surf, (cx - tag_surf.get_width() // 2, 180))
 
