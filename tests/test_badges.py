@@ -1,4 +1,5 @@
 from __future__ import annotations
+from pathlib import Path
 
 import pytest
 from cognitive_data_arcade.engine.badges import (
@@ -211,3 +212,10 @@ def test_badge_fields_non_empty():
         assert b.icon_file.endswith(".png")
         assert b.name_pl
         assert b.name_en
+
+
+def test_streak_badge_asset_files_exist():
+    """badge_streak_3/7/30.png must exist so streak badges render an icon."""
+    assets = Path("assets") / "badges"
+    for name in ("badge_streak_3.png", "badge_streak_7.png", "badge_streak_30.png"):
+        assert (assets / name).exists(), f"Missing streak badge asset: {name}"
