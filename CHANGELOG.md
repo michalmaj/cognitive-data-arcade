@@ -2,6 +2,30 @@
 
 All notable changes to Cognitive Data Arcade are documented here.
 
+## [v1.0.0a] — 2026-06-29
+
+Student-Ready Alpha — onboarding flow, profile data stats, home-prompt system, and pre-release hardening.
+
+### Added
+
+- **OnboardingScene** — first-launch screen (triggered when `onboarding_done == False`) collects alias and preferred language (PL/EN); TAB toggles language, ENTER or button submits, ESC-safe; profile saved and `onboarding_done` set before routing to TitleScene
+- **"Moje dane / My Data" stats card** — new section in `ProfileScene` showing sessions recorded, data points logged, active days (counted from CSV files in `data/generated/`), and quiz accuracy percentage; backed by `ui/data_stats.py` (`compute_data_stats`, `compute_quiz_accuracy`) using stdlib `csv` only
+- **LogoutConfirmScene** — reached via "Wyloguj / Log out" link in ProfileScene; ENTER deletes profile JSON + generated data and routes to OnboardingScene; ESC returns to a fresh ProfileScene (avoids stale scene routing)
+- **HOME_PROMPTS** — `data/home_prompts.py` contains bilingual (PL/EN) per-module study prompts (6 modules) grounded in real game names (RT Lab, N-Back, Distribution Playground, etc.)
+- **"Co zrobić przed kolejnymi zajęciami?" button** — orange border button at the bottom of `ModuleCompleteScene`; opens a full-screen overlay with the module-specific HOME_PROMPT; ESC closes overlay first, then menu
+
+### Fixed
+
+- **`ModuleCompleteScene` unreachable** — `_refresh_and_check_complete()` was defined but never called; now called in `ModuleRunnerScene.__init__` (when no pending quiz) and in `update()` after a quiz-less lesson completes
+- **Corrupted `profile.json` crash** — `ProfileManager.load()` now wraps `json.loads()` in `try/except (json.JSONDecodeError, OSError)` and recovers with a fresh profile instead of raising
+- **Version string** — `pyproject.toml` corrected from `0.0.1` to `1.0.0a0`; description updated to "31 data science games"
+- **ProfileScene lesson dots** — grid was capped at 30 dots; corrected to show all 31 lessons using explicit list `[1,2,3,4] + list(range(6,33))`
+- **OnboardingScene game count** — tagline showed `32 gier`; corrected to `31`
+- **Level title emoji rendering** — `🌱 📊 🧠 ⚡` in level strings rendered as tofu boxes in Space Grotesk TTF; emoji removed from all EN and PL `level_*` strings in `i18n.py`; `ProfileScene` avatar now shows two-letter initials (e.g. `SD` for "Siewca Danych")
+- **Polish diacritics in OnboardingScene** — `"Jezyk"` → `"Język"`, `"zmien jezyk"` → `"zmień język"`, `"wysylamy"` → `"wysyłamy"`
+
+---
+
 ## [v0.10.0] — 2026-06-28
 
 Learning Content — post-session reflection screens for all 32 lessons and an expanded daily challenge bank.
@@ -238,6 +262,7 @@ First complete release: 31 playable games, full CI, analysis scenes.
 | **v0.6.0** ✅ | Game quality | SessionResult + HowToPlay wiring for all 31 games · Per-decision feedback overlays · Reset progress |
 | **v0.7.0** ✅ | Semester Platform | Act intros · Checkpoint quizzes · SyllabusScene · Progress export · Diacritics audit |
 | **v0.8.0** ✅ | Streak + Daily | Streak tracking · Daily Challenge scene · 20-question bank · Streak badges |
-| **v0.9.0** | Distribution & Instructor | Standalone exe (Win/Mac/Linux) · GitHub Releases · Rich profile export · Instructor aggregator script |
-| **v0.10.0** | Content completion | Lesson content for all 31 lessons · 60+ daily challenge questions · Analysis scenes (ML/NLP) · Quiz audit |
-| **v1.0.0** | Release | Student-facing README · Final polish · Official release builds |
+| **v0.9.0** ✅ | Distribution & Instructor | Standalone exe (Win/Mac/Linux) · GitHub Releases · Rich profile export · Instructor aggregator script |
+| **v0.10.0** ✅ | Content completion | Lesson content for all 31 lessons · 60+ daily challenge questions · Analysis scenes (ML/NLP) · Quiz audit |
+| **v1.0.0a** ✅ | Student-Ready Alpha | Onboarding flow · Profile data stats · Home prompts · Pre-release hardening |
+| **v1.0.0** | Release | October 2026 · student assessment target |
