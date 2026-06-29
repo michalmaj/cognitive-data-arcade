@@ -22,6 +22,9 @@ class _FakePM:
     def award_badge(self, badge_id: str):
         pass
 
+    def complete_lesson(self, lesson_num: int) -> None:
+        pass
+
 
 def _key(k: int) -> pygame.event.Event:
     return pygame.event.Event(pygame.KEYDOWN, key=k, mod=0, unicode="")
