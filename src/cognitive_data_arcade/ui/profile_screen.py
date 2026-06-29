@@ -251,12 +251,14 @@ class ProfileScene(Scene):
         dot_cell = dot_size + dot_gap
         dots_per_row = 5
         completed = set(self._profile.completed_lessons)
-        for i in range(30):
+        # All 31 lesson nums: 1-4, 6-32 (lesson 5 merged into 4 in the curriculum)
+        _all_lesson_nums = [1, 2, 3, 4] + list(range(6, 33))
+        for i, lnum in enumerate(_all_lesson_nums):
             col = i % dots_per_row
             row = i // dots_per_row
             dx = 15 + col * dot_cell
             dy = y + row * dot_cell
-            color = _SP_COLOR if (i + 1) in completed else _BORDER_COLOR
+            color = _SP_COLOR if lnum in completed else _BORDER_COLOR
             pygame.draw.rect(surface, color, (dx, dy, dot_size, dot_size), border_radius=3)
 
         # Logout link at bottom of left column
