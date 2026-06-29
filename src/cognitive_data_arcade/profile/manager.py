@@ -51,7 +51,13 @@ class ProfileManager:
             profile = Profile(device_uuid=str(uuid.uuid4()))
             self.save(profile)
             return profile
-        data = json.loads(self._path.read_text(encoding="utf-8"))
+        try:
+            data = json.loads(self._path.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            # Corrupted or unreadable profile — start fresh rather than crashing.
+            profile = Profile(device_uuid=str(uuid.uuid4()))
+            self.save(profile)
+            return profile
         known = {f for f in Profile.__dataclass_fields__}
         filtered = {k: v for k, v in data.items() if k in known}
         return Profile(**filtered)

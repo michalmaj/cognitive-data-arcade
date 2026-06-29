@@ -1,7 +1,7 @@
 [project]
 name = "cognitive-data-arcade"
-version = "0.10.0"
-description = "Interactive pygame-based learning platform — 32 data science games across 6 modules, bilingual (PL/EN)"
+version = "1.0.0a0"
+description = "Interactive pygame-based learning platform — 31 data science games across 6 modules, bilingual (PL/EN)"
 readme = "README.md"
 authors = [
     { name = "Michał Maj", email = "michalpmaj@gmail.com" }

@@ -54,6 +54,8 @@ class ModuleRunnerScene(Scene):
         self._step_rects: list[pygame.Rect] = []
         self._mini_bar_rects: list[pygame.Rect] = []
         self._pending_quiz_lesson = pending_quiz_lesson
+        if pending_quiz_lesson is None:
+            self._refresh_and_check_complete()
 
     def _find_current_step(self, completed: set[int]) -> int:
         for i, lesson in enumerate(self._lessons):
@@ -158,6 +160,8 @@ class ModuleRunnerScene(Scene):
                 back = ModuleRunnerScene(self._module_idx, self._pm, self._strings)
                 self._next = QuizScene(lesson_num, self._pm, self._strings, back_scene=back)
                 self._done = True
+            else:
+                self._refresh_and_check_complete()
 
     def is_done(self) -> bool:
         return self._done

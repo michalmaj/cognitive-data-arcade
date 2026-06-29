@@ -147,10 +147,11 @@ class ProfileScene(Scene):
         pygame.draw.line(surface, _BORDER_COLOR, (0, _TOPBAR_H), (w, _TOPBAR_H))
 
         lvl = level_title(total_points, self._strings)
-        avatar_emoji = lvl.split()[0]
+        words = lvl.split()
+        avatar_initials = "".join(w[0].upper() for w in words[:2])
         pygame.draw.circle(surface, _BORDER_COLOR, (48, 48), 36)
         pygame.draw.circle(surface, _PANEL_BG, (48, 48), 34)
-        av_surf = self._font_large.render(avatar_emoji, True, _HIGHLIGHT_COLOR)
+        av_surf = self._font_large.render(avatar_initials, True, _HIGHLIGHT_COLOR)
         surface.blit(av_surf, (48 - av_surf.get_width() // 2, 48 - av_surf.get_height() // 2))
 
         alias_text = (self._alias_buffer + "|") if self._editing_alias else self._profile.alias
@@ -251,12 +252,14 @@ class ProfileScene(Scene):
         dot_cell = dot_size + dot_gap
         dots_per_row = 5
         completed = set(self._profile.completed_lessons)
-        for i in range(30):
+        # All 31 lesson nums: 1-4, 6-32 (lesson 5 merged into 4 in the curriculum)
+        _all_lesson_nums = [1, 2, 3, 4] + list(range(6, 33))
+        for i, lnum in enumerate(_all_lesson_nums):
             col = i % dots_per_row
             row = i // dots_per_row
             dx = 15 + col * dot_cell
             dy = y + row * dot_cell
-            color = _SP_COLOR if (i + 1) in completed else _BORDER_COLOR
+            color = _SP_COLOR if lnum in completed else _BORDER_COLOR
             pygame.draw.rect(surface, color, (dx, dy, dot_size, dot_size), border_radius=3)
 
         # Logout link at bottom of left column
