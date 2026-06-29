@@ -26,6 +26,41 @@ _PANEL_BG = (18, 18, 42)
 _BORDER_COLOR = (42, 42, 80)
 _LEVEL_COLOR = (192, 132, 252)
 
+# Maps SessionResult.task_name → lesson number for completion tracking.
+# L03 (event_log_detective) is handled separately in EventLogLevelScene.
+_TASK_LESSON_MAP: dict[str, int] = {
+    "reaction_time": 2,
+    "big_data_map": 1,
+    "data_quality_lab": 4,
+    "eda_sandbox": 6,
+    "stroop": 7,
+    "flanker": 8,
+    "go_no_go": 9,
+    "n_back": 10,
+    "visual_search": 11,
+    "cognitive_dashboard": 12,
+    "distribution_playground": 13,
+    "correlation_trap": 14,
+    "hypothesis_arena": 15,
+    "prediction_slider": 16,
+    "feature_hunter": 17,
+    "classifier_battle": 18,
+    "overfitting_monster": 19,
+    "anomaly_alert": 20,
+    "text_tokenizer_lab": 21,
+    "word_weight_factory": 22,
+    "emotion_classifier": 23,
+    "semantic_space_explorer": 24,
+    "topic_detective": 25,
+    "human_vs_model": 26,
+    "social_network_simulator": 27,
+    "misinformation_spread": 28,
+    "recommendation_bubble": 29,
+    "bias_blind_spot": 30,
+    "you_were_the_dataset": 31,
+    "architects_trial": 32,
+}
+
 _REFLECTION_TASK_MAP: dict[str, tuple[str, str]] = {
     "big_data_map": ("lesson_01", "REFLECTION"),
     "data_quality_lab": ("lesson_04", "REFLECTION"),
@@ -77,6 +112,9 @@ class SessionSummaryScene(Scene):
         self._csv_path = csv_path
         self._analysis_factory = analysis_factory
         self._go_to_analysis = False
+        lesson_num = _TASK_LESSON_MAP.get(session.task_name)
+        if lesson_num is not None:
+            profile_manager.complete_lesson(lesson_num)
         self._font_sm = get_font(24)
         self._font_title = get_font(56)
         self._font_sub = get_font(30)
