@@ -147,10 +147,11 @@ class ProfileScene(Scene):
         pygame.draw.line(surface, _BORDER_COLOR, (0, _TOPBAR_H), (w, _TOPBAR_H))
 
         lvl = level_title(total_points, self._strings)
-        avatar_emoji = lvl.split()[0]
+        words = lvl.split()
+        avatar_initials = "".join(w[0].upper() for w in words[:2])
         pygame.draw.circle(surface, _BORDER_COLOR, (48, 48), 36)
         pygame.draw.circle(surface, _PANEL_BG, (48, 48), 34)
-        av_surf = self._font_large.render(avatar_emoji, True, _HIGHLIGHT_COLOR)
+        av_surf = self._font_large.render(avatar_initials, True, _HIGHLIGHT_COLOR)
         surface.blit(av_surf, (48 - av_surf.get_width() // 2, 48 - av_surf.get_height() // 2))
 
         alias_text = (self._alias_buffer + "|") if self._editing_alias else self._profile.alias
