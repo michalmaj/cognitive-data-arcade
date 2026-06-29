@@ -124,7 +124,7 @@ class OnboardingScene(Scene):
             err_surf = get_font(15).render(self._error, True, _ERROR)
             surface.blit(err_surf, (cx - err_surf.get_width() // 2, 340))
 
-        lang_lbl = get_font(16).render("Jezyk / Language", True, _DIM)
+        lang_lbl = get_font(16).render("Język / Language", True, _DIM)
         surface.blit(lang_lbl, (cx - lang_lbl.get_width() // 2, 415))
 
         pl_rect = pygame.Rect(cx - 90, 440, 80, 36)
@@ -149,7 +149,7 @@ class OnboardingScene(Scene):
         )
 
         note = (
-            "Pseudonim jest lokalny — nie wysylamy danych nigdzie"
+            "Pseudonim jest lokalny — nie wysyłamy danych nigdzie"
             if self._language == "pl"
             else "Nickname is local — we never send your data anywhere"
         )
@@ -168,7 +168,7 @@ class OnboardingScene(Scene):
             ),
         )
 
-        hint = "TAB — zmien jezyk" if self._language == "pl" else "TAB — switch language"
+        hint = "TAB — zmień język" if self._language == "pl" else "TAB — switch language"
         hint_surf = get_font(13).render(hint, True, _DIM)
         surface.blit(hint_surf, (cx - hint_surf.get_width() // 2, 580))
 
