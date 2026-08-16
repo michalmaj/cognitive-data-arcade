@@ -7,6 +7,7 @@ authors = [
     { name = "Michał Maj", email = "michalpmaj@gmail.com" }
 ]
 requires-python = ">=3.12"
+license = { text = "MIT" }
 dependencies = [
     "matplotlib>=3.10.9",
     "numpy>=2.4.4",
