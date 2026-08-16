@@ -1,6 +1,10 @@
 # Cognitive Data Arcade
 
 [![CI](https://github.com/michalmaj/cognitive-data-arcade/actions/workflows/ci.yml/badge.svg)](https://github.com/michalmaj/cognitive-data-arcade/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/michalmaj/cognitive-data-arcade)](https://github.com/michalmaj/cognitive-data-arcade/releases/latest)
+[![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-blue)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/code-MIT-yellow)](LICENSE)
+[![License: CC BY 4.0](https://img.shields.io/badge/content-CC%20BY%204.0-lightgrey)](LICENSE-CONTENT.md)
 
 Interactive mini-games that teach **Big Data, Data Science, and Machine Learning through Cognitive Science**. Students don't just analyse data — they generate it by playing behavioural tasks, then inspect, clean, model, and interpret their own results.
 
