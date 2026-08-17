@@ -61,3 +61,69 @@ Naprawić przed tagiem beta; jawnie udokumentować, jeśli odłożone:
 ### P2 — odłożyć swobodnie
 
 Elementy wymienione w sekcji „jawnie przesunięte poza beta" powyżej.
+
+---
+
+## Konwencje commitów
+
+### Prefiksy
+
+Używaj jednego z tych konwencjonalnych prefiksów przy każdym commicie:
+
+```
+test:      dodanie lub aktualizacja testów
+fix:       naprawa błędu
+feat:      dodanie nowego zachowania
+refactor:  restrukturyzacja bez zamierzonej zmiany zachowania
+content:   zmiana tekstu edukacyjnego lub treści lekcji
+docs:      aktualizacja dokumentacji
+tooling:   dodanie lub aktualizacja narzędzia developerskiego lub skryptu
+build:     zmiana konfiguracji budowania lub pakowania
+ci:        zmiana konfiguracji CI/CD
+typing:    dodanie lub poprawa adnotacji typów
+style:     tylko formatowanie (zazwyczaj z ruff)
+chore:     konserwacja (gitignore, bump wersji itp.)
+release:   przygotowanie wydania
+```
+
+### Granularność
+
+Dąż do **4–10 sensownych commitów na normalny PR**. Każdy commit powinien być:
+
+- zrozumiały sam w sobie,
+- możliwy do przejrzenia w izolacji,
+- odwracalny przez `git revert`,
+- użyteczny przez `git bisect`.
+
+Dla zmian behawioralnych preferuj tę kolejność:
+
+```
+test:     odtwórz lub utrwal bieżące zachowanie
+refactor: przygotuj strukturę bez zamierzonej zmiany zachowania
+fix/feat: zaimplementuj zachowanie
+test:     pokryj przypadki brzegowe i regresje
+docs:     zsynchronizuj dokumentację
+```
+
+### Czego unikać
+
+```
+fix stuff
+oops
+fix typo
+actually fix
+more cleanup
+```
+
+Nie ściskaj dobrze ustrukturyzowanej sekwencji test/refactor/fix/docs w jeden gigantyczny commit.
+
+### Zakres PR
+
+Jeden PR powinien rozwiązywać **jeden spójny problem**. Przykłady dobrego zakresu:
+
+- konsolidacja ścieżek uruchamiania,
+- centralizacja ścieżek aplikacji,
+- korekta języka interpretacji panelu,
+- audyt zestawu powiązanych lekcji.
+
+Nie łącz refaktorów architektonicznych, przepisywania lekcji i poprawek UI w jednym PR.

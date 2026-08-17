@@ -61,3 +61,69 @@ Fix before the beta tag; explicitly document if deferred:
 ### P2 — defer freely
 
 These are listed under "explicitly deferred" above.
+
+---
+
+## Commit conventions
+
+### Prefixes
+
+Use one of these conventional prefixes on every commit:
+
+```
+test:      add or update tests
+fix:       correct a bug
+feat:      add new behavior
+refactor:  restructure without intended behavior change
+content:   change educational text or lesson copy
+docs:      update documentation
+tooling:   add or update a developer tool or script
+build:     change build or packaging configuration
+ci:        change CI/CD configuration
+typing:    add or improve type annotations
+style:     formatting only (usually from ruff)
+chore:     maintenance (gitignore, version bump, etc.)
+release:   release preparation
+```
+
+### Granularity
+
+Aim for **4–10 meaningful commits per normal PR**. Each commit should be:
+
+- understandable on its own,
+- reviewable in isolation,
+- reversible with `git revert`,
+- usable by `git bisect`.
+
+For behavioral changes, prefer this sequence:
+
+```
+test:     reproduce or capture current behavior
+refactor: prepare structure without intended behavior change
+fix/feat: implement the behavior
+test:     cover edge cases and regression
+docs:     synchronize documentation
+```
+
+### What to avoid
+
+```
+fix stuff
+oops
+fix typo
+actually fix
+more cleanup
+```
+
+Do not squash a well-structured test/refactor/fix/docs sequence into one giant commit.
+
+### PR scope
+
+One PR should solve **one coherent problem**. Examples of good scope:
+
+- consolidate launch paths,
+- centralize application paths,
+- correct dashboard interpretation language,
+- audit a set of related lessons.
+
+Do not combine architectural refactors, lesson rewrites, and UI fixes in one PR.
