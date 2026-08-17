@@ -25,3 +25,39 @@ To są poprawne ulepszenia, które nie będą blokować wydania beta:
 - ogólne abstrakcje storage bez konkretnej korzyści dla beta.
 
 W razie presji harmonogramu: najpierw odcinamy te elementy — nigdy poprawności naukowej ani przejrzystości prywatności.
+
+---
+
+## Bramki jakości
+
+### P0 — blokady beta
+
+Projekt nie może zostać otagowany jako beta, dopóki którakolwiek z poniższych kwestii pozostaje otwarta:
+
+- Menu i ścieżki uruchamiania modułów korzystają z jednego kanonicznego mechanizmu tworzenia gier.
+- Restart gry tworzy świeży stan rozgrywki (bez ponownego użycia zmutowanej sceny).
+- Ścieżki danych użytkownika nie zależą od bieżącego katalogu roboczego.
+- Zbieranie danych lokalnych jest wyraźnie ujawnione studentowi.
+- Student może zrozumieć, co jest przechowywane lokalnie, i usunąć dane z rozgrywki.
+- Panel kognitywny nie przedstawia wyników krótkich gier jako diagnoz ani stabilnych cech osobowości lub zdolności kognitywnych.
+- Nieobsługiwane uniwersalne „normy" i pseudonormatywne progi zostały usunięte lub prawidłowo zacytowane i skontekstualizowane.
+- Treści edukacyjne wysokiego ryzyka przeszły audyt merytoryczny.
+- Spakowana aplikacja uruchamia się poprawnie i ma dostęp do swoich zasobów.
+- Kluczowe przepływy smoke dla beta przechodzą.
+- Nie pozostaje żaden znany crash P0, błąd utraty danych, blokada nawigacji ani wprowadzające w błąd twierdzenie naukowe.
+
+### P1 — oczekiwane dla beta
+
+Naprawić przed tagiem beta; jawnie udokumentować, jeśli odłożone:
+
+- Teksty edukacyjne sprawdzone pod kątem nadmiernej pewności siebie w stylu LLM.
+- Ważne twierdzenia edukacyjne mają metadane źródłowe tam, gdzie to stosowne.
+- Duplikacja logowania prób jest zredukowana.
+- Dokumentacja odpowiada rzeczywistemu zachowaniu aplikacji.
+- Konfiguracja Ruff jest silniejsza niż w alpha.
+- Rdzenne moduły non-Pygame mają ukierunkowane typowanie statyczne.
+- Główne zmodyfikowane obszary mają testy na poziomie zachowania, a nie tylko testy metod prywatnych.
+
+### P2 — odłożyć swobodnie
+
+Elementy wymienione w sekcji „jawnie przesunięte poza beta" powyżej.
