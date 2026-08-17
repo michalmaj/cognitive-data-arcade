@@ -83,16 +83,14 @@ LESSON_REGISTRY: tuple[LessonSpec, ...] = (
     LessonSpec(32, "architects_trial",       "The Architect's Trial",          _P),
 )
 
-_AVAILABLE = frozenset(range(1, 33))  # kept until lesson_available() is migrated below
+_REGISTRY_BY_NUMBER: dict[int, LessonSpec] = {ls.number: ls for ls in LESSON_REGISTRY}
 
 
 def lesson_available(lesson_num: int) -> bool:
-    """Check if a lesson number is available.
+    """Return True if a lesson with this number exists in the registry."""
+    return lesson_num in _REGISTRY_BY_NUMBER
 
-    Args:
-        lesson_num: The lesson number to check (1-32 are available in v0.9.0).
 
-    Returns:
-        True if the lesson is available, False otherwise.
-    """
-    return lesson_num in _AVAILABLE
+def get_lesson(lesson_num: int) -> LessonSpec | None:
+    """Return the LessonSpec for a given number, or None if not found."""
+    return _REGISTRY_BY_NUMBER.get(lesson_num)
