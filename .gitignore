@@ -37,8 +37,10 @@ data/external/*
 # Private / agent configuration — not for public repo
 CLAUDE.md
 .claude/
+.claire/
 .superpowers/
 docs/superpowers/
+BETA_ROADMAP.md
 # Audio assets (download separately)
 assets/audio/music/*.ogg
 assets/audio/music/*.mp3
