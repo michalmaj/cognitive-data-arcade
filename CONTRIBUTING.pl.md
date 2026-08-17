@@ -127,3 +127,39 @@ Jeden PR powinien rozwiązywać **jeden spójny problem**. Przykłady dobrego za
 - audyt zestawu powiązanych lekcji.
 
 Nie łącz refaktorów architektonicznych, przepisywania lekcji i poprawek UI w jednym PR.
+
+---
+
+## Weryfikacja lokalna
+
+Uruchom te polecenia przed wypchnięciem. Odpowiadają dokładnie temu, co uruchamia CI.
+
+```bash
+# Instalacja zależności
+uv sync
+
+# Lintowanie
+uv run ruff check .
+
+# Sprawdzenie formatowania (nie modyfikuje plików)
+uv run ruff format --check .
+
+# Testy (headless — wymagane na macOS/Linux bez wyświetlacza)
+SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy uv run pytest --tb=short -q
+```
+
+Wszystkie cztery polecenia muszą przejść przed otwarciem PR. CI zakończy się niepowodzeniem na tych samych poleceniach.
+
+### Uruchamianie pojedynczego pliku testowego
+
+```bash
+SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy uv run pytest tests/test_foo.py -v
+```
+
+### Formatowanie przed commitem
+
+```bash
+uv run ruff format .
+```
+
+Uruchom to po każdej zmianie kodu. CI nie przejdzie, jeśli formatowanie się różni.

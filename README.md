@@ -72,12 +72,14 @@ Requires Python 3.12+, a display, and no other setup.
 ## Development
 
 ```bash
-uv run pytest          # 1188 tests
+uv run pytest          # run all tests
 uv run ruff check .    # lint
 uv run ruff format .   # format
 ```
 
 CI runs on every push and pull request (GitHub Actions).
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for quality gates, commit conventions, and local verification commands.
 
 ## Stack
 

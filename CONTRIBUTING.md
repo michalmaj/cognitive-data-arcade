@@ -127,3 +127,39 @@ One PR should solve **one coherent problem**. Examples of good scope:
 - audit a set of related lessons.
 
 Do not combine architectural refactors, lesson rewrites, and UI fixes in one PR.
+
+---
+
+## Verifying locally
+
+Run these commands before pushing. They match exactly what CI runs.
+
+```bash
+# Install dependencies
+uv sync
+
+# Lint
+uv run ruff check .
+
+# Format check (does not modify files)
+uv run ruff format --check .
+
+# Tests (headless — required on macOS/Linux without a display)
+SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy uv run pytest --tb=short -q
+```
+
+All four commands must pass before opening a PR. CI will fail on the same commands.
+
+### Running a single test file
+
+```bash
+SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy uv run pytest tests/test_foo.py -v
+```
+
+### Format before commit
+
+```bash
+uv run ruff format .
+```
+
+Run this after any code change. CI fails on formatting differences.
