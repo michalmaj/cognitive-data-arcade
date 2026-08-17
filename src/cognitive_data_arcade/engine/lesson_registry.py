@@ -1,10 +1,29 @@
-"""Nuitka-safe lesson availability check.
+"""Canonical lesson registry for Cognitive Data Arcade.
 
-This module provides a simple frozenset-based approach to check if a lesson
-is available. It replaces importlib.util.find_spec() which is unreliable
-in Nuitka onefile compiled binaries where all modules are compiled into
-a single executable.
+This module is the single source of truth for lesson metadata:
+lesson numbers, slugs, display titles, and lesson kinds.
+
+Game construction is handled separately in ui/game_launcher.py.
 """
+
+from __future__ import annotations
+
+from enum import Enum
+
+
+class LessonKind(Enum):
+    """Classification of a lesson by its interactive component.
+
+    PLAYABLE: the lesson has a runnable game or interactive scene.
+    THEORY:   the lesson has educational content but no playable component.
+    HIDDEN:   the lesson exists internally but is not shown in the UI
+              (e.g. its content is subsumed by another lesson).
+    """
+
+    PLAYABLE = "playable"
+    THEORY = "theory"
+    HIDDEN = "hidden"
+
 
 _AVAILABLE = frozenset(range(1, 33))  # lesson_01 … lesson_32 all ship with v0.9.0
 
