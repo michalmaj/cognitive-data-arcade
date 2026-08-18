@@ -130,7 +130,7 @@ Późne dojrzewanie kontroli hamowania jest równoległe do długiego dojrzewani
 
 Zadanie Go/No-Go jest standardowym narzędziem w klinicznej neuropsychologii:
 
-**ADHD:** Dzieci i dorośli z ADHD wykazują znacząco podwyższone wskaźniki błędów komisji i obniżony d', co odzwierciedla upośledzenie kontroli hamowania. Zadanie Go/No-Go jest zawarte w baterii CANTAB (Cambridge Neuropsychological Test Automated Battery) i podobnych skomputeryzowanych zestawach oceny. Było stosowane do monitorowania efektów leczenia — metylofenidat (Ritalin) niezawodnie zmniejsza błędy komisji w populacjach z ADHD (Heaton i in., 2004).
+**ADHD:** Dzieci i dorośli z ADHD wykazują znacząco podwyższone wskaźniki błędów komisji i obniżony d', co odzwierciedla upośledzenie kontroli hamowania. Zadanie Go/No-Go jest zawarte w baterii CANTAB (Cambridge Neuropsychological Test Automated Battery) i podobnych skomputeryzowanych zestawach oceny. Było stosowane do monitorowania efektów leczenia — kilka badań informowało o redukcji błędów komisji przez metylofenidat (Ritalin) w populacjach z ADHD.
 
 **Uszkodzenia płatów czołowych:** Pacjenci z uszkodzeniami kory przedczołowej — spowodowanymi udarem, guzem lub urazowym uszkodzeniem mózgu — wykazują podwyższone błędy komisji nawet przy nienaruszonych ogólnych zdolnościach intelektualnych i czasie reakcji. Zadanie Go/No-Go dostarcza zatem specyficznego pomiaru czołowych funkcji wykonawczych, wykraczającego poza ogólną szybkość przetwarzania.
 
@@ -157,7 +157,6 @@ Oba zadania angażują rIFG, ale SST czyściej izoluje reaktywny proces zatrzyma
 
 - Aron, A. R., & Poldrack, R. A. (2006). Cortical and subcortical contributions to stop signal response inhibition: role of the subthalamic nucleus. *Journal of Neuroscience, 26*(9), 2424–2433.
 - Donders, F. C. (1868/1969). On the speed of mental processes. *Acta Psychologica, 30*, 412–431. (Przetłumaczył W. G. Koster)
-- Heaton, S. C., Avila, M. T., Bailey, A. A., & Thaker, G. K. (2004). Specific working memory and executive function deficits in schizophrenia and related conditions. *Neuropsychology, 18*(4), 651–660.
 - Logan, G. D., & Cowan, W. B. (1984). On the ability to inhibit thought and action: a theory of an act of control. *Psychological Review, 91*(3), 295–327.
 - Macmillan, N. A., & Creelman, C. D. (2005). *Detection Theory: A User's Guide* (2. wyd.). Lawrence Erlbaum Associates.
 - Verbruggen, F., & Logan, G. D. (2008). Response inhibition in the stop-signal paradigm. *Trends in Cognitive Sciences, 12*(11), 418–424.

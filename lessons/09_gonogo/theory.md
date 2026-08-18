@@ -130,7 +130,7 @@ The late development of inhibitory control parallels the prolonged maturation of
 
 The Go/No-Go task is a standard tool in clinical neuropsychology:
 
-**ADHD:** Children and adults with ADHD show significantly elevated commission error rates and reduced d', reflecting impaired inhibitory control. The Go/No-Go task is included in the CANTAB (Cambridge Neuropsychological Test Automated Battery) and similar computerised assessment batteries. It has been used to monitor medication effects — methylphenidate (Ritalin) reliably reduces commission errors in ADHD populations (Heaton et al., 2004).
+**ADHD:** Children and adults with ADHD show significantly elevated commission error rates and reduced d', reflecting impaired inhibitory control. The Go/No-Go task is included in the CANTAB (Cambridge Neuropsychological Test Automated Battery) and similar computerised assessment batteries. It has been used to monitor medication effects — several studies have reported that methylphenidate (Ritalin) reduces commission errors in ADHD populations.
 
 **Frontal lobe lesions:** Patients with damage to the prefrontal cortex — from stroke, tumour, or traumatic brain injury — show elevated commission errors even when general intelligence and reaction time are unimpaired. The Go/No-Go task thus provides a specific measure of frontal executive function beyond general processing speed.
 
@@ -157,7 +157,6 @@ Both tasks recruit rIFG, but the SST more cleanly isolates the reactive stopping
 
 - Aron, A. R., & Poldrack, R. A. (2006). Cortical and subcortical contributions to stop signal response inhibition: role of the subthalamic nucleus. *Journal of Neuroscience, 26*(9), 2424–2433.
 - Donders, F. C. (1868/1969). On the speed of mental processes. *Acta Psychologica, 30*, 412–431. (Translated by W. G. Koster)
-- Heaton, S. C., Avila, M. T., Bailey, A. A., & Thaker, G. K. (2004). Specific working memory and executive function deficits in schizophrenia and related conditions. *Neuropsychology, 18*(4), 651–660.
 - Logan, G. D., & Cowan, W. B. (1984). On the ability to inhibit thought and action: a theory of an act of control. *Psychological Review, 91*(3), 295–327.
 - Macmillan, N. A., & Creelman, C. D. (2005). *Detection Theory: A User's Guide* (2nd ed.). Lawrence Erlbaum Associates.
 - Verbruggen, F., & Logan, G. D. (2008). Response inhibition in the stop-signal paradigm. *Trends in Cognitive Sciences, 12*(11), 418–424.
