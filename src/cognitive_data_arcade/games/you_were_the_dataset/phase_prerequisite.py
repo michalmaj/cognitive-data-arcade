@@ -78,7 +78,9 @@ class PhasePrerequisiteScene(Scene):
         self._state = state
         self._factories = game_factories
         self._data_dir = _data_dir
-        self._statuses: dict[str, bool] = check_prerequisites(self._data_dir) if self._data_dir else {}
+        self._statuses: dict[str, bool] = (
+            check_prerequisites(self._data_dir) if self._data_dir else {}
+        )
         self._done = False
         self._next: Scene | None = None
 

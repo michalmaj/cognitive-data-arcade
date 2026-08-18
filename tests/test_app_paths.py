@@ -1,7 +1,7 @@
 """Tests for AppPaths and CWD-independence of generated data paths."""
+
 from __future__ import annotations
 
-import os
 from pathlib import Path
 
 import pytest
