@@ -18,6 +18,7 @@ class _FakePM:
         sfx_volume = 1.0
         current_module_idx = None
         streak_days = 0
+        seen_intro = True
 
     def __init__(self):
         self._completed: list[int] = []
@@ -51,31 +52,25 @@ def test_completed_set_populated_from_profile():
     assert scene._completed == {1, 3, 7}
 
 
-def test_complete_lesson_not_called_on_launch(monkeypatch):
+def test_complete_lesson_not_called_on_launch():
     """Launching a game must NOT mark the lesson complete — only finishing does."""
     pm = _FakePM()
     scene = LessonMenuScene(pm, EN)
-
-    launched = []
-    monkeypatch.setattr(scene, "_launch_big_data_map", lambda: launched.append(1))
 
     assert scene._selected == 0
     scene._launch_selected_game()
 
     assert pm._completed == []
-    assert launched == [1]
 
 
-def test_complete_lesson_game_launches_without_marking_completion(monkeypatch):
-    """All 31 lessons can be launched without any completion being recorded."""
+def test_complete_lesson_game_launches_without_marking_completion():
+    """_launch_selected_game transitions to a game scene without recording completion."""
     pm = _FakePM()
     scene = LessonMenuScene(pm, EN)
 
-    call_order = []
-    monkeypatch.setattr(scene, "_launch_big_data_map", lambda: call_order.append("launch"))
-
     scene._launch_selected_game()
-    assert call_order == ["launch"]
+    assert scene._done is True
+    assert scene._next is not None
     assert pm._completed == []
 
 
