@@ -1,11 +1,10 @@
 from __future__ import annotations
 
-import csv
 import datetime
 import enum
 import math
 import random
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass
 from pathlib import Path
 
 import pygame
@@ -14,6 +13,7 @@ from cognitive_data_arcade.engine import audio
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
+from cognitive_data_arcade.engine.storage import write_trial
 from cognitive_data_arcade.games.visual_search.config import (
     FEEDBACK_MS,
     FIXATION_MS,
@@ -73,16 +73,6 @@ def _generate_block(trials_per_block: int, condition: str) -> list[dict]:
     ] * half
     random.shuffle(trials)
     return trials
-
-
-def _write_trial(csv_path: Path, record: _TrialRecord) -> None:
-    csv_path.parent.mkdir(parents=True, exist_ok=True)
-    write_header = not csv_path.exists()
-    with csv_path.open("a", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=list(asdict(record).keys()))
-        if write_header:
-            writer.writeheader()
-        writer.writerow(asdict(record))
 
 
 class VisualSearchGame(Scene):
@@ -194,7 +184,7 @@ class VisualSearchGame(Scene):
             timestamp=datetime.datetime.now(datetime.timezone.utc).isoformat(),
         )
         self._records.append(record)
-        _write_trial(self._csv_path, record)
+        write_trial(self._csv_path, record)
         self._last_correct = correct
         self._last_rt = rt_ms
         audio.play_sfx("correct" if correct else "wrong")

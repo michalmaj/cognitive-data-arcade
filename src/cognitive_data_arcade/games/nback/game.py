@@ -1,10 +1,9 @@
 from __future__ import annotations
 
-import csv
 import enum
 import math
 import random
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass
 from pathlib import Path
 
 import pygame
@@ -13,6 +12,7 @@ from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine import audio
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
+from cognitive_data_arcade.engine.storage import write_trial
 from cognitive_data_arcade.games.nback.config import NBackConfig, Trial, generate_block
 from cognitive_data_arcade.profile.manager import ProfileManager
 
@@ -48,16 +48,6 @@ class _TrialRecord:
 
 _N_MIN = 1
 _N_MAX = 3
-
-
-def _write_trial(csv_path: Path, record: _TrialRecord) -> None:
-    csv_path.parent.mkdir(parents=True, exist_ok=True)
-    write_header = not csv_path.exists()
-    with csv_path.open("a", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=list(asdict(record).keys()))
-        if write_header:
-            writer.writeheader()
-        writer.writerow(asdict(record))
 
 
 def _probit(p: float) -> float:
@@ -190,7 +180,7 @@ class NBackGame(Scene):
             rt_l_ms=self._rt_l,
         )
         self._records.append(record)
-        _write_trial(self._csv_path, record)
+        write_trial(self._csv_path, record)
         audio.play_sfx("correct" if (pos_correct and let_correct) else "wrong")
         self._trial_global += 1
         self._trial_in_block += 1
