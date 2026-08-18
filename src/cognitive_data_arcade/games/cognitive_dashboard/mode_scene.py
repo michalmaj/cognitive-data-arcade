@@ -42,7 +42,7 @@ class CognitiveDashboardModeScene(Scene):
 
         from cognitive_data_arcade.games.cognitive_dashboard.csv_loader import has_any_csv_data
 
-        self._has_data = has_any_csv_data()
+        self._has_data = has_any_csv_data(pm.paths.generated_data_dir)
 
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.MOUSEMOTION:
@@ -79,7 +79,7 @@ class CognitiveDashboardModeScene(Scene):
         from cognitive_data_arcade.games.cognitive_dashboard.info import get_game_info
 
         if idx == 0:
-            session = load_session_from_csv()
+            session = load_session_from_csv(self._pm.paths.generated_data_dir)
         elif idx == 1:
             session = DashboardSession()
         else:
