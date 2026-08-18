@@ -44,7 +44,7 @@ Zadanie Go/No-Go generuje dwa odrębne rodzaje błędów, z których każdy mier
 
 **Błędy pominięcia (chybienia):** Uczestnik nie naciska klawisza w próbie Go. Nie jest to brak hamowania, lecz zazwyczaj niepowodzenie **uwagi podtrzymanej** — uczestnik nie był wystarczająco czujny, by wykryć bodziec Go w oknie odpowiedzi, lub reagował zbyt wolno. Wysokie wskaźniki chybień zwykle wskazują na zmęczenie, nieuwagę lub skrajnie konserwatywną strategię odpowiadania.
 
-Rozróżnienie ma znaczenie kliniczne. Uczestnik z wieloma błędami komisji, ale nielicznymi chybieniami jest impulsywny. Uczestnik z nielicznymi błędami komisji, ale wieloma chybieniami może być nadmiernie zachowawczy lub nieuważny.
+Rozróżnienie ma znaczenie kliniczne. Uczestnik z wieloma błędami komisji, ale nielicznymi chybieniami wykazuje **impulsywny wzorzec reagowania w tym zadaniu** — naciska klawisz przed ukończeniem procesu hamowania. Ten wzorzec zadaniowy jest w literaturze badawczej powiązany z tendencjami do impulsywności, ale wskaźnik błędów komisji w krótkich sesjach Go/No-Go odzwierciedla sytuacyjną skuteczność hamowania, a nie stabilną cechę osobowości. Uczestnik z nielicznymi błędami komisji, ale wieloma chybieniami może być nadmiernie zachowawczy lub nieuważny.
 
 ## 5. Teoria detekcji sygnału i d'
 

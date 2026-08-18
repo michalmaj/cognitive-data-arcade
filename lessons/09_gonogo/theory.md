@@ -44,7 +44,7 @@ The Go/No-Go task generates two distinct types of error, each measuring a differ
 
 **Omission errors (misses):** The participant fails to press the key on a Go trial. This is not a failure of inhibition but typically a failure of **sustained attention** — the participant was not alert enough to detect the Go stimulus within the response window, or responded too slowly. High miss rates usually indicate fatigue, inattention, or a highly conservative response strategy.
 
-The distinction is clinically important. A participant with many commission errors but few misses is impulsive. A participant with few commission errors but many misses may be overcontrolling (excessively cautious) or inattentive.
+The distinction is clinically important. A participant with many commission errors but few misses shows an **impulsive response pattern on this task** — responding before completing inhibitory control. This task pattern is associated with impulsive tendencies in the research literature, but commission error rate on a brief Go/No-Go session reflects situational inhibitory performance, not a stable personality trait. A participant with few commission errors but many misses may be overcontrolling (excessively cautious) or inattentive.
 
 ## 5. Signal Detection Theory and d'
 
