@@ -36,7 +36,9 @@ class PhaseRevealScene(Scene):
         if self._state.profile is None:
             from cognitive_data_arcade.games.you_were_the_dataset.profile_loader import load_profile
 
-            self._state.profile = load_profile()
+            pm = getattr(self._state, "_pm", None)
+            data_dir = pm.paths.generated_data_dir if pm is not None else None
+            self._state.profile = load_profile(data_dir) if data_dir else None
 
     def handle_event(self, event: pygame.event.Event) -> None:
         if self._done:

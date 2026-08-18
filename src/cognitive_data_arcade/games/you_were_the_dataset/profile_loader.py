@@ -5,8 +5,6 @@ from pathlib import Path
 
 from cognitive_data_arcade.games.you_were_the_dataset.game_state import ProfileData
 
-DATA_DIR = Path(__file__).resolve().parents[4] / "data" / "generated"
-
 REQUIRED_GAMES: dict[str, str] = {
     "reaction_time": "L02 Reaction Time Lab",
     "stroop": "L07 Stroop Challenge",
@@ -20,7 +18,7 @@ REQUIRED_GAMES: dict[str, str] = {
 _RT_REFERENCE = [155, 175, 190, 205, 220, 235, 250, 270, 295, 330, 380, 450, 560]
 
 
-def check_prerequisites(data_dir: Path = DATA_DIR) -> dict[str, bool]:
+def check_prerequisites(data_dir: Path) -> dict[str, bool]:
     """Return {task_name: has_data} for each required game."""
     return {name: any((data_dir / name).glob("*.csv")) for name in REQUIRED_GAMES}
 
@@ -40,7 +38,7 @@ def _rt_percentile(rt_ms: float) -> int:
     return int(below / len(_RT_REFERENCE) * 100)
 
 
-def load_profile(data_dir: Path = DATA_DIR) -> ProfileData:
+def load_profile(data_dir: Path) -> ProfileData:
     """Read most recent CSV per game, compute 5 cognitive metrics."""
     # Reaction time baseline
     rt_rows = _read_rows(_latest_csv(data_dir / "reaction_time"))

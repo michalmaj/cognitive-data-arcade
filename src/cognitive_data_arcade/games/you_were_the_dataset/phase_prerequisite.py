@@ -9,7 +9,6 @@ from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.you_were_the_dataset.game_state import GameState
 from cognitive_data_arcade.games.you_were_the_dataset.profile_loader import (
-    DATA_DIR,
     REQUIRED_GAMES,
     check_prerequisites,
 )
@@ -78,8 +77,8 @@ class PhasePrerequisiteScene(Scene):
     ) -> None:
         self._state = state
         self._factories = game_factories
-        self._data_dir = _data_dir or DATA_DIR
-        self._statuses: dict[str, bool] = check_prerequisites(self._data_dir)
+        self._data_dir = _data_dir
+        self._statuses: dict[str, bool] = check_prerequisites(self._data_dir) if self._data_dir else {}
         self._done = False
         self._next: Scene | None = None
 
