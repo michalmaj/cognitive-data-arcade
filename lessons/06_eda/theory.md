@@ -138,7 +138,7 @@ The ultimate EDA goal in a Stroop paradigm is to determine whether the RT distri
 
 ### 6.1 Overlapping Distributions
 
-If the incongruent and congruent RT distributions overlap almost completely, the Stroop effect may be small or the variability may be high. Plotting both distributions as overlapping histograms or violin plots immediately reveals this. If the distributions are well-separated, the effect is large and likely reliable.
+If the incongruent and congruent RT distributions overlap almost completely, the Stroop effect may be small or the variability may be high. Plotting both distributions as overlapping histograms or violin plots immediately reveals this. If the distributions are well-separated, the effect is **large in these data** — but size and reliability are distinct concepts. A large observed separation in a small sample is still a noisy estimate; how certain we are about the true effect depends on sample size and trial-to-trial variance, not on the separation alone.
 
 ### 6.2 Cohen's d
 
@@ -148,15 +148,17 @@ After EDA, the first number to compute is not a p-value but an **effect size**. 
 
 Conventional benchmarks (Cohen, 1988):
 
-| d | Interpretation |
+| d | Benchmark label |
 |---|---|
 | 0.2 | Small |
 | 0.5 | Medium |
 | 0.8 | Large |
 
-For within-subjects designs (which Stroop paradigms typically are), Cohen's d_z — using the standard deviation of the *difference scores* — is the appropriate variant.
+These benchmarks are widely cited but were intended as rough defaults in the absence of domain knowledge, not as universal standards. Cohen (1992) explicitly cautioned that they should be replaced by discipline-specific context wherever possible. In cognitive psychology, Stroop effects often correspond to d ≈ 0.5–1.5 in within-subjects designs, which would be labelled "medium to large" by the table — but whether any particular effect size is *meaningful* depends on the research question, the paradigm, and the comparison being made.
 
-Effect size is critical because, with a large enough sample, even a trivially small difference (d = 0.05, equivalent to 3 ms in a 600 ms baseline) will be statistically significant. Statistical significance answers "is the effect non-zero?"; effect size answers "is it worth caring about?". EDA cannot answer the first question but can definitively inform the second.
+For within-subjects designs (which Stroop paradigms typically are), Cohen's d_z — using the standard deviation of the *difference scores* — is the appropriate variant. Effect size and statistical reliability are also distinct: a d = 0.8 estimated from 8 trials carries far more uncertainty than the same d estimated from 800 trials.
+
+Effect size is critical because, with a large enough sample, even a trivially small difference (d = 0.05, equivalent to 3 ms in a 600 ms baseline) will be statistically significant. Statistical significance answers "is the effect non-zero?"; effect size answers "how large is it in this sample?". Neither question alone settles whether the effect is meaningful or reliably estimated. EDA informs the effect-size question but not the inferential one.
 
 ## References
 
