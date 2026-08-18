@@ -1038,7 +1038,7 @@ class LessonMenuScene(Scene):
         )
         from cognitive_data_arcade.ui.how_to_play_scene import make_how_to_play
 
-        inner = DistributionPlaygroundScene()
+        inner = DistributionPlaygroundScene(self._pm, self._strings)
         game_info = get_game_info(self._strings)
         pausable = PausableGame(
             inner, game_info, self._make_distribution_playground, self._strings, self._pm
@@ -1063,7 +1063,7 @@ class LessonMenuScene(Scene):
         )
         from cognitive_data_arcade.ui.how_to_play_scene import make_how_to_play
 
-        inner = CorrelationTrapScene()
+        inner = CorrelationTrapScene(self._pm, self._strings)
         game_info = get_game_info(self._strings)
         pausable = PausableGame(
             inner, game_info, self._make_correlation_trap, self._strings, self._pm
