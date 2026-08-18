@@ -36,13 +36,15 @@ Session-level timestamps that are not timezone-aware can become ambiguous when d
 
 ## 3. RT-Specific Exclusion Criteria
 
-Reaction time distributions are right-skewed and bounded below by the irreducible minimum time for sensory processing and motor execution. Standard exclusion criteria reflect these biological constraints:
+Reaction time distributions are right-skewed and bounded below by the irreducible minimum time for sensory processing and motor execution. Standard exclusion criteria are grounded in physiological reasoning, but the specific numeric thresholds are **analytic conventions**, not fixed laws. Different laboratories and papers use different cutoffs; the choice must be pre-specified and reported.
 
-### Anticipations (RT < 100 ms)
+### Anticipations (RT < 100–200 ms)
 
-A response occurring less than 100 ms after stimulus onset cannot have been produced by processing that stimulus. At 100 ms, light from the stimulus has barely completed its path through the visual system to primary visual cortex (V1), let alone been processed by downstream decision mechanisms. Responses this fast are **anticipatory**: the participant responded before processing was complete, either by guessing the response timing or by reacting to an unintended cue.
+Responses faster than approximately 100–200 ms after stimulus onset are unlikely to reflect full processing of that stimulus. The physiological rationale: visual transduction and early cortical processing alone take roughly 40–80 ms, leaving very little time for downstream decision and motor execution before 100 ms. Responses this fast are therefore classified as **anticipatory** — the participant pressed the key before processing was complete, either by guessing the response timing or by reacting to an unintended cue.
 
-Including anticipatory responses in RT means would artificially lower means and inflate apparent speed. They should be excluded and counted separately (as a measure of task compliance and strategy).
+The conventional lower cutoff varies across the literature: 100 ms, 150 ms, and 200 ms are all used. The choice of cutoff is a methodological decision. Ratcliff (1993) recommends 200 ms as a conservative lower bound; some labs use 100 ms as the absolute minimum based on the physiological argument above. Whichever value is chosen, it should be pre-specified and reported alongside the number of trials excluded.
+
+Including anticipatory responses in RT means artificially lowers means and inflates apparent speed. They should be excluded and counted separately (as a measure of task compliance and strategy).
 
 ### Attentional Lapses (RT > 2000–3000 ms)
 

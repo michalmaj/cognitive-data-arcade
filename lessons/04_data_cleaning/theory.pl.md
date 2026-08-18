@@ -36,13 +36,15 @@ Znaczniki czasu na poziomie sesji, które nie uwzględniają strefy czasowej, mo
 
 ## 3. Specyficzne kryteria wykluczenia RT
 
-Rozkłady czasu reakcji są prawostronnie skośne i ograniczone od dołu przez nieodzowny minimalny czas na przetwarzanie sensoryczne i wykonanie ruchu. Standardowe kryteria wykluczenia odzwierciedlają te biologiczne ograniczenia:
+Rozkłady czasu reakcji są prawostronnie skośne i ograniczone od dołu przez nieodzowny minimalny czas na przetwarzanie sensoryczne i wykonanie ruchu. Standardowe kryteria wykluczenia mają uzasadnienie fizjologiczne, jednak konkretne progi liczbowe są **konwencjami analitycznymi**, nie stałymi prawami. Różne laboratoria stosują różne progi — wybór musi być ustalony z góry i zaraportowany.
 
-### Antycypacje (RT < 100 ms)
+### Antycypacje (RT < 100–200 ms)
 
-Odpowiedź występująca mniej niż 100 ms po pojawieniu się bodźca nie mogła zostać wyprodukowana przez przetwarzanie tego bodźca. W 100 ms światło od bodźca ledwo zakończyło drogę przez układ wzrokowy do pierwotnej kory wzrokowej (V1), nie wspominając o przetworzeniu przez podrzędne mechanizmy decyzyjne. Odpowiedzi tak szybkie są **antycypacyjne**: uczestnik odpowiedział przed zakończeniem przetwarzania, albo zgadując czas odpowiedzi, albo reagując na niezamierzoną wskazówkę.
+Odpowiedzi szybsze niż około 100–200 ms po pojawieniu się bodźca prawdopodobnie nie odzwierciedlają pełnego przetwarzania bodźca. Uzasadnienie fizjologiczne: sama transdukcja wzrokowa i wczesne przetwarzanie korowe zajmują około 40–80 ms, co pozostawia bardzo mało czasu na decyzję i wykonanie motoryczne przed 100 ms. Tak szybkie odpowiedzi są klasyfikowane jako **antycypacyjne** — uczestnik nacisnął klawisz przed zakończeniem przetwarzania, zgadując czas odpowiedzi lub reagując na niezamierzoną wskazówkę.
 
-Włączenie odpowiedzi antycypacyjnych do średnich RT sztucznie obniżałoby średnie i zawyżało pozorną szybkość. Powinny być wykluczone i liczone osobno (jako miara przestrzegania zadania i strategii).
+Konwencjonalny dolny próg różni się w literaturze: stosuje się wartości 100 ms, 150 ms i 200 ms. Wybór progu jest decyzją metodologiczną. Ratcliff (1993) zaleca 200 ms jako konserwatywną dolną granicę; część laboratoriów stosuje 100 ms jako bezwzględne minimum na podstawie argumentu fizjologicznego. Niezależnie od wybranej wartości, musi być ona ustalona przed analizą i zaraportowana wraz z liczbą wykluczonych prób.
+
+Włączenie odpowiedzi antycypacyjnych do średnich RT sztucznie obniżałoby średnie i zawyżało pozorną szybkość. Powinny być wykluczone i liczone osobno (jako miara przestrzegania zasad zadania i stosowanej strategii).
 
 ### Przerwy uwagi (RT > 2000–3000 ms)
 
