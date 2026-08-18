@@ -14,7 +14,7 @@ CONTENT: dict[str, dict[str, list[str]]] = {
         ],
         "notes": [
             "Badanie 'You Are What You Like' (Youyou, Kosiński, Stillwell, PNAS 2015): na podstawie 300 lajków model komputerowy przewidywał cechy osobowości dokładniej niż małżonek osoby badanej. Na podstawie 10 lajków - dokładniej niż współpracownicy. To badanie bezpośrednio zainspirowało model psychograficzny Cambridge Analytica. Kosiński sam nie współpracował z CA - jedynie opublikował metodę, którą inni wykorzystali bez jego wiedzy.",
-            "RODO (Ogólne Rozporządzenie o Ochronie Danych, 2018): każde przetwarzanie danych osobowych wymaga podstawy prawnej (zgoda, umowa, uzasadniony interes). Prawo do bycia zapomnianym oznacza prawo do żądania usunięcia wszystkich danych. EU AI Act (2024) nakłada dodatkowe wymogi na systemy AI wysokiego ryzyka w zakresie transparentności i audytowalności.",
+            "RODO (Ogólne Rozporządzenie o Ochronie Danych, 2018): każde przetwarzanie danych osobowych wymaga podstawy prawnej (zgoda, umowa, uzasadniony interes). Prawo do bycia zapomnianym (art. 17 RODO) pozwala osobom fizycznym żądać usunięcia ich danych, ale RODO przewiduje wyjątki — badania naukowe, interes publiczny, wolność wyrazu, roszczenia prawne — i nie jest to bezwarunkowe prawo do usunięcia wszystkich danych w każdej sytuacji. EU AI Act (2024) nakłada dodatkowe wymogi na systemy AI wysokiego ryzyka w zakresie transparentności i audytowalności.",
         ],
         "tasks": [
             "Na podstawie kognitywnego profilu zebranego w kursie - co jest najbardziej zaskakujące? Czy wyniki zgadzają się z subiektywnym poczuciem własnych zdolności? Co efekt Stroopa mówi o tym, jak mózg przetwarza sprzeczne informacje?",
@@ -32,7 +32,7 @@ CONTENT: dict[str, dict[str, list[str]]] = {
         ],
         "notes": [
             "The study 'You Are What You Like' (Youyou, Kosinski, Stillwell, PNAS 2015): based on 300 likes, a computer model predicted personality traits more accurately than a spouse. Based on 10 likes - more accurately than coworkers. This research directly inspired the Cambridge Analytica psychographic model. Kosinski himself did not work with CA - he merely published the method, which others then applied without his knowledge.",
-            "GDPR (General Data Protection Regulation, 2018): every processing of personal data requires a legal basis (consent, contract, legitimate interest). The right to be forgotten means the right to demand deletion of all data. The EU AI Act (2024) adds further transparency and auditability requirements for high-risk AI systems.",
+            "GDPR (General Data Protection Regulation, 2018): every processing of personal data requires a legal basis (consent, contract, legitimate interest). The right to erasure (Article 17) allows individuals to request deletion of their data, but GDPR includes exceptions for scientific research, public interest, freedom of expression, and legal claims — it is not an unconditional right to delete all data in all circumstances. The EU AI Act (2024) adds further transparency and auditability requirements for high-risk AI systems.",
         ],
         "tasks": [
             "Looking at the cognitive profile collected in this course - what is most surprising? Do the results match a subjective sense of one's own abilities? What does the Stroop effect say about how the brain processes conflicting information?",
