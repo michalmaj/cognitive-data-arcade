@@ -89,12 +89,18 @@ def test_down_navigates_and_clamps(tmp_path: Path) -> None:
 
 
 def test_restart_creates_new_scene(tmp_path: Path) -> None:
-    pg, _, _ = _make(tmp_path)
+    """restart_factory must produce a scene that is not the already-played inner."""
+    pg, original_inner, _ = _make(tmp_path)
     pg._paused = True
     pg._selected = 0
     pg.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode="\r"))
     assert pg.is_done()
-    assert pg.next_scene() is not None
+    restarted = pg.next_scene()
+    assert restarted is not None
+    assert restarted is not original_inner, (
+        "restart_factory returned the same scene object that was already played; "
+        "mutable gameplay state would persist across restarts"
+    )
 
 
 def test_how_to_play_opens_sub_scene(tmp_path: Path) -> None:
