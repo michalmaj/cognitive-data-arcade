@@ -3,6 +3,50 @@
 
 from __future__ import annotations
 
+from cognitive_data_arcade.lessons.provenance import Claim
+
+PROVENANCE: dict[str, Claim] = {
+    "hawthorne_effect_narrative": Claim(
+        type="empirical",
+        note=(
+            "The standard Hawthorne narrative (output rose whenever conditions changed) "
+            "is an oversimplification. Levitt & List (2011, American Economic Journal) "
+            "reanalysed the original data and found the effect far weaker than reported. "
+            "Content now correctly qualifies this."
+        ),
+        source="Levitt & List (2011), American Economic Journal: Applied Economics",
+        updated="2026-08-18",
+    ),
+    "reidentification_accuracy": Claim(
+        type="empirical",
+        note=(
+            ">95% re-identification accuracy claims are specific to controlled laboratory "
+            "conditions with large reference databases (long-term trace data). "
+            "Not a general property of any behavioural dataset. "
+            "Content now correctly scopes this claim."
+        ),
+        source="Kosinski et al. (2013, PNAS); Youyou et al. (2015, PNAS)",
+        updated="2026-08-18",
+    ),
+    "cambridge_analytica_user_count": Claim(
+        type="empirical",
+        note=(
+            "87 million Facebook profiles figure is from Facebook's own disclosure (2018). "
+            "Accurate as of that disclosure; treat as a reported figure from the company, "
+            "not an independently verified count."
+        ),
+        updated="2026-08-18",
+    ),
+    "gdpr_fine_amounts": Claim(
+        type="empirical",
+        note=(
+            "GDPR fine amounts (Meta EUR 1.2B, Amazon EUR 746M) are accurate as of 2023-2024. "
+            "Figures may change on appeal; treat as approximate reference values."
+        ),
+        updated="2026-08-18",
+    ),
+}
+
 CONTENT: dict[str, dict[str, list[str]]] = {
     "pl": {
         "theory": [

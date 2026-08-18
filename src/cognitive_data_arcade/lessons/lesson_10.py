@@ -2,6 +2,41 @@
 
 from __future__ import annotations
 
+from cognitive_data_arcade.lessons.provenance import Claim
+
+PROVENANCE: dict[str, Claim] = {
+    "nback_accuracy_benchmarks": Claim(
+        type="reference_range",
+        note=(
+            "N=1 >90%, N=2 70-80%, N=3 <60% accuracy presented as orientation norms. "
+            "These figures are approximate; they vary with stimulus type (letter vs. "
+            "spatial), presentation rate, adaptive vs. fixed design, and individual WM capacity."
+        ),
+        source="Kane & Engle (2002); Melby-Lervag & Hulme (2013)",
+        updated="2026-08-18",
+    ),
+    "miller_seven_chunks": Claim(
+        type="empirical",
+        note=(
+            "Miller (1956) '7 plus or minus 2' is a widely cited finding but applies "
+            "to span under rehearsal conditions. Cowan (2001) revision to ~4 chunks "
+            "is better supported by modern WM research."
+        ),
+        source="Miller (1956), Psychological Review; Cowan (2001), Behavioral and Brain Sciences",
+        updated="2026-08-18",
+    ),
+    "training_controversy_consensus": Claim(
+        type="empirical",
+        note=(
+            "WM training debate presented as ongoing. The current evidence balance "
+            "(as of 2018 consensus statement; Melby-Lervag & Hulme, 2013 meta-analysis) "
+            "favours near transfer only, with no reliable far transfer to fluid intelligence."
+        ),
+        source="Melby-Lervag & Hulme (2013), Developmental Psychology; Shipstead et al. (2012), Psychological Bulletin",
+        updated="2026-08-18",
+    ),
+}
+
 CONTENT: dict[str, dict[str, list[str]]] = {
     "pl": {
         "theory": [
