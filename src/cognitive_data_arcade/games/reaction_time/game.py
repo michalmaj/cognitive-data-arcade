@@ -1,9 +1,8 @@
 from __future__ import annotations
 
-import csv
 import datetime
 import enum
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass
 from pathlib import Path
 
 import pygame
@@ -13,6 +12,7 @@ from cognitive_data_arcade.engine import audio
 from cognitive_data_arcade.engine.badges import BadgeEngine, SessionResult
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
+from cognitive_data_arcade.engine.storage import write_trial
 from cognitive_data_arcade.games.reaction_time.config import ReactionTimeConfig
 from cognitive_data_arcade.profile.manager import ProfileManager
 
@@ -62,16 +62,6 @@ class _TrialRecord:
     reaction_time_ms: float
     timestamp: str
     distractor_count: int
-
-
-def _write_trial(path: Path, record: _TrialRecord) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    write_header = not path.exists()
-    with path.open("a", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=list(asdict(record).keys()))
-        if write_header:
-            writer.writeheader()
-        writer.writerow(asdict(record))
 
 
 def _compute_ap(config: ReactionTimeConfig, correct_trials: int, avg_rt: float) -> int:
@@ -203,7 +193,7 @@ class ReactionTimeGame(Scene):
             distractor_count=self._config.distractor_count,
         )
         self._records.append(record)
-        _write_trial(self._csv_path, record)
+        write_trial(self._csv_path, record)
         self._last_rt = rt if correct else None
         self._trial_index += 1
         self._phase = _Phase.FEEDBACK

@@ -1,10 +1,9 @@
 from __future__ import annotations
 
-import csv
 import datetime
 import enum
 import random
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass
 from pathlib import Path
 
 import pygame
@@ -14,6 +13,7 @@ from cognitive_data_arcade.engine import audio
 from cognitive_data_arcade.engine.badges import BadgeEngine, SessionResult
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
+from cognitive_data_arcade.engine.storage import write_trial
 from cognitive_data_arcade.games.stroop.config import COLORS, EASY, HARD, MEDIUM, StroopConfig
 from cognitive_data_arcade.profile.manager import ProfileManager
 
@@ -73,16 +73,6 @@ class _TrialRecord:
     correct: bool
     reaction_time_ms: float
     timestamp: str
-
-
-def _write_trial(path: Path, record: _TrialRecord) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    write_header = not path.exists()
-    with path.open("a", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=list(asdict(record).keys()))
-        if write_header:
-            writer.writeheader()
-        writer.writerow(asdict(record))
 
 
 class StroopGame(Scene):
@@ -285,7 +275,7 @@ class StroopGame(Scene):
             timestamp=datetime.datetime.now(datetime.timezone.utc).isoformat(),
         )
         self._records.append(record)
-        _write_trial(self._csv_path, record)
+        write_trial(self._csv_path, record)
         self._last_rt = rt if rt > 0 else None
         self._last_correct = correct
         audio.play_sfx("correct" if correct else "wrong")
