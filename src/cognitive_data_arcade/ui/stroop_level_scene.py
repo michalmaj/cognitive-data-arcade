@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import datetime
-from pathlib import Path
 
 import pygame
 from cognitive_data_arcade.engine.fonts import get_font
@@ -79,7 +78,7 @@ class StroopLevelScene(Scene):
         profile = self._pm.load()
         pid = profile.device_uuid
         sid = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-        csv_path = Path("data") / "generated" / "stroop" / f"{sid}.csv"
+        csv_path = self._pm.paths.generated_data_dir / "stroop" / f"{sid}.csv"
         from cognitive_data_arcade.games.stroop.game import StroopGame
         from cognitive_data_arcade.games.stroop.info import get_game_info
 

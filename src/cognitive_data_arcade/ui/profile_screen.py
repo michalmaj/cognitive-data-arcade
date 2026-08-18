@@ -17,7 +17,6 @@ from cognitive_data_arcade.engine.i18n import Strings, level_progress, level_tit
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.profile.manager import Profile, ProfileManager
 
-from pathlib import Path
 
 from cognitive_data_arcade.engine.colors import (
     BG as _BG,
@@ -55,7 +54,7 @@ class ProfileScene(Scene):
         self._export_msg: str = ""
         self._export_msg_ttl: float = 0.0
         self._logout_rect: pygame.Rect | None = None
-        self._data_stats = compute_data_stats(Path("data") / "generated")
+        self._data_stats = compute_data_stats(profile_manager.paths.generated_data_dir)
         self._quiz_acc = compute_quiz_accuracy(self._profile.quiz_results)
         pygame.font.init()
         self._font_sm = get_font(22)

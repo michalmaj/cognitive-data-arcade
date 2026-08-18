@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import datetime
-from pathlib import Path
 
 import pygame
 
@@ -112,7 +111,7 @@ class VisualSearchLevelScene(Scene):
         profile = self._pm.load()
         pid = profile.device_uuid
         sid = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-        csv_path = Path("data") / "generated" / "visual_search" / f"{sid}.csv"
+        csv_path = self._pm.paths.generated_data_dir / "visual_search" / f"{sid}.csv"
 
         inner = VisualSearchGame(cfg, self._pm, self._strings, pid, sid, csv_path)
         game_info = get_game_info(self._strings)

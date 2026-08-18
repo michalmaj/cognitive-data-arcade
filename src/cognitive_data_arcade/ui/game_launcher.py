@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from collections.abc import Callable
-from pathlib import Path
 
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
@@ -53,7 +52,7 @@ def game_factory_for(lesson_num: int, pm: ProfileManager, strings: Strings):
             profile = pm.load()
             pid = profile.device_uuid
             sid = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-            csv_path = Path("data") / "generated" / "reaction_time" / f"{sid}.csv"
+            csv_path = pm.paths.generated_data_dir / "reaction_time" / f"{sid}.csv"
             inner = ReactionTimeGame(DEFAULT_CONFIG, pm, strings, pid, sid, csv_path)
             game_info = get_game_info(strings)
             pausable = PausableGame(inner, game_info, lambda: _make(), strings, pm)

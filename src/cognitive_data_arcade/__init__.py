@@ -1,15 +1,18 @@
 """Cognitive Data Arcade package."""
 
-from pathlib import Path
-
 from cognitive_data_arcade.engine import audio
+from cognitive_data_arcade.engine.app_paths import default_app_paths
 from cognitive_data_arcade.engine.game_loop import GameLoop
 from cognitive_data_arcade.engine.i18n import get_strings
 from cognitive_data_arcade.profile.manager import ProfileManager
 
 
 def main() -> None:
-    pm = ProfileManager(Path.home() / ".cognitive_data_arcade" / "profile.json")
+    paths = default_app_paths()
+    paths.profile_dir.mkdir(parents=True, exist_ok=True)
+    paths.generated_data_dir.mkdir(parents=True, exist_ok=True)
+    paths.export_dir.mkdir(parents=True, exist_ok=True)
+    pm = ProfileManager(paths.profile_dir / "profile.json", app_paths=paths)
     profile = pm.load()
     audio.init(profile)
 

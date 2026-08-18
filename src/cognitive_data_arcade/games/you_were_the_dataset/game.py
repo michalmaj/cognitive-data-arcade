@@ -21,8 +21,9 @@ class YouWereTheDatasetScene(Scene):
         self._next: Scene | None = None
 
         factories = self._build_game_factories()
-        prereqs = check_prerequisites()
-        if all(prereqs.values()):
+        data_dir = pm.paths.generated_data_dir if pm is not None else None
+        prereqs = check_prerequisites(data_dir) if data_dir else {}
+        if data_dir and all(prereqs.values()):
             from cognitive_data_arcade.games.you_were_the_dataset.phase_reveal import (
                 PhaseRevealScene,
             )
@@ -33,7 +34,7 @@ class YouWereTheDatasetScene(Scene):
                 PhasePrerequisiteScene,
             )
 
-            self._current = PhasePrerequisiteScene(self._state, factories)
+            self._current = PhasePrerequisiteScene(self._state, factories, _data_dir=data_dir)
 
     def _build_game_factories(self) -> dict:
         pm, strings = self._pm, self._strings
@@ -43,9 +44,8 @@ class YouWereTheDatasetScene(Scene):
 
         def _make_rt():
             from cognitive_data_arcade.ui.session_picker import SessionPickerScene
-            from pathlib import Path
 
-            return SessionPickerScene(Path("data") / "generated" / "reaction_time", strings, pm)
+            return SessionPickerScene(pm.paths.generated_data_dir / "reaction_time", strings, pm)
 
         def _make_stroop():
             from cognitive_data_arcade.ui.stroop_level_scene import StroopLevelScene

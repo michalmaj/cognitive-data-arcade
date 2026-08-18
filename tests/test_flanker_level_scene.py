@@ -1,5 +1,6 @@
 from __future__ import annotations
 import pygame
+from cognitive_data_arcade.engine.app_paths import AppPaths
 from cognitive_data_arcade.engine.i18n import EN
 from cognitive_data_arcade.ui.flanker_level_scene import (
     FlankerLevelScene,
@@ -16,6 +17,16 @@ class _FakePM:
         device_uuid = "test-uuid"
         completed_lessons: list = []
         seen_intro: bool = False
+
+    paths = AppPaths(
+        profile_dir=__import__("pathlib").Path.home(),
+        generated_data_dir=__import__("pathlib").Path.home()
+        / ".cognitive_data_arcade"
+        / "data"
+        / "generated",
+        export_dir=__import__("pathlib").Path.home() / ".cognitive_data_arcade" / "exports",
+        asset_dir=__import__("pathlib").Path.home(),
+    )
 
     def load(self):
         return self._Profile()

@@ -5,13 +5,14 @@ from pathlib import Path
 
 from cognitive_data_arcade.games.cognitive_dashboard.session import DashboardSession, TaskResult
 
-_DATA_ROOT = Path("data") / "generated"
 _MAX_TRIALS = 500
 
 
-def _load_task(folder: str, rt_col: str, correct_col: str, condition_col: str) -> TaskResult | None:
+def _load_task(
+    data_root: Path, folder: str, rt_col: str, correct_col: str, condition_col: str
+) -> TaskResult | None:
     """Read all CSVs from a task folder, combine into one TaskResult."""
-    task_dir = _DATA_ROOT / folder
+    task_dir = data_root / folder
     if not task_dir.exists():
         return None
 
@@ -47,19 +48,19 @@ def _load_task(folder: str, rt_col: str, correct_col: str, condition_col: str) -
     return TaskResult(rt_ms=rt_ms, correct=correct, condition=condition)
 
 
-def load_session_from_csv() -> DashboardSession:
+def load_session_from_csv(data_root: Path) -> DashboardSession:
     """Build a DashboardSession from all saved CSV files on disk."""
-    rt = _load_task("reaction_time", "reaction_time_ms", "correct", "condition")
-    stroop = _load_task("stroop", "reaction_time_ms", "correct", "condition")
-    flanker = _load_task("flanker", "reaction_time_ms", "correct", "condition")
-    gonogo = _load_task("gono", "reaction_time_ms", "correct", "trial_type")
+    rt = _load_task(data_root, "reaction_time", "reaction_time_ms", "correct", "condition")
+    stroop = _load_task(data_root, "stroop", "reaction_time_ms", "correct", "condition")
+    flanker = _load_task(data_root, "flanker", "reaction_time_ms", "correct", "condition")
+    gonogo = _load_task(data_root, "gono", "reaction_time_ms", "correct", "trial_type")
     return DashboardSession(rt=rt, stroop=stroop, flanker=flanker, gonogo=gonogo, synthetic=False)
 
 
-def has_any_csv_data() -> bool:
+def has_any_csv_data(data_root: Path) -> bool:
     """Return True if at least one game has saved CSV data."""
     for folder in ("reaction_time", "stroop", "flanker", "gono"):
-        d = _DATA_ROOT / folder
+        d = data_root / folder
         if d.exists() and any(d.glob("*.csv")):
             return True
     return False

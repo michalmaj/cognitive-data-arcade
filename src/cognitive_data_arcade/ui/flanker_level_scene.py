@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import dataclasses
 import datetime
-from pathlib import Path
 
 import pygame
 from cognitive_data_arcade.engine.fonts import get_font
@@ -116,7 +115,7 @@ class FlankerLevelScene(Scene):
         profile = self._pm.load()
         pid = profile.device_uuid
         sid = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-        csv_path = Path("data") / "generated" / "flanker" / f"{sid}.csv"
+        csv_path = self._pm.paths.generated_data_dir / "flanker" / f"{sid}.csv"
         inner = FlankerGame(config, self._pm, self._strings, pid, sid, csv_path)
         game_info = get_game_info(self._strings)
         restart_factory = lambda: FlankerLevelScene(self._pm, self._strings)
