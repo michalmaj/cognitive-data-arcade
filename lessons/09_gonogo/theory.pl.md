@@ -15,7 +15,7 @@ W każdej próbie zadania Go/No-Go na ekranie pojawia się jeden bodziec. Uczest
 
 Wyzwanie poznawcze wynika z asymetrii między próbami Go i No-Go. Ponieważ próby Go stanowią większość (zazwyczaj 70–80% wszystkich prób), uczestnicy wykształcają **prepotentną odpowiedź** — silną, nawykową tendencję do naciskania klawisza za każdym razem, gdy pojawia się jakikolwiek bodziec. Bodziec No-Go musi przerywać tę automatyczną tendencję w momencie, gdy jest ona najsilniejsza.
 
-Dlatego prawidłowe zahamowanie w próbach No-Go nie jest po prostu brakiem ruchu. Jest to aktywne stłumienie odpowiedzi motorycznej, która została już częściowo przygotowana. Neuronalne i obliczeniowe zasoby wymagane do tego tłumienia są przedmiotem dekad badań.
+Prawidłowe zahamowanie w próbach No-Go nie jest po prostu brakiem ruchu — to aktywne stłumienie odpowiedzi, która została już częściowo przygotowana. Neuronalne i obliczeniowe zasoby wymagane do tego tłumienia są przedmiotem dekad badań.
 
 ## 3. Proporcja Go i prepotencja
 
@@ -34,13 +34,13 @@ W tej aplikacji:
 - **Średni:** 75% Go (standard, 1,0 s okno odpowiedzi)
 - **Trudny:** 60% Go (mniejsza prepotencja, ale krótsze okno 0,7 s — presja czasowa rekompensuje)
 
-Wyższa proporcja Go zwiększa prepotencję, a tym samym błędy komisji. To operacyjna definicja obciążenia hamowania: im większa automatyczność odpowiedzi Go, tym więcej zasobów poznawczych potrzeba do jej zatrzymania.
+Wyższa proporcja Go zwiększa prepotencję, a tym samym błędy komisji: im bardziej automatyczna odpowiedź Go, tym więcej zasobów poznawczych potrzeba do jej zatrzymania.
 
 ## 4. Dwa rodzaje błędów
 
 Zadanie Go/No-Go generuje dwa odrębne rodzaje błędów, z których każdy mierzy inny proces poznawczy:
 
-**Błędy komisji (fałszywe alarmy):** Uczestnik naciska klawisz w próbie No-Go. Jest to niepowodzenie kontroli hamowania. Wskazuje, że prepotentna odpowiedź Go została zainicjowana, ale nie została stłumiona na czas. Błędy komisji są głównym wynikiem zadania — indeksują zdolność do **hamowania odpowiedzi**.
+**Błędy komisji (fałszywe alarmy):** Uczestnik naciska klawisz w próbie No-Go — niepowodzenie kontroli hamowania wskazujące, że prepotentna odpowiedź Go nie została stłumiona na czas. Błędy komisji są głównym wynikiem zadania — indeksują zdolność do **hamowania odpowiedzi**.
 
 **Błędy pominięcia (chybienia):** Uczestnik nie naciska klawisza w próbie Go. Nie jest to brak hamowania, lecz zazwyczaj niepowodzenie **uwagi podtrzymanej** — uczestnik nie był wystarczająco czujny, by wykryć bodziec Go w oknie odpowiedzi, lub reagował zbyt wolno. Wysokie wskaźniki chybień zwykle wskazują na zmęczenie, nieuwagę lub skrajnie konserwatywną strategię odpowiadania.
 

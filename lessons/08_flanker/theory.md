@@ -57,7 +57,7 @@ The model makes a testable prediction: as the distance between the target and fl
 
 ## 6. The Gratton Effect: Sequential Adaptation of Cognitive Control
 
-One of the most important discoveries made with the flanker task is the **Gratton effect** (Gratton, Coles, & Donchin, 1992), also called the sequential compatibility effect. The finding: the size of the flanker compatibility effect depends on what happened on the previous trial.
+A key discovery made with the flanker task is the **Gratton effect** (Gratton, Coles, & Donchin, 1992), also called the sequential compatibility effect. The finding: the size of the flanker compatibility effect depends on what happened on the previous trial.
 
 Specifically:
 - After a congruent trial (CC), the compatibility effect on the next trial is **larger**.

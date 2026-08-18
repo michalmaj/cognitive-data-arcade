@@ -2,7 +2,7 @@
 
 ## 1. What Is EDA and Where Did It Come From?
 
-**Exploratory Data Analysis (EDA)** is the practice of summarizing and visualizing a dataset to understand its structure *before* specifying and testing a formal statistical model. The term was introduced by the American mathematician and statistician **John Tukey** in his 1977 book of the same name, which remains one of the most influential methodological texts in quantitative science.
+**Exploratory Data Analysis (EDA)** is the practice of summarizing and visualizing a dataset to understand its structure *before* specifying and testing a formal statistical model. The term was introduced by **John Tukey** in his 1977 book of the same name, which has been widely influential across statistics and data-intensive sciences.
 
 Tukey's central argument was that statistical analysis typically begins at the wrong end. Researchers collect data, immediately compute a test statistic, and report a p-value — without ever looking at the raw numbers. This workflow makes it easy to miss anomalies, misinterpret patterns, and draw conclusions from artefacts rather than signal.
 

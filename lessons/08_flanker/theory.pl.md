@@ -57,7 +57,7 @@ Model stawia testowalną prognozę: wraz ze wzrostem odległości między celem 
 
 ## 6. Efekt Grattona: sekwencyjna adaptacja kontroli poznawczej
 
-Jednym z najważniejszych odkryć dokonanych za pomocą zadania flankera jest **efekt Grattona** (Gratton, Coles & Donchin, 1992), zwany też sekwencyjnym efektem zgodności. Odkrycie: wielkość efektu zgodności flankera zależy od tego, co wydarzyło się w poprzedniej próbie.
+Kluczowym odkryciem dokonanym za pomocą zadania flankera jest **efekt Grattona** (Gratton, Coles & Donchin, 1992), zwany też sekwencyjnym efektem zgodności. Odkrycie: wielkość efektu zgodności flankera zależy od tego, co wydarzyło się w poprzedniej próbie.
 
 Konkretnie:
 - Po próbie kongruentnej (CC) efekt zgodności w następnej próbie jest **większy**.
