@@ -35,42 +35,30 @@ def _rt_baseline(session: DashboardSession) -> float | None:
 
 
 def cognitive_profile(session: DashboardSession) -> list[str]:
+    """Return session-scoped observations — no trait labels, no normative comparisons."""
     lines: list[str] = []
 
     rt_avg = _rt_baseline(session)
     if rt_avg is not None:
-        if rt_avg < 220:
-            lines.append(f"Czas reakcji bazowy: bardzo szybki ({rt_avg:.0f} ms).")
-        elif rt_avg <= 320:
-            lines.append(f"Czas reakcji bazowy: przeciętny ({rt_avg:.0f} ms).")
-        else:
-            lines.append(f"Czas reakcji bazowy: wolniejszy niż norma ({rt_avg:.0f} ms).")
+        n = sum(1 for r in session.rt.rt_ms if r > 0)
+        lines.append(f"Czas reakcji: {rt_avg:.0f} ms (średnia z {n} prób).")
 
-    stroop_eff = _stroop_effect(session)
-    if stroop_eff < 40:
-        lines.append("Odporność na interferencję: silna (efekt Stroopa poniżej 40 ms).")
-    elif stroop_eff <= 80:
-        lines.append(f"Odporność na interferencję: przeciętna (efekt Stroopa {stroop_eff:.0f} ms).")
-    else:
-        lines.append(f"Efekt Stroopa wyraźnie widoczny - duża interferencja ({stroop_eff:.0f} ms).")
+    if session.stroop is not None:
+        stroop_eff = _stroop_effect(session)
+        n_stroop = len(session.stroop.rt_ms)
+        lines.append(f"Efekt Stroopa: {stroop_eff:+.0f} ms (niekongr. − kongr., n={n_stroop}).")
 
-    flanker_eff = _flanker_effect(session)
-    if flanker_eff < 25:
-        lines.append("Selektywna uwaga: bardzo dobra (efekt Flankera poniżej 25 ms).")
-    elif flanker_eff <= 60:
-        lines.append(f"Selektywna uwaga: przeciętna (efekt Flankera {flanker_eff:.0f} ms).")
-    else:
-        lines.append(
-            f"Dystraktorzy wyraźnie spowalniają reakcję (efekt Flankera {flanker_eff:.0f} ms)."
-        )
+    if session.flanker is not None:
+        flanker_eff = _flanker_effect(session)
+        n_flanker = len(session.flanker.rt_ms)
+        lines.append(f"Efekt Flankera: {flanker_eff:+.0f} ms (niekongr. − kongr., n={n_flanker}).")
 
-    fa = _gonogo_fa_count(session)
-    if fa == 0:
-        lines.append("Hamowanie impulsów: bezbłędne (zero fałszywych alarmów).")
-    elif fa == 1:
-        lines.append("Hamowanie impulsów: dobre (drobne błędy na próbach no-go).")
-    else:
-        lines.append(f"Tendencja do impulsywności - trudność z hamowaniem ({fa} fałszywe alarmy).")
+    if session.gonogo is not None:
+        fa = _gonogo_fa_count(session)
+        n_nogo = sum(1 for c in session.gonogo.condition if c == "nogo")
+        lines.append(f"Fałszywe alarmy: {fa} z {n_nogo} prób no-go.")
 
-    lines.append("Pamiętaj - to tylko 8 prób. Więcej danych = pewniejszy wynik.")
+    results = [session.rt, session.stroop, session.flanker, session.gonogo]
+    total = sum(len(x.rt_ms) for x in results if x is not None)
+    lines.append(f"Łącznie {total} prób w tej sesji. To tylko jeden pomiar.")
     return lines
