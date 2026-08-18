@@ -508,10 +508,17 @@ def game_factory_for_with_back(
         return make_how_to_play(pm, game_info, strings, back_scene=pausable, esc_scene=back_scene)  # type: ignore[arg-type]
 
     if lesson_num == 4:
+        # DataCleaningScene has its own INTRO phase, so HowToPlay is skipped here.
         from cognitive_data_arcade.games.data_cleaning.info import get_game_info
         from cognitive_data_arcade.games.data_cleaning.scene import DataCleaningScene
 
-        return _make_pausable_with_back(DataCleaningScene(strings, pm), get_game_info(strings))
+        game_info = get_game_info(strings)
+        inner = DataCleaningScene(strings, pm)
+
+        def _restart_dc() -> "Scene":
+            return PausableGame(inner, game_info, _restart_dc, strings, pm)
+
+        return _restart_dc()
 
     if lesson_num == 6:
         from cognitive_data_arcade.games.eda.info import get_game_info
