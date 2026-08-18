@@ -2,6 +2,38 @@
 
 from __future__ import annotations
 
+from cognitive_data_arcade.lessons.provenance import Claim
+
+PROVENANCE: dict[str, Claim] = {
+    "stroop_effect_size": Claim(
+        type="reference_range",
+        note=(
+            "Stroop interference of 100-300 ms is a population reference range for "
+            "healthy adults using classic colour-word stimuli. Varies with response "
+            "modality (vocal vs. manual), stimulus set, and participant population."
+        ),
+        source="MacLeod (1991), Psychological Bulletin",
+        updated="2026-08-18",
+    ),
+    "stroop_citation_count": Claim(
+        type="empirical",
+        note=(
+            "Cited 'over 13,000 times' — accurate as of approximately 2024 per "
+            "Google Scholar. Citation counts change continuously; treat as approximate."
+        ),
+        updated="2026-08-18",
+    ),
+    "stroop_normal_range_tasks": Claim(
+        type="heuristic",
+        note=(
+            "Task prompt: 'Typical values are 100-300 ms. Does your result fall "
+            "within the normal range?' This phrasing implies a fixed norm. "
+            "The range is a population heuristic, not a diagnostic criterion."
+        ),
+        updated="2026-08-18",
+    ),
+}
+
 CONTENT: dict[str, dict[str, list[str]]] = {
     "pl": {
         "theory": [

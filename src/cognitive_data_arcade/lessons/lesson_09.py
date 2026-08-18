@@ -2,6 +2,48 @@
 
 from __future__ import annotations
 
+from cognitive_data_arcade.lessons.provenance import Claim
+
+PROVENANCE: dict[str, Claim] = {
+    "fa_rate_normal_range": Claim(
+        type="heuristic",
+        note=(
+            "FA rate 5-15% presented as 'normal'. This range is task-dependent: "
+            "it shifts with Go ratio, trial count, response window, and population. "
+            "Not a diagnostic threshold."
+        ),
+        updated="2026-08-18",
+    ),
+    "fa_rate_difficulty_threshold": Claim(
+        type="heuristic",
+        note=(
+            ">25% FA rate presented as signalling 'difficulty with inhibition'. "
+            "This is an orientation benchmark, not a clinical cut-off. "
+            "Varies with Go ratio and session length."
+        ),
+        updated="2026-08-18",
+    ),
+    "ssrt_typical_range": Claim(
+        type="reference_range",
+        note=(
+            "SSRT 200-250 ms described as typical. This range comes from healthy "
+            "young adults in laboratory stop-signal studies (Logan & Cowan, 1984 framework). "
+            "Varies with method of SSRT estimation and population."
+        ),
+        source="Verbruggen & Logan (2008), Trends in Cognitive Sciences",
+        updated="2026-08-18",
+    ),
+    "methylphenidate_fa_reduction": Claim(
+        type="empirical",
+        note=(
+            "Methylphenidate reduces FA rate in ADHD. Supported by multiple studies; "
+            "effect size and generalisability vary across paradigms. "
+            "Not universal across all ADHD subtypes or dose regimes."
+        ),
+        updated="2026-08-18",
+    ),
+}
+
 CONTENT: dict[str, dict[str, list[str]]] = {
     "pl": {
         "theory": [
