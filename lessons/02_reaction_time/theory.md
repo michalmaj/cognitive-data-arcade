@@ -26,7 +26,7 @@ A single RT measurement is noisy. The mean of many trials is more informative, b
 
 - **Right skew** — most responses cluster near the lower bound (fast), but occasional slow responses extend the distribution rightward. The median is often a better summary than the mean.
 - **Practice effects** — RT decreases across a session as participants warm up. The first few trials are typically slower.
-- **Outliers** — responses faster than 100 ms are anticipations, not true reactions. Responses slower than 1000 ms often reflect distraction. Both distort the mean.
+- **Outliers** — responses faster than 100 ms are anticipations, not true reactions. Very slow responses (e.g., above 2 000–3 000 ms, depending on the paradigm) often reflect attentional lapses. The appropriate upper cutoff is a methodological choice that varies across paradigms — note that typical Stroop incongruent RTs already reach 700–1 000 ms, so a 1 000 ms cutoff would discard valid data in many designs. Both extremes distort the mean.
 
 A typical simple-RT histogram shows a peak around 200–300 ms with a long rightward tail.
 

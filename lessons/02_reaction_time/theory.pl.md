@@ -26,7 +26,7 @@ Pojedynczy pomiar RT jest zaszumiony. Średnia z wielu prób jest bardziej infor
 
 - **Skośność prawostronna** — większość odpowiedzi skupia się blisko dolnej granicy (szybkie), jednak sporadyczne wolne odpowiedzi rozciągają rozkład w prawo. Mediana jest często lepszą miarą podsumowującą niż średnia.
 - **Efekty ćwiczenia** — RT maleje w trakcie sesji w miarę rozgrzewania się uczestnika. Pierwsze kilka prób jest typowo wolniejszych.
-- **Wartości odstające** — odpowiedzi szybsze niż 100 ms to antycypacje, a nie prawdziwe reakcje. Odpowiedzi wolniejsze niż 1000 ms często odzwierciedlają rozproszenie uwagi. Obydwa typy zniekształcają średnią.
+- **Wartości odstające** — odpowiedzi szybsze niż 100 ms to antycypacje, a nie prawdziwe reakcje. Bardzo wolne odpowiedzi (np. powyżej 2 000–3 000 ms, zależnie od paradygmatu) często odzwierciedlają chwilowe rozkojarzenie uwagi. Odpowiedni górny próg jest wyborem metodologicznym — warto zauważyć, że typowe RT Stroopa w warunku niezgodnym już osiągają 700–1 000 ms, więc cięcie na poziomie 1 000 ms odrzuciłoby poprawne dane w wielu projektach. Oba typy wartości odstających zniekształcają średnią.
 
 Typowy histogram prostego RT wykazuje szczyt w okolicach 200–300 ms z długim ogonem skierowanym w prawo.
 
