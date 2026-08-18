@@ -1,8 +1,12 @@
+from __future__ import annotations
+
 import json
 import uuid
 from dataclasses import asdict, dataclass, field
 from datetime import date, timedelta
 from pathlib import Path
+
+from cognitive_data_arcade.engine.app_paths import AppPaths
 
 _LEVELS = [
     (5000, "⚡ Mind Hacker"),
@@ -43,8 +47,19 @@ class Profile:
 
 
 class ProfileManager:
-    def __init__(self, path: Path) -> None:
+    def __init__(self, path: Path, app_paths: AppPaths | None = None) -> None:
         self._path = path
+        if app_paths is None:
+            # Derive minimal paths from the profile file location.
+            profile_dir = path.parent
+            self.paths = AppPaths(
+                profile_dir=profile_dir,
+                generated_data_dir=profile_dir / "data" / "generated",
+                export_dir=profile_dir / "exports",
+                asset_dir=profile_dir,
+            )
+        else:
+            self.paths = app_paths
 
     def load(self) -> Profile:
         if not self._path.exists():
@@ -195,12 +210,12 @@ class ProfileManager:
         self.save(profile)
         return profile
 
-    def delete_profile(self, generated_dir: Path | None = None) -> None:
+    def delete_profile(self) -> None:
         import shutil
 
         if self._path.exists():
             self._path.unlink()
-        target = generated_dir if generated_dir is not None else Path("data") / "generated"
+        target = self.paths.generated_data_dir
         if target.exists():
             shutil.rmtree(target)
 
