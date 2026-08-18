@@ -44,7 +44,7 @@ Zadanie Go/No-Go generuje dwa odrębne rodzaje błędów, z których każdy mier
 
 **Błędy pominięcia (chybienia):** Uczestnik nie naciska klawisza w próbie Go. Nie jest to brak hamowania, lecz zazwyczaj niepowodzenie **uwagi podtrzymanej** — uczestnik nie był wystarczająco czujny, by wykryć bodziec Go w oknie odpowiedzi, lub reagował zbyt wolno. Wysokie wskaźniki chybień zwykle wskazują na zmęczenie, nieuwagę lub skrajnie konserwatywną strategię odpowiadania.
 
-Rozróżnienie ma znaczenie kliniczne. Uczestnik z wieloma błędami komisji, ale nielicznymi chybieniami jest impulsywny. Uczestnik z nielicznymi błędami komisji, ale wieloma chybieniami może być nadmiernie zachowawczy lub nieuważny.
+Rozróżnienie ma znaczenie kliniczne. Uczestnik z wieloma błędami komisji, ale nielicznymi chybieniami wykazuje **impulsywny wzorzec reagowania w tym zadaniu** — naciska klawisz przed ukończeniem procesu hamowania. Ten wzorzec zadaniowy jest w literaturze badawczej powiązany z tendencjami do impulsywności, ale wskaźnik błędów komisji w krótkich sesjach Go/No-Go odzwierciedla sytuacyjną skuteczność hamowania, a nie stabilną cechę osobowości. Uczestnik z nielicznymi błędami komisji, ale wieloma chybieniami może być nadmiernie zachowawczy lub nieuważny.
 
 ## 5. Teoria detekcji sygnału i d'
 
@@ -72,6 +72,8 @@ Gdzie:
 | 2,0 | Dobra dyskryminacja (typowy zdrowy dorosły) |
 | 2,5–3,5 | Silna dyskryminacja |
 | > 4,0 | Niemal doskonała dyskryminacja |
+
+*Te zakresy to jedynie przybliżone punkty orientacyjne. Oczekiwane d' zależy od stosowanej proporcji Go, liczby prób i badanej populacji — nie są to progi diagnostyczne.*
 
 Przykład obliczenia: uczestnik odpowiada w 92% prób Go (trafień = 0,92) i w 8% prób No-Go (FA = 0,08). Z tabeli: Z(0,92) ≈ 1,41; Z(0,08) ≈ −1,41. Zatem d' = 1,41 − (−1,41) = 2,82 — silna dyskryminacja.
 
@@ -120,13 +122,15 @@ Hamowanie odpowiedzi wykazuje długą krzywą rozwojową. Dzieci w wieku 6–8 l
 | Młodzi dorośli (18–25) | 5–12% |
 | Starsi dorośli (60+) | 10–18% |
 
+*Wartości są przybliżone i zaczerpnięte z badań stosujących proporcję Go ~75%. Poszczególne badania różnią się znacząco; traktuj te dane jako zakresy referencyjne, a nie normy populacyjne.*
+
 Późne dojrzewanie kontroli hamowania jest równoległe do długiego dojrzewania kory przedczołowej, która nie jest w pełni zmielinizowana aż do około 25. roku życia. Starsi dorośli wykazują częściowy powrót podwyższonych błędów komisji, co jest zgodne z wiekowym spadkiem funkcji przedczołowych.
 
 ## 8. Zastosowania kliniczne
 
 Zadanie Go/No-Go jest standardowym narzędziem w klinicznej neuropsychologii:
 
-**ADHD:** Dzieci i dorośli z ADHD wykazują znacząco podwyższone wskaźniki błędów komisji i obniżony d', co odzwierciedla upośledzenie kontroli hamowania. Zadanie Go/No-Go jest zawarte w baterii CANTAB (Cambridge Neuropsychological Test Automated Battery) i podobnych skomputeryzowanych zestawach oceny. Było stosowane do monitorowania efektów leczenia — metylofenidat (Ritalin) niezawodnie zmniejsza błędy komisji w populacjach z ADHD (Heaton i in., 2004).
+**ADHD:** Dzieci i dorośli z ADHD wykazują znacząco podwyższone wskaźniki błędów komisji i obniżony d', co odzwierciedla upośledzenie kontroli hamowania. Zadanie Go/No-Go jest zawarte w baterii CANTAB (Cambridge Neuropsychological Test Automated Battery) i podobnych skomputeryzowanych zestawach oceny. Było stosowane do monitorowania efektów leczenia — kilka badań informowało o redukcji błędów komisji przez metylofenidat (Ritalin) w populacjach z ADHD.
 
 **Uszkodzenia płatów czołowych:** Pacjenci z uszkodzeniami kory przedczołowej — spowodowanymi udarem, guzem lub urazowym uszkodzeniem mózgu — wykazują podwyższone błędy komisji nawet przy nienaruszonych ogólnych zdolnościach intelektualnych i czasie reakcji. Zadanie Go/No-Go dostarcza zatem specyficznego pomiaru czołowych funkcji wykonawczych, wykraczającego poza ogólną szybkość przetwarzania.
 
@@ -153,7 +157,6 @@ Oba zadania angażują rIFG, ale SST czyściej izoluje reaktywny proces zatrzyma
 
 - Aron, A. R., & Poldrack, R. A. (2006). Cortical and subcortical contributions to stop signal response inhibition: role of the subthalamic nucleus. *Journal of Neuroscience, 26*(9), 2424–2433.
 - Donders, F. C. (1868/1969). On the speed of mental processes. *Acta Psychologica, 30*, 412–431. (Przetłumaczył W. G. Koster)
-- Heaton, S. C., Avila, M. T., Bailey, A. A., & Thaker, G. K. (2004). Specific working memory and executive function deficits in schizophrenia and related conditions. *Neuropsychology, 18*(4), 651–660.
 - Logan, G. D., & Cowan, W. B. (1984). On the ability to inhibit thought and action: a theory of an act of control. *Psychological Review, 91*(3), 295–327.
 - Macmillan, N. A., & Creelman, C. D. (2005). *Detection Theory: A User's Guide* (2. wyd.). Lawrence Erlbaum Associates.
 - Verbruggen, F., & Logan, G. D. (2008). Response inhibition in the stop-signal paradigm. *Trends in Cognitive Sciences, 12*(11), 418–424.

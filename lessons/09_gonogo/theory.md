@@ -44,7 +44,7 @@ The Go/No-Go task generates two distinct types of error, each measuring a differ
 
 **Omission errors (misses):** The participant fails to press the key on a Go trial. This is not a failure of inhibition but typically a failure of **sustained attention** — the participant was not alert enough to detect the Go stimulus within the response window, or responded too slowly. High miss rates usually indicate fatigue, inattention, or a highly conservative response strategy.
 
-The distinction is clinically important. A participant with many commission errors but few misses is impulsive. A participant with few commission errors but many misses may be overcontrolling (excessively cautious) or inattentive.
+The distinction is clinically important. A participant with many commission errors but few misses shows an **impulsive response pattern on this task** — responding before completing inhibitory control. This task pattern is associated with impulsive tendencies in the research literature, but commission error rate on a brief Go/No-Go session reflects situational inhibitory performance, not a stable personality trait. A participant with few commission errors but many misses may be overcontrolling (excessively cautious) or inattentive.
 
 ## 5. Signal Detection Theory and d'
 
@@ -72,6 +72,8 @@ Where:
 | 2.0 | Good discrimination (typical healthy adult) |
 | 2.5–3.5 | Strong discrimination |
 | > 4.0 | Near-perfect discrimination |
+
+*These ranges are approximate orientation benchmarks only. Expected d' varies with the Go ratio used, the number of trials, and the population studied — they are not diagnostic thresholds.*
 
 A worked example: suppose a participant responds on 92% of Go trials (hit rate = 0.92) and on 8% of No-Go trials (false alarm rate = 0.08). From a z-table: Z(0.92) ≈ 1.41, Z(0.08) ≈ −1.41. Therefore d' = 1.41 − (−1.41) = 2.82 — strong discrimination.
 
@@ -120,13 +122,15 @@ Response inhibition shows a protracted developmental course. Children aged 6–8
 | Young adults (18–25) | 5–12% |
 | Older adults (60+) | 10–18% |
 
+*Values are approximate and drawn from studies using a ~75% Go ratio. Individual studies vary substantially; treat these as reference ranges, not population norms.*
+
 The late development of inhibitory control parallels the prolonged maturation of the prefrontal cortex, which is not fully myelinated until approximately age 25. Older adults show a partial return of elevated commission errors, consistent with age-related prefrontal decline.
 
 ## 8. Clinical Applications
 
 The Go/No-Go task is a standard tool in clinical neuropsychology:
 
-**ADHD:** Children and adults with ADHD show significantly elevated commission error rates and reduced d', reflecting impaired inhibitory control. The Go/No-Go task is included in the CANTAB (Cambridge Neuropsychological Test Automated Battery) and similar computerised assessment batteries. It has been used to monitor medication effects — methylphenidate (Ritalin) reliably reduces commission errors in ADHD populations (Heaton et al., 2004).
+**ADHD:** Children and adults with ADHD show significantly elevated commission error rates and reduced d', reflecting impaired inhibitory control. The Go/No-Go task is included in the CANTAB (Cambridge Neuropsychological Test Automated Battery) and similar computerised assessment batteries. It has been used to monitor medication effects — several studies have reported that methylphenidate (Ritalin) reduces commission errors in ADHD populations.
 
 **Frontal lobe lesions:** Patients with damage to the prefrontal cortex — from stroke, tumour, or traumatic brain injury — show elevated commission errors even when general intelligence and reaction time are unimpaired. The Go/No-Go task thus provides a specific measure of frontal executive function beyond general processing speed.
 
@@ -153,7 +157,6 @@ Both tasks recruit rIFG, but the SST more cleanly isolates the reactive stopping
 
 - Aron, A. R., & Poldrack, R. A. (2006). Cortical and subcortical contributions to stop signal response inhibition: role of the subthalamic nucleus. *Journal of Neuroscience, 26*(9), 2424–2433.
 - Donders, F. C. (1868/1969). On the speed of mental processes. *Acta Psychologica, 30*, 412–431. (Translated by W. G. Koster)
-- Heaton, S. C., Avila, M. T., Bailey, A. A., & Thaker, G. K. (2004). Specific working memory and executive function deficits in schizophrenia and related conditions. *Neuropsychology, 18*(4), 651–660.
 - Logan, G. D., & Cowan, W. B. (1984). On the ability to inhibit thought and action: a theory of an act of control. *Psychological Review, 91*(3), 295–327.
 - Macmillan, N. A., & Creelman, C. D. (2005). *Detection Theory: A User's Guide* (2nd ed.). Lawrence Erlbaum Associates.
 - Verbruggen, F., & Logan, G. D. (2008). Response inhibition in the stop-signal paradigm. *Trends in Cognitive Sciences, 12*(11), 418–424.

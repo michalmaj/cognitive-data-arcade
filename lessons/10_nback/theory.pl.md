@@ -53,6 +53,8 @@ Operacja aktualizacji jest wąskim gardłem. Przy n=1 utrzymujesz jeden element 
 | 3-Back | 50–70% | 0,8–1,5 |
 | 4-Back | 40–55% | 0,3–0,8 |
 
+*Przybliżone wartości z zadań n-back z literami w próbach zdrowych młodych dorosłych (zob. np. Kane i Engle, 2002; Melby-Lervåg i Hulme, 2013). Wyniki zależą od rodzaju bodźca, tempa prezentacji i indywidualnej pojemności WM.*
+
 Trafność poniżej 55% przy n=3 sugeruje wyniki bliskie szansy losowej i może wskazywać, że bieżąca pojemność WM uczestnika nie obsługuje tego poziomu. Trafność powyżej 90% przy n=2 jest sygnałem, że system adaptacyjny powinien zwiększyć n.
 
 Standardowy adaptacyjny n-back stosowany w badaniach (w tym ta aplikacja) celuje w **~75% trafności**. Gdy trafność rośnie powyżej ~85%, n jest zwiększane. Gdy spada poniżej ~65%, n jest zmniejszane. Utrzymuje to uczestnika w strefie produktywnej trudności.
