@@ -86,7 +86,7 @@ Multiple imputation (Rubin, 1987; van Buuren, 2018) generates *m* complete datas
 2. Fit the model of interest on each dataset.
 3. Pool parameter estimates: the point estimate is the mean across *m* estimates; the standard error incorporates both within-imputation and between-imputation variance.
 
-**Valid under:** MAR (and, with sensitivity analysis, MNAR).
+**Valid under:** MAR. Under MNAR, no standard imputation method eliminates bias, because the missing values depend on information that cannot be observed. Sensitivity analyses (e.g., pattern mixture models, tipping-point analysis) can characterise how severely results would change under different MNAR assumptions, but they do not make the estimates unbiased — they quantify uncertainty about an untestable assumption.
 
 Software: `mice` (R), `IterativeImputer` (scikit-learn), Amelia II (R), fancyimpute (Python).
 
