@@ -86,7 +86,7 @@ Wielokrotna imputacja (Rubin, 1987; van Buuren, 2018) generuje *m* kompletnych z
 2. Dopasuj model do każdego zbioru.
 3. Połącz estymatory parametrów: estymator punktowy to średnia *m* estymatorów; błąd standardowy uwzględnia zarówno wariancję wewnątrz-, jak i między-imputacyjną.
 
-**Trafna przy:** MAR (i przy analizie wrażliwości — MNAR).
+**Trafna przy:** MAR. W przypadku MNAR żadna standardowa metoda imputacji nie eliminuje obciążenia, ponieważ brakujące wartości zależą od informacji, których nie można zaobserwować. Analizy wrażliwości (np. modele mieszanin wzorców, analiza punktu zmiany) pozwalają scharakteryzować, jak bardzo wyniki zmieniałyby się przy różnych założeniach MNAR, ale nie czynią estymatorów nieobciążonymi — kwantyfikują jedynie niepewność co do niesprawdzalnego założenia.
 
 Oprogramowanie: `mice` (R), `IterativeImputer` (scikit-learn), Amelia II (R), fancyimpute (Python).
 

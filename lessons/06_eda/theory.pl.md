@@ -138,7 +138,7 @@ Ostatecznym celem EDA w paradygmacie Stroopa jest określenie, czy rozkłady RT 
 
 ### 6.1 Nakładające się rozkłady
 
-Jeśli rozkłady RT w warunkach niezgodnym i zgodnym niemal całkowicie się nakładają, efekt Stroopa może być mały lub zmienność może być wysoka. Narysowanie obu rozkładów jako nakładających się histogramów lub wykresów skrzypcowych natychmiast to ujawnia. Jeśli rozkłady są dobrze rozdzielone, efekt jest duży i prawdopodobnie niezawodny.
+Jeśli rozkłady RT w warunkach niezgodnym i zgodnym niemal całkowicie się nakładają, efekt Stroopa może być mały lub zmienność może być wysoka. Narysowanie obu rozkładów jako nakładających się histogramów lub wykresów skrzypcowych natychmiast to ujawnia. Jeśli rozkłady są dobrze rozdzielone, efekt jest **duży w tych danych** — jednak wielkość i niezawodność to odrębne pojęcia. Duże zaobserwowane rozdzielenie przy małej próbie to nadal zaszumiony estymator; pewność co do prawdziwego efektu zależy od liczby prób i wariancji wewnątrz-podmiotowej, a nie od samego rozdzielenia rozkładów.
 
 ### 6.2 d Cohena
 
@@ -148,15 +148,17 @@ Po EDA pierwszą liczbą do obliczenia nie jest p-wartość, ale **wielkość ef
 
 Konwencjonalne punkty odniesienia (Cohen, 1988):
 
-| d | Interpretacja |
+| d | Etykieta |
 |---|---|
 | 0,2 | Mały |
 | 0,5 | Średni |
 | 0,8 | Duży |
 
-W projektach wewnątrz-podmiotowych (jakimi zazwyczaj są paradygmaty Stroopa) odpowiednim wariantem jest Cohen's d_z — używający odchylenia standardowego *wyników różnicowych*.
+Te punkty odniesienia są szeroko cytowane, ale miały służyć jako przybliżone wartości domyślne przy braku wiedzy dziedzinowej — nie jako powszechne standardy. Cohen (1992) wyraźnie zastrzegł, że tam gdzie to możliwe, powinny być zastąpione kontekstem specyficznym dla danej dyscypliny. W psychologii poznawczej efekty Stroopa często odpowiadają d ≈ 0,5–1,5 w projektach wewnątrz-podmiotowych, co etykieta z tabeli określiłaby jako „średni do dużego" — jednak to, czy dana wielkość efektu jest *znacząca*, zależy od pytania badawczego, paradygmatu i dokonanego porównania.
 
-Wielkość efektu jest krytyczna, ponieważ przy wystarczająco dużej próbie nawet trywialnie mała różnica (d = 0,05, odpowiadająca 3 ms przy wyjściowym RT 600 ms) będzie statystycznie istotna. Istotność statystyczna odpowiada na pytanie „czy efekt jest niezerowy?"; wielkość efektu odpowiada na pytanie „czy warto się nim przejmować?". EDA nie może odpowiedzieć na pierwsze pytanie, ale może definitywnie poinformować o drugim.
+W projektach wewnątrz-podmiotowych (jakimi zazwyczaj są paradygmaty Stroopa) odpowiednim wariantem jest Cohen's d_z — używający odchylenia standardowego *wyników różnicowych*. Wielkość efektu i niezawodność statystyczna to odrębne kwestie: d = 0,8 estymowane z 8 prób obarczone jest znacznie większą niepewnością niż ta sama wartość estymowana z 800 prób.
+
+Wielkość efektu jest krytyczna, ponieważ przy wystarczająco dużej próbie nawet trywialnie mała różnica (d = 0,05, odpowiadająca 3 ms przy wyjściowym RT 600 ms) będzie statystycznie istotna. Istotność statystyczna odpowiada na pytanie „czy efekt jest niezerowy?"; wielkość efektu odpowiada na pytanie „jak duży jest w tej próbie?". Żadne z tych pytań nie przesądza samodzielnie, czy efekt jest znaczący lub wiarygodnie estymowany. EDA informuje o pytaniu dotyczącym wielkości efektu, ale nie o wnioskowaniu statystycznym.
 
 ## Piśmiennictwo
 
