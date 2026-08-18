@@ -2,9 +2,9 @@
 
 ## 1. Historical Context
 
-In 1935, John Ridley Stroop published "Studies of interference in serial verbal reactions" in the *Journal of Experimental Psychology* — a paper that would become one of the most cited works in the entire history of psychology. Stroop compared two tasks: reading colour words printed in black ink (fast and unaffected by practice), and naming the ink colour of colour words printed in a conflicting ink (substantially slower). The interference he documented was so robust that the paradigm now bears his name.
+In 1935, John Ridley Stroop published "Studies of interference in serial verbal reactions" in the *Journal of Experimental Psychology* — one of the most frequently cited papers in experimental psychology. Stroop compared two tasks: reading colour words printed in black ink (fast and unaffected by practice), and naming the ink colour of colour words printed in a conflicting ink (substantially slower). The interference he documented was so robust that the paradigm now bears his name.
 
-Stroop's original observation was not immediately appreciated. For several decades the paper was rarely cited. Its renaissance came in the 1970s and 1980s, when cognitive psychology needed precise, replicable phenomena to test theories of attention and automaticity. MacLeod (1991) reviewed half a century of accumulated research and identified the Stroop effect as one of the most replicated findings in all of experimental psychology — his review catalogued over 700 published studies.
+Stroop's original observation was not immediately appreciated. For several decades the paper was rarely cited. Its renaissance came in the 1970s and 1980s, when cognitive psychology needed precise, replicable phenomena to test theories of attention and automaticity. MacLeod (1991) reviewed half a century of Stroop research and catalogued over 700 published studies, making it one of the most thoroughly documented effects in experimental psychology.
 
 ## 2. The Three Conditions
 

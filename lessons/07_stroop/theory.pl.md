@@ -2,9 +2,9 @@
 
 ## 1. Kontekst historyczny
 
-W 1935 roku John Ridley Stroop opublikował artykuł "Studies of interference in serial verbal reactions" w *Journal of Experimental Psychology* — pracę, która stała się jedną z najczęściej cytowanych w całej historii psychologii. Stroop porównał dwa zadania: czytanie nazw kolorów drukowanych czarnym tuszem (szybkie i nienaruszone przez ćwiczenie) z nazywaniem koloru tuszu nazw kolorów drukowanych tuszem innego koloru (istotnie wolniejsze). Odkryty przez niego efekt interferencji okazał się tak niezawodny, że paradygmat nosi dziś jego imię.
+W 1935 roku John Ridley Stroop opublikował artykuł "Studies of interference in serial verbal reactions" w *Journal of Experimental Psychology* — jeden z najczęściej cytowanych artykułów w psychologii eksperymentalnej. Stroop porównał dwa zadania: czytanie nazw kolorów drukowanych czarnym tuszem (szybkie i nienaruszone przez ćwiczenie) z nazywaniem koloru tuszu nazw kolorów drukowanych tuszem innego koloru (istotnie wolniejsze). Odkryty przez niego efekt interferencji okazał się tak niezawodny, że paradygmat nosi dziś jego imię.
 
-Oryginalnej obserwacji Stroopa nie doceniono od razu. Przez kilka dziesięcioleci artykuł był rzadko cytowany. Renesans nastąpił w latach 70. i 80. XX wieku, gdy psychologia poznawcza potrzebowała precyzyjnych, replikowalnych zjawisk do testowania teorii uwagi i automatyczności. MacLeod (1991) dokonał przeglądu pół wieku badań i wskazał efekt Stroopa jako jedno z najlepiej replikowanych odkryć w całej psychologii eksperymentalnej — jego recenzja katalogowała ponad 700 opublikowanych badań.
+Oryginalnej obserwacji Stroopa nie doceniono od razu. Przez kilka dziesięcioleci artykuł był rzadko cytowany. Renesans nastąpił w latach 70. i 80. XX wieku, gdy psychologia poznawcza potrzebowała precyzyjnych, replikowalnych zjawisk do testowania teorii uwagi i automatyczności. MacLeod (1991) skatalogował ponad 700 opublikowanych badań nad efektem Stroopa — jeden z najdokładniej udokumentowanych efektów w psychologii eksperymentalnej.
 
 ## 2. Trzy warunki
 

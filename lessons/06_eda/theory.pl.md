@@ -2,7 +2,7 @@
 
 ## 1. Czym jest EDA i skąd się wzięła?
 
-**Eksploracyjna analiza danych (EDA)** to praktyka podsumowywania i wizualizowania zbioru danych w celu zrozumienia jego struktury *przed* określeniem i przetestowaniem formalnego modelu statystycznego. Termin wprowadził amerykański matematyk i statystyk **John Tukey** w swojej książce z 1977 roku pod tym samym tytułem, która pozostaje jednym z najbardziej wpływowych tekstów metodologicznych w nauce ilościowej.
+**Eksploracyjna analiza danych (EDA)** to praktyka podsumowywania i wizualizowania zbioru danych w celu zrozumienia jego struktury *przed* określeniem i przetestowaniem formalnego modelu statystycznego. Termin wprowadził **John Tukey** w swojej książce z 1977 roku pod tym samym tytułem, która wywarła szeroki wpływ na statystykę i nauki oparte na danych.
 
 Centralna teza Tukeya była taka, że analiza statystyczna zazwyczaj zaczyna się od złego końca. Badacze zbierają dane, natychmiast obliczają statystykę testową i raportują p-wartość — nigdy nie zaglądając do surowych liczb. Ten sposób pracy ułatwia przeoczenie anomalii, błędną interpretację wzorców i wyciąganie wniosków z artefaktów zamiast z sygnału.
 

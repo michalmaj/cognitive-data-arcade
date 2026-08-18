@@ -15,7 +15,7 @@ In each trial of the Go/No-Go task, a single stimulus appears on screen. The par
 
 The cognitive challenge arises from the asymmetry between Go and No-Go trials. Because Go trials are more frequent (typically 70–80% of all trials), participants develop a **prepotent response** — a strong, habitual tendency to press the key whenever any stimulus appears. The No-Go stimulus must interrupt this automatic tendency at the moment it is most active.
 
-This is why correct inhibition on No-Go trials is not simply the absence of movement. It is an active suppression of a motor response that has already been partially prepared. The neural and computational resources required for this suppression are the subject of decades of research.
+Correct inhibition on No-Go trials is not simply the absence of movement — it is active suppression of a response that has already been partially prepared. The neural and computational resources required for this suppression are the subject of decades of research.
 
 ## 3. Go Ratio and Prepotency
 
@@ -34,13 +34,13 @@ In this application:
 - **Medium:** 75% Go (standard, 1.0 s response window)
 - **Hard:** 60% Go (less prepotency, but shorter response window 0.7 s; time pressure compensates)
 
-A higher Go ratio increases prepotency and therefore increases commission errors. This is the operational definition of inhibitory load: the greater the automaticity of the Go response, the greater the cognitive work required to stop it.
+A higher Go ratio increases prepotency and therefore increases commission errors: the more automatic the Go response, the greater the cognitive work required to stop it.
 
 ## 4. Two Types of Error
 
 The Go/No-Go task generates two distinct types of error, each measuring a different cognitive process:
 
-**Commission errors (false alarms):** The participant presses the key on a No-Go trial. This is a failure of inhibitory control. It indicates that the prepotent Go response was initiated but not suppressed in time. Commission errors are the primary outcome measure of the task — they index the capacity for **response inhibition**.
+**Commission errors (false alarms):** The participant presses the key on a No-Go trial — a failure of inhibitory control indicating that the prepotent Go response was not suppressed in time. Commission errors are the primary outcome measure of the task — they index the capacity for **response inhibition**.
 
 **Omission errors (misses):** The participant fails to press the key on a Go trial. This is not a failure of inhibition but typically a failure of **sustained attention** — the participant was not alert enough to detect the Go stimulus within the response window, or responded too slowly. High miss rates usually indicate fatigue, inattention, or a highly conservative response strategy.
 
