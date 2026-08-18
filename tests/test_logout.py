@@ -57,3 +57,22 @@ def test_delete_profile_idempotent_when_missing(tmp_path: Path) -> None:
     pm = _make_pm(tmp_path)
     # no profile created — should not raise
     pm.delete_profile()
+
+
+def test_delete_csv_data_removes_files_but_keeps_profile(tmp_path: Path) -> None:
+    generated = tmp_path / "generated" / "stroop"
+    generated.mkdir(parents=True)
+    csv_file = generated / "s01.csv"
+    csv_file.write_text("a,b\n1,2\n")
+
+    pm = _make_pm(tmp_path)
+    pm.load()  # creates profile.json
+    pm.delete_csv_data()
+
+    assert not csv_file.exists()
+    assert (tmp_path / "profile.json").exists()
+
+
+def test_delete_csv_data_idempotent_when_missing(tmp_path: Path) -> None:
+    pm = _make_pm(tmp_path)
+    pm.delete_csv_data()  # no CSV directory — should not raise

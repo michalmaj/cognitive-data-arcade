@@ -148,15 +148,17 @@ class OnboardingScene(Scene):
             (en_rect.centerx - en_lbl.get_width() // 2, en_rect.centery - en_lbl.get_height() // 2),
         )
 
-        note = (
-            "Pseudonim jest lokalny — nie wysyłamy danych nigdzie"
-            if self._language == "pl"
-            else "Nickname is local — we never send your data anywhere"
-        )
-        note_surf = get_font(14).render(note, True, _DIM)
-        surface.blit(note_surf, (cx - note_surf.get_width() // 2, 490))
+        if self._language == "pl":
+            note1 = "Wyniki gier zapisują się jako pliki CSV na tym urządzeniu."
+            note2 = "Losowe ID urządzenia łączy sesje — żadne dane nie wychodzą."
+        else:
+            note1 = "Gameplay is saved as CSV files on this device only."
+            note2 = "A random device ID links your sessions — no data leaves your computer."
+        for i, line in enumerate([note1, note2]):
+            n_surf = get_font(13).render(line, True, _DIM)
+            surface.blit(n_surf, (cx - n_surf.get_width() // 2, 486 + i * 17))
 
-        submit_rect = pygame.Rect(cx - 100, 510, 200, 44)
+        submit_rect = pygame.Rect(cx - 100, 530, 200, 44)
         pygame.draw.rect(surface, _ACCENT, submit_rect, border_radius=8)
         btn_label = "Zaczynamy  >" if self._language == "pl" else "Start  >"
         btn_surf = get_font_medium(18).render(btn_label, True, _TEXT)
@@ -170,9 +172,9 @@ class OnboardingScene(Scene):
 
         hint = "TAB — zmień język" if self._language == "pl" else "TAB — switch language"
         hint_surf = get_font(13).render(hint, True, _DIM)
-        surface.blit(hint_surf, (cx - hint_surf.get_width() // 2, 580))
+        surface.blit(hint_surf, (cx - hint_surf.get_width() // 2, 600))
 
-        close_rect = pygame.Rect(cx - 60, 630, 120, 28)
+        close_rect = pygame.Rect(cx - 60, 648, 120, 28)
         pygame.draw.rect(surface, _SURFACE, close_rect, border_radius=4)
         pygame.draw.rect(surface, _BORDER, close_rect, 1, border_radius=4)
         close_lbl = "Zamknij" if self._language == "pl" else "Close"

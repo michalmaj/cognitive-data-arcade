@@ -210,14 +210,18 @@ class ProfileManager:
         self.save(profile)
         return profile
 
-    def delete_profile(self) -> None:
+    def delete_csv_data(self) -> None:
+        """Remove only the generated CSV files; the profile.json is kept intact."""
         import shutil
 
-        if self._path.exists():
-            self._path.unlink()
         target = self.paths.generated_data_dir
         if target.exists():
             shutil.rmtree(target)
+
+    def delete_profile(self) -> None:
+        if self._path.exists():
+            self._path.unlink()
+        self.delete_csv_data()
 
     def export_progress(self, path: Path) -> None:
         import datetime

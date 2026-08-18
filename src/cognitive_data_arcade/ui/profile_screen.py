@@ -204,14 +204,15 @@ class ProfileScene(Scene):
 
         # ---- "Moje dane / My Data" stats card ----
         is_pl = self._strings.language == "pl"
-        card_rect = pygame.Rect(10, y, _LEFT_W - 20, 90)
+        card_rect = pygame.Rect(10, y, _LEFT_W - 20, 124)
         pygame.draw.rect(surface, _PANEL_BG, card_rect, border_radius=5)
         pygame.draw.rect(surface, (99, 102, 241), card_rect, 1, border_radius=5)
         # left accent bar
-        pygame.draw.rect(surface, (99, 102, 241), (10, y, 3, 90), border_radius=2)
+        pygame.draw.rect(surface, (99, 102, 241), (10, y, 3, 124), border_radius=2)
 
         card_font = get_font(13)
         val_font = get_font(15)
+        tiny_font = get_font(11)
         cy2 = y + 6
         lbl_data = "Moje dane" if is_pl else "My Data"
         lbl_surf2 = card_font.render(lbl_data, True, (99, 102, 241))
@@ -236,6 +237,27 @@ class ProfileScene(Scene):
             surface.blit(l_surf, (16, cy2))
             surface.blit(v_surf, (_LEFT_W - 15 - v_surf.get_width(), cy2 - 1))
             cy2 += 17
+
+        # Storage path (abbreviated to fit narrow left column)
+        data_dir = self._pm.paths.generated_data_dir
+        home = data_dir.home()
+        try:
+            rel = data_dir.relative_to(home)
+            path_str = "~/" + str(rel)
+        except ValueError:
+            path_str = str(data_dir)
+        if len(path_str) > 26:
+            path_str = path_str[:23] + "..."
+        path_surf = tiny_font.render(path_str, True, _DIM_COLOR)
+        surface.blit(path_surf, (16, cy2 + 2))
+        cy2 += 15
+
+        # Device ID (first 8 hex chars — pseudonymous, not anonymous)
+        profile_for_uuid = self._pm.load()
+        uid_short = profile_for_uuid.device_uuid[:8] if profile_for_uuid.device_uuid else "?"
+        uid_lbl = "ID urz." if is_pl else "Device ID"
+        uid_surf = tiny_font.render(f"{uid_lbl}: {uid_short}...", True, _DIM_COLOR)
+        surface.blit(uid_surf, (16, cy2 + 2))
 
         y = card_rect.bottom + 8
         # ---- end "Moje dane" card ----
