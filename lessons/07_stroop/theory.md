@@ -72,7 +72,7 @@ The Stroop effect is not the same size for everyone. Several well-documented mod
 
 **ADHD:** Individuals with attention-deficit/hyperactivity disorder often show elevated Stroop interference, consistent with documented deficits in response inhibition. The Stroop task is a standard component of neuropsychological ADHD assessments.
 
-**Bilingualism:** Bilinguals who regularly switch between languages show smaller Stroop effects than monolinguals — an effect attributed to the bilingual advantage in executive control arising from continuous practice managing two language systems (Bialystok et al., 2004, *Neuropsychologia*).
+**Bilingualism:** An early line of research reported that bilinguals who regularly switch between languages show smaller Stroop effects than monolinguals, attributing this to continuous practice managing two competing language systems (Bialystok et al., 2004, *Neuropsychologia*). However, subsequent large-scale and pre-registered studies have repeatedly failed to replicate the effect, and the claimed bilingual advantage in executive control remains actively debated in the literature.
 
 **Practice effects:** Repeated testing with the Stroop task reduces interference, but does not eliminate it. This practice effect is itself informative: it reflects improvements in cognitive control efficiency, not the automatization of colour naming.
 

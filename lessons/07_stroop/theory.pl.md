@@ -72,7 +72,7 @@ Efekt Stroopa nie jest jednakowy u wszystkich. Udokumentowano kilka moderatorów
 
 **ADHD:** Osoby z zaburzeniami uwagi z hiperaktywnością często wykazują podwyższoną interferencję Stroopa, zgodnie z udokumentowanymi deficytami hamowania odpowiedzi. Zadanie Stroopa jest standardowym elementem neuropsychologicznych ocen ADHD.
 
-**Bilingwizm:** Bilingwi regularnie przełączający się między językami wykazują mniejsze efekty Stroopa niż monolingwiści — efekt ten przypisuje się przewadze bilingwistycznej w kontroli wykonawczej, wynikającej z ciągłego zarządzania dwoma systemami językowymi (Bialystok i in., 2004, *Neuropsychologia*).
+**Bilingwizm:** Wczesna linia badań informowała, że bilingwi regularnie przełączający się między językami wykazują mniejsze efekty Stroopa niż monolingwiści, przypisując to ciągłemu ćwiczeniu zarządzania dwoma konkurującymi systemami językowymi (Bialystok i in., 2004, *Neuropsychologia*). Jednak późniejsze duże i pre-rejestrowane badania wielokrotnie nie zdołały wiarygodnie zreplikować tego efektu, a twierdzenie o przewadze bilingwistycznej w kontroli wykonawczej pozostaje aktywnie debatowane w literaturze.
 
 **Efekty ćwiczenia:** Wielokrotne testowanie zadaniem Stroopa redukuje interferencję, ale jej nie eliminuje. Sam ten efekt ćwiczenia jest pouczający: odzwierciedla poprawę efektywności kontroli poznawczej, a nie automatyzację nazywania kolorów.
 
