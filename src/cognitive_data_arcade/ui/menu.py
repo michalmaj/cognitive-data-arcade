@@ -741,70 +741,15 @@ class LessonMenuScene(Scene):
                 break
 
     def _launch_selected_game(self) -> None:
+        from cognitive_data_arcade.ui.game_launcher import game_factory_for_with_back
+
         audio.play_sfx("select")
         lesson_num = _LESSON_DATA[self._selected]["num"]
-        if lesson_num == 1:
-            self._launch_big_data_map()
-        elif lesson_num == 2:
-            self._launch_rt_lab()
-        elif lesson_num == 3:
-            self._launch_event_log_detective()
-        elif lesson_num == 4:
-            self._launch_data_cleaning()
-        elif lesson_num == 8:
-            self._launch_flanker()
-        elif lesson_num == 9:
-            self._launch_gono()
-        elif lesson_num == 10:
-            self._launch_nback()
-        elif lesson_num == 11:
-            self._launch_visual_search()
-        elif lesson_num == 12:
-            self._launch_cognitive_dashboard()
-        elif lesson_num == 13:
-            self._launch_distribution_playground()
-        elif lesson_num == 14:
-            self._launch_correlation_trap()
-        elif lesson_num == 15:
-            self._launch_hypothesis_arena()
-        elif lesson_num == 16:
-            self._launch_prediction_slider()
-        elif lesson_num == 17:
-            self._launch_feature_hunter()
-        elif lesson_num == 18:
-            self._launch_classifier_battle()
-        elif lesson_num == 19:
-            self._launch_overfitting_monster()
-        elif lesson_num == 20:
-            self._launch_anomaly_alert()
-        elif lesson_num == 21:
-            self._launch_text_tokenizer()
-        elif lesson_num == 22:
-            self._launch_word_weight_factory()
-        elif lesson_num == 23:
-            self._launch_emotion_classifier()
-        elif lesson_num == 24:
-            self._launch_semantic_space()
-        elif lesson_num == 25:
-            self._launch_topic_detective()
-        elif lesson_num == 26:
-            self._launch_human_vs_model()
-        elif lesson_num == 27:
-            self._launch_social_network()
-        elif lesson_num == 28:
-            self._launch_misinformation()
-        elif lesson_num == 29:
-            self._launch_recommendation_bubble()
-        elif lesson_num == 30:
-            self._launch_bias_blind_spot()
-        elif lesson_num == 32:
-            self._launch_architects_trial()
-        elif lesson_num == 31:
-            self._launch_you_were_the_dataset()
-        elif lesson_num == 6:
-            self._launch_eda()
-        elif lesson_num == 7:
-            self._launch_stroop()
+        back = LessonMenuScene(self._pm, self._strings, self._selected)
+        scene = game_factory_for_with_back(lesson_num, self._pm, self._strings, back_scene=back)
+        if scene is not None:
+            self._next = scene
+            self._done = True
 
     def _teoria_available(self) -> bool:
         from cognitive_data_arcade.engine.lesson_registry import lesson_available
