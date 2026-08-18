@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from pathlib import Path
 
 import pygame
 from cognitive_data_arcade.engine.fonts import get_font, get_font_medium
@@ -654,7 +653,7 @@ class LessonMenuScene(Scene):
         elif event.key == pygame.K_a:
             from cognitive_data_arcade.ui.session_picker import SessionPickerScene
 
-            sessions_dir = Path("data") / "generated" / "reaction_time"
+            sessions_dir = self._pm.paths.generated_data_dir / "reaction_time"
             self._next = SessionPickerScene(sessions_dir, self._strings, self._pm)
             self._done = True
         elif event.key == pygame.K_o:
@@ -794,7 +793,7 @@ class LessonMenuScene(Scene):
             StroopSessionPickerScene,
         )
 
-        sessions_dir = Path("data") / "generated" / "stroop"
+        sessions_dir = self._pm.paths.generated_data_dir / "stroop"
         self._next = StroopSessionPickerScene(sessions_dir, self._strings, self._pm)
         self._done = True
 
