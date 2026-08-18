@@ -53,6 +53,8 @@ The update operation is the bottleneck. At n=1, you maintain one item and update
 | 3-Back | 50–70% | 0.8–1.5 |
 | 4-Back | 40–55% | 0.3–0.8 |
 
+*Approximate values based on letter n-back tasks in healthy young adult samples (see e.g., Kane & Engle, 2002; Melby-Lervåg & Hulme, 2013). Performance varies with stimulus type, presentation rate, and individual WM capacity.*
+
 Accuracy below 55% at n=3 suggests performance near chance and may indicate that the participant's current WM span does not support that level. Accuracy above 90% at n=2 is a signal that the adaptive system should increase n.
 
 The standard adaptive n-back used in research (including this application) targets **~75% accuracy**. When accuracy rises above ~85%, n is incremented. When it falls below ~65%, n is decremented. This keeps the participant in the zone of productive difficulty.
