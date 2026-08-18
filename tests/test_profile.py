@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-
 from cognitive_data_arcade.games.cognitive_dashboard.profile import cognitive_profile
 from cognitive_data_arcade.games.cognitive_dashboard.session import DashboardSession, TaskResult
 
@@ -21,13 +20,12 @@ def _full_session(
     base_rt = 300.0
     rt = _make_result([base_rt] * 8, ["simple"] * 8)
 
-    # Stroop: 4 congruent at base, 4 incongruent at base + effect
+    # rt_ms order: congruent first, then incongruent
     stroop = _make_result(
         [base_rt] * 4 + [base_rt + stroop_effect_ms] * 4,
         ["congruent"] * 4 + ["incongruent"] * 4,
     )
 
-    # Flanker: same pattern
     flanker = _make_result(
         [base_rt] * 4 + [base_rt + flanker_effect_ms] * 4,
         ["congruent"] * 4 + ["incongruent"] * 4,
@@ -55,59 +53,63 @@ def test_profile_returns_list_of_strings() -> None:
 def test_profile_stroop_low_effect() -> None:
     s = _full_session(stroop_effect_ms=30.0, flanker_effect_ms=40.0, gonogo_fa_count=0)
     text = " ".join(cognitive_profile(s))
-    assert "silna" in text.lower() or "strong" in text.lower()
+    assert "30" in text  # effect value present
 
 
 def test_profile_stroop_medium_effect() -> None:
     s = _full_session(stroop_effect_ms=60.0, flanker_effect_ms=40.0, gonogo_fa_count=0)
     text = " ".join(cognitive_profile(s))
-    assert "przeciętna" in text.lower() or "average" in text.lower()
+    assert "60" in text
 
 
 def test_profile_stroop_high_effect() -> None:
     s = _full_session(stroop_effect_ms=90.0, flanker_effect_ms=40.0, gonogo_fa_count=0)
     text = " ".join(cognitive_profile(s))
-    assert "interferencja" in text.lower()
+    assert "90" in text
 
 
 def test_profile_flanker_low_effect() -> None:
     s = _full_session(stroop_effect_ms=50.0, flanker_effect_ms=15.0, gonogo_fa_count=0)
     text = " ".join(cognitive_profile(s))
-    assert "bardzo dobra" in text.lower()
+    assert "15" in text
 
 
 def test_profile_flanker_medium_effect() -> None:
     s = _full_session(stroop_effect_ms=50.0, flanker_effect_ms=40.0, gonogo_fa_count=0)
     text = " ".join(cognitive_profile(s))
-    assert "przeciętna" in text.lower()
+    assert "40" in text
 
 
 def test_profile_flanker_high_effect() -> None:
     s = _full_session(stroop_effect_ms=50.0, flanker_effect_ms=70.0, gonogo_fa_count=0)
     text = " ".join(cognitive_profile(s))
-    assert "dystraktorzy" in text.lower()
+    assert "70" in text
 
 
 def test_profile_gonogo_no_fa() -> None:
     s = _full_session(stroop_effect_ms=50.0, flanker_effect_ms=40.0, gonogo_fa_count=0)
-    text = " ".join(cognitive_profile(s))
-    assert "bezbłędne" in text.lower()
+    text = " ".join(cognitive_profile(s)).lower()
+    assert "0" in text
+    assert "no-go" in text
 
 
 def test_profile_gonogo_one_fa() -> None:
     s = _full_session(stroop_effect_ms=50.0, flanker_effect_ms=40.0, gonogo_fa_count=1)
-    text = " ".join(cognitive_profile(s))
-    assert "drobne błędy" in text.lower()
+    text = " ".join(cognitive_profile(s)).lower()
+    assert "1" in text
+    assert "no-go" in text
 
 
 def test_profile_gonogo_many_fa() -> None:
     s = _full_session(stroop_effect_ms=50.0, flanker_effect_ms=40.0, gonogo_fa_count=2)
-    text = " ".join(cognitive_profile(s))
-    assert "impulsywn" in text.lower()
+    text = " ".join(cognitive_profile(s)).lower()
+    assert "2" in text
+    assert "no-go" in text
 
 
-def test_profile_closing_sentence_always_present() -> None:
+def test_profile_closing_sentence_shows_actual_trial_count() -> None:
     s = _full_session(50.0, 40.0, 0)
     lines = cognitive_profile(s)
     closing = lines[-1]
-    assert "8 prób" in closing
+    # Total: 8 (rt) + 8 (stroop) + 8 (flanker) + 8 (gonogo) = 32 trials
+    assert "32" in closing

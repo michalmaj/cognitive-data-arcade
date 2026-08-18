@@ -432,7 +432,7 @@ class CognitiveDashboardScene(Scene):
         lines = cognitive_profile(self._session)
         profile_y = _ROW2_Y + _TILE_H + 20
         font = get_font(22)
-        header = get_font(26).render("Profil poznawczy", True, _ORANGE)
+        header = get_font(26).render("Wyniki tej sesji", True, _ORANGE)
         surface.blit(header, (40, profile_y))
         for i, line in enumerate(lines):
             txt = font.render(line, True, _WHITE)
@@ -639,7 +639,7 @@ class CognitiveDashboardScene(Scene):
 
         # Hypothetical profile
         prof_y = sep_y + 10
-        phdr = get_font(22).render("Hipotetyczny profil:", True, _ORANGE)
+        phdr = get_font(22).render("Jak by sie zmieniły wyniki:", True, _ORANGE)
         surface.blit(phdr, (px + 18, prof_y))
         for i, line in enumerate(
             self._hypothetical_profile(self._wi_stroop, self._wi_flanker, self._wi_fa)
@@ -688,25 +688,8 @@ class CognitiveDashboardScene(Scene):
 
     @staticmethod
     def _hypothetical_profile(stroop_eff: float, flanker_eff: float, fa: int) -> list[str]:
-        lines: list[str] = []
-        if stroop_eff < 40:
-            lines.append("Odporność na interferencję: silna (<40 ms)")
-        elif stroop_eff <= 80:
-            lines.append(f"Odporność na interferencję: przeciętna ({stroop_eff:.0f} ms)")
-        else:
-            lines.append(f"Efekt Stroopa wyraźny — duża interferencja ({stroop_eff:.0f} ms)")
-
-        if flanker_eff < 25:
-            lines.append("Selektywna uwaga: bardzo dobra (<25 ms)")
-        elif flanker_eff <= 60:
-            lines.append(f"Selektywna uwaga: przeciętna ({flanker_eff:.0f} ms)")
-        else:
-            lines.append(f"Dystraktorzy spowalniają reakcję ({flanker_eff:.0f} ms)")
-
-        if fa == 0:
-            lines.append("Hamowanie impulsów: bezbłędne")
-        elif fa == 1:
-            lines.append("Hamowanie impulsów: dobre (drobne błędy)")
-        else:
-            lines.append("Tendencja do impulsywności — trudność z hamowaniem")
-        return lines
+        return [
+            f"Efekt Stroopa: {stroop_eff:+.0f} ms",
+            f"Efekt Flankera: {flanker_eff:+.0f} ms",
+            f"Fałszywe alarmy: {fa}",
+        ]

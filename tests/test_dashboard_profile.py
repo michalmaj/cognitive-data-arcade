@@ -36,13 +36,16 @@ _FORBIDDEN = [
 @pytest.fixture()
 def session() -> DashboardSession:
     """Complete DashboardSession with known values for assertion."""
+    # rt_ms order must match condition order: first 4 congruent (fast), then 4 incongruent (slow)
+    # stroop effect: mean([340..355]) - mean([280..295]) = 347.5 - 287.5 = +60 ms
     stroop = TaskResult(
-        rt_ms=[280.0, 290.0, 340.0, 350.0, 285.0, 295.0, 345.0, 355.0],
+        rt_ms=[280.0, 285.0, 290.0, 295.0, 340.0, 345.0, 350.0, 355.0],
         correct=[True] * 8,
         condition=["congruent"] * 4 + ["incongruent"] * 4,
     )
+    # flanker effect: mean([320..335]) - mean([270..285]) = 327.5 - 277.5 = +50 ms
     flanker = TaskResult(
-        rt_ms=[270.0, 280.0, 320.0, 330.0, 275.0, 285.0, 325.0, 335.0],
+        rt_ms=[270.0, 275.0, 280.0, 285.0, 320.0, 325.0, 330.0, 335.0],
         correct=[True] * 8,
         condition=["congruent"] * 4 + ["incongruent"] * 4,
     )
