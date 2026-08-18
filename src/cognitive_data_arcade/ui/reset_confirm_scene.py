@@ -20,17 +20,20 @@ _OPTIONS = [
     ("Wyczysc punkty i odznaki", "Clear points and badges", _AMBER),
     ("Zresetuj postep modulow", "Reset module progress", (220, 130, 30)),
     ("Pelny reset", "Full reset", _RED),
+    ("Usun pliki CSV", "Delete CSV files", (180, 60, 180)),
 ]
 
 _CONFIRM_TEXTS_PL = [
     "Wyczysc {ap} pkt i {nb} odznak?",
     "Zresetowac postep modulow?",
     "UWAGA! To usunie caly postep! Jestes pewien?",
+    "Usunac wszystkie pliki CSV? (profil zostaje)",
 ]
 _CONFIRM_TEXTS_EN = [
     "Clear {ap} pts and {nb} badges?",
     "Reset module progress?",
     "WARNING! This deletes all progress! Are you sure?",
+    "Delete all CSV files? (profile is kept)",
 ]
 
 
@@ -90,6 +93,10 @@ class ResetConfirmScene(Scene):
             self._selected = 2
             self._confirm_profile = self._pm.load()
             self._state = "confirming"
+        elif key == pygame.K_4:
+            self._selected = 3
+            self._confirm_profile = self._pm.load()
+            self._state = "confirming"
 
     def _handle_confirming(self, key: int) -> None:
         if key in (pygame.K_RETURN, pygame.K_y):
@@ -104,6 +111,8 @@ class ResetConfirmScene(Scene):
             self._pm.reset_module_progress()
         elif self._selected == 2:
             self._pm.reset_all()
+        elif self._selected == 3:
+            self._pm.delete_csv_data()
         self._exit_to_profile()
 
     def _exit_to_profile(self) -> None:
