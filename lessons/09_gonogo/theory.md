@@ -73,6 +73,8 @@ Where:
 | 2.5–3.5 | Strong discrimination |
 | > 4.0 | Near-perfect discrimination |
 
+*These ranges are approximate orientation benchmarks only. Expected d' varies with the Go ratio used, the number of trials, and the population studied — they are not diagnostic thresholds.*
+
 A worked example: suppose a participant responds on 92% of Go trials (hit rate = 0.92) and on 8% of No-Go trials (false alarm rate = 0.08). From a z-table: Z(0.92) ≈ 1.41, Z(0.08) ≈ −1.41. Therefore d' = 1.41 − (−1.41) = 2.82 — strong discrimination.
 
 A simplified z-score table for common values:
@@ -119,6 +121,8 @@ Response inhibition shows a protracted developmental course. Children aged 6–8
 | 15–17 years | 8–12% |
 | Young adults (18–25) | 5–12% |
 | Older adults (60+) | 10–18% |
+
+*Values are approximate and drawn from studies using a ~75% Go ratio. Individual studies vary substantially; treat these as reference ranges, not population norms.*
 
 The late development of inhibitory control parallels the prolonged maturation of the prefrontal cortex, which is not fully myelinated until approximately age 25. Older adults show a partial return of elevated commission errors, consistent with age-related prefrontal decline.
 

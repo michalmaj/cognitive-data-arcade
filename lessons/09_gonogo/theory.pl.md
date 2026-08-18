@@ -73,6 +73,8 @@ Gdzie:
 | 2,5–3,5 | Silna dyskryminacja |
 | > 4,0 | Niemal doskonała dyskryminacja |
 
+*Te zakresy to jedynie przybliżone punkty orientacyjne. Oczekiwane d' zależy od stosowanej proporcji Go, liczby prób i badanej populacji — nie są to progi diagnostyczne.*
+
 Przykład obliczenia: uczestnik odpowiada w 92% prób Go (trafień = 0,92) i w 8% prób No-Go (FA = 0,08). Z tabeli: Z(0,92) ≈ 1,41; Z(0,08) ≈ −1,41. Zatem d' = 1,41 − (−1,41) = 2,82 — silna dyskryminacja.
 
 Uproszczona tabela wyników z dla częstych wartości:
@@ -119,6 +121,8 @@ Hamowanie odpowiedzi wykazuje długą krzywą rozwojową. Dzieci w wieku 6–8 l
 | 15–17 lat | 8–12% |
 | Młodzi dorośli (18–25) | 5–12% |
 | Starsi dorośli (60+) | 10–18% |
+
+*Wartości są przybliżone i zaczerpnięte z badań stosujących proporcję Go ~75%. Poszczególne badania różnią się znacząco; traktuj te dane jako zakresy referencyjne, a nie normy populacyjne.*
 
 Późne dojrzewanie kontroli hamowania jest równoległe do długiego dojrzewania kory przedczołowej, która nie jest w pełni zmielinizowana aż do około 25. roku życia. Starsi dorośli wykazują częściowy powrót podwyższonych błędów komisji, co jest zgodne z wiekowym spadkiem funkcji przedczołowych.
 
