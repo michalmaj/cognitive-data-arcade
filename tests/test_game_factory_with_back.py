@@ -1,9 +1,8 @@
-"""Baseline tests: game_factory_for_with_back returns a non-None Scene
-for every PLAYABLE lesson, using the module-runner calling convention.
+"""Tests for game_factory_for_with_back: the canonical scene-creation path
+used by both the menu and the module runner after PR #3.
 
-These tests run BEFORE the menu refactor (PR #3) and must stay green
-throughout.  They document the canonical scene-creation contract and
-serve as a regression guard after the menu switches to this path.
+The parametrised test at the bottom is the regression guard: every
+PLAYABLE lesson must produce a non-None Scene via game_factory_for_with_back.
 """
 
 from __future__ import annotations
@@ -129,3 +128,32 @@ def test_l14_with_back_injects_esc_scene(tmp_path):
     scene = game_factory_for_with_back(14, _pm(tmp_path, seen_intro=False), EN, back_scene=back)
     assert isinstance(scene, HowToPlayScene)
     assert scene._esc_scene is back
+
+
+# ── Regression guard: all 31 PLAYABLE lessons ────────────────────────────────
+
+
+from cognitive_data_arcade.engine.lesson_registry import LESSON_REGISTRY, LessonKind  # noqa: E402
+
+_PLAYABLE = [ls for ls in LESSON_REGISTRY if ls.kind == LessonKind.PLAYABLE]
+
+
+@pytest.mark.parametrize("spec", _PLAYABLE, ids=lambda s: f"L{s.number:02d}_{s.slug}")
+def test_all_playable_lessons_produce_scene_via_with_back(spec, tmp_path):
+    """game_factory_for_with_back must return a non-None Scene for every PLAYABLE lesson.
+
+    This is the canonical code path used by both the main menu and the
+    module runner after PR #3.  A None return means the lesson has no
+    game factory branch — a regression that must be caught immediately.
+    """
+    from unittest.mock import MagicMock
+
+    from cognitive_data_arcade.ui.game_launcher import game_factory_for_with_back
+
+    back = MagicMock()
+    pm = _pm(tmp_path)
+    scene = game_factory_for_with_back(spec.number, pm, EN, back_scene=back)
+    assert scene is not None, (
+        f"Lesson {spec.number} ({spec.slug}) is PLAYABLE but "
+        f"game_factory_for_with_back returned None"
+    )
