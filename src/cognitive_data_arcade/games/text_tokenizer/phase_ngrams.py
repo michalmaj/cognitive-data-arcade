@@ -62,7 +62,7 @@ class PhaseNgramsScene(Scene):
         font_11 = get_font(11)
         x, y = 12, 12
         self._btn_rects = []
-        for i, (n, label) in enumerate(_SIZES):
+        for _i, (n, label) in enumerate(_SIZES):
             active = self._state.ngram_n == n
             bw = font_12.size(label)[0] + 20
             rect = pygame.Rect(x, y, bw, 28)

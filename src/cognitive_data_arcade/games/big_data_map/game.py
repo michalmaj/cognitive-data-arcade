@@ -76,7 +76,7 @@ def _compute_positions() -> dict[int, tuple[int, int]]:
     for node in CONCEPT_NODES:
         by_module.setdefault(node.module, []).append(node)
 
-    for mod_idx, (mod_num, nodes) in enumerate(sorted(by_module.items())):
+    for mod_idx, (_mod_num, nodes) in enumerate(sorted(by_module.items())):
         arc_start = mod_idx * _MODULE_ARC
         usable_start = arc_start + _ARC_MARGIN
         usable_end = arc_start + _MODULE_ARC - _ARC_MARGIN

@@ -941,7 +941,7 @@ class LessonMenuScene(Scene):
         lang = self._strings.language
 
         mod_label = ""
-        for mi, (m_pl, m_en, start, count) in enumerate(_MODULES):
+        for mi, (_m_pl, _m_en, start, count) in enumerate(_MODULES):
             if start <= self._selected < start + count:
                 mod_label = self._strings.menu_modules[mi]
                 break

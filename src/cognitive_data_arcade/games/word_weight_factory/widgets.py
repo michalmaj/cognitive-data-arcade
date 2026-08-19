@@ -84,7 +84,7 @@ class CorpusPanel:
         pos = event.pos
 
         # Document rows
-        for i, (title, _, _lang) in enumerate(_PRESETS):
+        for i, (_title, _, _lang) in enumerate(_PRESETS):
             row_rect = pygame.Rect(4, _DOCS_TOP + i * _DOC_ROW_H, _PANEL_W - 8, _DOC_ROW_H - 2)
             if row_rect.collidepoint(pos):
                 self._state.selected_idx = i

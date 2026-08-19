@@ -41,7 +41,7 @@ class PhaseAScene(Scene):
 
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            for i, (diff, col, desc) in enumerate(_DIFFICULTIES):
+            for i, (diff, _col, _desc) in enumerate(_DIFFICULTIES):
                 btn_rect = self._btn_rect(i)
                 if btn_rect.collidepoint(event.pos):
                     from cognitive_data_arcade.games.feature_hunter.phase_b import PhaseBScene

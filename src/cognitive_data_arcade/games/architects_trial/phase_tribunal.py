@@ -183,7 +183,7 @@ class PhaseTribunalScene(Scene):
         right_label = get_font(14).render("Twoja odpowiedz:", True, _WHITE)
         surface.blit(right_label, (_W // 2 + 20, 270))
         response_texts = list(_RESPONSES.values())
-        for i, (rect, text) in enumerate(zip(self._response_rects, response_texts)):
+        for _i, (rect, text) in enumerate(zip(self._response_rects, response_texts)):
             hovered = rect.collidepoint(self._mouse_pos)
             bg = _HOVER_BG if hovered else _CARD_BG
             border = _PURPLE if hovered else (50, 60, 90)
