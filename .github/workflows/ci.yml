@@ -30,3 +30,8 @@ jobs:
           SDL_VIDEODRIVER: dummy
           SDL_AUDIODRIVER: dummy
         run: uv run pytest --tb=short -q
+
+      - name: Educational claim audit (warning only)
+        run: uv run python scripts/audit_claims.py
+        # Exits 0 even when findings are present — output is informational.
+        # To treat findings as failures locally, run: uv run python scripts/audit_claims.py --strict
