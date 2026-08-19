@@ -19,7 +19,7 @@ def load_session(csv_path: Path) -> pd.DataFrame:
     return df
 
 
-def session_stats(df: pd.DataFrame) -> dict:
+def session_stats(df: pd.DataFrame) -> dict[str, float | int]:
     """Compute summary stats; timeouts (reaction_time_ms == -1) excluded from RT stats."""
     valid = df.loc[df["reaction_time_ms"] > 0, "reaction_time_ms"]
     n_trials = len(df)

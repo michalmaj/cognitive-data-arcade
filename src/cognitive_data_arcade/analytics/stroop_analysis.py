@@ -15,7 +15,7 @@ def load_session(csv_path: Path) -> pd.DataFrame:
     return df
 
 
-def session_stats(df: pd.DataFrame) -> dict:
+def session_stats(df: pd.DataFrame) -> dict[str, float | int]:
     """Per-condition RT stats. Timeouts (reaction_time_ms == -1) excluded from means."""
     n_trials = len(df)
     n_correct = int(df["correct"].sum())
