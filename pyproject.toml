@@ -37,7 +37,7 @@ dev = [
 line-length = 100
 
 [tool.ruff.lint]
-select = ["E", "F", "I"]
+select = ["E", "F", "I", "B"]
 ignore = [
     "E402",  # module-level import not at top — used for lazy scene imports
     "E501",  # line too long — long strings in i18n and pygame draw calls
@@ -45,4 +45,5 @@ ignore = [
     "E702",  # multiple statements on one line (semicolon) — common in pygame draw code
     "E731",  # lambda assignment — minor style choice
     "E401",  # multiple imports on one line
+    "B905",  # zip() without strict= — pygame parallel iterables; strict=False is implicit intent
 ]
