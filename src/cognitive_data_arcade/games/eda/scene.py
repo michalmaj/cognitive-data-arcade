@@ -131,13 +131,13 @@ _HELP_LINES: list[tuple[str, bool]] = [
 
 class EDAScene(Scene):
     def __init__(
-        self, pm: "ProfileManager | None" = None, strings: "Strings | None" = None
+        self, pm: ProfileManager | None = None, strings: Strings | None = None
     ) -> None:
         self._pm = pm
         self._strings = strings
         self._generate_count: int = 0
         self._done: bool = False
-        self._next: "Scene | None" = None
+        self._next: Scene | None = None
         self._controls = ControlPanel()
         self._charts = ChartPanel()
         self._results = ResultsPanel()
@@ -298,7 +298,7 @@ class EDAScene(Scene):
             surface.blit(s, (px + panel_w // 2 - s.get_width() // 2, y))
             y += font.get_height() + 8
 
-    def _build_next_scene(self) -> "Scene":
+    def _build_next_scene(self) -> Scene:
         from cognitive_data_arcade.engine.badges import BadgeEngine, SessionResult
         from cognitive_data_arcade.ui.session_summary import SessionSummaryScene
 
@@ -334,7 +334,7 @@ class EDAScene(Scene):
     def is_done(self) -> bool:
         return self._done
 
-    def next_scene(self) -> "Scene | None":
+    def next_scene(self) -> Scene | None:
         if self._done and self._next is None and self._pm is not None:
             self._next = self._build_next_scene()
         return self._next if self._done else None

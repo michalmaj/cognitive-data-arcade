@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Callable
+from collections.abc import Callable
 
 import pygame
 
@@ -23,7 +23,7 @@ class PhaseFeedbackScene(Scene):
         score: int,
         answers: list[str],
         mission_type: str,
-        next_scene_factory: Callable[[], "Scene | None"],
+        next_scene_factory: Callable[[], Scene | None],
     ) -> None:
         self._is_correct = is_correct
         self._score = score
@@ -32,7 +32,7 @@ class PhaseFeedbackScene(Scene):
         self._factory = next_scene_factory
         self._timer = 0.0
         self._done = False
-        self._next: "Scene | None" = None
+        self._next: Scene | None = None
 
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
@@ -77,5 +77,5 @@ class PhaseFeedbackScene(Scene):
     def is_done(self) -> bool:
         return self._done
 
-    def next_scene(self) -> "Scene | None":
+    def next_scene(self) -> Scene | None:
         return self._next

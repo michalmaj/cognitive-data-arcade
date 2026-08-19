@@ -195,7 +195,7 @@ class ReactionTimeGame(Scene):
             actual_response=actual,
             correct=correct,
             reaction_time_ms=rt,
-            timestamp=datetime.datetime.now(datetime.timezone.utc).isoformat(),
+            timestamp=datetime.datetime.now(datetime.UTC).isoformat(),
             distractor_count=self._config.distractor_count,
         )
         self._records.append(record)

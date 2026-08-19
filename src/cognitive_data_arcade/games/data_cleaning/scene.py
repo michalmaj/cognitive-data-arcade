@@ -73,7 +73,7 @@ class DataCleaningScene(Scene):
     def __init__(
         self,
         strings: Strings,
-        pm: "ProfileManager",
+        pm: ProfileManager,
         seed: int | None = None,
         difficulty: DifficultyConfig = EASY,
     ) -> None:
@@ -268,7 +268,7 @@ class DataCleaningScene(Scene):
                 self._next = self._build_next_scene()
             self._done = True
 
-    def _build_next_scene(self) -> "Scene | None":
+    def _build_next_scene(self) -> Scene | None:
         from cognitive_data_arcade.engine.badges import BadgeEngine, SessionResult
         from cognitive_data_arcade.games.data_cleaning.generator import compute_score
         from cognitive_data_arcade.ui.session_summary import SessionSummaryScene

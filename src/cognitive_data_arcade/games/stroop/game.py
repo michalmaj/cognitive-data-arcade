@@ -279,7 +279,7 @@ class StroopGame(Scene):
             actual_response=actual,
             correct=correct,
             reaction_time_ms=rt,
-            timestamp=datetime.datetime.now(datetime.timezone.utc).isoformat(),
+            timestamp=datetime.datetime.now(datetime.UTC).isoformat(),
         )
         self._records.append(record)
         write_trial(self._csv_path, record)

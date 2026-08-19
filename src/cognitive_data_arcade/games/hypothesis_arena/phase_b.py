@@ -293,5 +293,5 @@ class PhaseBScene(Scene):
     def is_done(self) -> bool:
         return self._done
 
-    def next_scene(self) -> "Scene | None":
+    def next_scene(self) -> Scene | None:
         return None

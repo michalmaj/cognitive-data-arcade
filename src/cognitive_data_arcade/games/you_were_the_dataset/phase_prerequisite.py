@@ -1,8 +1,8 @@
 # src/cognitive_data_arcade/games/you_were_the_dataset/phase_prerequisite.py
 from __future__ import annotations
 
+from collections.abc import Callable
 from pathlib import Path
-from typing import Callable
 
 import pygame
 

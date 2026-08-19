@@ -172,7 +172,7 @@ class FlankerGame(Scene):
             target_direction=t["target_direction"],
             correct=correct,
             reaction_time_ms=rt_ms,
-            timestamp=datetime.datetime.now(datetime.timezone.utc).isoformat(),
+            timestamp=datetime.datetime.now(datetime.UTC).isoformat(),
         )
         self._records.append(record)
         write_trial(self._csv_path, record)

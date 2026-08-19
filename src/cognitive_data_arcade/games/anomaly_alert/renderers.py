@@ -1,7 +1,7 @@
 # src/cognitive_data_arcade/games/anomaly_alert/renderers.py
 from __future__ import annotations
 
-from typing import Callable
+from collections.abc import Callable
 
 import matplotlib
 
