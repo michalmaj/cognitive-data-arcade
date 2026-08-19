@@ -1,5 +1,6 @@
 # src/cognitive_data_arcade/games/you_were_the_dataset/info.py
 from __future__ import annotations
+
 from cognitive_data_arcade.engine.pause import GameInfo
 
 

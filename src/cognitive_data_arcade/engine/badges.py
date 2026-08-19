@@ -2,11 +2,11 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from dataclasses import dataclass
+
 import pygame
 
 from cognitive_data_arcade.engine.assets import assets_dir
 from cognitive_data_arcade.profile.manager import Profile
-
 
 # ── Session achievement badges (in-game scoring) ─────────────────────────────
 

@@ -4,26 +4,34 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-
 import pygame
 
 from cognitive_data_arcade.engine.chart import figure_to_surface
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+)
+from cognitive_data_arcade.engine.colors import (
+    DIM as _DIM,
+)
+from cognitive_data_arcade.engine.colors import (
+    GREEN as _GREEN,
+)
+from cognitive_data_arcade.engine.colors import (
+    ORANGE as _ORANGE,
+)
+from cognitive_data_arcade.engine.colors import (
+    RED as _RED,
+)
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
+)
 from cognitive_data_arcade.engine.context_popup import ContextInfo, ContextPopup
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.correlation_trap.simulator import (
+    _SCENARIOS,
     Scenario,
     generate_correlated,
-    _SCENARIOS,
-)
-
-from cognitive_data_arcade.engine.colors import (
-    BG as _BG,
-    WHITE as _WHITE,
-    DIM as _DIM,
-    ORANGE as _ORANGE,
-    GREEN as _GREEN,
-    RED as _RED,
 )
 
 _PANEL = (18, 18, 42)
@@ -153,11 +161,10 @@ class PhaseBScene(Scene):
                     self._state = "summary"
                 else:
                     self._load_scenario()
-        elif self._state == "summary":
-            if self._btn_rects[0].collidepoint(pos):  # restart
-                self._idx = 0
-                self._correct = 0
-                self._load_scenario()
+        elif self._state == "summary" and self._btn_rects[0].collidepoint(pos):  # restart
+            self._idx = 0
+            self._correct = 0
+            self._load_scenario()
 
     def update(self, dt_ms: float) -> None:
         pass

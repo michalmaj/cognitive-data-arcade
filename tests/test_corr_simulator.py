@@ -1,15 +1,16 @@
 from __future__ import annotations
+
 import numpy as np
+
 from cognitive_data_arcade.games.correlation_trap.simulator import (
+    _SANDBOX_VARS,
+    _SCENARIOS,
+    _sandbox_corr,
+    _sandbox_seed,
     generate_correlated,
     pearson_r,
     strength_label,
-    _SCENARIOS,
-    _SANDBOX_VARS,
-    _sandbox_corr,
-    _sandbox_seed,
 )
-
 
 # ── generate_correlated ──────────────────────────────────────────────────────
 

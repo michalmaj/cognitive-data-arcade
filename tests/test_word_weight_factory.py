@@ -1,11 +1,12 @@
 from __future__ import annotations
+
 import string as _string
 
 from cognitive_data_arcade.games.word_weight_factory.corpus import (
-    PRESET_STROOP_PL,
-    PRESET_NBACK_EN,
     PRESET_FLANKER_PL,
     PRESET_MEMORY_EN,
+    PRESET_NBACK_EN,
+    PRESET_STROOP_PL,
     CorpusState,
 )
 

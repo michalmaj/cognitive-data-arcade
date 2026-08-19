@@ -19,8 +19,9 @@ def _display():
 
 
 def _make(tmp_path: Path) -> tuple[ResetConfirmScene, ProfileManager]:
-    from cognitive_data_arcade.engine.scene import Scene
     from unittest.mock import MagicMock
+
+    from cognitive_data_arcade.engine.scene import Scene
 
     pm = ProfileManager(tmp_path / "profile.json")
     p = pm.load()

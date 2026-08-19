@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 import numpy as np
 
 
@@ -20,7 +21,7 @@ def test_simulate_data_seed_deterministic():
 
 
 def test_fit_line_perfect():
-    from cognitive_data_arcade.games.prediction_slider.simulator import simulate_data, fit_line
+    from cognitive_data_arcade.games.prediction_slider.simulator import fit_line, simulate_data
 
     x, y = simulate_data(n=50, slope=2.5, intercept=1.0, noise=0.0, seed=7)
     slope, intercept, r2, residuals = fit_line(x, y)
@@ -30,7 +31,7 @@ def test_fit_line_perfect():
 
 
 def test_fit_line_r_squared_range():
-    from cognitive_data_arcade.games.prediction_slider.simulator import simulate_data, fit_line
+    from cognitive_data_arcade.games.prediction_slider.simulator import fit_line, simulate_data
 
     x, y = simulate_data(n=50, slope=1.0, intercept=0.0, noise=1.0, seed=9)
     _, _, r2, residuals = fit_line(x, y)

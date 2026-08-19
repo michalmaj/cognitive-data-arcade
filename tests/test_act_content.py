@@ -1,6 +1,6 @@
 """Tests for act content data — narrative texts and quiz questions."""
 
-from cognitive_data_arcade.data.act_content import ACT_INTROS, ACT_BRIDGES
+from cognitive_data_arcade.data.act_content import ACT_BRIDGES, ACT_INTROS
 from cognitive_data_arcade.data.quiz_data import QUIZ_QUESTIONS, get_question
 
 

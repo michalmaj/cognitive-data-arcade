@@ -1,21 +1,35 @@
 from __future__ import annotations
+
 import dataclasses
+
 from cognitive_data_arcade.games.flanker.config import (
+    DIFFICULTY_EASY,
+    DIFFICULTY_HARD,
+    DIFFICULTY_MEDIUM,
+    FULL,
     QUICK,
     STANDARD,
-    FULL,
-    DIFFICULTY_EASY,
-    DIFFICULTY_MEDIUM,
-    DIFFICULTY_HARD,
     FlankerConfig,
 )
 from cognitive_data_arcade.games.gono.config import (
-    QUICK as GONO_QUICK,
-    STANDARD as GONO_STANDARD,
-    FULL as GONO_FULL,
     DIFFICULTY_EASY as GONO_EASY,
-    DIFFICULTY_MEDIUM as GONO_MEDIUM,
+)
+from cognitive_data_arcade.games.gono.config import (
     DIFFICULTY_HARD as GONO_HARD,
+)
+from cognitive_data_arcade.games.gono.config import (
+    DIFFICULTY_MEDIUM as GONO_MEDIUM,
+)
+from cognitive_data_arcade.games.gono.config import (
+    FULL as GONO_FULL,
+)
+from cognitive_data_arcade.games.gono.config import (
+    QUICK as GONO_QUICK,
+)
+from cognitive_data_arcade.games.gono.config import (
+    STANDARD as GONO_STANDARD,
+)
+from cognitive_data_arcade.games.gono.config import (
     GoNoGoConfig,
 )
 

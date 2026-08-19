@@ -5,12 +5,13 @@ from dataclasses import dataclass
 
 import pygame
 
-from cognitive_data_arcade.engine.fonts import get_font
-
 from cognitive_data_arcade.engine.colors import (
     DIM as _DIM,
+)
+from cognitive_data_arcade.engine.colors import (
     WHITE as _WHITE,
 )
+from cognitive_data_arcade.engine.fonts import get_font
 
 _TRACK = (42, 42, 80)
 _ACTIVE = (243, 156, 18)

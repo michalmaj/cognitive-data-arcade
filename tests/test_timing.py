@@ -1,5 +1,6 @@
 import time
-from cognitive_data_arcade.engine.timing import now_ms, elapsed_ms
+
+from cognitive_data_arcade.engine.timing import elapsed_ms, now_ms
 
 
 def test_now_ms_returns_positive_float() -> None:

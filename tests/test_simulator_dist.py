@@ -1,13 +1,15 @@
 # tests/test_simulator_dist.py
 from __future__ import annotations
+
 import numpy as np
+
 from cognitive_data_arcade.games.distribution_playground.simulator import (
-    SimResult,
     CompareResult,
-    simulate,
+    SimResult,
     compare,
-    random_target,
     match_score,
+    random_target,
+    simulate,
 )
 
 

@@ -1,8 +1,11 @@
 from __future__ import annotations
+
+from unittest.mock import MagicMock
+
 import pygame
 import pytest
-from unittest.mock import MagicMock
-from cognitive_data_arcade.engine.i18n import PL, EN
+
+from cognitive_data_arcade.engine.i18n import EN, PL
 from cognitive_data_arcade.ui.menu import LessonMenuScene
 
 

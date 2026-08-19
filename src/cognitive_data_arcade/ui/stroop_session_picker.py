@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import contextlib
 import csv
 import datetime
 import math
@@ -7,20 +8,29 @@ from dataclasses import dataclass
 from pathlib import Path
 
 import pygame
-from cognitive_data_arcade.engine.fonts import get_font
-
-from cognitive_data_arcade.engine.i18n import Strings
-from cognitive_data_arcade.engine.scene import Scene
-from cognitive_data_arcade.profile.manager import ProfileManager
 
 from cognitive_data_arcade.engine.colors import (
     BG as _BG,
-    ORANGE as _ORANGE,
-    WHITE as _WHITE,
+)
+from cognitive_data_arcade.engine.colors import (
     DIM as _DIM,
+)
+from cognitive_data_arcade.engine.colors import (
     GREEN as _GREEN,
+)
+from cognitive_data_arcade.engine.colors import (
+    ORANGE as _ORANGE,
+)
+from cognitive_data_arcade.engine.colors import (
     RED as _RED,
 )
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
+)
+from cognitive_data_arcade.engine.fonts import get_font
+from cognitive_data_arcade.engine.i18n import Strings
+from cognitive_data_arcade.engine.scene import Scene
+from cognitive_data_arcade.profile.manager import ProfileManager
 
 _ROW_BG = (14, 14, 32)
 _ROW_ACTIVE_BG = (20, 20, 50)
@@ -78,10 +88,8 @@ class StroopSessionPickerScene(Scene):
         )
         entries: list[_SessionEntry] = []
         for path in paths:
-            try:
+            with contextlib.suppress(Exception):
                 entries.append(self._parse(path))
-            except Exception:
-                pass
         return entries
 
     def _parse(self, path: Path) -> _SessionEntry:

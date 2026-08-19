@@ -1,7 +1,9 @@
 """Failing tests for Task 2: Visual Search Lab, Cognitive Dashboard."""
 
 from pathlib import Path
+
 import pygame
+
 from cognitive_data_arcade.engine.i18n import PL
 from cognitive_data_arcade.profile.manager import ProfileManager
 from cognitive_data_arcade.ui.session_summary import SessionSummaryScene
@@ -16,17 +18,15 @@ def _pm(tmp_path: Path) -> ProfileManager:
 def test_visual_search_done_routes_to_session_summary(tmp_path: Path) -> None:
     """After all trials, VisualSearchGame.next_scene() must be SessionSummaryScene."""
     pygame.init()
-    from cognitive_data_arcade.games.visual_search.game import VisualSearchGame
     from cognitive_data_arcade.games.visual_search.config import VSConfig
+    from cognitive_data_arcade.games.visual_search.game import VisualSearchGame
 
     pm = _pm(tmp_path)
     cfg = VSConfig(mode="letters", difficulty="easy")  # minimal config
     csv_path = tmp_path / "vs.csv"
     game = VisualSearchGame(cfg, pm, PL, "p1", "s1", csv_path)
     # Force DONE phase
-    from cognitive_data_arcade.games.visual_search.game import _Phase
-
-    from cognitive_data_arcade.games.visual_search.game import _TrialRecord
+    from cognitive_data_arcade.games.visual_search.game import _Phase, _TrialRecord
 
     game._records = [
         _TrialRecord(
@@ -52,10 +52,10 @@ def test_visual_search_done_routes_to_session_summary(tmp_path: Path) -> None:
 def test_cognitive_dashboard_q_routes_to_session_summary(tmp_path: Path) -> None:
     """When session complete, pressing Q must produce SessionSummaryScene."""
     pygame.init()
+    from cognitive_data_arcade.games.cognitive_dashboard.config import generate_synthetic
     from cognitive_data_arcade.games.cognitive_dashboard.dashboard_scene import (
         CognitiveDashboardScene,
     )
-    from cognitive_data_arcade.games.cognitive_dashboard.config import generate_synthetic
 
     pm = _pm(tmp_path)
     session = generate_synthetic()

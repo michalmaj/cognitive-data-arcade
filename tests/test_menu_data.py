@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 from cognitive_data_arcade.ui.menu import _LESSON_DATA, _MODULES, _VIRTUAL_ROWS
 
 

@@ -1,24 +1,32 @@
 # src/cognitive_data_arcade/games/you_were_the_dataset/phase_prerequisite.py
 from __future__ import annotations
+
+from collections.abc import Callable
 from pathlib import Path
-from typing import Callable
 
 import pygame
 
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+)
+from cognitive_data_arcade.engine.colors import (
+    DIM as _DIM,
+)
+from cognitive_data_arcade.engine.colors import (
+    GREEN as _GREEN,
+)
+from cognitive_data_arcade.engine.colors import (
+    RED as _RED,
+)
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
+)
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.you_were_the_dataset.game_state import GameState
 from cognitive_data_arcade.games.you_were_the_dataset.profile_loader import (
     REQUIRED_GAMES,
     check_prerequisites,
-)
-
-from cognitive_data_arcade.engine.colors import (
-    BG as _BG,
-    WHITE as _WHITE,
-    DIM as _DIM,
-    GREEN as _GREEN,
-    RED as _RED,
 )
 
 _W, _H = 1024, 768
@@ -98,11 +106,11 @@ class PhasePrerequisiteScene(Scene):
         if event.type == pygame.KEYDOWN:
             # Hidden dev shortcut: Ctrl+D loads synthetic data
             if event.key == pygame.K_d and (pygame.key.get_mods() & pygame.KMOD_CTRL):
-                from cognitive_data_arcade.games.you_were_the_dataset.synthetic_data import (
-                    SYNTHETIC_PROFILE,
-                )
                 from cognitive_data_arcade.games.you_were_the_dataset.phase_reveal import (
                     PhaseRevealScene,
+                )
+                from cognitive_data_arcade.games.you_were_the_dataset.synthetic_data import (
+                    SYNTHETIC_PROFILE,
                 )
 
                 self._state.profile = SYNTHETIC_PROFILE

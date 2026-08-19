@@ -167,7 +167,7 @@ def get_fix_feedback_text(error_type: ErrorType | None, fix: str, level: str, la
 
 
 def generate_dataset(
-    config: "DifficultyConfig",
+    config: DifficultyConfig,
     seed: int | None = None,
 ) -> CleaningSession:
     """Generate a synthetic RT dataset with injected errors per config."""

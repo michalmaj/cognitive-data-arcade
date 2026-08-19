@@ -19,9 +19,15 @@ _MAP_H = _H - _MAP_Y - 8
 _NODE_R = 18
 from cognitive_data_arcade.engine.colors import (
     BG as _BG,
-    WHITE as _WHITE,
+)
+from cognitive_data_arcade.engine.colors import (
     DIM as _DIM,
+)
+from cognitive_data_arcade.engine.colors import (
     GREEN as _GREEN,
+)
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
 )
 
 _TOP_BG = (10, 10, 28)
@@ -176,13 +182,13 @@ class PhaseMissionScene(Scene):
                 idx=self._round_idx + 1,
                 score=new_score,
                 results=new_results,
-            ) -> "Scene":
+            ) -> Scene:
                 return PhaseMissionScene(missions, idx, score, results)
 
             next_factory = _next_mission_factory
         else:
 
-            def _result_factory(score=new_score, results=new_results) -> "Scene":
+            def _result_factory(score=new_score, results=new_results) -> Scene:
                 from cognitive_data_arcade.games.semantic_space.phase_result import PhaseResultScene
 
                 return PhaseResultScene(session_score=score, round_results=results)

@@ -2,18 +2,25 @@ from __future__ import annotations
 
 import pygame
 
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+)
+from cognitive_data_arcade.engine.colors import (
+    DIM as _DIM,
+)
+from cognitive_data_arcade.engine.colors import (
+    GREEN as _GREEN,
+)
+from cognitive_data_arcade.engine.colors import (
+    PURPLE as _PURPLE,
+)
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
+)
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.text_tokenizer.engine import TokenizerState
 from cognitive_data_arcade.games.text_tokenizer.widgets import SharedState
-
-from cognitive_data_arcade.engine.colors import (
-    BG as _BG,
-    WHITE as _WHITE,
-    DIM as _DIM,
-    GREEN as _GREEN,
-    PURPLE as _PURPLE,
-)
 
 _PANEL = (18, 18, 42)
 _AMBER = (243, 156, 18)
@@ -127,8 +134,8 @@ class PhaseTokenizerScene(Scene):
         stops: set[str] = set()
         if not self._state.rm_stops:
             from cognitive_data_arcade.games.text_tokenizer.stop_words import (
-                STOP_WORDS_PL,
                 STOP_WORDS_EN,
+                STOP_WORDS_PL,
             )
 
             stops = STOP_WORDS_PL if self._state.lang == "pl" else STOP_WORDS_EN

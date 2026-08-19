@@ -11,12 +11,24 @@ _TOP_H = 44
 _MID = 512
 from cognitive_data_arcade.engine.colors import (
     BG as _BG,
-    WHITE as _WHITE,
-    DIM as _DIM,
+)
+from cognitive_data_arcade.engine.colors import (
     BLUE as _BLUE,
-    PURPLE as _PURPLE,
+)
+from cognitive_data_arcade.engine.colors import (
+    DIM as _DIM,
+)
+from cognitive_data_arcade.engine.colors import (
     GREEN as _GREEN,
+)
+from cognitive_data_arcade.engine.colors import (
+    PURPLE as _PURPLE,
+)
+from cognitive_data_arcade.engine.colors import (
     RED as _RED,
+)
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
 )
 
 _TOP_BG = (10, 10, 28)
@@ -90,9 +102,12 @@ class PhaseDetectScene(Scene):
         if self._done:
             return
         if self._state == "reveal":
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                self._advance()
-            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            if (
+                event.type == pygame.KEYDOWN
+                and event.key == pygame.K_SPACE
+                or event.type == pygame.MOUSEBUTTONDOWN
+                and event.button == 1
+            ):
                 self._advance()
             return
         if self._state != "task":

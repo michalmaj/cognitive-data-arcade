@@ -2,14 +2,17 @@ from __future__ import annotations
 
 import pygame
 
-from cognitive_data_arcade.engine.fonts import get_font
-from cognitive_data_arcade.engine.scene import Scene
-
 from cognitive_data_arcade.engine.colors import (
     BG as _BG,
-    WHITE as _WHITE,
+)
+from cognitive_data_arcade.engine.colors import (
     DIM as _DIM,
 )
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
+)
+from cognitive_data_arcade.engine.fonts import get_font
+from cognitive_data_arcade.engine.scene import Scene
 
 _W, _H = 1024, 768
 _PANEL = (18, 18, 42)
@@ -54,9 +57,12 @@ class PhaseIntroScene(Scene):
         self._next: Scene | None = None
 
     def handle_event(self, event: pygame.event.Event) -> None:
-        if event.type == pygame.KEYDOWN and event.key in (pygame.K_SPACE, pygame.K_RETURN):
-            self._advance()
-        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+        if (
+            event.type == pygame.KEYDOWN
+            and event.key in (pygame.K_SPACE, pygame.K_RETURN)
+            or event.type == pygame.MOUSEBUTTONDOWN
+            and event.button == 1
+        ):
             self._advance()
 
     def _advance(self) -> None:

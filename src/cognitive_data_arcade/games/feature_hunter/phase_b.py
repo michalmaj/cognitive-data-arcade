@@ -2,6 +2,27 @@ from __future__ import annotations
 
 import pygame
 
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+)
+from cognitive_data_arcade.engine.colors import (
+    BLUE as _BLUE,
+)
+from cognitive_data_arcade.engine.colors import (
+    DIM as _DIM,
+)
+from cognitive_data_arcade.engine.colors import (
+    GREEN as _GREEN,
+)
+from cognitive_data_arcade.engine.colors import (
+    ORANGE as _ORANGE,
+)
+from cognitive_data_arcade.engine.colors import (
+    RED as _RED,
+)
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
+)
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.feature_hunter.config import DifficultyConfig
@@ -9,18 +30,8 @@ from cognitive_data_arcade.games.feature_hunter.features import draw_features
 from cognitive_data_arcade.games.feature_hunter.simulator import compute_accuracy_delta
 from cognitive_data_arcade.games.feature_hunter.widgets import (
     FeatureCard,
-    render_card,
     grid_layout,
-)
-
-from cognitive_data_arcade.engine.colors import (
-    BG as _BG,
-    WHITE as _WHITE,
-    DIM as _DIM,
-    ORANGE as _ORANGE,
-    GREEN as _GREEN,
-    RED as _RED,
-    BLUE as _BLUE,
+    render_card,
 )
 
 _PANEL = (18, 18, 42)
@@ -157,16 +168,15 @@ class PhaseBScene(Scene):
                 ox, oy = self._drag_offset
                 self._dragging.rect.topleft = (event.pos[0] - ox, event.pos[1] - oy)
 
-        elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
-            if self._dragging:
-                cx = self._dragging.rect.centerx
-                if cx < _CZONE_X:
-                    self._dragging.assigned = "noise"
-                elif cx > _CZONE_X + _CZONE_W:
-                    self._dragging.assigned = "useful"
-                else:
-                    self._dragging.rect = self._dragging.home_rect.copy()
-                self._dragging = None
+        elif event.type == pygame.MOUSEBUTTONUP and event.button == 1 and self._dragging:
+            cx = self._dragging.rect.centerx
+            if cx < _CZONE_X:
+                self._dragging.assigned = "noise"
+            elif cx > _CZONE_X + _CZONE_W:
+                self._dragging.assigned = "useful"
+            else:
+                self._dragging.rect = self._dragging.home_rect.copy()
+            self._dragging = None
 
     def update(self, dt_ms: float = 0.0) -> None:
         if self._state == "playing" and self._difficulty.timer_s is not None:

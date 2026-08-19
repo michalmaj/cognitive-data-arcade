@@ -1,8 +1,6 @@
 from __future__ import annotations
 
-
 import pygame
-from cognitive_data_arcade.engine.fonts import get_font, get_font_medium
 
 from cognitive_data_arcade.engine import audio
 from cognitive_data_arcade.engine.badges import (
@@ -10,6 +8,7 @@ from cognitive_data_arcade.engine.badges import (
     load_badge_icon,
     module_complete,
 )
+from cognitive_data_arcade.engine.fonts import get_font, get_font_medium
 from cognitive_data_arcade.engine.i18n import Strings, get_strings
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.engine.scrollbar import ScrollBar
@@ -690,8 +689,8 @@ class LessonMenuScene(Scene):
             vy = y - _TOPBAR_H + self._scrollbar.scroll
             for kind, param, row_vy, row_vh in _VIRTUAL_ROWS:
                 if kind == "header" and row_vy <= vy < row_vy + row_vh:
-                    from cognitive_data_arcade.ui.module_runner_scene import ModuleRunnerScene
                     from cognitive_data_arcade.ui.act_intro_scene import make_act_intro
+                    from cognitive_data_arcade.ui.module_runner_scene import ModuleRunnerScene
 
                     self._pm.set_current_module(param)
                     _runner = ModuleRunnerScene(param, self._pm, self._strings)
@@ -942,7 +941,7 @@ class LessonMenuScene(Scene):
         lang = self._strings.language
 
         mod_label = ""
-        for mi, (m_pl, m_en, start, count) in enumerate(_MODULES):
+        for mi, (_m_pl, _m_en, start, count) in enumerate(_MODULES):
             if start <= self._selected < start + count:
                 mod_label = self._strings.menu_modules[mi]
                 break

@@ -450,8 +450,8 @@ def game_factory_for_with_back(
     lesson_num: int,
     pm: ProfileManager,
     strings: Strings,
-    back_scene: "Scene",
-) -> "Scene | None":
+    back_scene: Scene,
+) -> Scene | None:
     """Like game_factory_for but uses back_scene as the ESC/back destination.
 
     For simple level scenes (no HowToPlay wrapper), returns the scene directly.
@@ -502,7 +502,7 @@ def game_factory_for_with_back(
     # Standard pausable games: wrap with make_how_to_play injecting back_scene as esc_scene.
     # inner_factory is called on every restart so each play gets a fresh scene object.
     def _make_pausable_with_back(inner_factory: Callable[[], Scene], game_info: object) -> Scene:
-        def _restart() -> "Scene":
+        def _restart() -> Scene:
             return PausableGame(inner_factory(), game_info, _restart, strings, pm)  # type: ignore[arg-type]
 
         pausable = _restart()
@@ -515,7 +515,7 @@ def game_factory_for_with_back(
 
         game_info = get_game_info(strings)
 
-        def _restart_dc() -> "Scene":
+        def _restart_dc() -> Scene:
             return PausableGame(DataCleaningScene(strings, pm), game_info, _restart_dc, strings, pm)
 
         return _restart_dc()

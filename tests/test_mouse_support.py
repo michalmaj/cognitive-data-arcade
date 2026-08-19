@@ -1,6 +1,8 @@
+from unittest.mock import MagicMock
+
 import pygame
 import pytest
-from unittest.mock import MagicMock
+
 from cognitive_data_arcade.engine.mouse import hit
 
 pygame.init()
@@ -88,7 +90,7 @@ def test_menu_teoria_available_for_lesson_3():
     assert menu._teoria_available()
 
 
-from cognitive_data_arcade.engine.pause import PausableGame, GameInfo
+from cognitive_data_arcade.engine.pause import GameInfo, PausableGame
 
 
 @pytest.fixture(autouse=False)
@@ -132,8 +134,10 @@ def test_pause_mousebuttondown_confirms(_display_1024):
 
 
 def test_session_picker_mousemotion_sets_selected():
+    import pathlib
+    import tempfile
+
     from cognitive_data_arcade.ui.session_picker import SessionPickerScene
-    import pathlib, tempfile
 
     pm = MagicMock()
     from cognitive_data_arcade.engine.i18n import get_strings
@@ -167,8 +171,8 @@ def test_nback_mousemotion_sets_selected():
 
 
 def test_how_to_play_click_starts_game():
-    from cognitive_data_arcade.engine.pause import GameInfo
     from cognitive_data_arcade.engine.i18n import get_strings
+    from cognitive_data_arcade.engine.pause import GameInfo
     from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
 
     info = GameInfo(title="T", description_lines=[], key_bindings=[])
@@ -181,8 +185,8 @@ def test_how_to_play_click_starts_game():
 
 
 def test_lesson_reader_right_click_advances():
-    from cognitive_data_arcade.ui.lesson_reader import LessonReaderScene
     from cognitive_data_arcade.engine.i18n import get_strings
+    from cognitive_data_arcade.ui.lesson_reader import LessonReaderScene
 
     strings = get_strings("en")
     scene = LessonReaderScene(1, strings, back_scene=None)
@@ -193,8 +197,8 @@ def test_lesson_reader_right_click_advances():
 
 
 def test_lesson_reader_left_click_goes_back():
-    from cognitive_data_arcade.ui.lesson_reader import LessonReaderScene
     from cognitive_data_arcade.engine.i18n import get_strings
+    from cognitive_data_arcade.ui.lesson_reader import LessonReaderScene
 
     strings = get_strings("en")
     scene = LessonReaderScene(1, strings, back_scene=None)
@@ -205,8 +209,8 @@ def test_lesson_reader_left_click_goes_back():
 
 
 def test_profile_click_edit_button_enters_edit_mode():
-    from cognitive_data_arcade.ui.profile_screen import ProfileScene
     from cognitive_data_arcade.engine.i18n import get_strings
+    from cognitive_data_arcade.ui.profile_screen import ProfileScene
 
     pm = MagicMock()
     pm.load.return_value = MagicMock(
@@ -227,8 +231,8 @@ def test_profile_click_edit_button_enters_edit_mode():
 
 
 def test_profile_click_outside_edit_does_not_break_keyboard():
-    from cognitive_data_arcade.ui.profile_screen import ProfileScene
     from cognitive_data_arcade.engine.i18n import get_strings
+    from cognitive_data_arcade.ui.profile_screen import ProfileScene
 
     pm = MagicMock()
     pm.load.return_value = MagicMock(
@@ -338,7 +342,8 @@ def test_bdm_click_second_node_selects_it():
     assert bdm._selected == second_node.lesson_num
 
 
-import pathlib, tempfile
+import pathlib
+import tempfile
 
 
 def _make_stroop():
@@ -352,8 +357,8 @@ def _make_stroop():
         completed_lessons=[],
     )
     from cognitive_data_arcade.engine.i18n import get_strings
-    from cognitive_data_arcade.games.stroop.game import StroopGame
     from cognitive_data_arcade.games.stroop.config import STANDARD
+    from cognitive_data_arcade.games.stroop.game import StroopGame
 
     strings = get_strings("en")
     with tempfile.TemporaryDirectory() as d:

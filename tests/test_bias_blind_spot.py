@@ -1,6 +1,7 @@
 """Tests for L30 Bias Blind Spot."""
 
 from __future__ import annotations
+
 import pygame
 
 
@@ -32,8 +33,8 @@ def test_engineer_bias_decreases_when_zip_removed():
 
 def test_engineer_accuracy_drops_when_too_many_removed():
     from cognitive_data_arcade.games.bias_blind_spot.game_state import (
-        compute_round_result,
         STARTING_ACC,
+        compute_round_result,
     )
 
     _, acc = compute_round_result(frozenset({"zip_code", "debt_ratio", "income"}))

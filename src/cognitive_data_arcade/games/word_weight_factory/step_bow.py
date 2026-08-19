@@ -3,17 +3,22 @@ from __future__ import annotations
 
 import pygame
 
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+)
+from cognitive_data_arcade.engine.colors import (
+    DIM as _DIM,
+)
+from cognitive_data_arcade.engine.colors import (
+    PURPLE as _PURPLE,
+)
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
+)
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.word_weight_factory.corpus import CorpusState
 from cognitive_data_arcade.games.word_weight_factory.engine import WeightMatrix
-
-from cognitive_data_arcade.engine.colors import (
-    BG as _BG,
-    WHITE as _WHITE,
-    DIM as _DIM,
-    PURPLE as _PURPLE,
-)
 
 _AMBER = (243, 156, 18)
 

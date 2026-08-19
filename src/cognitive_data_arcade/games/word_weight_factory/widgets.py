@@ -3,15 +3,20 @@ from __future__ import annotations
 
 import pygame
 
-from cognitive_data_arcade.engine.fonts import get_font
-from cognitive_data_arcade.games.word_weight_factory.corpus import CorpusState, _PRESETS
-
 from cognitive_data_arcade.engine.colors import (
-    WHITE as _WHITE,
-    DIM as _DIM,
     BLUE as _BLUE,
+)
+from cognitive_data_arcade.engine.colors import (
+    DIM as _DIM,
+)
+from cognitive_data_arcade.engine.colors import (
     PURPLE as _PURPLE,
 )
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
+)
+from cognitive_data_arcade.engine.fonts import get_font
+from cognitive_data_arcade.games.word_weight_factory.corpus import _PRESETS, CorpusState
 
 _PANEL_W = 220
 _PANEL = (18, 18, 42)
@@ -79,7 +84,7 @@ class CorpusPanel:
         pos = event.pos
 
         # Document rows
-        for i, (title, _, _lang) in enumerate(_PRESETS):
+        for i, (_title, _, _lang) in enumerate(_PRESETS):
             row_rect = pygame.Rect(4, _DOCS_TOP + i * _DOC_ROW_H, _PANEL_W - 8, _DOC_ROW_H - 2)
             if row_rect.collidepoint(pos):
                 self._state.selected_idx = i

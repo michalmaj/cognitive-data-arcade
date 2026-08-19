@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 from dataclasses import dataclass, field
 
 FEATURES: list[str] = ["income", "employment", "credit_history", "zip_code", "debt_ratio"]

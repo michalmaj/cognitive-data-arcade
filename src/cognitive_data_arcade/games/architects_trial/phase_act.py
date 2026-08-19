@@ -1,17 +1,24 @@
 # src/cognitive_data_arcade/games/architects_trial/phase_act.py
 from __future__ import annotations
+
 import pygame
-from cognitive_data_arcade.engine.fonts import get_font
-from cognitive_data_arcade.engine.scene import Scene
-from cognitive_data_arcade.games.architects_trial.game_state import GameState, DecisionCard
-from cognitive_data_arcade.games.architects_trial.domain_data import DOMAIN_DATA
 
 from cognitive_data_arcade.engine.colors import (
     BG as _BG,
-    WHITE as _WHITE,
+)
+from cognitive_data_arcade.engine.colors import (
     DIM as _DIM,
+)
+from cognitive_data_arcade.engine.colors import (
     PURPLE as _PURPLE,
 )
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
+)
+from cognitive_data_arcade.engine.fonts import get_font
+from cognitive_data_arcade.engine.scene import Scene
+from cognitive_data_arcade.games.architects_trial.domain_data import DOMAIN_DATA
+from cognitive_data_arcade.games.architects_trial.game_state import DecisionCard, GameState
 
 _W, _H = 1024, 768
 _PANEL = (16, 20, 36)

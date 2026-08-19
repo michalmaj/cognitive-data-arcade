@@ -6,7 +6,7 @@ import pytest
 
 from cognitive_data_arcade.engine import fonts as _fonts_module
 from cognitive_data_arcade.engine.i18n import EN
-from cognitive_data_arcade.games.data_cleaning.difficulty import EASY, MEDIUM, HARD
+from cognitive_data_arcade.games.data_cleaning.difficulty import EASY, HARD, MEDIUM
 from cognitive_data_arcade.games.data_cleaning.scene import DataCleaningScene, Phase
 
 

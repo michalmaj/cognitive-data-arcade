@@ -75,9 +75,7 @@ class PhaseActScene(Scene):
         frac = self._infected_frac()
         if self._act == "spreader" and frac >= _WIN_SPREAD:
             return True
-        if self._act == "factchecker" and frac <= _WIN_CONTAIN:
-            return True
-        return False
+        return bool(self._act == "factchecker" and frac <= _WIN_CONTAIN)
 
     def _calc_score(self) -> int:
         frac = self._infected_frac()

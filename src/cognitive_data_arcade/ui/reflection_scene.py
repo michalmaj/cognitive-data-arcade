@@ -4,7 +4,10 @@ from typing import Any
 
 import pygame
 
-from cognitive_data_arcade.engine.colors import BG as _BG, DIM as _DIM, ORANGE, WHITE as _WHITE
+from cognitive_data_arcade.engine.colors import BG as _BG
+from cognitive_data_arcade.engine.colors import DIM as _DIM
+from cognitive_data_arcade.engine.colors import ORANGE
+from cognitive_data_arcade.engine.colors import WHITE as _WHITE
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
@@ -70,9 +73,12 @@ class ReflectionScene(Scene):
         self._font_hint = get_font(20)
 
     def handle_event(self, event: pygame.event.Event) -> None:
-        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            self._done = True
-        elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+        if (
+            event.type == pygame.MOUSEBUTTONDOWN
+            and event.button == 1
+            or event.type == pygame.KEYDOWN
+            and event.key == pygame.K_ESCAPE
+        ):
             self._done = True
 
     def update(self, dt_ms: float) -> None:

@@ -7,23 +7,30 @@ from dataclasses import dataclass
 from pathlib import Path
 
 import pygame
-from cognitive_data_arcade.engine.fonts import get_font
 
 from cognitive_data_arcade.engine import audio
 from cognitive_data_arcade.engine.badges import BadgeEngine, SessionResult
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+)
+from cognitive_data_arcade.engine.colors import (
+    DIM as _DIM,
+)
+from cognitive_data_arcade.engine.colors import (
+    ORANGE as _ORANGE,
+)
+from cognitive_data_arcade.engine.colors import (
+    RED as _RED,
+)
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
+)
+from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.engine.storage import write_trial
 from cognitive_data_arcade.games.stroop.config import COLORS, EASY, HARD, MEDIUM, StroopConfig
 from cognitive_data_arcade.profile.manager import ProfileManager
-
-from cognitive_data_arcade.engine.colors import (
-    BG as _BG,
-    WHITE as _WHITE,
-    DIM as _DIM,
-    ORANGE as _ORANGE,
-    RED as _RED,
-)
 
 _W, _H = 1024, 768
 _PROGRESS_H = 4
@@ -175,9 +182,8 @@ class StroopGame(Scene):
                     actual=_COLOR_TO_RESPONSE[color],
                     correct=correct,
                 )
-        elif self._phase == _Phase.BETWEEN_BLOCKS:
-            if event.key == pygame.K_SPACE:
-                self._enter_iti()
+        elif self._phase == _Phase.BETWEEN_BLOCKS and event.key == pygame.K_SPACE:
+            self._enter_iti()
 
     def _handle_preset_select(self, key: int) -> None:
         if key == pygame.K_UP:
@@ -272,7 +278,7 @@ class StroopGame(Scene):
             actual_response=actual,
             correct=correct,
             reaction_time_ms=rt,
-            timestamp=datetime.datetime.now(datetime.timezone.utc).isoformat(),
+            timestamp=datetime.datetime.now(datetime.UTC).isoformat(),
         )
         self._records.append(record)
         write_trial(self._csv_path, record)

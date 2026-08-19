@@ -1,7 +1,8 @@
 import pygame
+
 from cognitive_data_arcade.engine.i18n import EN
-from cognitive_data_arcade.ui.menu import LessonMenuScene
 from cognitive_data_arcade.ui.event_log_level_scene import EventLogLevelScene
+from cognitive_data_arcade.ui.menu import LessonMenuScene
 
 
 class _FakePM:

@@ -1,5 +1,6 @@
 # src/cognitive_data_arcade/games/bias_blind_spot/info.py
 from __future__ import annotations
+
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.pause import GameInfo
 

@@ -30,7 +30,7 @@ def load_questions(path: Path | None = None) -> list[dict]:
     with open(p, "rb") as f:
         data = tomllib.load(f)
     questions = data.get("questions", [])
-    return [q for q in questions if _REQUIRED_KEYS <= q.keys()]
+    return [q for q in questions if q.keys() >= _REQUIRED_KEYS]
 
 
 def pick_daily(questions: list[dict], today: date, n: int = 5) -> list[dict]:

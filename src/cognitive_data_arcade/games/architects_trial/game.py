@@ -1,6 +1,8 @@
 # src/cognitive_data_arcade/games/architects_trial/game.py
 from __future__ import annotations
+
 import pygame
+
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.architects_trial.game_state import GameState
 

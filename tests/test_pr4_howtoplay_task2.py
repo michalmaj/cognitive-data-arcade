@@ -7,9 +7,10 @@ when profile.seen_intro is False.
 
 from __future__ import annotations
 
-import pytest
-import pygame
 from unittest.mock import MagicMock
+
+import pygame
+import pytest
 
 from cognitive_data_arcade.engine.i18n import EN
 from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene

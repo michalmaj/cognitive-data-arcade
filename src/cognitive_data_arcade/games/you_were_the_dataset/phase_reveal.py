@@ -3,16 +3,21 @@ from __future__ import annotations
 
 import pygame
 
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+)
+from cognitive_data_arcade.engine.colors import (
+    DIM as _DIM,
+)
+from cognitive_data_arcade.engine.colors import (
+    PURPLE as _PURPLE,
+)
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
+)
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.you_were_the_dataset.game_state import GameState
-
-from cognitive_data_arcade.engine.colors import (
-    BG as _BG,
-    WHITE as _WHITE,
-    DIM as _DIM,
-    PURPLE as _PURPLE,
-)
 
 _W, _H = 1024, 768
 
@@ -43,9 +48,14 @@ class PhaseRevealScene(Scene):
     def handle_event(self, event: pygame.event.Event) -> None:
         if self._done:
             return
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and self._t >= 500:
-            self._advance()
-        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and self._t >= 500:
+        if (
+            event.type == pygame.KEYDOWN
+            and event.key == pygame.K_SPACE
+            and self._t >= 500
+            or event.type == pygame.MOUSEBUTTONDOWN
+            and event.button == 1
+            and self._t >= 500
+        ):
             self._advance()
 
     def _advance(self) -> None:

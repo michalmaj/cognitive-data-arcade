@@ -1,16 +1,23 @@
 # src/cognitive_data_arcade/games/architects_trial/phase_tribunal.py
 from __future__ import annotations
+
 import pygame
-from cognitive_data_arcade.engine.fonts import get_font
-from cognitive_data_arcade.engine.scene import Scene
-from cognitive_data_arcade.games.architects_trial.game_state import GameState, compute_verdict
 
 from cognitive_data_arcade.engine.colors import (
     BG as _BG,
-    WHITE as _WHITE,
+)
+from cognitive_data_arcade.engine.colors import (
     DIM as _DIM,
+)
+from cognitive_data_arcade.engine.colors import (
     PURPLE as _PURPLE,
 )
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
+)
+from cognitive_data_arcade.engine.fonts import get_font
+from cognitive_data_arcade.engine.scene import Scene
+from cognitive_data_arcade.games.architects_trial.game_state import GameState, compute_verdict
 
 _W, _H = 1024, 768
 _PANEL = (16, 20, 36)
@@ -176,7 +183,7 @@ class PhaseTribunalScene(Scene):
         right_label = get_font(14).render("Twoja odpowiedz:", True, _WHITE)
         surface.blit(right_label, (_W // 2 + 20, 270))
         response_texts = list(_RESPONSES.values())
-        for i, (rect, text) in enumerate(zip(self._response_rects, response_texts)):
+        for _i, (rect, text) in enumerate(zip(self._response_rects, response_texts)):
             hovered = rect.collidepoint(self._mouse_pos)
             bg = _HOVER_BG if hovered else _CARD_BG
             border = _PURPLE if hovered else (50, 60, 90)

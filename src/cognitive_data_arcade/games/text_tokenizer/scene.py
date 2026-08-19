@@ -18,6 +18,8 @@ _PHASE_H = _H - _INPUT_BAR_H - _NAV_H  # 684
 
 from cognitive_data_arcade.engine.colors import (
     BG as _BG,
+)
+from cognitive_data_arcade.engine.colors import (
     DIM as _DIM,
 )
 
@@ -207,7 +209,7 @@ class TextTokenizerLabScene(Scene):
             surface.blit(s, (px + panel_w // 2 - s.get_width() // 2, y))
             y += font.get_height() + 8
 
-    def _build_next_scene(self) -> "Scene":
+    def _build_next_scene(self) -> Scene:
         from cognitive_data_arcade.engine.badges import BadgeEngine, SessionResult
         from cognitive_data_arcade.ui.session_summary import SessionSummaryScene
 

@@ -125,8 +125,8 @@ def _pygame():
 
 def test_render_timeseries_returns_surface_and_elements():
     _pygame()
-    from cognitive_data_arcade.games.anomaly_alert.scenarios import SCENARIOS
     from cognitive_data_arcade.games.anomaly_alert.renderers import render_timeseries
+    from cognitive_data_arcade.games.anomaly_alert.scenarios import SCENARIOS
 
     surf, els = render_timeseries(SCENARIOS[0], 42)
     assert isinstance(surf, pygame.Surface)
@@ -136,8 +136,8 @@ def test_render_timeseries_returns_surface_and_elements():
 
 def test_render_barchart_returns_surface_and_elements():
     _pygame()
-    from cognitive_data_arcade.games.anomaly_alert.scenarios import SCENARIOS
     from cognitive_data_arcade.games.anomaly_alert.renderers import render_barchart
+    from cognitive_data_arcade.games.anomaly_alert.scenarios import SCENARIOS
 
     surf, els = render_barchart(SCENARIOS[1], 42)
     assert isinstance(surf, pygame.Surface)
@@ -146,8 +146,8 @@ def test_render_barchart_returns_surface_and_elements():
 
 def test_render_scatter_returns_surface_and_elements():
     _pygame()
-    from cognitive_data_arcade.games.anomaly_alert.scenarios import SCENARIOS
     from cognitive_data_arcade.games.anomaly_alert.renderers import render_scatter
+    from cognitive_data_arcade.games.anomaly_alert.scenarios import SCENARIOS
 
     surf, els = render_scatter(SCENARIOS[2], 42)
     assert isinstance(surf, pygame.Surface)
@@ -156,8 +156,8 @@ def test_render_scatter_returns_surface_and_elements():
 
 def test_render_histogram_returns_surface_and_elements():
     _pygame()
-    from cognitive_data_arcade.games.anomaly_alert.scenarios import SCENARIOS
     from cognitive_data_arcade.games.anomaly_alert.renderers import render_histogram
+    from cognitive_data_arcade.games.anomaly_alert.scenarios import SCENARIOS
 
     surf, els = render_histogram(SCENARIOS[3], 42)
     assert isinstance(surf, pygame.Surface)
@@ -166,8 +166,8 @@ def test_render_histogram_returns_surface_and_elements():
 
 def test_render_boxplot_returns_surface_and_elements():
     _pygame()
-    from cognitive_data_arcade.games.anomaly_alert.scenarios import SCENARIOS
     from cognitive_data_arcade.games.anomaly_alert.renderers import render_boxplot
+    from cognitive_data_arcade.games.anomaly_alert.scenarios import SCENARIOS
 
     surf, els = render_boxplot(SCENARIOS[4], 42)
     assert isinstance(surf, pygame.Surface)
@@ -176,8 +176,8 @@ def test_render_boxplot_returns_surface_and_elements():
 
 def test_render_heatmap_returns_surface_and_elements():
     _pygame()
-    from cognitive_data_arcade.games.anomaly_alert.scenarios import SCENARIOS
     from cognitive_data_arcade.games.anomaly_alert.renderers import render_heatmap
+    from cognitive_data_arcade.games.anomaly_alert.scenarios import SCENARIOS
 
     surf, els = render_heatmap(SCENARIOS[5], 42)
     assert isinstance(surf, pygame.Surface)
@@ -194,8 +194,8 @@ def test_chart_renderer_dict_covers_all_scenarios():
 
 def test_render_surface_size():
     _pygame()
-    from cognitive_data_arcade.games.anomaly_alert.scenarios import SCENARIOS
     from cognitive_data_arcade.games.anomaly_alert.renderers import render_timeseries
+    from cognitive_data_arcade.games.anomaly_alert.scenarios import SCENARIOS
 
     surf, _ = render_timeseries(SCENARIOS[0], 0)
     assert surf.get_width() == 680
@@ -204,8 +204,8 @@ def test_render_surface_size():
 
 def test_elements_have_valid_pixel_coords():
     _pygame()
-    from cognitive_data_arcade.games.anomaly_alert.scenarios import SCENARIOS
     from cognitive_data_arcade.games.anomaly_alert.renderers import render_timeseries
+    from cognitive_data_arcade.games.anomaly_alert.scenarios import SCENARIOS
 
     _, els = render_timeseries(SCENARIOS[0], 0)
     for el in els:

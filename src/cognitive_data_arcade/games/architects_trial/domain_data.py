@@ -2,6 +2,7 @@
 """Domain data for The Architect's Trial. No pygame imports."""
 
 from __future__ import annotations
+
 from cognitive_data_arcade.games.architects_trial.game_state import DecisionCard
 
 

@@ -1,12 +1,14 @@
 from __future__ import annotations
+
 import pygame
+
 from cognitive_data_arcade.engine.app_paths import AppPaths
 from cognitive_data_arcade.engine.i18n import EN
 from cognitive_data_arcade.ui.flanker_level_scene import (
-    FlankerLevelScene,
-    _tile_rect,
     _ROW1_Y,
     _ROW2_Y,
+    FlankerLevelScene,
+    _tile_rect,
 )
 from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
 from cognitive_data_arcade.ui.menu import LessonMenuScene

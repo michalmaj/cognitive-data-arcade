@@ -74,8 +74,8 @@ class ModuleCompleteScene(Scene):
         self._done = True
 
     def _go_next_module(self) -> None:
-        from cognitive_data_arcade.ui.module_runner_scene import ModuleRunnerScene
         from cognitive_data_arcade.ui.act_intro_scene import make_act_intro
+        from cognitive_data_arcade.ui.module_runner_scene import ModuleRunnerScene
 
         next_idx = self._module_idx + 1
         self._pm.set_current_module(next_idx)

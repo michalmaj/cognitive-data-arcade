@@ -6,10 +6,10 @@ import pygame
 import pytest
 
 from cognitive_data_arcade.games.visual_search.stimuli import (
-    Item,
-    generate_items,
-    draw_item,
     GRID_PARAMS,
+    Item,
+    draw_item,
+    generate_items,
 )
 
 

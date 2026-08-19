@@ -3,16 +3,26 @@ from __future__ import annotations
 import math
 
 import pygame
+
 from cognitive_data_arcade.engine.colors import (
     BG as _BG,
-    WHITE as _WHITE,
-    ORANGE as _ORANGE,
+)
+from cognitive_data_arcade.engine.colors import (
     DIM as _DIM,
+)
+from cognitive_data_arcade.engine.colors import (
     GREEN as _GREEN,
+)
+from cognitive_data_arcade.engine.colors import (
+    ORANGE as _ORANGE,
+)
+from cognitive_data_arcade.engine.colors import (
     RED as _RED,
 )
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
+)
 from cognitive_data_arcade.engine.fonts import get_font
-
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
 
@@ -48,9 +58,12 @@ class StroopAnalysisScene(Scene):
         self._font_badge = get_font(28)
 
     def handle_event(self, event: pygame.event.Event) -> None:
-        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            self._done = True
-        elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+        if (
+            event.type == pygame.MOUSEBUTTONDOWN
+            and event.button == 1
+            or event.type == pygame.KEYDOWN
+            and event.key == pygame.K_ESCAPE
+        ):
             self._done = True
 
     def update(self, dt_ms: float) -> None:

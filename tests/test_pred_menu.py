@@ -1,7 +1,8 @@
 # tests/test_pred_menu.py
 from __future__ import annotations
-import pytest
+
 import pygame
+import pytest
 
 
 @pytest.fixture(autouse=True)

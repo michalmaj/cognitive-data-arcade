@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import random
 
-
 from cognitive_data_arcade.games.nback.config import (
     LETTERS,
     NBACK_1,

@@ -7,7 +7,7 @@ os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
 
 
 def test_words_all_in_valid_clusters():
-    from cognitive_data_arcade.games.semantic_space.word_data import WORDS, CLUSTERS
+    from cognitive_data_arcade.games.semantic_space.word_data import CLUSTERS, WORDS
 
     for key, wd in WORDS.items():
         assert wd["cluster"] in CLUSTERS, f"{key} has unknown cluster {wd['cluster']}"
@@ -22,7 +22,7 @@ def test_coordinates_in_range():
 
 
 def test_similarities_all_50():
-    from cognitive_data_arcade.games.semantic_space.word_data import WORDS, SIMILARITIES
+    from cognitive_data_arcade.games.semantic_space.word_data import SIMILARITIES, WORDS
 
     assert len(SIMILARITIES) == len(WORDS)
     for key in WORDS:
@@ -31,7 +31,7 @@ def test_similarities_all_50():
 
 
 def test_similarities_keys_exist():
-    from cognitive_data_arcade.games.semantic_space.word_data import WORDS, SIMILARITIES
+    from cognitive_data_arcade.games.semantic_space.word_data import SIMILARITIES, WORDS
 
     for word, neighbors in SIMILARITIES.items():
         for neighbor_key, sim in neighbors:

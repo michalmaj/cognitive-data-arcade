@@ -1,11 +1,12 @@
 from __future__ import annotations
 
 import pytest
+
 from cognitive_data_arcade.games.data_cleaning.difficulty import (
-    EASY,
-    MEDIUM,
-    HARD,
     ALL_DIFFICULTIES,
+    EASY,
+    HARD,
+    MEDIUM,
 )
 
 

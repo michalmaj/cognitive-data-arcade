@@ -96,7 +96,7 @@ class YouWereTheDatasetScene(Scene):
             else:
                 self._current = nxt
 
-    def _build_next_scene(self) -> "Scene":
+    def _build_next_scene(self) -> Scene:
         from cognitive_data_arcade.engine.badges import BadgeEngine, SessionResult
         from cognitive_data_arcade.ui.session_summary import SessionSummaryScene
 

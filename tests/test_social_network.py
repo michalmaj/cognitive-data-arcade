@@ -29,7 +29,7 @@ def test_generate_scale_free_min_edges():
 
 
 def test_sir_step_infection_spreads():
-    from cognitive_data_arcade.games.social_network.graph import Node, Graph, sir_step
+    from cognitive_data_arcade.games.social_network.graph import Graph, Node, sir_step
 
     nodes = [Node(x=0, y=0, state="I"), Node(x=1, y=0, state="S")]
     g = Graph(nodes=nodes, edges=[(0, 1)])
@@ -38,7 +38,7 @@ def test_sir_step_infection_spreads():
 
 
 def test_sir_step_recovery():
-    from cognitive_data_arcade.games.social_network.graph import Node, Graph, sir_step
+    from cognitive_data_arcade.games.social_network.graph import Graph, Node, sir_step
 
     nodes = [Node(x=0, y=0, state="I")]
     g = Graph(nodes=nodes, edges=[])
@@ -47,7 +47,7 @@ def test_sir_step_recovery():
 
 
 def test_sir_step_pure():
-    from cognitive_data_arcade.games.social_network.graph import Node, Graph, sir_step
+    from cognitive_data_arcade.games.social_network.graph import Graph, Node, sir_step
 
     nodes = [Node(x=0, y=0, state="I"), Node(x=1, y=0, state="S")]
     g = Graph(nodes=nodes, edges=[(0, 1)])
@@ -57,7 +57,7 @@ def test_sir_step_pure():
 
 
 def test_hub_node_max_degree():
-    from cognitive_data_arcade.games.social_network.graph import Node, Graph, hub_node_index
+    from cognitive_data_arcade.games.social_network.graph import Graph, Node, hub_node_index
 
     nodes = [Node(x=0, y=0, degree=1), Node(x=1, y=0, degree=4), Node(x=2, y=0, degree=2)]
     g = Graph(nodes=nodes, edges=[])
@@ -73,6 +73,7 @@ def test_game_scene_instantiates():
 
 def test_game_renders():
     import pygame
+
     from cognitive_data_arcade.games.social_network.game import SocialNetworkScene
 
     pygame.display.init()
@@ -83,6 +84,7 @@ def test_game_renders():
 
 def test_add_node_limit():
     import pygame
+
     from cognitive_data_arcade.games.social_network.game import SocialNetworkScene
 
     scene = SocialNetworkScene()
@@ -97,6 +99,7 @@ def test_add_node_limit():
 
 def test_add_edge_no_duplicate():
     import pygame
+
     from cognitive_data_arcade.games.social_network.game import SocialNetworkScene
 
     scene = SocialNetworkScene()

@@ -13,9 +13,9 @@ import pygame
 def test_submit_enters_feedback_scene() -> None:
     """After submit, next scene is PhaseFeedbackScene."""
     pygame.init()
+    from cognitive_data_arcade.games.semantic_space.missions import build_session
     from cognitive_data_arcade.games.semantic_space.phase_feedback import PhaseFeedbackScene
     from cognitive_data_arcade.games.semantic_space.phase_mission import PhaseMissionScene
-    from cognitive_data_arcade.games.semantic_space.missions import build_session
 
     missions = build_session()
     scene = PhaseMissionScene(missions, round_idx=0, session_score=0, round_results=[])

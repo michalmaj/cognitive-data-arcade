@@ -4,18 +4,29 @@ import random
 
 import pygame
 
-from cognitive_data_arcade.engine.fonts import get_font
-from cognitive_data_arcade.engine.scene import Scene
-
 from cognitive_data_arcade.engine.colors import (
     BG as _BG,
-    WHITE as _WHITE,
-    DIM as _DIM,
-    GREEN as _GREEN,
-    RED as _RED,
+)
+from cognitive_data_arcade.engine.colors import (
     BLUE as _BLUE,
+)
+from cognitive_data_arcade.engine.colors import (
+    DIM as _DIM,
+)
+from cognitive_data_arcade.engine.colors import (
+    GREEN as _GREEN,
+)
+from cognitive_data_arcade.engine.colors import (
     PURPLE as _PURPLE,
 )
+from cognitive_data_arcade.engine.colors import (
+    RED as _RED,
+)
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
+)
+from cognitive_data_arcade.engine.fonts import get_font
+from cognitive_data_arcade.engine.scene import Scene
 
 _W, _H = 1024, 768
 _PANEL = (18, 18, 42)
@@ -83,7 +94,7 @@ class PhaseResultScene(Scene):
         self._next = PhaseIntroScene()
         self._done = True
 
-    def _build_next_scene(self) -> "Scene":
+    def _build_next_scene(self) -> Scene:
         from cognitive_data_arcade.engine.badges import BadgeEngine, SessionResult
         from cognitive_data_arcade.ui.session_summary import SessionSummaryScene
 

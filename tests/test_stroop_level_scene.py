@@ -1,9 +1,10 @@
 import pygame
+
 from cognitive_data_arcade.engine.app_paths import AppPaths
 from cognitive_data_arcade.engine.i18n import EN
-from cognitive_data_arcade.ui.stroop_level_scene import StroopLevelScene
 from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
 from cognitive_data_arcade.ui.menu import LessonMenuScene
+from cognitive_data_arcade.ui.stroop_level_scene import StroopLevelScene
 
 
 class _FakePM:
@@ -64,7 +65,7 @@ def test_right_clamps_at_two():
 
 def test_mouse_click_tile0():
     scene = _make_scene()
-    from cognitive_data_arcade.ui.stroop_level_scene import _tile_rect, _ROW_Y
+    from cognitive_data_arcade.ui.stroop_level_scene import _ROW_Y, _tile_rect
 
     rect = _tile_rect(0, _ROW_Y)
     scene.handle_event(pygame.event.Event(pygame.MOUSEBUTTONDOWN, button=1, pos=rect.center))
@@ -73,7 +74,7 @@ def test_mouse_click_tile0():
 
 def test_mouse_click_tile2():
     scene = _make_scene()
-    from cognitive_data_arcade.ui.stroop_level_scene import _tile_rect, _ROW_Y
+    from cognitive_data_arcade.ui.stroop_level_scene import _ROW_Y, _tile_rect
 
     rect = _tile_rect(2, _ROW_Y)
     scene.handle_event(pygame.event.Event(pygame.MOUSEBUTTONDOWN, button=1, pos=rect.center))

@@ -8,20 +8,20 @@ from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.word_weight_factory.corpus import CorpusState
 from cognitive_data_arcade.games.word_weight_factory.engine import WeightMatrix
 from cognitive_data_arcade.games.word_weight_factory.step_bow import (
-    _BG,
-    _WHITE,
-    _DIM,
     _AMBER,
+    _BG,
+    _COL_W,
+    _DIM,
+    _HDR_H,
+    _LABEL_W,
+    _MAX_COLS,
     _PURPLE,
+    _ROW_H,
     _STEP_H,
     _W,
-    _LABEL_W,
-    _COL_W,
-    _ROW_H,
-    _HDR_H,
-    _MAX_COLS,
-    _green_cell,
+    _WHITE,
     _draw_tooltip_box,
+    _green_cell,
 )
 
 

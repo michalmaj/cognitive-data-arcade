@@ -9,13 +9,12 @@ import matplotlib.pyplot as plt
 import pygame
 
 from cognitive_data_arcade.engine.chart import figure_to_surface
-from cognitive_data_arcade.engine.fonts import get_font
-from cognitive_data_arcade.games.feature_hunter.features import Feature
-from cognitive_data_arcade.games.feature_hunter.simulator import simulate_scatter
-
 from cognitive_data_arcade.engine.colors import (
     WHITE as _WHITE,
 )
+from cognitive_data_arcade.engine.fonts import get_font
+from cognitive_data_arcade.games.feature_hunter.features import Feature
+from cognitive_data_arcade.games.feature_hunter.simulator import simulate_scatter
 
 _FIG_BG = "#0d1b2a"
 _AX_BG = "#060f1a"

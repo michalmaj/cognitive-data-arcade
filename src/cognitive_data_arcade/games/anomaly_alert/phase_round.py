@@ -16,8 +16,14 @@ _PANEL_X = 680
 _TOP_H = 56
 from cognitive_data_arcade.engine.colors import (
     BG as _BG,
+)
+from cognitive_data_arcade.engine.colors import (
     DIM as _DIM,
+)
+from cognitive_data_arcade.engine.colors import (
     GREEN as _GREEN,
+)
+from cognitive_data_arcade.engine.colors import (
     RED as _RED,
 )
 
@@ -91,10 +97,10 @@ class PhaseRoundScene(Scene):
                     self._selected.add(idx)
 
     def _confirm(self) -> None:
+        from cognitive_data_arcade.games.anomaly_alert.detector import compute_round_score
         from cognitive_data_arcade.games.anomaly_alert.phase_round_result import (
             PhaseRoundResultScene,
         )
-        from cognitive_data_arcade.games.anomaly_alert.detector import compute_round_score
 
         found = sum(1 for i in self._selected if self._elements[i].is_anomaly)
         false_alarms = sum(1 for i in self._selected if not self._elements[i].is_anomaly)

@@ -5,17 +5,20 @@ from typing import TYPE_CHECKING
 
 import pygame
 
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+)
+from cognitive_data_arcade.engine.colors import (
+    DIM as _DIM,
+)
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
+)
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.eda.simulator import simulate
 from cognitive_data_arcade.games.eda.ui_controls import ControlPanel
 from cognitive_data_arcade.games.eda.ui_results import ChartPanel, ResultsPanel
-
-from cognitive_data_arcade.engine.colors import (
-    BG as _BG,
-    WHITE as _WHITE,
-    DIM as _DIM,
-)
 
 if TYPE_CHECKING:
     from cognitive_data_arcade.engine.i18n import Strings
@@ -127,14 +130,12 @@ _HELP_LINES: list[tuple[str, bool]] = [
 
 
 class EDAScene(Scene):
-    def __init__(
-        self, pm: "ProfileManager | None" = None, strings: "Strings | None" = None
-    ) -> None:
+    def __init__(self, pm: ProfileManager | None = None, strings: Strings | None = None) -> None:
         self._pm = pm
         self._strings = strings
         self._generate_count: int = 0
         self._done: bool = False
-        self._next: "Scene | None" = None
+        self._next: Scene | None = None
         self._controls = ControlPanel()
         self._charts = ChartPanel()
         self._results = ResultsPanel()
@@ -295,9 +296,9 @@ class EDAScene(Scene):
             surface.blit(s, (px + panel_w // 2 - s.get_width() // 2, y))
             y += font.get_height() + 8
 
-    def _build_next_scene(self) -> "Scene":
-        from cognitive_data_arcade.ui.session_summary import SessionSummaryScene
+    def _build_next_scene(self) -> Scene:
         from cognitive_data_arcade.engine.badges import BadgeEngine, SessionResult
+        from cognitive_data_arcade.ui.session_summary import SessionSummaryScene
 
         ap = min(100, 30 + self._generate_count * 5)
         session = SessionResult(
@@ -331,7 +332,7 @@ class EDAScene(Scene):
     def is_done(self) -> bool:
         return self._done
 
-    def next_scene(self) -> "Scene | None":
+    def next_scene(self) -> Scene | None:
         if self._done and self._next is None and self._pm is not None:
             self._next = self._build_next_scene()
         return self._next if self._done else None

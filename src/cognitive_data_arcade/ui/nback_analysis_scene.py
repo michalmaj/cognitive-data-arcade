@@ -3,18 +3,23 @@ from __future__ import annotations
 from pathlib import Path
 
 import pygame
-from cognitive_data_arcade.engine.fonts import get_font
 
 from cognitive_data_arcade.engine.chart import figure_to_surface
-from cognitive_data_arcade.engine.i18n import Strings
-from cognitive_data_arcade.engine.scene import Scene
-
 from cognitive_data_arcade.engine.colors import (
     BG as _BG,
-    WHITE as _WHITE,
-    ORANGE as _ORANGE,
+)
+from cognitive_data_arcade.engine.colors import (
     DIM as _DIM,
 )
+from cognitive_data_arcade.engine.colors import (
+    ORANGE as _ORANGE,
+)
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
+)
+from cognitive_data_arcade.engine.fonts import get_font
+from cognitive_data_arcade.engine.i18n import Strings
+from cognitive_data_arcade.engine.scene import Scene
 
 _CHART_X = 20
 _CHART_Y = 20
@@ -39,12 +44,16 @@ class NBackAnalysisScene(Scene):
         self._font_value = get_font(32)
 
     def handle_event(self, event: pygame.event.Event) -> None:
-        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            self._done = True
-        elif event.type == pygame.KEYDOWN and event.key in (
-            pygame.K_SPACE,
-            pygame.K_ESCAPE,
-            pygame.K_RETURN,
+        if (
+            event.type == pygame.MOUSEBUTTONDOWN
+            and event.button == 1
+            or event.type == pygame.KEYDOWN
+            and event.key
+            in (
+                pygame.K_SPACE,
+                pygame.K_ESCAPE,
+                pygame.K_RETURN,
+            )
         ):
             self._done = True
 

@@ -1,6 +1,7 @@
 """Failing tests for Task 6: Module 6 network/ethics games."""
 
 from pathlib import Path
+
 import pygame
 
 from cognitive_data_arcade.engine.i18n import PL

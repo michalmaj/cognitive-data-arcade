@@ -14,10 +14,18 @@ _TOP_H = 44
 _LEFT_W = 320
 from cognitive_data_arcade.engine.colors import (
     BG as _BG,
-    WHITE as _WHITE,
+)
+from cognitive_data_arcade.engine.colors import (
     DIM as _DIM,
+)
+from cognitive_data_arcade.engine.colors import (
     GREEN as _GREEN,
+)
+from cognitive_data_arcade.engine.colors import (
     RED as _RED,
+)
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
 )
 
 _TOP_BG = (10, 10, 28)
@@ -75,9 +83,12 @@ class PhaseMissionScene(Scene):
         if self._done:
             return
         if self._answered and self._mission.type == "assign_doc":
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                self._advance_to_next(self._pending_score, self._pending_results)
-            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            if (
+                event.type == pygame.KEYDOWN
+                and event.key == pygame.K_SPACE
+                or event.type == pygame.MOUSEBUTTONDOWN
+                and event.button == 1
+            ):
                 self._advance_to_next(self._pending_score, self._pending_results)
             return
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:

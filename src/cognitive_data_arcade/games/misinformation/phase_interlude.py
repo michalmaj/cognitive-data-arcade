@@ -3,11 +3,10 @@ from __future__ import annotations
 
 import pygame
 
+from cognitive_data_arcade.engine.colors import BG as _BG
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.misinformation.networks import ROUNDS
-
-from cognitive_data_arcade.engine.colors import BG as _BG
 
 _W, _H = 1024, 768
 

@@ -26,6 +26,7 @@ def _pm(tmp_path: Path) -> ProfileManager:
 
 def test_syllabus_initial_not_done(tmp_path: Path) -> None:
     from unittest.mock import MagicMock
+
     from cognitive_data_arcade.engine.scene import Scene
 
     back = MagicMock(spec=Scene)
@@ -35,6 +36,7 @@ def test_syllabus_initial_not_done(tmp_path: Path) -> None:
 
 def test_syllabus_esc_exits(tmp_path: Path) -> None:
     from unittest.mock import MagicMock
+
     from cognitive_data_arcade.engine.scene import Scene
 
     back = MagicMock(spec=Scene)
@@ -46,6 +48,7 @@ def test_syllabus_esc_exits(tmp_path: Path) -> None:
 
 def test_syllabus_draw_does_not_crash(tmp_path: Path) -> None:
     from unittest.mock import MagicMock
+
     from cognitive_data_arcade.engine.scene import Scene
 
     back = MagicMock(spec=Scene)
@@ -56,6 +59,7 @@ def test_syllabus_draw_does_not_crash(tmp_path: Path) -> None:
 
 def test_syllabus_shows_completed_acts(tmp_path: Path) -> None:
     from unittest.mock import MagicMock
+
     from cognitive_data_arcade.engine.scene import Scene
 
     pm = _pm(tmp_path)

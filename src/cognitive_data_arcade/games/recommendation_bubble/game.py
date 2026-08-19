@@ -1,6 +1,8 @@
 # src/cognitive_data_arcade/games/recommendation_bubble/game.py
 from __future__ import annotations
+
 import pygame
+
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState
 from cognitive_data_arcade.games.recommendation_bubble.phase_intro import PhaseIntroScene

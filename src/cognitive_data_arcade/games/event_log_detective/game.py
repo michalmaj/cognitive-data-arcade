@@ -10,23 +10,29 @@ import random
 
 import pygame
 
+# ---------------------------------------------------------------------------
+# Colours
+# ---------------------------------------------------------------------------
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+)
+from cognitive_data_arcade.engine.colors import (
+    DIM as _DIM,
+)
+from cognitive_data_arcade.engine.colors import (
+    GREEN as _GREEN,
+)
+from cognitive_data_arcade.engine.colors import (
+    RED as _RED,
+)
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
+)
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.event_log_detective.scenarios import Option, Scenario
 from cognitive_data_arcade.profile.manager import ProfileManager
-
-# ---------------------------------------------------------------------------
-# Colours
-# ---------------------------------------------------------------------------
-
-from cognitive_data_arcade.engine.colors import (
-    BG as _BG,
-    WHITE as _WHITE,
-    DIM as _DIM,
-    GREEN as _GREEN,
-    RED as _RED,
-)
 
 _ACCENT = (243, 156, 18)
 _PANEL_BG = (18, 18, 40)
@@ -286,8 +292,8 @@ class EventLogDetectiveGame(Scene):
         return correct, total, weighted_score
 
     def _build_next_scene(self) -> Scene:
-        from cognitive_data_arcade.ui.session_summary import SessionSummaryScene
         from cognitive_data_arcade.engine.badges import BadgeEngine, SessionResult
+        from cognitive_data_arcade.ui.session_summary import SessionSummaryScene
 
         correct, total, weighted = self._score()
         ap = min(100, weighted * 10)

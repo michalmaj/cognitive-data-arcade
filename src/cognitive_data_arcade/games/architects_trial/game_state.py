@@ -1,5 +1,6 @@
 # src/cognitive_data_arcade/games/architects_trial/game_state.py
 from __future__ import annotations
+
 from dataclasses import dataclass, field
 
 

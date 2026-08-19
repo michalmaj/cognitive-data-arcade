@@ -5,6 +5,8 @@ import pygame
 
 from cognitive_data_arcade.engine.colors import (
     DIM as _DIM,
+)
+from cognitive_data_arcade.engine.colors import (
     WHITE as _TITLE_COLOR,
 )
 from cognitive_data_arcade.engine.fonts import get_font

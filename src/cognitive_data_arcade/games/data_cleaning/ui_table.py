@@ -3,16 +3,21 @@ from __future__ import annotations
 
 import pygame
 
+from cognitive_data_arcade.engine.colors import (
+    DIM as _DIM,
+)
+from cognitive_data_arcade.engine.colors import (
+    GREEN as _GREEN,
+)
+from cognitive_data_arcade.engine.colors import (
+    ORANGE as _ORANGE,
+)
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
+)
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scrollbar import ScrollBar
 from cognitive_data_arcade.games.data_cleaning.generator import DataRow
-
-from cognitive_data_arcade.engine.colors import (
-    ORANGE as _ORANGE,
-    GREEN as _GREEN,
-    WHITE as _WHITE,
-    DIM as _DIM,
-)
 
 VISIBLE_ROWS = 15
 ROW_H = 28
