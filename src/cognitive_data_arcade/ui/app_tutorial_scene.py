@@ -49,9 +49,7 @@ class AppTutorialScene(Scene):
         ]
 
     def handle_event(self, event: pygame.event.Event) -> None:
-        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            self._exit()
-        elif event.type == pygame.KEYDOWN and event.key in (
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 or event.type == pygame.KEYDOWN and event.key in (
             pygame.K_RETURN,
             pygame.K_SPACE,
             pygame.K_ESCAPE,

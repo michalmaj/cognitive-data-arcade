@@ -182,9 +182,8 @@ class StroopGame(Scene):
                     actual=_COLOR_TO_RESPONSE[color],
                     correct=correct,
                 )
-        elif self._phase == _Phase.BETWEEN_BLOCKS:
-            if event.key == pygame.K_SPACE:
-                self._enter_iti()
+        elif self._phase == _Phase.BETWEEN_BLOCKS and event.key == pygame.K_SPACE:
+            self._enter_iti()
 
     def _handle_preset_select(self, key: int) -> None:
         if key == pygame.K_UP:

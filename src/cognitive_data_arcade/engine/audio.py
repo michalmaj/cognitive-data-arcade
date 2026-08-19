@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import contextlib
+
 import numpy as np
 import pygame
 
@@ -77,10 +79,8 @@ def _start_music(track: str) -> None:
 def stop_music() -> None:
     global _current_track
     _current_track = ""
-    try:
+    with contextlib.suppress(pygame.error):
         pygame.mixer.music.stop()
-    except pygame.error:
-        pass
 
 
 def play_sfx(name: str) -> None:
@@ -90,19 +90,15 @@ def play_sfx(name: str) -> None:
         return
     sound = _sfx.get(name)
     if sound is not None:
-        try:
+        with contextlib.suppress(pygame.error):
             sound.play()
-        except pygame.error:
-            pass
 
 
 def set_music_volume(v: float) -> None:
     global _music_volume
     _music_volume = max(0.0, min(1.0, v))
-    try:
+    with contextlib.suppress(pygame.error):
         pygame.mixer.music.set_volume(_music_volume)
-    except pygame.error:
-        pass
 
 
 def set_sfx_volume(v: float) -> None:
@@ -117,10 +113,8 @@ def set_music_enabled(b: bool) -> None:
     if b and _current_track:
         _start_music(_current_track)
     elif not b:
-        try:
+        with contextlib.suppress(pygame.error):
             pygame.mixer.music.stop()
-        except pygame.error:
-            pass
 
 
 def set_sfx_enabled(b: bool) -> None:

@@ -49,9 +49,8 @@ class ConceptDetailScene(Scene):
     # --- scene protocol ---
 
     def handle_event(self, event: pygame.event.Event) -> None:
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_BACKSPACE:
-                self._done = True
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_BACKSPACE:
+            self._done = True
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             self._done = True
 

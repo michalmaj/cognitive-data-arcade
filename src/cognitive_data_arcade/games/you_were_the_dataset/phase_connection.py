@@ -75,9 +75,7 @@ class PhaseConnectionScene(Scene):
             event.type == pygame.KEYDOWN
             and event.key == pygame.K_SPACE
             and self._t >= _ADVANCE_AFTER
-        ):
-            self._advance()
-        elif (
+        ) or (
             event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and self._t >= _ADVANCE_AFTER
         ):
             self._advance()

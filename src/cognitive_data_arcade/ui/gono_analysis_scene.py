@@ -56,9 +56,7 @@ class GoNoGoAnalysisScene(Scene):
         self._font_value = get_font(32)
 
     def handle_event(self, event: pygame.event.Event) -> None:
-        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            self._done = True
-        elif event.type == pygame.KEYDOWN and event.key in (
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 or event.type == pygame.KEYDOWN and event.key in (
             pygame.K_SPACE,
             pygame.K_ESCAPE,
             pygame.K_RETURN,

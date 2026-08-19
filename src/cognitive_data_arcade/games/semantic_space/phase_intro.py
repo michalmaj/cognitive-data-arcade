@@ -63,9 +63,7 @@ class PhaseIntroScene(Scene):
         self._next: Scene | None = None
 
     def handle_event(self, event: pygame.event.Event) -> None:
-        if event.type == pygame.KEYDOWN and event.key in (pygame.K_SPACE, pygame.K_RETURN):
-            self._advance()
-        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+        if event.type == pygame.KEYDOWN and event.key in (pygame.K_SPACE, pygame.K_RETURN) or event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             self._advance()
 
     def _advance(self) -> None:

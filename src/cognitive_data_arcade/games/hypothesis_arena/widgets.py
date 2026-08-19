@@ -117,10 +117,9 @@ class _AlphaButtons:
         for i in range(len(self._ALPHAS)):
             bx = self._x + i * (self._w + gap)
             btn = pygame.Rect(bx, self._y, self._w, self._h)
-            if btn.collidepoint(event.pos):
-                if self._selected != i:
-                    self._selected = i
-                    return True
+            if btn.collidepoint(event.pos) and self._selected != i:
+                self._selected = i
+                return True
         return False
 
     def draw(self, surface: pygame.Surface) -> None:

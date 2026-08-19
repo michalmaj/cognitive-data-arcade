@@ -1,3 +1,6 @@
+import contextlib
+
+
 def test_stop_words_pl_nonempty():
     from cognitive_data_arcade.games.text_tokenizer.stop_words import STOP_WORDS_PL
 
@@ -189,10 +192,8 @@ def test_phase_ngrams_instantiates():
     os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
     import pygame
 
-    try:
+    with contextlib.suppress(Exception):
         pygame.quit()
-    except Exception:
-        pass
     from cognitive_data_arcade.engine import fonts as fonts_mod
 
     fonts_mod._cache.clear()
@@ -223,10 +224,8 @@ def test_phase_frequency_returns_surface():
     os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
     import pygame
 
-    try:
+    with contextlib.suppress(Exception):
         pygame.quit()
-    except Exception:
-        pass
     from cognitive_data_arcade.engine import fonts as fonts_mod
 
     fonts_mod._cache.clear()
@@ -257,10 +256,8 @@ def test_text_tokenizer_scene_instantiates():
     os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
     import pygame
 
-    try:
+    with contextlib.suppress(Exception):
         pygame.quit()
-    except Exception:
-        pass
     from cognitive_data_arcade.engine import fonts as fonts_mod
 
     fonts_mod._cache.clear()
@@ -281,10 +278,8 @@ def test_text_tokenizer_tab_navigation():
     os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
     import pygame
 
-    try:
+    with contextlib.suppress(Exception):
         pygame.quit()
-    except Exception:
-        pass
     from cognitive_data_arcade.engine import fonts as fonts_mod
 
     fonts_mod._cache.clear()

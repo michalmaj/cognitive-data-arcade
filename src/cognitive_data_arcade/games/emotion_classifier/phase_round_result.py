@@ -76,9 +76,7 @@ class PhaseRoundResultScene(Scene):
         self._player_verdict = player_verdict
 
     def handle_event(self, event: pygame.event.Event) -> None:
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-            self._advance()
-        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE or event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             self._advance()
 
     def _advance(self) -> None:

@@ -123,10 +123,7 @@ class _ControlPanel:
         if self._tabs.handle_mousedown(pos):
             self._build_sliders()
             return True
-        for sl in self._sliders:
-            if sl.handle_mousedown(pos):
-                return True
-        return False
+        return any(sl.handle_mousedown(pos) for sl in self._sliders)
 
     def handle_mousemotion(self, pos: tuple[int, int], buttons: tuple) -> bool:
         changed = False

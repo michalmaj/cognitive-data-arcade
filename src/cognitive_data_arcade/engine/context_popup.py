@@ -43,10 +43,9 @@ class ContextPopup:
         return self._active.title if self._active else ""
 
     def handle_event(self, event: pygame.event.Event) -> bool:
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-            if self._active:
-                self._active = None
-                return True
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE and self._active:
+            self._active = None
+            return True
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 3:
                 for rect, info in self._entries:

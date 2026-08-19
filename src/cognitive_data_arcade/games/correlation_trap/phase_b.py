@@ -161,11 +161,10 @@ class PhaseBScene(Scene):
                     self._state = "summary"
                 else:
                     self._load_scenario()
-        elif self._state == "summary":
-            if self._btn_rects[0].collidepoint(pos):  # restart
-                self._idx = 0
-                self._correct = 0
-                self._load_scenario()
+        elif self._state == "summary" and self._btn_rects[0].collidepoint(pos):  # restart
+            self._idx = 0
+            self._correct = 0
+            self._load_scenario()
 
     def update(self, dt_ms: float) -> None:
         pass

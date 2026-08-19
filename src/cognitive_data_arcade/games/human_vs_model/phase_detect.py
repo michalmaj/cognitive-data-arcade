@@ -102,9 +102,7 @@ class PhaseDetectScene(Scene):
         if self._done:
             return
         if self._state == "reveal":
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                self._advance()
-            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE or event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 self._advance()
             return
         if self._state != "task":

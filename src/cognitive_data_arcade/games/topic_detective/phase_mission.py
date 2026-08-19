@@ -83,9 +83,7 @@ class PhaseMissionScene(Scene):
         if self._done:
             return
         if self._answered and self._mission.type == "assign_doc":
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                self._advance_to_next(self._pending_score, self._pending_results)
-            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE or event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 self._advance_to_next(self._pending_score, self._pending_results)
             return
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:

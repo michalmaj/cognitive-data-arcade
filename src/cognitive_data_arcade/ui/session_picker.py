@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import contextlib
 import csv
 import datetime
 from dataclasses import dataclass
@@ -82,10 +83,8 @@ class SessionPickerScene(Scene):
         )
         entries: list[_SessionEntry] = []
         for path in paths:
-            try:
+            with contextlib.suppress(Exception):
                 entries.append(self._parse(path))
-            except Exception:
-                pass
         return entries
 
     def _parse(self, path: Path) -> _SessionEntry:

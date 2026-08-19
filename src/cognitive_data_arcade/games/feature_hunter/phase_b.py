@@ -168,16 +168,15 @@ class PhaseBScene(Scene):
                 ox, oy = self._drag_offset
                 self._dragging.rect.topleft = (event.pos[0] - ox, event.pos[1] - oy)
 
-        elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
-            if self._dragging:
-                cx = self._dragging.rect.centerx
-                if cx < _CZONE_X:
-                    self._dragging.assigned = "noise"
-                elif cx > _CZONE_X + _CZONE_W:
-                    self._dragging.assigned = "useful"
-                else:
-                    self._dragging.rect = self._dragging.home_rect.copy()
-                self._dragging = None
+        elif event.type == pygame.MOUSEBUTTONUP and event.button == 1 and self._dragging:
+            cx = self._dragging.rect.centerx
+            if cx < _CZONE_X:
+                self._dragging.assigned = "noise"
+            elif cx > _CZONE_X + _CZONE_W:
+                self._dragging.assigned = "useful"
+            else:
+                self._dragging.rect = self._dragging.home_rect.copy()
+            self._dragging = None
 
     def update(self, dt_ms: float = 0.0) -> None:
         if self._state == "playing" and self._difficulty.timer_s is not None:
