@@ -3,14 +3,19 @@ from __future__ import annotations
 import numpy as np
 import pygame
 
-from cognitive_data_arcade.engine.fonts import get_font
-
 from cognitive_data_arcade.engine.colors import (
     BG as _BG,
-    RED as _RED,
+)
+from cognitive_data_arcade.engine.colors import (
     BLUE as _BLUE,
+)
+from cognitive_data_arcade.engine.colors import (
     ORANGE as _ORANGE,
 )
+from cognitive_data_arcade.engine.colors import (
+    RED as _RED,
+)
+from cognitive_data_arcade.engine.fonts import get_font
 
 _BORDER = (40, 40, 80)
 _DOT_RADIUS = 6

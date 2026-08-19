@@ -26,8 +26,9 @@ def test_generate_data_normalised():
 
 
 def test_generate_data_deterministic():
-    from cognitive_data_arcade.games.classifier_battle.scenarios import SCENARIOS, generate_data
     import numpy as np
+
+    from cognitive_data_arcade.games.classifier_battle.scenarios import SCENARIOS, generate_data
 
     X1, y1 = generate_data(SCENARIOS[2], seed=99)
     X2, y2 = generate_data(SCENARIOS[2], seed=99)
@@ -43,8 +44,8 @@ def test_generate_data_two_classes():
 
 
 def test_player_accuracy_range():
-    from cognitive_data_arcade.games.classifier_battle.scenarios import SCENARIOS, generate_data
     from cognitive_data_arcade.games.classifier_battle.classifier import player_accuracy
+    from cognitive_data_arcade.games.classifier_battle.scenarios import SCENARIOS, generate_data
 
     X, y = generate_data(SCENARIOS[0], seed=1)
     # vertical line at x=0.5 in normalised space, spanning full height
@@ -54,8 +55,8 @@ def test_player_accuracy_range():
 
 
 def test_player_accuracy_perfect_blobs():
-    from cognitive_data_arcade.games.classifier_battle.scenarios import SCENARIOS, generate_data
     from cognitive_data_arcade.games.classifier_battle.classifier import player_accuracy
+    from cognitive_data_arcade.games.classifier_battle.scenarios import SCENARIOS, generate_data
 
     # blobs: class 0 centred at (0.25, 0.5), class 1 at (0.75, 0.5)
     # a vertical line at x=0.5 should separate them well
@@ -66,8 +67,8 @@ def test_player_accuracy_perfect_blobs():
 
 
 def test_classifier_accuracies_keys():
-    from cognitive_data_arcade.games.classifier_battle.scenarios import SCENARIOS, generate_data
     from cognitive_data_arcade.games.classifier_battle.classifier import classifier_accuracies
+    from cognitive_data_arcade.games.classifier_battle.scenarios import SCENARIOS, generate_data
 
     X, y = generate_data(SCENARIOS[0], seed=0)
     accs = classifier_accuracies(X, y, seed=0)
@@ -75,8 +76,8 @@ def test_classifier_accuracies_keys():
 
 
 def test_classifier_accuracies_range():
-    from cognitive_data_arcade.games.classifier_battle.scenarios import SCENARIOS, generate_data
     from cognitive_data_arcade.games.classifier_battle.classifier import classifier_accuracies
+    from cognitive_data_arcade.games.classifier_battle.scenarios import SCENARIOS, generate_data
 
     X, y = generate_data(SCENARIOS[0], seed=0)
     accs = classifier_accuracies(X, y, seed=0)
@@ -116,8 +117,8 @@ def test_draw_canvas_smoke():
 
     pygame.init()
     pygame.display.set_mode((1, 1))
-    from cognitive_data_arcade.games.classifier_battle.widgets import DrawCanvas
     from cognitive_data_arcade.games.classifier_battle.scenarios import SCENARIOS, generate_data
+    from cognitive_data_arcade.games.classifier_battle.widgets import DrawCanvas
 
     canvas = DrawCanvas(pygame.Rect(0, 0, 750, 600))
     X, y = generate_data(SCENARIOS[0], seed=0)

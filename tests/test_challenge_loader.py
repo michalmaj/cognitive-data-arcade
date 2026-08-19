@@ -1,8 +1,9 @@
 from datetime import date
 from pathlib import Path
-import pytest
-from cognitive_data_arcade.engine.challenge_loader import load_questions, pick_daily
 
+import pytest
+
+from cognitive_data_arcade.engine.challenge_loader import load_questions, pick_daily
 
 SAMPLE_TOML = """\
 [[questions]]

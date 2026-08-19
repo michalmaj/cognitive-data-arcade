@@ -8,7 +8,7 @@ from cognitive_data_arcade.engine.i18n import EN
 from cognitive_data_arcade.engine.pause import PausableGame
 from cognitive_data_arcade.games.data_cleaning.scene import DataCleaningScene
 from cognitive_data_arcade.profile.manager import ProfileManager
-from cognitive_data_arcade.ui.menu import LessonMenuScene, _LESSONS
+from cognitive_data_arcade.ui.menu import _LESSONS, LessonMenuScene
 
 
 @pytest.fixture

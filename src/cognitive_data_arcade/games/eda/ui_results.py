@@ -18,11 +18,19 @@ _C1 = "#3498db"
 _C2 = "#e74c3c"
 _OUT = "#f39c12"
 from cognitive_data_arcade.engine.colors import (
-    WHITE as _WHITE,
     DIM as _DIM,
+)
+from cognitive_data_arcade.engine.colors import (
     GREEN as _GREEN,
-    RED as _RED,
+)
+from cognitive_data_arcade.engine.colors import (
     ORANGE as _ORANGE,
+)
+from cognitive_data_arcade.engine.colors import (
+    RED as _RED,
+)
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
 )
 
 _FIG_BG = "#0f0f23"

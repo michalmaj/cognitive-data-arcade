@@ -30,6 +30,7 @@ def _key(k: int) -> pygame.event.Event:
 
 def test_quiz_initial_not_done(tmp_path: Path) -> None:
     from unittest.mock import MagicMock
+
     from cognitive_data_arcade.engine.scene import Scene
 
     back = MagicMock(spec=Scene)
@@ -39,6 +40,7 @@ def test_quiz_initial_not_done(tmp_path: Path) -> None:
 
 def test_quiz_key_1_selects_option_0(tmp_path: Path) -> None:
     from unittest.mock import MagicMock
+
     from cognitive_data_arcade.engine.scene import Scene
 
     back = MagicMock(spec=Scene)
@@ -49,6 +51,7 @@ def test_quiz_key_1_selects_option_0(tmp_path: Path) -> None:
 
 def test_quiz_key_2_selects_option_1(tmp_path: Path) -> None:
     from unittest.mock import MagicMock
+
     from cognitive_data_arcade.engine.scene import Scene
 
     back = MagicMock(spec=Scene)
@@ -59,6 +62,7 @@ def test_quiz_key_2_selects_option_1(tmp_path: Path) -> None:
 
 def test_quiz_confirm_correct_records_true(tmp_path: Path) -> None:
     from unittest.mock import MagicMock
+
     from cognitive_data_arcade.engine.scene import Scene
 
     pm = _pm(tmp_path)
@@ -73,6 +77,7 @@ def test_quiz_confirm_correct_records_true(tmp_path: Path) -> None:
 
 def test_quiz_confirm_wrong_records_false(tmp_path: Path) -> None:
     from unittest.mock import MagicMock
+
     from cognitive_data_arcade.engine.scene import Scene
 
     pm = _pm(tmp_path)
@@ -87,6 +92,7 @@ def test_quiz_confirm_wrong_records_false(tmp_path: Path) -> None:
 
 def test_quiz_esc_skips_without_recording(tmp_path: Path) -> None:
     from unittest.mock import MagicMock
+
     from cognitive_data_arcade.engine.scene import Scene
 
     pm = _pm(tmp_path)
@@ -99,6 +105,7 @@ def test_quiz_esc_skips_without_recording(tmp_path: Path) -> None:
 
 def test_quiz_draw_does_not_crash(tmp_path: Path) -> None:
     from unittest.mock import MagicMock
+
     from cognitive_data_arcade.engine.scene import Scene
 
     back = MagicMock(spec=Scene)

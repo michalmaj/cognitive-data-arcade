@@ -5,7 +5,7 @@ import pygame
 import pytest
 
 from cognitive_data_arcade.games.data_cleaning.generator import DataRow
-from cognitive_data_arcade.games.data_cleaning.ui_table import TableWidget, VISIBLE_ROWS
+from cognitive_data_arcade.games.data_cleaning.ui_table import VISIBLE_ROWS, TableWidget
 
 
 @pytest.fixture(scope="session", autouse=True)

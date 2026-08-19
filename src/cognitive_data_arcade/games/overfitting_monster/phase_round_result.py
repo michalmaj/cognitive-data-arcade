@@ -11,20 +11,33 @@ import numpy as np
 import pygame
 
 from cognitive_data_arcade.engine.chart import figure_to_surface
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+)
+from cognitive_data_arcade.engine.colors import (
+    BLUE as _BLUE,
+)
+from cognitive_data_arcade.engine.colors import (
+    DIM as _DIM,
+)
+from cognitive_data_arcade.engine.colors import (
+    GREEN as _GREEN,
+)
+from cognitive_data_arcade.engine.colors import (
+    ORANGE as _ORANGE,
+)
+from cognitive_data_arcade.engine.colors import (
+    RED as _RED,
+)
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
+)
+from cognitive_data_arcade.engine.colors import (
+    YELLOW as _YELLOW,
+)
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.overfitting_monster.scenarios import Scenario
-
-from cognitive_data_arcade.engine.colors import (
-    BG as _BG,
-    WHITE as _WHITE,
-    DIM as _DIM,
-    GREEN as _GREEN,
-    RED as _RED,
-    BLUE as _BLUE,
-    YELLOW as _YELLOW,
-    ORANGE as _ORANGE,
-)
 
 _PANEL = (18, 18, 42)
 _FIG_BG = "#0f0f23"
@@ -69,8 +82,8 @@ def _wrap_text(text: str, font: pygame.font.Font, max_w: int) -> list[str]:
 
 
 def _render_boundary(d: RoundDisplay) -> pygame.Surface:
-    from sklearn.neighbors import KNeighborsClassifier
     from matplotlib.colors import ListedColormap
+    from sklearn.neighbors import KNeighborsClassifier
 
     clf = KNeighborsClassifier(n_neighbors=d.k)
     clf.fit(d.X_train, d.y_train)

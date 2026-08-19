@@ -1,8 +1,7 @@
 # tests/test_data_cleaning_generator.py
 from __future__ import annotations
 
-
-from cognitive_data_arcade.games.data_cleaning.difficulty import EASY, MEDIUM, HARD
+from cognitive_data_arcade.games.data_cleaning.difficulty import EASY, HARD, MEDIUM
 from cognitive_data_arcade.games.data_cleaning.generator import (
     CleaningSession,
     DataRow,

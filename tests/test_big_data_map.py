@@ -20,8 +20,8 @@ def game(tmp_path):
 def game_with_factory(tmp_path):
     pygame.init()
     pm = ProfileManager(tmp_path / "profile.json")
-    from cognitive_data_arcade.games.big_data_map.game import BigDataMapGame
     from cognitive_data_arcade.engine.scene import Scene
+    from cognitive_data_arcade.games.big_data_map.game import BigDataMapGame
 
     navigated_to: list[int] = []
 
@@ -73,7 +73,7 @@ def test_lesson_nums_unique() -> None:
 
 
 def test_concept_edges_reference_valid_nodes() -> None:
-    from cognitive_data_arcade.games.big_data_map.concept_data import CONCEPT_NODES, CONCEPT_EDGES
+    from cognitive_data_arcade.games.big_data_map.concept_data import CONCEPT_EDGES, CONCEPT_NODES
 
     valid = {n.lesson_num for n in CONCEPT_NODES}
     for a, b in CONCEPT_EDGES:
@@ -227,7 +227,7 @@ def test_get_connected_returns_at_most_5() -> None:
 
 
 def test_get_connected_cross_module_first() -> None:
-    from cognitive_data_arcade.games.big_data_map.concept_data import get_connected, _node_map
+    from cognitive_data_arcade.games.big_data_map.concept_data import _node_map, get_connected
 
     # Lesson 2 (RT Lab, module 1) has both intra- and cross-module connections
     result = get_connected(2, max_count=5)
@@ -248,7 +248,7 @@ def test_get_connected_unknown_node_returns_empty() -> None:
 
 
 def test_get_connected_returns_tuples_of_three() -> None:
-    from cognitive_data_arcade.games.big_data_map.concept_data import get_connected, LessonNode
+    from cognitive_data_arcade.games.big_data_map.concept_data import LessonNode, get_connected
 
     result = get_connected(1)
     for item in result:
@@ -263,8 +263,8 @@ def test_get_connected_returns_tuples_of_three() -> None:
 
 def test_detail_scene_is_done_on_backspace() -> None:
     pygame.init()
-    from cognitive_data_arcade.games.big_data_map.detail import ConceptDetailScene
     from cognitive_data_arcade.engine.i18n import get_strings
+    from cognitive_data_arcade.games.big_data_map.detail import ConceptDetailScene
 
     scene = ConceptDetailScene(1, get_strings("en"), back_scene=None)
     assert not scene.is_done()
@@ -277,8 +277,8 @@ def test_detail_scene_is_done_on_backspace() -> None:
 def test_detail_scene_esc_not_handled_by_scene() -> None:
     """ESC is handled by the wrapping PausableGame, not by ConceptDetailScene itself."""
     pygame.init()
-    from cognitive_data_arcade.games.big_data_map.detail import ConceptDetailScene
     from cognitive_data_arcade.engine.i18n import get_strings
+    from cognitive_data_arcade.games.big_data_map.detail import ConceptDetailScene
 
     scene = ConceptDetailScene(1, get_strings("en"), back_scene=None)
     scene.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode=""))
@@ -287,9 +287,10 @@ def test_detail_scene_esc_not_handled_by_scene() -> None:
 
 def test_detail_scene_next_scene_returns_back() -> None:
     pygame.init()
-    from cognitive_data_arcade.games.big_data_map.detail import ConceptDetailScene
-    from cognitive_data_arcade.engine.i18n import get_strings
     from unittest.mock import MagicMock
+
+    from cognitive_data_arcade.engine.i18n import get_strings
+    from cognitive_data_arcade.games.big_data_map.detail import ConceptDetailScene
 
     back = MagicMock()
     scene = ConceptDetailScene(1, get_strings("en"), back_scene=back)
@@ -301,8 +302,8 @@ def test_detail_scene_next_scene_returns_back() -> None:
 
 def test_detail_scene_click_closes() -> None:
     pygame.init()
-    from cognitive_data_arcade.games.big_data_map.detail import ConceptDetailScene
     from cognitive_data_arcade.engine.i18n import get_strings
+    from cognitive_data_arcade.games.big_data_map.detail import ConceptDetailScene
 
     scene = ConceptDetailScene(1, get_strings("en"), back_scene=None)
     scene.handle_event(pygame.event.Event(pygame.MOUSEBUTTONDOWN, pos=(512, 400), button=1))
@@ -311,8 +312,8 @@ def test_detail_scene_click_closes() -> None:
 
 def test_detail_scene_draw_without_crash() -> None:
     pygame.init()
-    from cognitive_data_arcade.games.big_data_map.detail import ConceptDetailScene
     from cognitive_data_arcade.engine.i18n import get_strings
+    from cognitive_data_arcade.games.big_data_map.detail import ConceptDetailScene
 
     scene = ConceptDetailScene(1, get_strings("en"), back_scene=None)
     surface = pygame.Surface((1024, 768))
@@ -321,8 +322,8 @@ def test_detail_scene_draw_without_crash() -> None:
 
 def test_detail_scene_shows_connections() -> None:
     pygame.init()
-    from cognitive_data_arcade.games.big_data_map.detail import ConceptDetailScene
     from cognitive_data_arcade.engine.i18n import get_strings
+    from cognitive_data_arcade.games.big_data_map.detail import ConceptDetailScene
 
     scene = ConceptDetailScene(2, get_strings("en"), back_scene=None)  # RT Lab has many connections
     assert len(scene._connections) > 0

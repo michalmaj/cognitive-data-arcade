@@ -1,12 +1,14 @@
 from __future__ import annotations
 
 import pygame
+
+from cognitive_data_arcade.engine.colors import BG as _BG
+from cognitive_data_arcade.engine.colors import ORANGE as _ORANGE
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
-from cognitive_data_arcade.engine.colors import BG as _BG, ORANGE as _ORANGE
 
-from .concept_data import DISPLAY_NUM, MODULE_COLORS, MODULE_NAMES, get_connected, _node_map
+from .concept_data import DISPLAY_NUM, MODULE_COLORS, MODULE_NAMES, _node_map, get_connected
 
 _W, _H = 1024, 768
 

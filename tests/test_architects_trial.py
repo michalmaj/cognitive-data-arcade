@@ -133,8 +133,8 @@ def test_phase_act_renders():
 
 
 def test_phase_act_applies_score_deltas():
-    from cognitive_data_arcade.games.architects_trial.game_state import GameState
     from cognitive_data_arcade.games.architects_trial.domain_data import DOMAIN_DATA
+    from cognitive_data_arcade.games.architects_trial.game_state import GameState
 
     state = GameState()
     state.domain = "social"

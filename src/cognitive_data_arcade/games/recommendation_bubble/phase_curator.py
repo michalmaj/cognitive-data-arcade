@@ -1,19 +1,22 @@
 from __future__ import annotations
+
 import pygame
-from cognitive_data_arcade.engine.fonts import get_font
-from cognitive_data_arcade.engine.scene import Scene
-from cognitive_data_arcade.games.recommendation_bubble.game_state import (
-    GameState,
-    CATEGORIES,
-    CAT_COLORS,
-    diversity,
-    curated_profile,
-    generate_slots,
-)
 
 from cognitive_data_arcade.engine.colors import (
     BG as _BG,
+)
+from cognitive_data_arcade.engine.colors import (
     DIM as _DIM,
+)
+from cognitive_data_arcade.engine.fonts import get_font
+from cognitive_data_arcade.engine.scene import Scene
+from cognitive_data_arcade.games.recommendation_bubble.game_state import (
+    CAT_COLORS,
+    CATEGORIES,
+    GameState,
+    curated_profile,
+    diversity,
+    generate_slots,
 )
 
 _W, _H = 1024, 768

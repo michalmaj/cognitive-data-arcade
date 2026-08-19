@@ -5,7 +5,8 @@ from __future__ import annotations
 import pygame
 
 from cognitive_data_arcade.data.act_content import ACT_INTROS
-from cognitive_data_arcade.engine.colors import BG as _BG, WHITE as _WHITE
+from cognitive_data_arcade.engine.colors import BG as _BG
+from cognitive_data_arcade.engine.colors import WHITE as _WHITE
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene

@@ -1,7 +1,9 @@
 """Tests for PR3 Task 3: session summaries and verdict lines."""
 
 from pathlib import Path
+
 import pygame
+
 from cognitive_data_arcade.engine.i18n import PL
 from cognitive_data_arcade.profile.manager import ProfileManager
 

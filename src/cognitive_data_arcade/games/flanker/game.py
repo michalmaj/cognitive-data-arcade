@@ -8,24 +8,33 @@ from dataclasses import dataclass
 from pathlib import Path
 
 import pygame
-from cognitive_data_arcade.engine.fonts import get_font
 
 from cognitive_data_arcade.engine import audio
 from cognitive_data_arcade.engine.badges import BadgeEngine, SessionResult
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+)
+from cognitive_data_arcade.engine.colors import (
+    DIM as _DIM,
+)
+from cognitive_data_arcade.engine.colors import (
+    GREEN as _GREEN,
+)
+from cognitive_data_arcade.engine.colors import (
+    ORANGE as _ORANGE,
+)
+from cognitive_data_arcade.engine.colors import (
+    RED as _RED,
+)
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
+)
+from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.engine.storage import write_trial
 from cognitive_data_arcade.games.flanker.config import FlankerConfig
 from cognitive_data_arcade.profile.manager import ProfileManager
-
-from cognitive_data_arcade.engine.colors import (
-    BG as _BG,
-    WHITE as _WHITE,
-    DIM as _DIM,
-    ORANGE as _ORANGE,
-    RED as _RED,
-    GREEN as _GREEN,
-)
 
 _W, _H = 1024, 768
 

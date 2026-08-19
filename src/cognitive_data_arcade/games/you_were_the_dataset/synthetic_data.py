@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 from cognitive_data_arcade.games.you_were_the_dataset.game_state import ProfileData
 
 SYNTHETIC_PROFILE = ProfileData(

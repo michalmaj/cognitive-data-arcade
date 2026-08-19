@@ -1,19 +1,26 @@
 from __future__ import annotations
 
 import pygame
-from cognitive_data_arcade.engine.fonts import get_font
-
-from cognitive_data_arcade.engine.i18n import Strings
-from cognitive_data_arcade.engine.scene import Scene
-from cognitive_data_arcade.profile.manager import ProfileManager
 
 from cognitive_data_arcade.engine.colors import (
     BG as _BG,
-    WHITE as _WHITE,
-    ORANGE as _ORANGE,
-    GREEN as _GREEN,
+)
+from cognitive_data_arcade.engine.colors import (
     DIM as _DIM,
 )
+from cognitive_data_arcade.engine.colors import (
+    GREEN as _GREEN,
+)
+from cognitive_data_arcade.engine.colors import (
+    ORANGE as _ORANGE,
+)
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
+)
+from cognitive_data_arcade.engine.fonts import get_font
+from cognitive_data_arcade.engine.i18n import Strings
+from cognitive_data_arcade.engine.scene import Scene
+from cognitive_data_arcade.profile.manager import ProfileManager
 
 _LEFT = 80
 _TITLE_Y = 60

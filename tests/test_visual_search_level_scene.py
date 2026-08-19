@@ -74,10 +74,10 @@ def test_mouse_click_mode_tile(tmp_path) -> None:
     scene = _make_scene(tmp_path)
     # Click on mode tile 1 (Shapes) — tile rect starts at _TILES_X + 1*(_TILE_W+_TILE_GAP)
     from cognitive_data_arcade.ui.visual_search_level_scene import (
-        _TILES_X,
-        _TILE_W,
-        _TILE_GAP,
         _ROW1_Y,
+        _TILE_GAP,
+        _TILE_W,
+        _TILES_X,
     )
 
     tile_x = _TILES_X + 1 * (_TILE_W + _TILE_GAP) + _TILE_W // 2

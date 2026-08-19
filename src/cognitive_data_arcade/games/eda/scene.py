@@ -5,17 +5,20 @@ from typing import TYPE_CHECKING
 
 import pygame
 
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+)
+from cognitive_data_arcade.engine.colors import (
+    DIM as _DIM,
+)
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
+)
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.eda.simulator import simulate
 from cognitive_data_arcade.games.eda.ui_controls import ControlPanel
 from cognitive_data_arcade.games.eda.ui_results import ChartPanel, ResultsPanel
-
-from cognitive_data_arcade.engine.colors import (
-    BG as _BG,
-    WHITE as _WHITE,
-    DIM as _DIM,
-)
 
 if TYPE_CHECKING:
     from cognitive_data_arcade.engine.i18n import Strings
@@ -296,8 +299,8 @@ class EDAScene(Scene):
             y += font.get_height() + 8
 
     def _build_next_scene(self) -> "Scene":
-        from cognitive_data_arcade.ui.session_summary import SessionSummaryScene
         from cognitive_data_arcade.engine.badges import BadgeEngine, SessionResult
+        from cognitive_data_arcade.ui.session_summary import SessionSummaryScene
 
         ap = min(100, 30 + self._generate_count * 5)
         session = SessionResult(

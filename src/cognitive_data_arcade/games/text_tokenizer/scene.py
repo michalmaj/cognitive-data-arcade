@@ -18,6 +18,8 @@ _PHASE_H = _H - _INPUT_BAR_H - _NAV_H  # 684
 
 from cognitive_data_arcade.engine.colors import (
     BG as _BG,
+)
+from cognitive_data_arcade.engine.colors import (
     DIM as _DIM,
 )
 

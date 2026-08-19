@@ -55,8 +55,8 @@ def test_classify_ai_fails_at_least_once():
 def test_difficulty_values():
     from cognitive_data_arcade.games.human_vs_model.challenge_data import (
         CLASSIFY_CHALLENGES,
-        DETECT_CHALLENGES,
         COMPLETE_CHALLENGES,
+        DETECT_CHALLENGES,
     )
 
     for c in CLASSIFY_CHALLENGES:

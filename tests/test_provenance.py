@@ -6,8 +6,7 @@ import importlib
 
 import pytest
 
-from cognitive_data_arcade.lessons.provenance import Claim, VALID_TYPES
-
+from cognitive_data_arcade.lessons.provenance import VALID_TYPES, Claim
 
 # Lessons that must have PROVENANCE defined
 REQUIRED_LESSON_NUMS = [7, 9, 10, 31]

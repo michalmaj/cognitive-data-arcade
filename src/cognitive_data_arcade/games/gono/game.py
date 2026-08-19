@@ -1,16 +1,16 @@
 from __future__ import annotations
 
-import math
 import enum
+import math
 import random
 from dataclasses import dataclass
 from pathlib import Path
 
 import pygame
-from cognitive_data_arcade.engine.fonts import get_font
 
 from cognitive_data_arcade.engine import audio
 from cognitive_data_arcade.engine.colors import DIM as _DIM
+from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.engine.storage import write_trial

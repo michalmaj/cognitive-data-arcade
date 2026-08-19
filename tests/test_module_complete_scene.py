@@ -1,9 +1,10 @@
 # tests/test_module_complete_scene.py
 from __future__ import annotations
 
+from unittest.mock import MagicMock
+
 import pygame
 import pytest
-from unittest.mock import MagicMock
 
 from cognitive_data_arcade.engine.i18n import EN
 
@@ -30,8 +31,8 @@ def _key(k: int) -> pygame.event.Event:
 
 
 def test_escape_returns_to_menu():
-    from cognitive_data_arcade.ui.module_complete_scene import ModuleCompleteScene
     from cognitive_data_arcade.ui.menu import LessonMenuScene
+    from cognitive_data_arcade.ui.module_complete_scene import ModuleCompleteScene
 
     scene = ModuleCompleteScene(0, _make_pm(), EN)
     scene.handle_event(_key(pygame.K_ESCAPE))
@@ -40,8 +41,8 @@ def test_escape_returns_to_menu():
 
 
 def test_enter_goes_to_next_module():
-    from cognitive_data_arcade.ui.module_complete_scene import ModuleCompleteScene
     from cognitive_data_arcade.ui.act_intro_scene import ActIntroScene
+    from cognitive_data_arcade.ui.module_complete_scene import ModuleCompleteScene
 
     scene = ModuleCompleteScene(0, _make_pm(), EN)
     scene.handle_event(_key(pygame.K_RETURN))
@@ -50,8 +51,8 @@ def test_enter_goes_to_next_module():
 
 
 def test_last_module_enter_goes_to_menu():
-    from cognitive_data_arcade.ui.module_complete_scene import ModuleCompleteScene
     from cognitive_data_arcade.ui.menu import LessonMenuScene
+    from cognitive_data_arcade.ui.module_complete_scene import ModuleCompleteScene
 
     scene = ModuleCompleteScene(5, _make_pm(), EN)  # module index 5 = last
     scene.handle_event(_key(pygame.K_RETURN))

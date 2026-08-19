@@ -6,16 +6,19 @@ from dataclasses import dataclass
 import pygame
 
 from cognitive_data_arcade.engine import audio
+from cognitive_data_arcade.engine.colors import (
+    DIM as _DIM,
+)
+from cognitive_data_arcade.engine.colors import (
+    ORANGE as _HIGHLIGHT,
+)
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
+)
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.profile.manager import ProfileManager
-
-from cognitive_data_arcade.engine.colors import (
-    WHITE as _WHITE,
-    DIM as _DIM,
-    ORANGE as _HIGHLIGHT,
-)
 
 _BG_PANEL = (18, 18, 42)
 _BORDER = (42, 42, 80)

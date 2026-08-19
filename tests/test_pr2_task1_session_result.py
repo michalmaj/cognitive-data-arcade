@@ -1,9 +1,12 @@
 """Tests for Task 1 SessionResult wiring: L01, L03, L06."""
 
 from __future__ import annotations
+
 from pathlib import Path
+
 import pygame
 import pytest
+
 from cognitive_data_arcade.engine.i18n import PL
 from cognitive_data_arcade.profile.manager import ProfileManager
 from cognitive_data_arcade.ui.session_summary import SessionSummaryScene

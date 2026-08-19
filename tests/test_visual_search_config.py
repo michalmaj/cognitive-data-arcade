@@ -2,14 +2,14 @@
 from __future__ import annotations
 
 from cognitive_data_arcade.games.visual_search.config import (
-    VSConfig,
-    SET_SIZES,
-    TRIALS_PER_BLOCK,
-    FIXATION_MS,
-    FEEDBACK_MS,
-    ITI_MS,
-    TIMEOUT_MS,
     BLOCK_BREAK_MS,
+    FEEDBACK_MS,
+    FIXATION_MS,
+    ITI_MS,
+    SET_SIZES,
+    TIMEOUT_MS,
+    TRIALS_PER_BLOCK,
+    VSConfig,
 )
 
 

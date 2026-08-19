@@ -16,8 +16,8 @@ def test_diversity_uniform():
 
 def test_diversity_single_category():
     from cognitive_data_arcade.games.recommendation_bubble.game_state import (
-        diversity,
         CATEGORIES,
+        diversity,
     )
 
     p = {cat: 0.0 for cat in CATEGORIES}
@@ -27,8 +27,8 @@ def test_diversity_single_category():
 
 def test_profile_from_clicks_normalises():
     from cognitive_data_arcade.games.recommendation_bubble.game_state import (
-        profile_from_clicks,
         CATEGORIES,
+        profile_from_clicks,
     )
 
     clicks = {cat: 0 for cat in CATEGORIES}
@@ -41,8 +41,8 @@ def test_profile_from_clicks_normalises():
 
 def test_profile_from_clicks_empty_returns_uniform():
     from cognitive_data_arcade.games.recommendation_bubble.game_state import (
-        profile_from_clicks,
         CATEGORIES,
+        profile_from_clicks,
         uniform_profile,
     )
 
@@ -66,8 +66,8 @@ def test_curated_profile_counts_slots():
 
 def test_generate_slots_dominated_by_heavy_category():
     from cognitive_data_arcade.games.recommendation_bubble.game_state import (
-        generate_slots,
         CATEGORIES,
+        generate_slots,
     )
 
     profile = {cat: 0.0 for cat in CATEGORIES}
@@ -78,8 +78,8 @@ def test_generate_slots_dominated_by_heavy_category():
 
 def test_game_state_defaults():
     from cognitive_data_arcade.games.recommendation_bubble.game_state import (
-        GameState,
         CATEGORIES,
+        GameState,
     )
 
     gs = GameState()
@@ -95,8 +95,8 @@ def test_game_state_defaults():
 
 def test_engagement_values():
     from cognitive_data_arcade.games.recommendation_bubble.game_state import (
-        ENGAGEMENT,
         CATEGORIES,
+        ENGAGEMENT,
     )
 
     assert all(cat in ENGAGEMENT for cat in CATEGORIES)
@@ -107,8 +107,8 @@ def test_phase_intro_renders():
     import pygame
 
     pygame.init()
-    from cognitive_data_arcade.games.recommendation_bubble.phase_intro import PhaseIntroScene
     from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState
+    from cognitive_data_arcade.games.recommendation_bubble.phase_intro import PhaseIntroScene
 
     scene = PhaseIntroScene(GameState())
     surface = pygame.Surface((1024, 720))
@@ -120,8 +120,8 @@ def test_phase_intro_advances_on_keydown():
     import pygame
 
     pygame.init()
-    from cognitive_data_arcade.games.recommendation_bubble.phase_intro import PhaseIntroScene
     from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState
+    from cognitive_data_arcade.games.recommendation_bubble.phase_intro import PhaseIntroScene
 
     scene = PhaseIntroScene(GameState())
     assert not scene.is_done()
@@ -135,8 +135,8 @@ def test_phase_user_click_increments_category():
     import pygame
 
     pygame.init()
-    from cognitive_data_arcade.games.recommendation_bubble.phase_user import PhaseUserScene
     from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState
+    from cognitive_data_arcade.games.recommendation_bubble.phase_user import PhaseUserScene
 
     scene = PhaseUserScene(GameState())
     # click on first bar (SPORT row y=120..189)
@@ -149,11 +149,11 @@ def test_phase_user_timer_expires_with_enough_clicks():
     import pygame
 
     pygame.init()
-    from cognitive_data_arcade.games.recommendation_bubble.phase_user import (
-        PhaseUserScene,
-        _MIN_CLICKS,
-    )
     from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState
+    from cognitive_data_arcade.games.recommendation_bubble.phase_user import (
+        _MIN_CLICKS,
+        PhaseUserScene,
+    )
 
     scene = PhaseUserScene(GameState())
     for _ in range(_MIN_CLICKS):
@@ -168,8 +168,8 @@ def test_phase_user_timer_extends_when_too_few_clicks():
     import pygame
 
     pygame.init()
-    from cognitive_data_arcade.games.recommendation_bubble.phase_user import PhaseUserScene
     from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState
+    from cognitive_data_arcade.games.recommendation_bubble.phase_user import PhaseUserScene
 
     scene = PhaseUserScene(GameState())
     # no clicks, advance past 30s — should NOT be done (extends timer)
@@ -182,10 +182,10 @@ def test_phase_interlude_space_advances():
     import pygame
 
     pygame.init()
+    from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState
     from cognitive_data_arcade.games.recommendation_bubble.phase_interlude import (
         PhaseInterludeScene,
     )
-    from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState
 
     scene = PhaseInterludeScene(GameState(), next_act="curator")
     assert not scene.is_done()
@@ -199,10 +199,10 @@ def test_phase_interlude_algo_next():
     import pygame
 
     pygame.init()
+    from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState
     from cognitive_data_arcade.games.recommendation_bubble.phase_interlude import (
         PhaseInterludeScene,
     )
-    from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState
 
     scene = PhaseInterludeScene(GameState(), next_act="algo")
     scene.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_SPACE))
@@ -216,8 +216,8 @@ def test_phase_curator_swap_decrements_counter():
     import pygame
 
     pygame.init()
-    from cognitive_data_arcade.games.recommendation_bubble.phase_curator import PhaseCuratorScene
     from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState
+    from cognitive_data_arcade.games.recommendation_bubble.phase_curator import PhaseCuratorScene
 
     scene = PhaseCuratorScene(GameState())
     initial_swaps = scene._swaps_left
@@ -231,8 +231,8 @@ def test_phase_curator_no_swap_when_exhausted():
     import pygame
 
     pygame.init()
-    from cognitive_data_arcade.games.recommendation_bubble.phase_curator import PhaseCuratorScene
     from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState
+    from cognitive_data_arcade.games.recommendation_bubble.phase_curator import PhaseCuratorScene
 
     scene = PhaseCuratorScene(GameState())
     scene._swaps_left = 0
@@ -247,8 +247,8 @@ def test_phase_curator_score_stored_in_state():
     import pygame
 
     pygame.init()
-    from cognitive_data_arcade.games.recommendation_bubble.phase_curator import PhaseCuratorScene
     from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState
+    from cognitive_data_arcade.games.recommendation_bubble.phase_curator import PhaseCuratorScene
 
     scene = PhaseCuratorScene(GameState())
     scene.update(50_000.0)  # 50s > 45s limit
@@ -261,8 +261,8 @@ def test_phase_algo_click_adds_engagement():
     import pygame
 
     pygame.init()
+    from cognitive_data_arcade.games.recommendation_bubble.game_state import ENGAGEMENT, GameState
     from cognitive_data_arcade.games.recommendation_bubble.phase_algo import PhaseAlgoScene
-    from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState, ENGAGEMENT
 
     scene = PhaseAlgoScene(GameState())
     # force first tile to SPORT for deterministic test
@@ -277,8 +277,8 @@ def test_phase_algo_tile_replaced_after_click():
     import pygame
 
     pygame.init()
-    from cognitive_data_arcade.games.recommendation_bubble.phase_algo import PhaseAlgoScene
     from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState
+    from cognitive_data_arcade.games.recommendation_bubble.phase_algo import PhaseAlgoScene
 
     scene = PhaseAlgoScene(GameState())
     rect = scene._tile_rect(0)
@@ -291,8 +291,8 @@ def test_phase_algo_score_stored_after_timeout():
     import pygame
 
     pygame.init()
-    from cognitive_data_arcade.games.recommendation_bubble.phase_algo import PhaseAlgoScene
     from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState
+    from cognitive_data_arcade.games.recommendation_bubble.phase_algo import PhaseAlgoScene
 
     scene = PhaseAlgoScene(GameState())
     scene.update(35_000.0)
@@ -305,8 +305,8 @@ def test_phase_result_stars_formula():
     import pygame
 
     pygame.init()
-    from cognitive_data_arcade.games.recommendation_bubble.phase_result import PhaseResultScene
     from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState
+    from cognitive_data_arcade.games.recommendation_bubble.phase_result import PhaseResultScene
 
     gs = GameState()
     gs.score_curator = 70
@@ -324,8 +324,8 @@ def test_phase_result_renders():
     import pygame
 
     pygame.init()
-    from cognitive_data_arcade.games.recommendation_bubble.phase_result import PhaseResultScene
     from cognitive_data_arcade.games.recommendation_bubble.game_state import GameState
+    from cognitive_data_arcade.games.recommendation_bubble.phase_result import PhaseResultScene
 
     scene = PhaseResultScene(GameState())
     surface = pygame.Surface((1024, 720))

@@ -1,4 +1,5 @@
 from pathlib import Path
+
 from cognitive_data_arcade.engine.assets import assets_dir
 
 

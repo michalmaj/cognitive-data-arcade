@@ -3,18 +3,23 @@ from __future__ import annotations
 
 import pygame
 
-from cognitive_data_arcade.engine.fonts import get_font
-from cognitive_data_arcade.engine.scene import Scene
-from cognitive_data_arcade.games.word_weight_factory.corpus import CorpusState
-from cognitive_data_arcade.games.word_weight_factory.engine import WeightMatrix
-from cognitive_data_arcade.games.text_tokenizer.stop_words import STOP_WORDS_EN, STOP_WORDS_PL
-
 from cognitive_data_arcade.engine.colors import (
     BG as _BG,
-    WHITE as _WHITE,
+)
+from cognitive_data_arcade.engine.colors import (
     GREEN as _GREEN,
+)
+from cognitive_data_arcade.engine.colors import (
     PURPLE as _PURPLE,
 )
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
+)
+from cognitive_data_arcade.engine.fonts import get_font
+from cognitive_data_arcade.engine.scene import Scene
+from cognitive_data_arcade.games.text_tokenizer.stop_words import STOP_WORDS_EN, STOP_WORDS_PL
+from cognitive_data_arcade.games.word_weight_factory.corpus import CorpusState
+from cognitive_data_arcade.games.word_weight_factory.engine import WeightMatrix
 
 _AMBER = (243, 156, 18)
 _STEP_H = 672

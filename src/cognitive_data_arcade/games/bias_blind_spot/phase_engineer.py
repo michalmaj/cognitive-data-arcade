@@ -2,25 +2,36 @@
 """Act 2 -- Engineer: 3 mandatory rounds of feature removal."""
 
 from __future__ import annotations
+
 import pygame
-from cognitive_data_arcade.engine.fonts import get_font
-from cognitive_data_arcade.engine.scene import Scene
-from cognitive_data_arcade.games.bias_blind_spot.game_state import (
-    GameState,
-    FEATURES,
-    STARTING_BIAS,
-    STARTING_ACC,
-    compute_round_result,
-    compute_score_engineer,
-)
 
 from cognitive_data_arcade.engine.colors import (
     BG as _BG,
-    WHITE as _WHITE,
+)
+from cognitive_data_arcade.engine.colors import (
     DIM as _DIM,
+)
+from cognitive_data_arcade.engine.colors import (
     GREEN as _GREEN,
-    RED as _RED,
+)
+from cognitive_data_arcade.engine.colors import (
     ORANGE as _ORANGE,
+)
+from cognitive_data_arcade.engine.colors import (
+    RED as _RED,
+)
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
+)
+from cognitive_data_arcade.engine.fonts import get_font
+from cognitive_data_arcade.engine.scene import Scene
+from cognitive_data_arcade.games.bias_blind_spot.game_state import (
+    FEATURES,
+    STARTING_ACC,
+    STARTING_BIAS,
+    GameState,
+    compute_round_result,
+    compute_score_engineer,
 )
 
 _W, _H = 1024, 768

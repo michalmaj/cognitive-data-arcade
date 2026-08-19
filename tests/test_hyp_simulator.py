@@ -1,5 +1,6 @@
 # tests/test_hyp_simulator.py
 from __future__ import annotations
+
 import numpy as np
 
 
@@ -45,8 +46,8 @@ def test_compute_power_zero_effect():
 
 def test_min_n_for_power_achieves_target():
     from cognitive_data_arcade.games.hypothesis_arena.simulator import (
-        min_n_for_power,
         compute_power,
+        min_n_for_power,
     )
 
     n = min_n_for_power(target_power=0.80, d=0.5, alpha=0.05)

@@ -5,7 +5,7 @@ from pathlib import Path
 import pygame
 import pytest
 
-from cognitive_data_arcade.engine.i18n import PL, EN
+from cognitive_data_arcade.engine.i18n import EN, PL
 from cognitive_data_arcade.profile.manager import ProfileManager
 from cognitive_data_arcade.ui.act_intro_scene import ActIntroScene, make_act_intro
 
@@ -26,6 +26,7 @@ def _pm(tmp_path: Path) -> ProfileManager:
 
 def test_act_intro_initial_not_done(tmp_path: Path) -> None:
     from unittest.mock import MagicMock
+
     from cognitive_data_arcade.engine.scene import Scene
 
     back = MagicMock(spec=Scene)
@@ -35,6 +36,7 @@ def test_act_intro_initial_not_done(tmp_path: Path) -> None:
 
 def test_act_intro_space_marks_done_and_seen(tmp_path: Path) -> None:
     from unittest.mock import MagicMock
+
     from cognitive_data_arcade.engine.scene import Scene
 
     pm = _pm(tmp_path)
@@ -47,6 +49,7 @@ def test_act_intro_space_marks_done_and_seen(tmp_path: Path) -> None:
 
 def test_act_intro_escape_exits_without_marking_seen(tmp_path: Path) -> None:
     from unittest.mock import MagicMock
+
     from cognitive_data_arcade.engine.scene import Scene
 
     pm = _pm(tmp_path)
@@ -59,6 +62,7 @@ def test_act_intro_escape_exits_without_marking_seen(tmp_path: Path) -> None:
 
 def test_make_act_intro_returns_intro_scene_when_not_seen(tmp_path: Path) -> None:
     from unittest.mock import MagicMock
+
     from cognitive_data_arcade.engine.scene import Scene
 
     pm = _pm(tmp_path)
@@ -69,6 +73,7 @@ def test_make_act_intro_returns_intro_scene_when_not_seen(tmp_path: Path) -> Non
 
 def test_make_act_intro_returns_back_when_already_seen(tmp_path: Path) -> None:
     from unittest.mock import MagicMock
+
     from cognitive_data_arcade.engine.scene import Scene
 
     pm = _pm(tmp_path)
@@ -80,6 +85,7 @@ def test_make_act_intro_returns_back_when_already_seen(tmp_path: Path) -> None:
 
 def test_draw_does_not_crash(tmp_path: Path) -> None:
     from unittest.mock import MagicMock
+
     from cognitive_data_arcade.engine.scene import Scene
 
     back = MagicMock(spec=Scene)

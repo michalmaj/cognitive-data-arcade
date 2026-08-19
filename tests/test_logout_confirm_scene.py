@@ -57,8 +57,10 @@ def test_esc_cancels_without_deleting() -> None:
 
 
 def test_esc_with_back_scene_routes_to_fresh_profile() -> None:
+    import pathlib
+    import tempfile
+
     from cognitive_data_arcade.ui.profile_screen import ProfileScene
-    import tempfile, pathlib
 
     pygame.init()
     from cognitive_data_arcade.engine.i18n import get_strings

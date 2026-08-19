@@ -1,9 +1,12 @@
 from __future__ import annotations
+
+from unittest.mock import MagicMock
+
 import pygame
 import pytest
-from unittest.mock import MagicMock
+
 from cognitive_data_arcade.engine.i18n import EN
-from cognitive_data_arcade.ui.menu import LessonMenuScene, _VIRTUAL_H, _SIDEBAR_H
+from cognitive_data_arcade.ui.menu import _SIDEBAR_H, _VIRTUAL_H, LessonMenuScene
 
 
 @pytest.fixture(autouse=True)

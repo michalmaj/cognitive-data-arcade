@@ -1,20 +1,21 @@
 from __future__ import annotations
+
 from pathlib import Path
 
 import pytest
+
 from cognitive_data_arcade.engine.badges import (
-    ALL_MODULE_BADGES,
-    Badge,
-    BadgeEngine,
-    BADGE_REGISTRY,
-    SessionResult,
     _ALL_LESSONS,
     _MODULE_LESSONS,
+    ALL_MODULE_BADGES,
+    BADGE_REGISTRY,
+    Badge,
+    BadgeEngine,
+    SessionResult,
     earned_badges,
     module_complete,
 )
 from cognitive_data_arcade.profile.manager import Profile
-
 
 # ── Session achievement badge tests ──────────────────────────────────────────
 

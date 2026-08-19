@@ -5,22 +5,26 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-
 import pygame
 
 from cognitive_data_arcade.engine.chart import figure_to_surface
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+)
+from cognitive_data_arcade.engine.colors import (
+    DIM as _DIM,
+)
+from cognitive_data_arcade.engine.colors import (
+    PURPLE as _PURPLE,
+)
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
+)
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.text_tokenizer.engine import TokenizerState
 from cognitive_data_arcade.games.text_tokenizer.stop_words import STOP_WORDS_EN, STOP_WORDS_PL
 from cognitive_data_arcade.games.text_tokenizer.widgets import SharedState
-
-from cognitive_data_arcade.engine.colors import (
-    BG as _BG,
-    WHITE as _WHITE,
-    DIM as _DIM,
-    PURPLE as _PURPLE,
-)
 
 _FIG_BG = "#0f0f23"
 _AX_BG = "#1a1a3e"

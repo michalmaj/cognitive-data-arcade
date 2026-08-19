@@ -7,7 +7,7 @@ import pytest
 
 from cognitive_data_arcade.engine import fonts as _fonts_module
 from cognitive_data_arcade.engine.i18n import PL
-from cognitive_data_arcade.games.visual_search.config import VSConfig, TIMEOUT_MS
+from cognitive_data_arcade.games.visual_search.config import TIMEOUT_MS, VSConfig
 from cognitive_data_arcade.games.visual_search.game import (
     VisualSearchGame,
     _generate_block,

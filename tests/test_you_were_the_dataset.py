@@ -1,6 +1,7 @@
 """Tests for L31 You Were the Dataset."""
 
 from __future__ import annotations
+
 from pathlib import Path
 
 
@@ -14,8 +15,8 @@ def test_game_state_defaults():
 
 def test_prerequisites_all_present(tmp_path):
     from cognitive_data_arcade.games.you_were_the_dataset.profile_loader import (
-        check_prerequisites,
         REQUIRED_GAMES,
+        check_prerequisites,
     )
 
     for name in REQUIRED_GAMES:
@@ -169,8 +170,9 @@ def test_lesson_31_structure():
 
 
 def test_game_renders_3_frames():
-    import pygame
     from unittest.mock import patch
+
+    import pygame
 
     pygame.init()
     surface = pygame.Surface((1024, 720))

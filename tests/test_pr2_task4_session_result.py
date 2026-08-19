@@ -1,8 +1,9 @@
 """Failing tests for Task 4: Module 4 games."""
 
 from pathlib import Path
-import pygame
 from unittest.mock import MagicMock
+
+import pygame
 
 from cognitive_data_arcade.engine.i18n import PL
 from cognitive_data_arcade.profile.manager import ProfileManager

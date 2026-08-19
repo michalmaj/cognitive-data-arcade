@@ -10,7 +10,6 @@ from cognitive_data_arcade.engine.lesson_registry import (
     lesson_available,
 )
 
-
 # ── lesson_available ──────────────────────────────────────────────────────────
 
 

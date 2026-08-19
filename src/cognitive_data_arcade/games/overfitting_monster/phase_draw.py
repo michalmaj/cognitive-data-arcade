@@ -3,6 +3,30 @@ from __future__ import annotations
 
 import pygame
 
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+)
+from cognitive_data_arcade.engine.colors import (
+    BLUE as _BLUE,
+)
+from cognitive_data_arcade.engine.colors import (
+    DIM as _DIM,
+)
+from cognitive_data_arcade.engine.colors import (
+    GREEN as _GREEN,
+)
+from cognitive_data_arcade.engine.colors import (
+    ORANGE as _ORANGE,
+)
+from cognitive_data_arcade.engine.colors import (
+    RED as _RED,
+)
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
+)
+from cognitive_data_arcade.engine.colors import (
+    YELLOW as _YELLOW,
+)
 from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.overfitting_monster.classifier import (
@@ -13,17 +37,6 @@ from cognitive_data_arcade.games.overfitting_monster.classifier import (
 )
 from cognitive_data_arcade.games.overfitting_monster.scenarios import Scenario, generate_data
 from cognitive_data_arcade.games.overfitting_monster.widgets import SliderWidget
-
-from cognitive_data_arcade.engine.colors import (
-    BG as _BG,
-    WHITE as _WHITE,
-    DIM as _DIM,
-    GREEN as _GREEN,
-    RED as _RED,
-    BLUE as _BLUE,
-    YELLOW as _YELLOW,
-    ORANGE as _ORANGE,
-)
 
 _PANEL = (18, 18, 42)
 

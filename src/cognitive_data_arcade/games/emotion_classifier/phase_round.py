@@ -19,11 +19,21 @@ _PANEL_W = 280
 _TOP_H = 50
 from cognitive_data_arcade.engine.colors import (
     BG as _BG,
-    WHITE as _WHITE,
+)
+from cognitive_data_arcade.engine.colors import (
     DIM as _DIM,
+)
+from cognitive_data_arcade.engine.colors import (
     GREEN as _GREEN,
-    RED as _RED,
+)
+from cognitive_data_arcade.engine.colors import (
     PURPLE as _PURPLE,
+)
+from cognitive_data_arcade.engine.colors import (
+    RED as _RED,
+)
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
 )
 
 _TOP_BG = (12, 12, 30)

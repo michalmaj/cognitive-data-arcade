@@ -4,18 +4,21 @@ from collections.abc import Callable
 from pathlib import Path
 
 import pygame
-from cognitive_data_arcade.engine.fonts import get_font
 
 from cognitive_data_arcade.engine.badges import SessionResult
+from cognitive_data_arcade.engine.colors import (
+    BG as _BG,
+)
+from cognitive_data_arcade.engine.colors import (
+    ORANGE as _HIGHLIGHT_COLOR,
+)
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _TITLE_COLOR,
+)
+from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.i18n import Strings, level_title
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.profile.manager import Profile, ProfileManager
-
-from cognitive_data_arcade.engine.colors import (
-    BG as _BG,
-    WHITE as _TITLE_COLOR,
-    ORANGE as _HIGHLIGHT_COLOR,
-)
 
 _BANNER_BG = (26, 26, 62)
 _ITEM_COLOR = (160, 160, 160)

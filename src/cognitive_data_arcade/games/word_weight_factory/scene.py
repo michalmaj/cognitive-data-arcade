@@ -7,12 +7,12 @@ from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.word_weight_factory.corpus import CorpusState
 from cognitive_data_arcade.games.word_weight_factory.engine import WeightEngine, WeightMatrix
-from cognitive_data_arcade.games.word_weight_factory.widgets import CorpusPanel
-from cognitive_data_arcade.games.word_weight_factory.step_corpus import StepCorpusScene
 from cognitive_data_arcade.games.word_weight_factory.step_bow import StepBowScene
-from cognitive_data_arcade.games.word_weight_factory.step_tf import StepTfScene
+from cognitive_data_arcade.games.word_weight_factory.step_corpus import StepCorpusScene
 from cognitive_data_arcade.games.word_weight_factory.step_idf import StepIdfScene
+from cognitive_data_arcade.games.word_weight_factory.step_tf import StepTfScene
 from cognitive_data_arcade.games.word_weight_factory.step_tfidf import StepTfidfScene
+from cognitive_data_arcade.games.word_weight_factory.widgets import CorpusPanel
 
 _W, _H = 1024, 768
 _PIPE_H = 48  # pipeline bar height
@@ -22,6 +22,8 @@ _STEP_W = _W - _PANEL_W  # 804
 
 from cognitive_data_arcade.engine.colors import (
     BG as _BG,
+)
+from cognitive_data_arcade.engine.colors import (
     DIM as _DIM,
 )
 

@@ -4,10 +4,10 @@ import pygame
 
 from cognitive_data_arcade.engine.i18n import EN
 from cognitive_data_arcade.ui.event_log_level_scene import (
-    EventLogLevelScene,
-    _tile_rect,
     _ROW1_Y,
     _ROW2_Y,
+    EventLogLevelScene,
+    _tile_rect,
 )
 
 

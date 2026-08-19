@@ -1,6 +1,8 @@
 import json
 from datetime import date
+
 import pytest
+
 from cognitive_data_arcade.profile.manager import ProfileManager
 
 

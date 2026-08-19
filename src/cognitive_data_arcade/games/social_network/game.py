@@ -4,8 +4,8 @@ import copy
 import math
 
 import pygame
-from cognitive_data_arcade.engine.fonts import get_font
 
+from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.games.social_network.graph import (
     Graph,
@@ -32,6 +32,8 @@ _RNG_P = 0.3
 
 from cognitive_data_arcade.engine.colors import (
     BG as _BG,
+)
+from cognitive_data_arcade.engine.colors import (
     BLUE as _BLUE,
 )
 

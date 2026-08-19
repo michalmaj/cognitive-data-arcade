@@ -3,15 +3,20 @@ from __future__ import annotations
 
 import pygame
 
-from cognitive_data_arcade.engine.fonts import get_font
-from cognitive_data_arcade.games.word_weight_factory.corpus import CorpusState, _PRESETS
-
 from cognitive_data_arcade.engine.colors import (
-    WHITE as _WHITE,
-    DIM as _DIM,
     BLUE as _BLUE,
+)
+from cognitive_data_arcade.engine.colors import (
+    DIM as _DIM,
+)
+from cognitive_data_arcade.engine.colors import (
     PURPLE as _PURPLE,
 )
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
+)
+from cognitive_data_arcade.engine.fonts import get_font
+from cognitive_data_arcade.games.word_weight_factory.corpus import _PRESETS, CorpusState
 
 _PANEL_W = 220
 _PANEL = (18, 18, 42)

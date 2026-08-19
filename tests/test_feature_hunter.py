@@ -2,7 +2,7 @@ from __future__ import annotations
 
 
 def test_difficulty_configs_card_counts():
-    from cognitive_data_arcade.games.feature_hunter.config import EASY, MEDIUM, HARD
+    from cognitive_data_arcade.games.feature_hunter.config import EASY, HARD, MEDIUM
 
     assert EASY.card_count == 4
     assert MEDIUM.card_count == 6
@@ -10,7 +10,7 @@ def test_difficulty_configs_card_counts():
 
 
 def test_difficulty_configs_timers():
-    from cognitive_data_arcade.games.feature_hunter.config import EASY, MEDIUM, HARD
+    from cognitive_data_arcade.games.feature_hunter.config import EASY, HARD, MEDIUM
 
     assert EASY.timer_s is None
     assert MEDIUM.timer_s == 45.0
@@ -18,7 +18,7 @@ def test_difficulty_configs_timers():
 
 
 def test_difficulty_configs_hints():
-    from cognitive_data_arcade.games.feature_hunter.config import EASY, MEDIUM, HARD
+    from cognitive_data_arcade.games.feature_hunter.config import EASY, HARD, MEDIUM
 
     assert EASY.hints == "full"
     assert MEDIUM.hints == "scatter_only"
@@ -56,24 +56,24 @@ def test_feature_bank_has_all_categories():
 
 
 def test_easy_difficulty_can_draw_4_features():
-    from cognitive_data_arcade.games.feature_hunter.features import draw_features
     from cognitive_data_arcade.games.feature_hunter.config import EASY
+    from cognitive_data_arcade.games.feature_hunter.features import draw_features
 
     features = draw_features(EASY, session_seed=0, round_idx=0)
     assert len(features) == 4
 
 
 def test_hard_difficulty_can_draw_8_features():
-    from cognitive_data_arcade.games.feature_hunter.features import draw_features
     from cognitive_data_arcade.games.feature_hunter.config import HARD
+    from cognitive_data_arcade.games.feature_hunter.features import draw_features
 
     features = draw_features(HARD, session_seed=7, round_idx=3)
     assert len(features) == 8
 
 
 def test_draw_features_always_includes_noise():
-    from cognitive_data_arcade.games.feature_hunter.features import draw_features
     from cognitive_data_arcade.games.feature_hunter.config import EASY
+    from cognitive_data_arcade.games.feature_hunter.features import draw_features
 
     for seed in range(10):
         features = draw_features(EASY, session_seed=seed, round_idx=0)
@@ -91,9 +91,10 @@ def test_simulate_scatter_shape():
 
 
 def test_simulate_scatter_normalised():
+    import numpy as np
+
     from cognitive_data_arcade.games.feature_hunter.features import FEATURE_BANK
     from cognitive_data_arcade.games.feature_hunter.simulator import simulate_scatter
-    import numpy as np
 
     x, y = simulate_scatter(FEATURE_BANK[0], n_points=60, seed=2)
     assert float(np.min(x)) >= 0.0 - 1e-6
@@ -103,9 +104,10 @@ def test_simulate_scatter_normalised():
 
 
 def test_simulate_scatter_deterministic():
+    import numpy as np
+
     from cognitive_data_arcade.games.feature_hunter.features import FEATURE_BANK
     from cognitive_data_arcade.games.feature_hunter.simulator import simulate_scatter
-    import numpy as np
 
     x1, y1 = simulate_scatter(FEATURE_BANK[1], n_points=40, seed=99)
     x2, y2 = simulate_scatter(FEATURE_BANK[1], n_points=40, seed=99)
@@ -148,16 +150,16 @@ def test_grid_layout_all_difficulties():
 
 
 def test_round_score_perfect_easy():
-    from cognitive_data_arcade.games.feature_hunter.phase_b import compute_round_score
     from cognitive_data_arcade.games.feature_hunter.config import EASY
+    from cognitive_data_arcade.games.feature_hunter.phase_b import compute_round_score
 
     score = compute_round_score(correct=4, total=4, timer_remaining=0.0, difficulty=EASY)
     assert score == 4 * 10 + 20  # 60
 
 
 def test_round_score_hard_with_time_bonus():
-    from cognitive_data_arcade.games.feature_hunter.phase_b import compute_round_score
     from cognitive_data_arcade.games.feature_hunter.config import HARD
+    from cognitive_data_arcade.games.feature_hunter.phase_b import compute_round_score
 
     # 8 correct, 15s remaining → 80 + 20 + (15//5)*2 = 106
     score = compute_round_score(correct=8, total=8, timer_remaining=15.0, difficulty=HARD)
@@ -165,8 +167,8 @@ def test_round_score_hard_with_time_bonus():
 
 
 def test_round_score_partial():
-    from cognitive_data_arcade.games.feature_hunter.phase_b import compute_round_score
     from cognitive_data_arcade.games.feature_hunter.config import MEDIUM
+    from cognitive_data_arcade.games.feature_hunter.phase_b import compute_round_score
 
     # 4/6 correct, no time bonus (timer_remaining counts but no perfect bonus)
     score = compute_round_score(correct=4, total=6, timer_remaining=20.0, difficulty=MEDIUM)

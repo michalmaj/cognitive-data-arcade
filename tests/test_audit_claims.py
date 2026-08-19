@@ -8,13 +8,12 @@ from pathlib import Path
 import pytest
 
 from scripts.audit_claims import (  # type: ignore[import]
-    Rule,
     RULES,
+    Rule,
     collect_paths,
     main,
     scan_file,
 )
-
 
 # ---------------------------------------------------------------------------
 # Rule fixture helpers

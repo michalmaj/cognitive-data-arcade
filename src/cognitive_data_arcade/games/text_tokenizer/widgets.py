@@ -27,9 +27,15 @@ _BAR_H = 48
 _W = 1024
 from cognitive_data_arcade.engine.colors import (
     BG as _BG,
-    WHITE as _WHITE,
-    DIM as _DIM,
+)
+from cognitive_data_arcade.engine.colors import (
     BLUE as _BLUE,
+)
+from cognitive_data_arcade.engine.colors import (
+    DIM as _DIM,
+)
+from cognitive_data_arcade.engine.colors import (
+    WHITE as _WHITE,
 )
 
 _PANEL = (18, 18, 42)

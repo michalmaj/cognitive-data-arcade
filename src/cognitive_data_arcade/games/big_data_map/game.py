@@ -4,20 +4,22 @@ import math
 from typing import Callable
 
 import pygame
-from cognitive_data_arcade.engine.fonts import get_font
+
 from cognitive_data_arcade.engine import audio
+from cognitive_data_arcade.engine.colors import BG as _BG
+from cognitive_data_arcade.engine.colors import ORANGE as _ORANGE
+from cognitive_data_arcade.engine.fonts import get_font
 from cognitive_data_arcade.engine.i18n import Strings
 from cognitive_data_arcade.engine.scene import Scene
 from cognitive_data_arcade.profile.manager import ProfileManager
-from cognitive_data_arcade.engine.colors import BG as _BG, ORANGE as _ORANGE
 
 from .concept_data import (
-    CONCEPT_NODES,
     CONCEPT_EDGES,
+    CONCEPT_NODES,
+    DISPLAY_NUM,
     MODULE_COLORS,
     MODULE_NAMES,
     LessonNode,
-    DISPLAY_NUM,
     get_connected,
 )
 
@@ -447,8 +449,8 @@ class BigDataMapGame(Scene):
             y += font.get_height() + 8
 
     def _build_next_scene(self) -> Scene:
-        from cognitive_data_arcade.ui.session_summary import SessionSummaryScene
         from cognitive_data_arcade.engine.badges import BadgeEngine, SessionResult
+        from cognitive_data_arcade.ui.session_summary import SessionSummaryScene
 
         visited = len(self._nodes_visited)
         ap = min(100, visited * 2)
