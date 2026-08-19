@@ -35,7 +35,12 @@ class PhaseFeedbackScene(Scene):
         self._next: Scene | None = None
 
     def handle_event(self, event: pygame.event.Event) -> None:
-        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 or event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+        if (
+            event.type == pygame.MOUSEBUTTONDOWN
+            and event.button == 1
+            or event.type == pygame.KEYDOWN
+            and event.key == pygame.K_SPACE
+        ):
             self._advance()
 
     def _advance(self) -> None:

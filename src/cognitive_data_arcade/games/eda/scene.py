@@ -130,9 +130,7 @@ _HELP_LINES: list[tuple[str, bool]] = [
 
 
 class EDAScene(Scene):
-    def __init__(
-        self, pm: ProfileManager | None = None, strings: Strings | None = None
-    ) -> None:
+    def __init__(self, pm: ProfileManager | None = None, strings: Strings | None = None) -> None:
         self._pm = pm
         self._strings = strings
         self._generate_count: int = 0

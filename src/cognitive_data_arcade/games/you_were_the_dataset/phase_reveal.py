@@ -48,7 +48,14 @@ class PhaseRevealScene(Scene):
     def handle_event(self, event: pygame.event.Event) -> None:
         if self._done:
             return
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and self._t >= 500 or event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and self._t >= 500:
+        if (
+            event.type == pygame.KEYDOWN
+            and event.key == pygame.K_SPACE
+            and self._t >= 500
+            or event.type == pygame.MOUSEBUTTONDOWN
+            and event.button == 1
+            and self._t >= 500
+        ):
             self._advance()
 
     def _advance(self) -> None:
