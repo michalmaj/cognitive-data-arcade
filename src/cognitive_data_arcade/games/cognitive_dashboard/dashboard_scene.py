@@ -130,7 +130,7 @@ class CognitiveDashboardScene(Scene):
 
     # ── helpers ────────────────────────────────────────────────────
 
-    def _show_synthetic_button(self) -> bool:
+    def show_synthetic_button(self) -> bool:
         s = self._session
         return s.rt is None and s.stroop is None and s.flanker is None and s.gonogo is None
 
@@ -234,7 +234,7 @@ class CognitiveDashboardScene(Scene):
                     self._detail_idx = self._selected
                 else:
                     self._launch_task(self._selected)
-            elif event.key == pygame.K_s and self._show_synthetic_button():
+            elif event.key == pygame.K_s and self.show_synthetic_button():
                 from cognitive_data_arcade.games.cognitive_dashboard.config import (
                     generate_synthetic,
                 )
@@ -373,7 +373,7 @@ class CognitiveDashboardScene(Scene):
 
         if self._session.is_complete():
             self._draw_profile(surface)
-        elif self._show_synthetic_button():
+        elif self.show_synthetic_button():
             self._draw_synthetic_button(surface, w, h)
 
         hint = get_font(22).render("strzałki + ENTER = zagraj / szczegóły zadania", True, _DIM)

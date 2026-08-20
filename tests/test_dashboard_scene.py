@@ -56,14 +56,14 @@ def test_esc_does_not_exit_scene(tmp_path) -> None:
 
 def test_synthetic_button_visible_when_empty(tmp_path) -> None:
     scene = _make_scene(tmp_path)
-    assert scene._show_synthetic_button()
+    assert scene.show_synthetic_button()
 
 
 def test_synthetic_button_hidden_when_rt_played(tmp_path) -> None:
     r = _make_result()
     s = DashboardSession(rt=r)
     scene = _make_scene(tmp_path, s)
-    assert not scene._show_synthetic_button()
+    assert not scene.show_synthetic_button()
 
 
 def test_profile_hidden_when_incomplete(tmp_path) -> None:
