@@ -105,49 +105,52 @@ def test_l14_game_factory_callable_and_produces_scene(tmp_path):
     assert scene is not None
 
 
-# ── ESC wiring: back_scene surfaces in HowToPlay esc_scene ───────────────────
+# ── ESC wiring: back_scene is returned when ESC is pressed in HowToPlay ──────
 
 
-def test_l13_with_back_injects_esc_scene(tmp_path):
-    """When seen_intro=False, game_factory_for_with_back wraps L13 in HowToPlay
-    with esc_scene=back, not esc_scene=None."""
+def test_l13_esc_in_howtoplay_navigates_to_back(tmp_path):
+    """When seen_intro=False, pressing ESC in the HowToPlay wrapper must
+    navigate to back_scene, not to None."""
     from cognitive_data_arcade.ui.game_launcher import game_factory_for_with_back
     from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
 
     back = MagicMock()
     scene = game_factory_for_with_back(13, _pm(tmp_path, seen_intro=False), EN, back_scene=back)
     assert isinstance(scene, HowToPlayScene)
-    assert scene._esc_scene is back
+    scene.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode=""))
+    assert scene.is_done()
+    assert scene.next_scene() is back
 
 
-def test_l14_with_back_injects_esc_scene(tmp_path):
+def test_l14_esc_in_howtoplay_navigates_to_back(tmp_path):
     from cognitive_data_arcade.ui.game_launcher import game_factory_for_with_back
     from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
 
     back = MagicMock()
     scene = game_factory_for_with_back(14, _pm(tmp_path, seen_intro=False), EN, back_scene=back)
     assert isinstance(scene, HowToPlayScene)
-    assert scene._esc_scene is back
+    scene.handle_event(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode=""))
+    assert scene.is_done()
+    assert scene.next_scene() is back
 
 
 # ── Restart identity ─────────────────────────────────────────────────────────
 
 
 def test_l13_restart_creates_new_inner(tmp_path):
-    """Restarting L13 (Distribution Playground) via game_factory_for_with_back
-    must produce a PausableGame with a NEW inner scene, not the original object.
+    """Restarting L13 (Distribution Playground) must produce a PausableGame
+    with a NEW inner scene, not the original object.
 
-    This test documents the stale-state restart bug: _make_pausable_with_back
-    captured the already-created inner in a closure, so every restart call
-    returned PausableGame(same_inner, ...).
+    This test checks object identity via _inner because there is no practical
+    behavioral alternative: comparing mutable gameplay state post-restart would
+    require running two full game sessions. The identity check is the minimal
+    proof that restart_factory was called with a fresh closure.
     """
-    import pygame
-
     from cognitive_data_arcade.engine.pause import PausableGame
     from cognitive_data_arcade.ui.game_launcher import game_factory_for_with_back
 
     back = MagicMock()
-    # seen_intro=True → make_how_to_play returns the PausableGame directly
+    # seen_intro=True → game_factory_for_with_back returns the PausableGame directly
     pausable = game_factory_for_with_back(13, _pm(tmp_path), EN, back_scene=back)
     assert isinstance(pausable, PausableGame), (
         "With seen_intro=True, game_factory_for_with_back(13) should return PausableGame directly"
@@ -155,9 +158,10 @@ def test_l13_restart_creates_new_inner(tmp_path):
 
     original_inner = pausable._inner
 
-    # Simulate restart via the pause menu
-    pausable._paused = True
-    pausable._selected = 0
+    # Trigger restart via public interface: ESC to pause, RETURN on item 0
+    pausable.handle_event(
+        pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE, mod=0, unicode="")
+    )
     pausable.handle_event(
         pygame.event.Event(pygame.KEYDOWN, key=pygame.K_RETURN, mod=0, unicode="\r")
     )

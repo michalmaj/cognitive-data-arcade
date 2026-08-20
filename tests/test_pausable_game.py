@@ -125,8 +125,6 @@ def test_restart_creates_new_scene(tmp_path: Path) -> None:
 
 
 def test_how_to_play_opens_and_game_stays_alive(tmp_path: Path) -> None:
-    from cognitive_data_arcade.ui.how_to_play_scene import HowToPlayScene
-
     pg, _, _ = _make(tmp_path)
     _pause(pg)
     _select(pg, 1)  # item 1 = How to Play
