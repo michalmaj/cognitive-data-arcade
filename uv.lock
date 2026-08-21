@@ -79,7 +79,7 @@ wheels = [
 
 [[package]]
 name = "cognitive-data-arcade"
-version = "1.0.0a0"
+version = "1.0.0b1"
 source = { editable = "." }
 dependencies = [
     { name = "matplotlib" },

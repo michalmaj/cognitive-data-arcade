@@ -22,6 +22,17 @@ Beta stabilisation — static typing, hardened packaging, smoke test suite, docu
 - **`PausableGame.is_paused()`** — added public accessor; previously internal state was read via `_paused` in tests.
 - **`CognitiveDashboardScene.show_synthetic_button()`** — renamed from `_show_synthetic_button` (private) to public API.
 - **`level_title()`** — added missing return statement for the unreachable final case (mypy violation).
+- **Stale data paths in lesson content** — all lesson Markdown files and in-app lesson text now reference `~/.cognitive_data_arcade/data/generated/` (previously showed the old repo-relative `data/generated/`). Regression tests (`tests/test_lesson_content.py`) enforce this going forward.
+
+### Known Limitations
+
+The following are accepted beta limitations. They are not blockers for classroom use and will be addressed in v1.0.0 or later.
+
+- **Dashboard shows 6 game types only.** The Cognitive Dashboard reads session CSVs for Reaction Time, Stroop, Flanker, Go/No-Go, N-Back, and Visual Search. The remaining 25 games record gameplay events to CSV but those files are not yet visualised in the dashboard.
+- **Synthetic placeholder on first visit.** The dashboard displays example data from `data/synthetic/` until at least one supported game session has been played. A notice is shown to the student.
+- **Standalone build is manual.** `scripts/build.sh` produces a portable binary via Nuitka; a C compiler is required. No prebuilt binaries are distributed with this release. The `uv run cognitive-data-arcade` workflow remains the supported path for students.
+- **Data is single-device and local.** All CSV files are written to `~/.cognitive_data_arcade/data/generated/` on the host machine. There is no cloud sync or cross-device sharing.
+- **Shell examples use Unix path syntax.** All lesson tasks and student guide examples show `~/.cognitive_data_arcade/...`. Windows students must substitute `%USERPROFILE%\.cognitive_data_arcade` when using Command Prompt or PowerShell.
 
 ---
 

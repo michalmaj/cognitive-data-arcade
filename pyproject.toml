@@ -1,6 +1,6 @@
 [project]
 name = "cognitive-data-arcade"
-version = "1.0.0a0"
+version = "1.0.0b1"
 description = "Interactive pygame-based learning platform — 31 data science games across 6 modules, bilingual (PL/EN)"
 readme = "README.md"
 authors = [
