@@ -9,17 +9,13 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [windows-latest, macos-latest, ubuntu-latest]
         include:
           - os: windows-latest
             artifact: CognitiveDataArcade-windows.exe
-            nuitka_output: CognitiveDataArcade.exe
           - os: macos-latest
             artifact: CognitiveDataArcade-macos
-            nuitka_output: CognitiveDataArcade.bin
           - os: ubuntu-latest
             artifact: CognitiveDataArcade-linux
-            nuitka_output: CognitiveDataArcade.bin
 
     runs-on: ${{ matrix.os }}
 
@@ -40,14 +36,22 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: |
           sudo apt-get update -q
-          sudo apt-get install -y patchelf ccache
+          sudo apt-get install -y patchelf ccache libsdl2-dev
 
       - name: Build standalone executable
         run: |
           uv run python -m nuitka \
             --onefile \
+            --follow-imports \
             --assume-yes-for-downloads \
             --include-package=cognitive_data_arcade \
+            --include-package=pygame \
+            --include-package=pandas \
+            --include-package=matplotlib \
+            --include-package=numpy \
+            --include-package=sklearn \
+            --include-package=scipy \
+            --nofollow-import-to=tkinter \
             --include-data-dir=assets=assets \
             --output-dir=dist \
             --output-filename=CognitiveDataArcade \
@@ -55,10 +59,15 @@ jobs:
         shell: bash
 
       - name: Rename artifact
+        # Use find -type f to avoid matching the .build/ directory Nuitka creates alongside the binary.
         run: |
-          src=$(ls dist/CognitiveDataArcade* | head -1)
-          mv "$src" dist/${{ matrix.artifact }}
+          src=$(find dist -maxdepth 1 -type f -name "CognitiveDataArcade*" | head -1)
+          mv "$src" "dist/${{ matrix.artifact }}"
         shell: bash
+
+      - name: Set executable bit (macOS / Linux)
+        if: matrix.os != 'windows-latest'
+        run: chmod +x "dist/${{ matrix.artifact }}"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -84,8 +93,36 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
+          generate_release_notes: false
+          body: |
+            ## Pobieranie / Download
+
+            Pobierz plik odpowiedni dla swojego systemu — zawiera wszystko (nie wymaga instalacji Pythona).
+
+            | System | Plik | Uwagi |
+            |---|---|---|
+            | **Windows 10/11** | `CognitiveDataArcade-windows.exe` | Może pojawić się SmartScreen — kliknij „Więcej informacji → Uruchom mimo to" |
+            | **macOS 12+** | `CognitiveDataArcade-macos` | Po pobraniu: kliknij prawym → Otwórz (Gatekeeper nie przepuszcza niepodpisanych plików zwykłym dwuklikiem) |
+            | **Linux (Ubuntu 22.04+)** | `CognitiveDataArcade-linux` | Wymaga `libsdl2-2.0-0`: `sudo apt install libsdl2-2.0-0` |
+
+            **Uruchomienie:**
+
+            ```bash
+            # macOS / Linux — nadaj uprawnienia do wykonania (jednorazowo):
+            chmod +x CognitiveDataArcade-macos   # lub CognitiveDataArcade-linux
+            ./CognitiveDataArcade-macos
+            ```
+
+            Przy pierwszym uruchomieniu aplikacja tworzy katalog `~/.cognitive_data_arcade/` na Twoje dane.
+            Dane są przechowywane wyłącznie lokalnie — nic nie jest wysyłane poza Twój komputer.
+
+            ---
+
+            *Download the file for your OS — includes everything, no Python required.*
+
+            **macOS:** right-click → Open to bypass Gatekeeper on first launch.
+            **Linux:** requires `sudo apt install libsdl2-2.0-0`.
           files: |
             dist/CognitiveDataArcade-windows.exe/CognitiveDataArcade-windows.exe
             dist/CognitiveDataArcade-macos/CognitiveDataArcade-macos
             dist/CognitiveDataArcade-linux/CognitiveDataArcade-linux
-          generate_release_notes: true
