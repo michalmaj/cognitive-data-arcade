@@ -134,6 +134,9 @@ class PausableGame(Scene):
                 self._next = nxt
             self._done = True
 
+    def is_paused(self) -> bool:
+        return self._paused
+
     def is_done(self) -> bool:
         return self._done
 
