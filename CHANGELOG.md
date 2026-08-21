@@ -2,6 +2,29 @@
 
 All notable changes to Cognitive Data Arcade are documented here.
 
+## [v1.0.0b1] — 2026-08-21
+
+Beta stabilisation — static typing, hardened packaging, smoke test suite, documentation sync.
+
+### Changed
+
+- **Data storage path** — generated CSV files now written to `~/.cognitive_data_arcade/data/generated/` (previously `data/generated/` inside the repo). Applies to all platforms; Windows uses `%USERPROFILE%\.cognitive_data_arcade`. Code that references `Path("data/generated/...")` must be updated to `Path.home() / ".cognitive_data_arcade" / "data" / "generated" / ...`.
+- **Asset resolution** — `default_app_paths().asset_dir` now delegates to `assets_dir()` which correctly handles both dev-mode and frozen (Nuitka) builds. Previously broken in packaged builds.
+
+### Added
+
+- **Targeted static typing** — mypy 2.3.1 checks analytics, engine core, profile, and provenance modules. CI fails on type errors in these modules.
+- **Nuitka build script** — `scripts/build.sh` produces a standalone `dist/CognitiveDataArcade` executable; assets must be distributed alongside it.
+- **Beta smoke suite** — `tests/test_smoke.py`: 5 cross-component journey tests (`@pytest.mark.smoke`) covering the full data pipeline from game completion to CSV persistence and dashboard visibility.
+
+### Fixed
+
+- **`PausableGame.is_paused()`** — added public accessor; previously internal state was read via `_paused` in tests.
+- **`CognitiveDashboardScene.show_synthetic_button()`** — renamed from `_show_synthetic_button` (private) to public API.
+- **`level_title()`** — added missing return statement for the unreachable final case (mypy violation).
+
+---
+
 ## [v1.0.0a] — 2026-06-29
 
 Student-Ready Alpha — onboarding flow, profile data stats, home-prompt system, and pre-release hardening.

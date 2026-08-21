@@ -46,11 +46,10 @@ Run it at least twice — once normally, once while deliberately distracted (loo
 
 ### Where is your data?
 
-After each session, a CSV file appears in:
+After each session, a CSV file appears in your user data folder:
 
-```
-data/generated/reaction_time/
-```
+- **Windows:** `C:\Users\<you>\.cognitive_data_arcade\data\generated\reaction_time\`
+- **macOS / Linux:** `~/.cognitive_data_arcade/data/generated/reaction_time/`
 
 The filename is a timestamp, e.g. `20260527_161352.csv`. Open it in any text editor to see the raw rows.
 
@@ -76,8 +75,11 @@ uv run python
 import pandas as pd
 from pathlib import Path
 
+# Path to your data (same on all platforms)
+data_dir = Path.home() / ".cognitive_data_arcade" / "data" / "generated" / "reaction_time"
+
 # Load your most recent session
-files = sorted(Path("data/generated/reaction_time").glob("*.csv"))
+files = sorted(data_dir.glob("*.csv"))
 df = pd.read_csv(files[-1])
 
 # How many trials?
@@ -104,7 +106,8 @@ If your standard deviation is very high (> 150 ms), your responses were inconsis
 If you ran two sessions (focused vs. distracted):
 
 ```python
-files = sorted(Path("data/generated/reaction_time").glob("*.csv"))
+data_dir = Path.home() / ".cognitive_data_arcade" / "data" / "generated" / "reaction_time"
+files = sorted(data_dir.glob("*.csv"))
 
 session_a = pd.read_csv(files[-2])   # earlier session
 session_b = pd.read_csv(files[-1])   # later session
@@ -130,7 +133,7 @@ These questions are what data science is actually about.
 
 ## What data do games generate?
 
-Six games log CSV files to `data/generated/`. Here are the exact columns for each.
+Six games log CSV files to `~/.cognitive_data_arcade/data/generated/` (Windows: `%USERPROFILE%\.cognitive_data_arcade\data\generated\`). Here are the exact columns for each.
 
 ### Reaction Time Lab → `data/generated/reaction_time/`
 
@@ -283,9 +286,9 @@ The arcade is organised into 6 modules. You can play in any order, but the modul
 - **L09 Go/No-Go Guard** — inhibitory control; logs `gono/` CSV.
 - **L10 N-Back Memory Grid** — working memory load; logs `nback/` CSV.
 - **L11 Visual Search Lab** — feature vs. conjunction search; logs `visual_search/` CSV.
-- **L12 Cognitive Dashboard** — reads all five CSVs above and shows your cross-task profile. **Play the five games first, then open this.**
+- **L12 Cognitive Dashboard** — reads all five CSVs above and shows your cross-task profile. **Play the five games first, then open this.** If you open the Dashboard before playing any games, it will show example (synthetic) data instead of your real results.
 
-**After this module:** You will have five CSV datasets from your own cognitive sessions. The Cognitive Dashboard reads them automatically.
+**After this module:** You will have five CSV datasets from your own cognitive sessions. The Cognitive Dashboard reads them automatically from `~/.cognitive_data_arcade/data/generated/`.
 
 ---
 
@@ -353,7 +356,7 @@ Each lab session or module has specific deliverables. Here is what your instruct
 
 For games that log data (L02, L07–L11):
 
-1. **The CSV file** — copy it out of `data/generated/<game>/` and keep it. Filename is the session timestamp.
+1. **The CSV file** — copy it out of `~/.cognitive_data_arcade/data/generated/<game>/` and keep it. Filename is the session timestamp.
 2. **A short analysis** (5–10 lines of Python) — at minimum: load the file, compute mean and median RT or accuracy per condition, print the result.
 3. **One sentence of interpretation** — what does the number mean? Is it what you expected?
 
@@ -392,4 +395,4 @@ The data this project generates is about you. Your reaction times, your accuracy
 
 A single session of 20 trials is not a scientific study. It is a starting point. The goal is to understand the pipeline, not to diagnose yourself.
 
-All data stays on your computer. The app never sends anything over the network.
+All data stays on your computer in `~/.cognitive_data_arcade/`. The app never sends anything over the network. To remove all recorded data, use the **Reset progress** option in the Profile screen, or delete the `~/.cognitive_data_arcade/data/generated/` folder manually.
