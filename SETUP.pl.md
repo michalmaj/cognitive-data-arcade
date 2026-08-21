@@ -21,6 +21,22 @@ Nie wymaga Pythona ani terminala.
 
 > **Uwaga dla macOS:** Przy pierwszym uruchomieniu może pojawić się ostrzeżenie systemowe. Przejdź do Ustawień systemowych → Prywatność i bezpieczeństwo → kliknij „Otwórz mimo to".
 
+### Wymagana struktura katalogu
+
+Plik wykonywalny i folder `assets/` muszą znajdować się w **tym samym katalogu**:
+
+```
+moj-folder/
+  CognitiveDataArcade        ← plik wykonywalny
+  assets/                    ← dostarcza prowadzący
+    audio/
+    badges/
+    fonts/
+    images/
+```
+
+Dane użytkownika (wyniki sesji, profil) są zapisywane do `~/.cognitive_data_arcade` — nie muszą być w tym folderze.
+
 ---
 
 ## Opcja B — Uruchomienie ze źródła (deweloperzy / zaawansowani użytkownicy)
@@ -113,4 +129,46 @@ Zależności nie zostały zainstalowane. Uruchom `uv sync` w katalogu projektu, 
 
 ### Wolne uruchamianie przy pierwszym uruchomieniu
 
-Pierwsze uruchomienie pobiera i instaluje pakiety do lokalnego środowiska wirtualnego. To jest normalne i trwa 1–2 minuty. Kolejne uruchomienia start w ciągu kilku sekund.
+Pierwsze uruchomienie pobiera i instaluje pakiety do lokalnego środowiska wirtualnego. To jest normalne i trwa 1–2 minuty. Kolejne uruchomienia startują w ciągu kilku sekund.
+
+---
+
+## Opcja C — Samodzielne budowanie pliku wykonywalnego
+
+Dla prowadzących lub deweloperów, którzy chcą samodzielnie zbudować nową wersję pliku wykonywalnego ze źródeł.
+
+### Wymagania
+
+- Wszystkie wymagania Opcji B (Python 3.12, uv, git)
+- Kompilator C:
+  - **Windows** — Visual Studio Build Tools
+  - **macOS** — Xcode Command Line Tools (`xcode-select --install`)
+  - **Linux** — `gcc` (zwykle preinstalowany; jeśli brak: `sudo apt install gcc`)
+
+### Komenda do budowania
+
+```bash
+bash scripts/build.sh
+```
+
+Tworzy plik `dist/CognitiveDataArcade` (lub `.exe` na Windows).
+
+### Weryfikacja przed dystrybucją
+
+```bash
+mkdir /tmp/cda-test
+cp dist/CognitiveDataArcade /tmp/cda-test/
+cp -r assets/ /tmp/cda-test/
+cd /tmp/cda-test && ./CognitiveDataArcade
+```
+
+Aplikacja musi uruchamiac sie z pustego katalogu, ktory nie jest katalogiem repozytorium. Jesli poprawnie laduje zasoby i otwiera menu, build jest gotowy do dystrybucji.
+
+### Co jest dystrybuowane
+
+```
+CognitiveDataArcade        ← zbudowany przez skrypt
+assets/                    ← skopiowany z repozytorium
+```
+
+Dane uzytkownika sa zapisywane do `~/.cognitive_data_arcade` i nigdy nie sa przechowywane w folderze `assets/`.

@@ -21,6 +21,22 @@ No Python or terminal required.
 
 > **macOS note:** The first launch may show a security warning. Go to System Settings → Privacy & Security → click "Open Anyway".
 
+### Required directory layout
+
+The executable and the `assets/` folder must be in the **same directory**:
+
+```
+my-folder/
+  CognitiveDataArcade        ← the executable
+  assets/                    ← provided by the instructor
+    audio/
+    badges/
+    fonts/
+    images/
+```
+
+User data (session results, profile) is saved to `~/.cognitive_data_arcade` and does not need to be in this folder.
+
 ---
 
 ## Option B — Run from source (developers / advanced users)
@@ -114,3 +130,45 @@ The dependencies were not installed. Run `uv sync` in the project directory, the
 ### Slow startup on the first run
 
 The first run downloads and installs packages into a local virtual environment. This is normal and takes 1–2 minutes. Subsequent runs start within a few seconds.
+
+---
+
+## Option C — Build the standalone executable yourself
+
+For instructors or maintainers who need to produce a new executable from source.
+
+### Requirements
+
+- All Option B requirements (Python 3.12, uv, git)
+- A C compiler:
+  - **Windows** — Visual Studio Build Tools
+  - **macOS** — Xcode Command Line Tools (`xcode-select --install`)
+  - **Linux** — `gcc` (usually pre-installed; `sudo apt install gcc` if missing)
+
+### Build command
+
+```bash
+bash scripts/build.sh
+```
+
+This produces `dist/CognitiveDataArcade` (or `.exe` on Windows).
+
+### Verify before distributing
+
+```bash
+mkdir /tmp/cda-test
+cp dist/CognitiveDataArcade /tmp/cda-test/
+cp -r assets/ /tmp/cda-test/
+cd /tmp/cda-test && ./CognitiveDataArcade
+```
+
+The app must launch from a clean directory that is not the repository root. If it loads assets correctly and opens the menu, the build is good to ship.
+
+### What gets distributed
+
+```
+CognitiveDataArcade        ← built by this script
+assets/                    ← copied from the repository
+```
+
+User data is written to `~/.cognitive_data_arcade` and is never stored inside the `assets/` folder.

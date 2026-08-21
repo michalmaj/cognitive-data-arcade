@@ -32,8 +32,9 @@ def test_assets_dir_frozen_mode_resolves_next_to_executable(tmp_path: Path) -> N
     fake_exe = tmp_path / "CognitiveDataArcade"
     fake_exe.touch()
 
-    with patch.object(sys, "frozen", True, create=True), patch.object(
-        sys, "executable", str(fake_exe)
+    with (
+        patch.object(sys, "frozen", True, create=True),
+        patch.object(sys, "executable", str(fake_exe)),
     ):
         result = assets_dir()
 
