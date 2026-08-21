@@ -1,14 +1,16 @@
 # Zadania — Eksploracyjna analiza danych
 
-Wykonaj poniższe kroki, korzystając z pliku CSV sesji Stroopa z `data/generated/stroop/`. Jeśli oczyszczałeś dane w Lekcji 05, użyj oczyszczonej wersji.
+Wykonaj poniższe kroki, korzystając z pliku CSV sesji Stroopa z `~/.cognitive_data_arcade/data/generated/stroop/`. Jeśli oczyszczałeś dane w Lekcji 05, użyj oczyszczonej wersji.
 
 ## Krok 1: Wczytaj i sprawdź zbiór danych
 
 ```python
 import pandas as pd
 import numpy as np
+from pathlib import Path
 
-df = pd.read_csv("data/generated/stroop/TWOJ_PLIK.csv")
+data_dir = Path.home() / ".cognitive_data_arcade" / "data" / "generated" / "stroop"
+df = pd.read_csv(data_dir / "TWOJ_PLIK.csv")
 
 print("Wymiary:", df.shape)
 print("\nTypy kolumn:")

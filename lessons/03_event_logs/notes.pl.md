@@ -12,7 +12,7 @@
 
 ## Oczekiwane obserwacje podczas zadań
 
-Studenci otworzą plik CSV z `data/generated/`. Plik powinien mieć osiem standardowych kolumn. Większość studentów od razu rozpozna `response_time_ms` jako RT, ale niektórzy pomylą ją z `stimulus_onset_ms`. Skorzystaj z tego zamieszania konstruktywnie: zapytaj, co oznacza różnica między tymi dwiema kolumnami w sensie konceptualnym.
+Studenci otworzą plik CSV z `~/.cognitive_data_arcade/data/generated/`. Plik powinien mieć osiem standardowych kolumn. Większość studentów od razu rozpozna `response_time_ms` jako RT, ale niektórzy pomylą ją z `stimulus_onset_ms`. Skorzystaj z tego zamieszania konstruktywnie: zapytaj, co oznacza różnica między tymi dwiema kolumnami w sensie konceptualnym.
 
 Studenci wykonujący zadanie arytmetyczne na znacznikach czasu (Krok 5 w Zadaniach) powinni stwierdzić, że kolejne wartości `stimulus_onset_ms` różnią się o długość przerwy między próbami. Na przestrzeni całej sesji mogą obliczyć przybliżony czas trwania sesji. Ukonkretnia to abstrakcyjny pomysł „rejestrowania z precyzją milisekundową".
 

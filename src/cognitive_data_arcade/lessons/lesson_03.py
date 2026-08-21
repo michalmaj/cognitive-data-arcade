@@ -22,7 +22,7 @@ CONTENT: dict[str, dict[str, list[str]]] = {
             "BIDS jest korzystny przede wszystkim dla samego badacza - standaryzacja przynosi korzyść własną. Zbiór danych, który nie może być ponownie analizowany dwa lata po zebraniu z powodu braku opisu kolumn, ma ograniczoną wartość naukową.",
         ],
         "tasks": [
-            "Otwórz plik CSV z data/generated/ i zidentyfikuj każdą z ośmiu standardowych kolumn. Dla każdej kolumny napisz jedno zdanie wyjaśniające jej cel analityczny.",
+            "Otwórz plik CSV z ~/.cognitive_data_arcade/data/generated/ i zidentyfikuj każdą z ośmiu standardowych kolumn. Dla każdej kolumny napisz jedno zdanie wyjaśniające jej cel analityczny.",
             "Znajdź kolumnę zawierającą czas reakcji w milisekundach. Zapisz wartość minimalną i maksymalną. Sprawdź, czy participant_id jest identyczne we wszystkich wierszach.",
             "Odejmij pierwszy stimulus_onset_ms od ostatniego i przelicz na sekundy - to przybliżony czas trwania sesji. Oblicz średni interwał między dwiema kolejnymi próbami.",
         ],
@@ -46,7 +46,7 @@ CONTENT: dict[str, dict[str, list[str]]] = {
             "BIDS primarily benefits the researcher themselves - standardisation carries its own reward. A dataset that cannot be re-analysed two years after collection because column names were not documented has limited scientific value.",
         ],
         "tasks": [
-            "Open a CSV from data/generated/ and identify each of the eight standard columns. For each column, write one sentence explaining its analytical purpose.",
+            "Open a CSV from ~/.cognitive_data_arcade/data/generated/ and identify each of the eight standard columns. For each column, write one sentence explaining its analytical purpose.",
             "Find the column containing reaction time in milliseconds. Record the minimum and maximum values. Check that participant_id is identical across all rows.",
             "Subtract the first stimulus_onset_ms from the last and convert to seconds - that is the approximate session duration. Calculate the mean inter-trial interval between two consecutive trials.",
         ],

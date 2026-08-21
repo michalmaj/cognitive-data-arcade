@@ -1,14 +1,16 @@
 # Tasks — Exploratory Data Analysis
 
-Complete the following steps using a Stroop session CSV from `data/generated/stroop/`. If you have already cleaned the data in Lesson 05, use the cleaned version.
+Complete the following steps using a Stroop session CSV from `~/.cognitive_data_arcade/data/generated/stroop/`. If you have already cleaned the data in Lesson 05, use the cleaned version.
 
 ## Step 1: Load and inspect the dataset
 
 ```python
 import pandas as pd
 import numpy as np
+from pathlib import Path
 
-df = pd.read_csv("data/generated/stroop/YOUR_FILE.csv")
+data_dir = Path.home() / ".cognitive_data_arcade" / "data" / "generated" / "stroop"
+df = pd.read_csv(data_dir / "YOUR_FILE.csv")
 
 print("Shape:", df.shape)
 print("\nColumn types:")

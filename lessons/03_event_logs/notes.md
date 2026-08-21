@@ -12,7 +12,7 @@
 
 ## Expected Observations During Tasks
 
-Students will open a CSV from `data/generated/`. The file should have eight standard columns. Most students will immediately recognise `response_time_ms` as RT, but some will confuse it with `stimulus_onset_ms`. Use this confusion productively: ask them what the difference between the two columns means conceptually.
+Students will open a CSV from `~/.cognitive_data_arcade/data/generated/`. The file should have eight standard columns. Most students will immediately recognise `response_time_ms` as RT, but some will confuse it with `stimulus_onset_ms`. Use this confusion productively: ask them what the difference between the two columns means conceptually.
 
 Students doing the timestamp arithmetic task (Step 5 in Tasks) should find that consecutive `stimulus_onset_ms` values differ by the inter-trial interval. Across a full session, they can calculate the approximate session duration. This concretises the abstract idea of "millisecond-precision logging."
 

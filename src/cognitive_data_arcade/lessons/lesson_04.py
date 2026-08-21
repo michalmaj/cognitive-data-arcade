@@ -29,7 +29,7 @@ CONTENT: dict[str, dict[str, list[str]]] = {
             "Nierówny rozkład prób z timeoutem między warunkami to sygnał MNAR i potencjalnego obciążenia przy usuwaniu wierszy. Warto sprawdzić proporcje timeoutów osobno dla każdego warunku przed wyborem metody obsługi braków.",
         ],
         "tasks": [
-            "Otwórz plik CSV z data/generated/ i policz łączną liczbę prób. Następnie zastosuj filtry, aby znaleźć: (1) próby z RT < 100 ms, (2) próby z RT > 2000 ms, (3) próby z brakującym RT.",
+            "Otwórz plik CSV z ~/.cognitive_data_arcade/data/generated/ i policz łączną liczbę prób. Następnie zastosuj filtry, aby znaleźć: (1) próby z RT < 100 ms, (2) próby z RT > 2000 ms, (3) próby z brakującym RT.",
             "Wypełnij tabelę wykluczeń: liczba i procent dla każdej kategorii. Oblicz łączny wskaźnik wykluczenia. Czy jest powyżej, czy poniżej 5%?",
             "Wpisz w Pythonie: załaduj CSV przez pandas, zastosuj trzy maski (mask_anticipation, mask_lapse, mask_timeout) i wydrukuj: Razem / Wykluczone (%) / Wlaczone. Sprawdź, czy liczby zgadzają się z ręcznym liczeniem.",
             "Wczytaj plik CSV sesji Stroopa. Policz próby z timeoutem łącznie i osobno dla każdego warunku. Czy rozkład jest równomierny?",
@@ -63,7 +63,7 @@ CONTENT: dict[str, dict[str, list[str]]] = {
             "An uneven distribution of timeout trials across conditions is a signal of MNAR and potential bias from listwise deletion. Checking timeout proportions per condition before choosing a missing-data remedy is essential.",
         ],
         "tasks": [
-            "Open a CSV from data/generated/ and count the total number of trials. Then apply filters to find: (1) trials with RT < 100 ms, (2) trials with RT > 2000 ms, (3) trials with missing RT.",
+            "Open a CSV from ~/.cognitive_data_arcade/data/generated/ and count the total number of trials. Then apply filters to find: (1) trials with RT < 100 ms, (2) trials with RT > 2000 ms, (3) trials with missing RT.",
             "Fill in the exclusion table: count and percentage for each category. Calculate the total exclusion rate. Is it above or below 5%?",
             "In Python: load the CSV via pandas, apply three masks (mask_anticipation, mask_lapse, mask_timeout) and print: Total / Excluded (%) / Included. Check that the numbers match the manual count.",
             "Load a Stroop session CSV. Count timeout trials in total and separately per condition. Is the distribution even across conditions?",

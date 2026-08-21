@@ -4,7 +4,7 @@ Complete the following steps during the lesson. Record observations in a noteboo
 
 ## Step 1: Generate a session file
 
-Launch the application and play any reaction-time game (e.g., Lesson 02 — Reaction Time Lab) for at least 20 trials. The game automatically saves a CSV to `data/generated/`. Confirm the file exists by checking that directory in your file manager or terminal.
+Launch the application and play any reaction-time game (e.g., Lesson 02 — Reaction Time Lab) for at least 20 trials. The game automatically saves a CSV to `~/.cognitive_data_arcade/data/generated/` (Windows: `%USERPROFILE%\.cognitive_data_arcade\data\generated\`). Confirm the file exists by checking that directory in your file manager or terminal.
 
 ## Step 2: Open the CSV
 

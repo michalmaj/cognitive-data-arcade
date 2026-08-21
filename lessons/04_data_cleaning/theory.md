@@ -101,8 +101,10 @@ The Python `pandas` library provides the standard toolkit for programmatic RT da
 
 ```python
 import pandas as pd
+from pathlib import Path
 
-raw = pd.read_csv("data/generated/session_001.csv")
+data_dir = Path.home() / ".cognitive_data_arcade" / "data" / "generated"
+raw = pd.read_csv(data_dir / "session_001.csv")
 
 # Exclusion 1: anticipations
 mask_anticipation = raw["response_time_ms"] < 100

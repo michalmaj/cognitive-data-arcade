@@ -4,7 +4,7 @@ Wykonaj poniższe kroki podczas lekcji. Zapisuj obserwacje w notatniku lub dokum
 
 ## Krok 1: Wygeneruj plik sesji
 
-Uruchom aplikację i zagraj w dowolną grę czasu reakcji (np. Lekcja 02 — Laboratorium czasu reakcji) przez co najmniej 20 prób. Gra automatycznie zapisuje plik CSV do `data/generated/`. Potwierdź istnienie pliku, sprawdzając ten katalog w menedżerze plików lub terminalu.
+Uruchom aplikację i zagraj w dowolną grę czasu reakcji (np. Lekcja 02 — Laboratorium czasu reakcji) przez co najmniej 20 prób. Gra automatycznie zapisuje plik CSV do `~/.cognitive_data_arcade/data/generated/` (Windows: `%USERPROFILE%\.cognitive_data_arcade\data\generated\`). Potwierdź istnienie pliku, sprawdzając ten katalog w menedżerze plików lub terminalu.
 
 ## Krok 2: Otwórz plik CSV
 

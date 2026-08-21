@@ -4,10 +4,10 @@ Complete the following steps using a CSV file from a game session. Any session f
 
 ## Step 1: Locate a game session file
 
-Game session files are stored in `data/generated/`. Run the following to list available files:
+Game session files are stored in `~/.cognitive_data_arcade/data/generated/` (Windows: `%USERPROFILE%\.cognitive_data_arcade\data\generated\`). Run the following to list available files:
 
 ```
-ls data/generated/stroop/
+ls ~/.cognitive_data_arcade/data/generated/stroop/
 ```
 
 If no files exist, play one session of the Stroop game (Lesson 07) and return.
@@ -18,8 +18,10 @@ Open Python (or a Jupyter notebook) and load the file:
 
 ```python
 import pandas as pd
+from pathlib import Path
 
-df = pd.read_csv("data/generated/stroop/YOUR_FILE.csv")
+data_dir = Path.home() / ".cognitive_data_arcade" / "data" / "generated" / "stroop"
+df = pd.read_csv(data_dir / "YOUR_FILE.csv")
 print(df.head())
 print(df.columns.tolist())
 ```
