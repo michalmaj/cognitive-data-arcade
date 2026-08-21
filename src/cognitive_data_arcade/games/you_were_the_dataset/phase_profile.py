@@ -64,9 +64,9 @@ def _draw_card_rt(surface: pygame.Surface, p: ProfileData) -> None:
     surface.blit(lo_lbl, (_CARD_X + 40, _CARD_Y + 180))
     surface.blit(hi_lbl, (_CARD_X + _CARD_W - 80 - hi_lbl.get_width() + 40, _CARD_Y + 180))
     if p.rt_percentile >= 50:
-        interp = f"Szybciej niz {p.rt_percentile}% uzytkownikow."
+        interp = f"Szybciej niz {p.rt_percentile}% wynikow referencyjnych."
     else:
-        interp = f"Wolniej niz {100 - p.rt_percentile}% uzytkownikow."
+        interp = f"Wolniej niz {100 - p.rt_percentile}% wynikow referencyjnych."
     txt = get_font(16).render(interp, True, _DIM)
     surface.blit(txt, (_W // 2 - txt.get_width() // 2, _CARD_Y + 210))
 

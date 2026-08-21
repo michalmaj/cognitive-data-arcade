@@ -14,8 +14,8 @@ REQUIRED_GAMES: dict[str, str] = {
     "nback": "L10 N-Back Memory Grid",
 }
 
-# Hard-coded reference RTs (ms) for percentile computation.
-# Derived from approximate population norms for simple RT.
+# Reference RT values (ms) spanning the typical human simple-RT range.
+# Used for within-app percentile display only — not a validated population dataset.
 _RT_REFERENCE = [155, 175, 190, 205, 220, 235, 250, 270, 295, 330, 380, 450, 560]
 
 

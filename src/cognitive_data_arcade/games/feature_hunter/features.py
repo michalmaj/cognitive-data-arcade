@@ -137,7 +137,7 @@ FEATURE_BANK: list[Feature] = [
         0.40,
         "Wiek (lata)",
         "Czas reakcji (ms)",
-        "RT rośnie z wiekiem — mózg przetwarza wolniej po 30. roku życia (norma biologiczna).",
+        "RT rośnie z wiekiem — spowalnianie przetwarzania poznawczego pojawia sie stopniowo juz od wczesnej doroslosci.",
     ),
     Feature(
         "Lata edukacji",
