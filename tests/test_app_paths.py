@@ -51,6 +51,18 @@ def test_default_app_paths_rooted_in_home() -> None:
     assert str(paths.generated_data_dir).startswith(str(Path.home()))
 
 
+def test_default_app_paths_asset_dir_is_assets_subdir() -> None:
+    """asset_dir must point to assets/ (not the project root).
+
+    Previously default_app_paths() set asset_dir=Path(__file__).parents[3],
+    which is the project root in dev mode but broken in frozen builds where
+    __file__ is inside the extraction directory.  The fix delegates to
+    assets_dir() which handles both dev and frozen mode correctly.
+    """
+    paths = default_app_paths()
+    assert paths.asset_dir.name == "assets"
+
+
 # ── ProfileManager.paths ──────────────────────────────────────────────────────
 
 
