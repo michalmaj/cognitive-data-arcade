@@ -12,7 +12,7 @@ By the end of this lesson, students will be able to:
 
 ## Required Activity
 
-> **Note:** No game is currently assigned to Lesson 06. An EDA dashboard game is planned for a future release. Complete the tasks using the Stroop session CSV files in `data/generated/stroop/`.
+> **Note:** No game is currently assigned to Lesson 06. An EDA dashboard game is planned for a future release. Complete the tasks using the Stroop session CSV files in `~/.cognitive_data_arcade/data/generated/stroop/`.
 
 ## Estimated Time
 

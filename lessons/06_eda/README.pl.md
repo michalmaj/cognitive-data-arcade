@@ -12,7 +12,7 @@ Po zakończeniu tej lekcji student potrafi:
 
 ## Wymagana aktywność
 
-> **Uwaga:** Do Lekcji 06 nie jest na razie przypisana żadna gra. Planowana jest gra-pulpit nawigacyjny EDA w przyszłej wersji. Wykonaj zadania, korzystając z plików CSV sesji Stroopa w `data/generated/stroop/`.
+> **Uwaga:** Do Lekcji 06 nie jest na razie przypisana żadna gra. Planowana jest gra-pulpit nawigacyjny EDA w przyszłej wersji. Wykonaj zadania, korzystając z plików CSV sesji Stroopa w `~/.cognitive_data_arcade/data/generated/stroop/`.
 
 ## Szacowany czas
 

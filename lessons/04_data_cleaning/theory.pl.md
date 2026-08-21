@@ -101,8 +101,10 @@ Biblioteka `pandas` w Pythonie zapewnia standardowy zestaw narzędzi do programo
 
 ```python
 import pandas as pd
+from pathlib import Path
 
-raw = pd.read_csv("data/generated/session_001.csv")
+data_dir = Path.home() / ".cognitive_data_arcade" / "data" / "generated"
+raw = pd.read_csv(data_dir / "session_001.csv")
 
 # Wykluczenie 1: antycypacje
 mask_anticipation = raw["response_time_ms"] < 100

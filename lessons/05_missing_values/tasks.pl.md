@@ -4,10 +4,10 @@ Wykonaj poniższe kroki, korzystając z pliku CSV z sesji gry. Każdy plik sesji
 
 ## Krok 1: Znajdź plik sesji gry
 
-Pliki sesji gry są przechowywane w `data/generated/`. Uruchom poniższe polecenie, aby wylistować dostępne pliki:
+Pliki sesji gry są przechowywane w `~/.cognitive_data_arcade/data/generated/` (Windows: `%USERPROFILE%\.cognitive_data_arcade\data\generated\`). Uruchom poniższe polecenie, aby wylistować dostępne pliki:
 
 ```
-ls data/generated/stroop/
+ls ~/.cognitive_data_arcade/data/generated/stroop/
 ```
 
 Jeśli nie ma żadnych plików, zagraj jedną sesję gry Stroop (Lekcja 07) i wróć.
@@ -19,7 +19,10 @@ Otwórz Pythona (lub notatnik Jupyter) i wczytaj plik:
 ```python
 import pandas as pd
 
-df = pd.read_csv("data/generated/stroop/TWOJ_PLIK.csv")
+from pathlib import Path
+
+data_dir = Path.home() / ".cognitive_data_arcade" / "data" / "generated" / "stroop"
+df = pd.read_csv(data_dir / "TWOJ_PLIK.csv")
 print(df.head())
 print(df.columns.tolist())
 ```
