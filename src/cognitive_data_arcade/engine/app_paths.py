@@ -27,10 +27,12 @@ class AppPaths:
 
 def default_app_paths() -> AppPaths:
     """Return production AppPaths rooted at ~/.cognitive_data_arcade."""
+    from cognitive_data_arcade.engine.assets import assets_dir
+
     base = Path.home() / ".cognitive_data_arcade"
     return AppPaths(
         profile_dir=base,
         generated_data_dir=base / "data" / "generated",
         export_dir=base / "exports",
-        asset_dir=Path(__file__).resolve().parents[3],
+        asset_dir=assets_dir(),
     )
